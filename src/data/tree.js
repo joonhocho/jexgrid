@@ -1,3 +1,10 @@
+goog.require('Util');
+goog.require('JGM');
+goog.provide('JGM.data.TreeNode');
+goog.provide('JGM.data.Tree');
+goog.provide('TreeNode');
+goog.provide('Tree');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -7,14 +14,6 @@
  */
 
 (function() {
-
- goog.require('JGM');
-
- goog.provide('JGM.data.TreeNode');
- goog.provide('JGM.data.Tree');
-
- goog.provide('TreeNode');
- goog.provide('Tree');
 
  goog.exportSymbol('JGM.dataTreeNode', TreeNode);
  goog.exportSymbol('JGM.dataTree', Tree);

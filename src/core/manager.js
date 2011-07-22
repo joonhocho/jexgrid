@@ -1,3 +1,7 @@
+goog.require('Util');
+goog.require('Util$');
+goog.provide('JGM');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -27,11 +31,6 @@ mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
 */
 
 (function() {
-
- goog.require('Util');
- goog.require('Util$');
-
- goog.provide('JGM');
 
  var $ = goog.getObjectByName('jQuery'),
  Util = goog.getObjectByName('Util'),
@@ -564,10 +563,6 @@ JGM._unbindGlobalEvents = function() {
 		this.__globalEventsBound_h__ = false;
 	}
 };
-
-JGM.lang = {};
-JGM.events = {};
-JGM.grids = {};
 
 JGM.error = {
    LENGTH_NOT_EQUAL: "Lengths are not equal",

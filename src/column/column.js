@@ -1,10 +1,16 @@
+goog.require('JGM');
+goog.require('JGM.core.Grid');
+goog.require('JGM.column.ColDefManager');
+goog.require('JGM.data.DataManager');
+goog.require('JGM.core.ViewportManager');
+goog.require('JGM.events.EventDispatcher');
+goog.provide('JGM.column.Column');
+
 (function() {
 
- goog.require('JGM.events.EventDispatcher');
 
- goog.provide('JGM.column.Column');
 
- goog.exportSymbol('JGM.column.Column', Column);
+	goog.exportSymbol('JGM.column.Column', Column);
 
 	function Column(args) {
 		if (!(args.manager && typeof args.manager == 'object')) {

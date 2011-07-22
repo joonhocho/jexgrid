@@ -1,3 +1,11 @@
+goog.require('Util');
+goog.require('JGM');
+goog.require('JGM.core.Grid');
+goog.require('JGM.column.ColDefManager');
+goog.require('JGM.data.DataManager');
+goog.require('JGM.core.ViewportManager');
+goog.provide('JGM.cell.Cell');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -12,11 +20,9 @@ JGM
 */
 (function() {
 
- goog.require('JGM');
  var JGM = goog.getObjectByName('JGM'),
  	Util = goog.getObjectByName('Util');
 
- goog.provide('JGM.cell.Cell');
 
  goog.exportSymbol('JGM.cell.Cell', Cell);
 
@@ -27,7 +33,6 @@ Cell 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
 @requires JGM.Grid
 @requires JGM.ColDefManager
 @requires JGM.DataManager
-@requires JGM.EventManager
 @requires JGM.ViewportManager
  */
 

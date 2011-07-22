@@ -1,3 +1,10 @@
+goog.require('Util');
+goog.require('JGM');
+goog.require('JGM.core.Grid');
+goog.require('JGM.column.Column');
+goog.require('JGM.core.BaseModule');
+goog.provide('JGM.column.ColDefManager');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -12,9 +19,6 @@ JGM
 */
 (function() {
 
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.column.ColDefManager');
 
  goog.exportSymbol('JGM.column.ColDefManager', ColDefManager);
 

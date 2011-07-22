@@ -1,3 +1,12 @@
+goog.require('Util');
+goog.require('Util$');
+goog.require('JGM');
+goog.require('JGM.core.Disposable');
+goog.require('JGM.core.EventDispatcher');
+goog.require('JGM.core.BaseModule');
+goog.require('JGM.core.ViewportManager');
+goog.provide('JGM.core.Grid');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -26,10 +35,6 @@
   */
 
 (function() {
-
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.core.Grid');
 
  goog.exportSymbol('JGM.core.Grid', Grid);
 

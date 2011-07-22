@@ -1,3 +1,6 @@
+goog.require('Util');
+goog.provide('Tracer');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -10,10 +13,6 @@
 * Stack/Time Tracer for Debugging
 */
 (function(){
-
- goog.require('Util');
-
- goog.provide('Tracer');
 
  goog.exportSymbol('Tracer', Tracer);
 

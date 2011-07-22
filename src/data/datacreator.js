@@ -1,3 +1,8 @@
+goog.require('JGM');
+goog.require('Util');
+goog.require('JGM.core.BaseModule');
+goog.require('JGM.core.Grid');
+goog.provide('JGM.data.DataCreator');
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -12,10 +17,6 @@
   */
 
 (function() {
-
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.data.DataCreator');
 
  goog.exportSymbol('JGM.data.DataCreator', DataCreator);
 

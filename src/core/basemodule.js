@@ -1,3 +1,8 @@
+goog.require('JGM');
+goog.require('JGM.lang.Disposable');
+goog.require('JGM.events.EventDispatcher');
+goog.provide('JGM.core.BaseModule');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -7,10 +12,6 @@
  */
 
 (function() {
-
- 	goog.require('JGM.events.EventDispatcher');
-
-	goog.provide('JGM.core.BaseModule');
 
 	goog.exportSymbol('JGM.core.BaseModule', BaseModule);
 
