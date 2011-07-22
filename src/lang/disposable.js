@@ -14,7 +14,8 @@
 (function() {
 
  goog.provide('JGM.lang.Disposable');
- JGM.lang.Disposable = Disposable;
+
+ goog.exportPath('JGM.lang.Disposable', Disposable);
 
  /**
    Grid 의 이벤트를 담당하는 모듈. 모듈들 간의 원활한 커뮤니케이트를 가능하게

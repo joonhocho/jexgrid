@@ -17,7 +17,7 @@ JGM
 
  goog.provide('JGM.module.TooltipManager');
 
- JGM.module.TooltipManager = TooltipManager;
+ goog.exportPath('JGM.module.TooltipManager', TooltipManager);
 
 /**
 TooltipManager 모듈. 컬럼 헤더들을 담당하는 모듈입니다.

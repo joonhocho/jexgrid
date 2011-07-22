@@ -10,6 +10,8 @@
  goog.provide('Util');
  goog.provide('echo');
 
+ goog.exportPath('Util', Util);
+
 var undefined = (function(){})(),
 	console = window.console,
 	CONSOLE_LOGS = [],

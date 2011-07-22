@@ -16,7 +16,8 @@ JGM
 	goog.require('JGM.lang.Disposable');
 
  	goog.provide('JGM.events.EventDispatcher');
-	JGM.events.EventDispatcher = EventDispatcher;
+
+	goog.exportPath('JGM.events.EventDispatcher', EventDispatcher);
 
 /**
 Grid 의 이벤트를 담당하는 모듈. 모듈들 간의 원활한 커뮤니케이트를 가능하게

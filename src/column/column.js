@@ -4,7 +4,7 @@
 
  goog.provide('JGM.column.Column');
 
- JGM.column.Column = Column;
+ goog.exportPath('JGM.column.Column', Column);
 
 	function Column(args) {
 		if (!(args.manager && typeof args.manager == 'object')) {

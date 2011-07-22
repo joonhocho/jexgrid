@@ -9,6 +9,8 @@
 
  goog.provide('Util$');
 
+ goog.exportPath('Util$', Util$);
+
 Util$.is$ = function(val) {
 	return (val instanceof jQuery) ? true : false;
 };

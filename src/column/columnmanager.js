@@ -16,7 +16,7 @@ JGM
 
  goog.provide('JGM.column.ColDefManager');
 
- JGM.column.ColDefManager = ColDefManager;
+ goog.exportPath('JGM.column.ColDefManager', ColDefManager);
 
 /**
 ColDefManager 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.

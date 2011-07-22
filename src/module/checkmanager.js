@@ -17,8 +17,7 @@ JGM
 
  goog.provide('JGM.module.CheckManager');
 
- JGM.module.CheckManager = CheckManager;
-
+ goog.exportPath('JGM.module.CheckManager', CheckManager);
 
 
 /**

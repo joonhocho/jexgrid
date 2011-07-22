@@ -30,7 +30,8 @@
  goog.require('JGM.core.BaseModule');
 
  goog.provide('JGM.core.Grid');
- JGM.core.Grid = Grid;
+
+ goog.exportPath('JGM.core.Grid', Grid);
 
 
  /**

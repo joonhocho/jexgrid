@@ -11,7 +11,7 @@
 
  goog.provide('JGM.module.PrintManager');
 
- JGM.module.PrintManager = PrintManager;
+ goog.exportPath('JGM.module.PrintManager', PrintManager);
 
 function PrintManager(args) {
 	this.mid = args.mid;

@@ -14,7 +14,8 @@
  goog.require('Util');
 
  goog.provide('Tracer');
- goog.global.Tracer = Tracer;
+
+ goog.exportPath('Tracer', Tracer);
 
 var Tracer = window.Tracer = function() {
 	this.stack = "";

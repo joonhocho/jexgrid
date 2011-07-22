@@ -19,7 +19,7 @@
 
  goog.provide('JGM.module.Collapser');
 
- JGM.module.Collapser = Collapser;
+ goog.exportPath('JGM.module.Collapser', Collapser);
 
 	/**
 	  Collapser 모듈. 트리 구조의 데이터를 담당하는 모듈입니다.

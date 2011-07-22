@@ -16,10 +16,11 @@
  goog.provide('TreeNode');
  goog.provide('Tree');
 
- JGM.data.TreeNode = TreeNode;
- JGM.data.Tree= Tree;
- goog.global.TreeNode = TreeNode;
- goog.global.Tree = Tree;
+ goog.exportPath('JGM.dataTreeNode', TreeNode);
+ goog.exportPath('JGM.dataTree', Tree);
+
+ goog.exportPath('TreeNode', TreeNode);
+ goog.exportPath('Tree', Tree);
 
  function TreeNode(args) {
  this.tree = args.tree;

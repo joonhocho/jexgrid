@@ -17,7 +17,7 @@ JGM
 
  goog.provide('JGM.edit.EditManager');
 
- JGM.edit.EditManager = EditManager;
+ goog.exportPath('JGM.edit.EditManager', EditManager);
 
 /**
 EditManager 모듈. 데이터 에디팅을 담당하는 모듈입니다.

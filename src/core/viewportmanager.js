@@ -17,7 +17,7 @@ JGM
 
  goog.provide('JGM.core.ViewportManager');
 
- JGM.core.ViewportManager = ViewportManager;
+ goog.exportPath('JGM.core.ViewportManager', ViewportManager);
 
 /**
 ViewportManager 모듈. 그리드 로우와 셀을 가진 테이블을 담당하는 모듈입니다.

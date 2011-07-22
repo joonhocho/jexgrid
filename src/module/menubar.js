@@ -11,7 +11,7 @@
 
  goog.provide('JGM.module.MenuBar');
 
- JGM.module.MenuBar = MenuBar;
+ goog.exportPath('JGM.module.MenuBar', MenuBar);
 
 /**
 메뉴 바를 생성하고 관리하는 {@link JGM.MenuBar MenuBar} 인스턴스 입니다.
