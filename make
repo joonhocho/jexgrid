@@ -84,7 +84,7 @@ foreach ($compilerSettings as $k=>$v) {
 }
 $libFiles = implode(' ', array_map(function($n) { return "--externs $n"; }, $libfilenames));
 $sourceFiles = implode(' ', array_map(function($n) { return "--js $n"; }, $filenames));
-$compilerCommand = "java -jar $compilerJar$compilerFlags $libFiles $sourceFiles --js_output_file $distPath/$outputFileKr";
+$compilerCommand = "java -jar $compilerJar$compilerFlags $sourceFiles $libFiles --js_output_file $distPath/$outputFileKr";
 echo $compilerCommand."\n\n";
 
 // compile js sources
