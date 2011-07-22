@@ -33,10 +33,10 @@ mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
 
  goog.provide('JGM');
 
- var $ = $,
- Util = Util,
- Util$ = Util$,
- JGM = JGM;
+ var $ = goog.getObjectByName('jQuery'),
+ Util = goog.getObjectByName('Util'),
+ Util$ = goog.getObjectByName('Util$'),
+ JGM = {};
 
  goog.exportSymbol('JGM', JGM);
 
@@ -322,9 +322,9 @@ JGM.__remove_f__ = function(name, mid) {
 /**
 Grid 를 생성하고 리턴합니다.
 
-@function {JGM.Grid} grid
+@function {JGM.core.Grid} grid
 @param {Object} args - Grid 모듈에 넘겨줄 옵션 오브젝트
-@returns {JGM.Grid} Grid 인스턴스
+@returns {JGM.core.Grid} Grid 인스턴스
 
 @author 조준호
 @since 1.0.1

@@ -13,6 +13,8 @@ JGM
 (function() {
 
  goog.require('JGM');
+ var JGM = goog.getObjectByName('JGM'),
+ 	Util = goog.getObjectByName('Util');
 
  goog.provide('JGM.cell.Cell');
 

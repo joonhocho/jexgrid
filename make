@@ -7,13 +7,14 @@ $pathlen = strlen($gridPath);
  * Build Path Settings
  */
 $encoding = 'euc-kr';
-$srcPath = "$gridPath/src";
+$srcPath = "$gridPath/testsrc";
 $libPath = "$gridPath/externs";
 $distPath = "$gridPath/dist";
 $buildPath = "$gridPath/build";
 $buildResultPath = "$gridPath/results";
 $versionFile = "$gridPath/VERSION";
 $licenseFile = "$gridPath/LICENSE";
+$calcdepsFile = "$gridPath/bin/calcdeps.py";
 $compilerJar = "$gridPath/lib/closure-compiler/compiler.jar";
 $compilerIniFile = "$gridPath/closure-compiler.ini";
 $srcPattern = '/.*\.js$/';
@@ -38,6 +39,7 @@ $license = trim($license);
 
 
 // read in source files from src path using src pattern
+echo "[ reading source files... ]\n\n";
 $dirIterator = new RecursiveDirectoryIterator($srcPath);
 $iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
 $regexIterator = new RegexIterator($iterator, $srcPattern);
@@ -51,8 +53,9 @@ foreach ($regexIterator as $file) {
 		$filenames[$filename] = $filename;
 	}
 }
-echo "\n";
+echo "\n\n";
 
+echo "[ reading external library files... ]\n\n";
 // read in library files from lib path using src pattern
 $dirIterator = new RecursiveDirectoryIterator($libPath);
 $iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
@@ -67,9 +70,16 @@ foreach ($regexIterator as $file) {
 		$libfilenames[$filename] = $filename;
 	}
 }
-echo "\n";
+echo "\n\n";
+
+// read in dependencies
+echo "[ calculating dependencies... ]\n\n";
+$depsCommand = "$calcdepsFile -p $srcPath -o deps -c $compilerJar --output_file $srcPath/deps.js";
+echo $depsCommand . "\n\n\n";
+system($depsCommand);
 
 // read in closure compiler settings from ini file
+echo "[ reading compiler settings... ]\n\n\n";
 $compilerSettings = parse_ini_file($compilerIniFile);
 $compilerFlags = '';
 foreach ($compilerSettings as $k=>$v) {
@@ -84,8 +94,12 @@ foreach ($compilerSettings as $k=>$v) {
 }
 $libFiles = implode(' ', array_map(function($n) { return "--externs $n"; }, $libfilenames));
 $sourceFiles = implode(' ', array_map(function($n) { return "--js $n"; }, $filenames));
+
+// compile
+echo "[ start compiling... ]\n\n";
 $compilerCommand = "java -jar $compilerJar$compilerFlags $libFiles $sourceFiles --js_output_file $distPath/$outputFileKr";
-echo $compilerCommand."\n\n";
+echo $compilerCommand."\n\n\n";
 
 // compile js sources
 system($compilerCommand);
+echo "[ finished compiling... ]\n";

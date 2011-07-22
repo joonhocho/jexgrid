@@ -8,12 +8,25 @@
 (function(){
 
  goog.provide('Util');
- goog.provide('echo');
 
 var undefined = (function(){})(),
 	console = window.console,
 	CONSOLE_LOGS = [],
-	echo = (console && console.log && function(){console.log.apply(console, arguments);}) || function(){CONSOLE_LOGS.push.apply(CONSOLE_LOGS, arguments);};
+	/**
+	 * @param {...*} var_args
+	 */
+	echo;
+
+if (console && console.log) {
+	echo = function(var_args){
+		console.log.apply(console, arguments);
+	};
+}
+else {
+	echo = function(var_args){
+		CONSOLE_LOGS.push.apply(CONSOLE_LOGS, arguments);
+	}
+}
 
  goog.exportSymbol('Util', Util);
  goog.exportSymbol('echo', echo);
@@ -409,7 +422,9 @@ Util.formatNumber = function(num, precision, currency, decimal, comma){
 
 	var s = num < 0 ? "-" : "",
 		i = parseInt(num = Math.abs(+num || 0).toFixed(precision), 10) + '',
-		j = (j = i.length) > 3 ? j % 3 : 0;
+		j = i.length;
+
+		j = j > 3 ? j % 3 : 0;
 
 	return currency + s + (j ? i.substr(0, j) + comma : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + comma) + (precision ? decimal + Math.abs(num - i).toFixed(precision).slice(2) : "");
 };
@@ -442,8 +457,8 @@ Util.hasClass = function(node, className) {
 		return true;
 	}
 
-	if (node.className !== undefined) {
-		var cl = node.classList === undefined ? Util.split(node.className) : node.classList,
+	if (node.className) {
+		var cl = node.classList ? node.classList : Util.split(node.className),
 			i = 0,
 			  len = cl.length;
 		for (; i < len; i++) {
@@ -466,8 +481,8 @@ Util.hasTagAndClass = function(node, tag, className) {
 			return true;
 		}
 
-		if (node.className !== undefined && node.className.length >= className.length) {
-			var cl = node.classList === undefined ? Util.split(node.className) : node.classList,
+		if (node.className && node.className.length >= className.length) {
+			var cl = node.classList ? node.classList : Util.split(node.className),
 				i = 0,
 				  len = cl.length;
 			for (; i < len; i++) {
@@ -605,7 +620,7 @@ Util.findByTagAndClass = function(node, tag, className, list) {
 
 // tested
 Util.getHead = function() {
-	if (document.head !== undefined) {
+	if (document.head) {
 		return document.head;
 	}
 	return document.getElementsByTagName("head")[0];
@@ -642,7 +657,7 @@ Util.createStyle = function(code) {
 	css.type = 'text/css';
 	css.rel = 'stylesheet';
 
-	if (css.styleSheet !== undefined) {
+	if (css.styleSheet) {
 		css.styleSheet.cssText = code;
 	}
 	else {
@@ -665,7 +680,7 @@ Util.setStyle = function(css, code) {
 	if (css == null) {
 		return "";
 	}
-	if (css.styleSheet !== undefined) {
+	if (css.styleSheet) {
 		return (css.styleSheet.cssText = code);
 	}
 	return (css.childNodes[0].nodeValue = code);
@@ -676,7 +691,7 @@ Util.appendStyle = function(css, code) {
 	if (css == null) {
 		return "";
 	}
-	if (css.styleSheet !== undefined) {
+	if (css.styleSheet) {
 		return (css.styleSheet.cssText += code);
 	}
 	return (css.childNodes[0].nodeValue += code);
@@ -689,7 +704,7 @@ Util.getStyle = function(css) {
 	if (css == null) {
 		return "";
 	}
-	if (css.styleSheet !== undefined) {
+	if (css.styleSheet) {
 		return css.styleSheet.cssText;
 	}
 	return css.childNodes[0].nodeValue;
@@ -699,7 +714,7 @@ Util.getStyle = function(css) {
 Util.appendScript = function(code) {
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
-	if (script.text !== undefined) {
+	if (script.text) {
 		script.text = code;
 	}
 	else {
@@ -1227,7 +1242,10 @@ Util.printEventPos = function(e) {
 			"xy: (" + e.x + ", " + e.y + ")");
 };
 
-Util.print = function() {
+/**
+ * @param {...*} var_args
+ */
+Util.print = function(var_args) {
 	if (!echo) {
 		return;
 	}

@@ -22,7 +22,7 @@
  /**
    Grid 의 이벤트를 담당하는 모듈. 모듈들 간의 원활한 커뮤니케이트를 가능하게
    합니다.
-   @module Disposable
+   @module JGM.lang.Disposable
    */
 
  /**
@@ -31,7 +31,7 @@
    호출하는 방법도 있지만 이벤트를 통하면 다른 모듈 인스턴스의 존재 유무 또는
    이름을 알지 못 하여도 상호 커뮤니케이트 할 수 있는 장점이 있습니다.
 
-   @class {Disposable} JGM.Disposable
+   @class {Disposable} JGM.lang.Disposable
 
    @author 조준호
    @since 1.0.0
@@ -41,9 +41,7 @@
  /**
    Disposable 컨스트럭터 입니다.
 
-   @constructor {Disposable} Disposable
-   @param {Object} args - Disposable 모듈 파라미터 오브젝트
-   @returns {Disposable} Disposable 모듈 인스턴스를 리턴합니다.
+   @constructor
 
    @author 조준호
    @since 1.0.0
@@ -55,29 +53,6 @@
  var proto = Disposable.prototype,
 	 isArray = Util.isArray;
 
- /**
-   jQuery.bind 와 비슷한 형식입니다. 하나 또는 여럿의 이벤트 핸들러를 레지스터 합니다.
-
-   @function {} bind
-
-   @paramset 한개의 이벤트를 등록할 경우 1
-   @param {string} event - 이벤트 이름. 여러개의 이벤트를 빈칸으로 띄어 쓰면 한번에
-   여러 이벤트에 같은 핸들러와 오브젝트를 등록할 수 있습니다.
-   @param {function|Array.<function>} fn - 이벤트 핸들러 함수. 함수 어레이일 경우 이벤트에
-   여러개의 이벤트 핸들러 함수를 등록합니다.
-   @param {?=} target - 이벤트 핸들러 오브젝트. 호출 함수의 this 로
-   정해집니다. 주어지지 않을 경우, window 오브젝트로 정해집니다.
-
-   @paramset 한개 이상의 이벤트를 등록할 경우
-   @param {Object} args - 이벤트 어레이 파라미터
-   @... {string} args.key - event 와 같음
-   @... {function|Array.<function>} args[args.key] - fn 과 같음
-   @param {?=} target - target.
-
-   @author 조준호
-   @since 1.1.6
-   @version 1.1.6
-   */
  function dispose(level, others) {'use strict';
 	 level = level || 0;
 	 var i,

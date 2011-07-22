@@ -11,20 +11,6 @@ Array
 @scope Array
 */
 (function() {
-
-/**
-엘레멘트의 어레이 인덱스를 리턴합니다.
-
-@function {number} indexOf
-@param {Object} elt - 어레이 인덱스를 찾을 엘레멘트
-@param {int=} from - 시작 인덱스
-@returns {number} 엘레멘트가 어레이에 포함되어 있을 경우 인덱스를 리턴하고, 그렇지
-않을 경우에는 -1 을 리턴합니다.
-
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
 var proto = Array.prototype;
 if (!proto.indexOf) {
 	proto.indexOf = function(searchElement /*, fromIndex */) {
@@ -321,27 +307,5 @@ if (!proto.reduceRight)
 		return accumulator;
 	};
 }
-
-
-
-
-
-/**
-어레이의 모든 엘레멘트들이 테스트 함수의 테스트를 통과하는지 테스트합니다.
-
-@function {boolean} every
-@param {Function(elt, index, array)} fun - 테스트 함수
-@param {Object=} thisp - 함수 호출시 this 로 사용될 오브젝트
-@returns {boolean} 모든 엘레멘트들이 테스트 함수에서 true 를 리턴할 경우 true 를
-리턴하고 하나의 엘레멘트라도 false 를 리턴할 경우 false 를 리턴합니다.
-
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
-
-
-
-if (window.JGM !== undefined) { window.JGM._add("ArrayExtIE"); }// TBR
 
 })();

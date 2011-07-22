@@ -10,7 +10,7 @@
  goog.require('Util');
  goog.provide('Util$');
 
- var Util = good.getObjectByName('Util');
+ var Util = goog.getObjectByName('Util');
 
  goog.exportSymbol('Util$', Util$);
 
@@ -86,7 +86,5 @@ Util$.calScrollbarDims = function(container) {
 	window.__SCROLLBAR_DIM__ = dim;
 	return dim;
 };
-
-if (window.JGM !== undefined) {window.JGM._add("Util$"); } // TBR
 
 })();
