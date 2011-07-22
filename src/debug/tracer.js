@@ -9,6 +9,13 @@
 /**
 * Stack/Time Tracer for Debugging
 */
+(function(){
+
+ goog.require('Util');
+
+ goog.provide('Tracer');
+ goog.global.Tracer = Tracer;
+
 var Tracer = window.Tracer = function() {
 	this.stack = "";
 	this.timers = {};
@@ -71,3 +78,5 @@ prototype.clearStack = function() {
 };
 
 if (window.JGM !== undefined) { window.JGM._add("Tracer", undefined); }// TBR
+
+})();

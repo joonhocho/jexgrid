@@ -1,5 +1,11 @@
 (function() {
 
+ goog.require('JGM.events.EventDispatcher');
+
+ goog.provide('JGM.column.Column');
+
+ JGM.column.Column = Column;
+
 	function Column(args) {
 		if (!(args.manager && typeof args.manager == 'object')) {
 			throw new Error('Column needs a valid manager!');
@@ -387,6 +393,7 @@
 	proto.setRenderer = function(renderer) {
 		if (this.renderer !== renderer) {
 			if (renderer && typeof renderer != 'function') {
+				var error = 'column key=' + this.key;
 				throw new Error('Invalid renderer!' + error);
 			}
 			this.renderer = renderer || null;

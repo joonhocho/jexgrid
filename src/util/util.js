@@ -5,11 +5,18 @@
  * COPYRIGHT
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
+(function(){
+
 var Util = window.Util = {},
 	undefined = (function(){})(),
 	console = window.console,
 	CONSOLE_LOGS = [],
 	echo = (console && console.log && function(){console.log.apply(console, arguments);}) || function(){CONSOLE_LOGS.push.apply(CONSOLE_LOGS, arguments);};
+
+ goog.provide('Util');
+ goog.provide('echo');
+ goog.global.Util = Util;
+ goog.global.echo = echo;
 
 // tested
 Util.isNull = function(val) {
@@ -972,7 +979,7 @@ Util.strReplace = function(str, replaceMap) {
 		search = [];
 	for (i in replaceMap) {
 		if (replaceMap.hasOwnProperty(i)) {
-			search.push(escapeRegExp(i));
+			search.push(Util.escapeRegExp(i));
 		}
 	}
 	return str.replace(new RegExp('(' + search.join('|') + ')', 'gm'), function(match) {
@@ -1301,3 +1308,5 @@ Util.open = function(options) {
 };
 
 if (window.JGM !== undefined) {window.JGM._add("Util");} // TBR
+
+})();

@@ -12,6 +12,12 @@ JGM
 */
 (function() {
 
+ goog.require('JGM');
+
+ goog.provide('JGM.cell.Cell');
+
+ JGM.cell.Cell = Cell;
+
 /**
 Cell 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
 @module Cell

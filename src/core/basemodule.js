@@ -8,6 +8,11 @@
 
 (function() {
 
+ 	goog.require('JGM.events.EventDispatcher');
+
+	goog.provide('JGM.core.BaseModule');
+	JGM.core.BaseModule = BaseModule;
+
 	function BaseModule(args) {
 		if (args) {
 			// module ID
@@ -102,7 +107,5 @@
 			type:'afterdispose'
 		});
 	}
-
-	JGM.grids.BaseModule = BaseModule;
 
 }());

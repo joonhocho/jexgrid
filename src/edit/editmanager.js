@@ -13,6 +13,12 @@ JGM
 
 (function() {
 
+ goog.require('JGM.core.BaseModule');
+
+ goog.provide('JGM.edit.EditManager');
+
+ JGM.edit.EditManager = EditManager;
+
 /**
 EditManager 모듈. 데이터 에디팅을 담당하는 모듈입니다.
 @module EditManager

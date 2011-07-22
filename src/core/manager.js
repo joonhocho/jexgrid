@@ -25,6 +25,15 @@ mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
 @since 1.0.0
 @version 1.2.0
 */
+
+(function() {
+
+ goog.require('Util');
+
+ goog.provide('JGM');
+
+ goog.global.JGM = JGM;
+
 JGM = {version:"1.2.3"};
 
 /**
@@ -573,3 +582,5 @@ JGM.error = {
 	SMALLER_THAN: "Data '%0' too small for column '%1'. Minimum is %2.",
 	WRONG_VALUE: "Incorrect value: '%0' for '%1'."
 };
+
+})();

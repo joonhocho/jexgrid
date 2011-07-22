@@ -7,51 +7,57 @@
  */
 
 /**
-<b>JexGrid</b> 는 다이나믹 랜더링을 통해 데이터 사이즈의 증가에 따른 성능 감소를
-최소화하고 자유로운 이벤트와 모듈 플러그인을 통해 유연한 확장성을 가진 jQuery
-기반의 자바스크립트 그리드 라이브러리 입니다.
+  <b>JexGrid</b> 는 다이나믹 랜더링을 통해 데이터 사이즈의 증가에 따른 성능 감소를
+  최소화하고 자유로운 이벤트와 모듈 플러그인을 통해 유연한 확장성을 가진 jQuery
+  기반의 자바스크립트 그리드 라이브러리 입니다.
 
-@project JexGrid JavaScript Library
-@timestamp
-@description JexGrid JavaScript Library
+  @project JexGrid JavaScript Library
+  @timestamp
+  @description JexGrid JavaScript Library
 
-@author 조준호
-@since 2011-Jan-05
-@version 1.3.2
-*/
+  @author 조준호
+  @since 2011-Jan-05
+  @version 1.3.2
+  */
 
 /**
-JGM
-@scope JGM
-*/
+  JGM
+  @scope JGM
+  */
 
 (function() {
 
-/**
-Grid 코어 모듈. 모든 Grid 모듈이 연결되는 모듈입니다.
-@module Grid
-@requires JGM
- */
+ goog.require('JGM.core.BaseModule');
 
-/**
-Grid 코어 클래스. Grid 의 모든 서브 모듈들은 이 클래스에 연결되어 서로
-커뮤니케이트 합니다.
+ goog.provide('JGM.core.Grid');
+ JGM.core.Grid = Grid;
 
-@class {public Grid} JGM.Grid
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+ /**
+   Grid 코어 모듈. 모든 Grid 모듈이 연결되는 모듈입니다.
+   @module Grid
+   @requires JGM
+   */
 
-/**
-Grid 컨스트럭터 입니다. 유일한 파라미터인 args 는 자바스크립트 오브젝트이며
-다음과 같은 형식을 가집니다.<br>
-args = {<br>
-	container: DOM Element 또는 DOM Element 를 가진 jQuery 오브젝트,<br>
-	datalist: 데이터 어레이,<br>
-	colDefs: 컬럼 정의 어레이,<br>
-	options: Grid 의 옵션과 모든 서브 옵션을 포함한 옵션 오브젝트<br>
+ /**
+   Grid 코어 클래스. Grid 의 모든 서브 모듈들은 이 클래스에 연결되어 서로
+   커뮤니케이트 합니다.
+
+   @class {public Grid} JGM.Grid
+
+   @author 조준호
+   @since 1.0.0
+   @version 1.0.0
+   */
+
+ /**
+   Grid 컨스트럭터 입니다. 유일한 파라미터인 args 는 자바스크립트 오브젝트이며
+   다음과 같은 형식을 가집니다.<br>
+   args = {<br>
+container: DOM Element 또는 DOM Element 를 가진 jQuery 오브젝트,<br>
+datalist: 데이터 어레이,<br>
+colDefs: 컬럼 정의 어레이,<br>
+options: Grid 의 옵션과 모든 서브 옵션을 포함한 옵션 오브젝트<br>
 };<br>
 
 @constructor {public Grid} Grid
@@ -80,7 +86,7 @@ function Grid(args) {
   @version 1.0.0
   */
 
-goog.inherits(Grid, JGM.grids.BaseModule);
+goog.inherits(Grid, JGM.core.BaseModule);
 
 Grid.getInstance = function(args) {
 	return new Grid(args);
@@ -99,338 +105,338 @@ prototype._defaultOptions = function() {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		classGrid: "jgrid",
+classGrid: "jgrid",
 
-			/**
-			  컨테이너에 적용되는 CSS border 스타일 입니다. <br>기본값:<code>"1px solid #868686"</code>
+			   /**
+				 컨테이너에 적용되는 CSS border 스타일 입니다. <br>기본값:<code>"1px solid #868686"</code>
 
-			  @var {private optional String} JGM.Grid.options.border
+				 @var {private optional String} JGM.Grid.options.border
 
-			  @author 조준호
-			  @since 1.0.0
-			  @version 1.0.0
-			  */
-			border: "1px solid #868686",
+				 @author 조준호
+				 @since 1.0.0
+				 @version 1.0.0
+				 */
+			   border: "1px solid #868686",
 
-			/**
-			  컨테이너에 적용되는 CSS width 픽셀값 입니다. 이 옵션 값이 입력되지 않을 경우 <code>width:100%</code> 로 설정하는 것과 같은 효과를 가집니다.<br>기본값:<code>undefined</code>
+			   /**
+				 컨테이너에 적용되는 CSS width 픽셀값 입니다. 이 옵션 값이 입력되지 않을 경우 <code>width:100%</code> 로 설정하는 것과 같은 효과를 가집니다.<br>기본값:<code>undefined</code>
 
-			  @var {private optional int} JGM.Grid.options.width
+				 @var {private optional int} JGM.Grid.options.width
 
-			  @author 조준호
-			  @since 1.0.0
-			  @version 1.0.0
-			  */
-			width: undefined,
+				 @author 조준호
+				 @since 1.0.0
+				 @version 1.0.0
+				 */
+			   width: undefined,
 
-			/**
-			  컨테이너에 적용되는 CSS font 스타일 입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
+			   /**
+				 컨테이너에 적용되는 CSS font 스타일 입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
 
-			  @var {private optional String} JGM.Grid.options.font
+				 @var {private optional String} JGM.Grid.options.font
 
-			  @author 조준호
-			  @since 1.0.0
-			  @version 1.0.0
-			  */
-			font: "15px Arial,Helvetica,sans-serif",
+				 @author 조준호
+				 @since 1.0.0
+				 @version 1.0.0
+				 */
+			   font: "15px Arial,Helvetica,sans-serif",
 
-			/**
-			  그리드 컨테이너에 적용될 CSS Style 입니다.<br>
-			  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
-			  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
-			  <br>기본값:<code>""</code>
+			   /**
+				 그리드 컨테이너에 적용될 CSS Style 입니다.<br>
+				 주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
+				 꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
+				 <br>기본값:<code>""</code>
 
-			  @var {private optional String} JGM.Grid.options.style
+				 @var {private optional String} JGM.Grid.options.style
 
-			  @author 조준호
-			  @since 1.0.0
-			  @version 1.0.0
-			  */
-			style: "",
+				 @author 조준호
+				 @since 1.0.0
+				 @version 1.0.0
+				 */
+			   style: "",
 
-			/**
-			  컨테이너에 적용되는 border 가 사이드에도 적용될지 여부입니다. <br>기본값:<code>true</code>
+			   /**
+				 컨테이너에 적용되는 border 가 사이드에도 적용될지 여부입니다. <br>기본값:<code>true</code>
 
-			  @var {private optional Boolean} JGM.Grid.options.borderSide
+				 @var {private optional Boolean} JGM.Grid.options.borderSide
 
-			  @author 조준호
-			  @since 1.0.0
-			  @version 1.0.0
-			  */
-			borderSide: true,
+				 @author 조준호
+				 @since 1.0.0
+				 @version 1.0.0
+				 */
+			   borderSide: true,
 
-			/**
-			  그리드에서 사용되는 이미지들이 있는 폴더의 url 입니다.<br>기본값:<code>"../images/"</code>
+			   /**
+				 그리드에서 사용되는 이미지들이 있는 폴더의 url 입니다.<br>기본값:<code>"../images/"</code>
 
-			  @var {private optional String} JGM.Grid.options.imageUrl
+				 @var {private optional String} JGM.Grid.options.imageUrl
 
-			  @author 조준호
-			  @since 1.1.3
-			  @version 1.1.3
-			  */
-			imageUrl: "../images/",
+				 @author 조준호
+				 @since 1.1.3
+				 @version 1.1.3
+				 */
+			   imageUrl: "../images/",
 
-			/**
-			  그리드 서브 모듈의 함수 또는 데이터를 그리드에서 직접 접근할 수 있도록
-			  링크를 만듭니다. 생성된 링크는 대상이 함수가 아닐 경우라도 함수로 링크됩니다. <br>
-			  { data: null, getData: "dataMgr.all" } <br>위와 같이 입력할 경우, 기본 링크인 grid.data 링크를 제거하고
-			  grid.getData -> grid.dataMgr.all 링크를 추가합니다. <br>기본값:<code>{
-			  data: "dataMgr.all",
-			  datalen: "dataMgr.all.length",
-			  shown: "dataMgr.datalist",
-			  set: "dataMgr.set",
-			  add: "dataMgr.add",
-			  addList: "dataMgr.addList",
-			  update: "dataMgr.update",
-			  updateList: "dataMgr.updateList",
-			  remove: "dataMgr.remove",
-			  removeList: "dataMgr.removeList",
-			  undo: "dataMgr.undo",
-			  redo: "dataMgr.redo",
-			  addFilter: "dataMgr.addFilter",
-			  removeFilter: "dataMgr.removeFilter",
-			  check: "collapser.checkMgr.checkList checkMgr.checkList",
-			  checked: "collapser.checkMgr.getCheckList checkMgr.getCheckList",
-			  register: "event.register",
-			  trigger: "event.trigger",
-			  bind: "event.bind",
-			  unregister: "event.unregister",
-			  unbind: "event.unregister",
-			  collen: "colDefMgr.length"
-			  }</code>
+			   /**
+				 그리드 서브 모듈의 함수 또는 데이터를 그리드에서 직접 접근할 수 있도록
+				 링크를 만듭니다. 생성된 링크는 대상이 함수가 아닐 경우라도 함수로 링크됩니다. <br>
+				 { data: null, getData: "dataMgr.all" } <br>위와 같이 입력할 경우, 기본 링크인 grid.data 링크를 제거하고
+				 grid.getData -> grid.dataMgr.all 링크를 추가합니다. <br>기본값:<code>{
+				 data: "dataMgr.all",
+				 datalen: "dataMgr.all.length",
+				 shown: "dataMgr.datalist",
+				 set: "dataMgr.set",
+				 add: "dataMgr.add",
+				 addList: "dataMgr.addList",
+				 update: "dataMgr.update",
+				 updateList: "dataMgr.updateList",
+				 remove: "dataMgr.remove",
+				 removeList: "dataMgr.removeList",
+				 undo: "dataMgr.undo",
+				 redo: "dataMgr.redo",
+				 addFilter: "dataMgr.addFilter",
+				 removeFilter: "dataMgr.removeFilter",
+				 check: "collapser.checkMgr.checkList checkMgr.checkList",
+				 checked: "collapser.checkMgr.getCheckList checkMgr.getCheckList",
+				 register: "event.register",
+				 trigger: "event.trigger",
+				 bind: "event.bind",
+				 unregister: "event.unregister",
+				 unbind: "event.unregister",
+				 collen: "colDefMgr.length"
+				 }</code>
 
-			  @var {private optional Object} JGM.Grid.options.links
+				 @var {private optional Object} JGM.Grid.options.links
 
-			  @author 조준호
-			  @since 1.1.6
-			  @version 1.1.6
-			  */
-			links: {
-				data: "dataMgr.all",
-				datalen: "dataMgr.all.length",
-				shown: "dataMgr.datalist",
-				set: "dataMgr.set",
-				add: "dataMgr.add",
-				addList: "dataMgr.addList",
-				update: "dataMgr.update",
-				updateByKey: "dataMgr.updateByKey",
-				updateList: "dataMgr.updateList",
-				remove: "dataMgr.remove",
-				removeList: "dataMgr.removeList",
-				select: "dataMgr.executeSelect",
-				undo: "dataMgr.undo",
-				redo: "dataMgr.redo",
-				addFilter: "dataMgr.addFilter",
-				removeFilter: "dataMgr.removeFilter",
-				check: "collapser.checkMgr.checkList checkMgr.checkList",
-				checked: "collapser.checkMgr.getCheckList checkMgr.getCheckList",
-				removeChecked: "collapser.checkMgr.removeChecked checkMgr.removeChecked",
-				register: "event.register",
-				trigger: "event.trigger",
-				bind: "event.bind",
-				unregister: "event.unregister",
-				unbind: "event.unregister",
-				collen: "colDefMgr.length"
-			},
+				 @author 조준호
+				 @since 1.1.6
+				 @version 1.1.6
+				 */
+			   links: {
+data: "dataMgr.all",
+		  datalen: "dataMgr.all.length",
+		  shown: "dataMgr.datalist",
+		  set: "dataMgr.set",
+		  add: "dataMgr.add",
+		  addList: "dataMgr.addList",
+		  update: "dataMgr.update",
+		  updateByKey: "dataMgr.updateByKey",
+		  updateList: "dataMgr.updateList",
+		  remove: "dataMgr.remove",
+		  removeList: "dataMgr.removeList",
+		  select: "dataMgr.executeSelect",
+		  undo: "dataMgr.undo",
+		  redo: "dataMgr.redo",
+		  addFilter: "dataMgr.addFilter",
+		  removeFilter: "dataMgr.removeFilter",
+		  check: "collapser.checkMgr.checkList checkMgr.checkList",
+		  checked: "collapser.checkMgr.getCheckList checkMgr.getCheckList",
+		  removeChecked: "collapser.checkMgr.removeChecked checkMgr.removeChecked",
+		  register: "event.register",
+		  trigger: "event.trigger",
+		  bind: "event.bind",
+		  unregister: "event.unregister",
+		  unbind: "event.unregister",
+		  collen: "colDefMgr.length"
+			   },
 
-			/**
-			  true 일 경우, 그리드 컨테이너의 사이즈가 모든 컬럼이 보이도록 자동 조절됩니다. <br>기본값:<code>false</code>
+			   /**
+				 true 일 경우, 그리드 컨테이너의 사이즈가 모든 컬럼이 보이도록 자동 조절됩니다. <br>기본값:<code>false</code>
 
-			  @var {private optional Boolean} JGM.Grid.options.autoWidth
+				 @var {private optional Boolean} JGM.Grid.options.autoWidth
 
-			  @author 조준호
-			  @since 1.1.7
-			  @version 1.1.7
-			  */
-			autoWidth: false,
+				 @author 조준호
+				 @since 1.1.7
+				 @version 1.1.7
+				 */
+autoWidth: false,
 
-			showMessage: false
+		   showMessage: false
 
-				/**
-				  서브 모듈 들에게 전달할 옵션을 정의합니다. 예를 들어
-				  {@link JGM.ViewportManager ViewportManager} 의 옵션을 변경하고자 할 경우
-				  다음과 같이 정의하면 됩니다.
-				  <code>ViewportManager:{classCell:"jgrid-new-cell-class"</code>
-				  <br>기본값:<code>undefined</code><br>
+			   /**
+				 서브 모듈 들에게 전달할 옵션을 정의합니다. 예를 들어
+				 {@link JGM.ViewportManager ViewportManager} 의 옵션을 변경하고자 할 경우
+				 다음과 같이 정의하면 됩니다.
+				 <code>ViewportManager:{classCell:"jgrid-new-cell-class"</code>
+				 <br>기본값:<code>undefined</code><br>
 
-				  @var {private optional String} JGM.Grid.options.MODULE_CLASS_NAME
+				 @var {private optional String} JGM.Grid.options.MODULE_CLASS_NAME
 
-				  @author 조준호
-				  @since 1.0.0
-				  @version 1.0.0
-				  */
+				 @author 조준호
+				 @since 1.0.0
+				 @version 1.0.0
+				 */
 	};
-}
-
-prototype._init = function(args) {
-	this._ctnr = args.container;
-
-	/**
-	  Grid 모듈의 기본 옵션 값들을 정의합니다.
-
-	  @var {private Object} options
-
-	  @author 조준호
-	  @since 1.0.0
-	  @version 1.0.0
-	  */
-	this.name = this._options.name;
-
-	this._vars = {
-		drag: false,
-		scrollbarDim: undefined,
-		lastW: undefined,
-		lastH: undefined
-	};
-
-	this._ctnr = $("<div id='" + this.mid + "' class='" + this._options.classGrid + "' " + (Util.isNull(this._options.width) ? "" : "style='width:" + this._options.width + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(this._ctnr));
-
-	this._vars.scrollbarDim = Util$.calScrollbarDims(this._ctnr);
-
-	this.event = JGM.create("EventManager", {grid:this, options:this._options.EventManager});
-	delete this._options.EventManager;
-
-	this.colDefMgr = JGM.create("ColDefManager", {grid:this, colDefs:args.colDefs, options:this._options.ColDefManager});
-	delete this._options.ColDefManager;
-
-	this.dataMgr = JGM.create("DataManager", {grid:this, datalist:args.datalist, options:this._options.DataManager});
-	delete this._options.DataManager;
-
-	if (this._options.CheckManager) {
-		this.checkMgr = JGM.create("CheckManager", {grid:this, options:this._options.CheckManager});
-		delete this._options.CheckManager;
 	}
 
-	var i = 10,
-		colDefs = this.colDefMgr.getAll(),
-		len = colDefs.length;
-	for (; i < len; i++) {
-		colDef = colDefs[i];
-		if (colDef.CheckManager) {
-			colDef.CheckManager.colDef = colDef;
-			colDef.checkMgr = JGM.create("CheckManager", {grid:this, options:colDef.CheckManager});
+	prototype._init = function(args) {
+		this._ctnr = args.container;
+
+		/**
+		  Grid 모듈의 기본 옵션 값들을 정의합니다.
+
+		  @var {private Object} options
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		this.name = this._options.name;
+
+		this._vars = {
+drag: false,
+	  scrollbarDim: undefined,
+	  lastW: undefined,
+	  lastH: undefined
+		};
+
+		this._ctnr = $("<div id='" + this.mid + "' class='" + this._options.classGrid + "' " + (Util.isNull(this._options.width) ? "" : "style='width:" + this._options.width + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(this._ctnr));
+
+		this._vars.scrollbarDim = Util$.calScrollbarDims(this._ctnr);
+
+		this.event = JGM.create("EventManager", {grid:this, options:this._options.EventManager});
+		delete this._options.EventManager;
+
+		this.colDefMgr = JGM.create("ColDefManager", {grid:this, colDefs:args.colDefs, options:this._options.ColDefManager});
+		delete this._options.ColDefManager;
+
+		this.dataMgr = JGM.create("DataManager", {grid:this, datalist:args.datalist, options:this._options.DataManager});
+		delete this._options.DataManager;
+
+		if (this._options.CheckManager) {
+			this.checkMgr = JGM.create("CheckManager", {grid:this, options:this._options.CheckManager});
+			delete this._options.CheckManager;
 		}
+
+		var i = 10,
+			colDefs = this.colDefMgr.getAll(),
+			len = colDefs.length;
+		for (; i < len; i++) {
+			colDef = colDefs[i];
+			if (colDef.CheckManager) {
+				colDef.CheckManager.colDef = colDef;
+				colDef.checkMgr = JGM.create("CheckManager", {grid:this, options:colDef.CheckManager});
+			}
+		}
+
+		if (this._options.Collapser) {
+			this.collapser = JGM.create("Collapser", {grid:this, options:this._options.Collapser});
+			this.collapser.__init();
+			delete this._options.Collapser;
+		}
+
+		if (this._options.ColGroup) {
+			this.colGroup = JGM.create("ColGroup", {grid:this, options:this._options.ColGroup});
+			delete this._options.ColGroup;
+		}
+
+		if (this._options.SelectionManager) {
+			this.selMgr = JGM.create("SelectionManager", {grid:this, options:this._options.SelectionManager});
+			delete this._options.SelectionManager;
+		}
+
+		if (this._options.EditManager) {
+			this.editMgr = JGM.create("EditManager", {grid:this, options:this._options.EditManager});
+			delete this._options.EditManager;
+		}
+
+		if (this._options.ColHeader) {
+			this.header = JGM.create("ColHeader", {grid:this, container:this._ctnr, options:this._options.ColHeader});
+			delete this._options.ColHeader;
+		}
+
+		if (this._options.SearchManager) {
+			this.search = JGM.create("SearchManager", {grid:this, container:this._ctnr, options:this._options.SearchManager});
+			delete this._options.SearchManager;
+		}
+
+		if (this._options.MenuBar) {
+			this.menubar = JGM.create("MenuBar", {grid:this, container:this._ctnr, options:this._options.MenuBar});
+			delete this._options.MenuBar;
+		}
+
+		this.view = JGM.create("ViewportManager", {grid:this, container:this._ctnr, options:this._options.ViewportManager});
+		delete this._options.ViewportManager;
+
+		if (this._options.TooltipManager) {
+			this.tooltip = JGM.create("TooltipManager", {grid:this, container:this._ctnr, options:this._options.TooltipManager});
+			delete this._options.TooltipManager;
+		}
+
+		if (this._options.DataCreator) {
+			this.creator = JGM.create("DataCreator", {grid:this, container:this._ctnr, options:this._options.DataCreator});
+			delete this._options.DataCreator;
+		}
+
+		if (this._options.Footer) {
+			this.footer = JGM.create("Footer", {grid:this, container:this._ctnr, options:this._options.Footer});
+			delete this._options.Footer;
+		}
+
+		if (this._options.autoWidth) {
+			this.event.bind("onResizeCanvasWidth", this.width, this);
+		}
+
+		this._createCss();
+
+		/**
+		  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 전에 onBeforeRenderModules
+		  이벤트를 트리거합니다. 서브 모듈들은 이 이벤트를 통해서 랜더링 전 필요한
+		  작업을 합니다.<br>
+		  @event {Event} onBeforeRenderModules
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */	
+
+		/**
+		  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 위해서 onRenderModules
+		  이벤트를 트리거합니다. JGM.ColHeader 와 같이 랜더링이 필요한 서브 모듈들은 이
+		  이벤트를 통해서 모듈 랜더링을 합니다.<br>
+		  @event {Event} onRenderModules
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+
+		/**
+		  Grid 모듈 초기화 중 서브 모듈들을 랜더링한 후에 onAfterRenderModules
+		  이벤트를 트리거합니다. 서브 모듈들은 이 이벤트를 통해서 랜더링 후 설정을
+		  합니다.<br>
+		  @event {Event} onAfterRenderModules
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		this.event.trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
+
+		this.msg = $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this._ctnr).hide();
+
+		this._vars.lastW = this._ctnr[0].clientWidth;
+		this._vars.lastH = this._ctnr[0].clientHeight;
+
+		this._registerLinks(this._options.links);
 	}
 
-	if (this._options.Collapser) {
-		this.collapser = JGM.create("Collapser", {grid:this, options:this._options.Collapser});
-		this.collapser.__init();
-		delete this._options.Collapser;
-	}
+	prototype._bindEvents = function() {
+		JGM._bindGlobalEvents();
 
-	if (this._options.ColGroup) {
-		this.colGroup = JGM.create("ColGroup", {grid:this, options:this._options.ColGroup});
-		delete this._options.ColGroup;
-	}
-
-	if (this._options.SelectionManager) {
-		this.selMgr = JGM.create("SelectionManager", {grid:this, options:this._options.SelectionManager});
-		delete this._options.SelectionManager;
-	}
-
-	if (this._options.EditManager) {
-		this.editMgr = JGM.create("EditManager", {grid:this, options:this._options.EditManager});
-		delete this._options.EditManager;
-	}
-
-	if (this._options.ColHeader) {
-		this.header = JGM.create("ColHeader", {grid:this, container:this._ctnr, options:this._options.ColHeader});
-		delete this._options.ColHeader;
-	}
-
-	if (this._options.SearchManager) {
-		this.search = JGM.create("SearchManager", {grid:this, container:this._ctnr, options:this._options.SearchManager});
-		delete this._options.SearchManager;
-	}
-
-	if (this._options.MenuBar) {
-		this.menubar = JGM.create("MenuBar", {grid:this, container:this._ctnr, options:this._options.MenuBar});
-		delete this._options.MenuBar;
-	}
-
-	this.view = JGM.create("ViewportManager", {grid:this, container:this._ctnr, options:this._options.ViewportManager});
-	delete this._options.ViewportManager;
-
-	if (this._options.TooltipManager) {
-		this.tooltip = JGM.create("TooltipManager", {grid:this, container:this._ctnr, options:this._options.TooltipManager});
-		delete this._options.TooltipManager;
-	}
-
-	if (this._options.DataCreator) {
-		this.creator = JGM.create("DataCreator", {grid:this, container:this._ctnr, options:this._options.DataCreator});
-		delete this._options.DataCreator;
-	}
-
-	if (this._options.Footer) {
-		this.footer = JGM.create("Footer", {grid:this, container:this._ctnr, options:this._options.Footer});
-		delete this._options.Footer;
-	}
-
-	if (this._options.autoWidth) {
-		this.event.bind("onResizeCanvasWidth", this.width, this);
-	}
-
-	this._createCss();
-
-	/**
-	  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 전에 onBeforeRenderModules
-	  이벤트를 트리거합니다. 서브 모듈들은 이 이벤트를 통해서 랜더링 전 필요한
-	  작업을 합니다.<br>
-	  @event {Event} onBeforeRenderModules
-
-	  @author 조준호
-	  @since 1.0.0
-	  @version 1.0.0
-	  */	
-
-	/**
-	  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 위해서 onRenderModules
-	  이벤트를 트리거합니다. JGM.ColHeader 와 같이 랜더링이 필요한 서브 모듈들은 이
-	  이벤트를 통해서 모듈 랜더링을 합니다.<br>
-	  @event {Event} onRenderModules
-
-	  @author 조준호
-	  @since 1.0.0
-	  @version 1.0.0
-	  */
-
-	/**
-	  Grid 모듈 초기화 중 서브 모듈들을 랜더링한 후에 onAfterRenderModules
-	  이벤트를 트리거합니다. 서브 모듈들은 이 이벤트를 통해서 랜더링 후 설정을
-	  합니다.<br>
-	  @event {Event} onAfterRenderModules
-
-	  @author 조준호
-	  @since 1.0.0
-	  @version 1.0.0
-	  */
-	this.event.trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
-
-	this.msg = $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this._ctnr).hide();
-
-	this._vars.lastW = this._ctnr[0].clientWidth;
-	this._vars.lastH = this._ctnr[0].clientHeight;
-
-	this._registerLinks(this._options.links);
-}
-
-prototype._bindEvents = function() {
-	JGM._bindGlobalEvents();
-
-	var thisIns = this;
-	this._ctnr.bind({
-		keydown:function(e) { thisIns._keydown(e); },
-		keyup:function(e) { thisIns._keyup(e); },
-		keypress:function(e) { thisIns._keypress(e); },
-		mousein:function(e) { thisIns._mousein(e); },
-		mouseout:function(e) { thisIns._mouseout(e); },
-		mouseenter:function(e) { thisIns._mouseenter(e); },
-		mouseleave:function(e) { thisIns._mouseleave(e); },
-		mouseover:function(e) { thisIns._mouseover(e); },
-		mousedown:function(e) { thisIns._mousedown(e); },
-		click:function(e) { thisIns._click(e); },
-		dblclick:function(e) { thisIns._dblclick(e); }
-	});
+		var thisIns = this;
+		this._ctnr.bind({
+keydown:function(e) { thisIns._keydown(e); },
+keyup:function(e) { thisIns._keyup(e); },
+keypress:function(e) { thisIns._keypress(e); },
+mousein:function(e) { thisIns._mousein(e); },
+mouseout:function(e) { thisIns._mouseout(e); },
+mouseenter:function(e) { thisIns._mouseenter(e); },
+mouseleave:function(e) { thisIns._mouseleave(e); },
+mouseover:function(e) { thisIns._mouseover(e); },
+mousedown:function(e) { thisIns._mousedown(e); },
+click:function(e) { thisIns._click(e); },
+dblclick:function(e) { thisIns._dblclick(e); }
+});
 };
 
 /**
@@ -463,16 +469,16 @@ prototype.destroy = function() {
 		this.event.trigger("onDestroy");
 
 		JGM._destroy(this, {
-			name: "Grid",
-			module: "event",
-			"$": "_ctnr",
-			map: "_vars _options",
-			style: "_style _dynStyle"
-		});
-	}
-	catch (e) {
-		return e;
-	}
+name: "Grid",
+module: "event",
+"$": "_ctnr",
+map: "_vars _options",
+style: "_style _dynStyle"
+});
+}
+catch (e) {
+	return e;
+}
 };
 
 //tested
@@ -553,28 +559,28 @@ prototype._createCss = function() {
 	  @version 1.2.2
 	  */
 	var style = Util.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {
-		selector: "#" + this.mid,
-		font: this._options.font,
-		border: this._options.borderSide ?
-			"border:" + this._options.border + ";" :
-			"border-top:" + this._options.border + ";border-bottom:" + this._options.border + ";",
-		style: this._options.style,
-		submodule: this.event.trigger("onCreateCss").join("")
-	});
-	this._style = Util.createStyle(style);
+selector: "#" + this.mid,
+font: this._options.font,
+border: this._options.borderSide ?
+"border:" + this._options.border + ";" :
+"border-top:" + this._options.border + ";border-bottom:" + this._options.border + ";",
+style: this._options.style,
+submodule: this.event.trigger("onCreateCss").join("")
+});
+this._style = Util.createStyle(style);
 
-	/**
-	  현재 그리드에 적용할 다이나믹 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
-	  <br>
+/**
+  현재 그리드에 적용할 다이나믹 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
+  <br>
 
-	  @event {Event} onCreateDynamicCss
+  @event {Event} onCreateDynamicCss
 
-	  @author 조준호
-	  @since 1.2.2
-	  @version 1.2.2
-	  */
+  @author 조준호
+  @since 1.2.2
+  @version 1.2.2
+  */
 
-	this._dynStyle = Util.createStyle(this.event.trigger("onCreateDynamicCss").join(""));
+this._dynStyle = Util.createStyle(this.event.trigger("onCreateDynamicCss").join(""));
 };
 
 prototype._recreateDynamicCss = function() {
@@ -1167,16 +1173,16 @@ prototype._resize = function(e) {
 };
 
 /**
-현재 그리드 컨테이너의 폭을 정하거나 현재 값을 리턴합니다.
+  현재 그리드 컨테이너의 폭을 정하거나 현재 값을 리턴합니다.
 
-@function {public int} width
-@params {optional int} width - 새로운 그리드 폭
-@returns {int} 현재 그리드 컨테이너의 폭 픽셀 값
+  @function {public int} width
+  @params {optional int} width - 새로운 그리드 폭
+  @returns {int} 현재 그리드 컨테이너의 폭 픽셀 값
 
-@author 조준호
-@since 1.1.5
-@version 1.1.7
-*/
+  @author 조준호
+  @since 1.1.5
+  @version 1.1.7
+  */
 prototype.width = function(w) {
 	w = parseInt(w);
 	if (Util.isNull(w) || isNaN(w) || w < 1 || w === this._ctnr[0].clientWidth) {
@@ -1192,15 +1198,15 @@ prototype.width = function(w) {
 };
 
 /*
-현재 그리드 컨테이너의 높이를 리턴합니다.
+   현재 그리드 컨테이너의 높이를 리턴합니다.
 
-@function {public int} height
-@returns {int} 현재 그리드 컨테이너의 높이 픽셀 값
+   @function {public int} height
+   @returns {int} 현재 그리드 컨테이너의 높이 픽셀 값
 
-@author 조준호
-@since 1.1.5
-@version 1.1.5
-*/
+   @author 조준호
+   @since 1.1.5
+   @version 1.1.5
+   */
 prototype.height = function(h) {
 	h = parseInt(h);
 	if (Util.isNull(h) || isNaN(h) || h < 1 || h === this._ctnr[0].clientHeight) {
@@ -1224,10 +1230,10 @@ prototype.getCellByIdx = function(rowIdx, colIdx) {
 };
 
 /**
-@author 조준호
-@since 1.2.3
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.2.3
+  @version 1.3.0
+  */
 prototype.error = function(code) {
 	var str = JGM.error[code],
 		i = 1,
