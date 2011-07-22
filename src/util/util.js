@@ -7,15 +7,14 @@
  */
 (function(){
 
-var Util = window.Util = {},
-	undefined = (function(){})(),
+ goog.provide('Util');
+ goog.provide('echo');
+
+var undefined = (function(){})(),
 	console = window.console,
 	CONSOLE_LOGS = [],
 	echo = (console && console.log && function(){console.log.apply(console, arguments);}) || function(){CONSOLE_LOGS.push.apply(CONSOLE_LOGS, arguments);};
 
- goog.provide('Util');
- goog.provide('echo');
- goog.global.Util = Util;
  goog.global.echo = echo;
 
 // tested

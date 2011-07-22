@@ -12,9 +12,11 @@ JGM
 */
 
 (function() {
-if (!JGM.renderer) {
-	JGM.renderer = {};
-}
+
+ goog.require('JGM');
+
+ goog.provide('JGM.renderer');
+
 JGM.renderer.selectBox = function(args) {
 	var mappings = args.mapping,
 		 attr = args.attr,

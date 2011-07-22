@@ -13,6 +13,13 @@ JGM
 
 (function() {
 
+ goog.require('JGM.core.BaseModule');
+ goog.require('JGM.module.Collapser');
+
+ goog.provide('JGM.module.ColGroup');
+
+ JGM.module.ColGroup = ColGroup;
+
 /**
 ColGroup 모듈. 트리 구조의 데이터를 담당하는 모듈입니다.
 @module ColGroup

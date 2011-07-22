@@ -7,6 +7,12 @@
  */
 (function() {
 
+ goog.require('JGM.core.BaseModule');
+
+ goog.provide('JGM.module.PrintManager');
+
+ JGM.module.PrintManager = PrintManager;
+
 function PrintManager(args) {
 	this.mid = args.mid;
 

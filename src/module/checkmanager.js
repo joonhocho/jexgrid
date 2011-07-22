@@ -13,6 +13,14 @@ JGM
 
 (function() {
 
+ goog.require('JGM.core.BaseModule');
+
+ goog.provide('JGM.module.CheckManager');
+
+ JGM.module.CheckManager = CheckManager;
+
+
+
 /**
 CheckManager 모듈. 그리드 로우의 선택을 담당하는 모듈입니다.
 @module CheckManager

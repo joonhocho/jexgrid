@@ -5,7 +5,9 @@
  * COPYRIGHT
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
-var Util$ = window.Util$ = {};
+(function () {
+
+ goog.provide('Util$');
 
 Util$.is$ = function(val) {
 	return (val instanceof jQuery) ? true : false;
@@ -81,3 +83,5 @@ Util$.calScrollbarDims = function(container) {
 };
 
 if (window.JGM !== undefined) {window.JGM._add("Util$"); } // TBR
+
+})();

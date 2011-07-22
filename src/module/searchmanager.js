@@ -7,6 +7,12 @@
  */
 (function() {
 
+ goog.require('JGM.core.BaseModule');
+
+ goog.provide('JGM.module.SearchManager');
+
+ JGM.module.SearchManager = SearchManager;
+
 function SearchManager(args) {
 	this.mid = args.mid;
 

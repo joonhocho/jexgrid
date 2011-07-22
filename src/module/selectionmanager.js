@@ -13,6 +13,12 @@ JGM
 
 (function() {
 
+ goog.require('JGM.core.BaseModule');
+
+ goog.provide('JGM.module.SelectionManager');
+
+ JGM.module.SelectionManager = SelectionManager;
+
 /**
 SelectionManager 모듈. 셀의 (범위) 선택을 담당하는 모듈입니다.
 @module SelectionManager

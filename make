@@ -11,6 +11,7 @@ $srcPath = "$gridPath/src";
 $libPath = "$gridPath/lib/js";
 $distPath = "$gridPath/dist";
 $buildPath = "$gridPath/build";
+$buildResultPath = "$gridPath/results";
 $versionFile = "$gridPath/VERSION";
 $licenseFile = "$gridPath/LICENSE";
 $compilerJar = "$gridPath/lib/closure-compiler/compiler.jar";
@@ -81,10 +82,10 @@ foreach ($compilerSettings as $k=>$v) {
 		}
 	}
 }
-$sourceFiles = implode(' ', array_map(function($n) { return "--js $n"; }, $filenames));
 $libFiles = implode(' ', array_map(function($n) { return "--externs $n"; }, $libfilenames));
+$sourceFiles = implode(' ', array_map(function($n) { return "--js $n"; }, $filenames));
 $compilerCommand = "java -jar $compilerJar$compilerFlags $libFiles $sourceFiles --js_output_file $distPath/$outputFileKr";
 echo $compilerCommand."\n\n";
 
 // compile js sources
-system($compilerCommand, $compilerReturn);
+system($compilerCommand);

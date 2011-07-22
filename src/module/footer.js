@@ -13,6 +13,12 @@ JGM
 
 (function() {
 
+ goog.require('JGM.core.BaseModule');
+
+ goog.provide('JGM.module.Footer');
+
+ JGM.module.Footer = Footer;
+
 /**
 Footer 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
 @module Footer

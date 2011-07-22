@@ -13,6 +13,14 @@
 
 (function() {
 
+ goog.require('JGM.core.BaseModule');
+ goog.require('JGM.data.Tree');
+ goog.require('JGM.data.TreeNode');
+
+ goog.provide('JGM.module.Collapser');
+
+ JGM.module.Collapser = Collapser;
+
 	/**
 	  Collapser 모듈. 트리 구조의 데이터를 담당하는 모듈입니다.
 	  @module Collapser

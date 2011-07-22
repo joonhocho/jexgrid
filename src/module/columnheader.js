@@ -13,6 +13,12 @@ JGM
 
 (function() {
 
+ goog.require('JGM.core.BaseModule');
+
+ goog.provide('JGM.module.ColHeader');
+
+ JGM.module.ColHeader = ColHeader;
+
 /**
 ColHeader 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
 @module ColHeader
