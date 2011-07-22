@@ -44,7 +44,7 @@
    Grid 코어 클래스. Grid 의 모든 서브 모듈들은 이 클래스에 연결되어 서로
    커뮤니케이트 합니다.
 
-   @class {public Grid} JGM.Grid
+   @class {Grid} JGM.Grid
 
    @author 조준호
    @since 1.0.0
@@ -61,11 +61,11 @@ colDefs: 컬럼 정의 어레이,<br>
 options: Grid 의 옵션과 모든 서브 옵션을 포함한 옵션 오브젝트<br>
 };<br>
 
-@constructor {public Grid} Grid
+@constructor {Grid} Grid
 @param {Object} args - Grid 모듈 파라미터 오브젝트
 @... {(DOMElement | jQuery)} args.container - Grid 를 위한 컨테이너 오브젝트
-@... {Object[]} args.datalist - 데이터 어레이
-@... {Object[]} args.colDefs - 컬럼 정의 어레이
+@... {Array.<Object>} args.datalist - 데이터 어레이
+@... {Array.<Object>} args.colDefs - 컬럼 정의 어레이
 @... {Object} args.options - Grid 옵션 오브젝트
 @returns {Grid} Grid 모듈 인스턴스를 리턴합니다.
 
@@ -80,7 +80,7 @@ function Grid(args) {
   {@link JGM} 이 할당해주는 Grid 모듈 고유 아이디입니다. 여러개의 그리드가 같은
   페이지에 존재할 경우 서로를 구분하기 위해 쓰입니다. 읽기 전용.
 
-  @var {public final String} mid
+  @var {string} mid
 
   @author 조준호
   @since 1.0.0
@@ -100,7 +100,8 @@ prototype._defaultOptions = function() {
 		/**
 		  그리드 컨테이너에 적용되는 CSS 클래스 입니다.<br>기본값:<code>"jgrid"</code>
 
-		  @var {private optional String} JGM.Grid.options.classGrid
+		  @type {string=} JGM.Grid.options.classGrid
+		  @private
 
 		  @author 조준호
 		  @since 1.0.0
@@ -111,7 +112,8 @@ classGrid: "jgrid",
 			   /**
 				 컨테이너에 적용되는 CSS border 스타일 입니다. <br>기본값:<code>"1px solid #868686"</code>
 
-				 @var {private optional String} JGM.Grid.options.border
+				 @type {string=} JGM.Grid.options.border
+				 @private
 
 				 @author 조준호
 				 @since 1.0.0
@@ -122,7 +124,8 @@ classGrid: "jgrid",
 			   /**
 				 컨테이너에 적용되는 CSS width 픽셀값 입니다. 이 옵션 값이 입력되지 않을 경우 <code>width:100%</code> 로 설정하는 것과 같은 효과를 가집니다.<br>기본값:<code>undefined</code>
 
-				 @var {private optional int} JGM.Grid.options.width
+				 @type {number=} JGM.Grid.options.width
+				 @private
 
 				 @author 조준호
 				 @since 1.0.0
@@ -133,7 +136,8 @@ classGrid: "jgrid",
 			   /**
 				 컨테이너에 적용되는 CSS font 스타일 입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
 
-				 @var {private optional String} JGM.Grid.options.font
+				 @type {string=} JGM.Grid.options.font
+				 @private
 
 				 @author 조준호
 				 @since 1.0.0
@@ -147,7 +151,8 @@ classGrid: "jgrid",
 				 꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 				 <br>기본값:<code>""</code>
 
-				 @var {private optional String} JGM.Grid.options.style
+				 @type {string=} JGM.Grid.options.style
+				 @private
 
 				 @author 조준호
 				 @since 1.0.0
@@ -158,7 +163,8 @@ classGrid: "jgrid",
 			   /**
 				 컨테이너에 적용되는 border 가 사이드에도 적용될지 여부입니다. <br>기본값:<code>true</code>
 
-				 @var {private optional Boolean} JGM.Grid.options.borderSide
+				 @type {boolean=} JGM.Grid.options.borderSide
+				 @private
 
 				 @author 조준호
 				 @since 1.0.0
@@ -169,7 +175,8 @@ classGrid: "jgrid",
 			   /**
 				 그리드에서 사용되는 이미지들이 있는 폴더의 url 입니다.<br>기본값:<code>"../images/"</code>
 
-				 @var {private optional String} JGM.Grid.options.imageUrl
+				 @type {string=} JGM.Grid.options.imageUrl
+				 @private
 
 				 @author 조준호
 				 @since 1.1.3
@@ -206,7 +213,8 @@ classGrid: "jgrid",
 				 collen: "colDefMgr.length"
 				 }</code>
 
-				 @var {private optional Object} JGM.Grid.options.links
+				 @type {Object=} JGM.Grid.options.links
+				 @private
 
 				 @author 조준호
 				 @since 1.1.6
@@ -243,7 +251,8 @@ data: "dataMgr.all",
 			   /**
 				 true 일 경우, 그리드 컨테이너의 사이즈가 모든 컬럼이 보이도록 자동 조절됩니다. <br>기본값:<code>false</code>
 
-				 @var {private optional Boolean} JGM.Grid.options.autoWidth
+				 @type {boolean=} JGM.Grid.options.autoWidth
+				 @private
 
 				 @author 조준호
 				 @since 1.1.7
@@ -260,7 +269,8 @@ autoWidth: false,
 				 <code>ViewportManager:{classCell:"jgrid-new-cell-class"</code>
 				 <br>기본값:<code>undefined</code><br>
 
-				 @var {private optional String} JGM.Grid.options.MODULE_CLASS_NAME
+				 @type {string=} JGM.Grid.options.MODULE_CLASS_NAME
+				 @private
 
 				 @author 조준호
 				 @since 1.0.0
@@ -275,7 +285,8 @@ autoWidth: false,
 		/**
 		  Grid 모듈의 기본 옵션 값들을 정의합니다.
 
-		  @var {private Object} options
+		  @type {Object} options
+		  @private
 
 		  @author 조준호
 		  @since 1.0.0
@@ -445,7 +456,7 @@ dblclick:function(e) { thisIns._dblclick(e); }
   통해서 모든 서브 모듈들도 함께 제거합니다.<br>
   트리거 이벤트: {@link onDestroy}
 
-  @function {public} destroy
+  @function {} destroy
 
   @author 조준호
   @since 1.0.0
@@ -595,7 +606,7 @@ prototype._keydown = function(e) {
 
 	  @event {Event} onBeforeKeydown
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -638,7 +649,7 @@ prototype._keyup = function(e) {
 
 	  @event {Event} onBeforeKeyup
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -681,7 +692,7 @@ prototype._keypress = function(e) {
 
 	  @event {Event} onBeforeKeypress
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -724,7 +735,7 @@ prototype._mousein = function(e) {
 
 	  @event {Event} onBeforeMousein
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -770,7 +781,7 @@ prototype._mouseout = function(e) {
 
 	  @event {Event} onBeforeMouseout
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -816,7 +827,7 @@ prototype._mouseenter = function(e) {
 
 	  @event {Event} onBeforeMouseenter
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -862,7 +873,7 @@ prototype._mouseleave = function(e) {
 
 	  @event {Event} onBeforeMouseleave
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -908,7 +919,7 @@ prototype._mousemove = function(e) {
 
 	  @event {Event} onBeforeMousemove
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -955,7 +966,7 @@ prototype._mouseover = function(e) {
 
 	  @event {Event} onBeforeMouseover
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -1003,7 +1014,7 @@ prototype._mousedown = function(e) {
 
 	  @event {Event} onBeforeMousedown
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -1039,7 +1050,7 @@ prototype._mouseup = function(e) {
 
 	  @event {Event} onBeforeMouseup
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -1070,7 +1081,7 @@ prototype._click = function(e) {
 
 	  @event {Event} onBeforeClick
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -1100,7 +1111,7 @@ prototype._dblclick = function(e) {
 
 	  @event {Event} onBeforeDblclick
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -1131,8 +1142,8 @@ prototype._resize = function(e) {
 		/**
 		  Grid 컨테이너의 폭이 변경되었을 경우 발생하는 이벤트입니다.
 		  @event {Event} resizeWidth
-		  @param {int} width - 변경 후 폭
-		  @param {int} oldWidth - 변경 전 폭
+		  @param {number} width - 변경 후 폭
+		  @param {number} oldWidth - 변경 전 폭
 
 		  @author 조준호
 		  @since 1.1.5
@@ -1147,8 +1158,8 @@ prototype._resize = function(e) {
 		/**
 		  Grid 컨테이너의 높이가 변경되었을 경우 발생하는 이벤트입니다.
 		  @event {Event} resizeHeight
-		  @param {int} height - 변경 후 높이
-		  @param {int} oldHeight - 변경 전 높이
+		  @param {number} height - 변경 후 높이
+		  @param {number} oldHeight - 변경 전 높이
 
 		  @author 조준호
 		  @since 1.1.5
@@ -1176,9 +1187,9 @@ prototype._resize = function(e) {
 /**
   현재 그리드 컨테이너의 폭을 정하거나 현재 값을 리턴합니다.
 
-  @function {public int} width
-  @params {optional int} width - 새로운 그리드 폭
-  @returns {int} 현재 그리드 컨테이너의 폭 픽셀 값
+  @function {number} width
+  @params {int=} width - 새로운 그리드 폭
+  @returns {number} 현재 그리드 컨테이너의 폭 픽셀 값
 
   @author 조준호
   @since 1.1.5
@@ -1201,8 +1212,8 @@ prototype.width = function(w) {
 /*
    현재 그리드 컨테이너의 높이를 리턴합니다.
 
-   @function {public int} height
-   @returns {int} 현재 그리드 컨테이너의 높이 픽셀 값
+   @function {number} height
+   @returns {number} 현재 그리드 컨테이너의 높이 픽셀 값
 
    @author 조준호
    @since 1.1.5

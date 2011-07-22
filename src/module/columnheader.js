@@ -34,7 +34,7 @@ ColHeader 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
 ColHeader 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 관련 기능들을 지원합니다.
 
-@class {public ColHeader} JGM.ColHeader
+@class {ColHeader} JGM.ColHeader
 
 @author 조준호
 @since 1.0.0
@@ -44,7 +44,7 @@ ColHeader 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 /**
 ColHeader 컨스트럭터 입니다.
 
-@constructor {public ColHeader} ColHeader
+@constructor {ColHeader} ColHeader
 @param {Object} args - ColHeader 모듈 파라미터 오브젝트
 @... {jQuery} args.container - ColHeader 를 넣을 컨테이너 오브젝트
 @... {JGM.Grid} args.grid - ColHeader 를 포함하는 {@link JGM.Grid Grid} 인스턴스
@@ -59,7 +59,7 @@ function ColHeader(args) {
 	/**
 	{@link JGM} 이 할당해주는 ColHeader 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.0.0
@@ -76,7 +76,7 @@ function ColHeader(args) {
 	/**
 	ColHeader 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -87,7 +87,7 @@ function ColHeader(args) {
 	/**
 	그리드 컬럼 헤더를 관리하는 {@link JGM.ColHeader ColHeader} 인스턴스 입니다.
 
-	@var {public JGM.ColHeader} JGM.Grid.header
+	@var {JGM.ColHeader} JGM.Grid.header
 
 	@author 조준호
 	@since 1.0.0
@@ -98,7 +98,8 @@ function ColHeader(args) {
 	/**
 	ColHeader 모듈의 기본 옵션 값들을 정의합니다.
 
-	@var {private Object} options
+	@type {Object} options
+	@private
 
 	@author 조준호
 	@since 1.0.0
@@ -108,7 +109,8 @@ function ColHeader(args) {
 		/**
 		컬럼 순서 변경 가능 여부를 정합니다. <br>기본값:<code>false</code>
 
-		@var {private optional Boolean} JGM.ColHeader.options.reorderEnabled
+		@type {boolean=} JGM.ColHeader.options.reorderEnabled
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -120,7 +122,8 @@ function ColHeader(args) {
 		컬럼 순서 변경을 할 경우, 컬럼 셀들이 컬럼 헤더와 함께
 		위치가 변경될지를 정합니다. <br>기본값:<code>true</code>
 
-		@var {private optional Boolean} JGM.ColHeader.options.reorderSyncEnabled
+		@type {boolean=} JGM.ColHeader.options.reorderSyncEnabled
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -131,7 +134,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더의 기본 배경을 설정합니다. <br>기본값:<code>"url(" + imageUrl + "column-headers-bg.png) repeat-x scroll center"</code>
 
-		@var {private optional String} JGM.ColHeader.options.background
+		@type {string=} JGM.ColHeader.options.background
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -142,7 +146,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더에 마우스가 오버되었을 때의 배경을 설정합니다. <br>기본값:<code>"url(" + imageUrl + "column-headers-over-bg.png) repeat-x scroll center"</code>
 
-		@var {private optional String} JGM.ColHeader.options.backgroundHover
+		@type {string=} JGM.ColHeader.options.backgroundHover
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -153,7 +158,8 @@ function ColHeader(args) {
 		/**
 		컬럼 순서 변경 시에 컬럼 헤더의 빈 자리의 배경을 설정합니다. <br>기본값:<code>"#646464"</code>
 
-		@var {private optional String} JGM.ColHeader.options.backgroundPlaceholder
+		@type {string=} JGM.ColHeader.options.backgroundPlaceholder
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -164,7 +170,8 @@ function ColHeader(args) {
 		/**
 		컬럼 로우 정렬 기본 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort.png"</code>
 
-		@var {private optional String} JGM.ColHeader.options.sortBackground
+		@type {string=} JGM.ColHeader.options.sortBackground
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -175,7 +182,8 @@ function ColHeader(args) {
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘의 오른쪽 마진 픽셀입니다. <br>기본값:<code>4</code>
 
-		@var {private optional int} JGM.ColHeader.options.sortRight
+		@type {number=} JGM.ColHeader.options.sortRight
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -186,7 +194,8 @@ function ColHeader(args) {
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘의 폭 픽셀입니다. <br>기본값:<code>7</code>
 
-		@var {private optional int} JGM.ColHeader.options.sortWidth
+		@type {number=} JGM.ColHeader.options.sortWidth
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -197,7 +206,8 @@ function ColHeader(args) {
 		/**
 		컬럼 로우 정렬 오름차순 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort-asc.png"</code>
 
-		@var {private optional String} JGM.ColHeader.options.sortBackgroundAsc
+		@type {string=} JGM.ColHeader.options.sortBackgroundAsc
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -208,7 +218,8 @@ function ColHeader(args) {
 		/**
 		컬럼 로우 정렬 내림차순 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort-desc.png"</code>
 
-		@var {private optional String} JGM.ColHeader.options.sortBackgroundDesc
+		@type {string=} JGM.ColHeader.options.sortBackgroundDesc
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -219,7 +230,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더의 폰트 스타일입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
 
-		@var {private optional String} JGM.ColHeader.options.font
+		@type {string=} JGM.ColHeader.options.font
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -230,7 +242,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더의 높이 픽셀 입니다. <br>기본값:<code>21</code>
 
-		@var {private optional int} JGM.ColHeader.options.height
+		@type {number=} JGM.ColHeader.options.height
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -241,7 +254,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더 border 의 두께 입니다. <br>기본값:<code>1</code>
 
-		@var {private optional int} JGM.ColHeader.options.borderThickness
+		@type {number=} JGM.ColHeader.options.borderThickness
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -252,7 +266,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더 border 의 스타일 입니다. <br>기본값:<code>"solid #909192"</code>
 
-		@var {private optional String} JGM.ColHeader.options.border
+		@type {string=} JGM.ColHeader.options.border
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -263,7 +278,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더 컨테이너 마스크에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-header-mask"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classHeaderMask
+		@type {string=} JGM.ColHeader.options.classHeaderMask
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -274,7 +290,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더 컨테이너에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-header"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classHeader
+		@type {string=} JGM.ColHeader.options.classHeader
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -285,7 +302,8 @@ function ColHeader(args) {
 		/**
 		각 컬럼 헤더에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classColHeader
+		@type {string=} JGM.ColHeader.options.classColHeader
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -296,7 +314,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더 순서 변경시 변경되는 컬럼에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader-active"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classColHeaderActive
+		@type {string=} JGM.ColHeader.options.classColHeaderActive
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -307,7 +326,8 @@ function ColHeader(args) {
 		/**
 		컬럼 헤더 순서 변경시 변경되는 컬럼의 빈자리에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader-placeholder"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classColHeaderPlaceholder
+		@type {string=} JGM.ColHeader.options.classColHeaderPlaceholder
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -318,7 +338,8 @@ function ColHeader(args) {
 		/**
 		interactive 한 컬럼 헤더들에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"interactive"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classInteractive
+		@type {string=} JGM.ColHeader.options.classInteractive
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -329,7 +350,8 @@ function ColHeader(args) {
 		/**
 		현재 로우 정렬 중인 컬럼 헤더에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader-sorted"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classColHeaderSorted
+		@type {string=} JGM.ColHeader.options.classColHeaderSorted
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -340,7 +362,8 @@ function ColHeader(args) {
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-sort"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classSort
+		@type {string=} JGM.ColHeader.options.classSort
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -351,7 +374,8 @@ function ColHeader(args) {
 		/**
 		컬럼 로우 정렬 오름차순 상태 표시 아이콘에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-sort-asc"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classSortAsc
+		@type {string=} JGM.ColHeader.options.classSortAsc
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -362,7 +386,8 @@ function ColHeader(args) {
 		/**
 		컬럼 로우 정렬 내림차순 상태 표시 아이콘에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-sort-desc"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classSortDesc
+		@type {string=} JGM.ColHeader.options.classSortDesc
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -373,7 +398,8 @@ function ColHeader(args) {
 		/**
 		컬럼 폭 조절 핸들의 CSS 클래스 입니다.<br>기본값:<code>"jgrid-resize-handle"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classResizeHandle
+		@type {string=} JGM.ColHeader.options.classResizeHandle
+		@private
 
 		@author 조준호
 		@since 1.1.2
@@ -384,7 +410,8 @@ function ColHeader(args) {
 		/**
 		컬럼 폭 조절 핸들의 폭입니다. <br>기본값:<code>11</code>
 
-		@var {private optional int} JGM.ColHeader.options.resizeHandleWidth
+		@type {number=} JGM.ColHeader.options.resizeHandleWidth
+		@private
 
 		@author 조준호
 		@since 1.1.2
@@ -398,7 +425,8 @@ function ColHeader(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.ColHeader.options.style
+		@type {string=} JGM.ColHeader.options.style
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -412,7 +440,8 @@ function ColHeader(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.ColHeader.options.headerStyle
+		@type {string=} JGM.ColHeader.options.headerStyle
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -424,7 +453,8 @@ function ColHeader(args) {
 		스크롤러의 시작 style.left
 		<br>기본값:<code>10000</code>
 
-		@var {private optional int} JGM.ColHeader.options.scrollerLeft
+		@type {number=} JGM.ColHeader.options.scrollerLeft
+		@private
 
 		@author 조준호
 		@since 1.1.7
@@ -436,7 +466,8 @@ function ColHeader(args) {
 		스크롤러의 width
 		<br>기본값:<code>100000</code>
 
-		@var {private optional int} JGM.ColHeader.options.scrollerWidth
+		@type {number=} JGM.ColHeader.options.scrollerWidth
+		@private
 
 		@author 조준호
 		@since 1.1.7
@@ -448,7 +479,8 @@ function ColHeader(args) {
 		컬럼 리사이즈를 할 때 생기는 가이드에 적용되는 CSS 클래스 입니다.
 		<br>기본값:<code>"resize-guide"</code>
 
-		@var {private optional String} JGM.ColHeader.options.classResizeGuide
+		@type {string=} JGM.ColHeader.options.classResizeGuide
+		@private
 
 		@author 조준호
 		@since 1.1.7
@@ -460,7 +492,8 @@ function ColHeader(args) {
 		컬럼 리사이즈를 할 때 생기는 가이드의 폭 픽셀입니다.
 		<br>기본값:<code>1</code>
 
-		@var {private optional int} JGM.ColHeader.options.resizeGuideWidth
+		@type {number=} JGM.ColHeader.options.resizeGuideWidth
+		@private
 
 		@author 조준호
 		@since 1.1.7
@@ -472,7 +505,8 @@ function ColHeader(args) {
 		컬럼 리사이즈를 할 때 생기는 가이드의 배경 style 입니다.
 		<br>기본값:<code>"black;filter:alpha(opacity=40);opacity:0.4"</code>
 
-		@var {private optional String} JGM.ColHeader.options.resizeBackground
+		@type {string=} JGM.ColHeader.options.resizeBackground
+		@private
 
 		@author 조준호
 		@since 1.1.7
@@ -484,7 +518,8 @@ function ColHeader(args) {
 		컬럼 리사이즈를 할 때 컬럼 셀들을 동시에 사이즈 변경할지 여부입니다.
 		<br>기본값:<code>false</code>
 
-		@var {private optional Boolean} JGM.ColHeader.options.syncResize
+		@type {boolean=} JGM.ColHeader.options.syncResize
+		@private
 
 		@author 조준호
 		@since 1.1.7
@@ -496,7 +531,8 @@ function ColHeader(args) {
 		컬럼 리사이즈 핸들의 배경 style 입니다.
 		<br>기본값:<code>"black;filter:alpha(opacity=5);opacity:0.05"</code>
 
-		@var {private optional String} JGM.ColHeader.options.resizeHandleBackground
+		@type {string=} JGM.ColHeader.options.resizeHandleBackground
+		@private
 
 		@author 조준호
 		@since 1.2.1
@@ -710,7 +746,7 @@ prototype.__render_g__ = function(header, colDef, i) {
 	/**
 	ColHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 앞에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
 	@event {Event} onRenderHeader_COLKEY_prepend
-	@param {String[]} html - 컬럼 헤더 렌더링 스트링들을 가진 어레이
+	@param {Array.<string>} html - 컬럼 헤더 렌더링 스트링들을 가진 어레이
 
 	@author 조준호
 	@since 1.0.0
@@ -723,7 +759,7 @@ prototype.__render_g__ = function(header, colDef, i) {
 	/**
 	ColHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 뒤에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
 	@event {Event} onRenderHeader_COLKEY_append
-	@param {String[]} html - 컬럼 헤더 렌더링 스트링들을 가진 어레이
+	@param {Array.<string>} html - 컬럼 헤더 렌더링 스트링들을 가진 어레이
 
 	@author 조준호
 	@since 1.0.0
@@ -748,8 +784,8 @@ ColHeader.__disableSel_e__ = function(target) {
 /**
 주어진 key 에 해당하는 컬럼 헤더 jQuery 오브젝트를 리턴합니다.
 
-@function {public jQuery} get
-@param {String} key - 컬럼의 key
+@function {jQuery} get
+@param {string} key - 컬럼의 key
 @returns {jQuery} 주어진 key 에 해당하는 컬럼 헤더 jQuery 오브젝트
 
 @author 조준호
@@ -925,7 +961,7 @@ prototype._click = function(e) {
 	@event {Event} clickHeaderValid_COLKEY
 	@param {jQuery.Event} e - jQuery 이벤트 오브젝트
 	@param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
-	@returns {Boolean} false 를 리턴할 경우 {@link clickHeader} 이벤트를 트리거하지
+	@returns {boolean} false 를 리턴할 경우 {@link clickHeader} 이벤트를 트리거하지
 	않습니다.
 
 	@author 조준호

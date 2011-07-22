@@ -40,7 +40,7 @@
 	  Collapser 클래스. 트리 구조의 데이터를 담당하는 모듈 클래스 입니다. 구조에 맞게
 	  데이터를 재정렬해주고 자식들이 있는 노드의 펼치기/접기의 기능을 지원합니다.
 
-	  @class {public Collapser} JGM.Collapser
+	  @class {Collapser} JGM.Collapser
 
 	  @author 조준호
 	  @since 1.0.0
@@ -50,7 +50,7 @@
 	/**
 	  Collapser 컨스트럭터 입니다.
 
-	  @constructor {public Collapser} Collapser
+	  @constructor {Collapser} Collapser
 	  @param {Object} args - Collapser 모듈 파라미터 오브젝트
 	  @... {JGM.Grid} args.grid - Collapser 를 포함하는 {@link JGM.Grid Grid} 인스턴스
 	  @... {Object} args.options - Collapser 옵션 오브젝트
@@ -64,7 +64,7 @@
 		/**
 		  {@link JGM} 이 할당해주는 Collapser 모듈 고유 아이디입니다. 읽기 전용.
 
-		  @var {public final String} mid
+		  @var {string} mid
 
 		  @author 조준호
 		  @since 1.0.0
@@ -75,7 +75,7 @@
 		/**
 		  Collapser 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-		  @var {public JGM.Grid} grid
+		  @var {JGM.Grid} grid
 
 		  @author 조준호
 		  @since 1.0.0
@@ -86,7 +86,7 @@
 		/**
 		  트리 형식의 데이터를 관리하는 {@link JGM.Collapser Collapser} 인스턴스 입니다.
 
-		  @var {public JGM.Collapser} JGM.Grid.collapser
+		  @var {JGM.Collapser} JGM.Grid.collapser
 
 		  @author 조준호
 		  @since 1.0.0
@@ -97,7 +97,8 @@
 		/**
 		  Collapser 모듈의 기본 옵션 값들을 정의합니다.
 
-		  @var {private Object} options
+		  @type {Object} options
+		  @private
 
 		  @author 조준호
 		  @since 1.0.0
@@ -109,7 +110,8 @@
 			  정해지지 않았을시에는 {@link JGM.Collapser.options.colDef colDef}
 			  를 사용하여 새로운 컬럼을 생성합니다.<br>기본값:<code>undefined</code>
 
-			  @var {private optional String} JGM.Collapser.options.key
+			  @type {string=} JGM.Collapser.options.key
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -121,7 +123,8 @@
 			  {@link JGM.Collapser.options.key key} 가 지정되지 않아서, Collapser 컬럼을 새로 생성해야할 경우 사용될 컬럼 정의 오브젝트입니다.
 			  <br>기본값:<code>{key:"collapser", width: 120, name:" "}</code>
 
-			  @var {private optional Object} JGM.Collapser.options.colDef
+			  @type {Object=} JGM.Collapser.options.colDef
+			  @private
 			  @see JGM.ColDefManager.options.colDef
 
 			  @author 조준호
@@ -134,7 +137,8 @@
 			  {@link JGM.Collapser.options.colDef colDef} 를 몇번째 컬럼으로 넣을지를 정합니다.
 			  <br>기본값:<code>0</code>
 
-			  @var {private optional int} JGM.Collapser.options.colIdx
+			  @type {number=} JGM.Collapser.options.colIdx
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -145,7 +149,8 @@
 			/**
 			  접힌 상태의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "collapsed.png"</code>
 
-			  @var {private optional String} JGM.Collapser.options.urlCollapsed
+			  @type {string=} JGM.Collapser.options.urlCollapsed
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -156,7 +161,8 @@
 			/**
 			  접힌 상태위에 마우스가 오버되었을 때의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "collapsed-hover.png"</code>
 
-			  @var {private optional String} JGM.Collapser.options.urlCollapsedHover
+			  @type {string=} JGM.Collapser.options.urlCollapsedHover
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -167,7 +173,8 @@
 			/**
 			  펼쳐진 상태의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "expanded.png"</code>
 
-			  @var {private optional String} JGM.Collapser.options.urlExpanded
+			  @type {string=} JGM.Collapser.options.urlExpanded
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -178,7 +185,8 @@
 			/**
 			  펼쳐진 상태위에 마우스가 오버되었을 때의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "expanded-hover.png"</code>
 
-			  @var {private optional String} JGM.Collapser.options.urlExpandedHover
+			  @type {string=} JGM.Collapser.options.urlExpandedHover
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -189,7 +197,8 @@
 			/**
 			  Collapser 토글 아이콘의 폭 픽셀입니다. <br>기본값:<code>6</code>
 
-			  @var {private optional int} JGM.Collapser.options.width
+			  @type {number=} JGM.Collapser.options.width
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -200,7 +209,8 @@
 			/**
 			  Collapser 토글 아이콘의 좌우 padding 픽셀입니다. <br>기본값:<code>5</code>
 
-			  @var {private optional int} JGM.Collapser.options.padding
+			  @type {number=} JGM.Collapser.options.padding
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -211,7 +221,8 @@
 			/**
 			  Collapser 토글 아이콘에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-collapser"</code>
 
-			  @var {private optional String} JGM.Collapser.options.classCollapser
+			  @type {string=} JGM.Collapser.options.classCollapser
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -222,7 +233,8 @@
 			/**
 			  접혀진 상태 아이콘에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"collapsed"</code>
 
-			  @var {private optional String} JGM.Collapser.options.classCollapsed
+			  @type {string=} JGM.Collapser.options.classCollapsed
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -233,7 +245,8 @@
 			/**
 			  펼쳐진 상태 아이콘에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"expanded"</code>
 
-			  @var {private optional String} JGM.Collapser.options.classExpanded
+			  @type {string=} JGM.Collapser.options.classExpanded
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -244,7 +257,8 @@
 			/**
 			  Collapser 토글 아이콘을 indent 하는 div 에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"indent"</code>
 
-			  @var {private optional String} JGM.Collapser.options.classIndent
+			  @type {string=} JGM.Collapser.options.classIndent
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -255,7 +269,8 @@
 			/**
 			  마스터 헤더 Collapser 토글에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"master"</code>
 
-			  @var {private optional String} JGM.Collapser.options.classMasterCollapser
+			  @type {string=} JGM.Collapser.options.classMasterCollapser
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -266,7 +281,8 @@
 			/*
 			   마스터 헤더 Collapser 토글을 생성할지 여부입니다. <br>기본값:<code>true</code>
 
-			   @var {private optional Boolean} JGM.Collapser.options.master
+			   @type {boolean=} JGM.Collapser.options.master
+			   @private
 
 			   @author 조준호
 			   @since 1.0.0
@@ -277,7 +293,8 @@
 			/**
 			  트리 레벨당 우측으로 밀려지는 indent 폭 픽셀입니다. <br>기본값:<code>12</code>
 
-			  @var {private optional int} JGM.Collapser.options.indentSize
+			  @type {number=} JGM.Collapser.options.indentSize
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -288,7 +305,8 @@
 			/**
 			  true 일 경우 모든 노드가 접힌 상태로, false 일 경우 펼쳐진 상태로 시작합니다. <br>기본값:<code>false</code>
 
-			  @var {private optional Boolean} JGM.Collapser.options.beginCollapsed
+			  @type {boolean=} JGM.Collapser.options.beginCollapsed
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -301,7 +319,8 @@
 			  이 옵션을 설정하지 않을 경우, {@link JGM.CheckManager CheckManager} 인스턴스를
 			  생성하지 않습니다. <br>기본값:<code>undefined</code>
 
-			  @var {private optional Object} JGM.Collapser.options.CheckManager
+			  @type {Object=} JGM.Collapser.options.CheckManager
+			  @private
 			  @see JGM.CheckManager.options
 
 			  @author 조준호
@@ -314,7 +333,8 @@
 			  트리 구조 데이터 관리에 사용할 {@link JGM.Tree Tree} 에 넘겨줄 옵션 오브젝트입니다.
 			  <br>기본값:<code>undefined</code>
 
-			  @var {private optional Object} JGM.Collapser.options.Tree
+			  @type {Object=} JGM.Collapser.options.Tree
+			  @private
 			  @see JGM.Tree.options
 			  @author 조준호
 			  @since 1.0.0
@@ -347,7 +367,7 @@
 			/**
 			  Collapser 와 연동된 {@link JGM.CheckManager CheckManager} 입니다.
 
-			  @var {public JGM.CheckManager} checkMgr
+			  @var {JGM.CheckManager} checkMgr
 
 			  @author 조준호
 			  @since 1.0.0
@@ -829,9 +849,9 @@
 	/**
 	  주어진 {@link JGM.TreeNode} 를 접습니다. 이미 접혀 있는경우 아무것도 하지 않습니다.
 
-	  @function {public} collapse
+	  @function {} collapse
 	  @param {JGM.TreeNode} node - 접을 {@link JGM.TreeNode}
-	  @param {optional Boolean} nocheck - true 일 경우, 마스터 Collapser 의 접기 여부를 체크하지 않습니다.
+	  @param {boolean=} nocheck - true 일 경우, 마스터 Collapser 의 접기 여부를 체크하지 않습니다.
 
 	  @author 조준호
 	  @since 1.0.0
@@ -861,9 +881,9 @@
 	/**
 	  주어진 {@link JGM.TreeNode} 를 펼칩니다. 이미 펼쳐져 있는경우 아무것도 하지 않습니다.
 
-	  @function {public} expand
+	  @function {} expand
 	  @param {JGM.TreeNode} node - 접을 {@link JGM.TreeNode}
-	  @param {optional Boolean} nocheck - true 일 경우, 마스터 Collapser 의 펼치기 여부를 체크하지 않습니다.
+	  @param {boolean=} nocheck - true 일 경우, 마스터 Collapser 의 펼치기 여부를 체크하지 않습니다.
 
 	  @author 조준호
 	  @since 1.0.0
@@ -916,7 +936,7 @@
 	  마스터 Collapser 를 토글합니다. 첫번째 레벨의 노드들이 하나라도 접혀 있으면
 	  첫번째 노드들을 모두 펼치고, 모두 펼쳐져 있는 경우 모두 접습니다.
 
-	  @function {public} toggleMaster
+	  @function {} toggleMaster
 
 	  @author 조준호
 	  @since 1.0.0
@@ -946,7 +966,7 @@
 	/**
 	  주어진 {@link JGM.TreeNode} 를 토글합니다.
 
-	  @function {public} toggleCollapse
+	  @function {} toggleCollapse
 	  @param {JGM.TreeNode} node - 토글할 {@link JGM.TreeNode}
 	  @see expand
 	  @see collapse

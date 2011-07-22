@@ -40,7 +40,7 @@ ColGroup 모듈. 트리 구조의 데이터를 담당하는 모듈입니다.
 ColGroup 클래스. 트리 구조의 데이터를 담당하는 모듈 클래스 입니다. 구조에 맞게
 데이터를 재정렬해주고 자식들이 있는 노드의 펼치기/접기의 기능을 지원합니다.
 
-@class {public ColGroup} JGM.ColGroup
+@class {ColGroup} JGM.ColGroup
 
 @author 조준호
 @since 1.1.0
@@ -50,7 +50,7 @@ ColGroup 클래스. 트리 구조의 데이터를 담당하는 모듈 클래스 입니다. 구조에 맞게
 /**
 ColGroup 컨스트럭터 입니다.
 
-@constructor {public ColGroup} ColGroup
+@constructor {ColGroup} ColGroup
 @param {Object} args - ColGroup 모듈 파라미터 오브젝트
 @... {JGM.Grid} args.grid - ColGroup 를 포함하는 {@link JGM.Grid Grid} 인스턴스
 @... {Object} args.options - ColGroup 옵션 오브젝트
@@ -64,7 +64,7 @@ function ColGroup(args) {
 	/**
 	{@link JGM} 이 할당해주는 ColGroup 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.1.0
@@ -75,7 +75,7 @@ function ColGroup(args) {
 	/**
 	ColGroup 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.1.0
@@ -86,7 +86,7 @@ function ColGroup(args) {
 	/**
 	그룹 형식의 데이터를 관리하는 {@link JGM.ColGroup ColGroup} 인스턴스 입니다.
 
-	@var {public JGM.ColGroup} JGM.Grid.colGroup
+	@var {JGM.ColGroup} JGM.Grid.colGroup
 
 	@author 조준호
 	@since 1.1.0
@@ -97,7 +97,8 @@ function ColGroup(args) {
 	/**
 	ColGroup 모듈의 기본 옵션 값들을 정의합니다.
 
-	@var {private Object} options
+	@type {Object} options
+	@private
 
 	@author 조준호
 	@since 1.1.0
@@ -108,7 +109,8 @@ function ColGroup(args) {
 		grouping 을 할 컬럼의 key 입니다. 반드시 입력해야합니다.
 		<br>기본값:<code>undefined</code>
 
-		@var {private String} JGM.ColGroup.options.key
+		@type {string} JGM.ColGroup.options.key
+		@private
 		@author 조준호
 		@since 1.1.0
 		@version 1.1.0
@@ -120,7 +122,8 @@ function ColGroup(args) {
 		지정되는 컬럼들의 값이 모두 같을 때 사용합니다.
 		<br>기본값:<code>[]</code>
 
-		@var {private optional String[]} JGM.ColGroup.options.padColKeys
+		@type {Array.<string>=} JGM.ColGroup.options.padColKeys
+		@private
 		@author 조준호
 		@since 1.1.0
 		@version 1.1.0
@@ -132,7 +135,8 @@ function ColGroup(args) {
 		소계 값이 표시됩니다.
 		<br>기본값:<code>[]</code>
 
-		@var {private optional String[]} JGM.ColGroup.options.sumColKeys
+		@type {Array.<string>=} JGM.ColGroup.options.sumColKeys
+		@private
 		@author 조준호
 		@since 1.1.0
 		@version 1.1.0
@@ -143,7 +147,8 @@ function ColGroup(args) {
 		소계 부분의 prefix 를 정합니다.
 		<br>기본값:<code>"합계: "</code>
 
-		@var {private optional String} JGM.ColGroup.options.prefix
+		@type {string=} JGM.ColGroup.options.prefix
+		@private
 		@author 조준호
 		@since 1.1.0
 		@version 1.1.0
@@ -154,7 +159,8 @@ function ColGroup(args) {
 		데이터 관리에 사용할 {@link JGM.Collapser Collapser} 에 넘겨줄 옵션 오브젝트입니다.
 		<br>기본값:<code>{ indentSize:0 }</code>
 
-		@var {private optional Object} JGM.ColGroup.options.Collapser
+		@type {Object=} JGM.ColGroup.options.Collapser
+		@private
 		@see JGM.Collapser.options
 		@author 조준호
 		@since 1.1.0
@@ -175,7 +181,7 @@ function ColGroup(args) {
 	/**
 	ColGroup 과 연동된 {@link JGM.Collapser Collapser} 입니다.
 
-	@var {public JGM.Collapser} collapser
+	@var {JGM.Collapser} collapser
 
 	@author 조준호
 	@since 1.1.0
@@ -202,7 +208,7 @@ prototype.__init = function() {
 	/**
 	ColGroup 와 연동된 {@link JGM.Collapser Collapser} 입니다.
 
-	@var {public JGM.Collapser} collapser
+	@var {JGM.Collapser} collapser
 
 	@author 조준호
 	@since 1.1.0

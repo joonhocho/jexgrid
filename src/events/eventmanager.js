@@ -31,7 +31,7 @@
    호출하는 방법도 있지만 이벤트를 통하면 다른 모듈 인스턴스의 존재 유무 또는
    이름을 알지 못 하여도 상호 커뮤니케이트 할 수 있는 장점이 있습니다.
 
-   @class {public EventManager} JGM.EventManager
+   @class {EventManager} JGM.EventManager
 
    @author 조준호
    @since 1.0.0
@@ -41,7 +41,7 @@
  /**
    EventManager 컨스트럭터 입니다.
 
-   @constructor {public EventManager} EventManager
+   @constructor {EventManager} EventManager
    @param {Object} args - EventManager 모듈 파라미터 오브젝트
    @returns {EventManager} EventManager 모듈 인스턴스를 리턴합니다.
 
@@ -53,7 +53,7 @@
 	 /**
 	   {@link JGM} 이 할당해주는 EventManager 모듈 고유 아이디입니다. 읽기 전용.
 
-	   @var {public final String} mid
+	   @var {string} mid
 
 	   @author 조준호
 	   @since 1.0.0
@@ -64,7 +64,7 @@
 	 /**
 	   Grid 내의 모든 이벤트 레지스터와 트리거를 담당하는 {@link JGM.EventManager EventManager} 인스턴스 입니다.
 
-	   @var {public JGM.EventManager} JGM.Grid.event
+	   @var {JGM.EventManager} JGM.Grid.event
 
 	   @author 조준호
 	   @since 1.0.0
@@ -100,27 +100,27 @@ map: "__map_a__"
 /**
   하나 또는 여럿의 이벤트 핸들러를 레지스터 합니다.
 
-  @function {public} register
+  @function {} register
 
   @paramset 한개의 이벤트를 등록할 경우 1
-  @param {String} event - 이벤트 이름. 여러개의 이벤트를 빈칸으로 띄어 쓰면 한번에
+  @param {string} event - 이벤트 이름. 여러개의 이벤트를 빈칸으로 띄어 쓰면 한번에
   여러 이벤트에 같은 핸들러와 오브젝트를 등록할 수 있습니다.
-  @param {Function | Function[]} fn - 이벤트 핸들러 함수. 함수 어레이일 경우 이벤트에
+  @param {function|Array.<function>} fn - 이벤트 핸들러 함수. 함수 어레이일 경우 이벤트에
   여러개의 이벤트 핸들러 함수를 등록합니다.
-  @param {optional ?} target - 이벤트 핸들러 오브젝트. 호출 함수의 this 로
+  @param {?=} target - 이벤트 핸들러 오브젝트. 호출 함수의 this 로
   정해집니다. 주어지지 않을 경우, window 오브젝트로 정해집니다.
 
   @paramset 한개의 이벤트를 등록할 경우 2
   @param {Object} args - 이벤트 파라미터
-  @... {String} args.e - event 와 같음
-  @... {Function | Function[]} args.f - fn 과 같음
-  @... {optional ?} args.t - target 과 같음
+  @... {string} args.e - event 와 같음
+  @... {function|Array.<function>} args.f - fn 과 같음
+  @... {?=} args.t - target 과 같음
 
   @paramset 여러개의 이벤트를 등록할 경우
-  @param {Object[]} args - 이벤트 어레이 파라미터
-  @... {String} args[i].e - event 와 같음
-  @... {Function | Function[]} args[i].f - fn 과 같음
-  @... {optional ?} args[i].t - target 과 같음
+  @param {Array.<Object>} args - 이벤트 어레이 파라미터
+  @... {string} args[i].e - event 와 같음
+  @... {function|Array.<function>} args[i].f - fn 과 같음
+  @... {?=} args[i].t - target 과 같음
 
   @author 조준호
   @since 1.0.0
@@ -151,21 +151,21 @@ prototype.register = function(events, fn, target) {
 /**
   jQuery.bind 와 비슷한 형식입니다. 하나 또는 여럿의 이벤트 핸들러를 레지스터 합니다.
 
-  @function {public} bind
+  @function {} bind
 
   @paramset 한개의 이벤트를 등록할 경우 1
-  @param {String} event - 이벤트 이름. 여러개의 이벤트를 빈칸으로 띄어 쓰면 한번에
+  @param {string} event - 이벤트 이름. 여러개의 이벤트를 빈칸으로 띄어 쓰면 한번에
   여러 이벤트에 같은 핸들러와 오브젝트를 등록할 수 있습니다.
-  @param {Function | Function[]} fn - 이벤트 핸들러 함수. 함수 어레이일 경우 이벤트에
+  @param {function|Array.<function>} fn - 이벤트 핸들러 함수. 함수 어레이일 경우 이벤트에
   여러개의 이벤트 핸들러 함수를 등록합니다.
-  @param {optional ?} target - 이벤트 핸들러 오브젝트. 호출 함수의 this 로
+  @param {?=} target - 이벤트 핸들러 오브젝트. 호출 함수의 this 로
   정해집니다. 주어지지 않을 경우, window 오브젝트로 정해집니다.
 
   @paramset 한개 이상의 이벤트를 등록할 경우
   @param {Object} args - 이벤트 어레이 파라미터
-  @... {String} args.key - event 와 같음
-  @... {Function | Function[]} args[args.key] - fn 과 같음
-  @param {optional ?} target - target.
+  @... {string} args.key - event 와 같음
+  @... {function|Array.<function>} args[args.key] - fn 과 같음
+  @param {?=} target - target.
 
   @author 조준호
   @since 1.1.6
@@ -237,9 +237,9 @@ prototype.__addHandler_c__ = function(e, fn, target) {
   이벤트 핸들러를 언레지스터 합니다. fn 파라미터를 입력할 경우 fn 핸들러만
   제거하고 그렇지 않은 경우 이벤트 이름에 레지스터된 모든 핸들러를 제거합니다.
 
-  @function {public} unregister
-  @param {String} event - 이벤트 이름
-  @param {optional Function} fn - 이벤트 핸들러 함수
+  @function {} unregister
+  @param {string} event - 이벤트 이름
+  @param {Function=} fn - 이벤트 핸들러 함수
 
   @author 조준호
   @since 1.0.0
@@ -276,10 +276,10 @@ prototype.unregister = function(event, fn) {
   하나 이상의 이벤트를 트리거 합니다. 해당 이름에 레지스터 된 모든 이벤트 핸들러에게
   파라미터를 넘겨주고 호출을 한후 결과를 Array 에 넣고 리턴합니다.
 
-  @function {public ?[]} trigger
-  @param {String} event - 이벤트 이름. 여러 이벤트의 이름을 빈칸으로 띄우면 여러 이벤트를 동시에 트리거합니다.
-  @param {optional ?[]} args - 이벤트 핸들러에 입력될 파라미터 어레이
-  @param {optional Function(?)} filter - 이벤트 리턴 값 필터링 함수. 리턴
+  @function {?[]} trigger
+  @param {string} event - 이벤트 이름. 여러 이벤트의 이름을 빈칸으로 띄우면 여러 이벤트를 동시에 트리거합니다.
+  @param {?[]=} args - 이벤트 핸들러에 입력될 파라미터 어레이
+  @param {Function(?)=} filter - 이벤트 리턴 값 필터링 함수. 리턴
   값들을 필터링 할 때 사용됩니다. 리턴 값을 파라미터로 받아서 true 를 리턴하면
   리턴 값은 이벤트 리턴 Array 에 추가됩니다.
   @returns {?[]} Event Result 어레이
@@ -356,8 +356,8 @@ prototype.triggerInvalid = function(events, args) {
   이벤트 이름의 이벤트 큐에서 함수를 맨 마지막으로 보냅니다. 이벤트 트리거 시 가장
   나중에 실행됩니다.
 
-  @function {public} sendToBack
-  @param {String} event - 이벤트 이름
+  @function {} sendToBack
+  @param {string} event - 이벤트 이름
   @param {Function} fn - 이벤트 핸들러 함수
 
   @author 조준호
@@ -387,8 +387,8 @@ prototype.sendToBack = function(event, fn) {
   이벤트 이름의 이벤트 큐에서 함수를 맨 처음으로 보냅니다. 이벤트 트리거 시 가장
   먼저 실행됩니다.
 
-  @function {public} sendToFront
-  @param {String} event - 이벤트 이름
+  @function {} sendToFront
+  @param {string} event - 이벤트 이름
   @param {Function} fn - 이벤트 핸들러 함수
 
   @author 조준호

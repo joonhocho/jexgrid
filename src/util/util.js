@@ -860,13 +860,13 @@ Util.areEqualComplex = function(ar, br, arch) {
   Check type of given object against given type, and
   either return false or throw a 'TypeError' exception if the type is not correct.
 
-  @function {public boolean} typeCheck
+  @function {boolean} typeCheck
 
   @param {string | Function} type - correct type of object to check against
   @param {*} obj - object to check type of
-  @param {optional boolean} allowUndefined - if true, undefined for object is considered as correct type
-  @param {optional boolean} allowNull - if true, null for object is considered as correct type
-  @param {optional boolean} noThrow - if true, return false instead of throwing 'TypeError' exception
+  @param {boolean=} allowUndefined - if true, undefined for object is considered as correct type
+  @param {boolean=} allowNull - if true, null for object is considered as correct type
+  @param {boolean=} noThrow - if true, return false instead of throwing 'TypeError' exception
 
   @return true if type of object is correct
 
@@ -909,12 +909,12 @@ Util.typeCheck = function(type, obj, allowUndefined, allowNull, noThrow) {
 /**
   Replace variable strings with string values.
 
-  @function {public string} sprint
+  @function {string} sprint
 
   @param {string} str - string with variables
   @param {Object} obj - object of variable to value mappings
-  @param {optional string} prefix - variable prefix. default to '%'.
-  @param {optional string} suffix - variable suffix. default to '%'.
+  @param {string=} prefix - variable prefix. default to '%'.
+  @param {string=} suffix - variable suffix. default to '%'.
 
   @return string with injected values
 

@@ -34,7 +34,7 @@ ViewportManager 모듈. 그리드 로우와 셀을 가진 테이블을 담당하는 모듈입니다.
 /**
 ViewportManager 클래스. 빠른 로우/셀 렌더링과 로우의 캐싱을 지원합니다.
 
-@class {public ViewportManager} JGM.ViewportManager
+@class {ViewportManager} JGM.ViewportManager
 
 @author 조준호
 @since 1.0.0
@@ -44,7 +44,7 @@ ViewportManager 클래스. 빠른 로우/셀 렌더링과 로우의 캐싱을 지원합니다.
 /**
 ViewportManager 컨스트럭터 입니다.
 
-@constructor {public ViewportManager} ViewportManager
+@constructor {ViewportManager} ViewportManager
 @param {Object} args - ViewportManager 모듈 파라미터 오브젝트
 @... {jQuery} args.container - ViewportManager 를 넣을 컨테이너 오브젝트
 @... {JGM.Grid} args.grid - ViewportManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
@@ -59,7 +59,7 @@ function ViewportManager(args) {
 	/**
 	{@link JGM} 이 할당해주는 ViewportManager 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.0.0
@@ -74,7 +74,7 @@ function ViewportManager(args) {
 	/**
 	ViewportManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -85,7 +85,7 @@ function ViewportManager(args) {
 	/**
 	그리드의 로우와 셀의 랜더링 및 뷰포트 관련 이벤트를 관리하는 {@link JGM.ViewportManager ViewportManager} 인스턴스 입니다.
 
-	@var {public JGM.ViewportManager} JGM.Grid.view
+	@var {JGM.ViewportManager} JGM.Grid.view
 
 	@author 조준호
 	@since 1.0.0
@@ -96,7 +96,8 @@ function ViewportManager(args) {
 	/**
 	ViewportManager 모듈의 기본 옵션 값들을 정의합니다.
 
-	@var {private Object} options
+	@type {Object} options
+	@private
 
 	@author 조준호
 	@since 1.0.0
@@ -106,7 +107,8 @@ function ViewportManager(args) {
 		/**
 		그리드 로우의 인덱스 값을 넣을 인덱스 노드 Attribute 이름. <br>기본값:<code>"r"</code>
 
-		@var {private optional String} JGM.ViewportManager.options.attrRowIdx
+		@type {string=} JGM.ViewportManager.options.attrRowIdx
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -118,7 +120,8 @@ function ViewportManager(args) {
 		뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 미만일 경우
 		추가하지 않습니다. <br>기본값:<code>3</code>
 
-		@var {private optional int} JGM.ViewportManager.options.appendThreshold
+		@type {number=} JGM.ViewportManager.options.appendThreshold
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -130,7 +133,8 @@ function ViewportManager(args) {
 		뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 이상일 경우
 		새로운 로우들을 붙여넣지 않고 전체 페이지를 다시 렌더링 합니다. <br>기본값:<code>10</code>
 
-		@var {private optional int} JGM.ViewportManager.options.renderThreshold
+		@type {number=} JGM.ViewportManager.options.renderThreshold
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -142,7 +146,8 @@ function ViewportManager(args) {
 		캔버스를 렌더링 할 경우, 스크롤의 자연스러움을 위해 화면에 보이는 로우들 이외에
 		전 후로 이 값의 수 많큼 로우들을 추가적으로 렌더링합니다. <br>기본값:<code>6</code>
 
-		@var {private optional int} JGM.ViewportManager.options.bufferSize
+		@type {number=} JGM.ViewportManager.options.bufferSize
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -154,7 +159,8 @@ function ViewportManager(args) {
 		뷰포트가 한 스크롤 페이지에 보여줄 데이터 로우들의 수를 정합니다. 뷰포트의
 		높이를 계산할 때 사용됩니다. <br>기본값:<code>10</code>
 
-		@var {private optional int} JGM.ViewportManager.options.rowsPerPage
+		@type {number=} JGM.ViewportManager.options.rowsPerPage
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -165,7 +171,8 @@ function ViewportManager(args) {
 		/**
 		로우의 높이의 픽셀값 입니다. padding 과 border 를 제외한 그 안의 높이입니다. <br>기본값:<code>20</code>
 
-		@var {private optional int} JGM.ViewportManager.options.rowH
+		@type {number=} JGM.ViewportManager.options.rowH
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -176,7 +183,8 @@ function ViewportManager(args) {
 		/**
 		셀 border 의 두께의 픽셀값 입니다. <br>기본값:<code>1</code>
 
-		@var {private optional int} JGM.ViewportManager.options.borderThickness
+		@type {number=} JGM.ViewportManager.options.borderThickness
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -187,7 +195,8 @@ function ViewportManager(args) {
 		/**
 		셀 border 의 스타일을 정합니다. <br>기본값:<code>"solid #D0D7E5"</code>
 
-		@var {private optional String} JGM.ViewportManager.options.border
+		@type {string=} JGM.ViewportManager.options.border
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -198,7 +207,8 @@ function ViewportManager(args) {
 		/**
 		셀 padding 의 픽셀값 입니다. <br>기본값:<code>1</code>
 
-		@var {private optional int} JGM.ViewportManager.options.padding
+		@type {number=} JGM.ViewportManager.options.padding
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -209,7 +219,8 @@ function ViewportManager(args) {
 		/**
 		홀수번째 로우와 짝수번째 로우의 바탕색을 다르게 할 지 정합니다. <br>기본값:<code>false</code>
 
-		@var {private optional Boolean} JGM.ViewportManager.options.evenOddRows
+		@type {boolean=} JGM.ViewportManager.options.evenOddRows
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -221,7 +232,8 @@ function ViewportManager(args) {
 		{@link JGM.ViewportManager.options.evenOddRows evenOddRows} 가 true 일 경우,
 		홀수번째 로우들에 적용될 바탕색입니다. <br>기본값:<code>"#F4F4F4"</code>
 
-		@var {private optional String} JGM.ViewportManager.options.oddRowsBackground
+		@type {string=} JGM.ViewportManager.options.oddRowsBackground
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -235,7 +247,8 @@ function ViewportManager(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.ViewportManager.options.style
+		@type {string=} JGM.ViewportManager.options.style
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -249,7 +262,8 @@ function ViewportManager(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.ViewportManager.options.canvasStyle
+		@type {string=} JGM.ViewportManager.options.canvasStyle
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -263,7 +277,8 @@ function ViewportManager(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.ViewportManager.options.rowStyle
+		@type {string=} JGM.ViewportManager.options.rowStyle
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -277,7 +292,8 @@ function ViewportManager(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.ViewportManager.options.cellStyle
+		@type {string=} JGM.ViewportManager.options.cellStyle
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -288,7 +304,8 @@ function ViewportManager(args) {
 		/**
 		모든 그리드 로우에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-row"</code>
 
-		@var {private optional String} JGM.ViewportManager.options.classRow
+		@type {string=} JGM.ViewportManager.options.classRow
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -299,7 +316,8 @@ function ViewportManager(args) {
 		/**
 		모든 그리드 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-cell"</code>
 
-		@var {private optional String} JGM.ViewportManager.options.classCell
+		@type {string=} JGM.ViewportManager.options.classCell
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -310,7 +328,8 @@ function ViewportManager(args) {
 		/**
 		그리드 뷰포트에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-viewport"</code>
 
-		@var {private optional String} JGM.ViewportManager.options.classView
+		@type {string=} JGM.ViewportManager.options.classView
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -321,7 +340,8 @@ function ViewportManager(args) {
 		/**
 		그리드 캔버스에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-canvas"</code>
 
-		@var {private optional String} JGM.ViewportManager.options.classCanvas
+		@type {string=} JGM.ViewportManager.options.classCanvas
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -332,7 +352,8 @@ function ViewportManager(args) {
 		/**
 		그리드 뷰가 포커스 되었을 경우 보여지는 뷰의 배경 스타일입니다. <br>기본값:<code>"#FFF"</code>
 
-		@var {private optional Object} JGM.ViewportManager.options.focusBackground
+		@type {Object=} JGM.ViewportManager.options.focusBackground
+		@private
 
 		@author 조준호
 		@since 1.1.5
@@ -343,7 +364,8 @@ function ViewportManager(args) {
 		/**
 		그리드 뷰가 포커스 되었을 경우 보여지는 아웃라인 스타일입니다. <br>기본값:<code>"2px solid #f1ca7f"</code>
 
-		@var {private optional Object} JGM.ViewportManager.options.focusOutline
+		@type {Object=} JGM.ViewportManager.options.focusOutline
+		@private
 
 		@author 조준호
 		@since 1.1.5
@@ -354,7 +376,8 @@ function ViewportManager(args) {
 		/**
 		true 로 설정되있을 경우 view 의 높이가 모든 로우를 포함하도록 자동 변경됩니다. <br>기본값:<code>false</code>
 
-		@var {private optional Boolean} JGM.ViewportManager.options.autoHeight
+		@type {boolean=} JGM.ViewportManager.options.autoHeight
+		@private
 
 		@author 조준호
 		@since 1.1.7
@@ -612,9 +635,9 @@ prototype.__getRowSelector_AH__ = function() {
 /**
 주어진 인덱스를 가진 셀로 스크롤합니다.
 
-@function {public} scrollTo
-@param {int} row - 셀의 로우 인덱스
-@param {int} col - 셀의 컬럼 인덱스
+@function {} scrollTo
+@param {number} row - 셀의 로우 인덱스
+@param {number} col - 셀의 컬럼 인덱스
 
 @author 조준호
 @since 1.0.0
@@ -630,9 +653,9 @@ prototype.scrollTo = function(row, col) {
 주어진 로우 인덱스로 lazy 하게 스크롤합니다.
 이미 화면 내에 있을 경우, 스크롤 하지 않습니다.
 
-@function {public int} scrollToRowLazy
-@param {int} row - 스크롤 할 로우 인덱스
-@return {int} scrollTop - 새로운 scrolltop 값
+@function {number} scrollToRowLazy
+@param {number} row - 스크롤 할 로우 인덱스
+@return {number} scrollTop - 새로운 scrolltop 값
 
 @author 조준호
 @since 1.3.0
@@ -656,9 +679,9 @@ prototype.scrollToRowLazy = function(row) {
 주어진 컬럼 인덱스로 lazy 하게 스크롤합니다.
 이미 화면 내에 있을 경우, 스크롤 하지 않습니다.
 
-@function {public int} scrollToColLazy
-@param {int} col - 스크롤 할 컬럼 인덱스
-@return {int} scrollLeft - 새로운 scrollLeft 값
+@function {number} scrollToColLazy
+@param {number} col - 스크롤 할 컬럼 인덱스
+@return {number} scrollLeft - 새로운 scrollLeft 값
 
 @author 조준호
 @since 1.3.0
@@ -682,9 +705,9 @@ prototype.scrollToColLazy = function(col) {
 주어진 인덱스를 가진 셀로 lazy 하게 스크롤합니다.
 이미 화면 내에 있을 경우, 스크롤 하지 않습니다.
 
-@function {public} scrollToLazy
-@param {int} row - 셀의 로우 인덱스
-@param {int} col - 셀의 컬럼 인덱스
+@function {} scrollToLazy
+@param {number} row - 셀의 로우 인덱스
+@param {number} col - 셀의 컬럼 인덱스
 
 @author 조준호
 @since 1.3.0
@@ -698,8 +721,8 @@ prototype.scrollToLazy = function(row, col) {
 /**
 주어진 인덱스의 로우로 스크롤합니다.
 
-@function {public} scrollToRow
-@param {int} row - 로우 인덱스
+@function {} scrollToRow
+@param {number} row - 로우 인덱스
 
 @author 조준호
 @since 1.0.0
@@ -716,8 +739,8 @@ prototype.scrollToRow = function(i) {
 /**
 주어진 인덱스의 컬럼으로 스크롤합니다.
 
-@function {public} scrollToCol
-@param {int} col - 컬럼 인덱스
+@function {} scrollToCol
+@param {number} col - 컬럼 인덱스
 
 @author 조준호
 @since 1.0.0
@@ -738,9 +761,9 @@ prototype.__getColInnerWidthByKey_AJ__ = function(i) {
 /**
 주어진 인덱스의 컬럼의 폭 픽셀을 리턴합니다.
 
-@function {public int} getColWidth
-@param {int} col - 컬럼 인덱스
-@returns {int} 주어진 인덱스의 컬럼의 폭
+@function {number} getColWidth
+@param {number} col - 컬럼 인덱스
+@returns {number} 주어진 인덱스의 컬럼의 폭
 
 @author 조준호
 @since 1.1.7
@@ -753,9 +776,9 @@ prototype.getColWidth = function(i) {
 /**
 주어진 키를 가진 컬럼의 폭 픽셀을 리턴합니다.
 
-@function {public int} getColWidthByKey
-@param {String} key - 컬럼 키
-@returns {int} 주어진 키를 가진 컬럼의 폭
+@function {number} getColWidthByKey
+@param {string} key - 컬럼 키
+@returns {number} 주어진 키를 가진 컬럼의 폭
 
 @author 조준호
 @since 1.1.7
@@ -799,8 +822,8 @@ prototype.__calHeight_AP__ = function() {
 /**
 가로 스크롤바가 있을 경우 스크롤바의 높이를 포함한 뷰의 높이 픽셀을 리턴합니다.
 
-@function {public int} getHeight
-@returns {int} 뷰의 높이 픽셀
+@function {number} getHeight
+@returns {number} 뷰의 높이 픽셀
 
 @author 조준호
 @since 1.0.0
@@ -813,8 +836,8 @@ prototype.getHeight = function() {
 /**
 가로 스크롤바가 있을 경우 스크롤바의 높이를 뺀 뷰의 안쪽 높이 픽셀을 리턴합니다.
 
-@function {public int} getInnerHeight
-@returns {int} 뷰의 안쪽 높이 픽셀
+@function {number} getInnerHeight
+@returns {number} 뷰의 안쪽 높이 픽셀
 
 @author 조준호
 @since 1.0.0
@@ -831,8 +854,8 @@ prototype.__getWidth_AQ__ = function() {
 /**
 세로 스크롤바가 있을 경우 스크롤바의 폭을 뺀 뷰의 안쪽 폭 픽셀을 리턴합니다.
 
-@function {public int} getInnerWidth
-@returns {int} 뷰의 안쪽 폭 픽셀
+@function {number} getInnerWidth
+@returns {number} 뷰의 안쪽 폭 픽셀
 
 @author 조준호
 @since 1.0.0
@@ -849,8 +872,8 @@ prototype.__calCanvasHeight_AR__ = function() {
 /**
 모든 그리드 로우를 포함하고 있는 캔버스의 가상 높이 픽셀을 리턴합니다.
 
-@function {public int} getCanvasHeight
-@returns {int} 캔버스의 높이 픽셀
+@function {number} getCanvasHeight
+@returns {number} 캔버스의 높이 픽셀
 
 @author 조준호
 @since 1.0.0
@@ -872,8 +895,8 @@ prototype.__setCanvasHeight_AS__ = function(h) {
 		캔바스의 높이가 변했을 경우 트리거되는 이벤트 입니다.
 
 		@event {Event} onResizeCanvasHeight
-		@param {int} new - 캔바스의 새로운 높이 픽셀
-		@param {int} old - 캔바스의 이전 높이 픽셀
+		@param {number} new - 캔바스의 새로운 높이 픽셀
+		@param {number} old - 캔바스의 이전 높이 픽셀
 
 		@author 조준호
 		@since 1.1.7
@@ -890,8 +913,8 @@ prototype.__calCanvasWidth_AT__ = function() {
 /**
 모든 그리드 컬럼을 포함하고 있는 캔버스의 가상 폭 픽셀을 리턴합니다.
 
-@function {public int} getCanvasWidth
-@returns {int} 캔버스의 폭 픽셀
+@function {number} getCanvasWidth
+@returns {number} 캔버스의 폭 픽셀
 
 @author 조준호
 @since 1.0.0
@@ -914,8 +937,8 @@ prototype.__setCanvasWidth_AU__ = function(w) {
 		캔바스의 폭이 변했을 경우 트리거되는 이벤트 입니다.
 
 		@event {Event} onResizeCanvasWidth
-		@param {int} new - 캔바스의 새로운 폭 픽셀
-		@param {int} old - 캔바스의 이전 폭 픽셀
+		@param {number} new - 캔바스의 새로운 폭 픽셀
+		@param {number} old - 캔바스의 이전 폭 픽셀
 
 		@author 조준호
 		@since 1.1.7
@@ -929,9 +952,9 @@ prototype.__setCanvasWidth_AU__ = function(w) {
 /**
 주어진 인덱스의 컬럼의 <code>left</code> 픽셀 값을 리턴합니다.
 
-@function {public int} getColLeft
-@param {int} col - 컬럼 인덱스
-@returns {int} 주어진 인덱스의 컬럼의 <code>left</code> 픽셀 값을 리턴합니다.
+@function {number} getColLeft
+@param {number} col - 컬럼 인덱스
+@returns {number} 주어진 인덱스의 컬럼의 <code>left</code> 픽셀 값을 리턴합니다.
 
 @author 조준호
 @since 1.0.0
@@ -970,9 +993,9 @@ prototype.__onReorderCols_Bf__ = function() {
 /**
 주어진 컬럼 키를 가진 컬럼의 폭을 변경합니다.
 
-@function {public} setWidthByKey
-@param {String} key - 컬럼 키
-@param {int} width - 폭 픽셀
+@function {} setWidthByKey
+@param {string} key - 컬럼 키
+@param {number} width - 폭 픽셀
 
 @author 조준호
 @since 1.1.7
@@ -997,9 +1020,9 @@ prototype.setWidthByKey = function(key, w) {
 	컬럼의 폭이 변했을 경우 트리거되는 이벤트 입니다.
 
 	@event {Event} onResizeCol_COLKEY
-	@param {String} key - 컬럼 키
-	@param {int} new - 컬럼의 새로운 폭 픽셀
-	@param {int} old - 컬럼의 이전 폭 픽셀
+	@param {string} key - 컬럼 키
+	@param {number} new - 컬럼의 새로운 폭 픽셀
+	@param {number} old - 컬럼의 이전 폭 픽셀
 
 	@author 조준호
 	@since 1.1.7
@@ -1010,9 +1033,9 @@ prototype.setWidthByKey = function(key, w) {
 	컬럼의 폭이 변했을 경우 트리거되는 이벤트 입니다.
 
 	@event {Event} onResizeCol
-	@param {String} key - 컬럼 키
-	@param {int} new - 컬럼의 새로운 폭 픽셀
-	@param {int} old - 컬럼의 이전 폭 픽셀
+	@param {string} key - 컬럼 키
+	@param {number} new - 컬럼의 새로운 폭 픽셀
+	@param {number} old - 컬럼의 이전 폭 픽셀
 
 	@author 조준호
 	@since 1.1.7
@@ -1388,7 +1411,7 @@ prototype.__lockExist_Ad__ = function() {
   현재 lock 되어 있는지 여부를 리턴합니다.
   lock 되어 있을 경우 스크롤이 되어도, DOM Tree 에서 제거 되지 않습니다.
 
-  @function {public boolean} isRowLockedById
+  @function {boolean} isRowLockedById
   @param {string} id - 데이터 로우의 아이디
   @return {boolean} 로우가 lock 되어 있는 여부
 
@@ -1408,8 +1431,8 @@ prototype.isRowLockedById = function(id) {
   현재 lock 되어 있는지 여부를 리턴합니다.
   lock 되어 있을 경우 스크롤이 되어도, DOM Tree 에서 제거 되지 않습니다.
 
-  @function {public boolean} isRowLocked
-  @param {object} datarow - 데이터 로우
+  @function {boolean} isRowLocked
+  @param {Object} datarow - 데이터 로우
   @return {boolean} 로우가 lock 되어 있는 여부
 
   @author 조준호
@@ -1425,8 +1448,8 @@ prototype.isRowLocked = function(datarow) {
   현재 lock 되어 있는지 여부를 리턴합니다.
   lock 되어 있을 경우 스크롤이 되어도, DOM Tree 에서 제거 되지 않습니다.
 
-  @function {public boolean} isRowLockedByIdx
-  @param {int} rowIdx - 로우 인덱스
+  @function {boolean} isRowLockedByIdx
+  @param {number} rowIdx - 로우 인덱스
   @return {boolean} 로우가 lock 되어 있는 여부
 
   @author 조준호
@@ -1443,7 +1466,7 @@ prototype.isRowLockedByIdx = function(i) {
   주어진 아이디에 해당하는 데이터 로우의 DOMElement 를 lock 합니다.
   lock 되어 있을 경우 스크롤이 되어도, DOM Tree 에서 제거 되지 않습니다.
 
-  @function {public} lockRowById
+  @function {} lockRowById
   @param {string} id - 데이터 로우의 아이디
 
   @author 조준호
@@ -1460,8 +1483,8 @@ prototype.lockRowById = function(id) {
   주어진 데이터 로우의 DOMElement 를 lock 합니다.
   lock 되어 있을 경우 스크롤이 되어도, DOM Tree 에서 제거 되지 않습니다.
 
-  @function {public} lockRow
-  @param {object} datarow - 데이터 로우
+  @function {} lockRow
+  @param {Object} datarow - 데이터 로우
 
   @author 조준호
   @since 1.3.0
@@ -1475,8 +1498,8 @@ prototype.lockRow = function(datarow) {
   주어진 로우 인덱스의 DOMElement 를 lock 합니다.
   lock 되어 있을 경우 스크롤이 되어도, DOM Tree 에서 제거 되지 않습니다.
 
-  @function {public} lockRowByIdx
-  @param {int} rowIdx - 로우 인덱스
+  @function {} lockRowByIdx
+  @param {number} rowIdx - 로우 인덱스
 
   @author 조준호
   @since 1.3.0
@@ -1492,7 +1515,7 @@ prototype.lockRowByIdx = function(i) {
   주어진 아이디에 해당하는 데이터 로우의 DOMElement 를 unlock 합니다.
   lock 되어 있을 경우 스크롤이 되어도, DOM Tree 에서 제거 되지 않습니다.
 
-  @function {public} unlockRowById
+  @function {} unlockRowById
   @param {string} id - 데이터 로우의 아이디
 
   @author 조준호
@@ -1509,8 +1532,8 @@ prototype.unlockRowById = function(id) {
   주어진 데이터 로우의 DOMElement 를 unlock 합니다.
   lock 되어 있을 경우 스크롤이 되어도, DOM Tree 에서 제거 되지 않습니다.
 
-  @function {public} unlockRow
-  @param {object} datarow - 데이터 로우
+  @function {} unlockRow
+  @param {Object} datarow - 데이터 로우
 
   @author 조준호
   @since 1.3.0
@@ -1524,8 +1547,8 @@ prototype.unlockRow = function(datarow) {
   주어진 로우 인덱스의 DOMElement 를 unlock 합니다.
   lock 되어 있을 경우 스크롤이 되어도, DOM Tree 에서 제거 되지 않습니다.
 
-  @function {public} unlockRowByIdx
-  @param {int} rowIdx - 로우 인덱스
+  @function {} unlockRowByIdx
+  @param {number} rowIdx - 로우 인덱스
 
   @author 조준호
   @since 1.3.0
@@ -1539,7 +1562,7 @@ prototype.unlockRowByIdx = function(i) {
 /**
   모든 로우의 DOM Element 를 unlock 합니다.
 
-  @function {public} unlockAllRows
+  @function {} unlockAllRows
 
   @author 조준호
   @since 1.3.0
@@ -1552,7 +1575,7 @@ prototype.unlockAllRows = function() {
 /**
   주어진 아이디에 해당하는 데이터 로우의 DOMElement 다시 랜더링 합니다.
 
-  @function {public} rerenderRowById
+  @function {} rerenderRowById
   @param {string} id - 데이터 로우의 아이디
 
   @author 조준호
@@ -1596,8 +1619,8 @@ prototype.rerenderRowById = function(id) {
 /**
   주어진 데이터 로우의 DOMElement 다시 랜더링 합니다.
 
-  @function {public} rerenderRow
-  @param {object} datarow - 데이터 로우
+  @function {} rerenderRow
+  @param {Object} datarow - 데이터 로우
 
   @author 조준호
   @since 1.3.0
@@ -1610,8 +1633,8 @@ prototype.rerenderRow = function(datarow) {
 /**
   주어진 로우 인덱스의 DOMElement 다시 랜더링 합니다.
 
-  @function {public} rerenderRowByIdx
-  @param {int} rowIdx - 로우 인덱스
+  @function {} rerenderRowByIdx
+  @param {number} rowIdx - 로우 인덱스
 
   @author 조준호
   @since 1.3.0
@@ -1626,7 +1649,7 @@ prototype.rerenderRowByIdx = function(i) {
   주어진 데이터 로우 아이디에 해당하는 데이터 로우와
   컬럼 키에 해당하는 셀의 DOM Element 를 다시 랜더링합니다.
 
-  @function {public} rerenderCellByIdAndKey
+  @function {} rerenderCellByIdAndKey
   @param {string} id - 데이터 로우 아이디
   @param {string} key - 컬럼 키
 
@@ -1651,9 +1674,9 @@ prototype.rerenderCellByIdAndKey = function(id, key) {
 /**
   주어진 로우 인덱스와 컬럼 인덱스에 해당하는 셀의 DOM Element 를 다시 랜더링합니다.
 
-  @function {public} rerenderCellByIdx
-  @param {int} row - 로우 인덱스
-  @param {int} col - 컬럼 인덱스
+  @function {} rerenderCellByIdx
+  @param {number} row - 로우 인덱스
+  @param {number} col - 컬럼 인덱스
 
   @author 조준호
   @since 1.3.0
@@ -1762,7 +1785,7 @@ prototype.__getColCellClass_Ao__ = function(colDef) {
 
 	  @event {Event} onGetColCellClass
 	  @param {Object} colDef - 컬럼 정의 오브젝트
-	  @returns {String} 컬럼 셀들에 공통적으로 추가할 css 클래스 명
+	  @returns {string} 컬럼 셀들에 공통적으로 추가할 css 클래스 명
 
 	  @author 조준호
 	  @since 1.1.7
@@ -1799,11 +1822,11 @@ prototype.__renderRow_Ap__ = function(html, rowIdx, datarow, colDefs, colCommon,
 		  예) return "이_셀에만_주어질_css_클래스_명";
 
 		  @event {Event} onGetCellClass
-		  @param {int} rowIdx - 셀의 로우 인덱스
-		  @param {int} colIdx - 셀의 컬럼 인덱스
+		  @param {number} rowIdx - 셀의 로우 인덱스
+		  @param {number} colIdx - 셀의 컬럼 인덱스
 		  @param {Object} datarow - 셀의 로우 데이터
 		  @param {Object} colDef - 셀의 컬럼 정의 오브젝트
-		  @returns {String} 셀에 추가할 css 클래스 명
+		  @returns {string} 셀에 추가할 css 클래스 명
 
 		  @author 조준호
 		  @since 1.1.7
@@ -1824,11 +1847,11 @@ prototype.__renderCell_Aq__ = function(html, rowIdx, colIdx, datarow, colDef) {
 	  예) html.push("prepend 할 내용");
 
 	  @event {Event} onRenderCell_COLKEY_prepend
-	  @param {int} rowIdx - 셀의 로우 인덱스
-	  @param {int} colIdx - 셀의 컬럼 인덱스
+	  @param {number} rowIdx - 셀의 로우 인덱스
+	  @param {number} colIdx - 셀의 컬럼 인덱스
 	  @param {Object} datarow - 셀의 로우 데이터
 	  @param {Object} colDef - 셀의 컬럼 정의 오브젝트
-	  @param {String[]} html - 셀에 append 할 html 을 넣을 어레이
+	  @param {Array.<string>} html - 셀에 append 할 html 을 넣을 어레이
 
 	  @author 조준호
 	  @since 1.1.7
@@ -1851,11 +1874,11 @@ prototype.__renderCell_Aq__ = function(html, rowIdx, colIdx, datarow, colDef) {
 	  예) html.push("append 할 내용");
 
 	  @event {Event} onRenderCell_COLKEY_append
-	  @param {int} rowIdx - 셀의 로우 인덱스
-	  @param {int} colIdx - 셀의 컬럼 인덱스
+	  @param {number} rowIdx - 셀의 로우 인덱스
+	  @param {number} colIdx - 셀의 컬럼 인덱스
 	  @param {Object} datarow - 셀의 로우 데이터
 	  @param {Object} colDef - 셀의 컬럼 정의 오브젝트
-	  @param {String[]} html - 셀에 append 할 html 을 넣을 어레이
+	  @param {Array.<string>} html - 셀에 append 할 html 을 넣을 어레이
 
 	  @author 조준호
 	  @since 1.1.7
@@ -1869,7 +1892,7 @@ prototype.__renderCell_Aq__ = function(html, rowIdx, colIdx, datarow, colDef) {
 /**
   셀 노드를 다시 렌더링 합니다.
 
-  @function {public} rerender
+  @function {} rerender
 
   @author 조준호
   @since 1.0.0
@@ -1882,7 +1905,7 @@ JGM.Cell.prototype.rerender = function() {
 /**
   셀로 뷰를 스크롤 합니다.
 
-  @function {public} scrollTo
+  @function {} scrollTo
 
   @author 조준호
   @since 1.0.0
@@ -2531,7 +2554,7 @@ prototype.focus = function(e) {
 
 	  @event {Event} onBeforeFocusCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @returns {Boolean} continueOrStop - false 를 리턴할 경우 그리드 캔바스를 포커스하지 않습니다.
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 그리드 캔바스를 포커스하지 않습니다.
 
 	  @author 조준호
 	  @since 1.2.1
@@ -2565,7 +2588,7 @@ prototype.focus = function(e) {
   주어진 아이디에 해당하는 데이터 로우의 DOMElement 가
   현재 랜더링되어 있는지 여부를 리턴합니다.
 
-  @function {public boolean} isRenderedById
+  @function {boolean} isRenderedById
   @param {string} id - 데이터 로우의 아이디
   @return {boolean} 로우가 랜더링되어 있는 여부
 
@@ -2584,8 +2607,8 @@ prototype.isRenderedById = function(id) {
   주어진 데이터 로우의 DOMElement 가
   현재 랜더링되어 있는지 여부를 리턴합니다.
 
-  @function {public boolean} isRendered
-  @param {object} datarow - 데이터 로우
+  @function {boolean} isRendered
+  @param {Object} datarow - 데이터 로우
   @return {boolean} 로우가 랜더링되어 있는 여부
 
   @author 조준호
@@ -2600,8 +2623,8 @@ prototype.isRendered = function(datarow) {
   주어진 로우 인덱스의 DOMElement 가
   현재 랜더링되어 있는지 여부를 리턴합니다.
 
-  @function {public boolean} isRenderedByIdx
-  @param {int} rowIdx - 로우 인덱스
+  @function {boolean} isRenderedByIdx
+  @param {number} rowIdx - 로우 인덱스
   @return {boolean} 로우가 랜더링되어 있는 여부
 
   @author 조준호

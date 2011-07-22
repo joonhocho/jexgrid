@@ -26,7 +26,7 @@ ColDefManager 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
 /**
 ColDefManager 클래스. 그리드 컬럼 정의 오브젝트를 관리하는 모듈입니다.
 
-@class {public ColDefManager} JGM.ColDefManager
+@class {ColDefManager} JGM.ColDefManager
 
 @author 조준호
 @since 1.0.0
@@ -36,9 +36,9 @@ ColDefManager 클래스. 그리드 컬럼 정의 오브젝트를 관리하는 모듈입니다.
 /**
 ColDefManager 컨스트럭터 입니다.
 
-@constructor {public ColDefManager} ColDefManager
+@constructor {ColDefManager} ColDefManager
 @param {Object} args - ColDefManager 모듈 파라미터 오브젝트
-@... {Object[]} args.colDefs - 컬럼 정의 오브젝트 어레이
+@... {Array.<Object>} args.colDefs - 컬럼 정의 오브젝트 어레이
 @... {JGM.Grid} args.grid - ColDefManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
 @... {Object} args.options - ColDefManager 옵션 오브젝트
 @returns {ColDefManager} ColDefManager 모듈 인스턴스를 리턴합니다.
@@ -51,7 +51,7 @@ function ColDefManager(args) {
 	/**
 	{@link JGM} 이 할당해주는 ColDefManager 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.0.0
@@ -62,7 +62,7 @@ function ColDefManager(args) {
 	/**
 	ColDefManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -73,7 +73,7 @@ function ColDefManager(args) {
 	/**
 	그리드 컬럼 정의를 관리하는 {@link JGM.ColDefManager ColDefManager} 인스턴스 입니다.
 
-	@var {public JGM.ColDefManager} JGM.Grid.colDefMgr
+	@var {JGM.ColDefManager} JGM.Grid.colDefMgr
 
 	@author 조준호
 	@since 1.0.0
@@ -84,7 +84,8 @@ function ColDefManager(args) {
 	/**
 	ColDefManager 모듈의 기본 옵션 값들을 정의합니다.
 
-	@var {private Object} options
+	@type {Object} options
+	@private
 
 	@author 조준호
 	@since 1.0.0
@@ -95,7 +96,8 @@ function ColDefManager(args) {
 		각 컬럼의 컬럼 정의 오브젝트를 익스텐드 할 때 사용될 기본 컬럼 정의
 		옵션입니다.
 
-		@var {private optional Object} JGM.ColDefManager.options.colDef
+		@type {Object=} JGM.ColDefManager.options.colDef
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -107,7 +109,8 @@ function ColDefManager(args) {
 			정의 오브젝트에서 필수적으로 각 컬럼마다 유니크한 키 값을 지정해줘야
 			합니다. <br>기본값:<code>undefined</code>
 
-			@var {private optional String} JGM.ColDefManager.options.colDef.key
+			@type {string=} JGM.ColDefManager.options.colDef.key
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -119,7 +122,8 @@ function ColDefManager(args) {
 			컬럼 이름. 이 값이 지정될 경우 컬럼 헤더에 key 값 대신 이 값을
 			이름으로 대신 표시합니다. <br>기본값:<code>""</code>
 
-			@var {private optional String} JGM.ColDefManager.options.colDef.name
+			@type {string=} JGM.ColDefManager.options.colDef.name
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -130,7 +134,8 @@ function ColDefManager(args) {
 			/**
 			컬럼 셀 노드들에 적용되는 CSS 클래스. <br>기본값:<code>undefined</code>
 
-			@var {private optional String} JGM.ColDefManager.options.colDef.colClass
+			@type {string=} JGM.ColDefManager.options.colDef.colClass
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -142,7 +147,8 @@ function ColDefManager(args) {
 			새로운 로우 데이터를 생성하거나 셀의 데이터를 del 키를 눌러서 삭제했을 경우에
 			컬럼에 자동적으로 채워지는 컬럼의 기본 값입니다. <br>기본값:<code>undefined</code>
 
-			@var {private optional ?} JGM.ColDefManager.options.colDef.defaultValue
+			@type {?=} JGM.ColDefManager.options.colDef.defaultValue
+			@private
 
 			@author 조준호
 			@since 1.1.1
@@ -154,7 +160,8 @@ function ColDefManager(args) {
 			{@link JGM.DataCreator DataCreator} 를 사용하여 새로운 로우 데이터를 생성할 경우,
 			로우 데이터의 컬럼 값을 직접적으로 입력할지의 여부입니다. <br>기본값:<code>undefined</code>
 
-			@var {private optional Boolean} JGM.ColDefManager.options.colDef.inputOnCreate
+			@type {boolean=} JGM.ColDefManager.options.colDef.inputOnCreate
+			@private
 
 			@author 조준호
 			@since 1.1.1
@@ -168,7 +175,8 @@ function ColDefManager(args) {
 			꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 			<br>기본값:<code>""</code>
 
-			@var {private optional String} JGM.ColDefManager.options.colDef.style
+			@type {string=} JGM.ColDefManager.options.colDef.style
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -182,7 +190,8 @@ function ColDefManager(args) {
 			꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 			<br>기본값:<code>""</code>
 
-			@var {private optional String} JGM.ColDefManager.options.colDef.headerStyle
+			@type {string=} JGM.ColDefManager.options.colDef.headerStyle
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -193,7 +202,8 @@ function ColDefManager(args) {
 			/**
 			컬럼의 기본 폭 픽셀. <br>기본값:<code>80</code>
 
-			@var {private optional int} JGM.ColDefManager.options.colDef.width
+			@type {number=} JGM.ColDefManager.options.colDef.width
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -204,7 +214,8 @@ function ColDefManager(args) {
 			/**
 			컬럼의 폭을 조절할 경우 사용되는 최소 폭 픽셀. <br>기본값:<code>30</code>
 
-			@var {private optional int} JGM.ColDefManager.options.colDef.minW
+			@type {number=} JGM.ColDefManager.options.colDef.minW
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -215,7 +226,8 @@ function ColDefManager(args) {
 			/**
 			컬럼의 폭을 조절할 경우 사용되는 최대 폭 픽셀. <br>기본값:<code>undefined</code>
 
-			@var {private optional int} JGM.ColDefManager.options.colDef.maxW
+			@type {number=} JGM.ColDefManager.options.colDef.maxW
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -226,7 +238,8 @@ function ColDefManager(args) {
 			/**
 			셀 에디팅을 할 때 사용되는 컬럼 에디터. <br>기본값:<code>undefined</code>
 
-			@var {private optional JGM.Editor} JGM.ColDefManager.options.colDef.editor
+			@type {JGM.Editor=} JGM.ColDefManager.options.colDef.editor
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -237,7 +250,8 @@ function ColDefManager(args) {
 			/**
 			컬럼 정렬할 때 사용되는 컬럼 정렬 오브젝트. <br>기본값:<code>undefined</code>
 
-			@var {private optional Object} JGM.ColDefManager.options.colDef.sorter
+			@type {Object=} JGM.ColDefManager.options.colDef.sorter
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -248,7 +262,8 @@ function ColDefManager(args) {
 			/**
 			컬럼의 숨기기 여부. <br>기본값:<code>false</code>
 
-			@var {private optional Boolean} JGM.ColDefManager.options.colDef.hidden
+			@type {boolean=} JGM.ColDefManager.options.colDef.hidden
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -262,7 +277,8 @@ function ColDefManager(args) {
 			함수 입력시 컬럼명과 합계 값을 파라미터로 받습니다.
 			<br>기본값:<code>undefined</code>
 
-			@var {private optional Function} JGM.ColDefManager.options.colDef.sumRenderer
+			@type {Function=} JGM.ColDefManager.options.colDef.sumRenderer
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -273,7 +289,8 @@ function ColDefManager(args) {
 			/**
 			마우스를 컬럼 셀위에 올려놓을 경우 보여지는 툴팁의 활성 여부. <br>기본값:<code>false</code>
 
-			@var {private optional Boolean} JGM.ColDefManager.options.colDef.tooltipEnabled
+			@type {boolean=} JGM.ColDefManager.options.colDef.tooltipEnabled
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -284,7 +301,8 @@ function ColDefManager(args) {
 			/**
 			컬럼의 폭 조절 가능 여부. <br>기본값:<code>false</code>
 
-			@var {private optional Boolean} JGM.ColDefManager.options.colDef.resizable
+			@type {boolean=} JGM.ColDefManager.options.colDef.resizable
+			@private
 
 			@author 조준호
 			@since 1.1.2
@@ -299,7 +317,8 @@ function ColDefManager(args) {
 			셀 HTML 을 리턴하는 Function 입니다.
 			<br>기본값:기본 텍스트 렌더러
 
-			@var {private optional Function} JGM.ColDefManager.options.colDef.renderer
+			@type {Function=} JGM.ColDefManager.options.colDef.renderer
+			@private
 			@see JGM.ColDefManager.options.colDef.rendererInput
 
 			@author 조준호
@@ -314,7 +333,8 @@ function ColDefManager(args) {
 			value(셀 값), rowIdx(로우 인덱스), colIdx(컬럼 인덱스), datarow(로우 데이터), colDef(컬럼 정의 오브젝트), {@link JGM.ViewportManager ViewportManager}
 			<br>기본값:<code>false</code>
 
-			@var {private optional Boolean} JGM.ColDefManager.options.colDef.rendererInput
+			@type {boolean=} JGM.ColDefManager.options.colDef.rendererInput
+			@private
 
 			@author 조준호
 			@since 1.0.0
@@ -325,7 +345,8 @@ function ColDefManager(args) {
 			/**
 			컬럼 헤더에 타이틀 attribute 입력 여부. <br>기본값:<code>false</code>
 
-			@var {private optional Boolean} JGM.ColDefManager.options.colDef.noTitle
+			@type {boolean=} JGM.ColDefManager.options.colDef.noTitle
+			@private
 
 			@author 조준호
 			@since 1.1.7
@@ -336,7 +357,8 @@ function ColDefManager(args) {
 			/**
 			컬럼 헤더에 이름값 입력 여부. <br>기본값:<code>false</code>
 
-			@var {private optional Boolean} JGM.ColDefManager.options.colDef.noName
+			@type {boolean=} JGM.ColDefManager.options.colDef.noName
+			@private
 
 			@author 조준호
 			@since 1.1.7
@@ -347,7 +369,8 @@ function ColDefManager(args) {
 			/**
 			컬럼 헤더에 입력할 타이틀 attribute 의 내용. <br>기본값:<code>undefined</code>
 
-			@var {private optional String} JGM.ColDefManager.options.colDef.title
+			@type {string=} JGM.ColDefManager.options.colDef.title
+			@private
 
 			@author 조준호
 			@since 1.1.7
@@ -358,7 +381,8 @@ function ColDefManager(args) {
 			/**
 			컬럼이 필터링 시에 검색에 포함되는지 여부.<br>기본값:<code>false</code>
 
-			@var {private optional Boolean} JGM.ColDefManager.options.colDef.noSearch
+			@type {boolean=} JGM.ColDefManager.options.colDef.noSearch
+			@private
 
 			@author 조준호
 			@since 1.2.0
@@ -369,7 +393,8 @@ function ColDefManager(args) {
 			/**
 			필터링 시에 사용될 추가 옵션 필터입니다. 커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.<br>기본값:<code>undefined</code>
 
-			@var {private optional Object[] | String} JGM.ColDefManager.options.colDef.filter
+			@type {Array.<Object> | string=} JGM.ColDefManager.options.colDef.filter
+			@private
 
 			@author 조준호
 			@since 1.2.0
@@ -383,7 +408,8 @@ function ColDefManager(args) {
 			!!!!!!!!!!!!!!!
 			커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.<br>기본값:<code>undefined</code>
 
-			@var {private optional Object[] | String} JGM.ColDefManager.options.colDef.parser
+			@type {Array.<Object> | string=} JGM.ColDefManager.options.colDef.parser
+			@private
 
 			@author 조준호
 			@since 1.3.0
@@ -394,7 +420,8 @@ function ColDefManager(args) {
 			/**
 			필터링 시에 사용될 추가 옵션 필터입니다. 커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.<br>기본값:<code>undefined</code>
 			!!!!!!!!!!
-			@var {private optional Object[] | String} JGM.ColDefManager.options.colDef.validator
+			@type {Array.<Object> | string=} JGM.ColDefManager.options.colDef.validator
+			@private
 
 			@author 조준호
 			@since 1.3.0
@@ -442,8 +469,8 @@ prototype.__destroy_aA__ = function() {
 /**
 필터링 되지 않은 모든 컬럼 정의 어레이를 리턴합니다.
 
-@function {public Object[]} getAll
-@returns {Object[]} 모든 컬럼 정의 어레이
+@function {Array.<Object>} getAll
+@returns {Array.<Object>} 모든 컬럼 정의 어레이
 
 @author 조준호
 @since 1.0.0
@@ -459,8 +486,8 @@ prototype.getAll = function() {
 컬럼 정의 어레이를 셋합니다. 기본 컬럼 정의 옵션들을 익스텐드하고 필터링 된 컬럼
 정의 어레이를 셋합니다.
 
-@function {public} set
-@param {optional Object[]} colDefs - 컬럼 정의 오브젝트 어레이
+@function {} set
+@param {Array.<Object>=} colDefs - 컬럼 정의 오브젝트 어레이
 
 @author 조준호
 @since 1.0.0
@@ -548,8 +575,8 @@ prototype.push = function(colDef) {
 /**
 주어진 컬럼 인덱스에 주어진 컬럼 정의 오브젝트를 넣습니다.
 
-@function {public} addAt
-@param {int} i - 새로운 컬럼을 넣을 인덱스
+@function {} addAt
+@param {number} i - 새로운 컬럼을 넣을 인덱스
 @param {Object} colDef - 새로 추가할 컬럼
 
 @author 조준호
@@ -726,11 +753,11 @@ prototype.__reidxFrom_g__ = function(from) {
 주어진 컬럼 인덱스에 해당하는 컬럼 정의 오브젝트를 리턴합니다. 인덱스가 주어지지
 않은 경우 필터링된 전체 리스트를 리턴합니다.
 
-@function {public (Object[] | Object)} get
+@function {(Array.<Object> | Object)} get
 @paramset 인덱스가 주어지지 않은 경우
-@returns {Object[]} 화면에 보여질 컬럼들의 컬럼 정의 오브젝트 어레이
+@returns {Array.<Object>} 화면에 보여질 컬럼들의 컬럼 정의 오브젝트 어레이
 @paramset 인덱스가 주어진 경우
-@param {optional int} i - 컬럼 인덱스
+@param {int=} i - 컬럼 인덱스
 @returns {Object} 주어진 인덱스의 컬럼 정의 오브젝트
 
 @author 조준호
@@ -750,8 +777,8 @@ prototype.get = function(i) {
 /**
 컬럼 키에 맞는 컬럼 정의 오브젝트를 리턴합니다.
 
-@function {public Object} getByKey
-@param {String} key - 컬럼 키
+@function {Object} getByKey
+@param {string} key - 컬럼 키
 @returns {Object} <code>{@link keyToDef}[key]</code>
 
 @author 조준호
@@ -768,8 +795,8 @@ prototype.getByKey = function(key) {
 /**
 화면에 보여지는 컬럼의 수를 리턴합니다. 필터링된 컬럼 정의 오브젝트 어레이에 길이를 리턴합니다.
 
-@function {public int} length
-@returns {int} 화면에 보여지는 컬럼의 수
+@function {number} length
+@returns {number} 화면에 보여지는 컬럼의 수
 
 @author 조준호
 @since 1.0.0
@@ -784,9 +811,9 @@ prototype.length = function() {
 /**
 컬럼 키에 맞는 컬럼의 인덱스를 리턴합니다.
 
-@function {public int} getIdxByKey
-@param {String} key - 컬럼 키
-@returns {int} <code>{@link keyToIdx}[key]</code>
+@function {number} getIdxByKey
+@param {string} key - 컬럼 키
+@returns {number} <code>{@link keyToIdx}[key]</code>
 
 @author 조준호
 @since 1.0.0
@@ -803,9 +830,9 @@ prototype.getIdxByKey = function(key) {
 /**
 주어진 컬럼 정의 오브젝트의 인덱스를 리턴합니다.
 
-@function {public int} getIdx
-@param {String} colDef - 컬럼 정의 오브젝트
-@returns {int}  <code>{@link keyToIdx}[colDef.key]</code>
+@function {number} getIdx
+@param {string} colDef - 컬럼 정의 오브젝트
+@returns {number}  <code>{@link keyToIdx}[colDef.key]</code>
 
 @author 조준호
 @since 1.0.0
@@ -822,8 +849,8 @@ prototype.getIdx = function(colDef) {
 /**
 화면에 보여지는 컬럼들을 주어진 컬럼 키 어레이에 맞춰서 재정렬합니다.
 
-@function {public Object[]} sortByKey
-@param {String[]} keys - 컬럼 키 어레이
+@function {Array.<Object>} sortByKey
+@param {Array.<string>} keys - 컬럼 키 어레이
 @returns {Object} 정렬된 컬럼 정의 오브젝트 어레이
 
 @author 조준호
@@ -849,7 +876,7 @@ prototype.sortByKey = function(keys) {
 	그리드 컬럼 순서가 변경되었을 경우 발생하는 이벤트 입니다.
 	
 	@event {Event} onReorderCols
-	@param {String[]} keys - 새로 정렬된 컬럼 키 순서
+	@param {Array.<string>} keys - 새로 정렬된 컬럼 키 순서
 
 	@author 조준호
 	@since 1.2.1
@@ -868,10 +895,10 @@ prototype.getKeys = function() {
 같은 정렬 방법인 "text", 정수를 비교하는 "int", 소수를 비교하는 "float" 이
 있습니다.
 
-@function {public static Object} sorter
-@param {String} type - 정렬 기준 타입 ("text" | "int" | "float")
-@param {String} key - 컬럼 키
-@param {optional Boolean} on - 정렬 오브젝트의 초기 활성화 여부
+@function {Object} sorter
+@param {string} type - 정렬 기준 타입 ("text" | "int" | "float")
+@param {string} key - 컬럼 키
+@param {boolean=} on - 정렬 오브젝트의 초기 활성화 여부
 @returns {Object} 정렬 오브젝트를 리턴합니다.
 
 @author 조준호

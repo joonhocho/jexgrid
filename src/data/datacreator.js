@@ -33,7 +33,7 @@
  /**
    DataCreator 클래스. 새로운 데이터의 생성과 추가를 담당합니다.
 
-   @class {public DataCreator} JGM.DataCreator
+   @class {DataCreator} JGM.DataCreator
 
    @author 조준호
    @since 1.1.1
@@ -43,7 +43,7 @@
 	/**
 	  DataCreator 컨스트럭터 입니다.
 
-	  @constructor {public DataCreator} DataCreator
+	  @constructor {DataCreator} DataCreator
 	  @param {Object} args - DataCreator 모듈 파라미터 오브젝트
 	  @... {jQuery} args.container - DataCreator 를 넣을 컨테이너 오브젝트
 	  @... {JGM.Grid} args.grid - DataCreator 를 포함하는 {@link JGM.Grid Grid} 인스턴스
@@ -58,7 +58,7 @@
 		/**
 		  {@link JGM} 이 할당해주는 DataCreator 모듈 고유 아이디입니다. 읽기 전용.
 
-		  @var {public final String} mid
+		  @var {string} mid
 
 		  @author 조준호
 		  @since 1.1.1
@@ -73,7 +73,7 @@
 		/**
 		  DataCreator 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-		  @var {public JGM.Grid} grid
+		  @var {JGM.Grid} grid
 
 		  @author 조준호
 		  @since 1.1.1
@@ -84,7 +84,7 @@
 		/**
 		  새로운 데이터 생성을 관리하는 {@link JGM.DataCreator DataCreator} 인스턴스 입니다.
 
-		  @var {public JGM.DataCreator} JGM.Grid.creator
+		  @var {JGM.DataCreator} JGM.Grid.creator
 
 		  @author 조준호
 		  @since 1.1.6
@@ -95,7 +95,8 @@
 		/**
 		  DataCreator 모듈의 기본 옵션 값들을 정의합니다.
 
-		  @var {private Object} options
+		  @type {Object} options
+		  @private
 
 		  @author 조준호
 		  @since 1.1.1
@@ -105,7 +106,8 @@
 			/**
 			  모듈의 기본 배경을 정합니다. <br>기본값:<code>"#dfdfdf"</code>
 
-			  @var {private optional String} JGM.DataCreator.options.background
+			  @type {string=} JGM.DataCreator.options.background
+			  @private
 
 			  @author 조준호
 			  @since 1.1.1
@@ -116,7 +118,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈의 border 의 두께를 정합니다. <br>기본값:<code>0</code>
 
-					@var {private optional int} JGM.DataCreator.options.borderThickness
+					@type {number=} JGM.DataCreator.options.borderThickness
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -127,7 +130,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈의 border 스타일을 정합니다. <br>기본값:<code>"solid #D6D6D6"</code>
 
-					@var {private optional String} JGM.DataCreator.options.border
+					@type {string=} JGM.DataCreator.options.border
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -138,7 +142,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈 내의 input 의 border 스타일을 정합니다. <br>기본값:<code>"solid #A7A7A7"</code>
 
-					@var {private optional String} JGM.DataCreator.options.inputBorder
+					@type {string=} JGM.DataCreator.options.inputBorder
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -149,7 +154,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈 내의 input 의 두께를 정합니다. <br>기본값:<code>1</code>
 
-					@var {private optional int} JGM.DataCreator.options.inputBorderThickness
+					@type {number=} JGM.DataCreator.options.inputBorderThickness
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -160,7 +166,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈 내의 input 의 높이를 정합니다. <br>기본값:<code>18</code>
 
-					@var {private optional int} JGM.DataCreator.options.inputHeight
+					@type {number=} JGM.DataCreator.options.inputHeight
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -171,7 +178,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈 내의 input 의 margin 을 정합니다. <br>기본값:<code>8</code>
 
-					@var {private optional int} JGM.DataCreator.options.inputMargin
+					@type {number=} JGM.DataCreator.options.inputMargin
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -182,7 +190,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈 내의 컬럼 명의 margin 을 정합니다. <br>기본값:<code>2</code>
 
-					@var {private optional int} JGM.DataCreator.options.nameMargin
+					@type {number=} JGM.DataCreator.options.nameMargin
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -193,7 +202,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈 내의 컬럼 명의 font 를 정합니다. <br>기본값:<code>"12px Arial,Helvetica,sans-serif"</code>
 
-					@var {private optional String} JGM.DataCreator.options.font
+					@type {string=} JGM.DataCreator.options.font
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -204,7 +214,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈의 높이를 정합니다. <br>기본값:<code>28</code>
 
-					@var {private optional int} JGM.DataCreator.options.height
+					@type {number=} JGM.DataCreator.options.height
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -215,7 +226,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈의 padding 을 정합니다. <br>기본값:<code>3</code>
 
-					@var {private optional int} JGM.DataCreator.options.padding
+					@type {number=} JGM.DataCreator.options.padding
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -226,7 +238,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 CSS 클래스 입니다. <br>기본값:<code>"creator-icon"</code>
 
-					@var {private optional String} JGM.DataCreator.options.classCreatorIcon
+					@type {string=} JGM.DataCreator.options.classCreatorIcon
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -237,7 +250,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 이미지 url 입니다. <br>기본값:<code>imageUrl + "data-creator-icon.png"</code>
 
-					@var {private optional String} JGM.DataCreator.options.creatorIconUrl
+					@type {string=} JGM.DataCreator.options.creatorIconUrl
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -248,7 +262,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 폭 입니다. <br>기본값:<code>13</code>
 
-					@var {private optional int} JGM.DataCreator.options.creatorIconWidth
+					@type {number=} JGM.DataCreator.options.creatorIconWidth
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -259,7 +274,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 높이 입니다. <br>기본값:<code>13</code>
 
-					@var {private optional int} JGM.DataCreator.options.creatorIconHeight
+					@type {number=} JGM.DataCreator.options.creatorIconHeight
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -270,7 +286,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈의 CSS 클래스 입니다. <br>기본값:<code>"data-creator"</code>
 
-					@var {private optional String} JGM.DataCreator.options.classCreator
+					@type {string=} JGM.DataCreator.options.classCreator
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -281,7 +298,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈 내의 컬럼 명의 CSS 클래스 입니다. <br>기본값:<code>"data-creator-name"</code>
 
-					@var {private optional String} JGM.DataCreator.options.classColName
+					@type {string=} JGM.DataCreator.options.classColName
+					@private
 
 					@author 조준호
 					@since 1.1.1
@@ -292,7 +310,8 @@ __background_a__: "#dfdfdf",
 				  /**
 					모듈 내의 input tag 에 적용되는 border radius 입니다. <br>기본값:<code>3</code>
 
-					@var {private optional int} JGM.DataCreator.options.inputBorderRadius
+					@type {number=} JGM.DataCreator.options.inputBorderRadius
+					@private
 
 					@author 조준호
 					@since 1.1.7

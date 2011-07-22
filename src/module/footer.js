@@ -34,7 +34,7 @@ Footer 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
 Footer 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 관련 기능들을 지원합니다.
 
-@class {public Footer} JGM.Footer
+@class {Footer} JGM.Footer
 
 @author 조준호
 @since 1.0.0
@@ -44,7 +44,7 @@ Footer 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 /**
 Footer 컨스트럭터 입니다.
 
-@constructor {public Footer} Footer
+@constructor {Footer} Footer
 @param {Object} args - Footer 모듈 파라미터 오브젝트
 @... {jQuery} args.container - Footer 를 넣을 컨테이너 오브젝트
 @... {JGM.Grid} args.grid - Footer 를 포함하는 {@link JGM.Grid Grid} 인스턴스
@@ -59,7 +59,7 @@ function Footer(args) {
 	/**
 	{@link JGM} 이 할당해주는 Footer 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.0.0
@@ -74,7 +74,7 @@ function Footer(args) {
 	/**
 	Footer 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -85,7 +85,7 @@ function Footer(args) {
 	/**
 	그리드 푸터를 관리하는 {@link JGM.Footer Footer} 인스턴스 입니다.
 
-	@var {public JGM.Footer} JGM.Grid.footer
+	@var {JGM.Footer} JGM.Grid.footer
 
 	@author 조준호
 	@since 1.0.0
@@ -96,7 +96,8 @@ function Footer(args) {
 	/**
 	Footer 모듈의 기본 옵션 값들을 정의합니다.
 
-	@var {private Object} options
+	@type {Object} options
+	@private
 
 	@author 조준호
 	@since 1.0.0
@@ -106,7 +107,8 @@ function Footer(args) {
 		/**
 		Footer 의 셀에 공통적으로 적용되는 CSS 클래스 입니다.<br>기본값:<code>"footer-cell"</code>
 
-		@var {private optional String} JGM.Footer.options.classCell
+		@type {string=} JGM.Footer.options.classCell
+		@private
 
 		@author 조준호
 		@since 1.1.3
@@ -117,7 +119,8 @@ function Footer(args) {
 		/**
 		Footer 의 배경입니다. <br>기본값:<code>"#F1F5FB"</code>
 
-		@var {private optional String} JGM.Footer.options.background
+		@type {string=} JGM.Footer.options.background
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -128,7 +131,8 @@ function Footer(args) {
 		/**
 		Footer 의 border 입니다. <br>기본값:<code>"0px solid #CCD9EA"</code>
 
-		@var {private optional String} JGM.Footer.options.border
+		@type {string=} JGM.Footer.options.border
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -139,7 +143,8 @@ function Footer(args) {
 		/**
 		Footer 의 기본 글씨 색 입니다. <br>기본값:<code>"#000"</code>
 
-		@var {private optional String} JGM.Footer.options.color
+		@type {string=} JGM.Footer.options.color
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -150,7 +155,8 @@ function Footer(args) {
 		/**
 		Footer 의 기본 폰트 크기 입니다. <br>기본값:<code>"13px"</code>
 
-		@var {private optional String} JGM.Footer.options.fontSize
+		@type {string=} JGM.Footer.options.fontSize
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -161,7 +167,8 @@ function Footer(args) {
 		/**
 		Footer 의 기본 폰트 무게 입니다. <br>기본값:<code>"normal"</code>
 
-		@var {private optional String} JGM.Footer.options.fontWeight
+		@type {string=} JGM.Footer.options.fontWeight
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -172,7 +179,8 @@ function Footer(args) {
 		/**
 		Footer 안 셀의 높이 픽셀 입니다. <br>기본값:<code>25</code>
 
-		@var {private optional int} JGM.Footer.options.cellHeight
+		@type {number=} JGM.Footer.options.cellHeight
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -183,7 +191,8 @@ function Footer(args) {
 		/**
 		Footer 안 셀의 right-padding 픽셀 입니다. <br>기본값:<code>30</code>
 
-		@var {private optional int} JGM.Footer.options.cellPadding
+		@type {number=} JGM.Footer.options.cellPadding
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -194,7 +203,8 @@ function Footer(args) {
 		/**
 		Footer 의 총 건수를 보여주는 셀의 템플릿 입니다.<br>기본값:<code>"현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건"</code>
 
-		@var {private optional String} JGM.Footer.options.countTemplate
+		@type {string=} JGM.Footer.options.countTemplate
+		@private
 
 		@author 조준호
 		@since 1.1.3
@@ -205,7 +215,8 @@ function Footer(args) {
 		/**
 		Footer 의 title 의 글씨 색 입니다. <br>기본값:<code>"#5A6779"</code>
 
-		@var {private optional String} JGM.Footer.options.titleColor
+		@type {string=} JGM.Footer.options.titleColor
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -216,7 +227,8 @@ function Footer(args) {
 		/**
 		Footer 의 title 의 폰트 크기 입니다. <br>기본값:<code>"12px"</code>
 
-		@var {private optional String} JGM.Footer.options.titleFontSize
+		@type {string=} JGM.Footer.options.titleFontSize
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -227,7 +239,8 @@ function Footer(args) {
 		/**
 		Footer 의 title 의 폰트 무게 입니다. <br>기본값:<code>"normal"</code>
 
-		@var {private optional String} JGM.Footer.options.titleFontWeight
+		@type {string=} JGM.Footer.options.titleFontWeight
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -238,7 +251,8 @@ function Footer(args) {
 		/**
 		Footer 의 content 의 글씨 색 입니다. <br>기본값:<code>"#1E395B"</code>
 
-		@var {private optional String} JGM.Footer.options.contentColor
+		@type {string=} JGM.Footer.options.contentColor
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -249,7 +263,8 @@ function Footer(args) {
 		/**
 		Footer 의 content 의 폰트 크기 입니다. <br>기본값:<code>"12px"</code>
 
-		@var {private optional String} JGM.Footer.options.contentFontSize
+		@type {string=} JGM.Footer.options.contentFontSize
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -260,7 +275,8 @@ function Footer(args) {
 		/**
 		Footer 의 content 의 폰트 무게 입니다. <br>기본값:<code>"normal"</code>
 
-		@var {private optional String} JGM.Footer.options.contentFontWeight
+		@type {string=} JGM.Footer.options.contentFontWeight
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -271,7 +287,8 @@ function Footer(args) {
 		/**
 		Footer 컨테이너에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-footer"</code>
 
-		@var {private optional String} JGM.Footer.options.classFooter
+		@type {string=} JGM.Footer.options.classFooter
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -282,7 +299,8 @@ function Footer(args) {
 		/**
 		Footer 의 title 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"footer-title"</code>
 
-		@var {private optional String} JGM.Footer.options.classTitle
+		@type {string=} JGM.Footer.options.classTitle
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -293,7 +311,8 @@ function Footer(args) {
 		/**
 		Footer 의 content 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"footer-content"</code>
 
-		@var {private optional String} JGM.Footer.options.classContent
+		@type {string=} JGM.Footer.options.classContent
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -307,7 +326,8 @@ function Footer(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.Footer.options.style
+		@type {string=} JGM.Footer.options.style
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -321,7 +341,8 @@ function Footer(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.Footer.options.cellStyle
+		@type {string=} JGM.Footer.options.cellStyle
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -335,7 +356,8 @@ function Footer(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.Footer.options.titleStyle
+		@type {string=} JGM.Footer.options.titleStyle
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -349,7 +371,8 @@ function Footer(args) {
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
 
-		@var {private optional String} JGM.Footer.options.contentStyle
+		@type {string=} JGM.Footer.options.contentStyle
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -546,7 +569,7 @@ prototype.__updateSums_e__ = function() {
 {@link JGM.Footer Footer} 에 비어있는 셀 하나를 리턴합니다. 현재 비어있는 셀이
 없을 경우에는 새로운 로우를 추가하여 그 로우의 첫 셀을 리턴합니다.
 
-@function {public jQuery} getNextCell
+@function {jQuery} getNextCell
 @returns {jQuery} {@link JGM.Footer Footer} 에 비어있는 셀
 
 @author 조준호

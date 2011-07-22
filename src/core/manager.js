@@ -19,7 +19,7 @@ mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
 /**
 {@link JGM} (JexGrid Manager) 오브젝트 입니다.
 
-@var {public Object} window.JGM
+@var {Object} window.JGM
 
 @author 조준호
 @since 1.0.0
@@ -113,8 +113,8 @@ Grid 모듈을 instantiate 하고 생성된 오브젝트 인스턴스를 리턴합니다. JGM 에
 등록해야하는 모듈인 경우 고유의 mid를 할당하고 생성된 모듈을 {@link m} 에 모듈
 명을 key 값으로 그리고 mid 를 다시 한번 key 값으로 등록합니다.
 
-@function {public static ?} create
-@param {String} name - Grid 모듈 이름
+@function {?} create
+@param {string} name - Grid 모듈 이름
 @param {Object} args - 해당 Grid 모듈에 넘겨줄 옵션 오브젝트
 @returns {?} Grid 모듈 인스턴스
 
@@ -322,7 +322,7 @@ JGM.__remove_f__ = function(name, mid) {
 /**
 Grid 를 생성하고 리턴합니다.
 
-@function {public static JGM.Grid} grid
+@function {JGM.Grid} grid
 @param {Object} args - Grid 모듈에 넘겨줄 옵션 오브젝트
 @returns {JGM.Grid} Grid 인스턴스
 
@@ -496,7 +496,7 @@ JGM.__extend_e__ = function(defaults, options, map) {
 mid 를 가진 {@link JGM.CheckManager CheckManager} 를 가져오려면 <code>JGM.m.JGM10</code> 과
 같이 엑세스 할 수 있습니다.
 
-@var {public Object} m
+@var {Object} m
 
 @author 조준호
 @since 1.0.0

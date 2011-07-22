@@ -32,7 +32,7 @@ Cell 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
 /**
 Cell 클래스. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
 
-@class {public Cell} JGM.Cell
+@class {Cell} JGM.Cell
 
 @author 조준호
 @since 1.0.0
@@ -42,12 +42,12 @@ Cell 클래스. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
 /**
 Cell 컨스트럭터 입니다.
 
-@constructor {public Cell} Cell
+@constructor {Cell} Cell
 @paramset 셀 인덱스를 사용할 경우
 @param {Object} args - Cell 모듈 파라미터 오브젝트
 @... {JGM.Grid} args.grid - 셀을 포함하는 {@link JGM.Grid Grid} 인스턴스
-@... {int} args.row - 셀의 로우 인덱스
-@... {int} args.col - 셀의 컬럼 인덱스
+@... {number} args.row - 셀의 로우 인덱스
+@... {number} args.col - 셀의 컬럼 인덱스
 @paramset 셀 DOM 노드를 사용할 경우
 @param {Object} args - Cell 모듈 파라미터 오브젝트
 @... {JGM.Grid} args.grid - 셀을 포함하는 {@link JGM.Grid Grid} 인스턴스
@@ -76,7 +76,7 @@ function Cell(args) {
 	/**
 	셀을 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -140,8 +140,8 @@ prototype.destroy = function() {
 /**
 셀의 로우 인덱스를 리턴합니다.
 
-@function {public int} getRowIdx
-@returns {int} 셀의 로우 인덱스
+@function {number} getRowIdx
+@returns {number} 셀의 로우 인덱스
 
 @author 조준호
 @since 1.0.0
@@ -157,8 +157,8 @@ prototype.getRowIdx = function() {
 /**
 셀의 컬럼 인덱스를 리턴합니다.
 
-@function {public int} getColIdx
-@returns {int} 셀의 컬럼 인덱스
+@function {number} getColIdx
+@returns {number} 셀의 컬럼 인덱스
 
 @author 조준호
 @since 1.0.0
@@ -174,7 +174,7 @@ prototype.getColIdx = function() {
 /**
 셀의 DOM 노드를 리턴합니다.
 
-@function {public DOMElement} getNode
+@function {DOMElement} getNode
 @returns {DOMElement} 셀의 DOM 노드
 
 @author 조준호
@@ -194,7 +194,7 @@ prototype.getRowNode = function() {
 /**
 셀의 DOM 노드를 가진 jQuery 오브젝트를 리턴합니다.
 
-@function {public jQuery} get$
+@function {jQuery} get$
 @returns {jQuery} 셀의 DOM 노드를 가진 jQuery 오브젝트
 
 @author 조준호
@@ -213,7 +213,7 @@ prototype.get$ = function() {
 /**
 셀의 데이터 로우를 리턴합니다.
 
-@function {public Object} getDatarow
+@function {Object} getDatarow
 @returns {Object} 셀의 데이터 로우
 
 @author 조준호
@@ -228,7 +228,7 @@ prototype.getDatarow = function() {
 /**
 셀의 컬럼 정의 오브젝트를 리턴합니다.
 
-@function {public Object} getColDef
+@function {Object} getColDef
 @returns {Object} 셀의 컬럼 정의 오브젝트
 
 @author 조준호
@@ -243,8 +243,8 @@ prototype.getColDef = function() {
 /**
 셀의 컬럼 키를 리턴합니다.
 
-@function {public String} getKey
-@returns {String} 셀의 컬럼 키
+@function {string} getKey
+@returns {string} 셀의 컬럼 키
 
 @author 조준호
 @since 1.0.0
@@ -265,8 +265,8 @@ prototype.getId = function() {
 /**
 셀의 데이터 값을 리턴합니다.
 
-@function {public String} getValue
-@returns {String} 셀의 데이터 값
+@function {string} getValue
+@returns {string} 셀의 데이터 값
 
 @author 조준호
 @since 1.0.0
@@ -282,8 +282,8 @@ prototype.getValue = function() {
 /**
 셀의 DOM 노드가 valid 한지를 리턴합니다.
 
-@function {public Boolean} isValid
-@returns {Boolean} 셀의 DOM 노드의 validity
+@function {boolean} isValid
+@returns {boolean} 셀의 DOM 노드의 validity
 
 @author 조준호
 @since 1.0.0
@@ -297,8 +297,8 @@ prototype.isValid = function() {
 /**
 셀의 DOM 노드가 invalid 한지를 리턴합니다.
 
-@function {public Boolean} isInvalid
-@returns {Boolean} 셀의 DOM 노드의 invalidity
+@function {boolean} isInvalid
+@returns {boolean} 셀의 DOM 노드의 invalidity
 
 @author 조준호
 @since 1.0.0
@@ -312,8 +312,8 @@ prototype.isInvalid = function() {
 /**
 셀의 jQuery 오브젝트가 invalid 한지를 리턴합니다.
 
-@function {public Boolean} isEmpty$
-@returns {Boolean} 셀의 jQuery 오브젝트가 비었을 경우 true, 아닐경우 false 를
+@function {boolean} isEmpty$
+@returns {boolean} 셀의 jQuery 오브젝트가 비었을 경우 true, 아닐경우 false 를
 리턴합니다.
 
 @author 조준호
@@ -328,8 +328,8 @@ prototype.isEmpty$ = function() {
 /**
 셀의 jQuery 오브젝트가 valid 한지를 리턴합니다.
 
-@function {public Boolean} has$
-@returns {Boolean} 셀의 jQuery 오브젝트가 비었을 경우 false, 아닐경우 true 를
+@function {boolean} has$
+@returns {boolean} 셀의 jQuery 오브젝트가 비었을 경우 false, 아닐경우 true 를
 리턴합니다.
 
 @author 조준호
@@ -344,8 +344,8 @@ prototype.has$ = function() {
 /**
 주어진 셀의 인스턴스가 현재 셀의 인스턴스와 동일한지를 리턴합니다.
 
-@function {public Boolean} equals
-@returns {Boolean} 서로 같은 데이터를 가질 경우 true, 아닐 경우 false 를
+@function {boolean} equals
+@returns {boolean} 서로 같은 데이터를 가질 경우 true, 아닐 경우 false 를
 리턴합니다.
 
 @author 조준호

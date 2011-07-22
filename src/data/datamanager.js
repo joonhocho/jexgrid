@@ -33,7 +33,7 @@
 	  DataManager 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 	  관련 기능들을 지원합니다.
 
-	  @class {public DataManager} JGM.DataManager
+	  @class {DataManager} JGM.DataManager
 
 	  @author 조준호
 	  @since 1.0.0
@@ -43,9 +43,9 @@
 	/**
 	  DataManager 컨스트럭터 입니다.
 
-	  @constructor {public DataManager} DataManager
+	  @constructor {DataManager} DataManager
 	  @param {Object} args - DataManager 모듈 파라미터 오브젝트
-	  @... {Object[]} args.datalist - 데이터 어레이
+	  @... {Array.<Object>} args.datalist - 데이터 어레이
 	  @... {JGM.Grid} args.grid - DataManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
 	  @... {Object} args.options - DataManager 옵션 오브젝트
 	  @returns {DataManager} DataManager 모듈 인스턴스를 리턴합니다.
@@ -59,7 +59,7 @@
 		/**
 		  {@link JGM} 이 할당해주는 DataManager 모듈 고유 아이디입니다. 읽기 전용.
 
-		  @var {public final String} mid
+		  @var {string} mid
 
 		  @author 조준호
 		  @since 1.0.0
@@ -70,7 +70,7 @@
 		/**
 		  DataManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-		  @var {public JGM.Grid} grid
+		  @var {JGM.Grid} grid
 
 		  @author 조준호
 		  @since 1.0.0
@@ -81,7 +81,7 @@
 		/**
 		  그리드 데이터를 관리하는 {@link JGM.DataManager DataManager} 인스턴스 입니다.
 
-		  @var {public JGM.DataManager} JGM.Grid.dataMgr
+		  @var {JGM.DataManager} JGM.Grid.dataMgr
 
 		  @author 조준호
 		  @since 1.0.0
@@ -92,7 +92,7 @@
 		/**
 		  필터링 되지 않은 모든 데이터 어레이.
 
-		  @var {public Object[]} all
+		  @var {Array.<Object>} all
 
 		  @author 조준호
 		  @since 1.0.0
@@ -103,7 +103,7 @@
 		/**
 		  그리드 화면에 보여질 필터링 된 데이터 어레이.
 
-		  @var {public Object[]} datalist
+		  @var {Array.<Object>} datalist
 
 		  @author 조준호
 		  @since 1.0.0
@@ -114,7 +114,7 @@
 		/**
 		  필터링 되어 화면에 보이지 않는 데이터 어레이.
 
-		  @var {public Object[]} failed
+		  @var {Array.<Object>} failed
 
 		  @author 조준호
 		  @since 1.0.0
@@ -125,7 +125,8 @@
 		/**
 		  DataManager 모듈의 기본 옵션 값들을 정의합니다.
 
-		  @var {private Object} options
+		  @type {Object} options
+		  @private
 
 		  @author 조준호
 		  @since 1.0.0
@@ -135,7 +136,8 @@
 			/**
 			  각 로우 데이터들이 갖는 고유 데이터 아이디를 가리키는 key 입니다.<br>기본값:<code>undefined</code>
 
-			  @var {private optional String} JGM.DataManager.options.idKey
+			  @type {string=} JGM.DataManager.options.idKey
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -146,7 +148,8 @@
 			/**
 			  데이터 로우의 primary key 가 하나 이상일 경우에 이 어레이에 키 값들을 넣어줍니다.<br>기본값:<code>[]</code>
 
-			  @var {private optional String[]} JGM.DataManager.options.idColKeys
+			  @type {Array.<string>=} JGM.DataManager.options.idColKeys
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -187,7 +190,8 @@
 			/**
 			  데이터 로우의 유니크 아이디를 가리키는 key 입니다.
 
-			  @var {private String} idKey
+			  @type {string} idKey
+			  @private
 
 			  @author 조준호
 			  @since 1.0.0
@@ -976,9 +980,9 @@
 	  예를 들면 executeSelect("id, key") 를 실행할 경우 로우 데이터에서 id 와 key 컬럼들의
 	  값들만 추출해서 리턴합니다.
 
-	  @function {public int} executeSelect
+	  @function {number} executeSelect
 	  @param {string} selectStatement - 빈칸 또는 , 에 의해 띄여진 키 들의 스트링
-	  @returns {Object[]} 주어진 키들을 가진 오브젝트들의 어레이
+	  @returns {Array.<Object>} 주어진 키들을 가진 오브젝트들의 어레이
 
 	  @author 조준호
 	  @since 1.3.0
@@ -1387,7 +1391,7 @@
 	  매핑된 데이터 로우를 리턴합니다. 그리드가 데이터를 가지고 있지 않는 경우에는
 	  <code>undefined</code> 를 리턴합니다.
 
-	  @function {public Object} map
+	  @function {Object} map
 	  @param {Object} datarow - 기존의 데이터에 매핑할 데이터 로우
 	  @returns {Object} 매핑된 데이터 로우를 리턴합니다.
 
@@ -1415,8 +1419,8 @@
 	  매핑 결과는 다음과 같은 형식을 가집니다.
 	  <code>{mapped:data[], unmapped:data[]}</code>
 
-	  @function {public Object} mapList
-	  @param {Object[]} datalist - 기존의 데이터에 매핑할 데이터 어레이
+	  @function {Object} mapList
+	  @param {Array.<Object>} datalist - 기존의 데이터에 매핑할 데이터 어레이
 	  @returns {Object} 매핑된 로우 데이터 어레이와 실패한 어레이를 리턴합니다.
 
 	  @author 조준호
@@ -1454,8 +1458,8 @@
 	/**
 	  주어진 아이디를 가진 로우 데이터를 리턴합니다.
 
-	  @function {public Object} getById
-	  @param {String} id - 데이터 로우의 아이디
+	  @function {Object} getById
+	  @param {string} id - 데이터 로우의 아이디
 	  @returns {Object} 주어진 아이디를 가진 데이터 로우
 
 	  @author 조준호
@@ -1471,8 +1475,8 @@
 	/**
 	  주어진 인덱스에 해당하는 로우 데이터를 리턴합니다.
 
-	  @function {public Object} getByIdx
-	  @param {int} idx - 데이터 로우의 화면에 보여지는 인덱스
+	  @function {Object} getByIdx
+	  @param {number} idx - 데이터 로우의 화면에 보여지는 인덱스
 	  @returns {Object} 주어진 인덱스를 가진 데이터 로우
 
 	  @author 조준호
@@ -1488,7 +1492,7 @@
 	/**
 	  주어진 로우 DOM Element 에 해당하는 로우 데이터를 리턴합니다.
 
-	  @function {public Object} getByNode
+	  @function {Object} getByNode
 	  @param {DOMElement} node - 로우 DOM Element
 	  @returns {Object} 주어진 로우 DOM Element 에 해당하는 데이터 로우
 
@@ -1504,9 +1508,9 @@
 	/**
 	  주어진 데이터 로우의 인덱스를 리턴합니다.
 
-	  @function {public int} getIdx
+	  @function {number} getIdx
 	  @param {Object} datarow - 인덱스를 찾을 데이터 로우
-	  @returns {int} 주어진 데이터 로우의 인덱스
+	  @returns {number} 주어진 데이터 로우의 인덱스
 
 	  @author 조준호
 	  @since 1.0.0
@@ -1519,9 +1523,9 @@
 	/**
 	  주어진 아이디를 가진 데이터 로우의 인덱스를 리턴합니다.
 
-	  @function {public int} getIdxById
-	  @param {String} id - 인덱스를 찾을 데이터 로우의 아이디
-	  @returns {int} 주어진 아이디를 가진 데이터 로우의 인덱스
+	  @function {number} getIdxById
+	  @param {string} id - 인덱스를 찾을 데이터 로우의 아이디
+	  @returns {number} 주어진 아이디를 가진 데이터 로우의 인덱스
 
 	  @author 조준호
 	  @since 1.0.0
@@ -1537,9 +1541,9 @@
 	/**
 	  주어진 로우 DOM Element 에 해당하는 로우 데이터의 인덱스를 리턴합니다.
 
-	  @function {public int} getIdxByNode
+	  @function {number} getIdxByNode
 	  @param {DOMElement} node - 로우 DOM Element
-	  @returns {int} 주어진 로우 DOM Element 에 해당하는 데이터 로우의 인덱스
+	  @returns {number} 주어진 로우 DOM Element 에 해당하는 데이터 로우의 인덱스
 
 	  @author 조준호
 	  @since 1.3.0
@@ -1552,7 +1556,7 @@
 	/**
 	  주어진 데이터 로우의 아이디를 리턴합니다.
 
-	  @function {public string} getId
+	  @function {string} getId
 	  @param {Object} datarow - 데이터 로우
 	  @returns {string} 데이터 로우의 아이디
 
@@ -1569,8 +1573,8 @@
 	/**
 	  주어진 데이터 로우의 아이디를 리턴합니다.
 
-	  @function {public string} getIdByIdx
-	  @param {int} index - 데이터 로우 인덱스
+	  @function {string} getIdByIdx
+	  @param {number} index - 데이터 로우 인덱스
 	  @returns {string} 데이터 로우의 아이디
 
 	  @author 조준호
@@ -1584,7 +1588,7 @@
 	/**
 	  주어진 로우 DOM Element 에 해당하는 로우 데이터의 아이디를 리턴합니다.
 
-	  @function {public string} getIdByNode
+	  @function {string} getIdByNode
 	  @param {DOMElement} node - 로우 DOM Element
 	  @returns {string} 주어진 로우 DOM Element 에 해당하는 데이터 로우의 아이디
 
@@ -1623,9 +1627,9 @@
 	/**
 	  주어진 데이터 로우가 화면에 보여지는 데이터 로우 어레이에 있는지를 체크합니다.
 
-	  @function {public Boolean} has
+	  @function {boolean} has
 	  @param {Object} datarow - 데이터 어레이에 포함되있는지 체크할 데이터 로우
-	  @returns {Boolean} 화면에 보여지는 데이터 어레이에 포함되어 있으면 true, 아니면
+	  @returns {boolean} 화면에 보여지는 데이터 어레이에 포함되어 있으면 true, 아니면
 	  false 를 리턴합니다.
 
 	  @author 조준호
@@ -1639,9 +1643,9 @@
 	/**
 	  주어진 데이터 로우가 화면에 보여지는 데이터 로우 어레이에 있는지를 체크합니다.
 
-	  @function {public Boolean} hasById
-	  @param {String} id - 데이터 어레이에 포함되있는지 체크할 데이터 아이디
-	  @returns {Boolean} 화면에 보여지는 데이터 어레이에 포함되어 있으면 true, 아니면
+	  @function {boolean} hasById
+	  @param {string} id - 데이터 어레이에 포함되있는지 체크할 데이터 아이디
+	  @returns {boolean} 화면에 보여지는 데이터 어레이에 포함되어 있으면 true, 아니면
 	  false 를 리턴합니다.
 
 	  @author 조준호
@@ -1658,9 +1662,9 @@
 	/**
 	  주어진 데이터 로우가 화면에 보여지는 데이터 로우 어레이 뿐만 아니라 모든 데이터 어레이 맵에 있는지를 체크합니다.
 
-	  @function {public Boolean} contains
-	  @param {object} datarow - 데이터 로우
-	  @returns {Boolean} 데이터 어레이에 포함되어 있으면 true, 아니면 false 를 리턴합니다.
+	  @function {boolean} contains
+	  @param {Object} datarow - 데이터 로우
+	  @returns {boolean} 데이터 어레이에 포함되어 있으면 true, 아니면 false 를 리턴합니다.
 
 	  @author 조준호
 	  @since 1.3.0
@@ -1673,9 +1677,9 @@
 	/**
 	  주어진 데이터 로우가 화면에 보여지는 데이터 로우 어레이 뿐만 아니라 모든 데이터 어레이 맵에 있는지를 체크합니다.
 
-	  @function {public Boolean} containsById
-	  @param {String} id - 데이터 아이디
-	  @returns {Boolean} 데이터 어레이에 포함되어 있으면 true, 아니면 false 를 리턴합니다.
+	  @function {boolean} containsById
+	  @param {string} id - 데이터 아이디
+	  @returns {boolean} 데이터 어레이에 포함되어 있으면 true, 아니면 false 를 리턴합니다.
 
 	  @author 조준호
 	  @since 1.3.0
@@ -1691,8 +1695,8 @@
 	/**
 	  필터링 되지 않은 모든 데이터 어레이를 주어진 데이터 어레이로 셋합니다.
 
-	  @function {public} set
-	  @param {Object[]} datalist - 데이터 어레이
+	  @function {} set
+	  @param {Array.<Object>} datalist - 데이터 어레이
 
 	  @author 조준호
 	  @since 1.0.0
@@ -1718,8 +1722,8 @@
 		  그리드의 모든 데이터 어레이를 셋하기 전에 발생되는 이벤트 입니다.
 
 		  @event {Event} onBeforeSetDatalist
-		  @param {Object[]} datalist - 그리드가 기존에 가지고 있던 모든 데이터 어레이
-		  @param {Object[]} newDatalist - 그리드가 새로 가지게 될 데이터 어레이
+		  @param {Array.<Object>} datalist - 그리드가 기존에 가지고 있던 모든 데이터 어레이
+		  @param {Array.<Object>} newDatalist - 그리드가 새로 가지게 될 데이터 어레이
 
 		  @author 조준호
 		  @since 1.0.0
@@ -1773,7 +1777,7 @@
 		  그리드의 모든 데이터 어레이를 셋한 후에 발생되는 이벤트 입니다.
 
 		  @event {Event} onAfterSetDatalist
-		  @param {Object[]} datalist - 그리드가 새로 가지게 되는 모든 데이터 어레이
+		  @param {Array.<Object>} datalist - 그리드가 새로 가지게 되는 모든 데이터 어레이
 
 		  @author 조준호
 		  @since 1.0.0
@@ -1802,7 +1806,7 @@
 	  하나의 데이터 로우를 추가합니다. 이미 있는 데이터라면 아무것도 하지 않고 새로운
 	  데이터라면 모든 데이터 어레이의 뒤에 붙여 넣습니다.
 
-	  @function {public} add
+	  @function {} add
 	  @param {Object} datarow - 추가할 데이터 로우
 
 	  @author 조준호
@@ -1870,8 +1874,8 @@
 	  여러개의 데이터 로우를 추가합니다. 이미 있는 데이터는 무시하고 새로운 데이터만
 	  기존의 모든 데이터 어레이의 뒤에 붙여 넣습니다.
 
-	  @function {public} addList
-	  @param {Object[]} datalist - 추가할 데이터 어레이
+	  @function {} addList
+	  @param {Array.<Object>} datalist - 추가할 데이터 어레이
 
 	  @author 조준호
 	  @since 1.0.0
@@ -1922,7 +1926,7 @@
 		  여러개의 데이터 로우를 추가한 후에 발생되는 이벤트 입니다.
 
 		  @event {Event} onAddDatalist
-		  @param {Object[]} datalist - 추가된 데이터 어레이
+		  @param {Array.<Object>} datalist - 추가된 데이터 어레이
 
 		  @author 조준호
 		  @since 1.0.0
@@ -1942,9 +1946,9 @@
 	/**
 	  주어진 데이터 로우의 하나의 컬럼의 값을 변경합니다.
 
-	  @function {public} updateByKey
+	  @function {} updateByKey
 	  @param {Object} datarow - 내용을 변경할 데이터 로우
-	  @param {String} key - 변경할 키
+	  @param {string} key - 변경할 키
 	  @param {?} value - 새로운 값
 
 	  @author 조준호
@@ -1960,7 +1964,7 @@
 	/**
 	  주어진 데이터 로우의 내용을 변경합니다.
 
-	  @function {public} update
+	  @function {} update
 	  @param {Object} datarow - 내용을 변경할 데이터 로우
 	  @param {Object} change - 변경될 컬럼의 키 값과 변경될 값을 가집니다. 예를 들어
 	  주어진 데이터 로우의 name 이라는 컬럼의 값을 "john" 으로 변경하고 age 컬럼을 15 로 변경할
@@ -2035,8 +2039,8 @@
 
 		  @event {Event} onIdChange
 		  @param {Object} datarow - 데이터 아이디가 변경될 데이터 로우
-		  @param {String} idBefore - 데이터의 바뀌기 전 아이디
-		  @param {String} idAfter - 데이터의 새로운 아이디
+		  @param {string} idBefore - 데이터의 바뀌기 전 아이디
+		  @param {string} idAfter - 데이터의 새로운 아이디
 		  @see update
 
 		  @author 조준호
@@ -2086,8 +2090,8 @@
 	  다음과 같은 형식을 가집니다.<br>
 	  <code>{datarow:datarow, change:{name:"john", age:15}}</code>
 
-	  @function {public} updateList
-	  @param {Object[]} list - 내용이 변경될 데이터와 변경 내용을 가진 어레이
+	  @function {} updateList
+	  @param {Array.<Object>} list - 내용이 변경될 데이터와 변경 내용을 가진 어레이
 	  @see {@link update}
 
 	  @author 조준호
@@ -2105,7 +2109,7 @@
 		  데이터가 변경되기 전에 발생하는 이벤트 입니다.
 
 		  @event {Event} onBeforeUpdateDatalist
-		  @param {Object[]} list - 내용이 변경될 데이터와 변경 내용을 가진 어레이. 각 엘레멘트는
+		  @param {Array.<Object>} list - 내용이 변경될 데이터와 변경 내용을 가진 어레이. 각 엘레멘트는
 		  다음과 같은 형식을 가집니다.<br>
 		  <code>list[i] = {datarow:datarow, change:{name:"john", age:15}}</code>
 		  @see updateList
@@ -2178,9 +2182,9 @@
 		  데이터 어레이의 아이디가 변경된 후에 발생하는 이벤트 입니다.
 
 		  @event {Event} onIdListChange
-		  @param {Object[]} datalist - 데이터 아이디가 변경될 데이터 로우 어레이
-		  @param {String[]} idBefores - 데이터의 바뀌기 전 아이디 어레이
-		  @param {String} idKey - 데이터의 아이디를 가리키는 키
+		  @param {Array.<Object>} datalist - 데이터 아이디가 변경될 데이터 로우 어레이
+		  @param {Array.<string>} idBefores - 데이터의 바뀌기 전 아이디 어레이
+		  @param {string} idKey - 데이터의 아이디를 가리키는 키
 		  @see update
 
 		  @author 조준호
@@ -2205,9 +2209,9 @@
 		  여러개의 데이터가 변경된 후에 발생되는 이벤트 입니다.
 
 		  @event {Event} onUpdateDatalist
-		  @param {Object[]} datalist - 내용이 변경된 데이터 로우 어레이
-		  @param {Object[]} changes - 데이터의 변경 내용을 담은 오브젝트 어레이
-		  @param {Object[]} befores - 데이터의 변경 전 내용을 담은 오브젝트 어레이
+		  @param {Array.<Object>} datalist - 내용이 변경된 데이터 로우 어레이
+		  @param {Array.<Object>} changes - 데이터의 변경 내용을 담은 오브젝트 어레이
+		  @param {Array.<Object>} befores - 데이터의 변경 전 내용을 담은 오브젝트 어레이
 		  @param {Object} args - 현재 onUpdateDatalist 의 옵션을 담은 오브젝트
 
 		  @author 조준호
@@ -2257,7 +2261,7 @@
 	  하나의 데이터 로우를 기존의 모든 데이터 어레이에서 제거합니다. 기존의 데이터
 	  어레이에 존재하지 않는 경우에는 아무것도 하지 않습니다.
 
-	  @function {public} remove
+	  @function {} remove
 	  @param {Object} datarow - 제거할 데이터 로우
 
 	  @author 조준호
@@ -2314,8 +2318,8 @@
 	  여러개의 데이터 로우를 기존의 모든 데이터 어레이에서 제거합니다. 기존의 데이터
 	  어레이에 없는 데이터들은 무시하고 있는 데이터 들만 제거합니다.
 
-	  @function {public} removeList
-	  @param {Object[]} datalist - 제거할 데이터 어레이
+	  @function {} removeList
+	  @param {Array.<Object>} datalist - 제거할 데이터 어레이
 
 	  @author 조준호
 	  @since 1.0.0
@@ -2385,7 +2389,7 @@
 	  마지막 데이터 변경 내용을 한 단계 취소합니다.
 	  그리드 뷰가 활성화 되었을 때 Ctrl+Z 를 입력하면 실행됩니다.
 
-	  @function {public} undo
+	  @function {} undo
 
 	  @author 조준호
 	  @since 1.1.4
@@ -2427,7 +2431,7 @@
 	  마지막으로 취소된 데이터 변경 내용을 다시 실행합니다.
 	  그리드 뷰가 활성화 되었을 때 Ctrl+Y 를 입력하면 실행됩니다.
 
-	  @function {public} redo
+	  @function {} redo
 
 	  @author 조준호
 	  @since 1.1.4
@@ -2469,10 +2473,10 @@
 	/**
 	  주어진 두개의 데이터 로우가 서로 같은 데이터를 가리키는지를 리턴합니다.
 
-	  @function {public Boolean} equals
+	  @function {boolean} equals
 	  @param {Object} datarow1 - 데이터 로우 1
 	  @param {Object} datarow2 - 데이터 로우 2
-	  @returns {Boolean} 같은 데이터를 가리키면 true, 아닐 경우 false
+	  @returns {boolean} 같은 데이터를 가리키면 true, 아닐 경우 false
 
 	  @author 조준호
 	  @since 1.2.3
@@ -2504,8 +2508,8 @@
 	/**
 	  순수 화면 출력 목적을 위해 모듈에 의해 추가된 데이터 로우가 아닌 진실된 데이터 로우들만 필터링 한 후 리턴합니다.
 
-	  @function {public Object[]} getReal
-	  @returns {Object[]} 모듈에 의해 추가된 데이터 로우가 아닌 진실된 데이터 어레이
+	  @function {Array.<Object>} getReal
+	  @returns {Array.<Object>} 모듈에 의해 추가된 데이터 로우가 아닌 진실된 데이터 어레이
 
 	  @author 조준호
 	  @since 1.0.0
@@ -2521,9 +2525,9 @@
 	/**
 	  주어진 데이터 어레이에서 진실된 데이터 로우들만 필터링 한 후 리턴합니다.
 
-	  @function {public Object[]} filterReal
-	  @param {optional Object[]} datalist - 필터링 할 데이터 어레이
-	  @returns {Object[]} 모듈에 의해 추가된 데이터 로우가 아닌 진실된 데이터 어레이
+	  @function {Array.<Object>} filterReal
+	  @param {Array.<Object>=} datalist - 필터링 할 데이터 어레이
+	  @returns {Array.<Object>} 모듈에 의해 추가된 데이터 로우가 아닌 진실된 데이터 어레이
 
 	  @author 조준호
 	  @since 1.1.4
@@ -2540,9 +2544,9 @@
 	/**
 	  주어진 로우 데이터가 모듈에 의해 추가된 경우 false, 아니면 true 를 리턴합니다.
 
-	  @function {public Boolean} isReal
-	  @param {optional Object} datarow - 진실된 데이터인지 체크할 로우 데이터
-	  @returns {Boolean} 모듈에 의해 추가된 데이터 로우일 경우 false, 아니면 true
+	  @function {boolean} isReal
+	  @param {Object=} datarow - 진실된 데이터인지 체크할 로우 데이터
+	  @returns {boolean} 모듈에 의해 추가된 데이터 로우일 경우 false, 아니면 true
 
 	  @author 조준호
 	  @since 1.1.0
@@ -2557,8 +2561,8 @@
 	  주어진 데이터 어레이에서 모듈들에 의해 추가된 거짓된 데이터들을 제거합니다.
 	  주어진 데이터 어레이가 없을 경우 기존의 모든 데이터를 사용합니다.
 
-	  @function {public} dropNonReal
-	  @param {optional Object[]} datalist - 화면 출력 목적을 위해 모듈에 의해 추가된 데이터 로우들을 제거할 데이터 어레이
+	  @function {} dropNonReal
+	  @param {Array.<Object>=} datalist - 화면 출력 목적을 위해 모듈에 의해 추가된 데이터 로우들을 제거할 데이터 어레이
 
 	  @author 조준호
 	  @since 1.0.0
@@ -2644,8 +2648,8 @@
 	/**
 	  정렬 오브젝트를 셋합니다.
 
-	  @function {public} setSorter
-	  @param {optional Object} sorter - 정렬 오브젝트를 셋합니다. undefined 또는 null 을 넣을경우
+	  @function {} setSorter
+	  @param {Object=} sorter - 정렬 오브젝트를 셋합니다. undefined 또는 null 을 넣을경우
 	  정렬 오브젝트틀 제거합니다.
 
 	  @author 조준호
@@ -2687,7 +2691,7 @@
 		  데이터를 정렬하기 전에 발생되는 이벤트 입니다.
 
 		  @event {Event} onBeforeSort
-		  @param {Object[]} datalist - 정렬하기 전의 데이터 어레이
+		  @param {Array.<Object>} datalist - 정렬하기 전의 데이터 어레이
 
 		  @author 조준호
 		  @since 1.0.0
@@ -2710,7 +2714,7 @@
 		  데이터를 정렬한 후에 발생되는 이벤트 입니다.
 
 		  @event {Event} onAfterSort
-		  @param {Object[]} datalist - 정렬한 후의 데이터 어레이
+		  @param {Array.<Object>} datalist - 정렬한 후의 데이터 어레이
 
 		  @author 조준호
 		  @since 1.0.0
@@ -2724,8 +2728,8 @@
 	  true 를 리턴할 경우 그 데이터는 보여지는 데이터 어레이에 포함되고 false 를 리턴할 경우
 	  그 데이터는 필터링 되어 보여지지 않습니다.
 
-	  @function {public} addFilter
-	  @param {optional Function} filter - 추가할 데이터 필터
+	  @function {} addFilter
+	  @param {Function=} filter - 추가할 데이터 필터
 
 	  @author 조준호
 	  @since 1.1.5
@@ -2739,8 +2743,8 @@
 	/**
 	  등록된 데이터 필터를 제거합니다.
 
-	  @function {public} removeFilter
-	  @param {optional Function} filter - 제거할 데이터 필터
+	  @function {} removeFilter
+	  @param {Function=} filter - 제거할 데이터 필터
 
 	  @author 조준호
 	  @since 1.1.5
@@ -2767,8 +2771,8 @@
 		  데이터 필터링을 시작하기 전에 발생되는 이벤트 입니다.
 
 		  @event {Event} onBeforeFilter
-		  @param {Object[]} datalist - 현재 그리드 화면에 보여지는 데이터 어레이
-		  @param {Object[]} failed - 현재 필터링되어 보여지지 않는 데이터 어레이
+		  @param {Array.<Object>} datalist - 현재 그리드 화면에 보여지는 데이터 어레이
+		  @param {Array.<Object>} failed - 현재 필터링되어 보여지지 않는 데이터 어레이
 
 		  @author 조준호
 		  @since 1.0.0
@@ -2795,8 +2799,8 @@
 		  이용하여 필터링을 합니다.
 
 		  @event {Event} onFilter
-		  @param {Object[]} datalist - 화면에 보여질 데이터 어레이
-		  @param {Object[]} failed - 필터링되어 보여지지 않을 데이터 어레이
+		  @param {Array.<Object>} datalist - 화면에 보여질 데이터 어레이
+		  @param {Array.<Object>} failed - 필터링되어 보여지지 않을 데이터 어레이
 
 		  @author 조준호
 		  @since 1.0.0
@@ -2808,8 +2812,8 @@
 		  데이터 필터링 후에 발생되는 이벤트 입니다.
 
 		  @event {Event} onAfterFilter
-		  @param {Object[]} datalist - 화면에 보여질 데이터 어레이
-		  @param {Object[]} failed - 필터링되어 보여지지 않을 데이터 어레이
+		  @param {Array.<Object>} datalist - 화면에 보여질 데이터 어레이
+		  @param {Array.<Object>} failed - 필터링되어 보여지지 않을 데이터 어레이
 
 		  @author 조준호
 		  @since 1.0.0
@@ -2839,8 +2843,8 @@
 	/**
 	  데이터를 재정렬하고 다시 필터링합니다.
 
-	  @function {public} refresh
-	  @param {optional Object} sorter - 데이터를 정렬할 때 사용할 sorter
+	  @function {} refresh
+	  @param {Object=} sorter - 데이터를 정렬할 때 사용할 sorter
 
 	  @author 조준호
 	  @since 1.0.0

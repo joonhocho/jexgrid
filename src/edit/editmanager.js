@@ -35,7 +35,7 @@ EditManager 모듈. 데이터 에디팅을 담당하는 모듈입니다.
 /**
 EditManager 클래스. 컬럼 별 커스텀 에디터를 지원합니다.
 
-@class {public EditManager} JGM.EditManager
+@class {EditManager} JGM.EditManager
 
 @author 조준호
 @since 1.0.0
@@ -45,7 +45,7 @@ EditManager 클래스. 컬럼 별 커스텀 에디터를 지원합니다.
 /**
 EditManager 컨스트럭터 입니다.
 
-@constructor {public EditManager} EditManager
+@constructor {EditManager} EditManager
 @param {Object} args - EditManager 모듈 파라미터 오브젝트
 @... {JGM.Grid} args.grid - EditManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
 @... {Object} args.options - EditManager 옵션 오브젝트
@@ -59,7 +59,7 @@ function EditManager(args) {
 	/**
 	{@link JGM} 이 할당해주는 EditManager 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.0.0
@@ -70,7 +70,7 @@ function EditManager(args) {
 	/**
 	EditManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -81,7 +81,7 @@ function EditManager(args) {
 	/**
 	그리드 데이터 편집을 관리하는 {@link JGM.EditManager EditManager} 인스턴스 입니다.
 
-	@var {public JGM.EditManager} JGM.Grid.editMgr
+	@var {JGM.EditManager} JGM.Grid.editMgr
 
 	@author 조준호
 	@since 1.0.0
@@ -92,7 +92,8 @@ function EditManager(args) {
 	/**
 	EditManager 모듈의 기본 옵션 값들을 정의합니다.
 
-	@var {private Object} options
+	@type {Object} options
+	@private
 
 	@author 조준호
 	@since 1.0.0
@@ -102,7 +103,8 @@ function EditManager(args) {
 		/**
 		현재 에디팅 중인 그리드 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-edit"</code>
 
-		@var {private optional String} JGM.EditManager.options.classEdit
+		@type {string=} JGM.EditManager.options.classEdit
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -113,7 +115,8 @@ function EditManager(args) {
 		/**
 		{@link JGM.EditManager.options.editableBgEnabled editableBgEnabled} 이 true 일 경우, 에디팅이 가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-editable"</code>
 
-		@var {private optional String} JGM.EditManager.options.classCellEditable
+		@type {string=} JGM.EditManager.options.classCellEditable
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -124,7 +127,8 @@ function EditManager(args) {
 		/**
 		{@link JGM.EditManager.options.notEditableBgEnabled notEditableBgEnabled} 이 true 일 경우, 에디팅이 불가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-notEditable"</code>
 
-		@var {private optional String} JGM.EditManager.options.classCellNotEditable
+		@type {string=} JGM.EditManager.options.classCellNotEditable
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -135,7 +139,8 @@ function EditManager(args) {
 		/**
 		true 일 경우, {@link JGM.EditManager.options.classCellEditable classCellEditable} 를 적용합니다. <br>기본값:<code>false</code>
 
-		@var {private optional Boolean} JGM.EditManager.options.editableBgEnabled
+		@type {boolean=} JGM.EditManager.options.editableBgEnabled
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -146,7 +151,8 @@ function EditManager(args) {
 		/**
 		true 일 경우, {@link JGM.EditManager.options.classCellNotEditable classCellNotEditable} 를 적용합니다. <br>기본값:<code>false</code>
 
-		@var {private optional Boolean} JGM.EditManager.options.notEditableBgEnabled
+		@type {boolean=} JGM.EditManager.options.notEditableBgEnabled
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -157,7 +163,8 @@ function EditManager(args) {
 		/**
 		{@link JGM.EditManager.options.classCellEditable classCellEditable} 에 적용될 배경입니다. <br>기본값:<code>"#FFF"</code>
 
-		@var {private optional String} JGM.EditManager.options.editableBg
+		@type {string=} JGM.EditManager.options.editableBg
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -168,7 +175,8 @@ function EditManager(args) {
 		/**
 		{@link JGM.EditManager.options.classCellNotEditable classCellNotEditable} 에 적용될 배경입니다. <br>기본값:<code>"#F6F6F6"</code>
 
-		@var {private optional String} JGM.EditManager.options.notEditableBg
+		@type {string=} JGM.EditManager.options.notEditableBg
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -179,7 +187,8 @@ function EditManager(args) {
 		/**
 		delete 키를 이용한 셀 내용 삭제 가능 여부입니다. <br>기본값:<code>false</code>
 
-		@var {private optional Boolean} JGM.EditManager.options.deleteEnabled
+		@type {boolean=} JGM.EditManager.options.deleteEnabled
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -190,7 +199,8 @@ function EditManager(args) {
 		/**
 		에디팅 가능한 셀에 에디팅 아이콘을 보여줄지 여부입니다. <br>기본값:<code>true</code>
 
-		@var {private optional Boolean} JGM.EditManager.options.editIconEnabled
+		@type {boolean=} JGM.EditManager.options.editIconEnabled
+		@private
 
 		@author 조준호
 		@since 1.2.1
@@ -201,7 +211,8 @@ function EditManager(args) {
 		/**
 		에디팅 가능한 셀에 보여줄 아이콘 이미지 url 입니다. <br>기본값:<code>imageUrl + "editable-small.png"</code>
 
-		@var {private optional String} JGM.EditManager.options.urlEditIcon
+		@type {string=} JGM.EditManager.options.urlEditIcon
+		@private
 
 		@author 조준호
 		@since 1.2.1
@@ -212,7 +223,8 @@ function EditManager(args) {
 		/**
 		에디팅 아이콘 이미지에 적용될 CSS 클래스 입니다. <br>기본값:<code>"edit-icon"</code>
 
-		@var {private optional String} JGM.EditManager.options.classEditIcon
+		@type {string=} JGM.EditManager.options.classEditIcon
+		@private
 
 		@author 조준호
 		@since 1.2.1
@@ -223,7 +235,8 @@ function EditManager(args) {
 		/**
 		에디팅 아이콘 이미지의 폭 픽셀 값입니다. <br>기본값:<code>11</code>
 
-		@var {private optional int} JGM.EditManager.options.editIconWidth
+		@type {number=} JGM.EditManager.options.editIconWidth
+		@private
 
 		@author 조준호
 		@since 1.2.1
@@ -234,7 +247,8 @@ function EditManager(args) {
 		/**
 		에디팅 아이콘 이미지의 padding 픽셀 값입니다. <br>기본값:<code>3</code>
 
-		@var {private optional int} JGM.EditManager.options.editIconPadding
+		@type {number=} JGM.EditManager.options.editIconPadding
+		@private
 
 		@author 조준호
 		@since 1.2.1
@@ -245,7 +259,8 @@ function EditManager(args) {
 		/**
 		기본 텍스트 에디터의 배경 스타일입니다. <br>기본값:<code>"#FFF9D7"</code>
 
-		@var {private optional String} JGM.EditManager.options.basicBackground
+		@type {string=} JGM.EditManager.options.basicBackground
+		@private
 
 		@author 조준호
 		@since 1.2.2
@@ -285,7 +300,7 @@ function EditManager(args) {
 	에디팅 되고 있는 셀이 없을 경우에는 undefined 의 값을 가집니다. 활성화 중일
 	때에는 <code>this.cell</code> 로 에디팅 되고 있는 {@link JGM.Cell} 인스턴스를 엑세스 할 수 있습니다.
 
-	@var {public JGM.Editor} editor
+	@var {JGM.Editor} editor
 
 	@author 조준호
 	@since 1.0.0
@@ -464,8 +479,8 @@ prototype.__keydownCanvas_ba__ = function(e) {
 /**
 현재 에디팅 되고 있는 셀의 존재 여부를 리턴합니다.
 
-@function {public Boolean} active
-@returns {Boolean} 에디팅 활성화 여부
+@function {boolean} active
+@returns {boolean} 에디팅 활성화 여부
 
 @author 조준호
 @since 1.0.0
@@ -495,8 +510,8 @@ prototype.__onGetColCellClass_f__ = function(colDef) {
 /**
 셀이 현재 에디팅 되고 있는지를 리턴합니다.
 
-@function {public Boolean} JGM.Cell.isEdited
-@returns {Boolean} 셀의 에디팅 여부
+@function {boolean} JGM.Cell.isEdited
+@returns {boolean} 셀의 에디팅 여부
 
 @author 조준호
 @since 1.0.0
@@ -509,8 +524,8 @@ JGM.Cell.prototype.isEdited = function() {
 /**
 셀 데이터 값을 변경합니다.
 
-@function {public Boolean} JGM.Cell.setValue
-@param {String} value - 셀 데이터에 새로 넣을 값
+@function {boolean} JGM.Cell.setValue
+@param {string} value - 셀 데이터에 새로 넣을 값
 
 @author 조준호
 @since 1.0.0
@@ -534,9 +549,9 @@ JGM.Cell.prototype.setValue = function(value) {
 /**
 주어진 셀이 에디트 가능한지를 체크합니다.
 
-@function {public} isEditable 
+@function {} isEditable 
 @param {JGM.Cell} cell - 에디트가 가능한지 체크할 셀
-@returns {Boolean} 에디트가 가능하면 true 아니면 false 를 리턴합니다.
+@returns {boolean} 에디트가 가능하면 true 아니면 false 를 리턴합니다.
 
 @author 조준호
 @since 1.1.0
@@ -549,7 +564,7 @@ prototype.isEditable = function(cell) {
 /**
 주어진 셀의 에디팅을 시작합니다.
 
-@function {public} begin
+@function {} begin
 @param {JGM.Cell} cell - 에디팅을 시작할 셀 인스턴스
 
 @author 조준호
@@ -581,7 +596,7 @@ prototype.begin = function(cell) {
 /**
 현재 진행중인 에디팅을 취소합니다. 셀 데이터는 변경되지 않습니다.
 
-@function {public} cancel
+@function {} cancel
 
 @author 조준호
 @since 1.0.0
@@ -612,7 +627,7 @@ prototype.__deleteEditor_g__ = function() {
 현재 진행중인 셀의 변경 내용을 저장합니다. 저장할 내용이 valid 한지를 확인한 후
 valid 한 경우에는 변경을 진행하고 그렇지 않은 경우에는 변경 내용을 취소합니다.
 
-@function {public} commit
+@function {} commit
 
 @author 조준호
 @since 1.0.0
@@ -761,7 +776,7 @@ Editor 모듈. 컬럼 에디팅을 공통적으로 담당하는 모듈입니다.
 Editor 클래스. 컬럼 공통 에디터입니다. 컬럼 셀의 에디팅 모드로의 변경시 렌더링,
 내용 변경시 값의 validity check 등을 담당합니다.
 
-@class {public Editor} JGM.Editor
+@class {Editor} JGM.Editor
 
 @author 조준호
 @since 1.0.0
@@ -771,11 +786,11 @@ Editor 클래스. 컬럼 공통 에디터입니다. 컬럼 셀의 에디팅 모드로의 변경시 렌더링,
 /**
 Editor 컨스트럭터 입니다.
 
-@constructor {public Editor} Editor
+@constructor {Editor} Editor
 @param {Object} args - Editor 모듈 파라미터 오브젝트
-@... {String Function()} args.edit - 셀 안에 들어갈 에디터를 렌더링 하는 HTML String 을 리턴하는 function 입니다.
+@... {Function(): string} args.edit - 셀 안에 들어갈 에디터를 렌더링 하는 HTML String 을 리턴하는 function 입니다.
 @... {Function()} args.focus - 셀 에디팅이 시작됬을때 에디터를 focus 해주는 function 입니다.
-@... {Boolean Function(Object value)} args.valid - 주어진 값이 valid 한지를 리턴합니다.
+@... {Function(*): boolean} args.valid - 주어진 값이 valid 한지를 리턴합니다.
 @... {Object Function} args.value - 에디팅 중인 값을 리턴합니다.
 @returns {Editor} Editor 모듈 인스턴스를 리턴합니다.
 
@@ -788,7 +803,7 @@ function Editor(args) {
 	/**
 	{@link JGM} 이 할당해주는 Editor 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.0.0
@@ -798,7 +813,7 @@ function Editor(args) {
 	/**
 	Editor 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -808,7 +823,7 @@ function Editor(args) {
 	/**
 	Editor 가 현재 에디팅 중인 {@link JGM.Cell Cell} 인스턴스.
 
-	@var {public JGM.Cell} cell
+	@var {JGM.Cell} cell
 
 	@author 조준호
 	@since 1.0.0
@@ -832,7 +847,7 @@ prototype = Editor.prototype;
 /**
 셀 에디팅 활성화 시, 해당 셀에 들어갈 HTML 을 리턴합니다.
 
-@function {public String} edit
+@function {string} edit
 @param {?} value - 셀의 현재 데이터 값입니다.
 @returns {Editor} 셀 노드 안에 들어갈 HTML 코드
 
@@ -848,7 +863,7 @@ prototype.edit = function(value) {
 /**
 셀 에디팅 활성화 시, 생성된 에디터 HTML 노드를 focus 해줍니다.
 
-@function {public} focus
+@function {} focus
 
 @author 조준호
 @since 1.0.0
@@ -869,9 +884,9 @@ prototype.focus = function() {
 셀 변경 내용 저장시에 변경된 내용이 valid 한지를 리턴합니다. false 를 리턴할 경우
 셀 에디팅은 취소되고 true 를 리턴할경우 변경된 내용이 저장됩니다.
 
-@function {public Boolean} valid
+@function {boolean} valid
 @param {?} value - 셀에 저장될 내용 {@link value} 함수에서 리턴되는 값입니다.
-@returns {Boolean} 셀 변경 내용 저장시에 변경된 내용의 validity
+@returns {boolean} 셀 변경 내용 저장시에 변경된 내용의 validity
 
 @author 조준호
 @since 1.0.0
@@ -889,7 +904,7 @@ prototype.focus = function() {
 함수의 파라미터로 입력되어서 validity 가 체크되고 valid 하다고 판단되면 데이터
 로우의 셀 데이터 값으로 입력됩니다.
 
-@function {public Boolean} value
+@function {boolean} value
 @param {DOMElement} wrapperNode - 에디터 DOM 노드를 포함하는 셀 DOM 노드 입니다.
 @returns {?} 생성된 셀 에디터의 현재 데이터 값
 
@@ -904,8 +919,8 @@ prototype.value = function(wrapperNode) {
 /**
 현재 데이터의 path 스트링입니다. 이 값을 eval() 하면 이 에디터가 리턴됩니다.
 
-@function {public String} path
-@returns {String} 현재 데이터의 path 스트링
+@function {string} path
+@returns {string} 현재 데이터의 path 스트링
 
 @author 조준호
 @since 1.0.0

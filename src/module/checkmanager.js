@@ -35,7 +35,7 @@ CheckManager 모듈. 그리드 로우의 선택을 담당하는 모듈입니다.
 /**
 CheckManager 클래스. checkbox 와 radio 타입의 선택을 지원합니다.
 
-@class {public CheckManager} JGM.CheckManager
+@class {CheckManager} JGM.CheckManager
 
 @author 조준호
 @since 1.0.0
@@ -45,7 +45,7 @@ CheckManager 클래스. checkbox 와 radio 타입의 선택을 지원합니다.
 /**
 CheckManager 컨스트럭터 입니다.
 
-@constructor {public CheckManager} CheckManager
+@constructor {CheckManager} CheckManager
 @param {Object} args - CheckManager 모듈 파라미터 오브젝트
 @... {JGM.Grid} args.grid - CheckManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
 @... {Object} args.options - CheckManager 옵션 오브젝트
@@ -59,7 +59,7 @@ function CheckManager(args) {
 	/**
 	{@link JGM} 이 할당해주는 CheckManager 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.0.0
@@ -70,7 +70,7 @@ function CheckManager(args) {
 	/**
 	CheckManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -81,7 +81,7 @@ function CheckManager(args) {
 	/**
 	데이터의 체크 박스 컬럼을 생성하고 관리하는 {@link JGM.CheckManager CheckManager} 인스턴스 입니다.
 
-	@var {public JGM.CheckManager} JGM.Grid.checkMgr
+	@var {JGM.CheckManager} JGM.Grid.checkMgr
 
 	@author 조준호
 	@since 1.0.0
@@ -92,7 +92,8 @@ function CheckManager(args) {
 	/**
 	CheckManager 모듈의 기본 옵션 값들을 정의합니다.
 
-	@var {private Object} options
+	@type {Object} options
+	@private
 
 	@author 조준호
 	@since 1.0.0
@@ -102,7 +103,8 @@ function CheckManager(args) {
 		/**
 		체크 컬럼을 나타내는 컬럼 정의 오브젝트입니다. <br>기본값:<code>{key:"checkbox", width: 20, name:" "}</code>
 
-		@var {private optional Object} JGM.CheckManager.options.colDef
+		@type {Object=} JGM.CheckManager.options.colDef
+		@private
 		@see JGM.ColDefManager.options.colDef
 
 		@author 조준호
@@ -114,7 +116,8 @@ function CheckManager(args) {
 		/**
 		{@link JGM.CheckManager.options.colDef colDef} 을 몇번째 컬럼으로 넣을지를 정합니다. <br>기본값:<code>0</code>
 
-		@var {private optional int} JGM.CheckManager.options.colIdx
+		@type {number=} JGM.CheckManager.options.colIdx
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -125,7 +128,8 @@ function CheckManager(args) {
 		/**
 		체크 input 들의 name attribute 에 공통적으로 넣을 값입니다. <br>기본값:<code>undefined</code>
 
-		@var {private optional String} JGM.CheckManager.options.name
+		@type {string=} JGM.CheckManager.options.name
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -136,7 +140,8 @@ function CheckManager(args) {
 		/**
 		체크 input 들에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"checkmg"</code>
 
-		@var {private optional String} JGM.CheckManager.options.classCheck
+		@type {string=} JGM.CheckManager.options.classCheck
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -147,7 +152,8 @@ function CheckManager(args) {
 		/**
 		마스터 헤더 체크 input 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"checkm"</code>
 
-		@var {private optional String} JGM.CheckManager.options.classMasterCheck
+		@type {string=} JGM.CheckManager.options.classMasterCheck
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -158,7 +164,8 @@ function CheckManager(args) {
 		/**
 		checkbox 를 위한 마스터 헤더 체크를 생성할지 여부입니다. <br>기본값:<code>true</code>
 
-		@var {private optional Boolean} JGM.CheckManager.options.master
+		@type {boolean=} JGM.CheckManager.options.master
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -169,7 +176,8 @@ function CheckManager(args) {
 		/**
 		true 일 경우 radio 타입의 input, false 일 경우 checkbox 타입의 input 을 생성합니다. <br>기본값:<code>false</code>
 
-		@var {private optional Boolean} JGM.CheckManager.options.isRadio
+		@type {boolean=} JGM.CheckManager.options.isRadio
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -300,9 +308,9 @@ prototype.__onCreateCss_V__ = function() {
 데이터의 내용은 같지만 메모리상 다른 주소를 가지는 데이터들일 경우 데이터 매핑을
 합니다.
 
-@function {public} checkList
-@param {Object[]} list - 체크할 데이터 어레이
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@function {} checkList
+@param {Array.<Object>} list - 체크할 데이터 어레이
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 @see JGM.DataManager.mapList 데이터 매핑을 합니다.
 @see check
 
@@ -326,9 +334,9 @@ prototype.checkList = function(list, nomap) {
 /**
 {@link checkList} 와 같지만 체크하기 전에, 기존에 체크된 리스트를 모두 제거합니다.
 
-@function {public} setCheckList
-@param {Object[]} list - 체크할 데이터 어레이
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@function {} setCheckList
+@param {Array.<Object>} list - 체크할 데이터 어레이
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 @see uncheckAll
 @see checkList
 
@@ -345,8 +353,8 @@ prototype.setCheckList = function(list, nomap) {
 /**
 현재 체크된 데이터들의 어레이를 리턴합니다.
 
-@function {public Object[]} getCheckList
-@returns {Object[]} 현재 체크된 데이터들의 어레이
+@function {Array.<Object>} getCheckList
+@returns {Array.<Object>} 현재 체크된 데이터들의 어레이
 
 @author 조준호
 @since 1.0.0
@@ -360,8 +368,8 @@ prototype.getCheckList = function() {
 /**
 현재 비활성화된 데이터들의 어레이를 리턴합니다.
 
-@function {public Object[]} getDisableds
-@returns {Object[]} 현재 비활성화된 데이터들의 어레이
+@function {Array.<Object>} getDisableds
+@returns {Array.<Object>} 현재 비활성화된 데이터들의 어레이
 
 @author 조준호
 @since 1.3.0
@@ -376,7 +384,7 @@ prototype.getDisableds = function() {
 모든 데이터의 체크를 토글합니다. 모든 데이터가 체크되어 있을 경우, 모든 체크를
 해제하고, 하나의 데이터라도 체크되어 있지 않은 경우 모든 데이터를 체크합니다.
 
-@function {public} toggleCheckAll
+@function {} toggleCheckAll
 @see uncheckAll
 @see checkAll
 
@@ -397,7 +405,7 @@ prototype.toggleCheckAll = function() {
 /**
 모든 데이터를 체크합니다.
 
-@function {public} checkAll
+@function {} checkAll
 
 @author 조준호
 @since 1.0.0
@@ -427,7 +435,7 @@ prototype.checkAll = function() {
 /**
 모든 데이터를 체크를 헤재합니다.
 
-@function {public} uncheckAll
+@function {} uncheckAll
 
 @author 조준호
 @since 1.0.0
@@ -448,9 +456,9 @@ prototype.uncheckAll = function() {
 /**
 주어진 데이터의 체크를 토글합니다.
 
-@function {public} toggleCheck
+@function {} toggleCheck
 @param {Object} datarow - 체크 토글할 데이터
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 @see check
 @see uncheck
 
@@ -475,9 +483,9 @@ prototype.toggleCheck = function(datarow, nomap) {
 /**
 주어진 데이터의 활성화를 토글합니다.
 
-@function {public} toggleDisable
+@function {} toggleDisable
 @param {Object} datarow - 활성화를 토글할 데이터
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
 @author 조준호
 @since 1.3.0
@@ -500,9 +508,9 @@ prototype.toggleDisable = function(datarow, nomap) {
 /**
 주어진 아이디를 가진 데이터를 체크를 토글합니다.
 
-@function {public} toggleById
+@function {} toggleById
 @param {Object} id - 체크 토글할 데이터의 아이디
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 @see check
 @see uncheck
 
@@ -522,9 +530,9 @@ prototype.toggleById = function(id) {
 주어진 데이터를 체크합니다. 이미 체크된 데이터일 경우 아무것도 하지 않습니다.<br>
 트리거 이벤트: {@link onCheckChange}
 
-@function {public} check
+@function {} check
 @param {Object} datarow - 체크할 데이터
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
 @author 조준호
 @since 1.0.0
@@ -548,7 +556,7 @@ prototype.check = function(datarow, nomap) {
 	트리거링 함수: {@link check}, {@link uncheck}
 	@event {Event} onCheckChange
 	@param {Object} datarow - 체크/해제 된 데이터 로우
-	@param {Boolean} checked - 체크되었으면 true, 해제되었으면 false 의 값을 가집니다.
+	@param {boolean} checked - 체크되었으면 true, 해제되었으면 false 의 값을 가집니다.
 
 	@author 조준호
 	@since 1.0.0
@@ -562,9 +570,9 @@ prototype.check = function(datarow, nomap) {
 주어진 데이터의 체크를 해제합니다. 체크되어있지 않은 경우 아무것도 하지 않습니다.<br>
 트리거 이벤트: {@link onCheckChange}
 
-@function {public} uncheck
+@function {} uncheck
 @param {Object} datarow - 체크 해제할 데이터
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
 @author 조준호
 @since 1.0.0
@@ -592,9 +600,9 @@ prototype.uncheck = function(datarow, nomap) {
 주어진 데이터에 해당하는 체크박스를 비활성화 합니다.
 트리거 이벤트: {@link onDisableCheck}
 
-@function {public} disable 
+@function {} disable 
 @param {Object} datarow -활성화할 데이터
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
 @author 조준호
 @since 1.3.0
@@ -634,9 +642,9 @@ prototype.disable = function(datarow, nomap) {
 주어진 데이터에 해당하는 체크박스를 활성화 합니다.
 트리거 이벤트: {@link onEnableCheck}
 
-@function {public} enable 
+@function {} enable 
 @param {Object} datarow -비활성화할 데이터
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
 @author 조준호
 @since 1.3.0
@@ -713,10 +721,10 @@ prototype.__remove_g__ = function(datarow) {
 /**
 주어진 데이터의 체크 여부를 리턴합니다.
 
-@function {public Boolean} isChecked
+@function {boolean} isChecked
 @param {Object} datarow - 체크 여부를 확인할 데이터
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
-@returns {Boolean} 체크 되었을 경우 true, 아닌 경우 false
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@returns {boolean} 체크 되었을 경우 true, 아닌 경우 false
 
 @author 조준호
 @since 1.0.0
@@ -734,10 +742,10 @@ prototype.isChecked = function(datarow, nomap) {
 /**
 주어진 데이터의 체크 활성화 여부를 리턴합니다.
 
-@function {public Boolean} isDisabled 
+@function {boolean} isDisabled 
 @param {Object} datarow - 체크 활성화 여부를 확인할 데이터
-@param {optional Boolean} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
-@returns {Boolean} 체크 비활성화 되었을 경우 true, 아닌 경우 false
+@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+@returns {boolean} 체크 비활성화 되었을 경우 true, 아닌 경우 false
 
 @author 조준호
 @since 1.3.0
@@ -780,8 +788,8 @@ prototype.splitChecked = function(datalist, nomap) {
 /**
 모든 데이터의 체크 여부를 리턴합니다.
 
-@function {public Boolean} isCheckedAll
-@returns {Boolean} 모든 데이터가 체크 되었을 경우 true, 아닌 경우 false
+@function {boolean} isCheckedAll
+@returns {boolean} 모든 데이터가 체크 되었을 경우 true, 아닌 경우 false
 
 @author 조준호
 @since 1.0.0
@@ -795,7 +803,7 @@ prototype.isCheckedAll = function() {
 /**
 체크된 모든 데이터를 그리드에서 제거합니다.
 
-@function {public} removeChecked
+@function {} removeChecked
 
 @author 조준호
 @since 1.3.0
@@ -824,7 +832,7 @@ prototype.__getChecks_i__ = function(rows) {
 /**
 현재 캐쉬된 체크 박스 DOM Element 들을 리턴합니다.
 
-@function {public DOMElement[]} getCheckboxes
+@function {DOMElement[]} getCheckboxes
 @returns {DOMElement[]} 캐쉬된 채크 박스들
 
 @author 조준호
@@ -838,7 +846,7 @@ prototype.getCheckboxes = function() {
 /**
 아이디에 해당하는 체크 박스 DOM Element 를 리턴합니다.
 
-@function {public DOMElement} getCheckboxById
+@function {DOMElement} getCheckboxById
 @returns {DOMElement} 채크 박스
 
 @author 조준호
@@ -855,7 +863,7 @@ prototype.getCheckboxById = function(id) {
 /**
 로우 데이터에 해당하는 체크 박스 DOM Element 를 리턴합니다.
 
-@function {public DOMElement} getCheckbox
+@function {DOMElement} getCheckbox
 @returns {DOMElement} 채크 박스
 
 @author 조준호
@@ -869,7 +877,7 @@ prototype.getCheckbox = function(datarow) {
 /**
 인덱스에 해당하는 체크 박스 DOM Element 를 리턴합니다.
 
-@function {public DOMElement} getCheckboxByIdx
+@function {DOMElement} getCheckboxByIdx
 @returns {DOMElement} 채크 박스
 
 @author 조준호
@@ -992,7 +1000,7 @@ prototype.__onRenderCell_aH__ = function(rowIdx, colIdx, datarow, colDef, cellHt
 /**
 CheckManager 를 비활성화 합니다.
 
-@function {public} disableAll
+@function {} disableAll
 
 @author 조준호
 @since 1.0.0
@@ -1020,7 +1028,7 @@ prototype.disableAll = function() {
 /**
 CheckManager 를 활성화 합니다.
 
-@function {public} enableAll
+@function {} enableAll
 
 @author 조준호
 @since 1.0.0

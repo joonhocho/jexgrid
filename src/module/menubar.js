@@ -16,7 +16,7 @@
 /**
 메뉴 바를 생성하고 관리하는 {@link JGM.MenuBar MenuBar} 인스턴스 입니다.
 
-@var {public JGM.MenuBar} JGM.Grid.menubar
+@var {JGM.MenuBar} JGM.Grid.menubar
 
 @author 조준호
 @since 1.1.6

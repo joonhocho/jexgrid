@@ -35,7 +35,7 @@ SelectionManager 모듈. 셀의 (범위) 선택을 담당하는 모듈입니다.
 SelectionManager 클래스. 셀들을 선택하고 선택된 셀들에 대한 이벤트를 트리거링하는
 클래스입니다.
 
-@class {public SelectionManager} JGM.SelectionManager
+@class {SelectionManager} JGM.SelectionManager
 
 @author 조준호
 @since 1.0.0
@@ -45,7 +45,7 @@ SelectionManager 클래스. 셀들을 선택하고 선택된 셀들에 대한 이벤트를 트리거링하�
 /**
 SelectionManager 컨스트럭터 입니다.
 
-@constructor {public SelectionManager} SelectionManager
+@constructor {SelectionManager} SelectionManager
 @param {Object} args - SelectionManager 모듈 파라미터 오브젝트
 @... {JGM.Grid} args.grid - SelectionManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
 @... {Object} args.options - SelectionManager 옵션 오브젝트
@@ -59,7 +59,7 @@ function SelectionManager(args) {
 	/**
 	{@link JGM} 이 할당해주는 SelectionManager 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.0.0
@@ -70,7 +70,7 @@ function SelectionManager(args) {
 	/**
 	SelectionManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -81,7 +81,7 @@ function SelectionManager(args) {
 	/**
 	그리드 셀의 선택을 관리하는 {@link JGM.SelectionManager SelectionManager} 인스턴스 입니다.
 
-	@var {public JGM.SelectionManager} JGM.Grid.selMgr
+	@var {JGM.SelectionManager} JGM.Grid.selMgr
 
 	@author 조준호
 	@since 1.0.0
@@ -92,7 +92,8 @@ function SelectionManager(args) {
 	/**
 	SelectionManager 모듈의 기본 옵션 값들을 정의합니다.
 
-	@var {private Object} options
+	@type {Object} options
+	@private
 
 	@author 조준호
 	@since 1.0.0
@@ -103,7 +104,8 @@ function SelectionManager(args) {
 		로우 전체를 선택하는데 사용되는 컬럼 key 값입니다. 이 값을 키로 가진
 		컬럼을 선택시 로우 전체가 선택됩니다. <br>기본값:<code>DataManager.idKey</code>
 
-		@var {private optional String} JGM.SelectionManager.options.rowSelKey
+		@type {string=} JGM.SelectionManager.options.rowSelKey
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -114,7 +116,8 @@ function SelectionManager(args) {
 		/**
 		현재 선택된 모든 셀들에 적용되는 배경색입니다. <br>기본값:<code>"#DCEBFE"</code>
 
-		@var {private optional String} JGM.SelectionManager.options.bgColorSelection
+		@type {string=} JGM.SelectionManager.options.bgColorSelection
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -125,7 +128,8 @@ function SelectionManager(args) {
 		/**
 		마지막으로 선택된 셀에 적용되는 배경색입니다. <br>기본값:<code>"#C1DBFC"</code>
 
-		@var {private optional String} JGM.SelectionManager.options.bgColorLast
+		@type {string=} JGM.SelectionManager.options.bgColorLast
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -137,7 +141,8 @@ function SelectionManager(args) {
 		/**
 		범위 선택시 범위 끝의 셀에 적용되는 배경색입니다. <br>기본값:<code>"#D9D9D9"</code>
 
-		@var {private optional String} JGM.SelectionManager.options.bgColorRange
+		@type {string=} JGM.SelectionManager.options.bgColorRange
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -148,7 +153,8 @@ function SelectionManager(args) {
 		/**
 		현재 선택된 모든 셀들에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-selection"</code>
 
-		@var {private optional String} JGM.SelectionManager.options.classSelection
+		@type {string=} JGM.SelectionManager.options.classSelection
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -159,7 +165,8 @@ function SelectionManager(args) {
 		/**
 		마지막으로 선택된 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"selection-last"</code>
 
-		@var {private optional String} JGM.SelectionManager.options.classLast
+		@type {string=} JGM.SelectionManager.options.classLast
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -170,7 +177,8 @@ function SelectionManager(args) {
 		/**
 		범위 선택시에 범위 끝의 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"selection-range"</code>
 
-		@var {private optional String} JGM.SelectionManager.options.classRange
+		@type {string=} JGM.SelectionManager.options.classRange
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -181,7 +189,8 @@ function SelectionManager(args) {
 		/**
 		범위 선택 가능 여부입니다. <br>기본값:<code>false</code>
 
-		@var {private optional Boolean} JGM.SelectionManager.options.multiSelectEnabled
+		@type {boolean=} JGM.SelectionManager.options.multiSelectEnabled
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -372,7 +381,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
 		
 		@event {Event} onBeforeNavigate
 		@param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		@returns {Boolean} continueOrStop - false 를 리턴할 경우 네비게이션을 취소합니다.
+		@returns {boolean} continueOrStop - false 를 리턴할 경우 네비게이션을 취소합니다.
 
 		@author 조준호
 		@since 1.1.7
@@ -618,7 +627,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
 /**
 현재 선택된 셀이 있을경우 선택된 {@link JGM.Cell Cell} 의 인스턴스를 리턴합니다. 없을 경우에는 <code>undefined</code> 를 리턴합니다.
 
-@function {public JGM.Cell} getCell
+@function {JGM.Cell} getCell
 @returns {JGM.Cell} 현재 선택된 셀의 인스턴스
 
 @author 조준호
@@ -641,8 +650,8 @@ prototype.__isSelected_h__ = function(cell) {
 셀이 {@link JGM.SelectionManager SelectionManager} 에 의해 선택되어 있는 경우 true,
 아닌 경우 false 를 리턴합니다.
 
-@function {public Boolean} JGM.Cell.isSelected
-@returns {Boolean} 셀이 {@link JGM.SelectionManager SelectionManager} 에 의해 선택되어 있는 경우 true,
+@function {boolean} JGM.Cell.isSelected
+@returns {boolean} 셀이 {@link JGM.SelectionManager SelectionManager} 에 의해 선택되어 있는 경우 true,
 아닌 경우 false 를 리턴합니다.
 
 @author 조준호
@@ -707,7 +716,7 @@ prototype.__idxToCell_j__ = function(dir, idx) {
 /**
 주어진 {@link JGM.Cell Cell} 을 포함하는 로우 전체를 선택합니다.
 
-@function {public} selectRow
+@function {} selectRow
 @param {JGM.Cell} cell - 선택할 로우가 포함하는 {@link JGM.Cell Cell}
 
 @author 조준호
@@ -726,7 +735,7 @@ prototype.selectRow = function(cell) {
 /**
 주어진 {@link JGM.Cell Cell} 을 선택합니다.
 
-@function {public} selectCell
+@function {} selectCell
 @param {JGM.Cell} cell - 선택할 {@link JGM.Cell Cell}
 
 @author 조준호
@@ -792,7 +801,7 @@ prototype.onAfterRerender = function() {
 /**
 주어진 {@link JGM.Cell Cell} 을 포함하는 로우 전체를 선택에 추가합니다.
 
-@function {public} addRow
+@function {} addRow
 @param {JGM.Cell} cell - 추가 선택할 로우가 포함하는 {@link JGM.Cell Cell}
 
 @author 조준호
@@ -812,7 +821,7 @@ prototype.addRow = function(cell) {
 /**
 주어진 {@link JGM.Cell Cell} 을 선택에 추가합니다.
 
-@function {public} addCell
+@function {} addCell
 @param {JGM.Cell} cell - 추가 선택할 {@link JGM.Cell Cell}
 
 @author 조준호
@@ -832,7 +841,7 @@ prototype.addCell = function(cell) {
 /**
 주어진 {@link JGM.Cell Cell} 을 범위의 모서리로 범위 선택을 합니다.
 
-@function {public} selectRange
+@function {} selectRange
 @param {JGM.Cell} cell - 범위 선택의 모서리 {@link JGM.Cell Cell}
 
 @author 조준호
@@ -1157,7 +1166,7 @@ prototype.__getRangeMap_r__ = function(rowMin, colMin, rowMax, colMax, row, col,
 /**
 현재 선택된 모든 선택을 제거합니다.
 
-@function {public} empty
+@function {} empty
 
 @author 조준호
 @since 1.0.0

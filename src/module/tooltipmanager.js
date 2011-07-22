@@ -33,7 +33,7 @@ TooltipManager 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
 TooltipManager 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 관련 기능들을 지원합니다.
 
-@class {public TooltipManager} JGM.TooltipManager
+@class {TooltipManager} JGM.TooltipManager
 
 @author 조준호
 @since 1.0.0
@@ -43,7 +43,7 @@ TooltipManager 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 
 /**
 TooltipManager 컨스트럭터 입니다.
 
-@constructor {public TooltipManager} TooltipManager
+@constructor {TooltipManager} TooltipManager
 @param {Object} args - TooltipManager 모듈 파라미터 오브젝트
 @... {jQuery} args.container - TooltipManager 를 넣을 컨테이너 오브젝트
 @... {JGM.Grid} args.grid - TooltipManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
@@ -58,7 +58,7 @@ function TooltipManager(args) {
 	/**
 	{@link JGM} 이 할당해주는 TooltipManager 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {public final String} mid
+	@var {string} mid
 
 	@author 조준호
 	@since 1.0.0
@@ -69,7 +69,7 @@ function TooltipManager(args) {
 	/**
 	TooltipManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {public JGM.Grid} grid
+	@var {JGM.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -80,7 +80,7 @@ function TooltipManager(args) {
 	/**
 	그리드 툴팁을 관리하는 {@link JGM.TooltipManager TooltipManager} 인스턴스 입니다.
 
-	@var {public JGM.TooltipManager} JGM.Grid.tooltip
+	@var {JGM.TooltipManager} JGM.Grid.tooltip
 
 	@author 조준호
 	@since 1.0.0
@@ -94,7 +94,8 @@ function TooltipManager(args) {
 	/**
 	TooltipManager 모듈의 기본 옵션 값들을 정의합니다.
 
-	@var {private Object} options
+	@type {Object} options
+	@private
 
 	@author 조준호
 	@since 1.0.0
@@ -104,7 +105,8 @@ function TooltipManager(args) {
 		/**
 		툴팁 컨테이너에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-tooltip"</code>
 
-		@var {private optional String} JGM.TooltipManager.options.classTooltip
+		@type {string=} JGM.TooltipManager.options.classTooltip
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -116,7 +118,8 @@ function TooltipManager(args) {
 		툴팁이 마우스를 실시간으로 따라다닐지를 정합니다. true 일 경우 따라다니고,
 		false 일 경우 생성된 위치에 남아있습니다.<br>기본값:<code>true</code>
 
-		@var {private optional Boolean} JGM.TooltipManager.options.tooltipSyncEnabled
+		@type {boolean=} JGM.TooltipManager.options.tooltipSyncEnabled
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -127,7 +130,8 @@ function TooltipManager(args) {
 		/**
 		툴팁의 마우스 포인터로부터의 우측 offset 을 정합니다.<br>기본값:<code>0</code>
 
-		@var {private optional int} JGM.TooltipManager.options.offsetX
+		@type {number=} JGM.TooltipManager.options.offsetX
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -138,7 +142,8 @@ function TooltipManager(args) {
 		/**
 		툴팁의 마우스 포인터로부터의 아래 방향 offset 을 정합니다.<br>기본값:<code>18</code>
 
-		@var {private optional int} JGM.TooltipManager.options.offsetY
+		@type {number=} JGM.TooltipManager.options.offsetY
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -149,7 +154,8 @@ function TooltipManager(args) {
 		/**
 		툴팁의 배경을 설정합니다. <br>기본값:<code>"#F5F5F5"</code>
 
-		@var {private optional String} JGM.TooltipManager.options.background
+		@type {string=} JGM.TooltipManager.options.background
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -160,7 +166,8 @@ function TooltipManager(args) {
 		/**
 		툴팁의 border 를 설정합니다. <br>기본값:<code>"1px solid #868686"</code>
 
-		@var {private optional String} JGM.TooltipManager.options.border
+		@type {string=} JGM.TooltipManager.options.border
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -171,7 +178,8 @@ function TooltipManager(args) {
 		/**
 		툴팁의 padding 을 설정합니다. <br>기본값:<code>"2px 10px"</code>
 
-		@var {private optional String} JGM.TooltipManager.options.padding
+		@type {string=} JGM.TooltipManager.options.padding
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -182,7 +190,8 @@ function TooltipManager(args) {
 		/**
 		툴팁의 폰트를 설정합니다. <br>기본값:<code>"14px Arial,Helvetica,sans-serif"</code>
 
-		@var {private optional String} JGM.TooltipManager.options.font
+		@type {string=} JGM.TooltipManager.options.font
+		@private
 
 		@author 조준호
 		@since 1.0.0
@@ -193,7 +202,8 @@ function TooltipManager(args) {
 		/**
 		툴팁의 글자색을 설정합니다. <br>기본값:<code>"#333"</code>
 
-		@var {private optional String} JGM.TooltipManager.options.color
+		@type {string=} JGM.TooltipManager.options.color
+		@private
 
 		@author 조준호
 		@since 1.0.0
