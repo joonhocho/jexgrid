@@ -1,0 +1,106 @@
+html{
+	background:#ccc;
+	min-width:700px;
+	padding:5px;
+}
+
+body{
+	padding:14px;
+	font:12px arial;
+	line-height:18px;
+	background:white;
+}
+
+h4{
+	font:bold 18px serif;
+	padding:5px 0px 10px 10px;
+	margin:0;
+	white-space:nowrap;
+}
+
+h5{
+	font-size:15px;
+	padding:15px 0px 5px 0px;
+	margin:0;
+	white-space:nowrap;
+}
+
+p{
+	margin:0;
+	padding:0;
+}
+
+ul{
+	margin:0;
+	padding:5px 0 0 20px;
+}
+
+a{
+	font-weight:bold;
+	text-decoration:none;
+	color:#07c;
+}
+
+a:hover{
+	text-decoration:underline;
+}
+
+.codebox{
+	height:200px;
+	width:100%;
+	font-size:12px;
+	background:#fff8e8;
+}
+
+.hiddencode, .hiddencode * {
+	position:absolute;
+	left:0;
+	top:0;
+	padding:0;
+	margin:0;
+	border:0;
+	width:0;
+	height:0;
+	visibility:hidden;
+}
+
+.index{
+	padding:0 0 5px 0;
+}
+
+.index span{
+	padding:0 10px 0 0;
+}
+
+.index a{
+	padding:0 5px;
+}
+
+ol{
+	margin:0 0 0 12px;list-style-type:none;line-height:24px
+}
+
+.b {
+	font-weight: bold;
+}
+
+.red {
+	color: red;
+}
+
+pre {
+	font-size: 12px;
+	padding: 0;
+	margin: 18px 0;
+	background: #fbfbfb;
+	border: 1px solid #ccc;
+	line-height: 20px; /*--Height of each line of code--*/
+	overflow: auto; /*--If the Code exceeds the width, a scrolling is available--*/
+	overflow-Y: hidden;  /*--Hides vertical scroll created by IE--*/
+}
+
+pre code {
+	color: #269;
+	padding: 8px;
+	display: block;
+}

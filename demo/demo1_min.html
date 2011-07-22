@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+
+		<title>JexGrid example 4: Model</title>
+
+		<link rel="stylesheet" href="../css/jgrid.css" type="text/css" media="screen" />
+
+		<script language="JavaScript" src="../lib/jquery-1.4.4.min.js"></script>
+		<script language="JavaScript" src="../lib/jquery-ui-1.8.7.custom.min.js"></script>
+
+		<script language="JavaScript" src="../bin/jgrid-1.3.2-min.js"></script>
+		<script>
+		var grid;
+		var options;
+		var data;
+		</script>
+		<style rel="stylesheet" type="text/css">
+		body {
+			margin: 0;
+		}
+		</style>
+	</head>
+	<body>
+		그리드
+		<div id="myGrid"></div>
+		<script>
+
+			(function() {
+				data = [];
+				// prepare the data
+				for (var i = 0; i < 200; i++) {
+					var d = {};
+					d["id"] = "id_" + i;
+					d["num"] = i;
+					d["title"] = "Task " + i;
+					d["duration"] = "5 days";
+					d["per"] = Math.round(Math.random() * 100);
+					d["start"] = "01/01/2009";
+					d["finish"] = "01/05/2009";
+					d["effortDriven"] = (i % 5 == 0);
+					var parent = Math.floor(Math.random() * i);
+					if (parent === 0)
+						parent = i;
+					d["parent"] = parent;
+					data.push(d);
+				}
+
+				options = {
+					cssGrid: "hahahah",
+					width: 1200,
+					border: "1px solid #868686",
+					footerEnabled: true,
+					SelectionManager: {},
+					EditManager: {},
+					ColDefManager: {
+						defaultColDef: {
+							resizable: false,
+							width: 120
+						}
+					},
+					ColHeader: {
+						reorderEnabled: true,
+						reorderSyncEnabled:true
+					},
+					DataManager: {
+						idColKeys:["num"]
+					},
+					ViewportManager: {
+						numOfRowsPerPage: 20,
+						rowH: 20,
+						autoColWEnabled: false
+					},
+					Collapser: {
+						key:"num",
+						Tree: {nodeKey:"num", parentKey:"parent"},
+						CheckManager:{}
+					},
+					Footer:{},
+					MenuBar:{},
+					SearchManager:{},
+					DataCreator:{}
+				};
+
+				var colDefs = [
+					{key:"num", name:"#", width:200, sorter:"int"},
+					{key:"title", name:"Title", width:120, minW:120, tooltipEnabled: true},
+					{key:"duration", name:"Duration", sorter:"int", sumRenderer: true},
+					{key:"per", name:"% Complete", width:80, sorter:"int"},
+					{key:"start", name:"Start", minW:60, sorter:"int"},
+					{key:"finish", name:"Finish", minW:60, sorter:"int"},
+					{key:"effortDriven", name:"Effort Driven", width:80, minW:20, maxW:80, sorter:"int"}
+				];
+
+				var tc = new Tracer();
+				for (var i = 0; i < colDefs.length; i++)
+					if (i !== 0)
+						colDefs[i].editor = JGM.create("Editor", {});
+				grid = JGM.grid({container:$("#myGrid"), colDefs:colDefs, options:options});
+				grid.dataMgr.set(data);
+			})();
+		</script>
+	</body>
+</html>
