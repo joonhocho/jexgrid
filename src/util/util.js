@@ -10,14 +10,13 @@
  goog.provide('Util');
  goog.provide('echo');
 
- goog.exportSymbol('Util', Util);
-
 var undefined = (function(){})(),
 	console = window.console,
 	CONSOLE_LOGS = [],
 	echo = (console && console.log && function(){console.log.apply(console, arguments);}) || function(){CONSOLE_LOGS.push.apply(CONSOLE_LOGS, arguments);};
 
- goog.global.echo = echo;
+ goog.exportSymbol('Util', Util);
+ goog.exportSymbol('echo', echo);
 
 // tested
 Util.isNull = function(val) {
@@ -863,8 +862,8 @@ Util.areEqualComplex = function(ar, br, arch) {
 
   @function {public boolean} typeCheck
 
-  @param {String | Function} type - correct type of object to check against
-  @param {Object} obj - object to check type of
+  @param {string | Function} type - correct type of object to check against
+  @param {*} obj - object to check type of
   @param {optional boolean} allowUndefined - if true, undefined for object is considered as correct type
   @param {optional boolean} allowNull - if true, null for object is considered as correct type
   @param {optional boolean} noThrow - if true, return false instead of throwing 'TypeError' exception
@@ -910,12 +909,12 @@ Util.typeCheck = function(type, obj, allowUndefined, allowNull, noThrow) {
 /**
   Replace variable strings with string values.
 
-  @function {public String} sprint
+  @function {public string} sprint
 
-  @param {String} str - string with variables
+  @param {string} str - string with variables
   @param {Object} obj - object of variable to value mappings
-  @param {optional String} prefix - variable prefix. default to '%'.
-  @param {optional String} suffix - variable suffix. default to '%'.
+  @param {optional string} prefix - variable prefix. default to '%'.
+  @param {optional string} suffix - variable suffix. default to '%'.
 
   @return string with injected values
 
@@ -1236,25 +1235,11 @@ Util.print = function() {
 		echo(arguments[0]);
 	}
 	else {
-		Util.printGroup("Group");
 		var i = 0,
 			len = arguments.length;
 		for (; i < len; i++) {
 			echo(arguments[i]);
 		}
-		Util.printGroupEnd();
-	}
-};
-
-Util.printGroup = function() {
-	if (console && console.group) {
-		console.group(Array.prototype.slice.call(arguments).join(", "));
-	}
-};
-
-Util.printGroupEnd = function() {
-	if (console && console.groupEnd) {
-		console.groupEnd();
 	}
 };
 
@@ -1307,7 +1292,5 @@ Util.open = function(options) {
 	}
 	return window.open(ops.url, ops.name, specs, ops.replace);
 };
-
-if (window.JGM !== undefined) {window.JGM._add("Util");} // TBR
 
 })();

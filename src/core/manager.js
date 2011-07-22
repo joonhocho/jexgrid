@@ -29,8 +29,14 @@ mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
 (function() {
 
  goog.require('Util');
+ goog.require('Util$');
 
  goog.provide('JGM');
+
+ var $ = $,
+ Util = Util,
+ Util$ = Util$,
+ JGM = JGM;
 
  goog.exportSymbol('JGM', JGM);
 

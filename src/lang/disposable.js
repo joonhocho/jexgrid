@@ -13,9 +13,11 @@
 
 (function() {
 
+ goog.require('Util');
  goog.provide('JGM.lang.Disposable');
-
  goog.exportSymbol('JGM.lang.Disposable', Disposable);
+ goog.exportProperty(Disposable.prototype, 'dispose', dispose);
+ var Util = goog.getObjectByName('Util');
 
  /**
    Grid 의 이벤트를 담당하는 모듈. 모듈들 간의 원활한 커뮤니케이트를 가능하게
@@ -76,7 +78,6 @@
    @since 1.1.6
    @version 1.1.6
    */
- proto.dispose = dispose;
  function dispose(level, others) {'use strict';
 	 level = level || 0;
 	 var i,
@@ -115,5 +116,6 @@
 		 }
 	 }
  };
+
 
 }());

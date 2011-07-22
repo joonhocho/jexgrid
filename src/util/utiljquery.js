@@ -7,7 +7,10 @@
  */
 (function () {
 
+ goog.require('Util');
  goog.provide('Util$');
+
+ var Util = good.getObjectByName('Util');
 
  goog.exportSymbol('Util$', Util$);
 
