@@ -5,9 +5,24 @@ use POSIX qw/strftime/;
 
 my $encoding = 'euc-kr';
 my $gridpath = '/var/www/jexgrid';
-my $rpath = "$gridpath/src";
-my $opath = "$gridpath/dist";
-my $mypath = "$gridpath/build";
+my $srcpath = "$gridpath/src";
+my $distpath = "$gridpath/dist";
+my $buildpath = "$gridpath/build";
+
+sub trim($) {
+	my $str = shift;
+	$str =~ s/^\s+//;
+	$str =~ s/\s+$//;
+	return $str;
+}
+
+my $VER = "$gridpath/VERSION";
+open(VER) or die("Could not open $VER file. $!");
+my $vers = trim(readline(*VER));
+close(VER);
+
+my $raw = "$distpath/jgrid-$vers-raw.js";
+open(OUT, ">:encoding($encoding)", $raw) or die("Could not open $raw file. $!");
 
 my @files = qw(engine_ext
 array_ext_ie
@@ -40,13 +55,6 @@ jgrid_selectionmanager
 jgrid_tooltipmanager
 jgrid_viewportmanager);
 
-my $ver = "$gridpath/VERSION";
-open(VER, "<:encoding($encoding)", $ver) or die("Could not open $ver file. $!");
-my $vers = <VER>;
-close(VER);
-
-my $out = "$opath/jgrid-$vers-all.js";
-open(OUT, ">:encoding($encoding)", $out) or die("Could not open $out file. $!");
 
 print OUT "/*!\n * JexGrid JavaScript Library v$vers\n * Date: " . strftime('%b-%d-%Y %T',localtime) . "\n *\n";
 
@@ -61,7 +69,7 @@ print OUT "\n *\n */\n";
 
 print OUT "(function() {\n";
 for my $file (@files) {
-	$file = "$rpath/$file.js";
+	$file = "$srcpath/$file.js";
 	print "reading $file...\n";
 	open(INFO, "<:encoding($encoding)", $file) or die("Could not open $file file. $!");
 	#open(INFO, "<:encoding(UTF-8)", $file) or die("Could not open $file file. $!");
@@ -91,22 +99,13 @@ for my $file (@files) {
 print OUT "}());";
 close(OUT);
 
-my @args = ("java", "-jar", "$mypath/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar", "--charset", "EUC-KR", "--line-break", "256", "-o", "$opath/jgrid-$vers-min.js", "$opath/jgrid-$vers-all.js");
+my @args = ("java", "-jar", "$buildpath/yuicompressor-2.4.6/build/yuicompressor-2.4.6.jar", "--charset", "EUC-KR", "--line-break", "256", "-o", "$distpath/jgrid-$vers-min.js", $raw);
 system(@args);
 
-open(MININ, "<:encoding($encoding)", "$opath/jgrid-$vers-min.js") or die("Could not open MIN");
+open(MININ, "<:encoding($encoding)", "$distpath/jgrid-$vers-min.js") or die("Could not open MIN");
 my @minin = <MININ>;
 close(MININ);
 
-open(UTFOUT, ">:encoding(utf-8)", "$opath/jgrid-$vers-min-utf8.js") or die("Could not open $opath/jgrid-$vers-min-utf8.js");
+open(UTFOUT, ">:encoding(utf-8)", "$distpath/jgrid-$vers-min-utf8.js") or die("Could not open $distpath/jgrid-$vers-min-utf8.js");
 print UTFOUT @minin;
 close(UTFOUT);
-
-@args = ("$mypath/einars-js-beautify-f614cc4/qtscript/jsbeautify -s 1 -c '\t' $opath/jgrid-$vers-min.js > $opath/jgrid-$vers-min-beautified.js");
-system(@args);
-
-@args = ("$mypath/einars-js-beautify-f614cc4/qtscript/jsbeautify -s 1 -c '\t' $opath/jgrid-$vers-all.js > $opath/jgrid-$vers-all-beautified.js");
-system(@args);
-
-system("svn status | grep '\''?'\'' | sed '\''s/^.* /svn add /'\'' | bash");
-system("svn ci");
