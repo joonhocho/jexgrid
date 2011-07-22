@@ -7,7 +7,7 @@ $pathlen = strlen($gridPath);
  * Build Path Settings
  */
 $encoding = 'euc-kr';
-$srcPath = "$gridPath/testsrc";
+$srcPath = "$gridPath/src";
 $libPath = "$gridPath/externs";
 $distPath = "$gridPath/dist";
 $buildPath = "$gridPath/build";

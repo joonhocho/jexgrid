@@ -35,12 +35,11 @@ mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
 
  var $ = goog.getObjectByName('jQuery'),
  Util = goog.getObjectByName('Util'),
- Util$ = goog.getObjectByName('Util$'),
- JGM = {};
+ Util$ = goog.getObjectByName('Util$');
 
  goog.exportSymbol('JGM', JGM);
 
-JGM = {version:"1.2.3"};
+ JGM.version = "1.2.3";
 
 /**
 JGM
