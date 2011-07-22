@@ -109,7 +109,7 @@ goog.provide = function(name) {
     }
   }
 
-  goog.exportPath_(name);
+  goog.exportSymbol_(name);
 };
 
 
@@ -165,7 +165,7 @@ if (!COMPILED) {
  *     is |goog.global|.
  * @private
  */
-goog.exportPath_ = function(name, opt_object, opt_objectToExportTo) {
+goog.exportSymbol_ = function(name, opt_object, opt_objectToExportTo) {
   var parts = name.split('.');
   var cur = opt_objectToExportTo || goog.global;
 
@@ -1371,7 +1371,7 @@ goog.getMsg = function(str, opt_values) {
  *     is |goog.global|.
  */
 goog.exportSymbol = function(publicPath, object, opt_objectToExportTo) {
-  goog.exportPath_(publicPath, object, opt_objectToExportTo);
+  goog.exportSymbol_(publicPath, object, opt_objectToExportTo);
 };
 
 

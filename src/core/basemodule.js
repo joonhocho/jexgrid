@@ -12,7 +12,7 @@
 
 	goog.provide('JGM.core.BaseModule');
 
-	goog.exportPath('JGM.core.BaseModule', BaseModule);
+	goog.exportSymbol('JGM.core.BaseModule', BaseModule);
 
 	function BaseModule(args) {
 		if (args) {

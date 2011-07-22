@@ -17,7 +17,7 @@ JGM
 
  goog.provide('JGM.module.Footer');
 
- goog.exportPath('JGM.module.Footer', Footer);
+ goog.exportSymbol('JGM.module.Footer', Footer);
 
 /**
 Footer 모듈. 컬럼 헤더들을 담당하는 모듈입니다.

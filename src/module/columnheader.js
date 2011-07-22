@@ -17,7 +17,7 @@ JGM
 
  goog.provide('JGM.module.ColHeader');
 
- goog.exportPath('JGM.module.ColHeader', ColHeader);
+ goog.exportSymbol('JGM.module.ColHeader', ColHeader);
 
 /**
 ColHeader 모듈. 컬럼 헤더들을 담당하는 모듈입니다.

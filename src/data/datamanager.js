@@ -17,7 +17,7 @@
 
  goog.provide('JGM.data.DataManager');
 
- goog.exportPath('JGM.data.DataManager', DataManager);
+ goog.exportSymbol('JGM.data.DataManager', DataManager);
 
 	/**
 	  DataManager 모듈. 컬럼 헤더들을 담당하는 모듈입니다.

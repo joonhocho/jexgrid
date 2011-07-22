@@ -11,7 +11,7 @@
 
  goog.provide('JGM.module.SearchManager');
 
- goog.exportPath('JGM.module.SearchManager', SearchManager);
+ goog.exportSymbol('JGM.module.SearchManager', SearchManager);
 
 function SearchManager(args) {
 	this.mid = args.mid;

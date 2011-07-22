@@ -9,7 +9,7 @@
 
  goog.provide('Util$');
 
- goog.exportPath('Util$', Util$);
+ goog.exportSymbol('Util$', Util$);
 
 Util$.is$ = function(val) {
 	return (val instanceof jQuery) ? true : false;

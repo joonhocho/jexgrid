@@ -31,7 +31,7 @@
 
  goog.provide('JGM.core.Grid');
 
- goog.exportPath('JGM.core.Grid', Grid);
+ goog.exportSymbol('JGM.core.Grid', Grid);
 
 
  /**

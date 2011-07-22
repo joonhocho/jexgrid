@@ -17,7 +17,7 @@
 
  goog.provide('JGM.data.DataCreator');
 
- goog.exportPath('JGM.data.DataCreator', DataCreator);
+ goog.exportSymbol('JGM.data.DataCreator', DataCreator);
 
  /**
    DataCreator 모듈. 새로운 데이터의 생성과 추가를 담당하는 모듈입니다.

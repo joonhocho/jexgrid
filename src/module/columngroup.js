@@ -18,7 +18,7 @@ JGM
 
  goog.provide('JGM.module.ColGroup');
 
- goog.exportPath('JGM.module.ColGroup', ColGroup);
+ goog.exportSymbol('JGM.module.ColGroup', ColGroup);
 
 /**
 ColGroup 모듈. 트리 구조의 데이터를 담당하는 모듈입니다.

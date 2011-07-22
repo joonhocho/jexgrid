@@ -10,7 +10,7 @@
  goog.provide('Util');
  goog.provide('echo');
 
- goog.exportPath('Util', Util);
+ goog.exportSymbol('Util', Util);
 
 var undefined = (function(){})(),
 	console = window.console,
