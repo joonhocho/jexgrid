@@ -20,6 +20,9 @@ goog.provide('jx.data.DataManager');
   */
 
 (function() {
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.data.DataManager', DataManager);
 	JGM._add("DataManager", DataManager);

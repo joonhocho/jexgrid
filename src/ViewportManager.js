@@ -22,6 +22,9 @@ JGM
 */
 
 (function() {
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
 JGM._add("ViewportManager", ViewportManager);

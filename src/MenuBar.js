@@ -14,6 +14,9 @@ goog.provide('jx.grid.MenuBar');
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
 (function() {
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.MenuBar', MenuBar);
  JGM._add("MenuBar", MenuBar);
@@ -32,7 +35,7 @@ function MenuBar(args) {
 	this.grid.menubar = this;
 }
 
-goog.inherits(MenuBar, jx.grid.BaseModule);
+goog.inherits(MenuBar, BaseModule);
 
 MenuBar.getInstance = function(args) {
 	return new MenuBar(args);

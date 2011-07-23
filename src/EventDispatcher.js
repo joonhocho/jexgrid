@@ -16,6 +16,9 @@ JGM
 */
 
 (function() {
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	Disposable = goog.getObjectByName('jx.lang.Disposable');
 
 	goog.exportSymbol('jx.events.EventDispatcher', EventDispatcher);
 
@@ -52,7 +55,7 @@ EventDispatcher 컨스트럭터 입니다.
 function EventDispatcher(args) {
 }
 
-goog.inherits(EventDispatcher, jx.lang.Disposable);
+goog.inherits(EventDispatcher, Disposable);
 
 var proto = EventDispatcher.prototype,
 	sdispose = proto.dispose;

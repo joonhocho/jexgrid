@@ -15,6 +15,7 @@ goog.provide('jx.grid.BaseModule');
 
 (function() {
 
+ var EventDispatcher = goog.getObjectByName('EventDispatcher');
 	goog.exportSymbol('jx.grid.BaseModule', BaseModule);
 
 	function BaseModule(args) {
@@ -93,7 +94,7 @@ goog.provide('jx.grid.BaseModule');
 		});
 	}
 
-	goog.inherits(BaseModule, jx.events.EventDispatcher);
+	goog.inherits(BaseModule, EventDispatcher);
 
 	var proto = BaseModule.prototype,
 		superdispose = proto.dispose;

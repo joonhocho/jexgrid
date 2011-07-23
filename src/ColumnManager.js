@@ -21,6 +21,11 @@ JGM
 */
 (function() {
 
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Column = goog.getObjectByName('jx.grid.Column');
+
  goog.exportSymbol('jx.grid.ColumnManager', ColDefManager);
  JGM._add("ColDefManager", ColDefManager);
 

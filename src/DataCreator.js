@@ -19,6 +19,9 @@ goog.provide('jx.grid.DataCreator');
   */
 
 (function() {
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.DataCreator', DataCreator);
 JGM._add("DataCreator", DataCreator);

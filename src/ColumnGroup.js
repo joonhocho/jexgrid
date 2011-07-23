@@ -26,6 +26,10 @@ JGM
 */
 
 (function() {
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Collapser = goog.getObjectByName('jx.grid.Collapser');
 
  goog.exportSymbol('jx.grid.ColumnGroup', ColGroup);
  JGM._add("ColGroup", ColGroup);

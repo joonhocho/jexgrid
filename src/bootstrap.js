@@ -33,6 +33,8 @@ mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
 */
 
 (function() {
+var Util.goog.getObjectByName('jx.util'),
+	Util$.goog.getObjectByName('jx.util$');
 
  goog.exportSymbol('JGM', JGM);
  goog.exportSymbol('jx.grid', JGM);

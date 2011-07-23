@@ -19,6 +19,9 @@ goog.provide('jx.grid.EventManager');
   */
 
 (function() {
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.EventManager', EventManager);
  JGM._add("EventManager", EventManager);

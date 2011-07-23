@@ -16,6 +16,8 @@ goog.provide('Tree');
  */
 
 (function() {
+var Util.goog.getObjectByName('jx.util');
+	
 
  goog.exportSymbol('jx.data.TreeNode', TreeNode);
  goog.exportSymbol('jx.data.Tree', Tree);

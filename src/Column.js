@@ -4,6 +4,8 @@ goog.require('jx.events.EventDispatcher');
 goog.provide('jx.grid.Column');
 
 (function() {
+	var EventDispatcher = goog.getObjectByName('jx.events.EventDispatcher');
+
 	goog.exportSymbol('jx.grid.Column', Column);
 
 	function Column(args) {
@@ -369,7 +371,7 @@ goog.provide('jx.grid.Column');
 		this.filter = args.filter || null;
 	}
 
-	goog.inherits(Column, jx.events.EventDispatcher);
+	goog.inherits(Column, EventDispatcher);
 
 	var proto = Column.prototype;
 

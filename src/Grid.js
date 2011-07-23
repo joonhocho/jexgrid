@@ -36,6 +36,9 @@ goog.provide('jx.grid.Grid');
   */
 
 (function() {
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.Grid', Grid);
  JGM._add("Grid", Grid);
@@ -94,7 +97,7 @@ function Grid(args) {
   @version 1.0.0
   */
 
-goog.inherits(Grid, jx.grid.BaseModule);
+goog.inherits(Grid, BaseModule);
 
 Grid.getInstance = function(args) {
 	return new Grid(args);

@@ -15,6 +15,7 @@ goog.provide('Tracer');
 * Stack/Time Tracer for Debugging
 */
 (function(){
+var Util.goog.getObjectByName('jx.util');
 
 goog.exportSymbol('Tracer', Tracer);
 

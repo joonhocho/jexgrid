@@ -17,6 +17,7 @@ goog.provide('jx.lang.Disposable');
 
 (function() {
 
+	var Util.goog.getObjectByName('jx.util');
  goog.exportSymbol('jx.lang.Disposable', Disposable);
  goog.exportProperty(Disposable.prototype, 'dispose', dispose);
 

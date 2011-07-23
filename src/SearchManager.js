@@ -16,6 +16,9 @@ goog.provide('jx.grid.SearchManager');
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
 (function() {
+var JGM = goog.getObjectByName('jx.grid'),
+	Util.goog.getObjectByName('jx.util'),
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.SearchManager', SearchManager);
  JGM._add("SearchManager", SearchManager);
