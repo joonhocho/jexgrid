@@ -229,8 +229,8 @@ prototype.__init = function() {
 		size,
 		con = JGM._CONST;
 
-	if (this.grid.colDefMgr.getByKey(opt.colDef.key) === undefined) {
-		this.grid.colDefMgr.addAt(opt.colIdx, opt.colDef);
+	if (this.grid.colDefMgr.getByKey(opt['colDef'].key) === undefined) {
+		this.grid.colDefMgr.addAt(opt['colIdx'], opt['colDef']);
 	}
 	
 	if (Util.isNull(con._checkboxWidth)) {
@@ -246,7 +246,7 @@ prototype.__init = function() {
 
 prototype.bindEvents = function() {
 	var opt = this._options,
-		key = opt.colDef.key,
+		key = opt['colDef'].key,
 		events;
 
 	events = {
@@ -262,7 +262,7 @@ prototype.bindEvents = function() {
 	events["onRenderCell_" + key + "_prepend"] = this._onRenderCell;
 	events["keydownColSel_" + key + "_" + Util.keyMapKeydown.space] = this._keydownColSel;
 	
-	if (opt.master) {
+	if (opt['master']) {
 		events["onRenderHeader_" + key + "_prepend"] = this._onRenderHeader;
 		events.onRenderHeadersComplete = this._getMaster;
 	}

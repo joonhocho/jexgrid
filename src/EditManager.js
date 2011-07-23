@@ -376,21 +376,21 @@ prototype._onBeforeCreateSelCss = function() {
 		rules = [],
 		height = this.grid.view._getRowInnerHeight();
 
-	rules.push(this.grid.view._getCellSelector() + "." + o.classEdit + "{background:" + o.basicBackground + "}");
+	rules.push(this.grid.view._getCellSelector() + "." + opt['classEdit'] + "{background:" + opt['basicBackground'] + "}");
 	
-	rules.push(gridId + o.classEdit + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + o.basicBackground + ";height:" + height + "px;line-height:" + height + "px}");
+	rules.push(gridId + opt['classEdit'] + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + opt['basicBackground'] + ";height:" + height + "px;line-height:" + height + "px}");
 
-	if (o.editableBgEnabled) {
-		rules.push(gridId + o.classCellEditable + "{background:" + o.editableBg + "}");
+	if (opt['editableBgEnabled']) {
+		rules.push(gridId + opt['classCellEditable'] + "{background:" + opt['editableBg'] + "}");
 	}
-	if (o.notEditableBgEnabled) {
-		rules.push(gridId + o.classCellNotEditable + "{background:" + o.notEditableBg + "}");
+	if (opt['notEditableBgEnabled']) {
+		rules.push(gridId + opt['classCellNotEditable'] + "{background:" + opt['notEditableBg'] + "}");
 	}
-	if (o.editIconEnabled) {
-		rules.push(gridId + o.classEditIcon + "{float:left;position:absolute;left:0;top:0;padding:0 " + o.editIconPadding + "px;width:" + o.editIconWidth + "px;height:" + height + "px;background:url(" + o.urlEditIcon + ") no-repeat center transparent}");
+	if (opt['editIconEnabled']) {
+		rules.push(gridId + opt['classEditIcon'] + "{float:left;position:absolute;left:0;top:0;padding:0 " + opt['editIconPadding'] + "px;width:" + opt['editIconWidth'] + "px;height:" + height + "px;background:url(" + opt['urlEditIcon'] + ") no-repeat center transparent}");
 	}
-	rules.push(gridId + o.classSuccess + "{background:" + o.successBackground + "}");
-	rules.push(gridId + o.classFailure + "{background:" + o.failureBackground + "}");
+	rules.push(gridId + opt['classSuccess'] + "{background:" + opt['successBackground'] + "}");
+	rules.push(gridId + opt['classFailure'] + "{background:" + opt['failureBackground'] + "}");
 	return rules.join("");
 };
 

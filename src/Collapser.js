@@ -445,23 +445,23 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var gridId = "#" + this.grid.mid + " .",
 			o = this._options,
 			rowSel = gridId + this.grid.view._options['classRow'] + " .",
-			toggleSel = gridId + o.classCollapser,
-			expandedSel = toggleSel + "." + o.classExpanded,
-			collapsedSel = toggleSel + "." + o.classCollapsed,
+			toggleSel = gridId + opt['classCollapser'],
+			expandedSel = toggleSel + "." + opt['classExpanded'],
+			collapsedSel = toggleSel + "." + opt['classCollapsed'],
 			rowH = this.grid.view._getRowInnerHeight(),
 			rules = [],
 			header = this.grid.header;
 
-		rules.push(gridId + o.classIndent + "{height:" + rowH + "px;float:left;}");
-		rules.push(toggleSel + "{width:" + o.width + "px;float:left;padding:0 " + o.padding + "px}");
-		rules.push(rowSel + o.classCollapser + "{height:" + rowH + "px}");
-		rules.push(expandedSel + "{background:url(" + o.urlExpanded + ") no-repeat center transparent}");
-		rules.push(expandedSel + ":hover{background:url(" + o.urlExpandedHover + ") no-repeat center transparent}");
-		rules.push(collapsedSel + "{background:url(" + o.urlCollapsed + ") no-repeat center transparent}");
-		rules.push(collapsedSel + ":hover{background:url(" + o.urlCollapsedHover + ") no-repeat center transparent}");
+		rules.push(gridId + opt['classIndent'] + "{height:" + rowH + "px;float:left;}");
+		rules.push(toggleSel + "{width:" + opt['width'] + "px;float:left;padding:0 " + opt['padding'] + "px}");
+		rules.push(rowSel + opt['classCollapser'] + "{height:" + rowH + "px}");
+		rules.push(expandedSel + "{background:url(" + opt['urlExpanded'] + ") no-repeat center transparent}");
+		rules.push(expandedSel + ":hover{background:url(" + opt['urlExpandedHover'] + ") no-repeat center transparent}");
+		rules.push(collapsedSel + "{background:url(" + opt['urlCollapsed'] + ") no-repeat center transparent}");
+		rules.push(collapsedSel + ":hover{background:url(" + opt['urlCollapsedHover'] + ") no-repeat center transparent}");
 
 		if (Util.isNotNull(header)) {
-			rules.push(gridId + header._options['classColHeader'] + " ." + o.classCollapser + "{height:" + header._options['height'] + "px}");
+			rules.push(gridId + header._options['classColHeader'] + " ." + opt['classCollapser'] + "{height:" + header._options['height'] + "px}");
 		}
 
 		return rules.join("");
@@ -814,18 +814,18 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var id = this.grid.dataMgr.getId(datarow),
 			opt = this._options;
 
-		cellHtml.push("<div class='" + opt.classIndent + "' style='width:" + (opt.indentSize * node.getLevel()) + "px;'></div><div ");
+		cellHtml.push("<div class='" + opt['classIndent'] + "' style='width:" + (opt['indentSize'] * node.getLevel()) + "px;'></div><div ");
 		if (!node.isLeaf()) {
-			cellHtml.push("onmousedown=\"JGM.m.Collapser." + this.mid + ".toggleById('" + id + "');\" class='" + opt.classCollapser);
+			cellHtml.push("onmousedown=\"JGM.m.Collapser." + this.mid + ".toggleById('" + id + "');\" class='" + opt['classCollapser']);
 			if (node._collapsed) {
-				cellHtml.push(" " + opt.classCollapsed);
+				cellHtml.push(" " + opt['classCollapsed']);
 			}
 			else {
-				cellHtml.push(" " + opt.classExpanded);
+				cellHtml.push(" " + opt['classExpanded']);
 			}
 		}
 		else {
-			cellHtml.push("class='" + opt.classCollapser);
+			cellHtml.push("class='" + opt['classCollapser']);
 		}
 		cellHtml.push("'></div>");
 	};
@@ -918,10 +918,10 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 		var opt = this._options;
 		if (collapsed) {
-			ob.addClass(opt.classCollapsed).removeClass(opt.classExpanded);
+			ob.addClass(opt['classCollapsed']).removeClass(opt['classExpanded']);
 		}
 		else {
-			ob.addClass(opt.classExpanded).removeClass(opt.classCollapsed);
+			ob.addClass(opt['classExpanded']).removeClass(opt['classCollapsed']);
 		}
 	};
 

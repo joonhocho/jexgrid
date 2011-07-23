@@ -635,26 +635,26 @@ prototype._destroy = function() {
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		border = o.borderThickness + "px " + o.border,
+		border = opt['borderThickness'] + "px " + opt['border'],
 		rules = [],
 		colDefs = this.grid.colDefMgr.get(),
 		len = colDefs.length,
 		i = 0;
 
-	rules.push(gridId + o.classHeaderMask + "{position:relative;overflow:hidden;width:100%;font:" + o.font + ";background:" + o.background + ";border-bottom:" + border + ";" + o.style + "}");
-	rules.push(gridId + o.classHeader + "{position:relative;overflow:hidden;white-space:nowrap;cursor:default;left:" + (-o.scrollerLeft) + "px;width:" + o.scrollerWidth + "px;line-height:" + o.height + "px}");
-	rules.push(gridId + o.classColHeader + "{position:relative;overflow:hidden;float:left;text-overflow:ellipsis;text-align:center;height:" + o.height + "px;left:" + (o.scrollerLeft - this.grid.view.getScrollLeft()) + "px;border-right:" + border + ";" + o.headerStyle + "}");
-	rules.push(gridId + o.classColHeader + "." + o.classInteractive + ":hover, " + gridId + o.classColHeaderActive + "{background:" + o.backgroundHover + "}");
-	rules.push(gridId + o.classColHeaderActive + "{border-left:" + border + "}");
-	rules.push(gridId + o.classColHeader + "." + o.classColHeaderPlaceholder + "{background:" + o.backgroundPlaceholder + "!important}");
-	rules.push(gridId + o.classSort + "{position:absolute;height:" + o.height + "px;right:" + o.sortRight + "px;width:" + o.sortWidth + "px;background:url(" + o.sortBackground + ") no-repeat center transparent}");
-	rules.push(gridId + o.classSortAsc + "{background:url(" + o.sortBackgroundAsc + ") no-repeat center transparent}");
-	rules.push(gridId + o.classSortDesc + "{background:url(" + o.sortBackgroundDesc + ") no-repeat center transparent}");
-	rules.push(gridId + o.classResizeHandle + "{z-index:10;background:" + o.resizeHandleBackground + ";cursor:e-resize;position:absolute;height:" + o.height + "px;width:" + o.resizeHandleWidth + "px}");
-	rules.push(gridId + o.classResizeGuide + "{z-index:10;position:absolute;background:" + o.resizeBackground + ";width:" + o.resizeGuideWidth + "px}");
+	rules.push(gridId + opt['classHeaderMask'] + "{position:relative;overflow:hidden;width:100%;font:" + opt['font'] + ";background:" + opt['background'] + ";border-bottom:" + border + ";" + opt['style'] + "}");
+	rules.push(gridId + opt['classHeader'] + "{position:relative;overflow:hidden;white-space:nowrap;cursor:default;left:" + (-opt['scrollerLeft']) + "px;width:" + opt['scrollerWidth'] + "px;line-height:" + opt['height'] + "px}");
+	rules.push(gridId + opt['classColHeader'] + "{position:relative;overflow:hidden;float:left;text-overflow:ellipsis;text-align:center;height:" + opt['height'] + "px;left:" + (opt['scrollerLeft'] - this.grid.view.getScrollLeft()) + "px;border-right:" + border + ";" + opt['headerStyle'] + "}");
+	rules.push(gridId + opt['classColHeader'] + "." + opt['classInteractive'] + ":hover, " + gridId + opt['classColHeaderActive'] + "{background:" + opt['backgroundHover'] + "}");
+	rules.push(gridId + opt['classColHeaderActive'] + "{border-left:" + border + "}");
+	rules.push(gridId + opt['classColHeader'] + "." + opt['classColHeaderPlaceholder'] + "{background:" + opt['backgroundPlaceholder'] + "!important}");
+	rules.push(gridId + opt['classSort'] + "{position:absolute;height:" + opt['height'] + "px;right:" + opt['sortRight'] + "px;width:" + opt['sortWidth'] + "px;background:url(" + opt['sortBackground'] + ") no-repeat center transparent}");
+	rules.push(gridId + opt['classSortAsc'] + "{background:url(" + opt['sortBackgroundAsc'] + ") no-repeat center transparent}");
+	rules.push(gridId + opt['classSortDesc'] + "{background:url(" + opt['sortBackgroundDesc'] + ") no-repeat center transparent}");
+	rules.push(gridId + opt['classResizeHandle'] + "{z-index:10;background:" + opt['resizeHandleBackground'] + ";cursor:e-resize;position:absolute;height:" + opt['height'] + "px;width:" + opt['resizeHandleWidth'] + "px}");
+	rules.push(gridId + opt['classResizeGuide'] + "{z-index:10;position:absolute;background:" + opt['resizeBackground'] + ";width:" + opt['resizeGuideWidth'] + "px}");
 	
 	for (; i < len; i++) {
-		rules.push(gridId + o.classColHeader + "#" + this.mid + "h" + colDefs[i].key + "{" + colDefs[i].headerStyle + "}");
+		rules.push(gridId + opt['classColHeader'] + "#" + this.mid + "h" + colDefs[i].key + "{" + colDefs[i].headerStyle + "}");
 	}
 	
 	return rules.join("");
@@ -786,18 +786,18 @@ prototype._updateIndicator = function(key, status) {
 	}
 
 	var opt = this._options,
-		indicator = colHeader.find("." + opt.classSort);
+		indicator = colHeader.find("." + opt['classSort']);
 	if (status === 0) {
-		colHeader.removeClass(opt.classColHeaderSorted);
-		indicator.removeClass(opt.classSortAsc + " " + opt.classSortDesc);
+		colHeader.removeClass(opt['classColHeaderSorted']);
+		indicator.removeClass(opt['classSortAsc'] + " " + opt['classSortDesc']);
 	}
 	else {
-		colHeader.addClass(opt.classColHeaderSorted);
+		colHeader.addClass(opt['classColHeaderSorted']);
 		if (status === 1) {
-			indicator.addClass(opt.classSortAsc).removeClass(opt.classSortDesc);
+			indicator.addClass(opt['classSortAsc']).removeClass(opt['classSortDesc']);
 		}
 		else if (status === 2) {
-			indicator.addClass(opt.classSortDesc).removeClass(opt.classSortAsc);
+			indicator.addClass(opt['classSortDesc']).removeClass(opt['classSortAsc']);
 		}
 	}
 };
@@ -884,10 +884,10 @@ prototype._initReorder = function() {
 		};
 
 	container.sortable({
-		'items': "." + opt.classColHeader,
+		'items': "." + opt['classColHeader'],
 		'axis': "x",
 		'forcePlaceholderSize': true,
-		'placeholder': opt.classColHeaderPlaceholder + " " + opt.classColHeader,
+		'placeholder': opt['classColHeaderPlaceholder'] + " " + opt['classColHeader'],
 		'tolerance': "pointer",
 		'start': function(e, ui) {
 			ui.item.addClass(thisIns._options['classColHeaderActive']);
@@ -899,7 +899,7 @@ prototype._initReorder = function() {
 		'update': updatefn
 	});
 
-	if (opt.reorderSyncEnabled) {
+	if (opt['reorderSyncEnabled']) {
 		container.sortable("option", "change", updatefn);
 	}
 };
@@ -1132,9 +1132,9 @@ prototype._initResizeHandles = function() {
 		colDef,
 		key,
 		i = 0,
-		offset = this._resizeHandleOffset = Math.floor(opt.scrollerLeft - opt.resizeHandleWidth / 2),
+		offset = this._resizeHandleOffset = Math.floor(opt['scrollerLeft'] - opt['resizeHandleWidth'] / 2),
 		vmid = this.grid.view.mid,
-		handle = opt.classResizeHandle,
+		handle = opt['classResizeHandle'],
 		head = this._head;
 
 	for (; i < len; i++) {

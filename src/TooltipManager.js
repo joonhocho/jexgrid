@@ -257,7 +257,7 @@ prototype._onCreateCss = function() {
 		opt = this._options,
 		rules = [];
 
-	rules.push(gridId + opt.classTooltip + "{position:absolute;z-index:10;background:" + opt.background + ";border:" + opt.border + ";padding:" + opt.padding + ";color:" + opt.color + ";font:" + opt.font + "}");
+	rules.push(gridId + opt['classTooltip'] + "{position:absolute;z-index:10;background:" + opt['background'] + ";border:" + opt['border'] + ";padding:" + opt['padding'] + ";color:" + opt['color'] + ";font:" + opt['font'] + "}");
 
 	return rules.join("");
 };
@@ -271,8 +271,8 @@ prototype._mouseoutCanvas = function(e, cell) {
 
 prototype._mousemoveCanvas = function(e, cell) {
 	var opt = this._options;
-	if (opt.tooltipSyncEnabled && Util.isNotNull(this._tooltip)) {
-		this._tooltip.css({'left':(e.pageX + opt.offsetX) + "px", 'top':(e.pageY + opt.offsetY) + "px"});
+	if (opt['tooltipSyncEnabled'] && Util.isNotNull(this._tooltip)) {
+		this._tooltip.css({'left':(e.pageX + opt['offsetX']) + "px", 'top':(e.pageY + opt['offsetY']) + "px"});
 	}
 };
 
@@ -281,7 +281,7 @@ prototype._mouseoverCanvas = function(e, cell) {
 		if (Util.isNull(this._tooltip)) {
 			var opt = this._options,
 				temp = document.createElement("div");
-			temp.innerHTML = "<div class='" + opt.classTooltip + "' style='left:" + (e.pageX + opt.offsetX) + "px;top:" + (e.pageY + opt.offsetY) + "px'>" + cell.getValue() + "</div>";
+			temp.innerHTML = "<div class='" + opt['classTooltip'] + "' style='left:" + (e.pageX + opt['offsetX']) + "px;top:" + (e.pageY + opt['offsetY']) + "px'>" + cell.getValue() + "</div>";
 			this._tooltip = $(temp.firstChild);
 			this._ctnr[0].appendChild(this._tooltip[0]);
 		}

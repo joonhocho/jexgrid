@@ -289,14 +289,14 @@ prototype._onCreateCss = function() {
 	var rules = this.grid.event.trigger("onBeforeCreateSelCss"),
       gridId = "#" + this.grid.mid + " .",
       opt = this._options;
-   if (opt.highlightRowEnabled === true) {
-      rules.push(gridId + opt.classRowSelected  + " > *{background:" + opt.bgColorRowSelected + "}");
+   if (opt['highlightRowEnabled'] === true) {
+      rules.push(gridId + opt['classRowSelected']  + " > *{background:" + opt['bgColorRowSelected'] + "}");
    }
-	if (opt.multiSelectEnabled === true) {
-		rules.push(gridId + opt.classSelection +  "{background:" + opt.bgColorSelection + "}");
-		rules.push(gridId + opt.classRange +  "{background:" + opt.bgColorRange + "}");
+	if (opt['multiSelectEnabled'] === true) {
+		rules.push(gridId + opt['classSelection'] +  "{background:" + opt['bgColorSelection'] + "}");
+		rules.push(gridId + opt['classRange'] +  "{background:" + opt['bgColorRange'] + "}");
 	}
-	rules.push(gridId + opt.classLast  + "{background:" + opt.bgColorLast + "}");
+	rules.push(gridId + opt['classLast']  + "{background:" + opt['bgColorLast'] + "}");
 	
 	return rules.join("\n");
 };
@@ -308,15 +308,15 @@ prototype._onGetCellClass = function(row, col, datarow, colDef) {
       rows = this._rows,
       opt = this._options;
 	if (Util.isNotNull(last) && last.getDatarow() === datarow && last.getColDef() === colDef) {
-		css += opt.classLast;
+		css += opt['classLast'];
    }
 
-	if (opt.multiSelectEnabled === true) {
+	if (opt['multiSelectEnabled'] === true) {
 		if (Util.isNotNull(range) && range.getDatarow() === datarow && range.getColDef() === colDef) {
-			css += " " + opt.classRange;
+			css += " " + opt['classRange'];
       }
 		if (rows.hasOwnProperty(row) && rows[row].hasOwnProperty(col)) {
-			css += " " + opt.classSelection;
+			css += " " + opt['classSelection'];
       }
 	}
 	return css;

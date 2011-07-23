@@ -447,13 +447,13 @@ prototype._destroy = function() {
 
 prototype._onCreateCss = function() {
 	var o = this._options,
-      footerSel = "#" + this.grid.mid + " ." + o.classFooter,
+      footerSel = "#" + this.grid.mid + " ." + opt['classFooter'],
       rules = [];
 
-	rules.push(footerSel + "{float:left;cursor:default;width:100%;" + JGM._CONST._cssUnselectable + "background:" + o.background +";border-top:" + o.border + ";border-collapse:collapse;color:" + o.color + ";font-size:" + o.fontSize + ";font-weight:" + o.fontWeight + ";padding-left:8px;" + o.style + "}");
-	rules.push(footerSel + " ." + o.classCell + "{float:left;white-space:nowrap;line-height:" + o.cellHeight + "px;padding-right:" + o.cellPadding + "px;" + o.cellStyle + "}");
-	rules.push(footerSel + " ." + o.classTitle + "{text-align:right;color:" + o.titleColor + ";font-size:" + o.titleFontSize + ";font-weight:" + o.titleFontWeight + ";" + o.titleStyle + "}");
-	rules.push(footerSel + " ." + o.classContent + "{color:" + o.contentColor + ";font-size:" + o.contentFontSize + ";font-weight:" + o.contentFontWeight + ";" + o.contentStyle + "}");
+	rules.push(footerSel + "{float:left;cursor:default;width:100%;" + JGM._CONST._cssUnselectable + "background:" + opt['background'] +";border-top:" + opt['border'] + ";border-collapse:collapse;color:" + opt['color'] + ";font-size:" + opt['fontSize'] + ";font-weight:" + opt['fontWeight'] + ";padding-left:8px;" + opt['style'] + "}");
+	rules.push(footerSel + " ." + opt['classCell'] + "{float:left;white-space:nowrap;line-height:" + opt['cellHeight'] + "px;padding-right:" + opt['cellPadding'] + "px;" + opt['cellStyle'] + "}");
+	rules.push(footerSel + " ." + opt['classTitle'] + "{text-align:right;color:" + opt['titleColor'] + ";font-size:" + opt['titleFontSize'] + ";font-weight:" + opt['titleFontWeight'] + ";" + opt['titleStyle'] + "}");
+	rules.push(footerSel + " ." + opt['classContent'] + "{color:" + opt['contentColor'] + ";font-size:" + opt['contentFontSize'] + ";font-weight:" + opt['contentFontWeight'] + ";" + opt['contentStyle'] + "}");
 
 	return rules.join("");
 };

@@ -224,8 +224,8 @@ prototype.__init = function() {
 	@since 1.1.0
 	@version 1.1.0
 	*/
-	collapser = this.collapser = JGM.create("Collapser", {grid:grid, 'options':opt.Collapser});
-	delete opt.Collapser;
+	collapser = this.collapser = JGM.create("Collapser", {grid:grid, 'options':opt['Collapser']});
+	delete opt['Collapser'];
 
 	this._processData(datam.all);
 
@@ -357,12 +357,12 @@ prototype._onAddDatarow = function(datarow) {
 
 	this._addData(
 		datarow,
-		opt.key,
+		opt['key'],
 		datam.idKey,
 		datam._consts._notReal,
-		ctopt.nodeKey,
-		ctopt.parentKey,
-		opt.padColKeys,
+		ctopt['nodeKey'],
+		ctopt['parentKey'],
+		opt['padColKeys'],
 		newParents
 	);
 

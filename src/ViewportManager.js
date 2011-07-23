@@ -494,28 +494,28 @@ prototype._onDestroy = function() {
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		cellSel = gridId + o.classCell,
-		rowSel = gridId + o.classRow,
-		border = o.borderThickness + "px " + o.border,
-		attrRowIdx = rowSel + "[" + o.attrRowIdx,
+		cellSel = gridId + opt['classCell'],
+		rowSel = gridId + opt['classRow'],
+		border = opt['borderThickness'] + "px " + opt['border'],
+		attrRowIdx = rowSel + "[" + opt['attrRowIdx'],
 		colDefs = this.grid.colDefMgr.get(),
       clen = colDefs.length,
       i = 0,
 		rules = [];
 
-	rules.push(gridId + o.classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + o.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + o.style + "}");
-	rules.push(gridId + o.classView + ":focus{background:" + o.focusBackground + ";outline:" + o.focusOutline + "}");
-	rules.push(gridId + o.classCanvas + "{height:" + this._calCanvasHeight() + "px;" + o.canvasStyle + ";background:#fff}");
-	rules.push(rowSel + "{position:absolute;" + o.rowStyle + "}");
-	rules.push(cellSel + "{height:" + o.rowH + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + o.padding + "px;border-right:" + border + ";" + o.cellStyle + "}");
+	rules.push(gridId + opt['classView'] + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + opt['rowH'] + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + opt['style'] + "}");
+	rules.push(gridId + opt['classView'] + ":focus{background:" + opt['focusBackground'] + ";outline:" + opt['focusOutline'] + "}");
+	rules.push(gridId + opt['classCanvas'] + "{height:" + this._calCanvasHeight() + "px;" + opt['canvasStyle'] + ";background:#fff}");
+	rules.push(rowSel + "{position:absolute;" + opt['rowStyle'] + "}");
+	rules.push(cellSel + "{height:" + opt['rowH'] + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + opt['padding'] + "px;border-right:" + border + ";" + opt['cellStyle'] + "}");
 	
-	if (o.evenOddRows) {
+	if (opt['evenOddRows']) {
 		rules.push(
 			attrRowIdx + "$='1']," +
 			attrRowIdx + "$='3']," +
 			attrRowIdx + "$='5']," +
 			attrRowIdx + "$='7']," +
-			attrRowIdx + "$='9']{background:" + o.oddRowsBackground + "}");
+			attrRowIdx + "$='9']{background:" + opt['oddRowsBackground'] + "}");
    }
 
 	for (; i < clen; i++) {

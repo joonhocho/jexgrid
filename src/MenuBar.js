@@ -94,14 +94,14 @@ proto._destroy = function() {
 proto._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
       o = this._options,
-      border = o.borderThickness + "px " + o.border,
+      border = opt['borderThickness'] + "px " + opt['border'],
       rules = [];
 
-	rules.push(gridId + o.classMenuBar + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + o.background + ";border-bottom:" + border + ";height:" + o.height + "px}");
-	rules.push(gridId + o.classIcon + "{float:left;height:" + o.iconHeight + "px;width:" + o.iconWidth + "px;border:" + o.iconBorderThickness + "px " + o.iconBorder + ";margin:" + o.iconMargin + "px 0 0 " + o.iconMargin + "px;background:" + o.iconBackground + ";border-radius:" + o.iconBorderRadius + "px;-moz-border-radius:" + o.iconBorderRadius + "px}");
-	rules.push(gridId + o.classIcon + ":hover," + gridId + o.classIcon + ":focus{background:" + o.iconBackgroundHover + ";border:" + o.iconBorderThickness + "px " + o.iconBorderHover + "}");
-	rules.push(gridId + o.classIcon + ":active," + gridId + o.classIcon + ".active{cursor:default;background:" + o.iconBackgroundActive + ";border:" + o.iconBorderThickness + "px " + o.iconBorderActive + "}");
-	rules.push(gridId + o.classIcon + ".active:focus{border:" + o.iconBorderThickness + "px " + o.iconBorderFocus + "}");
+	rules.push(gridId + opt['classMenuBar'] + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + opt['background'] + ";border-bottom:" + border + ";height:" + opt['height'] + "px}");
+	rules.push(gridId + opt['classIcon'] + "{float:left;height:" + opt['iconHeight'] + "px;width:" + opt['iconWidth'] + "px;border:" + opt['iconBorderThickness'] + "px " + opt['iconBorder'] + ";margin:" + opt['iconMargin'] + "px 0 0 " + opt['iconMargin'] + "px;background:" + opt['iconBackground'] + ";border-radius:" + opt['iconBorderRadius'] + "px;-moz-border-radius:" + opt['iconBorderRadius'] + "px}");
+	rules.push(gridId + opt['classIcon'] + ":hover," + gridId + opt['classIcon'] + ":focus{background:" + opt['iconBackgroundHover'] + ";border:" + opt['iconBorderThickness'] + "px " + opt['iconBorderHover'] + "}");
+	rules.push(gridId + opt['classIcon'] + ":active," + gridId + opt['classIcon'] + ".active{cursor:default;background:" + opt['iconBackgroundActive'] + ";border:" + opt['iconBorderThickness'] + "px " + opt['iconBorderActive'] + "}");
+	rules.push(gridId + opt['classIcon'] + ".active:focus{border:" + opt['iconBorderThickness'] + "px " + opt['iconBorderFocus'] + "}");
 	
 	return rules.join("");
 };

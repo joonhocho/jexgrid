@@ -141,51 +141,51 @@ var prototype = SearchManager.prototype;
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		border = o.borderThickness + "px " + o.border,
-		tagsBorderRadius = "border-radius:" + o.tagsBorderRadius + "px;-moz-border-radius:" + o.tagsBorderRadius + "px",
-		advButtonBorder = o.advButtonBorderThickness + "px " + o.advButtonBorder,
-		advButtonBorderHover = o.advButtonBorderThickness + "px " + o.advButtonBorderHover,
-		advButtonBorderActive = o.advButtonBorderThickness + "px " + o.advButtonBorderActive,
-		advButtonBorderOpened = o.advButtonBorderThickness + "px " + o.advButtonBorderOpened,
-		tagsInnerHeight = o.tagsHeight - 2 * o.tagsPadding,
-		advButtonHeight = tagsInnerHeight - 2 * o.advButtonBorderThickness,
-		tagHeight = tagsInnerHeight - 2 * o.tagBorderThickness,
-		classMask = gridId + o.classMask,
-		classSearchar = gridId + o.classSearchbar,
-		classAdvButton = gridId + o.classAdvButton,
-		classRemoveTag = gridId + o.classRemoveTag,
+		border = opt['borderThickness'] + "px " + opt['border'],
+		tagsBorderRadius = "border-radius:" + opt['tagsBorderRadius'] + "px;-moz-border-radius:" + opt['tagsBorderRadius'] + "px",
+		advButtonBorder = opt['advButtonBorderThickness'] + "px " + opt['advButtonBorder'],
+		advButtonBorderHover = opt['advButtonBorderThickness'] + "px " + opt['advButtonBorderHover'],
+		advButtonBorderActive = opt['advButtonBorderThickness'] + "px " + opt['advButtonBorderActive'],
+		advButtonBorderOpened = opt['advButtonBorderThickness'] + "px " + opt['advButtonBorderOpened'],
+		tagsInnerHeight = opt['tagsHeight'] - 2 * opt['tagsPadding'],
+		advButtonHeight = tagsInnerHeight - 2 * opt['advButtonBorderThickness'],
+		tagHeight = tagsInnerHeight - 2 * opt['tagBorderThickness'],
+		classMask = gridId + opt['classMask'],
+		classSearchar = gridId + opt['classSearchbar'],
+		classAdvButton = gridId + opt['classAdvButton'],
+		classRemoveTag = gridId + opt['classRemoveTag'],
 		rules = [];
 
-	rules.push(classMask + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + o.background +"}");
+	rules.push(classMask + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + opt['background'] +"}");
 	rules.push(classMask + " button{margin:0;padding:0 3px}");
-	rules.push(classMask + " input{border:" + o.inputBorder + ";padding:" + o.inputPadding + "}");
+	rules.push(classMask + " input{border:" + opt['inputBorder'] + ";padding:" + opt['inputPadding'] + "}");
 
-	rules.push(classSearchar + "{text-align:" + o.searchbarAlign + ";border-bottom:" + border + "}");
-	rules.push(classSearchar + " input{width:" + o.searchbarWidth + ";margin:" + o.searchbarMargin + "px 0;height:" + o.searchbarHeight + "px;" + tagsBorderRadius + "}");
+	rules.push(classSearchar + "{text-align:" + opt['searchbarAlign'] + ";border-bottom:" + border + "}");
+	rules.push(classSearchar + " input{width:" + opt['searchbarWidth'] + ";margin:" + opt['searchbarMargin'] + "px 0;height:" + opt['searchbarHeight'] + "px;" + tagsBorderRadius + "}");
 
-	rules.push(gridId + o.classTagbar + "{cursor:default;height:" + (o.tagsHeight - o.tagsPadding) + "px;padding:" + o.tagsPadding + "px 0 0 " + o.tagsPadding + "px;border-bottom:" + border + "}");
+	rules.push(gridId + opt['classTagbar'] + "{cursor:default;height:" + (opt['tagsHeight'] - opt['tagsPadding']) + "px;padding:" + opt['tagsPadding'] + "px 0 0 " + opt['tagsPadding'] + "px;border-bottom:" + border + "}");
 
-	rules.push(classAdvButton + "{float:left;margin-right:" + o.tagsPadding + "px;background:" + o.advButtonBg + ";border:" + advButtonBorder + ";padding:0 " + o.advButtonPadding + "px;" + tagsBorderRadius + "}");
-	rules.push(classAdvButton + ":hover{background:" + o.advButtonBgHover + ";border:" + advButtonBorderHover + "}");
-	rules.push(classAdvButton + ".opened{background:" + o.advButtonBgOpened + ";border:" + advButtonBorderOpened + "}");
-	rules.push(classAdvButton + ":active{background:" + o.advButtonBgActive + ";border:" + advButtonBorderActive + "}");
+	rules.push(classAdvButton + "{float:left;margin-right:" + opt['tagsPadding'] + "px;background:" + opt['advButtonBg'] + ";border:" + advButtonBorder + ";padding:0 " + opt['advButtonPadding'] + "px;" + tagsBorderRadius + "}");
+	rules.push(classAdvButton + ":hover{background:" + opt['advButtonBgHover'] + ";border:" + advButtonBorderHover + "}");
+	rules.push(classAdvButton + ".opened{background:" + opt['advButtonBgOpened'] + ";border:" + advButtonBorderOpened + "}");
+	rules.push(classAdvButton + ":active{background:" + opt['advButtonBgActive'] + ";border:" + advButtonBorderActive + "}");
 
-	rules.push(gridId + o.classAdvButtonName + "{float:left;color:" + o.advButtonColor + ";font:" + o.advButtonFont + ";line-height:" + advButtonHeight + "px}");
-	rules.push(gridId + o.classAdvButtonIcon + "{float:left;height:" + advButtonHeight + "px;margin-left:" + o.advButtonIconMargin + "px;background:url(" + o.advButtonIconUrl + ") no-repeat center;width:" + o.advButtonIconWidth + "px}");
-	rules.push(classAdvButton + ".opened ." + o.classAdvButtonIcon + "{background:url(" + o.advButtonIconCloseUrl + ") no-repeat center}");
+	rules.push(gridId + opt['classAdvButtonName'] + "{float:left;color:" + opt['advButtonColor'] + ";font:" + opt['advButtonFont'] + ";line-height:" + advButtonHeight + "px}");
+	rules.push(gridId + opt['classAdvButtonIcon'] + "{float:left;height:" + advButtonHeight + "px;margin-left:" + opt['advButtonIconMargin'] + "px;background:url(" + opt['advButtonIconUrl'] + ") no-repeat center;width:" + opt['advButtonIconWidth'] + "px}");
+	rules.push(classAdvButton + ".opened ." + opt['classAdvButtonIcon'] + "{background:url(" + opt['advButtonIconCloseUrl'] + ") no-repeat center}");
 
-	rules.push(gridId + o.classTag + "{float:left;border:" + o.tagBorderThickness + "px " + o.tagBorder + ";margin:0 " + o.tagsPadding + "px " + o.tagsPadding + "px 0;padding:0 " + o.tagPadding + "px;background:" + o.tagBackground + ";" + tagsBorderRadius + "}");
-	rules.push(gridId + o.classTagName + "{float:left;color:" + o.tagColor + ";font:" + o.tagFont + ";line-height:" + tagHeight + "px}");
-	rules.push(classRemoveTag + "{float:left;margin-left:" + o.tagPadding + "px;background:url(" + o.tagRemoveIconUrl + ") no-repeat center;width:" + o.tagRemoveIconWidth + "px;height:" + tagHeight + "px}");
-	rules.push(classRemoveTag + ":hover{background:url(" + o.tagRemoveIconHoverUrl + ") no-repeat center}");
-	rules.push(classRemoveTag + ":active{background:url(" + o.tagRemoveIconActiveUrl + ") no-repeat center}");
+	rules.push(gridId + opt['classTag'] + "{float:left;border:" + opt['tagBorderThickness'] + "px " + opt['tagBorder'] + ";margin:0 " + opt['tagsPadding'] + "px " + opt['tagsPadding'] + "px 0;padding:0 " + opt['tagPadding'] + "px;background:" + opt['tagBackground'] + ";" + tagsBorderRadius + "}");
+	rules.push(gridId + opt['classTagName'] + "{float:left;color:" + opt['tagColor'] + ";font:" + opt['tagFont'] + ";line-height:" + tagHeight + "px}");
+	rules.push(classRemoveTag + "{float:left;margin-left:" + opt['tagPadding'] + "px;background:url(" + opt['tagRemoveIconUrl'] + ") no-repeat center;width:" + opt['tagRemoveIconWidth'] + "px;height:" + tagHeight + "px}");
+	rules.push(classRemoveTag + ":hover{background:url(" + opt['tagRemoveIconHoverUrl'] + ") no-repeat center}");
+	rules.push(classRemoveTag + ":active{background:url(" + opt['tagRemoveIconActiveUrl'] + ") no-repeat center}");
 
-	rules.push(gridId + o.classClearTags + "{height:" + tagsInnerHeight + "px}");
+	rules.push(gridId + opt['classClearTags'] + "{height:" + tagsInnerHeight + "px}");
 
-	rules.push(gridId + o.classAdvanced + "{cursor:default;font:" + o.advFont + ";border-bottom:" + border + "}");
-	rules.push(gridId + o.classOptionCol + "{display:inline-block;vertical-align:top}");
-	rules.push(gridId + o.classOptionCol + " input{width:" + o.advInputWidth + "px;margin-right:2px;" + tagsBorderRadius + "}");
-	rules.push(gridId + o.classSearchIcon + "{background:url(" + o.searchIconUrl + ") no-repeat center;width:" + o.searchIconWidth + "px;height:" + o.searchIconHeight + "px}");
+	rules.push(gridId + opt['classAdvanced'] + "{cursor:default;font:" + opt['advFont'] + ";border-bottom:" + border + "}");
+	rules.push(gridId + opt['classOptionCol'] + "{display:inline-block;vertical-align:top}");
+	rules.push(gridId + opt['classOptionCol'] + " input{width:" + opt['advInputWidth'] + "px;margin-right:2px;" + tagsBorderRadius + "}");
+	rules.push(gridId + opt['classSearchIcon'] + "{background:url(" + opt['searchIconUrl'] + ") no-repeat center;width:" + opt['searchIconWidth'] + "px;height:" + opt['searchIconHeight'] + "px}");
 
 	return rules.join("");
 };
@@ -201,9 +201,9 @@ prototype.__init = function() {
 		hasFilter,
 		tag;
 
-	mask = this._mask = $("<div class='" + opt.classMask + "'>").prependTo(this._ctnr);
+	mask = this._mask = $("<div class='" + opt['classMask'] + "'>").prependTo(this._ctnr);
 
-	this._search = $("<div class='" + opt.classSearchbar + "'><input type='text'/></div>").appendTo(mask);
+	this._search = $("<div class='" + opt['classSearchbar'] + "'><input type='text'/></div>").appendTo(mask);
 
 	this._masterInput = this._search.children(":eq(0)").keyup(function(e) {
 		if (e.which === Util.keyMapKeydown.enter) {
@@ -216,11 +216,11 @@ prototype.__init = function() {
 
 	hasFilter = this._hasFilter = this.grid.colDefMgr.get().some(function(a){return Util.isNotNull(a.filter);});
 	tag = this._tag =
-		$("<div class='" + opt.classTagbar + "'>" + (hasFilter ? "<div class='" + opt.classAdvButton + "'><div class='" + opt.classAdvButtonName + "'>추가 옵션</div><div class='" + opt.classAdvButtonIcon + "'></div></div>" : "") + "<button type='button' class='" + opt.classClearTags + "' onclick='JGM.m.SearchManager." + this.mid + "._removeAllOptions()'>모든 필터 제거</button></div>")
+		$("<div class='" + opt['classTagbar'] + "'>" + (hasFilter ? "<div class='" + opt['classAdvButton'] + "'><div class='" + opt['classAdvButtonName'] + "'>추가 옵션</div><div class='" + opt['classAdvButtonIcon'] + "'></div></div>" : "") + "<button type='button' class='" + opt['classClearTags'] + "' onclick='JGM.m.SearchManager." + this.mid + "._removeAllOptions()'>모든 필터 제거</button></div>")
 		.appendTo(mask);
 
 	if (hasFilter) {
-		var adv = this._adv = $("<div class='" + opt.classAdvanced + "'>").appendTo(mask).hide()
+		var adv = this._adv = $("<div class='" + opt['classAdvanced'] + "'>").appendTo(mask).hide()
 			.keyup(function(e) {
 				if (e.which === Util.keyMapKeydown.enter) {
 					var key = e.target.getAttribute("key");
@@ -251,7 +251,7 @@ prototype._onRenderModules = function() {
 	if (this._hasFilter) {			
 		var colDefs = this.grid.colDefMgr.get(),
 			len = colDefs.length,
-			keymap = opt.keyMap,
+			keymap = opt['keyMap'],
 			nmap = this._nameMap,
 			kmap = this._keyToName,
 			colDef,
@@ -272,7 +272,7 @@ prototype._onRenderModules = function() {
 				nmap[nick] = key;
 				kmap[key] = nick;
 
-				html.push("<div class='" + opt.classOptionCol + "'>");
+				html.push("<div class='" + opt['classOptionCol'] + "'>");
 				this._registerFilter(key, nick, colDef['name'], colDef['filter'], html);
 				html.push("</div>");
 			}
@@ -282,7 +282,7 @@ prototype._onRenderModules = function() {
 	}
 	
 	if (Util.isNotNull(this.grid.menubar)) {
-		this.grid.menubar.addIcon(opt.classSearchIcon, "데이터 검색을 합니다.", opt.searchIconWidth, opt.searchIconHeight, function() {
+		this.grid.menubar.addIcon(opt['classSearchIcon'], "데이터 검색을 합니다.", opt['searchIconWidth'], opt['searchIconHeight'], function() {
 			mask.toggle("fast");
 		});
 		mask.hide();
@@ -303,7 +303,7 @@ prototype._onAfterRenderModules = function() {
 			for (tag in keymap) {
 				if (keymap.hasOwnProperty(tag)) {
 					if (tag !== "andor" && tag !== "parser" && tag !== "validator") {
-						(item = keymap[tag]).input = adv.find("#" + key + item.option.name);
+						(item = keymap[tag]).input = adv.find("#" + key + item.option['name']);
 					}
 				}
 			}
@@ -505,19 +505,19 @@ prototype._registerFilter = function(key, nick, name, filter, html) {
 
 	for (; i < len; i++) {
 		option = filter[i];
-		oname = option.name;
+		oname = option['name'];
 		if (oname === "parser") {
-			fkmap.parser = option.fn;
+			fkmap.parser = option['fn'];
 			continue;
 		}
 		if (oname === "validator") {
-			fkmap.validator = option.fn;
+			fkmap.validator = option['fn'];
 			continue;
 		}
-		tag = option.tag;
+		tag = option['tag'];
 		fkmap[tag] = {'option':option};
 		tmap[tag] = {};
-		html.push("<tr title='" + option.comment(name, "입력값") + "'><td><div class='" + classOpt + "'>" + name + " " + tag +
+		html.push("<tr title='" + option['comment'](name, "입력값") + "'><td><div class='" + classOpt + "'>" + name + " " + tag +
 			"</td><td><input id='" + key + oname + "' key='" + key + "' tag='" + tag + "' type='text'><button type='button' onclick=\"JGM.m.SearchManager." + mid + "._registerOption('" + key + "','" + nick + "','" + tag + "',this.previousSibling.value)\">등록</button></div></td></tr>");
 	}
 	html.push("</table>");
@@ -654,8 +654,8 @@ prototype._registerGlobal = function(toAdd) {
 		
 	var opt = this._options;
 	this._globalMap[toAdd[0]] = {
-		tag:$("<div class='" + opt.classTag + "' title='" + toAdd.join(", ") + " 를 포함하는'><div class='" + opt.classTagName + "'>" + toAdd.join(" ") +
-		"</div><div class='" + opt.classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeGlobal('" + toAdd[0] + "')\"></div></div>").appendTo(this._tag),
+		tag:$("<div class='" + opt['classTag'] + "' title='" + toAdd.join(", ") + " 를 포함하는'><div class='" + opt['classTagName'] + "'>" + toAdd.join(" ") +
+		"</div><div class='" + opt['classRemoveTag'] + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeGlobal('" + toAdd[0] + "')\"></div></div>").appendTo(this._tag),
 		list: toAdd
 	};
 	return true;
@@ -741,8 +741,8 @@ prototype._registerOption = function(key, nick, optionTag, base, norefresh) {
 						parsedOther = otherbase;
 					}
 
-					if (SearchManager._checkDisable(option.type, oomap.option.type, andor, base, parsedOther)) {
-						delete cmap[key + "@T" + oomap.option.tag + "@B" + parsedOther];
+					if (SearchManager._checkDisable(option['type'], oomap.option['type'], andor, base, parsedOther)) {
+						delete cmap[key + "@T" + oomap.option['tag'] + "@B" + parsedOther];
 						oomap.tag.remove();
 						delete oomap.tag;
 						delete oomap.option;
@@ -771,10 +771,10 @@ prototype._removeOption = function(key, tag, base) {
 		tktmap;
 	if (tmap.hasOwnProperty(key) && (tkmap = tmap[key]).hasOwnProperty(tag) && (tktmap = tkmap[tag]).hasOwnProperty(base)) {
 		var option = tktmap[base];
-		option.tag.remove();
-		delete option.tag;
-		delete option.option;
-		delete option.fn;
+		option['tag'].remove();
+		delete option['tag'];
+		delete option['option'];
+		delete option['fn'];
 		delete tktmap[base];
 		delete this._codeMap[key + "@T" + tag + "@B" + base];
 		this._syncMasterInput();
@@ -834,11 +834,11 @@ prototype._removeAllOptions = function() {
 
 prototype._createTag = function(key, option, base, nick) {
 	var opt = this._options;
-	return (this._tagMap[key][option.tag][base] = {
-		tag:$("<div class='" + opt.classTag + "' title='" + option.comment(nick, base) + "'><div class='" + opt.classTagName + "'>@" + nick + " " + option.tag + " " + base +
-		"</div><div class='" + opt.classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeOption('" + key + "','" + option.tag + "','" + base + "')\"></div></div>").appendTo(this._tag),
+	return (this._tagMap[key][option['tag']][base] = {
+		tag:$("<div class='" + opt['classTag'] + "' title='" + option['comment'](nick, base) + "'><div class='" + opt['classTagName'] + "'>@" + nick + " " + option['tag'] + " " + base +
+		"</div><div class='" + opt['classRemoveTag'] + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeOption('" + key + "','" + option['tag'] + "','" + base + "')\"></div></div>").appendTo(this._tag),
 		option:option,
-		fn:option.fn(base)
+		fn:option['fn'](base)
 	});
 };
 

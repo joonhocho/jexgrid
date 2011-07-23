@@ -360,15 +360,15 @@ prototype.bindEvents = function() {
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		border = o.borderThickness + "px " + o.border,
+		border = opt['borderThickness'] + "px " + opt['border'],
 		rules = [];
 
-	rules.push(gridId + o.classCreator + "{" + JGM._CONST._cssUnselectable + "float:left;width:100%;padding-left:8px;background:" + o.background + ";border-top:" + border + ";font:" + o.font + "}");
-	rules.push(gridId + o.classCreator + " button{float:left;margin:" + o.padding + "px " + o.padding + "px 0 0;height:" + (o.height - 2 * o.padding) + "px}");
-	rules.push(gridId + o.classCreator + " input{float:left;padding:0;margin-top:" + ((o.height - o.inputHeight - 2 * o.inputBorderThickness) / 2) + "px;height:" + o.inputHeight + "px;border:" + o.inputBorderThickness + "px " + o.inputBorder + ";border-radius:" + o.inputBorderRadius + "px;-moz-border-radius:" + o.inputBorderRadius + "px}");
-	rules.push(gridId + o.classCol + "{float:left;overflow:hidden;white-space:nowrap;line-height:" + o.height + "px;margin-right:" + o.inputMargin + "px}");
-	rules.push(gridId + o.classColName + "{float:left;margin-right:" + o.nameMargin + "px}");
-	rules.push(gridId + o.classCreatorIcon + "{background:url(" + o.creatorIconUrl + ") no-repeat center;width:" + o.creatorIconWidth + "px;height:" + o.creatorIconHeight + "px}");
+	rules.push(gridId + opt['classCreator'] + "{" + JGM._CONST._cssUnselectable + "float:left;width:100%;padding-left:8px;background:" + opt['background'] + ";border-top:" + border + ";font:" + opt['font'] + "}");
+	rules.push(gridId + opt['classCreator'] + " button{float:left;margin:" + opt['padding'] + "px " + opt['padding'] + "px 0 0;height:" + (opt['height'] - 2 * opt['padding']) + "px}");
+	rules.push(gridId + opt['classCreator'] + " input{float:left;padding:0;margin-top:" + ((opt['height'] - opt['inputHeight'] - 2 * opt['inputBorderThickness']) / 2) + "px;height:" + opt['inputHeight'] + "px;border:" + opt['inputBorderThickness'] + "px " + opt['inputBorder'] + ";border-radius:" + opt['inputBorderRadius'] + "px;-moz-border-radius:" + opt['inputBorderRadius'] + "px}");
+	rules.push(gridId + opt['classCol'] + "{float:left;overflow:hidden;white-space:nowrap;line-height:" + opt['height'] + "px;margin-right:" + opt['inputMargin'] + "px}");
+	rules.push(gridId + opt['classColName'] + "{float:left;margin-right:" + opt['nameMargin'] + "px}");
+	rules.push(gridId + opt['classCreatorIcon'] + "{background:url(" + opt['creatorIconUrl'] + ") no-repeat center;width:" + opt['creatorIconWidth'] + "px;height:" + opt['creatorIconHeight'] + "px}");
 
 	return rules.join("");
 };
@@ -379,8 +379,8 @@ prototype._onRenderModules = function() {
 		len = colDefs.length,
 		colDef,
 		opt = this._options,
-		classCol = opt.classCol,
-		classColName = opt.classColName,
+		classCol = opt['classCol'],
+		classColName = opt['classColName'],
 		thisIns = this,
 		creator = this._creator,
 		imap = this._inputMap,
@@ -408,7 +408,7 @@ prototype._onRenderModules = function() {
 	}
 
 	if (Util.isNotNull(this.grid.menubar)) {
-		this.grid.menubar.addIcon(opt.classCreatorIcon, "데이터 로우를 추가합니다.", opt.creatorIconWidth, opt.creatorIconHeight, function() {
+		this.grid.menubar.addIcon(opt['classCreatorIcon'], "데이터 로우를 추가합니다.", opt['creatorIconWidth'], opt['creatorIconHeight'], function() {
 				creator.toggle("fast");
 				});
 		creator.hide();

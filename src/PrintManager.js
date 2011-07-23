@@ -73,9 +73,9 @@ prototype.print = function() {
 
 prototype.getPrintHtml = function(colDefs, datalist) {
    var opt = this._options,
-      tableBorderColor = opt.tableBorderColor,
-      headerBorderColor = opt.headerBorderColor,
-      cellBorderColor = opt.cellBorderColor,
+      tableBorderColor = opt['tableBorderColor'],
+      headerBorderColor = opt['headerBorderColor'],
+      cellBorderColor = opt['cellBorderColor'],
       html = [],
       collen = colDefs.length,
       lastCol = collen - 1,
@@ -86,12 +86,12 @@ prototype.getPrintHtml = function(colDefs, datalist) {
       j;
 
 	html.push("<html><head>");
-	html.push("<title>" + opt.title + "</title>");
+	html.push("<title>" + opt['title'] + "</title>");
 	html.push("</head><body onload='window.print();'>");
 	html.push("<table width='100%' cellspacing='0' cellpadding='0'><tbody><tr><td align='left'>");
 	html.push("<table width='100%' cellspacing='0' cellpadding='2' style='border-collapse:collapse'>");
-	html.push("<tbody style='font:" + opt.font + ";'>");
-	html.push("<tr style='background-color:" + opt.headerBackgroundColor + ";color:" + opt.headerFontColor + ";text-align:center'>");
+	html.push("<tbody style='font:" + opt['font'] + ";'>");
+	html.push("<tr style='background-color:" + opt['headerBackgroundColor'] + ";color:" + opt['headerFontColor'] + ";text-align:center'>");
 
 	for (; i < collen; i++) {
 		html.push("<td style='border:solid 1px " + headerBorderColor + ";'>" + colDefs[i].name + "</td>");
