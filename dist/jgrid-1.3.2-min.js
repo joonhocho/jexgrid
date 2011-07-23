@@ -1,122 +1,4 @@
-(function(){(function() {
-  var d = Number.prototype, b = String.prototype, a = Array.prototype;
-  if(!d.toFixedFloat) {
-    d.toFixedFloat = function(a) {
-      return parseFloat(this.toFixed(a))
-    }
-  }
-  if(!b.toInt) {
-    b.toInt = function() {
-      var a;
-      if((a = this.replace(/[^\d\.\-]/g, "")).length === 0) {
-        return NaN
-      }
-      for(var c, g = 0, b = 0, f = a.length, d = 0, k = !1;d < f;d++) {
-        if(c = a.charAt(d), c === ".") {
-          if(++g === 2) {
-            k = !0;
-            break
-          }
-        }else {
-          if(c === "-" && ++b === 2) {
-            k = !0;
-            break
-          }
-        }
-      }
-      return k === !0 && (a = a.replace(/[\.\-]/g, "")).length === 0 ? NaN : /^-*0*\./.test(a) || (a = a.replace(/^-0+/, "-")).length === 0 || (a = a.replace(/^0+/, "")).length === 0 ? 0 : parseInt(a, 10)
-    }
-  }
-  if(!b.toFloat) {
-    b.toFloat = function() {
-      var a;
-      if((a = this.replace(/[^-\d\.]/g, "")).length === 0) {
-        return NaN
-      }
-      for(var c = 0, g = a.length, b, f = 0, d = 0;c < g;c++) {
-        if(b = a.charAt(c), b === ".") {
-          if(f !== 0) {
-            return NaN
-          }else {
-            f++
-          }
-        }else {
-          if(b === "-") {
-            if(d !== 0) {
-              return NaN
-            }else {
-              d++
-            }
-          }
-        }
-      }
-      return parseFloat(a)
-    }
-  }
-  if(!a.remove) {
-    a.remove = function(a) {
-      if(this.length === 0) {
-        return-1
-      }
-      a = this.indexOf(a);
-      a !== -1 && this.splice(a, 1);
-      return a
-    }
-  }
-  if(!a.removeAll) {
-    a.removeAll = function(a) {
-      if(this.length === 0) {
-        return this
-      }
-      for(var c = this.length;(c = this.lastIndexOf(a, c - 1)) !== -1;) {
-        if(this.splice(c, 1), c === 0) {
-          break
-        }
-      }
-      return this
-    }
-  }
-  if(!a.removeList) {
-    a.removeList = function(a) {
-      if(this.length === 0 || a.length === 0) {
-        return this
-      }
-      for(var c = a.length, g = 0, b;g < c;g++) {
-        (b = this.indexOf(a[g])) !== -1 && this.splice(b, 1)
-      }
-      return this
-    }
-  }
-  if(!a.removeAt) {
-    a.removeAt = function(a) {
-      if(this.length !== 0 && (a < 0 && (a = this.length + a), a < 0 && (a = 0), this.hasOwnProperty(a) && a < this.length)) {
-        return this.splice(a, 1)[0]
-      }
-    }
-  }
-  if(!a.addAt) {
-    a.addAt = function(a, c) {
-      this.splice(a, 0, c);
-      return c
-    }
-  }
-  if(!a.pushList) {
-    a.pushList = function(e) {
-      return e.length === 0 ? this.length : a.push.apply(this, e)
-    }
-  }
-  if(!a.pushListAt) {
-    a.pushListAt = function(e, c) {
-      if(c.length === 0) {
-        return this.length
-      }
-      var g = [e, 0];
-      a.push.apply(g, c);
-      a.splice.apply(this, g);
-      return this.length
-    }
-  }
-})();
+(function(){var array_extension = {};
 (function() {
   var d = Array.prototype;
   if(!d.indexOf) {
@@ -287,6 +169,126 @@
         e in a && (c = b.call(void 0, c, a[e], e, a)), e--
       }
       return c
+    }
+  }
+})();
+var engine_extension = {};
+(function() {
+  var d = Number.prototype, b = String.prototype, a = Array.prototype;
+  if(!d.toFixedFloat) {
+    d.toFixedFloat = function(a) {
+      return parseFloat(this.toFixed(a))
+    }
+  }
+  if(!b.toInt) {
+    b.toInt = function() {
+      var a;
+      if((a = this.replace(/[^\d\.\-]/g, "")).length === 0) {
+        return NaN
+      }
+      for(var c, g = 0, b = 0, f = a.length, d = 0, k = !1;d < f;d++) {
+        if(c = a.charAt(d), c === ".") {
+          if(++g === 2) {
+            k = !0;
+            break
+          }
+        }else {
+          if(c === "-" && ++b === 2) {
+            k = !0;
+            break
+          }
+        }
+      }
+      return k === !0 && (a = a.replace(/[\.\-]/g, "")).length === 0 ? NaN : /^-*0*\./.test(a) || (a = a.replace(/^-0+/, "-")).length === 0 || (a = a.replace(/^0+/, "")).length === 0 ? 0 : parseInt(a, 10)
+    }
+  }
+  if(!b.toFloat) {
+    b.toFloat = function() {
+      var a;
+      if((a = this.replace(/[^-\d\.]/g, "")).length === 0) {
+        return NaN
+      }
+      for(var c = 0, g = a.length, b, f = 0, d = 0;c < g;c++) {
+        if(b = a.charAt(c), b === ".") {
+          if(f !== 0) {
+            return NaN
+          }else {
+            f++
+          }
+        }else {
+          if(b === "-") {
+            if(d !== 0) {
+              return NaN
+            }else {
+              d++
+            }
+          }
+        }
+      }
+      return parseFloat(a)
+    }
+  }
+  if(!a.remove) {
+    a.remove = function(a) {
+      if(this.length === 0) {
+        return-1
+      }
+      a = this.indexOf(a);
+      a !== -1 && this.splice(a, 1);
+      return a
+    }
+  }
+  if(!a.removeAll) {
+    a.removeAll = function(a) {
+      if(this.length === 0) {
+        return this
+      }
+      for(var c = this.length;(c = this.lastIndexOf(a, c - 1)) !== -1;) {
+        if(this.splice(c, 1), c === 0) {
+          break
+        }
+      }
+      return this
+    }
+  }
+  if(!a.removeList) {
+    a.removeList = function(a) {
+      if(this.length === 0 || a.length === 0) {
+        return this
+      }
+      for(var c = a.length, g = 0, b;g < c;g++) {
+        (b = this.indexOf(a[g])) !== -1 && this.splice(b, 1)
+      }
+      return this
+    }
+  }
+  if(!a.removeAt) {
+    a.removeAt = function(a) {
+      if(this.length !== 0 && (a < 0 && (a = this.length + a), a < 0 && (a = 0), this.hasOwnProperty(a) && a < this.length)) {
+        return this.splice(a, 1)[0]
+      }
+    }
+  }
+  if(!a.addAt) {
+    a.addAt = function(a, c) {
+      this.splice(a, 0, c);
+      return c
+    }
+  }
+  if(!a.pushList) {
+    a.pushList = function(e) {
+      return e.length === 0 ? this.length : a.push.apply(this, e)
+    }
+  }
+  if(!a.pushListAt) {
+    a.pushListAt = function(e, c) {
+      if(c.length === 0) {
+        return this.length
+      }
+      var g = [e, 0];
+      a.push.apply(g, c);
+      a.splice.apply(this, g);
+      return this.length
     }
   }
 })();
@@ -1415,23 +1417,23 @@ var JGM = {};
   goog.exportSymbol("JGM", JGM);
   goog.exportSymbol("jx.grid", JGM);
   JGM.version = "1.2.3";
-  JGM.__map_a__ = {ArrayExtIE:{filename:"array_ext_ie.js", readyState:"notloaded", required:!1, cacheModule:!1}, Cache:{filename:"jgrid_cache.js", readyState:"notloaded", required:!0, cacheModule:!0}, Cell:{filename:"jgrid_cell.js", readyState:"notloaded", required:!0, cacheModule:!1}, CheckManager:{filename:"jgrid_checkmanager.js", readyState:"notloaded", required:!1, cacheModule:!0}, ColDefManager:{filename:"jgrid_coldefmanager.js", readyState:"notloaded", required:!0, cacheModule:!0}, ColGroup:{filename:"jgrid_colgroup.js", 
-  readyState:"notloaded", required:!1, cacheModule:!0}, ColHeader:{filename:"jgrid_colheader.js", readyState:"notloaded", required:!0, cacheModule:!0}, Collapser:{filename:"jgrid_collapser.js", readyState:"notloaded", required:!1, cacheModule:!0}, DataManager:{filename:"jgrid_datamanager.js", readyState:"notloaded", required:!0, cacheModule:!0}, DataCreator:{filename:"jgrid_datacreator.js", readyState:"notloaded", required:!1, cacheModule:!0}, EditManager:{filename:"jgrid_editmanager.js", readyState:"notloaded", 
-  required:!0, cacheModule:!0}, Editor:{filename:"jgrid_editmanager.js", readyState:"notloaded", required:!0, cacheModule:!0}, EngineExt:{filename:"engine_ext.js", readyState:"notloaded", required:!0, cacheModule:!1}, EventManager:{filename:"jgrid_eventmanager.js", readyState:"notloaded", required:!0, cacheModule:!0}, Footer:{filename:"jgrid_footer.js", readyState:"notloaded", required:!1, cacheModule:!0}, HeaderTree:{filename:"jgrid_headertree.js", readyState:"notloaded", required:!1, cacheModule:!0}, 
-  Grid:{filename:"jgrid_grid.js", readyState:"notloaded", required:!0, cacheModule:!0}, GridManager:{filename:"jgrid_manager.js", readyState:"loaded", required:!0, cacheModule:!1}, MenuBar:{filename:"jgrid_menubar.js", readyState:"notloaded", required:!0, cacheModule:!0}, ViewportManager:{filename:"jgrid_viewportmanager.js", readyState:"notloaded", required:!0, cacheModule:!0}, SelectionManager:{filename:"jgrid_selectionmanager.js", readyState:"notloaded", required:!1, cacheModule:!0}, SearchManager:{filename:"jgrid_searchmanager.js", 
-  readyState:"notloaded", required:!1, cacheModule:!0}, TooltipManager:{filename:"jgrid_tooltipmanager.js", readyState:"notloaded", required:!1, cacheModule:!0}, Tracer:{filename:"tracer.js", readyState:"notloaded", required:!1, cacheModule:!1}, Tree:{filename:"tree.js", readyState:"notloaded", required:!1, cacheModule:!0}, TreeNode:{filename:"tree.js", readyState:"notloaded", required:!1, cacheModule:!1}, Util:{filename:"util.js", readyState:"notloaded", required:!0, cacheModule:!1}, Util$:{filename:"util_jquery.js", 
-  readyState:"notloaded", required:!0, cacheModule:!1}};
+  JGM.__map_a__ = {ArrayExtIE:{cacheModule:!1}, Cache:{cacheModule:!0}, Cell:{cacheModule:!1}, CheckManager:{cacheModule:!0}, ColDefManager:{cacheModule:!0}, ColGroup:{cacheModule:!0}, ColHeader:{cacheModule:!0}, Collapser:{cacheModule:!0}, DataManager:{cacheModule:!0}, DataCreator:{cacheModule:!0}, EditManager:{cacheModule:!0}, Editor:{cacheModule:!0}, EngineExt:{cacheModule:!1}, EventManager:{cacheModule:!0}, Footer:{cacheModule:!0}, HeaderTree:{cacheModule:!0}, Grid:{cacheModule:!0}, GridManager:{cacheModule:!1}, 
+  MenuBar:{cacheModule:!0}, ViewportManager:{cacheModule:!0}, SelectionManager:{cacheModule:!0}, SearchManager:{cacheModule:!0}, TooltipManager:{cacheModule:!0}, Tracer:{cacheModule:!1}, Tree:{cacheModule:!0}, TreeNode:{cacheModule:!1}, Util:{cacheModule:!1}, Util$:{cacheModule:!1}};
   JGM.create = function(d, b) {
     Util.isNull(b) && (b = {});
-    if(this.__map_a__[d].cacheModule) {
-      b.mid = "JGM" + this.m.length++;
-      var a = this[d].getInstance(b);
-      this.m.hasOwnProperty(d) || (this.m[d] = {});
-      this.m[d][a.mid] = a;
-      d === "Grid" && Util.isNotNull(a.name) && (this.gridMap[a.name] = a);
-      return a
+    if(!this.hasOwnProperty(d)) {
+      throw Error("cannot find a grid module: name=" + d);
+    }
+    if(this.__map_a__.hasOwnProperty(d)) {
+      if(this.__map_a__[d].cacheModule) {
+        var a = b.mid = "JGM" + this.m.length++, e = new this[d](b);
+        this.m.hasOwnProperty(d) || (this.m[d] = {});
+        this.m[d][a] = e;
+        d === "Grid" && e.name && (this.gridMap[e.name] = e);
+        return e
+      }
     }else {
-      return this[d].getInstance(b)
+      return new this[d](b)
     }
   };
   JGM._destroy = function(d, b) {
@@ -1584,9 +1586,7 @@ var JGM = {};
     }
   };
   JGM._add = function(d, b) {
-    Util.isNotNull(b) && (this[d] = b);
-    this.__map_a__[d].readyState = "loaded";
-    $("body").trigger({type:"moduleload.Grid", modulename:d, readyState:"loaded"})
+    this[d] = b
   };
   JGM.__extend_e__ = function(d, b, a) {
     var b = Util.ifNull(b, {}), e;
@@ -1709,7 +1709,7 @@ jx.events.EventDispatcher = {};
   function d() {
   }
   goog.exportSymbol("jx.events.EventDispatcher", d);
-  goog.inherits(d, JGM.lang.Disposable);
+  goog.inherits(d, jx.lang.Disposable);
   var b = d.prototype, a = b.dispose;
   b.dispose = function() {
     a.call(this, -1, !0)
@@ -1875,7 +1875,7 @@ jx.grid.BaseModule = {};
     this.dispatchEvent({type:"complete"})
   }
   goog.exportSymbol("jx.grid.BaseModule", d);
-  goog.inherits(d, EventDispatcher);
+  goog.inherits(d, jx.events.EventDispatcher);
   var b = d.prototype, a = b.dispose;
   b._beforedispose = function() {
     this.dispose()
@@ -2320,10 +2320,10 @@ jx.data.DataManager = {};
   };
   b.fillTemp = function(a, e) {
     if(!Util.isNull(a)) {
-      var c = this.grid.colDefMgr.getAll(), g = c.length, b, f, d = 0;
+      var c = this.grid.colDefMgr.getAll(), g = c.length, b, d, h = 0;
       if(e !== void 0 && e.isNew) {
-        for(;d < g;d++) {
-          f = c[d], b = f.key, f.nullOnCreate && Util.isNull(a[b]) && (a[b] = "J@H" + this.__increment_l__++)
+        for(;h < g;h++) {
+          d = c[h], b = d.key, d.nullOnCreate && Util.isNull(a[b]) && (a[b] = "J@H" + this.__increment_l__++)
         }
       }
     }
@@ -3775,11 +3775,11 @@ var TreeNode = {}, Tree = {};
 jx.grid.Grid = {};
 (function() {
   function d(a) {
-    JGM.core.BaseModule.call(this, a)
+    jx.grid.BaseModule.call(this, a)
   }
   goog.exportSymbol("jx.grid.Grid", d);
   JGM._add("Grid", d);
-  goog.inherits(d, JGM.core.BaseModule);
+  goog.inherits(d, jx.grid.BaseModule);
   d.getInstance = function(a) {
     return new d(a)
   };
@@ -4053,12 +4053,12 @@ jx.grid.Grid = {};
 jx.grid.MenuBar = {};
 (function() {
   function d(a) {
-    JGM.grids.BaseModule.call(this, a);
+    jx.grid.BaseModule.call(this, a);
     this.grid.menubar = this
   }
   goog.exportSymbol("jx.grid.MenuBar", d);
   JGM._add("MenuBar", d);
-  goog.inherits(d, JGM.grids.BaseModule);
+  goog.inherits(d, jx.grid.BaseModule);
   d.getInstance = function(a) {
     return new d(a)
   };
@@ -5261,9 +5261,9 @@ jx.grid.CheckManager = {};
       this.check(a[c], !0)
     }
   };
-  b.setCheckList = function(a, b) {
+  b.setCheckList = function(a, e) {
     this.uncheckAll();
-    this.checkList(a, b)
+    this.checkList(a, e)
   };
   b.getCheckList = function() {
     return Util.toArray(this.__map_a__)
@@ -5277,10 +5277,10 @@ jx.grid.CheckManager = {};
   b.checkAll = function() {
     this._options.__master_f__ && d.__check_a__(this.__master_c__);
     d.__check_a__(this.getCheckboxes());
-    for(var a = this.grid.dataMgr.all, b = a.length, c = this.grid.dataMgr.idKey, g = this.__map_a__, i = 0;i < b;i++) {
-      g[a[i][c]] = a[i]
+    for(var a = this.grid.dataMgr.all, e = a.length, c = this.grid.dataMgr.idKey, b = this.__map_a__, i = 0;i < e;i++) {
+      b[a[i][c]] = a[i]
     }
-    this.__count_b__ = b
+    this.__count_b__ = e
   };
   b.uncheckAll = function() {
     this._options.__master_f__ && d.__uncheck_b__(this.__master_c__);
@@ -5288,36 +5288,36 @@ jx.grid.CheckManager = {};
     this.__map_a__ = {};
     this.__count_b__ = 0
   };
-  b.toggleCheck = function(a, b) {
-    b || (a = this.grid.dataMgr.map(a));
+  b.toggleCheck = function(a, e) {
+    e || (a = this.grid.dataMgr.map(a));
     this.isChecked(a, !0) && !this._options.__isRadio_g__ ? this.uncheck(a, !0) : this.check(a, !0)
   };
-  b.toggleDisable = function(a, b) {
-    b || (a = this.grid.dataMgr.map(a));
+  b.toggleDisable = function(a, e) {
+    e || (a = this.grid.dataMgr.map(a));
     this.isDisabled(a, !0) ? this.enable(a, !0) : this.disable(a, !0)
   };
   b.toggleById = function(a) {
     this.toggleCheck(this.grid.dataMgr.getById(a), !0)
   };
-  b.check = function(a, b) {
-    b || (a = this.grid.dataMgr.map(a));
+  b.check = function(a, e) {
+    e || (a = this.grid.dataMgr.map(a));
     this.__add_f__(a) && (d.__check_a__(this.getCheckbox(a)), this.__updateMaster_e__(), this.grid.event.trigger("onCheckChange", [a, !0]))
   };
-  b.uncheck = function(a, b) {
-    b || (a = this.grid.dataMgr.map(a));
+  b.uncheck = function(a, e) {
+    e || (a = this.grid.dataMgr.map(a));
     this.__remove_g__(a) && (d.__uncheck_b__(this.getCheckbox(a)), this._options.__master_f__ && d.__uncheck_b__(this.__master_c__), this.grid.event.trigger("onCheckChange", [a, !1]))
   };
-  b.disable = function(a, b) {
+  b.disable = function(a, e) {
     var c = this.grid.dataMgr;
-    b || (a = c.map(a));
-    var c = c.getId(a), g = this.disabledmap;
-    g.hasOwnProperty(c) || (g[c] = a, d.disableNode(this.getCheckbox(a)), this.grid.event.trigger("onDisableCheck", [a]))
+    e || (a = c.map(a));
+    var c = c.getId(a), b = this.disabledmap;
+    b.hasOwnProperty(c) || (b[c] = a, d.disableNode(this.getCheckbox(a)), this.grid.event.trigger("onDisableCheck", [a]))
   };
-  b.enable = function(a, b) {
+  b.enable = function(a, e) {
     var c = this.grid.dataMgr;
-    b || (a = this.grid.dataMgr.map(a));
-    var c = c.getId(a), g = this.disabledmap;
-    g.hasOwnProperty(c) && (delete g[c], d.enableNode(this.getCheckbox(a)), this.grid.event.trigger("onEnableCheck", [a]))
+    e || (a = this.grid.dataMgr.map(a));
+    var c = c.getId(a), b = this.disabledmap;
+    b.hasOwnProperty(c) && (delete b[c], d.enableNode(this.getCheckbox(a)), this.grid.event.trigger("onEnableCheck", [a]))
   };
   b.__updateMaster_e__ = function() {
     this._options.__master_f__ && d.__setCheck_c__(this.__master_c__, this.isCheckedAll())
