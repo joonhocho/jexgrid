@@ -446,7 +446,7 @@ prototype._destroy = function() {
 };
 
 prototype._onCreateCss = function() {
-	var o = this._options,
+	var opt = this._options,
       footerSel = "#" + this.grid.mid + " ." + opt['classFooter'],
       rules = [];
 

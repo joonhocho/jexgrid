@@ -140,7 +140,7 @@ var prototype = SearchManager.prototype;
 
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
-		o = this._options,
+		opt = this._options,
 		border = opt['borderThickness'] + "px " + opt['border'],
 		tagsBorderRadius = "border-radius:" + opt['tagsBorderRadius'] + "px;-moz-border-radius:" + opt['tagsBorderRadius'] + "px",
 		advButtonBorder = opt['advButtonBorderThickness'] + "px " + opt['advButtonBorder'],

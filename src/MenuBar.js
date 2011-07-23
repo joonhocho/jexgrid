@@ -93,7 +93,7 @@ proto._destroy = function() {
 
 proto._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
-      o = this._options,
+      opt = this._options,
       border = opt['borderThickness'] + "px " + opt['border'],
       rules = [];
 

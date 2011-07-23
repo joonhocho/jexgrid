@@ -372,7 +372,7 @@ prototype._destroy = function() {
 
 prototype._onBeforeCreateSelCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
-		o = this._options,
+		opt = this._options,
 		rules = [],
 		height = this.grid.view._getRowInnerHeight();
 

@@ -444,7 +444,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	prototype._onCreateCss = function() {
 		var gridId = "#" + this.grid.mid + " .",
-			o = this._options,
+			opt = this._options,
 			rowSel = gridId + this.grid.view._options['classRow'] + " .",
 			toggleSel = gridId + opt['classCollapser'],
 			expandedSel = toggleSel + "." + opt['classExpanded'],

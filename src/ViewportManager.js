@@ -493,7 +493,7 @@ prototype._onDestroy = function() {
 
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
-		o = this._options,
+		opt = this._options,
 		cellSel = gridId + opt['classCell'],
 		rowSel = gridId + opt['classRow'],
 		border = opt['borderThickness'] + "px " + opt['border'],

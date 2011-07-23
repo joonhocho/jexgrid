@@ -634,7 +634,7 @@ prototype._destroy = function() {
 
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
-		o = this._options,
+		opt = this._options,
 		border = opt['borderThickness'] + "px " + opt['border'],
 		rules = [],
 		colDefs = this.grid.colDefMgr.get(),
