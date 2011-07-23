@@ -330,7 +330,7 @@ drag: false,
 		}
 
 		var i = 10,
-			colDefs = this['colDefMgr']getAll(),
+			colDefs = this['colDefMgr'].getAll(),
 			len = colDefs.length;
 		for (; i < len; i++) {
 			colDef = colDefs[i];
@@ -488,7 +488,7 @@ prototype.destroy = function() {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this['event']trigger("onDestroy");
+		this['event'].trigger("onDestroy");
 
 		JGM._destroy(this, {
 name: "Grid",
@@ -587,7 +587,7 @@ prototype._createCss = function() {
 "border:" + this._options['border'] + ";" :
 "border-top:" + this._options['border'] + ";border-bottom:" + this._options['border'] + ";",
 'style': this._options['style'],
-'submodule': this['event']trigger("onCreateCss").join("")
+'submodule': this['event'].trigger("onCreateCss").join("")
 });
 this._style = Util.createStyle(style);
 
@@ -602,11 +602,11 @@ this._style = Util.createStyle(style);
   @version 1.2.2
   */
 
-this._dynStyle = Util.createStyle(this['event']trigger("onCreateDynamicCss").join(""));
+this._dynStyle = Util.createStyle(this['event'].trigger("onCreateDynamicCss").join(""));
 };
 
 prototype._recreateDynamicCss = function() {
-	Util.setStyle(this._dynStyle, this['event']trigger("onCreateDynamicCss").join(""));
+	Util.setStyle(this._dynStyle, this['event'].trigger("onCreateDynamicCss").join(""));
 };
 
 prototype._keydown = function(e) {
@@ -622,7 +622,7 @@ prototype._keydown = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event']triggerInvalid("onBeforeKeydown", [e])) {
+	if (this['event'].triggerInvalid("onBeforeKeydown", [e])) {
 		return;
 	}
 
@@ -649,7 +649,7 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['event']trigger("keydown_" + e.which + " keydown", [e]);
+	this['event'].trigger("keydown_" + e.which + " keydown", [e]);
 };
 
 prototype._keyup = function(e) {
@@ -665,7 +665,7 @@ prototype._keyup = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event']triggerInvalid("onBeforeKeyup", [e])) {
+	if (this['event'].triggerInvalid("onBeforeKeyup", [e])) {
 		return;
 	}
 
@@ -1244,7 +1244,7 @@ prototype.height = function(h) {
 };
 
 prototype.getCellByIdAndKey = function(id, key) {
-	return JGM.create("Cell", {'grid':this, 'datarow':this['dataMgr'].getById(id), 'colDef':this['colDefMgr']getByKey(key)});
+	return JGM.create("Cell", {'grid':this, 'datarow':this['dataMgr'].getById(id), 'colDef':this['colDefMgr'].getByKey(key)});
 };
 
 prototype.getCellByIdx = function(rowIdx, colIdx) {
