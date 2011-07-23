@@ -22,7 +22,7 @@ JGM
 (function() {
 
 var JGM = goog.getObjectByName('jx.grid'),
-	Util.goog.getObjectByName('jx.util'),
+	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
 	Column = goog.getObjectByName('jx.grid.Column');
 

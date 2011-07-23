@@ -17,7 +17,7 @@ JGM
 
 (function() {
 var JGM = goog.getObjectByName('jx.grid'),
-	Util.goog.getObjectByName('jx.util'),
+	Util = goog.getObjectByName('jx.util'),
 	Disposable = goog.getObjectByName('jx.lang.Disposable');
 
 	goog.exportSymbol('jx.events.EventDispatcher', EventDispatcher);

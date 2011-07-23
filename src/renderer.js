@@ -19,7 +19,7 @@ JGM
 
 (function() {
 var JGM = goog.getObjectByName('jx.grid'),
-	Util.goog.getObjectByName('jx.util');
+	Util = goog.getObjectByName('jx.util');
 
  goog.exportSymbol('jx.grid.renderer', renderer);
  var renderer = JGM.renderer = jx.grid.renderer;

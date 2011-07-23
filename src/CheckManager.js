@@ -24,7 +24,7 @@ JGM
 (function() {
 
 var JGM = goog.getObjectByName('jx.grid'),
-	Util.goog.getObjectByName('jx.util'),
+	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
  goog.exportSymbol('jx.grid.CheckManager', CheckManager);
  JGM._add("CheckManager", CheckManager);

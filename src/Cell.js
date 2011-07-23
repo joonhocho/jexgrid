@@ -20,7 +20,7 @@ JGM
 */
 (function() {
 var JGM = goog.getObjectByName('jx.grid'),
-	Util.goog.getObjectByName('jx.util');
+	Util = goog.getObjectByName('jx.util');
 
 goog.exportSymbol('jx.grid.Cell', Cell);
 JGM._add("Cell", Cell);
