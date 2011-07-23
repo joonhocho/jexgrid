@@ -64,12 +64,12 @@ Util$.baseurlOfHeadScript = function(filename) {
 };
 
 Util$.calScrollbarDims = function(container) {
-	if (Util.isNotNull(window.__SCROLLBAR_DIM__)) {
-		return window.__SCROLLBAR_DIM__;
+	if (Util.isNotNull(window._SCROLLBAR)) {
+		return window._SCROLLBAR;
 	}
 
-	if (Util.isNotNull(window.opener) && Util.isNotNull(window.opener.__SCROLLBAR_DIM__)) {
-		return window.opener.__SCROLLBAR_DIM__;
+	if (Util.isNotNull(window.opener) && Util.isNotNull(window.opener._SCROLLBAR)) {
+		return window.opener._SCROLLBAR;
 	}
 
 	var cont = Util$.safe$(container),
@@ -83,7 +83,7 @@ Util$.calScrollbarDims = function(container) {
 	};
 	cont[0].innerHTML = "";
 
-	window.__SCROLLBAR_DIM__ = dim;
+	window._SCROLLBAR = dim;
 	return dim;
 };
 

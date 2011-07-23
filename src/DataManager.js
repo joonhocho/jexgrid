@@ -151,7 +151,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'__idKey_a__': undefined,
+			'_idKey': undefined,
 
 			/**
 			  데이터 로우의 primary key 가 하나 이상일 경우에 이 어레이에 키 값들을 넣어줍니다.<br>기본값:<code>[]</code>
@@ -163,27 +163,27 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'__idColKeys_c__': [],
+			'_idColKeys': [],
 
 			'uniqueKeys': []
 		};
 
-		this._options = JGM.__extend_e__(options, args['options'], {
-			idKey:"__idKey_a__",
-			idColKeys:"__idColKeys_c__"
+		this._options = JGM._extend(options, args['options'], {
+			idKey:"_idKey",
+			idColKeys:"_idColKeys"
 		});
 
-		this.__consts_n__ = {
-			__auto_a__: 0,
-			__given_b__: 1,
-			__composite_c__: 2,
-			__notReal_d__: this.mid + "@NR" + Util.random(10000),
-			__add_e__: 0,
-			__addList_f__: 1,
-			__update_g__: 2,
-			__updateList_h__: 3,
-			__remove_i__: 4,
-			__removeList_j__: 5,
+		this._consts = {
+			_auto: 0,
+			_given: 1,
+			_composite: 2,
+			_notReal: this.mid + "@NR" + Util.random(10000),
+			_add: 0,
+			_addList: 1,
+			_update: 2,
+			_updateList: 3,
+			_remove: 4,
+			_removeList: 5,
 			unknown:0,
 			number:1,
 			string:2,
@@ -192,8 +192,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 			"enum":5
 		};
 
-		if (Util.isNotNull(this._options['__idKey_a__'])) {
-			this.__idMode_m__ = this.__consts_n__.__given_b__;
+		if (Util.isNotNull(this._options['_idKey'])) {
+			this._idMode = this._consts._given;
 
 			/**
 			  데이터 로우의 유니크 아이디를 가리키는 key 입니다.
@@ -205,29 +205,29 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			this.idKey = this._options['__idKey_a__'];
+			this.idKey = this._options['_idKey'];
 		}
-		else if (this._options['__idColKeys_c__']['length'] !== 0) {
-			this.__idMode_m__ = this.__consts_n__.__composite_c__;
+		else if (this._options['_idColKeys']['length'] !== 0) {
+			this._idMode = this._consts._composite;
 			this.idKey = "J@I" + this.mid + "@" + Util.random(10000);
 		}
 		else {
-			this.__idMode_m__ = this.__consts_n__.__auto_a__;
+			this._idMode = this._consts._auto;
 			this.idKey = "J@I" + this.mid + "@" + Util.random(10000);
 		}
 
-		this.__increment_l__ = 0;
+		this._increment = 0;
 
 		this.keyToType = {};
 
-		this.__idToIdx_b__ = {};
-		this.__idToData_a__ = {};
+		this._idToIdx = {};
+		this._idToData = {};
 
-		this.__sorter_h__;
-		this.__filters_r__ = [];
+		this._sorter;
+		this._filters = [];
 
-		this.__history_e__ = [];
-		this.__redoHistory_q__ = [];
+		this._history = [];
+		this._redoHistory = [];
 
 		this.uniqueMap = {};
 
@@ -280,38 +280,38 @@ var JGM = goog.getObjectByName('jx.grid'),
 			type = type.toLowerCase();
 			switch (type) {
 				case "number":
-					return this.__consts_n__.number;
+					return this._consts.number;
 				case "string":
-					return this.__consts_n__.string;
+					return this._consts.string;
 				case "boolean":
-					return this.__consts_n__["boolean"];
+					return this._consts["boolean"];
 				case "date":
-					return this.__consts_n__.date;
+					return this._consts.date;
 				case "enum":
-					return this.__consts_n__["enum"];
+					return this._consts["enum"];
 				default:	
-					return this.__consts_n__.unknown;
+					return this._consts.unknown;
 			}
 		}
-		return this.__consts_n__.unknown;
+		return this._consts.unknown;
 	};
 
 	prototype.bindEvents = function() {
 		this.grid.event.bind({
-			'onDestroy': this.__destroy_aA__,
-			'keydownCanvas': this.__keydownCanvas_ba__
+			'onDestroy': this._destroy,
+			'keydownCanvas': this._keydownCanvas
 		}, this);
 	};
 
-	prototype.__destroy_aA__ = function() {
+	prototype._destroy = function() {
 		this.cleanList(this.all);
 
 		JGM._destroy(this, {
 			name: "DataManager",
 			path: "dataMgr",
-			property: "all __idMode_m__ __increment_l__ idKey __sorter_h__",
-			map: "__consts_n__ __idToIdx_b__ __idToData_a__ _options",
-			array: "datalist failed __history_e__ __redoHistory_q__ __filters_r__"
+			property: "all _idMode _increment idKey _sorter",
+			map: "_consts _idToIdx _idToData _options",
+			array: "datalist failed _history _redoHistory _filters"
 		});
 	};
 
@@ -663,14 +663,14 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return false;
 		}
 		var idKey = this.idKey;
-		switch (this.__idMode_m__) {
-			case this.__consts_n__.__auto_a__:
+		switch (this._idMode) {
+			case this._consts._auto:
 				if (datarow.hasOwnProperty(idKey) === false) {
-					datarow[idKey] = this.__increment_l__++;
+					datarow[idKey] = this._increment++;
 				}
-			case this.__consts_n__.__given_b__:
-			case this.__consts_n__.__composite_c__:
-				return this.addUniqueIndex(this.__idToData_a__, idKey, datarow);
+			case this._consts._given:
+			case this._consts._composite:
+				return this.addUniqueIndex(this._idToData, idKey, datarow);
 		}
 		return false;
 	};
@@ -682,19 +682,19 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 
 		var idKey = this.idKey;
-		switch (this.__idMode_m__) {
-			case this.__consts_n__.__auto_a__:
+		switch (this._idMode) {
+			case this._consts._auto:
 				var i = 0,
 					 datarow,
 					 len = datalist.length;
 				for (; i < len; i++) {
 					if ((datarow = datalist[i]).hasOwnProperty(idKey) === false) {
-						datarow[idKey] = this.__increment_l__++;
+						datarow[idKey] = this._increment++;
 					}
 				}
-			case this.__consts_n__.__given_b__:
-			case this.__consts_n__.__composite_c__:
-				return this.addUniqueIndices(this.__idToData_a__, idKey, datalist);
+			case this._consts._given:
+			case this._consts._composite:
+				return this.addUniqueIndices(this._idToData, idKey, datalist);
 		}
 		return false;
 	};
@@ -706,18 +706,18 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 
 		var idKey = this.idKey;
-		switch (this.__idMode_m__) {
-			case this.__consts_n__.__auto_a__:
+		switch (this._idMode) {
+			case this._consts._auto:
 				if (change.hasOwnProperty(idKey)) {
 					return this.grid.error("NOT_MODIFIABLE", idKey);
 				}
-			case this.__consts_n__.__given_b__:
-				return this.updateUniqueIndex(this.__idToData_a__, idKey, datarow, change, before);
-			case this.__consts_n__.__composite_c__:
+			case this._consts._given:
+				return this.updateUniqueIndex(this._idToData, idKey, datarow, change, before);
+			case this._consts._composite:
 				if (change.hasOwnProperty(idKey)) {
 					return this.grid.error("NOT_MODIFIABLE", idKey);
 				}
-				var idKeys = this._options['__idColKeys_c__'],
+				var idKeys = this._options['_idColKeys'],
 					 keylen = idKeys.length,
 					 i = 0;
 				for (; i < keylen; i++) {
@@ -747,7 +747,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 						if (oldId === newId) {
 							return false;
 						}
-						res = this.updateUniqueIndex(this.__idToData_a__, idKey, datarow, idChange, idBefore);
+						res = this.updateUniqueIndex(this._idToData, idKey, datarow, idChange, idBefore);
 						if (res instanceof Error) {
 							datarow[idKey] = oldId;
 						}
@@ -769,20 +769,20 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 len = datalist.length,
 			 i = 0;
 
-		switch (this.__idMode_m__) {
-			case this.__consts_n__.__auto_a__:
+		switch (this._idMode) {
+			case this._consts._auto:
 				for (; i < len; i++) {
 					if (changes[i].hasOwnProperty(idKey)) {
 						return this.grid.error("NOT_MODIFIABLE", idKey);
 					}
 				}
-			case this.__consts_n__.__given_b__:
-				return this.updateUniqueIndices(this.__idToData_a__, idKey, datalist, changes, befores);
-			case this.__consts_n__.__composite_c__:
-				var idMap = this.__idToData_a__,
+			case this._consts._given:
+				return this.updateUniqueIndices(this._idToData, idKey, datalist, changes, befores);
+			case this._consts._composite:
+				var idMap = this._idToData,
 					 datarow,
 					 change,
-					 idKeys = this._options['__idColKeys_c__'],
+					 idKeys = this._options['_idColKeys'],
 					 keylen = idKeys.length,
 					 newId,
 					 oldIds = [],
@@ -851,7 +851,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	prototype.removeFromIdMap = function(datarow) {
 		var idKey = this.idKey,
-			 idMap = this.__idToData_a__,
+			 idMap = this._idToData,
 			 val;
 		if (Util.isNotNull(datarow) && datarow.hasOwnProperty(idKey) && (idMap.hasOwnProperty((val = datarow[idKey])))) {
 			delete idMap[val];
@@ -864,7 +864,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 		var idKey = this.idKey,
 			 datalen = datalist.length,
-			 idMap = this.__idToData_a__,
+			 idMap = this._idToData,
 			 val,
 			 datarow,
 			 i = 0;
@@ -894,7 +894,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				key = colDef['key'];
 				// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
 				if (colDef['nullOnCreate'] && Util.isNull(datarow[key])) {
-					datarow[key] = "J@H" + this.__increment_l__++;
+					datarow[key] = "J@H" + this._increment++;
 				}
 			}
 		}
@@ -920,7 +920,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
 				if (colDef['nullOnCreate']) {
 					for (j = 0; len; j++) {
-						datalist[j][key] = "J@H" + this.__increment_l__++;
+						datalist[j][key] = "J@H" + this._increment++;
 					}
 				}
 			}
@@ -1340,12 +1340,12 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.makeCompositeKey = function(datarow, update) {
-		if (this.__idMode_m__ !== this.__consts_n__.__composite_c__ || Util.isNull(datarow)) {
+		if (this._idMode !== this._consts._composite || Util.isNull(datarow)) {
 			return;
 		}
 
 		if (update === true || datarow.hasOwnProperty(this.idKey) === false) {
-			var idColKeys = this._options['__idColKeys_c__'],
+			var idColKeys = this._options['_idColKeys'],
 				keylen = idColKeys.length,
 						 i = 0,
 						 id = "";
@@ -1357,13 +1357,13 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.makeCompositeKeyList = function(datalist, update) {
-		if (this.__idMode_m__ !== this.__consts_n__.__composite_c__ || datalist.length === 0) {
+		if (this._idMode !== this._consts._composite || datalist.length === 0) {
 			return;
 		}
 
 		var idKey = this.idKey,
 			 datalen = datalist.length,
-			 idColKeys = this._options['__idColKeys_c__'],
+			 idColKeys = this._options['_idColKeys'],
 			 keylen = idColKeys.length,
 			 data,
 			 i = 0,
@@ -1411,7 +1411,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		if (Util.isNull(datarow)) {
 			return;
 		}
-		var idMap = this.__idToData_a__,
+		var idMap = this._idToData,
 			 idKey = this.idKey,
 			 id;
 
@@ -1445,7 +1445,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var mapped = [],
 			 unmapped = [],
 			 idKey = this.idKey,
-			 idMap = this.__idToData_a__,
+			 idMap = this._idToData,
 			 len = list.length,
 			 i = 0,
 			 datarow,
@@ -1475,8 +1475,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.0.0
 	  */
 	prototype.getById = function(id) {
-		if (Util.isNotNull(id) && this.__idToData_a__.hasOwnProperty(id)) {
-			return this.__idToData_a__[id];
+		if (Util.isNotNull(id) && this._idToData.hasOwnProperty(id)) {
+			return this._idToData[id];
 		}
 	};
 
@@ -1540,8 +1540,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.0.0
 	  */
 	prototype.getIdxById = function(id) {
-		if (Util.isNotNull(id) && this.__idToIdx_b__.hasOwnProperty(id)) {
-			return this.__idToIdx_b__[id];
+		if (Util.isNotNull(id) && this._idToIdx.hasOwnProperty(id)) {
+			return this._idToIdx[id];
 		}
 		return -1;
 	};
@@ -1610,7 +1610,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 	};
 
-	prototype.__reidxFrom_f__ = function(from) {
+	prototype._reidxFrom = function(from) {
 		if (Util.isNull(from)) {
 			from = 0;
 		}
@@ -1618,7 +1618,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var datalist = this.datalist,
 			 datalen = datalist.length,
 			 idKey = this.idKey,
-			 idxMap = this.__idToIdx_b__,
+			 idxMap = this._idToIdx,
 			 i = from;
 
 		for (; i < datalen; i++) {
@@ -1626,9 +1626,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 	};
 
-	prototype.__reidx_g__ = function(from) {
-		this.__idToIdx_b__ = {};
-		this.__reidxFrom_f__();
+	prototype._reidx = function(from) {
+		this._idToIdx = {};
+		this._reidxFrom();
 	};
 
 
@@ -1662,7 +1662,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  */
 	prototype.hasById = function(id) {
 		if (Util.isNotNull(id)) {
-			return this.__idToIdx_b__.hasOwnProperty(id);
+			return this._idToIdx.hasOwnProperty(id);
 		}
 		return false;
 	};
@@ -1695,7 +1695,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  */
 	prototype.containsById = function(id) {
 		if (Util.isNotNull(id)) {
-			return this.__idToData_a__.hasOwnProperty(id);
+			return this._idToData.hasOwnProperty(id);
 		}
 		return false;
 	};
@@ -1749,12 +1749,12 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}
 		}
 
-		this.__idToData_a__ = {};
+		this._idToData = {};
 
 		this.all = [];
 
-		this.__history_e__.length = 0;
-		this.__redoHistory_q__.length = 0;
+		this._history.length = 0;
+		this._redoHistory.length = 0;
 
 		if (Util.isNull(datalist)) {
 			datalist = [];
@@ -1850,11 +1850,11 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.all.push(datarow);
 
 		if (Util.isNull(args) || args['undo'] !== true) {
-			this.__history_e__.push({
-				__action_a__:this.__consts_n__.__add_e__,
-				__target_b__:datarow
+			this._history.push({
+				_action:this._consts._add,
+				_target:datarow
 			});
-			this.__redoHistory_q__.length = 0;
+			this._redoHistory.length = 0;
 		}
 
 		/**
@@ -1923,11 +1923,11 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.all.pushList(toAdd);
 
 		if (Util.isNull(args) || args['undo'] !== true) {
-			this.__history_e__.push({
-				__action_a__:this.__consts_n__.__addList_f__,
-				__target_b__:toAdd
+			this._history.push({
+				_action:this._consts._addList,
+				_target:toAdd
 			});
-			this.__redoHistory_q__.length = 0;
+			this._redoHistory.length = 0;
 		}
 
 		/**
@@ -2023,22 +2023,22 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 		var res;
 		if ((res = this.parse(datarow, args)) instanceof Error) {
-			this.__rollback_o__(datarow, before);
+			this._rollback(datarow, before);
 			return res;
 		}
 
 		if ((res = this.validate(datarow, args)) instanceof Error) {
-			this.__rollback_o__(datarow, before);
+			this._rollback(datarow, before);
 			return res;
 		}
 
 		if ((res = this.updateUniqueMap(datarow, change, before)) instanceof Error) {
-			this.__rollback_o__(datarow, before);
+			this._rollback(datarow, before);
 			return res;
 		}
 
 		if ((res = this.updateIdMap(datarow, change, before)) instanceof Error) {
-			this.__rollback_o__(datarow, before);
+			this._rollback(datarow, before);
 			return res;
 		}
 
@@ -2060,13 +2060,13 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 
 		if (Util.isNull(args) || args['undo'] !== true) {
-			this.__history_e__.push({
-				__action_a__:this.__consts_n__.__update_g__,
-				__target_b__:datarow,
-				__before_c__:before,
-				__change_d__:change
+			this._history.push({
+				_action:this._consts._update,
+				_target:datarow,
+				_before:before,
+				_change:change
 			});
-			this.__redoHistory_q__.length = 0;
+			this._redoHistory.length = 0;
 		}
 
 		/**
@@ -2167,22 +2167,22 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 		var res;
 		if ((res = this.parseList(datalist, args)) instanceof Error) {
-			this.__rollbackList_p__(datalist, befores);
+			this._rollbackList(datalist, befores);
 			return res;
 		}
 
 		if ((res = this.validateList(datalist, args)) instanceof Error) {
-			this.__rollbackList_p__(datalist, befores);
+			this._rollbackList(datalist, befores);
 			return res;
 		}
 
 		if ((res = this.updateListUniqueMap(datalist, changes, befores)) instanceof Error) {
-			this.__rollbackList_p__(datalist, befores);
+			this._rollbackList(datalist, befores);
 			return res;
 		}
 
 		if ((res = this.updateListIdMap(datalist, changes, befores)) instanceof Error) {
-			this.__rollbackList_p__(datalist, befores);
+			this._rollbackList(datalist, befores);
 			return res;
 		}
 
@@ -2204,13 +2204,13 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 
 		if (Util.isNull(args) || args['undo'] !== true) {
-			this.__history_e__.push({
-				__action_a__:this.__consts_n__.__updateList_h__,
-				__target_b__:datalist,
-				__before_c__:befores,
-				__change_d__:changes
+			this._history.push({
+				_action:this._consts._updateList,
+				_target:datalist,
+				_before:befores,
+				_change:changes
 			});
-			this.__redoHistory_q__.length = 0;
+			this._redoHistory.length = 0;
 		}
 
 		/**
@@ -2239,7 +2239,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		return true;
 	};
 
-	prototype.__rollback_o__ = function(datarow, before) {
+	prototype._rollback = function(datarow, before) {
 		var i;
 		for (i in before) {
 			if (before.hasOwnProperty(i)) {
@@ -2248,7 +2248,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 	};
 
-	prototype.__rollbackList_p__ = function(datalist, befores) {
+	prototype._rollbackList = function(datalist, befores) {
 		var len = datalist.length,
 			 i = 0,
 			 datarow,
@@ -2294,11 +2294,11 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.removeId(mapped);
 
 		if (Util.isNull(args) || args['undo'] !== true) {
-			this.__history_e__.push({
-				__action_a__:this.__consts_n__.__remove_i__,
-				__target_b__:mapped
+			this._history.push({
+				_action:this._consts._remove,
+				_target:mapped
 			});
-			this.__redoHistory_q__.length = 0;
+			this._redoHistory.length = 0;
 		}
 
 		/**
@@ -2353,11 +2353,11 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.cleanList(mapped);
 
 		if (Util.isNull(args) || args['undo'] !== true) {
-			this.__history_e__.push({
-				__action_a__:this.__consts_n__.__removeList_j__,
-				__target_b__:mapped
+			this._history.push({
+				_action:this._consts._removeList,
+				_target:mapped
 			});
-			this.__redoHistory_q__.length = 0;
+			this._redoHistory.length = 0;
 		}
 
 		/**
@@ -2380,7 +2380,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		return true;
 	};
 
-	prototype.__keydownCanvas_ba__ = function(e) {
+	prototype._keydownCanvas = function(e) {
 		if (e.ctrlKey) {
 			switch (e.which) {
 				case "Z".charCodeAt(0):
@@ -2404,23 +2404,23 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.1.4
 	  */
 	prototype.undo = function() {
-		if (this.__history_e__.length === 0) {
+		if (this._history.length === 0) {
 			return false;
 		}
 
-		var hist = this.__history_e__.pop();
-		this.__redoHistory_q__.push(hist);
+		var hist = this._history.pop();
+		this._redoHistory.push(hist);
 
-		var tar = hist.__target_b__,
-			 bef = hist.__before_c__;
-		switch (hist.__action_a__) {
-			case this.__consts_n__.__add_e__:
+		var tar = hist._target,
+			 bef = hist._before;
+		switch (hist._action) {
+			case this._consts._add:
 				return this.remove(tar, {'undo':true});
-			case this.__consts_n__.__addList_f__:
+			case this._consts._addList:
 				return this.removeList(tar, {'undo':true});		
-			case this.__consts_n__.__update_g__:
+			case this._consts._update:
 				return this.update(tar, bef, {'undo':true});
-			case this.__consts_n__.__updateList_h__:
+			case this._consts._updateList:
 				var list = [],
 					 i = 0,
 					 len = tar.length;
@@ -2428,9 +2428,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 					list.push({'datarow':tar[i], 'change':bef[i]});
 				}
 				return this.updateList(list, {'undo':true});		
-			case this.__consts_n__.__remove_i__:
+			case this._consts._remove:
 				return this.add(tar, {'undo':true});
-			case this.__consts_n__.__removeList_j__:
+			case this._consts._removeList:
 				return this.addList(tar, {'undo':true});
 		}
 	};
@@ -2446,23 +2446,23 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.1.4
 	  */
 	prototype.redo = function() {
-		if (this.__redoHistory_q__.length === 0) {
+		if (this._redoHistory.length === 0) {
 			return false;
 		}
 
-		var hist = this.__redoHistory_q__.pop();
-		this.__history_e__.push(hist);
+		var hist = this._redoHistory.pop();
+		this._history.push(hist);
 
-		var tar = hist.__target_b__;
-		var cha = hist.__change_d__;
-		switch (hist.__action_a__) {
-			case this.__consts_n__.__add_e__:
+		var tar = hist._target;
+		var cha = hist._change;
+		switch (hist._action) {
+			case this._consts._add:
 				return this.add(tar, {'undo':true});
-			case this.__consts_n__.__addList_f__:
+			case this._consts._addList:
 				return this.addList(tar, {'undo':true});		
-			case this.__consts_n__.__update_g__:
+			case this._consts._update:
 				return this.update(tar, cha, {'undo':true});
-			case this.__consts_n__.__updateList_h__:
+			case this._consts._updateList:
 				var list = [],
 					 i = 0,
 					 len = tar.length;
@@ -2470,9 +2470,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 					list.push({'datarow':tar[i], 'change':cha[i]});
 				}
 				return this.updateList(list, {'undo':true});
-			case this.__consts_n__.__remove_i__:
+			case this._consts._remove:
 				return this.remove(tar, {'undo':true});
-			case this.__consts_n__.__removeList_j__:
+			case this._consts._removeList:
 				return this.removeList(tar, {'undo':true});
 		}
 	};
@@ -2499,7 +2499,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return true;
 		}
 
-		if (this.__idMode_m__ === this.__consts_n__.__composite_c__) {
+		if (this._idMode === this._consts._composite) {
 			this.makeCompositeKey(a);
 			this.makeCompositeKey(b);
 		}
@@ -2524,7 +2524,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.0.0
 	  */
 	prototype.getReal = function() {
-		var notReal = this.__consts_n__.__notReal_d__;
+		var notReal = this._consts._notReal;
 		return this.all.filter(function(datarow) {
 			return datarow.hasOwnProperty(notReal) === false;
 		});
@@ -2542,7 +2542,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.1.4
 	  */
 	prototype.filterReal = function(list) {
-		var notReal = this.__consts_n__.__notReal_d__;
+		var notReal = this._consts._notReal;
 		return list.filter(function(datarow) {
 			return datarow.hasOwnProperty(notReal) === false;
 		});
@@ -2561,7 +2561,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.1.0
 	  */
 	prototype.isReal = function(datarow) {
-		return Util.isNotNull(datarow) && datarow.hasOwnProperty(this.__consts_n__.__notReal_d__) === false;
+		return Util.isNotNull(datarow) && datarow.hasOwnProperty(this._consts._notReal) === false;
 	};
 
 
@@ -2581,7 +2581,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return;
 		}
 
-		var notReal = this.__consts_n__.__notReal_d__,
+		var notReal = this._consts._notReal,
 			 len = datalist.length,
 			 i = len - 1;
 
@@ -2594,7 +2594,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.removeIdCol = function(datalist) {
-		if (this.__idMode_m__ === this.__consts_n__.__given_b__ || Util.isEmptyArray(datalist)) {
+		if (this._idMode === this._consts._given || Util.isEmptyArray(datalist)) {
 			return;
 		}
 
@@ -2610,7 +2610,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.removeId = function(datarow) {
-		if (Util.isNotNull(datarow) && this.__idMode_m__ !== this.__consts_n__.__given_b__ && datarow.hasOwnProperty(this.idKey)) {
+		if (Util.isNotNull(datarow) && this._idMode !== this._consts._given && datarow.hasOwnProperty(this.idKey)) {
 			delete datarow[this.idKey];
 		}
 	};
@@ -2635,7 +2635,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 j,
 			 data,
 			 clone,
-			 notReal = this.__consts_n__.__notReal_d__;
+			 notReal = this._consts._notReal;
 
 		for (; i < len; i++) {
 			if ((data = datalist[i]).hasOwnProperty(notReal) === false) {
@@ -2676,14 +2676,14 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid.event.trigger("onChangeSorter", [this.__sorter_h__, sorter]);
+		this.grid.event.trigger("onChangeSorter", [this._sorter, sorter]);
 
-		this.__sorter_h__ = sorter;
+		this._sorter = sorter;
 	};
 
-	prototype.__sort_i__ = function(sorter) {
+	prototype._sort = function(sorter) {
 		if (Util.isNull(sorter)) {
-			sorter = this.__sorter_h__;
+			sorter = this._sorter;
 		}
 		else {
 			this.setSorter(sorter);
@@ -2714,7 +2714,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}
 		}
 		else if (Util.isNotNull(sorter.lexi)) {
-			this.constructor.__lexi_a__(datalist, sorter.lexi, sorter.desc);
+			this.constructor._lexi(datalist, sorter.lexi, sorter.desc);
 		}
 
 
@@ -2744,7 +2744,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.1.5
 	  */
 	prototype.addFilter = function(filter) {
-		this.__filters_r__.push(filter);
+		this._filters.push(filter);
 		this.refresh();
 	};
 
@@ -2759,18 +2759,18 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.1.5
 	  */
 	prototype.removeFilter = function(filter) {
-		var len = this.__filters_r__.length;
-		this.__filters_r__.remove(filter);
-		if (len !== this.__filters_r__.length) {
+		var len = this._filters.length;
+		this._filters.remove(filter);
+		if (len !== this._filters.length) {
 			this.refresh();
 		}
 	};
 
-	prototype.__filter_j__ = function() {
+	prototype._filter = function() {
 		var datalist = this.datalist,
 			 failed = this.failed,
 			 i = 0,
-			 filters = this.__filters_r__,
+			 filters = this._filters,
 			 flen = filters.length,
 			 filter,
 			 j;
@@ -2793,7 +2793,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		failed.length = 0;
 
 		for (; i < flen; i++) {
-			filter = this.__filters_r__[i];
+			filter = this._filters[i];
 			for (j = datalist.length - 1; j >= 0; j--) {
 				if (!filter(datalist[j])) {
 					failed.push(datalist[j]);
@@ -2830,8 +2830,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.grid.event.trigger("onAfterFilter", [datalist, failed]);
 	};
 
-	prototype.__finish_k__ = function(args) {
-		this.__reidx_g__();
+	prototype._finish = function(args) {
+		this._reidx();
 
 		/**
 		  모든 {@link JGM.DataManager DataManager} 의 {@link refresh} 과정이 끝났음을 알리는
@@ -2873,17 +2873,17 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.grid.event.trigger("onBeforeRefresh");
 
 		if (args === undefined) {
-			this.__sort_i__();
+			this._sort();
 		}
 		else if (args['noSort'] !== true) {
-			this.__sort_i__(args['sorter']);
+			this._sort(args['sorter']);
 		}
 
 		if (args === undefined || args['noFilter'] !== true) {
-			this.__filter_j__();
+			this._filter();
 		}
 
-		this.__finish_k__(args);
+		this._finish(args);
 	};
 
 	prototype.exportRowToArray = function(index, keys) {'use strict';
@@ -2934,7 +2934,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		return arr;
 	}
 
-	DataManager.__lexi_a__ = function(datalist, key, desc) {
+	DataManager._lexi = function(datalist, key, desc) {
 		var oldToString = Object.prototype.toString;
 		Object.prototype.toString = Util.isFunction(key)? key : function() { return this[key]; };
 		datalist.sort();

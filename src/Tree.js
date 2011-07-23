@@ -338,7 +338,7 @@ var Util = goog.getObjectByName('jx.util');
 	 };
 
 	 // 옵션을 익스텐드합니다
-	 this._options = JGM.__extend_e__(options, args['options']);
+	 this._options = JGM._extend(options, args['options']);
 
 	 this.map = {};
 	 this.root = new TreeNode({'tree':this});

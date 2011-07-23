@@ -75,7 +75,7 @@ JGM._add("DataCreator", DataCreator);
 
 		this._ctnr = args['container'];
 
-		this.__creator_a__;
+		this._creator;
 
 		/**
 		  DataCreator 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
@@ -120,7 +120,7 @@ JGM._add("DataCreator", DataCreator);
 			  @since 1.1.1
 			  @version 1.1.1
 			  */
-'__background_a__': "#dfdfdf",
+'_background': "#dfdfdf",
 
 				  /**
 					모듈의 border 의 두께를 정합니다. <br>기본값:<code>0</code>
@@ -132,7 +132,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__borderThickness_b__': 0,
+				  '_borderThickness': 0,
 
 				  /**
 					모듈의 border 스타일을 정합니다. <br>기본값:<code>"solid #D6D6D6"</code>
@@ -144,7 +144,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__border_c__': "solid #D6D6D6",
+				  '_border': "solid #D6D6D6",
 
 				  /**
 					모듈 내의 input 의 border 스타일을 정합니다. <br>기본값:<code>"solid #A7A7A7"</code>
@@ -156,7 +156,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__inputBorder_d__': "solid #A7A7A7",
+				  '_inputBorder': "solid #A7A7A7",
 
 				  /**
 					모듈 내의 input 의 두께를 정합니다. <br>기본값:<code>1</code>
@@ -168,7 +168,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__inputBorderThickness_e__': 1,
+				  '_inputBorderThickness': 1,
 
 				  /**
 					모듈 내의 input 의 높이를 정합니다. <br>기본값:<code>18</code>
@@ -180,7 +180,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__inputHeight_f__': 18,
+				  '_inputHeight': 18,
 
 				  /**
 					모듈 내의 input 의 margin 을 정합니다. <br>기본값:<code>8</code>
@@ -192,7 +192,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__inputMargin_g__': 8,
+				  '_inputMargin': 8,
 
 				  /**
 					모듈 내의 컬럼 명의 margin 을 정합니다. <br>기본값:<code>2</code>
@@ -204,7 +204,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__nameMargin_h__': 2,
+				  '_nameMargin': 2,
 
 				  /**
 					모듈 내의 컬럼 명의 font 를 정합니다. <br>기본값:<code>"12px Arial,Helvetica,sans-serif"</code>
@@ -216,7 +216,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__font_i__': "12px Arial,Helvetica,sans-serif",
+				  '_font': "12px Arial,Helvetica,sans-serif",
 
 				  /**
 					모듈의 높이를 정합니다. <br>기본값:<code>28</code>
@@ -228,7 +228,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__height_j__': 28,
+				  '_height': 28,
 
 				  /**
 					모듈의 padding 을 정합니다. <br>기본값:<code>3</code>
@@ -240,7 +240,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__padding_k__': 3,
+				  '_padding': 3,
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 CSS 클래스 입니다. <br>기본값:<code>"creator-icon"</code>
@@ -252,7 +252,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__classCreatorIcon_l__': "creator-icon",
+				  '_classCreatorIcon': "creator-icon",
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 이미지 url 입니다. <br>기본값:<code>imageUrl + "data-creator-icon.png"</code>
@@ -264,7 +264,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__creatorIconUrl_m__': this.grid._options['imageUrl'] + "data-creator-icon.png",
+				  '_creatorIconUrl': this.grid._options['imageUrl'] + "data-creator-icon.png",
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 폭 입니다. <br>기본값:<code>13</code>
@@ -276,7 +276,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__creatorIconWidth_n__': 13,
+				  '_creatorIconWidth': 13,
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 높이 입니다. <br>기본값:<code>13</code>
@@ -288,7 +288,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__creatorIconHeight_o__': 13,
+				  '_creatorIconHeight': 13,
 
 				  /**
 					모듈의 CSS 클래스 입니다. <br>기본값:<code>"data-creator"</code>
@@ -300,7 +300,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__classCreator_p__': "data-creator",
+				  '_classCreator': "data-creator",
 
 				  /**
 					모듈 내의 컬럼 명의 CSS 클래스 입니다. <br>기본값:<code>"data-creator-name"</code>
@@ -312,7 +312,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '__classColName_q__': "data-creator-name",
+				  '_classColName': "data-creator-name",
 
 				  /**
 					모듈 내의 input tag 에 적용되는 border radius 입니다. <br>기본값:<code>3</code>
@@ -324,31 +324,31 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.7
 					@version 1.1.7
 					*/
-				  '__inputBorderRadius_r__': 3
+				  '_inputBorderRadius': 3
 		};
 
-		this._options = JGM.__extend_e__(options, args['options'], {
-background:"__background_a__",
-borderThickness:"__borderThickness_b__",
-border:"__border_c__",
-inputBorder:"__inputBorder_d__",
-inputBorderThickness:"__inputBorderThickness_e__",
-inputHeight:"__inputHeight_f__",
-inputMargin:"__inputMargin_g__",
-nameMargin:"__nameMargin_h__",
-font:"__font_i__",
-height:"__height_j__",
-padding:"__padding_k__",
-classCreatorIcon:"__classCreatorIcon_l__",
-creatorIconUrl:"__creatorIconUrl_m__",
-creatorIconWidth:"__creatorIconWidth_n__",
-creatorIconHeight:"__creatorIconHeight_o__",
-classCreator:"__classCreator_p__",
-classColName:"__classColName_q__",
-inputBorderRadius:"__inputBorderRadius_r__"
+		this._options = JGM._extend(options, args['options'], {
+background:"_background",
+borderThickness:"_borderThickness",
+border:"_border",
+inputBorder:"_inputBorder",
+inputBorderThickness:"_inputBorderThickness",
+inputHeight:"_inputHeight",
+inputMargin:"_inputMargin",
+nameMargin:"_nameMargin",
+font:"_font",
+height:"_height",
+padding:"_padding",
+classCreatorIcon:"_classCreatorIcon",
+creatorIconUrl:"_creatorIconUrl",
+creatorIconWidth:"_creatorIconWidth",
+creatorIconHeight:"_creatorIconHeight",
+classCreator:"_classCreator",
+classColName:"_classColName",
+inputBorderRadius:"_inputBorderRadius"
 });
 
-this.__inputMap_c__ = {};
+this._inputMap = {};
 
 this.__init();
 }
@@ -360,8 +360,8 @@ DataCreator.getInstance = function(args) {
 var prototype = DataCreator.prototype;
 
 prototype.__init = function() {
-	this.__creator_a__ =
-		$("<div class='" + this._options['__classCreator_p__'] + "'>")
+	this._creator =
+		$("<div class='" + this._options['_classCreator'] + "'>")
 		.appendTo(this._ctnr);
 
 	this.bindEvents();
@@ -369,44 +369,44 @@ prototype.__init = function() {
 
 prototype.bindEvents = function() {
 	var events = {
-'onRenderModules': this.__onRenderModules_aE__,
-				 'onCreateCss': this.__onCreateCss_V__,
-				 'onDestroy': this.__destroy_aA__
+'onRenderModules': this._onRenderModules,
+				 'onCreateCss': this._onCreateCss,
+				 'onDestroy': this._destroy
 	};
 	this.grid.event.bind(events, this);
 };
 
-prototype.__onCreateCss_V__ = function() {
+prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		border = o.__borderThickness_b__ + "px " + o.__border_c__,
+		border = o._borderThickness + "px " + o._border,
 		rules = [];
 
-	rules.push(gridId + o.__classCreator_p__ + "{" + JGM.__CONST_g__.__cssUnselectable_a__ + "float:left;width:100%;padding-left:8px;background:" + o.__background_a__ + ";border-top:" + border + ";font:" + o.__font_i__ + "}");
-	rules.push(gridId + o.__classCreator_p__ + " button{float:left;margin:" + o.__padding_k__ + "px " + o.__padding_k__ + "px 0 0;height:" + (o.__height_j__ - 2 * o.__padding_k__) + "px}");
-	rules.push(gridId + o.__classCreator_p__ + " input{float:left;padding:0;margin-top:" + ((o.__height_j__ - o.__inputHeight_f__ - 2 * o.__inputBorderThickness_e__) / 2) + "px;height:" + o.__inputHeight_f__ + "px;border:" + o.__inputBorderThickness_e__ + "px " + o.__inputBorder_d__ + ";border-radius:" + o.__inputBorderRadius_r__ + "px;-moz-border-radius:" + o.__inputBorderRadius_r__ + "px}");
-	rules.push(gridId + o.classCol + "{float:left;overflow:hidden;white-space:nowrap;line-height:" + o.__height_j__ + "px;margin-right:" + o.__inputMargin_g__ + "px}");
-	rules.push(gridId + o.__classColName_q__ + "{float:left;margin-right:" + o.__nameMargin_h__ + "px}");
-	rules.push(gridId + o.__classCreatorIcon_l__ + "{background:url(" + o.__creatorIconUrl_m__ + ") no-repeat center;width:" + o.__creatorIconWidth_n__ + "px;height:" + o.__creatorIconHeight_o__ + "px}");
+	rules.push(gridId + o._classCreator + "{" + JGM._CONST._cssUnselectable + "float:left;width:100%;padding-left:8px;background:" + o._background + ";border-top:" + border + ";font:" + o._font + "}");
+	rules.push(gridId + o._classCreator + " button{float:left;margin:" + o._padding + "px " + o._padding + "px 0 0;height:" + (o._height - 2 * o._padding) + "px}");
+	rules.push(gridId + o._classCreator + " input{float:left;padding:0;margin-top:" + ((o._height - o._inputHeight - 2 * o._inputBorderThickness) / 2) + "px;height:" + o._inputHeight + "px;border:" + o._inputBorderThickness + "px " + o._inputBorder + ";border-radius:" + o._inputBorderRadius + "px;-moz-border-radius:" + o._inputBorderRadius + "px}");
+	rules.push(gridId + o.classCol + "{float:left;overflow:hidden;white-space:nowrap;line-height:" + o._height + "px;margin-right:" + o._inputMargin + "px}");
+	rules.push(gridId + o._classColName + "{float:left;margin-right:" + o._nameMargin + "px}");
+	rules.push(gridId + o._classCreatorIcon + "{background:url(" + o._creatorIconUrl + ") no-repeat center;width:" + o._creatorIconWidth + "px;height:" + o._creatorIconHeight + "px}");
 
 	return rules.join("");
 };
 
-prototype.__onRenderModules_aE__ = function() {
+prototype._onRenderModules = function() {
 	var html = [],
 		colDefs = this.grid.colDefMgr.getAll(),
 		len = colDefs.length,
 		colDef,
 		opt = this._options,
 		classCol = opt.classCol,
-		classColName = opt.__classColName_q__,
+		classColName = opt._classColName,
 		thisIns = this,
-		creator = this.__creator_a__,
-		imap = this.__inputMap_c__,
+		creator = this._creator,
+		imap = this._inputMap,
 		i = 0,
 		keyupfn = function(e) {
 			if (e.which === Util.keyMapKeydown.enter) {
-				thisIns.__addData_d__();
+				thisIns._addData();
 			}
 		};
 
@@ -417,7 +417,7 @@ prototype.__onRenderModules_aE__ = function() {
 		}
 	}
 
-	creator[0].innerHTML = html.join("") + "<button type='button' onclick='JGM.m.DataCreator." + this.mid + ".__addData_d__()'>등록</button><button type='button' onclick='JGM.m.DataCreator." + this.mid + ".__reset_e__()'>초기화</button>";
+	creator[0].innerHTML = html.join("") + "<button type='button' onclick='JGM.m.DataCreator." + this.mid + "._addData()'>등록</button><button type='button' onclick='JGM.m.DataCreator." + this.mid + "._reset()'>초기화</button>";
 
 	for (i = 0; i < len; i++) {
 		colDef = colDefs[i];
@@ -427,16 +427,16 @@ prototype.__onRenderModules_aE__ = function() {
 	}
 
 	if (Util.isNotNull(this.grid.menubar)) {
-		this.grid.menubar.addIcon(opt.__classCreatorIcon_l__, "데이터 로우를 추가합니다.", opt.__creatorIconWidth_n__, opt.__creatorIconHeight_o__, function() {
+		this.grid.menubar.addIcon(opt._classCreatorIcon, "데이터 로우를 추가합니다.", opt._creatorIconWidth, opt._creatorIconHeight, function() {
 				creator.toggle("fast");
 				});
 		creator.hide();
 	}
 };
 
-prototype.__addData_d__ = function() {
+prototype._addData = function() {
 	var key,
-		imap = this.__inputMap_c__,
+		imap = this._inputMap,
 		cmgr = this.grid.colDefMgr,
 		colDef,
 		input,
@@ -475,11 +475,11 @@ prototype.__addData_d__ = function() {
 	this.grid.dataMgr.add(newData, {'isNew':true});
 };
 
-prototype.__reset_e__ = function() {
+prototype._reset = function() {
 	var key,
 		cmgr = this.grid.colDefMgr,
 		colDef,
-		imap = this.__inputMap_c__;
+		imap = this._inputMap;
 	for (key in imap) {
 		if (imap.hasOwnProperty(key)) {
 			colDef = cmgr.getByKey(key);
@@ -490,20 +490,20 @@ prototype.__reset_e__ = function() {
 	}
 };
 
-prototype.__destroy_aA__ = function() {
+prototype._destroy = function() {
 	var i,
-		imap = this.__inputMap_c__;
+		imap = this._inputMap;
 	for (i in imap) {
 		if (imap.hasOwnProperty(i)) {
-			JGM.__delete$_n__(imap, i);
+			JGM._delete$(imap, i);
 		}
 	}
 
 	JGM._destroy(this, {
 name: "DataCreator",
 path: "creator",
-"$": "__creator_a__",
-map: "__inputMap_c__ _options"
+"$": "_creator",
+map: "_inputMap _options"
 });
 };
 }());

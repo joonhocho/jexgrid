@@ -27,13 +27,13 @@ function SearchManager(args) {
 	this.mid = args.mid;
 
 	this._ctnr = args['container'];
-	this.__mask_a__;
+	this._mask;
 
-	this.__search_c__;
-	this.__masterInput_p__;
-	this.__tag_d__;
-	this.__advButton_q__;
-	this.__adv_e__;
+	this._search;
+	this._masterInput;
+	this._tag;
+	this._advButton;
+	this._adv;
 
 	this.grid = args.grid;
 	
@@ -49,216 +49,216 @@ function SearchManager(args) {
 	this.grid.search = this;
 
 	var options = {
-		'__background_a__': "#f0f0f0",
-		'__borderThickness_b__': 1,
-		'__border_c__': "solid #d6d6d6",
+		'_background': "#f0f0f0",
+		'_borderThickness': 1,
+		'_border': "solid #d6d6d6",
 
-		'__inputBorder_d__': "1px solid #A7A7A7",
-		'__inputPadding_e__': 0,
+		'_inputBorder': "1px solid #A7A7A7",
+		'_inputPadding': 0,
 
-		'__searchbarAlign_f__': "center",
-		'__searchbarMargin_g__': 3,
-		'__searchbarWidth_h__': "99%",
-		'__searchbarHeight_i__': 20,
+		'_searchbarAlign': "center",
+		'_searchbarMargin': 3,
+		'_searchbarWidth': "99%",
+		'_searchbarHeight': 20,
 
-		'__tagsHeight_j__': 26,
-		'__tagsPadding_k__': 2,
-		'__tagsBorderRadius_l__': 3,
+		'_tagsHeight': 26,
+		'_tagsPadding': 2,
+		'_tagsBorderRadius': 3,
 
-		'__advButtonColor_m__': "#123272",
-		'__advButtonFont_n__': "bold 12px Arial,Helvetica,sans-serif",
-		'__advButtonPadding_o__': 5,
+		'_advButtonColor': "#123272",
+		'_advButtonFont': "bold 12px Arial,Helvetica,sans-serif",
+		'_advButtonPadding': 5,
 
-		'__advButtonBg_p__': "",
-		'__advButtonBgHover_q__': "url(" + this.grid._options['imageUrl'] + "more-options-bg-hover.png) repeat-x scroll center",
-		'__advButtonBgActive_r__': "url(" + this.grid._options['imageUrl'] + "more-options-bg-active.png) repeat-x scroll center",
-		'__advButtonBgOpened_s__': "url(" + this.grid._options['imageUrl'] + "more-options-bg-opened.png) repeat-x scroll center",
+		'_advButtonBg': "",
+		'_advButtonBgHover': "url(" + this.grid._options['imageUrl'] + "more-options-bg-hover.png) repeat-x scroll center",
+		'_advButtonBgActive': "url(" + this.grid._options['imageUrl'] + "more-options-bg-active.png) repeat-x scroll center",
+		'_advButtonBgOpened': "url(" + this.grid._options['imageUrl'] + "more-options-bg-opened.png) repeat-x scroll center",
 
-		'__advButtonBorderThickness_t__': 1,
-		'__advButtonBorder_u__': "solid transparent",
-		'__advButtonBorderHover_v__': "solid #a4a4a4",
-		'__advButtonBorderActive_w__': "solid #c5c5c5",
-		'__advButtonBorderOpened_x__': "solid #bfbfbf",
+		'_advButtonBorderThickness': 1,
+		'_advButtonBorder': "solid transparent",
+		'_advButtonBorderHover': "solid #a4a4a4",
+		'_advButtonBorderActive': "solid #c5c5c5",
+		'_advButtonBorderOpened': "solid #bfbfbf",
 
-		'__advButtonIconWidth_y__': 9,
-		'__advButtonIconMargin_z__': 2,
-		'__advButtonIconUrl_A__': this.grid._options['imageUrl'] + "more-options.png",
-		'__advButtonIconCloseUrl_B__': this.grid._options['imageUrl'] + "more-options-close.png",
+		'_advButtonIconWidth': 9,
+		'_advButtonIconMargin': 2,
+		'_advButtonIconUrl': this.grid._options['imageUrl'] + "more-options.png",
+		'_advButtonIconCloseUrl': this.grid._options['imageUrl'] + "more-options-close.png",
 
-		'__tagPadding_C__': 2,
-		'__tagBorder_D__': "solid #93979D",
-		'__tagBorderThickness_E__': 1,
-		'__tagFont_F__': "bold 13px Arial",
-		'__tagColor_G__': "#282853",
-		'__tagBackground_H__': "url(" + this.grid._options['imageUrl'] + "tag-background.png) repeat-x scroll center",
+		'_tagPadding': 2,
+		'_tagBorder': "solid #93979D",
+		'_tagBorderThickness': 1,
+		'_tagFont': "bold 13px Arial",
+		'_tagColor': "#282853",
+		'_tagBackground': "url(" + this.grid._options['imageUrl'] + "tag-background.png) repeat-x scroll center",
 
-		'__tagRemoveIconWidth_I__': 12,
-		'__tagRemoveIconUrl_J__': this.grid._options['imageUrl'] + "tag-close.png",
-		'__tagRemoveIconHoverUrl_K__': this.grid._options['imageUrl'] + "tag-close-hover.png",
+		'_tagRemoveIconWidth': 12,
+		'_tagRemoveIconUrl': this.grid._options['imageUrl'] + "tag-close.png",
+		'_tagRemoveIconHoverUrl': this.grid._options['imageUrl'] + "tag-close-hover.png",
 
-		'__advFont_L__': "11px Arial",
-		'__advInputWidth_M__': 30,
+		'_advFont': "11px Arial",
+		'_advInputWidth': 30,
 
-		'__classMask_N__': "search-mask",
-		'__classSearchbar_O__': "search-bar",
-		'__classAdvButtonName_P__': "more-option-name",
-		'__classAdvButton_Q__': "more-options",
-		'__classAdvButtonIcon_R__': "more-icon",
-		'__classClearTags_S__': "clear-tags",
-		'__classTagbar_T__': "search-tags",
-		'__classTag_U__': "search-tag",
-		'__classTagName_V__': "search-tag-name",
-		'__classRemoveTag_W__': "search-tag-remove",
-		'__classAdvanced_X__': "search-advanced",
-		'__classOptionCol_Y__': "search-option-col",
-		'__classOption_Z__': "search-option",
-		'__classSearchIcon_aa__': "search-icon",
-		'__searchIconUrl_ab__': this.grid._options['imageUrl'] + "search-icon.png",
-		'__searchIconWidth_ac__': 15,
-		'__searchIconHeight_ad__': 15,
-		'__keyMap_ae__': undefined,
-		'__tagRemoveIconActiveUrl_af__': this.grid._options['imageUrl'] + "tag-close-active.png",
+		'_classMask': "search-mask",
+		'_classSearchbar': "search-bar",
+		'_classAdvButtonName': "more-option-name",
+		'_classAdvButton': "more-options",
+		'_classAdvButtonIcon': "more-icon",
+		'_classClearTags': "clear-tags",
+		'_classTagbar': "search-tags",
+		'_classTag': "search-tag",
+		'_classTagName': "search-tag-name",
+		'_classRemoveTag': "search-tag-remove",
+		'_classAdvanced': "search-advanced",
+		'_classOptionCol': "search-option-col",
+		'_classOption': "search-option",
+		'_classSearchIcon': "search-icon",
+		'_searchIconUrl': this.grid._options['imageUrl'] + "search-icon.png",
+		'_searchIconWidth': 15,
+		'_searchIconHeight': 15,
+		'_keyMap': undefined,
+		'_tagRemoveIconActiveUrl': this.grid._options['imageUrl'] + "tag-close-active.png",
 		
-		'__syncMaster_ag__': false
+		'_syncMaster': false
 	};
 
-	this._options = JGM.__extend_e__(options, args['options'], {
+	this._options = JGM._extend(options, args['options'], {
 
-		background:"__background_a__",
-		borderThickness:"__borderThickness_b__",
-		border:"__border_c__",
+		background:"_background",
+		borderThickness:"_borderThickness",
+		border:"_border",
 
-		inputBorder:"__inputBorder_d__",
-		inputPadding:"__inputPadding_e__",
+		inputBorder:"_inputBorder",
+		inputPadding:"_inputPadding",
 
-		searchbarAlign:"__searchbarAlign_f__",
-		searchbarMargin:"__searchbarMargin_g__",
-		searchbarWidth:"__searchbarWidth_h__",
-		searchbarHeight:"__searchbarHeight_i__",
+		searchbarAlign:"_searchbarAlign",
+		searchbarMargin:"_searchbarMargin",
+		searchbarWidth:"_searchbarWidth",
+		searchbarHeight:"_searchbarHeight",
 
-		tagsHeight:"__tagsHeight_j__",
-		tagsPadding:"__tagsPadding_k__",
-		tagsBorderRadius:"__tagsBorderRadius_l__",
+		tagsHeight:"_tagsHeight",
+		tagsPadding:"_tagsPadding",
+		tagsBorderRadius:"_tagsBorderRadius",
 
-		advButtonColor:"__advButtonColor_m__",
-		advButtonFont:"__advButtonFont_n__",
-		advButtonPadding:"__advButtonPadding_o__",
+		advButtonColor:"_advButtonColor",
+		advButtonFont:"_advButtonFont",
+		advButtonPadding:"_advButtonPadding",
 
-		advButtonBg:"__advButtonBg_p__",
-		advButtonBgHover:"__advButtonBgHover_q__",
-		advButtonBgActive:"__advButtonBgActive_r__",
-		advButtonBgOpened:"__advButtonBgOpened_s__",
+		advButtonBg:"_advButtonBg",
+		advButtonBgHover:"_advButtonBgHover",
+		advButtonBgActive:"_advButtonBgActive",
+		advButtonBgOpened:"_advButtonBgOpened",
 
-		advButtonBorderThickness:"__advButtonBorderThickness_t__",
-		advButtonBorder:"__advButtonBorder_u__",
-		advButtonBorderHover:"__advButtonBorderHover_v__",
-		advButtonBorderActive:"__advButtonBorderActive_w__",
-		advButtonBorderOpened:"__advButtonBorderOpened_x__",
+		advButtonBorderThickness:"_advButtonBorderThickness",
+		advButtonBorder:"_advButtonBorder",
+		advButtonBorderHover:"_advButtonBorderHover",
+		advButtonBorderActive:"_advButtonBorderActive",
+		advButtonBorderOpened:"_advButtonBorderOpened",
 
-		advButtonIconWidth:"__advButtonIconWidth_y__",
-		advButtonIconMargin:"__advButtonIconMargin_z__",
-		advButtonIconUrl:"__advButtonIconUrl_A__",
-		advButtonIconCloseUrl:"__advButtonIconCloseUrl_B__",
+		advButtonIconWidth:"_advButtonIconWidth",
+		advButtonIconMargin:"_advButtonIconMargin",
+		advButtonIconUrl:"_advButtonIconUrl",
+		advButtonIconCloseUrl:"_advButtonIconCloseUrl",
 
-		tagPadding:"__tagPadding_C__",
-		tagBorder:"__tagBorder_D__",
-		tagBorderThickness:"__tagBorderThickness_E__",
-		tagFont:"__tagFont_F__",
-		tagColor:"__tagColor_G__",
-		tagBackground:"__tagBackground_H__",
+		tagPadding:"_tagPadding",
+		tagBorder:"_tagBorder",
+		tagBorderThickness:"_tagBorderThickness",
+		tagFont:"_tagFont",
+		tagColor:"_tagColor",
+		tagBackground:"_tagBackground",
 
-		tagRemoveIconWidth:"__tagRemoveIconWidth_I__",
-		tagRemoveIconUrl:"__tagRemoveIconUrl_J__",
-		tagRemoveIconHoverUrl:"__tagRemoveIconHoverUrl_K__",
+		tagRemoveIconWidth:"_tagRemoveIconWidth",
+		tagRemoveIconUrl:"_tagRemoveIconUrl",
+		tagRemoveIconHoverUrl:"_tagRemoveIconHoverUrl",
 
-		advFont:"__advFont_L__",
-		advInputWidth:"__advInputWidth_M__",
+		advFont:"_advFont",
+		advInputWidth:"_advInputWidth",
 
-		classMask:"__classMask_N__",
-		classSearchbar:"__classSearchbar_O__",
-		classAdvButtonName:"__classAdvButtonName_P__",
-		classAdvButton:"__classAdvButton_Q__",
-		classAdvButtonIcon:"__classAdvButtonIcon_R__",
-		classClearTags:"__classClearTags_S__",
-		classTagbar:"__classTagbar_T__",
-		classTag:"__classTag_U__",
-		classTagName:"__classTagName_V__",
-		classRemoveTag:"__classRemoveTag_W__",
-		classAdvanced:"__classAdvanced_X__",
-		classOptionCol:"__classOptionCol_Y__",
-		classOption:"__classOption_Z__",
+		classMask:"_classMask",
+		classSearchbar:"_classSearchbar",
+		classAdvButtonName:"_classAdvButtonName",
+		classAdvButton:"_classAdvButton",
+		classAdvButtonIcon:"_classAdvButtonIcon",
+		classClearTags:"_classClearTags",
+		classTagbar:"_classTagbar",
+		classTag:"_classTag",
+		classTagName:"_classTagName",
+		classRemoveTag:"_classRemoveTag",
+		classAdvanced:"_classAdvanced",
+		classOptionCol:"_classOptionCol",
+		classOption:"_classOption",
 
-		classSearchIcon:"__classSearchIcon_aa__",
-		searchIconUrl:"__searchIconUrl_ab__",
-		searchIconWidth:"__searchIconWidth_ac__",
-		searchIconHeight:"__searchIconHeight_ad__",
-		keyMap: "__keyMap_ae__",
-		tagRemoveIconActiveUrl: "__tagRemoveIconActiveUrl_af__",
-		syncMaster:"__syncMaster_ag__"
+		classSearchIcon:"_classSearchIcon",
+		searchIconUrl:"_searchIconUrl",
+		searchIconWidth:"_searchIconWidth",
+		searchIconHeight:"_searchIconHeight",
+		keyMap: "_keyMap",
+		tagRemoveIconActiveUrl: "_tagRemoveIconActiveUrl",
+		syncMaster:"_syncMaster"
 	});
 
-	this.__filterMap_f__ = {};
-	this.__tagMap_g__ = {};
-	this.__nameMap_h__ = {};
-	this.__codeMap_i__ = {};
-	this.__global_r__ = [];
-	this.__globalMap_s__ = {};
-	this.__hasFilter_x__;
-	this.__keyToName_y__ = {};
+	this._filterMap = {};
+	this._tagMap = {};
+	this._nameMap = {};
+	this._codeMap = {};
+	this._global = [];
+	this._globalMap = {};
+	this._hasFilter;
+	this._keyToName = {};
 	
 	this.__init();
 }
 
 var prototype = SearchManager.prototype;
 
-prototype.__onCreateCss_V__ = function() {
+prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		border = o.__borderThickness_b__ + "px " + o.__border_c__,
-		tagsBorderRadius = "border-radius:" + o.__tagsBorderRadius_l__ + "px;-moz-border-radius:" + o.__tagsBorderRadius_l__ + "px",
-		advButtonBorder = o.__advButtonBorderThickness_t__ + "px " + o.__advButtonBorder_u__,
-		advButtonBorderHover = o.__advButtonBorderThickness_t__ + "px " + o.__advButtonBorderHover_v__,
-		advButtonBorderActive = o.__advButtonBorderThickness_t__ + "px " + o.__advButtonBorderActive_w__,
-		advButtonBorderOpened = o.__advButtonBorderThickness_t__ + "px " + o.__advButtonBorderOpened_x__,
-		tagsInnerHeight = o.__tagsHeight_j__ - 2 * o.__tagsPadding_k__,
-		advButtonHeight = tagsInnerHeight - 2 * o.__advButtonBorderThickness_t__,
-		tagHeight = tagsInnerHeight - 2 * o.__tagBorderThickness_E__,
-		classMask = gridId + o.__classMask_N__,
-		classSearchar = gridId + o.__classSearchbar_O__,
-		classAdvButton = gridId + o.__classAdvButton_Q__,
-		classRemoveTag = gridId + o.__classRemoveTag_W__,
+		border = o._borderThickness + "px " + o._border,
+		tagsBorderRadius = "border-radius:" + o._tagsBorderRadius + "px;-moz-border-radius:" + o._tagsBorderRadius + "px",
+		advButtonBorder = o._advButtonBorderThickness + "px " + o._advButtonBorder,
+		advButtonBorderHover = o._advButtonBorderThickness + "px " + o._advButtonBorderHover,
+		advButtonBorderActive = o._advButtonBorderThickness + "px " + o._advButtonBorderActive,
+		advButtonBorderOpened = o._advButtonBorderThickness + "px " + o._advButtonBorderOpened,
+		tagsInnerHeight = o._tagsHeight - 2 * o._tagsPadding,
+		advButtonHeight = tagsInnerHeight - 2 * o._advButtonBorderThickness,
+		tagHeight = tagsInnerHeight - 2 * o._tagBorderThickness,
+		classMask = gridId + o._classMask,
+		classSearchar = gridId + o._classSearchbar,
+		classAdvButton = gridId + o._classAdvButton,
+		classRemoveTag = gridId + o._classRemoveTag,
 		rules = [];
 
-	rules.push(classMask + "{" + JGM.__CONST_g__.__cssUnselectable_a__ + "overflow:hidden;width:100%;background:" + o.__background_a__ +"}");
+	rules.push(classMask + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + o._background +"}");
 	rules.push(classMask + " button{margin:0;padding:0 3px}");
-	rules.push(classMask + " input{border:" + o.__inputBorder_d__ + ";padding:" + o.__inputPadding_e__ + "}");
+	rules.push(classMask + " input{border:" + o._inputBorder + ";padding:" + o._inputPadding + "}");
 
-	rules.push(classSearchar + "{text-align:" + o.__searchbarAlign_f__ + ";border-bottom:" + border + "}");
-	rules.push(classSearchar + " input{width:" + o.__searchbarWidth_h__ + ";margin:" + o.__searchbarMargin_g__ + "px 0;height:" + o.__searchbarHeight_i__ + "px;" + tagsBorderRadius + "}");
+	rules.push(classSearchar + "{text-align:" + o._searchbarAlign + ";border-bottom:" + border + "}");
+	rules.push(classSearchar + " input{width:" + o._searchbarWidth + ";margin:" + o._searchbarMargin + "px 0;height:" + o._searchbarHeight + "px;" + tagsBorderRadius + "}");
 
-	rules.push(gridId + o.__classTagbar_T__ + "{cursor:default;height:" + (o.__tagsHeight_j__ - o.__tagsPadding_k__) + "px;padding:" + o.__tagsPadding_k__ + "px 0 0 " + o.__tagsPadding_k__ + "px;border-bottom:" + border + "}");
+	rules.push(gridId + o._classTagbar + "{cursor:default;height:" + (o._tagsHeight - o._tagsPadding) + "px;padding:" + o._tagsPadding + "px 0 0 " + o._tagsPadding + "px;border-bottom:" + border + "}");
 
-	rules.push(classAdvButton + "{float:left;margin-right:" + o.__tagsPadding_k__ + "px;background:" + o.__advButtonBg_p__ + ";border:" + advButtonBorder + ";padding:0 " + o.__advButtonPadding_o__ + "px;" + tagsBorderRadius + "}");
-	rules.push(classAdvButton + ":hover{background:" + o.__advButtonBgHover_q__ + ";border:" + advButtonBorderHover + "}");
-	rules.push(classAdvButton + ".opened{background:" + o.__advButtonBgOpened_s__ + ";border:" + advButtonBorderOpened + "}");
-	rules.push(classAdvButton + ":active{background:" + o.__advButtonBgActive_r__ + ";border:" + advButtonBorderActive + "}");
+	rules.push(classAdvButton + "{float:left;margin-right:" + o._tagsPadding + "px;background:" + o._advButtonBg + ";border:" + advButtonBorder + ";padding:0 " + o._advButtonPadding + "px;" + tagsBorderRadius + "}");
+	rules.push(classAdvButton + ":hover{background:" + o._advButtonBgHover + ";border:" + advButtonBorderHover + "}");
+	rules.push(classAdvButton + ".opened{background:" + o._advButtonBgOpened + ";border:" + advButtonBorderOpened + "}");
+	rules.push(classAdvButton + ":active{background:" + o._advButtonBgActive + ";border:" + advButtonBorderActive + "}");
 
-	rules.push(gridId + o.__classAdvButtonName_P__ + "{float:left;color:" + o.__advButtonColor_m__ + ";font:" + o.__advButtonFont_n__ + ";line-height:" + advButtonHeight + "px}");
-	rules.push(gridId + o.__classAdvButtonIcon_R__ + "{float:left;height:" + advButtonHeight + "px;margin-left:" + o.__advButtonIconMargin_z__ + "px;background:url(" + o.__advButtonIconUrl_A__ + ") no-repeat center;width:" + o.__advButtonIconWidth_y__ + "px}");
-	rules.push(classAdvButton + ".opened ." + o.__classAdvButtonIcon_R__ + "{background:url(" + o.__advButtonIconCloseUrl_B__ + ") no-repeat center}");
+	rules.push(gridId + o._classAdvButtonName + "{float:left;color:" + o._advButtonColor + ";font:" + o._advButtonFont + ";line-height:" + advButtonHeight + "px}");
+	rules.push(gridId + o._classAdvButtonIcon + "{float:left;height:" + advButtonHeight + "px;margin-left:" + o._advButtonIconMargin + "px;background:url(" + o._advButtonIconUrl + ") no-repeat center;width:" + o._advButtonIconWidth + "px}");
+	rules.push(classAdvButton + ".opened ." + o._classAdvButtonIcon + "{background:url(" + o._advButtonIconCloseUrl + ") no-repeat center}");
 
-	rules.push(gridId + o.__classTag_U__ + "{float:left;border:" + o.__tagBorderThickness_E__ + "px " + o.__tagBorder_D__ + ";margin:0 " + o.__tagsPadding_k__ + "px " + o.__tagsPadding_k__ + "px 0;padding:0 " + o.__tagPadding_C__ + "px;background:" + o.__tagBackground_H__ + ";" + tagsBorderRadius + "}");
-	rules.push(gridId + o.__classTagName_V__ + "{float:left;color:" + o.__tagColor_G__ + ";font:" + o.__tagFont_F__ + ";line-height:" + tagHeight + "px}");
-	rules.push(classRemoveTag + "{float:left;margin-left:" + o.__tagPadding_C__ + "px;background:url(" + o.__tagRemoveIconUrl_J__ + ") no-repeat center;width:" + o.__tagRemoveIconWidth_I__ + "px;height:" + tagHeight + "px}");
-	rules.push(classRemoveTag + ":hover{background:url(" + o.__tagRemoveIconHoverUrl_K__ + ") no-repeat center}");
-	rules.push(classRemoveTag + ":active{background:url(" + o.__tagRemoveIconActiveUrl_af__ + ") no-repeat center}");
+	rules.push(gridId + o._classTag + "{float:left;border:" + o._tagBorderThickness + "px " + o._tagBorder + ";margin:0 " + o._tagsPadding + "px " + o._tagsPadding + "px 0;padding:0 " + o._tagPadding + "px;background:" + o._tagBackground + ";" + tagsBorderRadius + "}");
+	rules.push(gridId + o._classTagName + "{float:left;color:" + o._tagColor + ";font:" + o._tagFont + ";line-height:" + tagHeight + "px}");
+	rules.push(classRemoveTag + "{float:left;margin-left:" + o._tagPadding + "px;background:url(" + o._tagRemoveIconUrl + ") no-repeat center;width:" + o._tagRemoveIconWidth + "px;height:" + tagHeight + "px}");
+	rules.push(classRemoveTag + ":hover{background:url(" + o._tagRemoveIconHoverUrl + ") no-repeat center}");
+	rules.push(classRemoveTag + ":active{background:url(" + o._tagRemoveIconActiveUrl + ") no-repeat center}");
 
-	rules.push(gridId + o.__classClearTags_S__ + "{height:" + tagsInnerHeight + "px}");
+	rules.push(gridId + o._classClearTags + "{height:" + tagsInnerHeight + "px}");
 
-	rules.push(gridId + o.__classAdvanced_X__ + "{cursor:default;font:" + o.__advFont_L__ + ";border-bottom:" + border + "}");
-	rules.push(gridId + o.__classOptionCol_Y__ + "{display:inline-block;vertical-align:top}");
-	rules.push(gridId + o.__classOptionCol_Y__ + " input{width:" + o.__advInputWidth_M__ + "px;margin-right:2px;" + tagsBorderRadius + "}");
-	rules.push(gridId + o.__classSearchIcon_aa__ + "{background:url(" + o.__searchIconUrl_ab__ + ") no-repeat center;width:" + o.__searchIconWidth_ac__ + "px;height:" + o.__searchIconHeight_ad__ + "px}");
+	rules.push(gridId + o._classAdvanced + "{cursor:default;font:" + o._advFont + ";border-bottom:" + border + "}");
+	rules.push(gridId + o._classOptionCol + "{display:inline-block;vertical-align:top}");
+	rules.push(gridId + o._classOptionCol + " input{width:" + o._advInputWidth + "px;margin-right:2px;" + tagsBorderRadius + "}");
+	rules.push(gridId + o._classSearchIcon + "{background:url(" + o._searchIconUrl + ") no-repeat center;width:" + o._searchIconWidth + "px;height:" + o._searchIconHeight + "px}");
 
 	return rules.join("");
 };
@@ -274,59 +274,59 @@ prototype.__init = function() {
 		hasFilter,
 		tag;
 
-	mask = this.__mask_a__ = $("<div class='" + opt.__classMask_N__ + "'>").prependTo(this._ctnr);
+	mask = this._mask = $("<div class='" + opt._classMask + "'>").prependTo(this._ctnr);
 
-	this.__search_c__ = $("<div class='" + opt.__classSearchbar_O__ + "'><input type='text'/></div>").appendTo(mask);
+	this._search = $("<div class='" + opt._classSearchbar + "'><input type='text'/></div>").appendTo(mask);
 
-	this.__masterInput_p__ = this.__search_c__.children(":eq(0)").keyup(function(e) {
+	this._masterInput = this._search.children(":eq(0)").keyup(function(e) {
 		if (e.which === Util.keyMapKeydown.enter) {
-			thisIns.__parse_k__($(this)[0].value);
+			thisIns._parse($(this)[0].value);
 		}
 		else if (e.which === Util.keyMapKeydown.esc) {
-			thisIns.__removeAllOptions_n__();
+			thisIns._removeAllOptions();
 		}
 	});
 
-	hasFilter = this.__hasFilter_x__ = this.grid.colDefMgr.get().some(function(a){return Util.isNotNull(a.filter);});
-	tag = this.__tag_d__ =
-		$("<div class='" + opt.__classTagbar_T__ + "'>" + (hasFilter ? "<div class='" + opt.__classAdvButton_Q__ + "'><div class='" + opt.__classAdvButtonName_P__ + "'>추가 옵션</div><div class='" + opt.__classAdvButtonIcon_R__ + "'></div></div>" : "") + "<button type='button' class='" + opt.__classClearTags_S__ + "' onclick='JGM.m.SearchManager." + this.mid + ".__removeAllOptions_n__()'>모든 필터 제거</button></div>")
+	hasFilter = this._hasFilter = this.grid.colDefMgr.get().some(function(a){return Util.isNotNull(a.filter);});
+	tag = this._tag =
+		$("<div class='" + opt._classTagbar + "'>" + (hasFilter ? "<div class='" + opt._classAdvButton + "'><div class='" + opt._classAdvButtonName + "'>추가 옵션</div><div class='" + opt._classAdvButtonIcon + "'></div></div>" : "") + "<button type='button' class='" + opt._classClearTags + "' onclick='JGM.m.SearchManager." + this.mid + "._removeAllOptions()'>모든 필터 제거</button></div>")
 		.appendTo(mask);
 
 	if (hasFilter) {
-		var adv = this.__adv_e__ = $("<div class='" + opt.__classAdvanced_X__ + "'>").appendTo(mask).hide()
+		var adv = this._adv = $("<div class='" + opt._classAdvanced + "'>").appendTo(mask).hide()
 			.keyup(function(e) {
 				if (e.which === Util.keyMapKeydown.enter) {
 					var key = e.target.getAttribute("key");
-					thisIns.__registerOption_l__(key, thisIns.__keyToName_y__[key], e.target.getAttribute("tag"), e.target.value);
+					thisIns._registerOption(key, thisIns._keyToName[key], e.target.getAttribute("tag"), e.target.value);
 					e.target.value = "";
 				}
 			});
 
-		this.__advButton_q__ = tag.children(":eq(0)").click(function() {
+		this._advButton = tag.children(":eq(0)").click(function() {
 			$(this).toggleClass("opened");
 			adv.toggle("fast");
 		});
 	}
 
 	this.grid.event.bind({
-		'onRenderModules': this.__onRenderModules_aE__,
-		'onCreateCss': this.__onCreateCss_V__,
-		'onFilter': this.__onFilter_ar__,
-		'onDestroy': this.__destroy_aA__,
-		'onAfterRenderModules': this.__onAfterRenderModules_aF__
+		'onRenderModules': this._onRenderModules,
+		'onCreateCss': this._onCreateCss,
+		'onFilter': this._onFilter,
+		'onDestroy': this._destroy,
+		'onAfterRenderModules': this._onAfterRenderModules
 	}, this);
 };
 
-prototype.__onRenderModules_aE__ = function() {
+prototype._onRenderModules = function() {
 	var html = [],
 		opt = this._options,
-		mask = this.__mask_a__;
-	if (this.__hasFilter_x__) {			
+		mask = this._mask;
+	if (this._hasFilter) {			
 		var colDefs = this.grid.colDefMgr.get(),
 			len = colDefs.length,
-			keymap = opt.__keyMap_ae__,
-			nmap = this.__nameMap_h__,
-			kmap = this.__keyToName_y__,
+			keymap = opt._keyMap,
+			nmap = this._nameMap,
+			kmap = this._keyToName,
 			colDef,
 			nick,
 			key,
@@ -345,30 +345,30 @@ prototype.__onRenderModules_aE__ = function() {
 				nmap[nick] = key;
 				kmap[key] = nick;
 
-				html.push("<div class='" + opt.__classOptionCol_Y__ + "'>");
-				this.__registerFilter_j__(key, nick, colDef['name'], colDef['filter'], html);
+				html.push("<div class='" + opt._classOptionCol + "'>");
+				this._registerFilter(key, nick, colDef['name'], colDef['filter'], html);
 				html.push("</div>");
 			}
 		}
 
-		this.__adv_e__[0].innerHTML = html.join("");
+		this._adv[0].innerHTML = html.join("");
 	}
 	
 	if (Util.isNotNull(this.grid.menubar)) {
-		this.grid.menubar.addIcon(opt.__classSearchIcon_aa__, "데이터 검색을 합니다.", opt.__searchIconWidth_ac__, opt.__searchIconHeight_ad__, function() {
+		this.grid.menubar.addIcon(opt._classSearchIcon, "데이터 검색을 합니다.", opt._searchIconWidth, opt._searchIconHeight, function() {
 			mask.toggle("fast");
 		});
 		mask.hide();
 	}
 };
 
-prototype.__onAfterRenderModules_aF__ = function() {
-	var map = this.__filterMap_f__,
+prototype._onAfterRenderModules = function() {
+	var map = this._filterMap,
 		keymap,
 		key,
 		tag,
 		item,
-		adv = this.__adv_e__;
+		adv = this._adv;
 		
 	for (key in map) {
 		if (map.hasOwnProperty(key)) {
@@ -384,21 +384,21 @@ prototype.__onAfterRenderModules_aF__ = function() {
 	}
 };
 
-prototype.__destroy_aA__ = function() {
+prototype._destroy = function() {
 	var key,
 		tag,
 		base,
-		gmap = this.__globalMap_s__,
-		fmap = this.__filterMap_f__,
+		gmap = this._globalMap,
+		fmap = this._filterMap,
 		ftmap,
-		tmap = this.__tagMap_g__,
+		tmap = this._tagMap,
 		ttmap,
 		ttbmap;
 
 	for (key in gmap) {
 		if (gmap.hasOwnProperty(key)) {
-			JGM.__delete$_n__(gmap[key], "tag");
-			JGM.__deleteArray_r__(gmap[key], "list");
+			JGM._delete$(gmap[key], "tag");
+			JGM._deleteArray(gmap[key], "list");
 		}
 	}
 	
@@ -408,12 +408,12 @@ prototype.__destroy_aA__ = function() {
 			for (tag in ftmap) {
 				if (ftmap.hasOwnProperty(tag)) {
 					if (tag !== "andor" && tag !== "parser" && tag !== "validator") {
-						JGM.__delete$_n__(ftmap[tag], "input");
+						JGM._delete$(ftmap[tag], "input");
 					}
-					JGM.__deleteMap_l__(ftmap, tag);
+					JGM._deleteMap(ftmap, tag);
 				}
 			}
-			JGM.__deleteMap_l__(fmap, key);
+			JGM._deleteMap(fmap, key);
 		}
 	}
 
@@ -425,49 +425,49 @@ prototype.__destroy_aA__ = function() {
 					ttbmap = ttmap[tag];
 					for (base in ttbmap) {
 						if (ttbmap.hasOwnProperty(base)) {
-							JGM.__delete$_n__(ttbmap[base], "tag");
-							JGM.__deleteMap_l__(ttbmap, base);
+							JGM._delete$(ttbmap[base], "tag");
+							JGM._deleteMap(ttbmap, base);
 						}
 					}
-					JGM.__deleteMap_l__(ttmap, tag);
+					JGM._deleteMap(ttmap, tag);
 				}
 			}
-			JGM.__deleteMap_l__(tmap, key);
+			JGM._deleteMap(tmap, key);
 		}
 	}
 	
 	JGM._destroy(this, {
 		name: "SearchManager",
 		path: "search",
-		"$": "__masterInput_p__ __advButton_q__ __mask_a__ __search_c__ __tag_d__ __adv_e__",
-		property: "_ctnr __hasFilter_x__",
-		array: "__global_r__",
-		map: "__globalMap_s__ __filterMap_f__ __tagMap_g__ __codeMap_i__ __nameMap_h__ _options __keyToName_y__"
+		"$": "_masterInput _advButton _mask _search _tag _adv",
+		property: "_ctnr _hasFilter",
+		array: "_global",
+		map: "_globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"
 	});
 };
 
-prototype.__onFilter_ar__ = function(success, failed) {
-	if (this.__global_r__.length === 0 && Util.isEmptyObj(this.__codeMap_i__)) {
+prototype._onFilter = function(success, failed) {
+	if (this._global.length === 0 && Util.isEmptyObj(this._codeMap)) {
 		return;
 	}
 
 	var options,
-		tagMap = this.__tagMap_g__,
+		tagMap = this._tagMap,
 		key,
 		tag,
 		len = success.length,
 		data,
 		value,
 		andor,
-		filterMap = this.__filterMap_f__,
+		filterMap = this._filterMap,
 		and = this.constructor.CONST.and,
 		base,
-		hasGlobal = this.__global_r__.length > 0,
+		hasGlobal = this._global.length > 0,
 		i,
 		keymap;
 	
 	if (hasGlobal) {
-		var global = this.__global_r__,
+		var global = this._global,
 			globalToFind,
 			j,
 			k,
@@ -549,30 +549,30 @@ prototype.__onFilter_ar__ = function(success, failed) {
 	}
 };
 
-prototype.__registerFilter_j__ = function(key, nick, name, filter, html) {
-	if (this.__filterMap_f__.hasOwnProperty(key)) {
+prototype._registerFilter = function(key, nick, name, filter, html) {
+	if (this._filterMap.hasOwnProperty(key)) {
 		return;
 	}
 
 	if (filter === "number") {
-		filter = this.constructor.__numberFilter_d__;
+		filter = this.constructor._numberFilter;
 	}
 	else if (filter === "string") {
-		filter = this.constructor.__stringFilter_e__;
+		filter = this.constructor._stringFilter;
 	}
 
 	var option,
 		len = filter.length,
 		i = 0,
 		mid = this.mid,
-		classOpt = this._options['__classOption_Z__'],
+		classOpt = this._options['_classOption'],
 		fkmap,
 		tmap,
 		tag,
 		oname;
 		
-	fkmap = this.__filterMap_f__[key] = {'andor':this.constructor.CONST.and};
-	tmap = this.__tagMap_g__[key] = {};
+	fkmap = this._filterMap[key] = {'andor':this.constructor.CONST.and};
+	tmap = this._tagMap[key] = {};
 
 	html.push("<table>");
 
@@ -591,12 +591,12 @@ prototype.__registerFilter_j__ = function(key, nick, name, filter, html) {
 		fkmap[tag] = {'option':option};
 		tmap[tag] = {};
 		html.push("<tr title='" + option.comment(name, "입력값") + "'><td><div class='" + classOpt + "'>" + name + " " + tag +
-			"</td><td><input id='" + key + oname + "' key='" + key + "' tag='" + tag + "' type='text'><button type='button' onclick=\"JGM.m.SearchManager." + mid + ".__registerOption_l__('" + key + "','" + nick + "','" + tag + "',this.previousSibling.value)\">등록</button></div></td></tr>");
+			"</td><td><input id='" + key + oname + "' key='" + key + "' tag='" + tag + "' type='text'><button type='button' onclick=\"JGM.m.SearchManager." + mid + "._registerOption('" + key + "','" + nick + "','" + tag + "',this.previousSibling.value)\">등록</button></div></td></tr>");
 	}
 	html.push("</table>");
 };
 
-prototype.__parse_k__ = function(str) {
+prototype._parse = function(str) {
 	var arg,
 		key,
 		name,
@@ -607,8 +607,8 @@ prototype.__parse_k__ = function(str) {
 		status = 2,
 		change = false,
 		global = [],
-		nmap = this.__nameMap_h__,
-		fmap = this.__filterMap_f__,
+		nmap = this._nameMap,
+		fmap = this._filterMap,
 		i = 0;
 
 	for (; i < len; i++) {
@@ -632,7 +632,7 @@ prototype.__parse_k__ = function(str) {
 					arg = arg.substring(1);
 					if (nmap.hasOwnProperty(arg)) {
 						if (Util.isNotNullAnd(key, name, tag, base)) {
-							if (this.__registerOption_l__(key, name, tag, base, true)) {
+							if (this._registerOption(key, name, tag, base, true)) {
 								change = true;
 							}
 						}
@@ -660,27 +660,27 @@ prototype.__parse_k__ = function(str) {
 		}
 	}
 	if (Util.isNotNullAnd(key, name, tag, base)) {
-		if (this.__registerOption_l__(key, name, tag, base, true)) {
+		if (this._registerOption(key, name, tag, base, true)) {
 			change = true;
 		}
 	}
-	if (this.__registerGlobal_v__(global)) {
+	if (this._registerGlobal(global)) {
 		change = true;
 	}
 	
 	
-	this.__syncMasterInput_u__();
+	this._syncMasterInput();
 	
 	if (change) {
 		this.grid.dataMgr.refresh();
 	}
 };
 
-prototype.__syncMasterInput_u__ = function() {
-	if (this._options['__syncMaster_ag__']) {
-		var inputStr = this.__global_r__.join(" "),
-			tagMap = this.__tagMap_g__,
-			keyToName = this.__keyToName_y__,
+prototype._syncMasterInput = function() {
+	if (this._options['_syncMaster']) {
+		var inputStr = this._global.join(" "),
+			tagMap = this._tagMap,
+			keyToName = this._keyToName,
 			key,
 			tag,
 			base,
@@ -701,17 +701,17 @@ prototype.__syncMasterInput_u__ = function() {
 				}
 			}
 		}					
-		this.__masterInput_p__[0].value = $.trim(inputStr);
+		this._masterInput[0].value = $.trim(inputStr);
 	}
 	else {
-		this.__masterInput_p__[0].value = "";
+		this._masterInput[0].value = "";
 	}
 };
 
-prototype.__registerGlobal_v__ = function(toAdd) {
+prototype._registerGlobal = function(toAdd) {
 	var i = 0,
 		len = toAdd.length,
-		global = this.__global_r__;
+		global = this._global;
 	for (; i < len; i++) {
 		if (global.indexOf(toAdd[i]) !== -1) {
 			toAdd.removeAt(i--);
@@ -726,34 +726,34 @@ prototype.__registerGlobal_v__ = function(toAdd) {
 	}
 		
 	var opt = this._options;
-	this.__globalMap_s__[toAdd[0]] = {
-		tag:$("<div class='" + opt.__classTag_U__ + "' title='" + toAdd.join(", ") + " 를 포함하는'><div class='" + opt.__classTagName_V__ + "'>" + toAdd.join(" ") +
-		"</div><div class='" + opt.__classRemoveTag_W__ + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + ".__removeGlobal_w__('" + toAdd[0] + "')\"></div></div>").appendTo(this.__tag_d__),
+	this._globalMap[toAdd[0]] = {
+		tag:$("<div class='" + opt._classTag + "' title='" + toAdd.join(", ") + " 를 포함하는'><div class='" + opt._classTagName + "'>" + toAdd.join(" ") +
+		"</div><div class='" + opt._classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeGlobal('" + toAdd[0] + "')\"></div></div>").appendTo(this._tag),
 		list: toAdd
 	};
 	return true;
 };
 
-prototype.__removeGlobal_w__ = function(index) {
-	var gmap = this.__globalMap_s__;
+prototype._removeGlobal = function(index) {
+	var gmap = this._globalMap;
 	if (gmap.hasOwnProperty(index)) {
 		var item = gmap[index];
 		item.tag.remove();
 		delete item.tag;
-		this.__global_r__.removeList(item.list);
+		this._global.removeList(item.list);
 		item.list.length = 0;
 		delete item.list;
 		delete gmap[index];
-		this.__syncMasterInput_u__();
+		this._syncMasterInput();
 		this.grid.dataMgr.refresh();
 	}
 };
 
-prototype.__registerOption_l__ = function(key, nick, optionTag, base, norefresh) {
-	var fmap = this.__filterMap_f__,
+prototype._registerOption = function(key, nick, optionTag, base, norefresh) {
+	var fmap = this._filterMap,
 		fkmap,
 		fkomap,
-		cmap = this.__codeMap_i__;
+		cmap = this._codeMap;
 	if (fmap.hasOwnProperty(key) && (fkmap = fmap[key]).hasOwnProperty(optionTag)) {
 		fkomap = fkmap[optionTag];
 		if (Util.isNull(base)) {
@@ -790,7 +790,7 @@ prototype.__registerOption_l__ = function(key, nick, optionTag, base, norefresh)
 		return false;
 	}
 
-	var tagmap = this.__tagMap_g__[key];
+	var tagmap = this._tagMap[key];
 	if (tagmap[optionTag].hasOwnProperty(base)) {
 		return false;
 	}
@@ -799,7 +799,7 @@ prototype.__registerOption_l__ = function(key, nick, optionTag, base, norefresh)
 		parsedOther,
 		tag,
 		otherbase,
-		filtermap = this.__filterMap_f__[key],
+		filtermap = this._filterMap[key],
 		oomap;
 	for (tag in tagmap) {
 		if (tagmap.hasOwnProperty(tag)) {
@@ -814,7 +814,7 @@ prototype.__registerOption_l__ = function(key, nick, optionTag, base, norefresh)
 						parsedOther = otherbase;
 					}
 
-					if (SearchManager.__checkDisable_c__(option.type, oomap.option.type, andor, base, parsedOther)) {
+					if (SearchManager._checkDisable(option.type, oomap.option.type, andor, base, parsedOther)) {
 						delete cmap[key + "@T" + oomap.option.tag + "@B" + parsedOther];
 						oomap.tag.remove();
 						delete oomap.tag;
@@ -828,18 +828,18 @@ prototype.__registerOption_l__ = function(key, nick, optionTag, base, norefresh)
 	}
 
 	cmap[key + "@T" + optionTag + "@B" + base] = true;
-	this.__createTag_o__(key, option, base, nick);
+	this._createTag(key, option, base, nick);
 
 	if (!norefresh) {
-		this.__syncMasterInput_u__();
+		this._syncMasterInput();
 		this.grid.dataMgr.refresh();
 	}
 
 	return true;
 };
 
-prototype.__removeOption_m__ = function(key, tag, base) {
-	var tmap = this.__tagMap_g__,
+prototype._removeOption = function(key, tag, base) {
+	var tmap = this._tagMap,
 		tkmap,
 		tktmap;
 	if (tmap.hasOwnProperty(key) && (tkmap = tmap[key]).hasOwnProperty(tag) && (tktmap = tkmap[tag]).hasOwnProperty(base)) {
@@ -849,17 +849,17 @@ prototype.__removeOption_m__ = function(key, tag, base) {
 		delete option.option;
 		delete option.fn;
 		delete tktmap[base];
-		delete this.__codeMap_i__[key + "@T" + tag + "@B" + base];
-		this.__syncMasterInput_u__();
+		delete this._codeMap[key + "@T" + tag + "@B" + base];
+		this._syncMasterInput();
 		this.grid.dataMgr.refresh();
 	}
 };
 
-prototype.__removeAllOptions_n__ = function() {
+prototype._removeAllOptions = function() {
 	var key,
-		global = this.__globalMap_s__,
+		global = this._globalMap,
 		item,
-		map = this.__tagMap_g__,
+		map = this._tagMap,
 		tag,
 		base,
 		tagmap,
@@ -876,7 +876,7 @@ prototype.__removeAllOptions_n__ = function() {
 			delete global[key];
 		}
 	}
-	this.__global_r__.length = 0;
+	this._global.length = 0;
 		
 	for (key in map) {
 		if (map.hasOwnProperty(key)) {
@@ -899,17 +899,17 @@ prototype.__removeAllOptions_n__ = function() {
 		}
 	}
 
-	this.__codeMap_i__ = {};
-	this.__syncMasterInput_u__();
+	this._codeMap = {};
+	this._syncMasterInput();
 	
 	this.grid.dataMgr.refresh();
 };
 
-prototype.__createTag_o__ = function(key, option, base, nick) {
+prototype._createTag = function(key, option, base, nick) {
 	var opt = this._options;
-	return (this.__tagMap_g__[key][option.tag][base] = {
-		tag:$("<div class='" + opt.__classTag_U__ + "' title='" + option.comment(nick, base) + "'><div class='" + opt.__classTagName_V__ + "'>@" + nick + " " + option.tag + " " + base +
-		"</div><div class='" + opt.__classRemoveTag_W__ + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + ".__removeOption_m__('" + key + "','" + option.tag + "','" + base + "')\"></div></div>").appendTo(this.__tag_d__),
+	return (this._tagMap[key][option.tag][base] = {
+		tag:$("<div class='" + opt._classTag + "' title='" + option.comment(nick, base) + "'><div class='" + opt._classTagName + "'>@" + nick + " " + option.tag + " " + base +
+		"</div><div class='" + opt._classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeOption('" + key + "','" + option.tag + "','" + base + "')\"></div></div>").appendTo(this._tag),
 		option:option,
 		fn:option.fn(base)
 	});
@@ -935,12 +935,12 @@ var con = SearchManager.CONST = {
 	or = con.or,
 	T = con.T,
 	F = con.F,
-	comp = SearchManager.__comparator_a__ = {},
+	comp = SearchManager._comparator = {},
 	complt = comp[lt] = function(a,b){return a <= b;},
 	compgt = comp[gt] = function(a,b){return a >= b;},
 	compeq = comp[eq] = function(a,b){return a === b;},
 	compT = comp[T] = function(){return true;},
-	dmap = SearchManager.__disableMap_b__ = {},
+	dmap = SearchManager._disableMap = {},
 	dmaplt = dmap[lt] = {},
 	dmapgt = dmap[gt] = {},
 	dmapeq = dmap[eq] = {},
@@ -1000,16 +1000,16 @@ dmapneq[neq] = {};
 dmapneq[neq][and] = compeq;
 dmapneq[neq][or] = compT;
 
-SearchManager.__checkDisable_c__ = function(toEnable, other, andor, base, otherbase) {
+SearchManager._checkDisable = function(toEnable, other, andor, base, otherbase) {
 	try {
-		return this.__disableMap_b__[toEnable][other][andor](base, otherbase);
+		return this._disableMap[toEnable][other][andor](base, otherbase);
 	}
 	catch (e) {
 		return false;
 	}
 };
 
-SearchManager.__numberFilter_d__ = [
+SearchManager._numberFilter = [
 	{
 		'name':"gt",
 		'tag':">",
@@ -1138,7 +1138,7 @@ SearchManager.__numberFilter_d__ = [
 	}
 ];
 
-SearchManager.__stringFilter_e__ = [
+SearchManager._stringFilter = [
 	{
 		'name':"to",
 		'tag':"<=",

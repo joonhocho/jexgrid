@@ -79,7 +79,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	   */
 	 args.grid.event = this;
 
-	 this.__map_a__ = {};
+	 this._map = {};
  }
 
  EventManager.getInstance = function(args) {
@@ -90,17 +90,17 @@ var JGM = goog.getObjectByName('jx.grid'),
 
  prototype.destroy = function() {
 	 var i,
-		 map = this.__map_a__;
+		 map = this._map;
 	 for (i in map) {
 		 if (map.hasOwnProperty(i)) {
-			 JGM.__deleteArray_r__(map, i);
+			 JGM._deleteArray(map, i);
 		 }
 	 }
 
 	 JGM._destroy(this, {
 name: "EventManager",
 path: "event",
-map: "__map_a__"
+map: "_map"
 });
 };
 
@@ -135,11 +135,11 @@ map: "__map_a__"
   */
 prototype.register = function(events, fn, target) {
 	if (Util.isString(events)) {
-		this.__parseAndAdd_b__(events, fn, target);
+		this._parseAndAdd(events, fn, target);
 	}
 	else {
 		if (Util.isNotNull(events.e)) {
-			this.__parseAndAdd_b__(events.e, events.f, events.t);
+			this._parseAndAdd(events.e, events.f, events.t);
 		}
 		else {
 			var i,
@@ -147,7 +147,7 @@ prototype.register = function(events, fn, target) {
 				e;
 			for (; i < len; i++) {
 				if (Util.isNotNull(e = events[i])) {
-					this.__parseAndAdd_b__(e.e, e.f, e.t);
+					this._parseAndAdd(e.e, e.f, e.t);
 				}
 			}
 		}
@@ -180,19 +180,19 @@ prototype.register = function(events, fn, target) {
   */
 prototype.bind = function(events, fn, target) {
 	if (Util.isString(events)) {
-		this.__parseAndAdd_b__(events, fn, target);
+		this._parseAndAdd(events, fn, target);
 	}
 	else {
 		var e;
 		for (e in events) {
 			if (events.hasOwnProperty(e)) {
-				this.__parseAndAdd_b__(e, events[e], fn);
+				this._parseAndAdd(e, events[e], fn);
 			}
 		}
 	}
 };
 
-prototype.__parseAndAdd_b__ = function(events, fn, target) {
+prototype._parseAndAdd = function(events, fn, target) {
 	if (Util.isNull(target)) {
 		target = window;
 	}
@@ -202,7 +202,7 @@ prototype.__parseAndAdd_b__ = function(events, fn, target) {
 		i = 0;
 	if (Util.isFunction(fn)) {	// Function
 		for (; i < len; i++) {
-			this.__addHandler_c__(arr[i], fn, target);
+			this._addHandler(arr[i], fn, target);
 		}
 	}
 	else if (Util.isString(fn)) {	// String
@@ -214,7 +214,7 @@ prototype.__parseAndAdd_b__ = function(events, fn, target) {
 		for (; i < len; i++) {
 			e = arr[i];
 			for (j = 0; j < flen; j++) {
-				this.__addHandler_c__(e, target[fns[j]], target);
+				this._addHandler(e, target[fns[j]], target);
 			}
 		}
 	}
@@ -226,18 +226,18 @@ prototype.__parseAndAdd_b__ = function(events, fn, target) {
 		for (; i < len; i++) {
 			e = arr[i];
 			for (j = 0; j < flen; j++) {
-				this.__addHandler_c__(e, fn[j], target);
+				this._addHandler(e, fn[j], target);
 			}
 		}
 	}
 };
 
-prototype.__addHandler_c__ = function(e, fn, target) {
-	if (!this.__map_a__.hasOwnProperty(e)) {
-		this.__map_a__[e] = [];
+prototype._addHandler = function(e, fn, target) {
+	if (!this._map.hasOwnProperty(e)) {
+		this._map[e] = [];
 	}
 
-	this.__map_a__[e].push({'fn':fn, 'target':target});
+	this._map[e].push({'fn':fn, 'target':target});
 };
 
 /**
@@ -253,7 +253,7 @@ prototype.__addHandler_c__ = function(e, fn, target) {
   @version 1.0.0
   */
 prototype.unregister = function(event, fn) {
-	var map = this.__map_a__;
+	var map = this._map;
 	if (!map.hasOwnProperty(event)) {
 		return;
 	}
@@ -298,7 +298,7 @@ prototype.unregister = function(event, fn) {
 prototype.trigger = function(events, args, filter) {
 	var	hans,
 		hlen,
-		map = this.__map_a__,
+		map = this._map,
 		rarr = [],
 		arr = Util.split(events),
 		len = arr.length,
@@ -372,7 +372,7 @@ prototype.triggerInvalid = function(events, args) {
   @version 1.0.0
   */
 prototype.sendToBack = function(event, fn) {
-	var eventQueue = this.__map_a__[event],
+	var eventQueue = this._map[event],
 		len = eventQueue.length,
 		handler,
 		index = -1,
@@ -403,7 +403,7 @@ prototype.sendToBack = function(event, fn) {
   @version 1.0.0
   */
 prototype.sendToFront = function(event, fn) {
-	var eventQueue = this.__map_a__[event],
+	var eventQueue = this._map[event],
 		len = eventQueue.length,
 		handler,
 		index = -1,

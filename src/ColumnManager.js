@@ -114,7 +114,7 @@ function ColDefManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__colDef_a__': {
+		'_colDef': {
 			/**
 			로우 데이터에서 해당 컬럼 데이터를 가져올 때 사용되는 키입니다. 컬럼
 			정의 오브젝트에서 필수적으로 각 컬럼마다 유니크한 키 값을 지정해줘야
@@ -336,7 +336,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			'renderer':		JGM.ViewportManager.__renderer_AD__,
+			'renderer':		JGM.ViewportManager._renderer,
 
 			/**
 			컬럼 셀 {@link JGM.ColDefManager.options.colDef.renderer renderer} 함수에 보낼 파라미터 타입을 정하는 옵션. true 일 경우에는
@@ -442,15 +442,15 @@ function ColDefManager(args) {
 		}
 	};
 
-	this._options = JGM.__extend_e__(options, args['options'], {colDef:"__colDef_a__"});
+	this._options = JGM._extend(options, args['options'], {colDef:"_colDef"});
 
-	this.__colDefs_a__ = [];
+	this._colDefs = [];
 
-	this.__filtered_b__ = [];
+	this._filtered = [];
 
-	this.__keyToDef_c__ = {};
+	this._keyToDef = {};
 
-	this.__keyToIdx_d__ = {};
+	this._keyToIdx = {};
 
 	this.__init(args);
 }
@@ -462,17 +462,17 @@ ColDefManager.getInstance = function(args) {
 var prototype = ColDefManager.prototype;
 
 prototype.__init = function(args) {
-	this.grid.event.bind("onDestroy", this.__destroy_aA__, this);
+	this.grid.event.bind("onDestroy", this._destroy, this);
 	this.set(args['colDefs']);
 };
 
-prototype.__destroy_aA__ = function() {
+prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "ColDefManager",
 		path: "colDefMgr",
-		property: "__colDefs_a__",
-		map: "__keyToIdx_d__ __keyToDef_c__ _options",
-		array: "__filtered_b__"
+		property: "_colDefs",
+		map: "_keyToIdx _keyToDef _options",
+		array: "_filtered"
 	});
 };
 
@@ -489,7 +489,7 @@ prototype.__destroy_aA__ = function() {
 */
 // tested
 prototype.getAll = function() {
-	return this.__colDefs_a__;
+	return this._colDefs;
 };
 
 
@@ -514,7 +514,7 @@ changelog
 */
 // tested
 prototype.set = function(colDefs) {
-	if (this.__colDefs_a__ === colDefs || Util.areEqualArrays(this.__colDefs_a__, colDefs)) {
+	if (this._colDefs === colDefs || Util.areEqualArrays(this._colDefs, colDefs)) {
 		return colDefs;
 	}
 	
@@ -527,46 +527,46 @@ prototype.set = function(colDefs) {
 		colDefs.pushList(filtered);
 	}
 	
-	this.grid.event.trigger("onBeforeSetColDefs", [this.__colDefs_a__, colDefs]);
+	this.grid.event.trigger("onBeforeSetColDefs", [this._colDefs, colDefs]);
 	
-	this.__colDefs_a__ = [];
-	this.__filtered_b__.length = 0;
-	this.__keyToIdx_d__ = {};
-	this.__keyToDef_c__ = {};
+	this._colDefs = [];
+	this._filtered.length = 0;
+	this._keyToIdx = {};
+	this._keyToDef = {};
 	
 	this.grid.event.trigger("onEmptyColDefs");
 	
 	var i = 0,
 		len = colDefs.length,
-		map = this.__keyToDef_c__,
+		map = this._keyToDef,
 		col,
 		key;
 		
 	for (; i < len; i++) {
 		col = colDefs[i];
 		if (!col.hasOwnProperty('key')) {
-			this.__keyToDef_c__ = {};
+			this._keyToDef = {};
 			return this.grid.error("KEY_UNDEFINED", i);
 		}
 		key = col.key;
       if (Util.isEmptyString(key)) {
-			this.__keyToDef_c__ = {};
+			this._keyToDef = {};
 			return this.grid.error("BAD_NULL", i);
 		}
 		if (map.hasOwnProperty(key)) {
-			this.__keyToDef_c__ = {};
+			this._keyToDef = {};
 			return this.grid.error("DUP_KEY", key);
 		}
 		map[key] = col;
 	}
 	
-	this.__colDefs_a__ = colDefs;
+	this._colDefs = colDefs;
 		
 	for (i = 0; i < len; i++) {
-		this.__extend_i__(colDefs[i]);
+		this._extend(colDefs[i]);
 	}
 
-	this.grid.event.trigger("onAfterSetColDefs", [colDefs, this.__filter_e__()]);
+	this.grid.event.trigger("onAfterSetColDefs", [colDefs, this._filter()]);
 	
 	return colDefs;
 };
@@ -580,7 +580,7 @@ changelog
 */
 // tested
 prototype.push = function(colDef) {
-	return this.addAt(this.__filtered_b__.length, colDef);
+	return this.addAt(this._filtered.length, colDef);
 };
 
 /**
@@ -608,8 +608,8 @@ prototype.addAt = function(i, colDef) {
 	}
 
 	var key = colDef['key'],
-		map = this.__keyToDef_c__,
-		filtered = this.__filtered_b__;
+		map = this._keyToDef,
+		filtered = this._filtered;
 
 	if (Util.isNull(i) || i > filtered.length) {
 		i = filtered.length;
@@ -628,11 +628,11 @@ prototype.addAt = function(i, colDef) {
 		return this.grid.error("DUP_KEY", key);
 	}
 	
-	this.__colDefs_a__.addAt(i, this.__extend_i__(map[key] = colDef));
+	this._colDefs.addAt(i, this._extend(map[key] = colDef));
 	
 	if (colDef['hidden'] !== true) {
 		filtered.addAt(i, colDef);
-      this.__reidx_f__();
+      this._reidx();
 	}
 	
 	this.grid.event.trigger("onAfterAddColDef", [colDef, i]);
@@ -641,7 +641,7 @@ prototype.addAt = function(i, colDef) {
 };
 
 // tested
-prototype.__extend_i__ = function(colDef) {
+prototype._extend = function(colDef) {
 	if (Util.isNull(colDef)) {
 		return;
 	}
@@ -649,7 +649,7 @@ prototype.__extend_i__ = function(colDef) {
 	var options = {},
 		sorter;
 		
-	$.extend(true, options, this._options['__colDef_a__']);
+	$.extend(true, options, this._options['_colDef']);
 	$.extend(true, options, colDef);
 	$.extend(true, colDef, options);
 
@@ -671,15 +671,15 @@ changelog
 */
 // tested
 prototype.hide = function(i) {
-	var colDef = this.__filtered_b__[i];
+	var colDef = this._filtered[i];
 	if (Util.isNull(colDef)) {
 		return;
 	}
 	
 	colDef['hidden'] = true;
 	
-	this.__filtered_b__.removeAt(i);
-	this.__reidx_f__();
+	this._filtered.removeAt(i);
+	this._reidx();
 	
 	this.grid.event.trigger("onHideCol", [colDef, i]);
 	
@@ -706,52 +706,52 @@ prototype.show = function(key) {
 		key = key.key;
 	}
 	
-	var map = this.__keyToDef_c__,
+	var map = this._keyToDef,
 		colDef;
 	if (!map.hasOwnProperty(key)) {
 		return;
 	}
 	
-	if (this.__keyToIdx_d__.hasOwnProperty(key)) {
+	if (this._keyToIdx.hasOwnProperty(key)) {
 		return map[key];
 	}
 	
 	colDef = map[key];
 	colDef['hidden'] = false;
 	
-	this.__filter_e__();
-	this.__reidx_f__();
+	this._filter();
+	this._reidx();
 	
-	this.grid.event.trigger("onShowCol", [colDef, this.__keyToIdx_d__[key]]);
+	this.grid.event.trigger("onShowCol", [colDef, this._keyToIdx[key]]);
 	
 	return colDef;
 };
 
 // implicitly tested
-prototype.__filter_e__ = function() {
-	this.__filtered_b__ = this.__colDefs_a__.filter(function(colDef) {
+prototype._filter = function() {
+	this._filtered = this._colDefs.filter(function(colDef) {
 		return colDef['hidden'] !== true;
 	});
-	this.__reidx_f__();
-	return this.__filtered_b__;
+	this._reidx();
+	return this._filtered;
 };
 
 // implicitly tested
-prototype.__reidx_f__ = function() {
-	this.__keyToIdx_d__ = {};
-	return this.__reidxFrom_g__();
+prototype._reidx = function() {
+	this._keyToIdx = {};
+	return this._reidxFrom();
 };
 
 // implicitly tested
-prototype.__reidxFrom_g__ = function(from) {
+prototype._reidxFrom = function(from) {
 	if (Util.isNull(from)) {
 		from = 0;
 	}
 	
 	var i = from,
-		f = this.__filtered_b__,
+		f = this._filtered,
 		len = f.length,
-		map = this.__keyToIdx_d__;
+		map = this._keyToIdx;
 		
 	for (; i < len; i++) {
 		map[f[i].key] = i;
@@ -778,10 +778,10 @@ prototype.__reidxFrom_g__ = function(from) {
 // tested
 prototype.get = function(i) {
 	if (Util.isNull(i)) {
-		return this.__filtered_b__;
+		return this._filtered;
 	}
-	if (this.__filtered_b__.hasOwnProperty(i)) {
-		return this.__filtered_b__[i];
+	if (this._filtered.hasOwnProperty(i)) {
+		return this._filtered[i];
 	}
 };
 
@@ -798,8 +798,8 @@ prototype.get = function(i) {
 */
 // tested
 prototype.getByKey = function(key) {
-	if (Util.isNotNull(key) && this.__keyToDef_c__.hasOwnProperty(key)) {
-		return this.__keyToDef_c__[key];
+	if (Util.isNotNull(key) && this._keyToDef.hasOwnProperty(key)) {
+		return this._keyToDef[key];
 	}
 };
 
@@ -815,7 +815,7 @@ prototype.getByKey = function(key) {
 */
 // tested
 prototype.length = function() {
-	return this.__filtered_b__.length;
+	return this._filtered.length;
 };
 
 
@@ -831,8 +831,8 @@ prototype.length = function() {
 @version 1.0.0
 */
 prototype.getIdxByKey = function(key) {
-	if (this.__keyToIdx_d__.hasOwnProperty(key)) {
-		return this.__keyToIdx_d__[key];
+	if (this._keyToIdx.hasOwnProperty(key)) {
+		return this._keyToIdx[key];
 	}
 	return -1;
 };
@@ -850,8 +850,8 @@ prototype.getIdxByKey = function(key) {
 @version 1.0.0
 */
 prototype.getIdx = function(colDef) {
-	if (Util.isNotNull(colDef) && this.__keyToIdx_d__.hasOwnProperty(colDef['key'])) {
-		return this.__keyToIdx_d__[colDef['key']];
+	if (Util.isNotNull(colDef) && this._keyToIdx.hasOwnProperty(colDef['key'])) {
+		return this._keyToIdx[colDef['key']];
 	}
 	return -1;
 };
@@ -869,14 +869,14 @@ prototype.getIdx = function(colDef) {
 @version 1.0.0
 */
 prototype.sortByKey = function(keys) {
-	this.__filtered_b__.length = 0;
-	this.__keyToIdx_d__ = {};
+	this._filtered.length = 0;
+	this._keyToIdx = {};
 	
 	var i = 0,
 		len = keys.length,
-		f = this.__filtered_b__,
-		map = this.__keyToIdx_d__,
-		dmap = this.__keyToDef_c__;
+		f = this._filtered,
+		map = this._keyToIdx,
+		dmap = this._keyToDef;
 		
 	for (; i < len; i++) {
 		f.push(dmap[keys[i]]);
@@ -894,11 +894,11 @@ prototype.sortByKey = function(keys) {
 	@version 1.2.1
 	*/
 	this.grid.event.trigger("onReorderCols", keys);
-	return this.__filtered_b__;
+	return this._filtered;
 };
 
 prototype.getKeys = function() {
-	return this.__filtered_b__.map(function(def) { return def.key; });
+	return this._filtered.map(function(def) { return def.key; });
 }
 
 /**

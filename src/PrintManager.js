@@ -47,7 +47,7 @@ function PrintManager(args) {
 		}
 	};
 
-	this._options = JGM.__extend_e__(options, args['options']);
+	this._options = JGM._extend(options, args['options']);
 
 	this.__init();
 }

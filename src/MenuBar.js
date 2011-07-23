@@ -68,46 +68,46 @@ proto._defaultOptions = function() {
 
 proto._init = function(args) {
 	this._ctnr = args['container'];
-	this.__menubar_a__ =
-		$("<div class='" + this._options['__classMenuBar_e__'] + "'></div>")
+	this._menubar =
+		$("<div class='" + this._options['_classMenuBar'] + "'></div>")
 		.prependTo(this._ctnr);
 
 };
 
 proto._bindEvents = function(args) {
 	this.grid.event.bind({
-		'onCreateCss': this.__onCreateCss_V__,
-		'onDestroy': this.__destroy_aA__
+		'onCreateCss': this._onCreateCss,
+		'onDestroy': this._destroy
 	}, this);
 }
 
-proto.__destroy_aA__ = function() {	
+proto._destroy = function() {	
 	JGM._destroy(this, {
 		name: "MenuBar",
 		path: "menubar",
-		"$": "__menubar_a__",
+		"$": "_menubar",
 		property: "_ctnr",
 		map: "_options"
 	});
 };
 
-proto.__onCreateCss_V__ = function() {
+proto._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
       o = this._options,
-      border = o.__borderThickness_b__ + "px " + o.__border_c__,
+      border = o._borderThickness + "px " + o._border,
       rules = [];
 
-	rules.push(gridId + o.__classMenuBar_e__ + "{" + JGM.__CONST_g__.__cssUnselectable_a__ + "overflow:hidden;width:100%;background:" + o.__background_a__ + ";border-bottom:" + border + ";height:" + o.__height_d__ + "px}");
-	rules.push(gridId + o.__classIcon_f__ + "{float:left;height:" + o.__iconHeight_o__ + "px;width:" + o.__iconWidth_p__ + "px;border:" + o.__iconBorderThickness_g__ + "px " + o.__iconBorder_h__ + ";margin:" + o.__iconMargin_k__ + "px 0 0 " + o.__iconMargin_k__ + "px;background:" + o.__iconBackground_l__ + ";border-radius:" + o.__iconBorderRadius_q__ + "px;-moz-border-radius:" + o.__iconBorderRadius_q__ + "px}");
-	rules.push(gridId + o.__classIcon_f__ + ":hover," + gridId + o.__classIcon_f__ + ":focus{background:" + o.__iconBackgroundHover_m__ + ";border:" + o.__iconBorderThickness_g__ + "px " + o.__iconBorderHover_i__ + "}");
-	rules.push(gridId + o.__classIcon_f__ + ":active," + gridId + o.__classIcon_f__ + ".active{cursor:default;background:" + o.__iconBackgroundActive_n__ + ";border:" + o.__iconBorderThickness_g__ + "px " + o.__iconBorderActive_j__ + "}");
-	rules.push(gridId + o.__classIcon_f__ + ".active:focus{border:" + o.__iconBorderThickness_g__ + "px " + o.__iconBorderFocus_r__ + "}");
+	rules.push(gridId + o._classMenuBar + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + o._background + ";border-bottom:" + border + ";height:" + o._height + "px}");
+	rules.push(gridId + o._classIcon + "{float:left;height:" + o._iconHeight + "px;width:" + o._iconWidth + "px;border:" + o._iconBorderThickness + "px " + o._iconBorder + ";margin:" + o._iconMargin + "px 0 0 " + o._iconMargin + "px;background:" + o._iconBackground + ";border-radius:" + o._iconBorderRadius + "px;-moz-border-radius:" + o._iconBorderRadius + "px}");
+	rules.push(gridId + o._classIcon + ":hover," + gridId + o._classIcon + ":focus{background:" + o._iconBackgroundHover + ";border:" + o._iconBorderThickness + "px " + o._iconBorderHover + "}");
+	rules.push(gridId + o._classIcon + ":active," + gridId + o._classIcon + ".active{cursor:default;background:" + o._iconBackgroundActive + ";border:" + o._iconBorderThickness + "px " + o._iconBorderActive + "}");
+	rules.push(gridId + o._classIcon + ".active:focus{border:" + o._iconBorderThickness + "px " + o._iconBorderFocus + "}");
 	
 	return rules.join("");
 };
 
 proto.addIcon = function(css, title, width, height, fn) {
-	return $("<div class='" + this._options['__classIcon_f__'] + "' tabIndex='0' title='" + title + "'><div class='" + css + "' style='margin-top:" + ((this._options['__iconHeight_o__'] - height) / 2) + "px;margin-left:" + ((this._options['__iconWidth_p__'] - width) / 2) + "px'></div></div>").appendTo(this.__menubar_a__)
+	return $("<div class='" + this._options['_classIcon'] + "' tabIndex='0' title='" + title + "'><div class='" + css + "' style='margin-top:" + ((this._options['_iconHeight'] - height) / 2) + "px;margin-left:" + ((this._options['_iconWidth'] - width) / 2) + "px'></div></div>").appendTo(this._menubar)
 	.click(function(e) {
 		fn();
 		$(this).toggleClass("active");

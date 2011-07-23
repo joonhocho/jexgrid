@@ -91,9 +91,9 @@ function Cell(args) {
 	*/
 	this.grid = args['grid'];
 
-	this.__datarow_h__ = args['datarow'];
+	this._datarow = args['datarow'];
 
-	this.__colDef_i__ = args['colDef'];
+	this._colDef = args['colDef'];
 
 	this.__init(args);
 }
@@ -106,41 +106,41 @@ Cell.getInstance = function(args) {
 var prototype = Cell.prototype;
 
 prototype.__init = function(args) {
-   if (Util.isNull(this.__datarow_h__)) {
+   if (Util.isNull(this._datarow)) {
       if (Util.isNotNull(args['row'])) {
-         this.__datarow_h__ = this.grid.dataMgr.getByIdx(args['row']);
+         this._datarow = this.grid.dataMgr.getByIdx(args['row']);
       }
       else if (Util.isNotNull(args['node'])) {
-         this.__datarow_h__ = this.grid.dataMgr.getByNode(args['node'].parentNode);
+         this._datarow = this.grid.dataMgr.getByNode(args['node'].parentNode);
       }
       else if (Util.isNotNull(args['$'])) {
-         this.__datarow_h__ = this.grid.dataMgr.getByNode(args['$'][0].parentNode);
+         this._datarow = this.grid.dataMgr.getByNode(args['$'][0].parentNode);
       }
    }
-   if (Util.isNull(this.__colDef_i__)) {
+   if (Util.isNull(this._colDef)) {
       if (Util.isNotNull(args['col'])) {
-         this.__colDef_i__ = this.grid.colDefMgr.get(args['col']);
+         this._colDef = this.grid.colDefMgr.get(args['col']);
       }
       else if (Util.isNotNull(args['node'])) {
-         this.__colDef_i__ = this.grid.colDefMgr.get(Util.index(args['node']));
+         this._colDef = this.grid.colDefMgr.get(Util.index(args['node']));
       }
       else if (Util.isNotNull(args['$'])) {
-         this.__colDef_i__ = this.grid.colDefMgr.get(Util.index(args['$'][0]));
+         this._colDef = this.grid.colDefMgr.get(Util.index(args['$'][0]));
       }
    }
-	if (Util.isNullOr(this.__datarow_h__, this.__colDef_i__) && Util.isNotNull(args['event'])) {
-      var node = this.grid.view.__getClosestCell_Az__(args['event'].target);
+	if (Util.isNullOr(this._datarow, this._colDef) && Util.isNotNull(args['event'])) {
+      var node = this.grid.view._getClosestCell(args['event'].target);
       if (Util.isNotNull(node)) {
-         this.__datarow_h__ = this.grid.dataMgr.getByNode(node.parentNode);
-         this.__colDef_i__ = this.grid.colDefMgr.get(Util.index(node));
+         this._datarow = this.grid.dataMgr.getByNode(node.parentNode);
+         this._colDef = this.grid.colDefMgr.get(Util.index(node));
       }
 	}
 };
 
 prototype.destroy = function() {
 	delete this.grid;
-	delete this.__datarow_h__;
-	delete this.__colDef_i__;
+	delete this._datarow;
+	delete this._colDef;
 };
 
 
@@ -155,8 +155,8 @@ prototype.destroy = function() {
 @version 1.0.0
 */
 prototype.getRowIdx = function() {
-	if (Util.isNotNull(this.__datarow_h__)) {
-		return this.grid.dataMgr.getIdx(this.__datarow_h__);
+	if (Util.isNotNull(this._datarow)) {
+		return this.grid.dataMgr.getIdx(this._datarow);
 	}
 };
 
@@ -172,8 +172,8 @@ prototype.getRowIdx = function() {
 @version 1.0.0
 */
 prototype.getColIdx = function() {
-	if (Util.isNotNull(this.__colDef_i__)) {
-		return this.grid.colDefMgr.getIdx(this.__colDef_i__);
+	if (Util.isNotNull(this._colDef)) {
+		return this.grid.colDefMgr.getIdx(this._colDef);
 	}
 };
 
@@ -189,13 +189,13 @@ prototype.getColIdx = function() {
 @version 1.0.0
 */
 prototype.getNode = function() {
-	if (Util.isNotNullAnd(this.__datarow_h__, this.__colDef_i__)) {
-		return this.grid.view.getCellByIdAndKey(this.grid.dataMgr.getId(this.__datarow_h__), this.__colDef_i__.key);
+	if (Util.isNotNullAnd(this._datarow, this._colDef)) {
+		return this.grid.view.getCellByIdAndKey(this.grid.dataMgr.getId(this._datarow), this._colDef.key);
 	}
 };
 
 prototype.getRowNode = function() {
-	return this.grid.view.getRow(this.__datarow_h__);
+	return this.grid.view.getRow(this._datarow);
 };
 
 /**
@@ -228,7 +228,7 @@ prototype.get$ = function() {
 @version 1.0.0
 */
 prototype.getDatarow = function() {
-   return this.__datarow_h__;
+   return this._datarow;
 };
 
 
@@ -243,7 +243,7 @@ prototype.getDatarow = function() {
 @version 1.0.0
 */
 prototype.getColDef = function() {
-   return this.__colDef_i__;
+   return this._colDef;
 };
 
 
@@ -258,14 +258,14 @@ prototype.getColDef = function() {
 @version 1.0.0
 */
 prototype.getKey = function() {
-	if (Util.isNotNull(this.__colDef_i__)) {
-		return this.__colDef_i__.key;
+	if (Util.isNotNull(this._colDef)) {
+		return this._colDef.key;
 	}
 };
 
 
 prototype.getId = function() {
-   return this.grid.dataMgr.getId(this.__datarow_h__);
+   return this.grid.dataMgr.getId(this._datarow);
 };
 
 
@@ -280,8 +280,8 @@ prototype.getId = function() {
 @version 1.0.0
 */
 prototype.getValue = function() {
-	if (Util.isNotNullAnd(this.__datarow_h__, this.__colDef_i__)) {
-		return this.__datarow_h__[this.__colDef_i__.key];
+	if (Util.isNotNullAnd(this._datarow, this._colDef)) {
+		return this._datarow[this._colDef.key];
 	}
 };
 
@@ -361,8 +361,8 @@ prototype.has$ = function() {
 */
 prototype.equals = function(cell) {
 	return Util.isNotNull(cell) &&
-		Util.isNotNull(this.__datarow_h__) && this.__datarow_h__ === cell.getDatarow() &&
-		Util.isNotNull(this.__colDef_i__) && this.__colDef_i__ === cell.getColDef();
+		Util.isNotNull(this._datarow) && this._datarow === cell.getDatarow() &&
+		Util.isNotNull(this._colDef) && this._colDef === cell.getColDef();
 };
 
 }());

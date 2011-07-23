@@ -79,7 +79,7 @@ function Footer(args) {
 
 	this._ctnr = args['container'];
 
-	this.__foot_a__;
+	this._foot;
 
 	/**
 	Footer 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
@@ -124,7 +124,7 @@ function Footer(args) {
 		@since 1.1.3
 		@version 1.1.3
 		*/
-		'__classCell_a__': "footer-cell",
+		'_classCell': "footer-cell",
 		
 		/**
 		Footer 의 배경입니다. <br>기본값:<code>"#F1F5FB"</code>
@@ -136,7 +136,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__background_b__': "#F1F5FB",
+		'_background': "#F1F5FB",
 
 		/**
 		Footer 의 border 입니다. <br>기본값:<code>"0px solid #CCD9EA"</code>
@@ -148,7 +148,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__border_c__':		"0px solid #CCD9EA",
+		'_border':		"0px solid #CCD9EA",
 
 		/**
 		Footer 의 기본 글씨 색 입니다. <br>기본값:<code>"#000"</code>
@@ -160,7 +160,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__color_d__': "#000",
+		'_color': "#000",
 
 		/**
 		Footer 의 기본 폰트 크기 입니다. <br>기본값:<code>"13px"</code>
@@ -172,7 +172,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__fontSize_e__': "13px",
+		'_fontSize': "13px",
 
 		/**
 		Footer 의 기본 폰트 무게 입니다. <br>기본값:<code>"normal"</code>
@@ -184,7 +184,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__fontWeight_f__': "normal",
+		'_fontWeight': "normal",
 
 		/**
 		Footer 안 셀의 높이 픽셀 입니다. <br>기본값:<code>25</code>
@@ -196,7 +196,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__cellHeight_g__': 25,
+		'_cellHeight': 25,
 
 		/**
 		Footer 안 셀의 right-padding 픽셀 입니다. <br>기본값:<code>30</code>
@@ -208,7 +208,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__cellPadding_h__': 40,
+		'_cellPadding': 40,
 		
 		/**
 		Footer 의 총 건수를 보여주는 셀의 템플릿 입니다.<br>기본값:<code>"현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건"</code>
@@ -220,7 +220,7 @@ function Footer(args) {
 		@since 1.1.3
 		@version 1.1.3
 		*/
-		'__countTemplate_i__': "현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건",
+		'_countTemplate': "현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건",
 
 		/**
 		Footer 의 title 의 글씨 색 입니다. <br>기본값:<code>"#5A6779"</code>
@@ -232,7 +232,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__titleColor_j__': "#5A6779",
+		'_titleColor': "#5A6779",
 
 		/**
 		Footer 의 title 의 폰트 크기 입니다. <br>기본값:<code>"12px"</code>
@@ -244,7 +244,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__titleFontSize_k__': "12px",
+		'_titleFontSize': "12px",
 
 		/**
 		Footer 의 title 의 폰트 무게 입니다. <br>기본값:<code>"normal"</code>
@@ -256,7 +256,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__titleFontWeight_l__': "normal",
+		'_titleFontWeight': "normal",
 
 		/**
 		Footer 의 content 의 글씨 색 입니다. <br>기본값:<code>"#1E395B"</code>
@@ -268,7 +268,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__contentColor_n__': "#1E395B",
+		'_contentColor': "#1E395B",
 
 		/**
 		Footer 의 content 의 폰트 크기 입니다. <br>기본값:<code>"12px"</code>
@@ -280,7 +280,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__contentFontSize_o__': "12px",
+		'_contentFontSize': "12px",
 
 		/**
 		Footer 의 content 의 폰트 무게 입니다. <br>기본값:<code>"normal"</code>
@@ -292,7 +292,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__contentFontWeight_p__': "normal",
+		'_contentFontWeight': "normal",
 
 		/**
 		Footer 컨테이너에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-footer"</code>
@@ -304,7 +304,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__classFooter_q__': "jgrid-footer",
+		'_classFooter': "jgrid-footer",
 
 		/**
 		Footer 의 title 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"footer-title"</code>
@@ -316,7 +316,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__classTitle_r__': "footer-title",
+		'_classTitle': "footer-title",
 
 		/**
 		Footer 의 content 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"footer-content"</code>
@@ -328,7 +328,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__classContent_s__': "footer-content",
+		'_classContent': "footer-content",
 
 		/**
 		Footer 컨테이너에 적용되는 CSS style 입니다.<br>
@@ -343,7 +343,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__style_u__': "",
+		'_style': "",
 
 		/**
 		Footer 셀에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -358,7 +358,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__cellStyle_v__': "",
+		'_cellStyle': "",
 
 		/**
 		Footer 셀의 타이틀에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -373,7 +373,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__titleStyle_w__': "",
+		'_titleStyle': "",
 
 		/**
 		Footer 셀의 컨텐트에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -388,35 +388,35 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__contentStyle_x__': ""
+		'_contentStyle': ""
 	};
 
-	this._options = JGM.__extend_e__(options, args['options'], {
-		classCell:"__classCell_a__",
-		background:"__background_b__",
-		border:"__border_c__",
-		color:"__color_d__",
-		fontSize:"__fontSize_e__",
-		fontWeight:"__fontWeight_f__",
-		cellHeight:"__cellHeight_g__",
-		cellPadding:"__cellPadding_h__",
-		countTemplate:"__countTemplate_i__",
-		titleColor:"__titleColor_j__",
-		titleFontSize:"__titleFontSize_k__",
-		titleFontWeight:"__titleFontWeight_l__",
-		contentColor:"__contentColor_n__",
-		contentFontSize:"__contentFontSize_o__",
-		contentFontWeight:"__contentFontWeight_p__",
-		classFooter:"__classFooter_q__",
-		classTitle:"__classTitle_r__",
-		classContent:"__classContent_s__",
-		style:"__style_u__",
-		cellStyle:"__cellStyle_v__",
-		titleStyle:"__titleStyle_w__",
-		contentStyle:"__contentStyle_x__"
+	this._options = JGM._extend(options, args['options'], {
+		classCell:"_classCell",
+		background:"_background",
+		border:"_border",
+		color:"_color",
+		fontSize:"_fontSize",
+		fontWeight:"_fontWeight",
+		cellHeight:"_cellHeight",
+		cellPadding:"_cellPadding",
+		countTemplate:"_countTemplate",
+		titleColor:"_titleColor",
+		titleFontSize:"_titleFontSize",
+		titleFontWeight:"_titleFontWeight",
+		contentColor:"_contentColor",
+		contentFontSize:"_contentFontSize",
+		contentFontWeight:"_contentFontWeight",
+		classFooter:"_classFooter",
+		classTitle:"_classTitle",
+		classContent:"_classContent",
+		style:"_style",
+		cellStyle:"_cellStyle",
+		titleStyle:"_titleStyle",
+		contentStyle:"_contentStyle"
 	});
 
-	this.__sumMap_g__ = {};
+	this._sumMap = {};
 	
 	this.__init();
 }
@@ -428,31 +428,31 @@ Footer.getInstance = function(args) {
 var prototype = Footer.prototype;
 
 prototype.__init = function() {
-	this.__foot_a__ =
-		$("<div class='" + this._options['__classFooter_q__'] + "'>")
+	this._foot =
+		$("<div class='" + this._options['_classFooter'] + "'>")
 		.appendTo(this._ctnr);
 		
-	this.getNextCell().html(this._options['__countTemplate_i__']);
-	this.__updateTotalCount_d__();
-	this.__updateShownCount_c__();
+	this.getNextCell().html(this._options['_countTemplate']);
+	this._updateTotalCount();
+	this._updateShownCount();
 	
-	this.__initSumCells_f__();
+	this._initSumCells();
    this.bindEvents();
 };
 
 prototype.bindEvents = function() {
 	this.grid.event.bind({
-		'onCreateCss': this.__onCreateCss_V__,
-		'onDestroy': this.__destroy_aA__,
-		'onDataChange': [this.__updateTotalCount_d__, this.__updateSums_e__],
-		'onAfterRefresh': this.__updateShownCount_c__
+		'onCreateCss': this._onCreateCss,
+		'onDestroy': this._destroy,
+		'onDataChange': [this._updateTotalCount, this._updateSums],
+		'onAfterRefresh': this._updateShownCount
 	}, this);
 };
 
 
-prototype.__destroy_aA__ = function() {
+prototype._destroy = function() {
    var i,
-      map = this.__sumMap_g__;
+      map = this._sumMap;
 	for (i in map) {
       if (map.hasOwnProperty(i)) {
          map[i].remove();
@@ -462,34 +462,34 @@ prototype.__destroy_aA__ = function() {
 	JGM._destroy(this, {
 		name: "Footer",
 		path: "footer",
-		"$": "__foot_a__",
+		"$": "_foot",
 		property: "_ctnr",
-		map: "__sumMap_g__ _options"
+		map: "_sumMap _options"
 	});
 };
 
-prototype.__onCreateCss_V__ = function() {
+prototype._onCreateCss = function() {
 	var o = this._options,
-      footerSel = "#" + this.grid.mid + " ." + o.__classFooter_q__,
+      footerSel = "#" + this.grid.mid + " ." + o._classFooter,
       rules = [];
 
-	rules.push(footerSel + "{float:left;cursor:default;width:100%;" + JGM.__CONST_g__.__cssUnselectable_a__ + "background:" + o.__background_b__ +";border-top:" + o.__border_c__ + ";border-collapse:collapse;color:" + o.__color_d__ + ";font-size:" + o.__fontSize_e__ + ";font-weight:" + o.__fontWeight_f__ + ";padding-left:8px;" + o.__style_u__ + "}");
-	rules.push(footerSel + " ." + o.__classCell_a__ + "{float:left;white-space:nowrap;line-height:" + o.__cellHeight_g__ + "px;padding-right:" + o.__cellPadding_h__ + "px;" + o.__cellStyle_v__ + "}");
-	rules.push(footerSel + " ." + o.__classTitle_r__ + "{text-align:right;color:" + o.__titleColor_j__ + ";font-size:" + o.__titleFontSize_k__ + ";font-weight:" + o.__titleFontWeight_l__ + ";" + o.__titleStyle_w__ + "}");
-	rules.push(footerSel + " ." + o.__classContent_s__ + "{color:" + o.__contentColor_n__ + ";font-size:" + o.__contentFontSize_o__ + ";font-weight:" + o.__contentFontWeight_p__ + ";" + o.__contentStyle_x__ + "}");
+	rules.push(footerSel + "{float:left;cursor:default;width:100%;" + JGM._CONST._cssUnselectable + "background:" + o._background +";border-top:" + o._border + ";border-collapse:collapse;color:" + o._color + ";font-size:" + o._fontSize + ";font-weight:" + o._fontWeight + ";padding-left:8px;" + o._style + "}");
+	rules.push(footerSel + " ." + o._classCell + "{float:left;white-space:nowrap;line-height:" + o._cellHeight + "px;padding-right:" + o._cellPadding + "px;" + o._cellStyle + "}");
+	rules.push(footerSel + " ." + o._classTitle + "{text-align:right;color:" + o._titleColor + ";font-size:" + o._titleFontSize + ";font-weight:" + o._titleFontWeight + ";" + o._titleStyle + "}");
+	rules.push(footerSel + " ." + o._classContent + "{color:" + o._contentColor + ";font-size:" + o._contentFontSize + ";font-weight:" + o._contentFontWeight + ";" + o._contentStyle + "}");
 
 	return rules.join("");
 };
 
-prototype.__updateTotalCount_d__ = function() {
-	this.__foot_a__.find("[name=totalCount]")[0].innerHTML = this.grid.dataMgr.getReal().length;
+prototype._updateTotalCount = function() {
+	this._foot.find("[name=totalCount]")[0].innerHTML = this.grid.dataMgr.getReal().length;
 };
 
-prototype.__updateShownCount_c__ = function() {
-	this.__foot_a__.find("[name=shownCount]")[0].innerHTML = this.grid.dataMgr.filterReal(this.grid.dataMgr.datalist).length;
+prototype._updateShownCount = function() {
+	this._foot.find("[name=shownCount]")[0].innerHTML = this.grid.dataMgr.filterReal(this.grid.dataMgr.datalist).length;
 };
 
-prototype.__initSumCells_f__ = function() {
+prototype._initSumCells = function() {
 	var rows = this.grid.dataMgr.getReal(),
       colDefs = this.grid.colDefMgr.get(),
       clen = colDefs.length,
@@ -499,8 +499,8 @@ prototype.__initSumCells_f__ = function() {
       key,
       name,
       sum,
-      sumfn = Footer.__calSum_a__,
-      map = this.__sumMap_g__,
+      sumfn = Footer._calSum,
+      map = this._sumMap,
       cell,
       node,
       i = 0;
@@ -520,33 +520,33 @@ prototype.__initSumCells_f__ = function() {
 			else if (Util.isString(renderer)) {
             lower = renderer.toLowerCase();
 				if (lower === "krw" || renderer === "\\") {
-					node.innerHTML = this.__sumRenderer_h__(name, Util.formatNumber(sum));				
+					node.innerHTML = this._sumRenderer(name, Util.formatNumber(sum));				
             }
 				else if (lower === "usd" || renderer === "$") {
-					node.innerHTML = this.__sumRenderer_h__(name, Util.formatNumber(sum, 2, "$ "));
+					node.innerHTML = this._sumRenderer(name, Util.formatNumber(sum, 2, "$ "));
             }
 			}
 			else {
-				node.innerHTML = this.__sumRenderer_h__(name, sum);
+				node.innerHTML = this._sumRenderer(name, sum);
          }
 		}
 	}
 };
 
-prototype.__updateSums_e__ = function() {
+prototype._updateSums = function() {
 	var rows = this.grid.dataMgr.getReal(),
       key,
-      map = this.__sumMap_g__,
+      map = this._sumMap,
       cmgr = this.grid.colDefMgr,
       colDef,
       renderer,
       lower,
       name,
       sum,
-      sumfn = Footer.__calSum_a__,
+      sumfn = Footer._calSum,
       cell,
       node,
-      content = this._options['__classContent_s__'];
+      content = this._options['_classContent'];
 	for (key in map) {
       if (map.hasOwnProperty(key)) {
          colDef = cmgr.getByKey(key);
@@ -587,14 +587,14 @@ prototype.__updateSums_e__ = function() {
 @version 1.0.0
 */
 prototype.getNextCell = function() {
-	return $("<div class='" + this._options['__classCell_a__'] + "'/>").appendTo(this.__foot_a__);
+	return $("<div class='" + this._options['_classCell'] + "'/>").appendTo(this._foot);
 };
 
-prototype.__sumRenderer_h__ = function(name, sum) {
-	return "<span class='" + this._options['__classTitle_r__'] + "'>" + name + " 합계: </span><span class='" + this._options['__classContent_s__'] + "'>" + sum + "</span>";
+prototype._sumRenderer = function(name, sum) {
+	return "<span class='" + this._options['_classTitle'] + "'>" + name + " 합계: </span><span class='" + this._options['_classContent'] + "'>" + sum + "</span>";
 };
 
-Footer.__calSum_a__ = function(datalist, key) {
+Footer._calSum = function(datalist, key) {
 	var sum = 0,
       tmp,
       len = datalist.length,

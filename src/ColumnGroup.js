@@ -129,7 +129,7 @@ function ColGroup(args) {
 		@since 1.1.0
 		@version 1.1.0
 		*/
-		'__key_a__':		undefined,
+		'_key':		undefined,
 
 		/**
 		패딩 처리를 할 컬럼들의 키들을 가진 어레이입니다. 그룹의 데이터들이 여기에
@@ -142,7 +142,7 @@ function ColGroup(args) {
 		@since 1.1.0
 		@version 1.1.0
 		*/
-		'__padColKeys_b__': [],
+		'_padColKeys': [],
 
 		/**
 		합계를 구할 컬럼들의 키들을 가진 어레이입니다. 여기에 지정되는 컬럼들의
@@ -155,7 +155,7 @@ function ColGroup(args) {
 		@since 1.1.0
 		@version 1.1.0
 		*/
-		'__sumColKeys_c__': [],
+		'_sumColKeys': [],
 
 		/**
 		소계 부분의 prefix 를 정합니다.
@@ -185,12 +185,12 @@ function ColGroup(args) {
 		}
 	};
 
-	this._options = JGM.__extend_e__(options, args['options'], {
-		key:"__key_a__",
-		padColKeys:"__padColKeys_b__",
-		sumColKeys:"__sumColKeys_c__"
+	this._options = JGM._extend(options, args['options'], {
+		key:"_key",
+		padColKeys:"_padColKeys",
+		sumColKeys:"_sumColKeys"
 	});
-	this._options['Collapser']['key'] = this._options['__key_a__'];
+	this._options['Collapser']['key'] = this._options['_key'];
 
 	/**
 	ColGroup 과 연동된 {@link JGM.Collapser Collapser} 입니다.
@@ -202,7 +202,7 @@ function ColGroup(args) {
 	@version 1.1.0
 	*/
 	this.collapser;
-	this.__parentMap_a__ = {};
+	this._parentMap = {};
 	this.__init();
 }
 
@@ -231,7 +231,7 @@ prototype.__init = function() {
 	collapser = this.collapser = JGM.create("Collapser", {grid:grid, 'options':opt.Collapser});
 	delete opt.Collapser;
 
-	this.__processData_b__(datam.all);
+	this._processData(datam.all);
 
 	collapser.__init();
 	datam.refresh();
@@ -241,22 +241,22 @@ prototype.bindEvents = function() {
 	var events;
 
 	events = {
-		'onBeforeSetDatalist': this.__removeAll_f__,
-		"onAfterSetDatalist onAddDatalist": this.__processData_b__,
-		'onAddDatarow': this.__onAddDatarow_ac__,
-		'onUpdateDatarow': this.__onUpdateDatarow_ae__,
-		'onUpdateDatalist': this.__onUpdateDatalist_ah__,
-		'onRemoveDatarow': this.__onRemoveDatarow_af__,
-		'onRemoveDatalist': this.__onRemoveDatalist_ag__,
-		'onDestroy': this.__destroy_aA__
+		'onBeforeSetDatalist': this._removeAll,
+		"onAfterSetDatalist onAddDatalist": this._processData,
+		'onAddDatarow': this._onAddDatarow,
+		'onUpdateDatarow': this._onUpdateDatarow,
+		'onUpdateDatalist': this._onUpdateDatalist,
+		'onRemoveDatarow': this._onRemoveDatarow,
+		'onRemoveDatalist': this._onRemoveDatalist,
+		'onDestroy': this._destroy
 	};
 	
-	if (this._options['__sumColKeys_c__']['length'] !== 0) {
+	if (this._options['_sumColKeys']['length'] !== 0) {
 		var mid = this.mid,
-		notReal = this.grid.dataMgr.__consts_n__.__notReal_d__,
+		notReal = this.grid.dataMgr._consts._notReal,
 		i = 0,
 		sumfn,
-		sumkeys = this._options['__sumColKeys_c__'],
+		sumkeys = this._options['_sumColKeys'],
 		prefix = this._options['prefix'],
 		len = sumkeys.length;
 
@@ -269,36 +269,36 @@ prototype.bindEvents = function() {
 		for (; i < len; i++) {
 			events["onRenderCell_" + sumkeys[i] + "_prepend"] = sumfn;
 		}
-		events.onCollapserTreeChange = this.__onCollapserTreeChange_g__;
+		events.onCollapserTreeChange = this._onCollapserTreeChange;
 	}
 
 	this.grid.event.bind(events, this);
 };
 
-prototype.__destroy_aA__ = function() {
+prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "ColGroup",
 		path: "colGroup",
 		property: "collapser",
-		map: "__parentMap_a__ _options"
+		map: "_parentMap _options"
 	});
 };
 
-prototype.__processData_b__ = function(datalist) {
+prototype._processData = function(datalist) {
 	var len = datalist.length,
-		key = this._options['__key_a__'],
-		padColKeys = this._options['__padColKeys_b__'],
+		key = this._options['_key'],
+		padColKeys = this._options['_padColKeys'],
 		datam = this.grid.dataMgr,
-		notReal = datam.__consts_n__.__notReal_d__,
+		notReal = datam._consts._notReal,
 		idKey = datam.idKey,
 		collapser = this.collapser,
-		nodeKey = collapser.__tree_a__._options['nodeKey'],
-		parentKey = collapser.__tree_a__._options['parentKey'],
+		nodeKey = collapser._tree._options['nodeKey'],
+		parentKey = collapser._tree._options['parentKey'],
 		newParents = [],
 		i = 0;
 
 	for (; i < len; i++) {
-		this.__addData_c__(datalist[i], key, idKey, notReal, nodeKey, parentKey, padColKeys, newParents);
+		this._addData(datalist[i], key, idKey, notReal, nodeKey, parentKey, padColKeys, newParents);
 	}
 
 	if (newParents.length !== 0) {
@@ -307,19 +307,19 @@ prototype.__processData_b__ = function(datalist) {
 		datam.addListToIdMap(newParents);
 
 		if (Util.isNotNull(collapser)) {
-			collapser.__onAddDatalist_ad__(newParents);
+			collapser._onAddDatalist(newParents);
 		}
 	}
 
 	return newParents;
 };
 
-prototype.__addData_c__ = function(data, key, idKey, notReal, nodeKey, parentKey, padColKeys, newParents) {
+prototype._addData = function(data, key, idKey, notReal, nodeKey, parentKey, padColKeys, newParents) {
 	var keyVal = data[key],
 		parent,
-		map = this.__parentMap_a__;
+		map = this._parentMap;
 	if (!map.hasOwnProperty(keyVal)) {
-		parent = this.__makeParent_d__(data, key, idKey, keyVal, notReal, nodeKey, padColKeys);
+		parent = this._makeParent(data, key, idKey, keyVal, notReal, nodeKey, padColKeys);
 		newParents.push(parent);
 		map[keyVal] = parent;
 	}
@@ -330,7 +330,7 @@ prototype.__addData_c__ = function(data, key, idKey, notReal, nodeKey, parentKey
 	data[parentKey] = this.mid + keyVal;
 };
 
-prototype.__makeParent_d__ = function(data, key, idKey, keyVal, notReal, nodeKey, padColKeys) {
+prototype._makeParent = function(data, key, idKey, keyVal, notReal, nodeKey, padColKeys) {
 	var parent = {},
 		j = 0,
 		len = padColKeys.length;
@@ -344,29 +344,29 @@ prototype.__makeParent_d__ = function(data, key, idKey, keyVal, notReal, nodeKey
 	return parent;
 };
 
-prototype.__isParent_e__ = function(datarow) {
-	return datarow[this.grid.dataMgr.__consts_n__.__notReal_d__] === this.mid;
+prototype._isParent = function(datarow) {
+	return datarow[this.grid.dataMgr._consts._notReal] === this.mid;
 };
 
-prototype.__removeAll_f__ = function(datalist) {
-	this.__parentMap_a__ = {};
+prototype._removeAll = function(datalist) {
+	this._parentMap = {};
 };
 
-prototype.__onAddDatarow_ac__ = function(datarow) {
+prototype._onAddDatarow = function(datarow) {
 	var newParents = [],
 		opt = this._options,
 		datam = this.grid.dataMgr,
 		collapser = this.collapser,
-		ctopt = collapser.__tree_a__._options;
+		ctopt = collapser._tree._options;
 
-	this.__addData_c__(
+	this._addData(
 		datarow,
-		opt.__key_a__,
+		opt._key,
 		datam.idKey,
-		datam.__consts_n__.__notReal_d__,
+		datam._consts._notReal,
 		ctopt.nodeKey,
 		ctopt.parentKey,
-		opt.__padColKeys_b__,
+		opt._padColKeys,
 		newParents
 	);
 
@@ -375,50 +375,50 @@ prototype.__onAddDatarow_ac__ = function(datarow) {
 		datam.all.push(parent);
 		datam.makeCompositeKey(parent, true);
 		datam.addToIdMap(parent);
-		collapser.__onAddDatarow_ac__(parent);
+		collapser._onAddDatarow(parent);
 	}
 };
 
-prototype.__onUpdateDatarow_ae__ = function(datarow, change, before) {
-	if (change.hasOwnProperty(this._options['__key_a__'])) {
-		var key = this._options['__key_a__'],	// group key
+prototype._onUpdateDatarow = function(datarow, change, before) {
+	if (change.hasOwnProperty(this._options['_key'])) {
+		var key = this._options['_key'],	// group key
 			newkey = change[key],	// new group key value
 			oldkey = before[key],	// old group key value
 			mid = this.mid,	// colgroup's module id
 			collapser = this.collapser,	// collapser used by colgroup
-			tree = collapser.__tree_a__,	// tree used by collapser
+			tree = collapser._tree,	// tree used by collapser
 			tpkey = tree._options['parentKey'],	// tree's parent key
 			parKey = {},	// change that contains new parent key to be passed to collapser
 			oldParKey = {},	// before that contains old parent key to be passed to collapser
-			pmap = this.__parentMap_a__,	// group parent map
+			pmap = this._parentMap,	// group parent map
 			oldp;	// old tree parent of currently modified record
 
 		// add new parent group if not exists already
 		if (!pmap.hasOwnProperty(newkey)) {
-			this.__onAddDatarow_ac__(datarow);
+			this._onAddDatarow(datarow);
 		}
 
 		// pass parent key info to collapser
 		// this will move current data's tree node from old to new parent tree node
 		parKey[tpkey] = mid + newkey;
 		oldParKey[tpkey] = mid + oldkey;
-		collapser.__onUpdateDatarow_ae__(datarow, parKey, oldParKey);
+		collapser._onUpdateDatarow(datarow, parKey, oldParKey);
 
 		// get old parent tree node and delete the group parent if it has no children members anymore
 		oldp = tree.getNode(pmap[oldkey]);
 		if (oldp.children.length === 0) {
 			this.grid.dataMgr.all.remove(oldp.data);
 			delete pmap[oldkey];
-			collapser.__onRemoveDatarow_A__(oldp.data);
+			collapser._onRemoveDatarow(oldp.data);
 		}
 	}
 };
 
-prototype.__onUpdateDatalist_ah__ = function(datalist, changes, befores) {
-	var key = this._options['__key_a__'],	// group key
+prototype._onUpdateDatalist = function(datalist, changes, befores) {
+	var key = this._options['_key'],	// group key
 		mid = this.mid,	// colgroup's module id
 		collapser = this.collapser,	// collapser used by colgroup
-		tree = collapser.__tree_a__,	// tree used by collapser
+		tree = collapser._tree,	// tree used by collapser
 		tpkey = tree._options['parentKey'],	// tree's parent key
 		change,
 		parKey = {},	// change that contains new parent key to be passed to collapser
@@ -445,16 +445,16 @@ prototype.__onUpdateDatalist_ah__ = function(datalist, changes, befores) {
 
 	if (list.length !== 0) {
 		var oldkey,	// old group key value
-			pmap = this.__parentMap_a__,	// group parent map
+			pmap = this._parentMap,	// group parent map
 			oldp,	// old tree parent of currently modified record
 			removeList = [];
 
 		// add new parent group if not exists already
-		this.__processData_b__(list);
+		this._processData(list);
 
 		// pass parent key info to collapser
 		// this will move current data's tree node from old to new parent tree node
-		collapser.__onUpdateDatalist_ah__(list, parKeys, oldParKeys);
+		collapser._onUpdateDatalist(list, parKeys, oldParKeys);
 
 		// get old parent tree node and delete the group parent if it has no children members anymore
 		i = 0;
@@ -472,38 +472,38 @@ prototype.__onUpdateDatalist_ah__ = function(datalist, changes, befores) {
 
 		// remove group parents with no children members
 		if (removeList.length !== 0) {
-			collapser.__onRemoveDatalist_ag__(removeList);
+			collapser._onRemoveDatalist(removeList);
 			this.grid.dataMgr.all.removeList(removeList);
 		}
 	}
 };
 
-prototype.__onRemoveDatarow_af__ = function(datarow) {
-	if (this.__isParent_e__(datarow)) {
-		delete this.__parentMap_a__[datarow[this._options['__key_a__']]];
+prototype._onRemoveDatarow = function(datarow) {
+	if (this._isParent(datarow)) {
+		delete this._parentMap[datarow[this._options['_key']]];
 	}
 	else {
-		var parentNode = this.collapser.__tree_a__.getNode(datarow).parent;
+		var parentNode = this.collapser._tree.getNode(datarow).parent;
 		if (parentNode.children.length === 1) {
 			this.grid.dataMgr.remove(parentNode.data);
 		}
 	}
 };
 
-prototype.__onRemoveDatalist_ag__ = function(datalist) {
+prototype._onRemoveDatalist = function(datalist) {
 	var i = 0,
 		len = datalist.length;
 	for (; i < len; i++) {
-		this.__onRemoveDatarow_af__(datalist[i]);
+		this._onRemoveDatarow(datalist[i]);
 	}
 };
 
-prototype.__onCollapserTreeChange_g__ = function() {
+prototype._onCollapserTreeChange = function() {
 	var sums = {},
-		sumKeys = this._options['__sumColKeys_c__'],
+		sumKeys = this._options['_sumColKeys'],
 		len = sumKeys.length,
 		i = 0,
-		notReal = this.grid.dataMgr.__consts_n__.__notReal_d__,
+		notReal = this.grid.dataMgr._consts._notReal,
 		mid = this.mid,
 		data,
 		curKey,
@@ -514,7 +514,7 @@ prototype.__onCollapserTreeChange_g__ = function() {
 		sums[sumKeys[i]] = 0;
 	}
 
-	this.collapser.__tree_a__.root.traverseChildren({post:true, fn:function(args, index) {
+	this.collapser._tree.root.traverseChildren({post:true, fn:function(args, index) {
 		data = this.data;
 		i = 0;
 		if (data[notReal] === mid) {

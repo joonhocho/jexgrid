@@ -78,8 +78,8 @@ function ViewportManager(args) {
 	this.mid = args.mid;
 
 	this._ctnr = args['container'];
-	this.__mask_a__;
-	this.__canvas_c__;
+	this._mask;
+	this._canvas;
 
 	/**
 	ViewportManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
@@ -124,7 +124,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__attrRowIdx_a__':					"r",
+		'_attrRowIdx':					"r",
 
 		/**
 		뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 미만일 경우
@@ -137,7 +137,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__appendThreshold_b__':			3,
+		'_appendThreshold':			3,
 
 		/**
 		뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 이상일 경우
@@ -150,7 +150,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__renderThreshold_c__':			10,
+		'_renderThreshold':			10,
 
 		/**
 		캔버스를 렌더링 할 경우, 스크롤의 자연스러움을 위해 화면에 보이는 로우들 이외에
@@ -163,7 +163,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__bufferSize_d__':					6,
+		'_bufferSize':					6,
 
 		/**
 		뷰포트가 한 스크롤 페이지에 보여줄 데이터 로우들의 수를 정합니다. 뷰포트의
@@ -176,7 +176,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__rowsPerPage_e__':			10,
+		'_rowsPerPage':			10,
 
 		/**
 		로우의 높이의 픽셀값 입니다. padding 과 border 를 제외한 그 안의 높이입니다. <br>기본값:<code>20</code>
@@ -188,7 +188,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__rowH_f__':						21,
+		'_rowH':						21,
 
 		/**
 		셀 border 의 두께의 픽셀값 입니다. <br>기본값:<code>1</code>
@@ -200,7 +200,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__borderThickness_g__': 1,
+		'_borderThickness': 1,
 
 		/**
 		셀 border 의 스타일을 정합니다. <br>기본값:<code>"solid #D0D7E5"</code>
@@ -212,7 +212,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__border_h__':						"solid #D0D7E5",
+		'_border':						"solid #D0D7E5",
 
 		/**
 		셀 padding 의 픽셀값 입니다. <br>기본값:<code>1</code>
@@ -224,7 +224,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__padding_i__':					1,
+		'_padding':					1,
 
 		/**
 		홀수번째 로우와 짝수번째 로우의 바탕색을 다르게 할 지 정합니다. <br>기본값:<code>false</code>
@@ -236,7 +236,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__evenOddRows_j__':				false,
+		'_evenOddRows':				false,
 
 		/**
 		{@link JGM.ViewportManager.options.evenOddRows evenOddRows} 가 true 일 경우,
@@ -249,7 +249,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__oddRowsBackground_k__':			"#F4F4F4",
+		'_oddRowsBackground':			"#F4F4F4",
 
 		/**
 		ViewportManager 컨테이너에 적용되는 CSS style 입니다.<br>
@@ -264,7 +264,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__style_q__': "",
+		'_style': "",
 
 		/**
 		그리드 캔바스에 적용되는 CSS style 입니다.<br>
@@ -279,7 +279,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__canvasStyle_r__': "",
+		'_canvasStyle': "",
 
 		/**
 		모든 그리드 로우에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -294,7 +294,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__rowStyle_s__': "",
+		'_rowStyle': "",
 
 		/**
 		모든 그리드 셀에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -309,7 +309,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__cellStyle_t__': "",
+		'_cellStyle': "",
 
 		/**
 		모든 그리드 로우에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-row"</code>
@@ -321,7 +321,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__classRow_l__':						"jgrid-row",
+		'_classRow':						"jgrid-row",
 
 		/**
 		모든 그리드 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-cell"</code>
@@ -333,7 +333,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__classCell_m__':					"jgrid-cell",
+		'_classCell':					"jgrid-cell",
 
 		/**
 		그리드 뷰포트에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-viewport"</code>
@@ -345,7 +345,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__classView_n__':				"jgrid-viewport",
+		'_classView':				"jgrid-viewport",
 
 		/**
 		그리드 캔버스에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-canvas"</code>
@@ -357,7 +357,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'__classCanvas_o__':				"jgrid-canvas",
+		'_classCanvas':				"jgrid-canvas",
 
 		/**
 		그리드 뷰가 포커스 되었을 경우 보여지는 뷰의 배경 스타일입니다. <br>기본값:<code>"#FFF"</code>
@@ -369,7 +369,7 @@ function ViewportManager(args) {
 		@since 1.1.5
 		@version 1.1.5
 		*/
-		'__focusBackground_u__':			"#FFF",
+		'_focusBackground':			"#FFF",
 
 		/**
 		그리드 뷰가 포커스 되었을 경우 보여지는 아웃라인 스타일입니다. <br>기본값:<code>"2px solid #f1ca7f"</code>
@@ -381,7 +381,7 @@ function ViewportManager(args) {
 		@since 1.1.5
 		@version 1.1.5
 		*/
-		'__focusOutline_v__': "2px solid #f1ca7f",
+		'_focusOutline': "2px solid #f1ca7f",
 
 		/**
 		true 로 설정되있을 경우 view 의 높이가 모든 로우를 포함하도록 자동 변경됩니다. <br>기본값:<code>false</code>
@@ -393,48 +393,48 @@ function ViewportManager(args) {
 		@since 1.1.7
 		@version 1.1.7
 		*/
-		'__autoHeight_w__': false,
+		'_autoHeight': false,
 
-		'__autoWidth_x__': false
+		'_autoWidth': false
 	};
 
-	this._options = JGM.__extend_e__(options, args['options'], {
-		attrRowIdx:"__attrRowIdx_a__",
-		appendThreshold:"__appendThreshold_b__",
-		renderThreshold:"__renderThreshold_c__",
-		bufferSize:"__bufferSize_d__",
-		rowsPerPage:"__rowsPerPage_e__",
-		rowH:"__rowH_f__",
-		borderThickness:"__borderThickness_g__",
-		border:"__border_h__",
-		padding:"__padding_i__",
-		evenOddRows:"__evenOddRows_j__",
-		oddRowsBackground:"__oddRowsBackground_k__",
-		classRow:"__classRow_l__",
-		classCell:"__classCell_m__",
-		classView:"__classView_n__",
-		classCanvas:"__classCanvas_o__",
-		style:"__style_q__",
-		canvasStyle:"__canvasStyle_r__",
-		rowStyle:"__rowStyle_s__",
-		cellStyle:"__cellStyle_t__",
-		focusBackground:"__focusBackground_u__",
-		focusOutline:"__focusOutline_v__",
-		autoHeight:"__autoHeight_w__",
-		autoWidth:"__autoWidth_x__"
+	this._options = JGM._extend(options, args['options'], {
+		attrRowIdx:"_attrRowIdx",
+		appendThreshold:"_appendThreshold",
+		renderThreshold:"_renderThreshold",
+		bufferSize:"_bufferSize",
+		rowsPerPage:"_rowsPerPage",
+		rowH:"_rowH",
+		borderThickness:"_borderThickness",
+		border:"_border",
+		padding:"_padding",
+		evenOddRows:"_evenOddRows",
+		oddRowsBackground:"_oddRowsBackground",
+		classRow:"_classRow",
+		classCell:"_classCell",
+		classView:"_classView",
+		classCanvas:"_classCanvas",
+		style:"_style",
+		canvasStyle:"_canvasStyle",
+		rowStyle:"_rowStyle",
+		cellStyle:"_cellStyle",
+		focusBackground:"_focusBackground",
+		focusOutline:"_focusOutline",
+		autoHeight:"_autoHeight",
+		autoWidth:"_autoWidth"
 	});
 
 	this._vars = {
 		drag:			false,
-		__lastScrollTop_d__:		0,
-		__lastScrollLeft_e__:		0,
-		__lastRowLen_l__:			0
+		_lastScrollTop:		0,
+		_lastScrollLeft:		0,
+		_lastRowLen:			0
 	};
 
-	this.__renderedRows_A__ = {};
-	this.__lockedRows_B__ = {};
+	this._renderedRows = {};
+	this._lockedRows = {};
 
-	this.__colLefts_Bd__ = [0];
+	this._colLefts = [0];
 
 	this.__init();
 }
@@ -446,31 +446,31 @@ ViewportManager.getInstance = function(args) {
 var prototype = ViewportManager.prototype;
 
 prototype.__init = function() {
-	this.__mask_a__ =
-		$("<div class='" + this._options['__classView_n__'] + "' tabIndex='0' onscroll='JGM.m.ViewportManager." + this.mid + ".__scroll_As__()'>")
+	this._mask =
+		$("<div class='" + this._options['_classView'] + "' tabIndex='0' onscroll='JGM.m.ViewportManager." + this.mid + "._scroll()'>")
 		.appendTo(this._ctnr);
 
-	this.__canvas_c__ =
-		$("<div class='" + this._options['__classCanvas_o__'] + "'>")
-		.appendTo(this.__mask_a__);
+	this._canvas =
+		$("<div class='" + this._options['_classCanvas'] + "'>")
+		.appendTo(this._mask);
 
 	// disable text selection in grid cells except in input and textarea
 	// elements (this is IE-specific, because selectstart event will
 	// only fire in IE)
-	this.__mask_a__.bind("selectstart.ui", function (event) {
+	this._mask.bind("selectstart.ui", function (event) {
 		return $(event.target).is("input, textarea");
 	});
-	//JGM.ColHeader.__disableSel_e__(this.__mask_a__);
+	//JGM.ColHeader._disableSel(this._mask);
 
-	this.__setColLefts_Be__();
+	this._setColLefts();
 
-	this._vars.__lastRowLen_l__ = this.grid.dataMgr.datalist.length;
+	this._vars._lastRowLen = this.grid.dataMgr.datalist.length;
 
 	this.grid.event.bind({
-		'canvasFind': this.__canvasFind_AC__,
-		'onCreateCss': this.__onCreateCss_V__,
-		'onCreateDynamicCss': this.__onCreateDynamicCss_C__,
-		'onDestroy': this.__onDestroy_e__,
+		'canvasFind': this._canvasFind,
+		'onCreateCss': this._onCreateCss,
+		'onCreateDynamicCss': this._onCreateDynamicCss,
+		'onDestroy': this._onDestroy,
 		'keydown': this._keydown,
 		'keyup': this._keyup,
 		'keypress': this._keypress,
@@ -484,13 +484,13 @@ prototype.__init = function() {
 		'mouseup': this._mouseup,
 		'click': this._click,
 		'dblclick': this._dblclick,
-		'resizeWidth': this.__setWidth_AV__,
-		"resizeWidth onResizeCol onResizeCanvasHeight": this.__resizeWidth_AZ__,
+		'resizeWidth': this._setWidth,
+		"resizeWidth onResizeCol onResizeCanvasHeight": this._resizeWidth,
 		//'resizeHeight': this.resizeHeight,
 		'onAfterRefresh': this.onAfterRefresh,
-		'onRenderModules': this.__render_w__,
-		'onReorderCols': this.__onReorderCols_Bf__,
-		'onResizeCanvasWidth': this.__scroll_As__,
+		'onRenderModules': this._render,
+		'onReorderCols': this._onReorderCols,
+		'onResizeCanvasWidth': this._scroll,
 		'onUpdateDatarow': this.onUpdateDatarow,
 		'onUpdateDatalist': this.onUpdateDatalist,
 		'onRemoveDatarow': this.onRemoveDatarow,
@@ -505,41 +505,41 @@ prototype.unsetDrag = function() {
 	this._vars.drag = false;
 };
 
-prototype.__onDestroy_e__ = function() {
+prototype._onDestroy = function() {
 	JGM._destroy(this, {
 		name: "ViewportManager",
 		path: "view",
-		"$": "__canvas_c__ __mask_a__",
+		"$": "_canvas _mask",
 		property: "_ctnr",
-		map: "_vars __lockedRows_B__ __renderedRows_A__ _options"
+		map: "_vars _lockedRows _renderedRows _options"
 	});
 };
 
-prototype.__onCreateCss_V__ = function() {
+prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		cellSel = gridId + o.__classCell_m__,
-		rowSel = gridId + o.__classRow_l__,
-		border = o.__borderThickness_g__ + "px " + o.__border_h__,
-		attrRowIdx = rowSel + "[" + o.__attrRowIdx_a__,
+		cellSel = gridId + o._classCell,
+		rowSel = gridId + o._classRow,
+		border = o._borderThickness + "px " + o._border,
+		attrRowIdx = rowSel + "[" + o._attrRowIdx,
 		colDefs = this.grid.colDefMgr.get(),
       clen = colDefs.length,
       i = 0,
 		rules = [];
 
-	rules.push(gridId + o.__classView_n__ + "{height:" + this.__calHeight_AP__() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + o.__rowH_f__ + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + o.__style_q__ + "}");
-	rules.push(gridId + o.__classView_n__ + ":focus{background:" + o.__focusBackground_u__ + ";outline:" + o.__focusOutline_v__ + "}");
-	rules.push(gridId + o.__classCanvas_o__ + "{height:" + this.__calCanvasHeight_AR__() + "px;" + o.__canvasStyle_r__ + ";background:#fff}");
-	rules.push(rowSel + "{position:absolute;" + o.__rowStyle_s__ + "}");
-	rules.push(cellSel + "{height:" + o.__rowH_f__ + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + o.__padding_i__ + "px;border-right:" + border + ";" + o.__cellStyle_t__ + "}");
+	rules.push(gridId + o._classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + o._rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + o._style + "}");
+	rules.push(gridId + o._classView + ":focus{background:" + o._focusBackground + ";outline:" + o._focusOutline + "}");
+	rules.push(gridId + o._classCanvas + "{height:" + this._calCanvasHeight() + "px;" + o._canvasStyle + ";background:#fff}");
+	rules.push(rowSel + "{position:absolute;" + o._rowStyle + "}");
+	rules.push(cellSel + "{height:" + o._rowH + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + o._padding + "px;border-right:" + border + ";" + o._cellStyle + "}");
 	
-	if (o.__evenOddRows_j__) {
+	if (o._evenOddRows) {
 		rules.push(
 			attrRowIdx + "$='1']," +
 			attrRowIdx + "$='3']," +
 			attrRowIdx + "$='5']," +
 			attrRowIdx + "$='7']," +
-			attrRowIdx + "$='9']{background:" + o.__oddRowsBackground_k__ + "}");
+			attrRowIdx + "$='9']{background:" + o._oddRowsBackground + "}");
    }
 
 	for (; i < clen; i++) {
@@ -549,9 +549,9 @@ prototype.__onCreateCss_V__ = function() {
 	return rules.join("");
 };
 
-prototype.__onCreateDynamicCss_C__ = function() {
-	var cellSel = "#" + this.grid.mid + " ." + this._options['__classCell_m__'],
-      str = this.__getRowSelector_AH__() + "{width:" + this.__calCanvasWidth_AT__() + "px}",
+prototype._onCreateDynamicCss = function() {
+	var cellSel = "#" + this.grid.mid + " ." + this._options['_classCell'],
+      str = this._getRowSelector() + "{width:" + this._calCanvasWidth() + "px}",
       colDefs = this.grid.colDefMgr.get(),
       clen = colDefs.length,
       i = 0;
@@ -598,13 +598,13 @@ prototype.onIdChange = function(datarow, before, after) {
    var attrChanged = false,
        node;
    if (this.isRowLockedById(before)) {
-		this.__lockedRows_B__[after] = this.__lockedRows_B__[before];
-		delete this.__lockedRows_B__[before];
+		this._lockedRows[after] = this._lockedRows[before];
+		delete this._lockedRows[before];
    }
 	if (this.isRenderedById(before)) {
-		(this.__renderedRows_A__[after] = this.__renderedRows_A__[before]).setAttribute('i', after);
+		(this._renderedRows[after] = this._renderedRows[before]).setAttribute('i', after);
       attrChanged = true;
-		delete this.__renderedRows_A__[before];
+		delete this._renderedRows[before];
 	}
 };
 
@@ -612,8 +612,8 @@ prototype.onIdChange = function(datarow, before, after) {
 prototype.onIdListChange = function(datalist, befores, idKey) {
    var len = datalist.length,
       i = 0,
-      locked = this.__lockedRows_B__,
-      rendered = this.__renderedRows_A__,
+      locked = this._lockedRows,
+      rendered = this._renderedRows,
       before,
       after,
       attrChanged,
@@ -634,12 +634,12 @@ prototype.onIdListChange = function(datalist, befores, idKey) {
    }
 };
 
-prototype.__getCellSelector_AG__ = function() {
-	return "#" + this.grid.mid + " ." + this._options['__classCell_m__'];
+prototype._getCellSelector = function() {
+	return "#" + this.grid.mid + " ." + this._options['_classCell'];
 };
 
-prototype.__getRowSelector_AH__ = function() {
-	return "#" + this.grid.mid + " ." + this._options['__classRow_l__'];
+prototype._getRowSelector = function() {
+	return "#" + this.grid.mid + " ." + this._options['_classRow'];
 };
 
 /**
@@ -676,10 +676,10 @@ prototype.scrollToRowLazy = function(row) {
    if (Util.isNull(row)) {
       return scrollTop;
    }
-	if (this.__getLastSafeVisibleRow_n__() < row) {
-		return this.scrollToRow(this.__getFirstRowForSafe_o__(row));
+	if (this._getLastSafeVisibleRow() < row) {
+		return this.scrollToRow(this._getFirstRowForSafe(row));
    }
-	if (this.__getFirstSafeVisibleRow_l__() > row) {
+	if (this._getFirstSafeVisibleRow() > row) {
 		return this.scrollToRow(row);
    }
    return scrollTop;
@@ -702,10 +702,10 @@ prototype.scrollToColLazy = function(col) {
    if (Util.isNull(col)) {
       return scrollLeft;
    }
-	if (this.__getLastSafeVisibleCol_s__() < col) {
+	if (this._getLastSafeVisibleCol() < col) {
 		return this.setScrollLeft(this.getScrollHForSafe(col));
    }
-	else if (this.__getFirstSafeVisibleCol_q__() > col) {
+	else if (this._getFirstSafeVisibleCol() > col) {
 		return this.scrollToCol(col);
    }
    return scrollLeft;
@@ -741,7 +741,7 @@ prototype.scrollToLazy = function(row, col) {
 //tested
 prototype.scrollToRow = function(i) {
    if (Util.isNotNull(i)) {
-      return this.setScrollTop(this.__getRowOuterHeight_AN__() * i);
+      return this.setScrollTop(this._getRowOuterHeight() * i);
    }
    return this.getScrollTop();
 };
@@ -760,11 +760,11 @@ prototype.scrollToCol = function(i) {
 	return this.setScrollLeft(this.getColLeft(i));
 };
 
-prototype.__getColInnerWidth_AI__ = function(i) {
+prototype._getColInnerWidth = function(i) {
 	return this.grid.colDefMgr.get(i).width;
 };
 
-prototype.__getColInnerWidthByKey_AJ__ = function(i) {
+prototype._getColInnerWidthByKey = function(i) {
 	return this.grid.colDefMgr.getByKey(i).width;
 };
 
@@ -780,7 +780,7 @@ prototype.__getColInnerWidthByKey_AJ__ = function(i) {
 @version 1.1.7
 */
 prototype.getColWidth = function(i) {
-	return this.grid.colDefMgr.get(i).width + this._options['__padding_i__'];
+	return this.grid.colDefMgr.get(i).width + this._options['_padding'];
 };
 
 /**
@@ -795,38 +795,38 @@ prototype.getColWidth = function(i) {
 @version 1.1.7
 */
 prototype.getColWidthByKey = function(i) {
-	return this.grid.colDefMgr.getByKey(i).width + this._options['__padding_i__'];
+	return this.grid.colDefMgr.getByKey(i).width + this._options['_padding'];
 };
 
-prototype.__getColOuterWidth_AK__ = function(i) {
-	return this.grid.colDefMgr.get(i).width + this._options['__padding_i__'] + this._options['__borderThickness_g__'];
+prototype._getColOuterWidth = function(i) {
+	return this.grid.colDefMgr.get(i).width + this._options['_padding'] + this._options['_borderThickness'];
 };
 
-prototype.__getColOuterWidthByKey_AL__ = function(i) {
-	return this.grid.colDefMgr.getByKey(i).width + this._options['__padding_i__'] + this._options['__borderThickness_g__'];
+prototype._getColOuterWidthByKey = function(i) {
+	return this.grid.colDefMgr.getByKey(i).width + this._options['_padding'] + this._options['_borderThickness'];
 };
 
-prototype.__getPadding_AM__ = function() {
-	return this._options['__padding_i__'];
+prototype._getPadding = function() {
+	return this._options['_padding'];
 };
 
-prototype.__colWidthPlus_f__ = function() {
-	return this._options['__padding_i__'] + this._options['__borderThickness_g__'];
+prototype._colWidthPlus = function() {
+	return this._options['_padding'] + this._options['_borderThickness'];
 };
 
-prototype.__getRowOuterHeight_AN__ = function() {
-	return this._options['__rowH_f__'] + this._options['__borderThickness_g__'];
+prototype._getRowOuterHeight = function() {
+	return this._options['_rowH'] + this._options['_borderThickness'];
 };
 
-prototype.__getRowInnerHeight_AO__ = function() {
-	return this._options['__rowH_f__'];
+prototype._getRowInnerHeight = function() {
+	return this._options['_rowH'];
 };
 
-prototype.__calHeight_AP__ = function() {
-	if (this._options['__autoHeight_w__']) {
-		return this.__calCanvasHeight_AR__() + (this.grid.width() < this.__calCanvasWidth_AT__() ? this.grid._vars.scrollbarDim.h: 0);
+prototype._calHeight = function() {
+	if (this._options['_autoHeight']) {
+		return this._calCanvasHeight() + (this.grid.width() < this._calCanvasWidth() ? this.grid._vars.scrollbarDim.h: 0);
    }
-	return this.__getRowOuterHeight_AN__() * this._options['__rowsPerPage_e__'];
+	return this._getRowOuterHeight() * this._options['_rowsPerPage'];
 };
 
 /**
@@ -840,7 +840,7 @@ prototype.__calHeight_AP__ = function() {
 @version 1.1.7
 */
 prototype.getHeight = function() {
-	return this.__mask_a__[0].offsetHeight;
+	return this._mask[0].offsetHeight;
 };
 
 /**
@@ -854,11 +854,11 @@ prototype.getHeight = function() {
 @version 1.1.7
 */
 prototype.getInnerHeight = function() {
-	return this.__mask_a__[0].clientHeight;
+	return this._mask[0].clientHeight;
 };
 
-prototype.__getWidth_AQ__ = function() {
-	return this.__mask_a__[0].offsetWidth;
+prototype._getWidth = function() {
+	return this._mask[0].offsetWidth;
 };
 
 /**
@@ -872,11 +872,11 @@ prototype.__getWidth_AQ__ = function() {
 @version 1.1.7
 */
 prototype.getInnerWidth = function() {
-	return this.__mask_a__[0].clientWidth;
+	return this._mask[0].clientWidth;
 };
 
-prototype.__calCanvasHeight_AR__ = function() {
-	return this.__getRowOuterHeight_AN__() * this.grid.dataMgr.datalist.length;
+prototype._calCanvasHeight = function() {
+	return this._getRowOuterHeight() * this.grid.dataMgr.datalist.length;
 };
 
 /**
@@ -890,17 +890,17 @@ prototype.__calCanvasHeight_AR__ = function() {
 @version 1.0.0
 */
 prototype.getCanvasHeight = function() {
-	return this.__canvas_c__[0].clientHeight;
+	return this._canvas[0].clientHeight;
 };
 
-prototype.__setCanvasHeight_AS__ = function(h) {
+prototype._setCanvasHeight = function(h) {
 	h = parseInt(h);
 	if (isNaN(h) || h < 1) {
 		return;
 	}
 	var old = this.getCanvasHeight();
 	if (h != old) {
-		this.__canvas_c__[0].style.height = h + "px";
+		this._canvas[0].style.height = h + "px";
 		/**
 		캔바스의 높이가 변했을 경우 트리거되는 이벤트 입니다.
 
@@ -916,8 +916,8 @@ prototype.__setCanvasHeight_AS__ = function(h) {
 	}
 };
 
-prototype.__calCanvasWidth_AT__ = function() {
-	return this.__colLefts_Bd__[this.grid.colDefMgr.length()];
+prototype._calCanvasWidth = function() {
+	return this._colLefts[this.grid.colDefMgr.length()];
 };
 
 /**
@@ -931,17 +931,17 @@ prototype.__calCanvasWidth_AT__ = function() {
 @version 1.0.0
 */
 prototype.getCanvasWidth = function() {
-	return this.__canvas_c__[0].clientWidth;
+	return this._canvas[0].clientWidth;
 };
 
-prototype.__setCanvasWidth_AU__ = function(w) {
+prototype._setCanvasWidth = function(w) {
 	w = parseInt(w);
 	if (isNaN(w) || w < 1) {
 		return;
 	}
 	var old = this.getCanvasWidth();
 	if (w != old) {
-		this.__canvas_c__[0].style.width = w + "px";
+		this._canvas[0].style.width = w + "px";
 
 		/**
 		캔바스의 폭이 변했을 경우 트리거되는 이벤트 입니다.
@@ -971,32 +971,32 @@ prototype.__setCanvasWidth_AU__ = function(w) {
 @version 1.0.0
 */
 prototype.getColLeft = function(i) {
-	return this.__colLefts_Bd__[i];
+	return this._colLefts[i];
 };
 
-prototype.__getColLefts_Bh__ = function() {
-	return this.__colLefts_Bd__;
+prototype._getColLefts = function() {
+	return this._colLefts;
 };
 
-prototype.__setColLefts_Be__ = function(from, to) {
+prototype._setColLefts = function(from, to) {
 	if (Util.isNull(from)) {
 		from = 0;
    }
 
-	var colDefs = this.grid.colDefMgr.get(), widthPlus = this.__colWidthPlus_f__();
+	var colDefs = this.grid.colDefMgr.get(), widthPlus = this._colWidthPlus();
 	if (Util.isNull(to)) {
 		to = colDefs.length;
    }
 
 	for (; from < to; from++)  {
-		this.__colLefts_Bd__[from + 1] = this.__colLefts_Bd__[from] + colDefs[from].width + widthPlus;
+		this._colLefts[from + 1] = this._colLefts[from] + colDefs[from].width + widthPlus;
    }
-	return this.__colLefts_Bd__;
+	return this._colLefts;
 };
 
-prototype.__onReorderCols_Bf__ = function() {
-	this.__setColLefts_Be__();
-	this.__rerender_Ba__();
+prototype._onReorderCols = function() {
+	this._setColLefts();
+	this._rerender();
 };
 
 
@@ -1022,7 +1022,7 @@ prototype.setWidthByKey = function(key, w) {
 	var old = colDef['width'];
 	colDef['width'] = w;
 
-	this.__setCanvasWidth_AU__(this.__setColLefts_Be__(this.grid.colDefMgr.getIdxByKey(key))[this.grid.colDefMgr.length()]);
+	this._setCanvasWidth(this._setColLefts(this.grid.colDefMgr.getIdxByKey(key))[this.grid.colDefMgr.length()]);
 
 	this.grid._recreateDynamicCss();
 
@@ -1054,8 +1054,8 @@ prototype.setWidthByKey = function(key, w) {
 	this.grid.event.trigger("onResizeCol_" + key + " onResizeCol", [key, w, old]);
 };
 
-prototype.__autoColWidth_Bg__ = function(key) {
-	var res = this.__canvasFind_AC__(".k_" + key),
+prototype._autoColWidth = function(key) {
+	var res = this._canvasFind(".k_" + key),
       max = Number.MIN_VALUE,
       len = res.length,
       i = 0;
@@ -1065,32 +1065,32 @@ prototype.__autoColWidth_Bg__ = function(key) {
       }
    }
 
-	max -= this.__getPadding_AM__();
+	max -= this._getPadding();
 	this.setWidthByKey(key, max);
 };
 
-prototype.__setWidth_AV__ = function(w) {
+prototype._setWidth = function(w) {
 	w = parseInt(w);
 	if (isNaN(w) || w < 1) {
 		return;
 	}
-	this.__mask_a__[0].style.width = w + "px";
+	this._mask[0].style.width = w + "px";
 };
 
 //tested
 prototype.getScrollTop = function() {
-	return this.__mask_a__[0].scrollTop;
+	return this._mask[0].scrollTop;
 };
 
 prototype.getScrollLeft = function() {
-	return this.__mask_a__[0].scrollLeft;
+	return this._mask[0].scrollLeft;
 };
 
 //tested
 prototype.setScrollTop = function(t) {
    var scrollTop = this.getScrollTop();
    if (Util.isNotNull(t) && scrollTop != t) {
-      return (this.__mask_a__[0].scrollTop = t);
+      return (this._mask[0].scrollTop = t);
    }
    return scrollTop;
 };
@@ -1098,53 +1098,53 @@ prototype.setScrollTop = function(t) {
 prototype.setScrollLeft = function(left) {
    var scrollLeft = this.getScrollLeft();
    if (Util.isNotNull(left) && scrollLeft != left) {
-      return (this.__mask_a__[0].scrollLeft = left);
+      return (this._mask[0].scrollLeft = left);
    }
    return scrollLeft;
 };
 
-prototype.__hasHScrollbar_i__ = function() {
-	return this.__mask_a__[0].offsetHeight > this.__mask_a__[0].clientHeight;
+prototype._hasHScrollbar = function() {
+	return this._mask[0].offsetHeight > this._mask[0].clientHeight;
 };
 
-prototype.__hasVScrollbar_j__ = function() {
-	return this.__mask_a__[0].offsetWidth > this.__mask_a__[0].clientWidth;
+prototype._hasVScrollbar = function() {
+	return this._mask[0].offsetWidth > this._mask[0].clientWidth;
 };
 
-prototype.__heightPlus_AW__ = function() {
-	return this.__mask_a__[0].offsetHeight - this.__mask_a__[0].clientHeight;
+prototype._heightPlus = function() {
+	return this._mask[0].offsetHeight - this._mask[0].clientHeight;
 };
 
-prototype.__widthPlus_AX__ = function() {
-	return this.__mask_a__[0].offsetWidth - this.__mask_a__[0].clientWidth;
+prototype._widthPlus = function() {
+	return this._mask[0].offsetWidth - this._mask[0].clientWidth;
 };
 
 //tested
-prototype.__getFirstVisibleRow_k__ = function() {
-	return Math.floor(this.getScrollTop() / this.__getRowOuterHeight_AN__());
+prototype._getFirstVisibleRow = function() {
+	return Math.floor(this.getScrollTop() / this._getRowOuterHeight());
 };
 
 //tester
-prototype.__getFirstSafeVisibleRow_l__ = function() {
-	return Math.ceil(this.getScrollTop() / this.__getRowOuterHeight_AN__());
+prototype._getFirstSafeVisibleRow = function() {
+	return Math.ceil(this.getScrollTop() / this._getRowOuterHeight());
 };
 
-prototype.__getLastVisibleRow_m__ = function() {
-	return Math.ceil((this.getScrollTop() + this.__mask_a__[0].clientHeight) / this.__getRowOuterHeight_AN__()) - 1;
+prototype._getLastVisibleRow = function() {
+	return Math.ceil((this.getScrollTop() + this._mask[0].clientHeight) / this._getRowOuterHeight()) - 1;
 };
 
-prototype.__getLastSafeVisibleRow_n__ = function() {
-	return Math.floor((this.getScrollTop() + this.__mask_a__[0].clientHeight) / this.__getRowOuterHeight_AN__()) - 1;
+prototype._getLastSafeVisibleRow = function() {
+	return Math.floor((this.getScrollTop() + this._mask[0].clientHeight) / this._getRowOuterHeight()) - 1;
 };
 
-prototype.__getFirstRowForSafe_o__ = function(row) {
-	return row - Math.floor(this.__mask_a__[0].clientHeight / this.__getRowOuterHeight_AN__()) + 1;
+prototype._getFirstRowForSafe = function(row) {
+	return row - Math.floor(this._mask[0].clientHeight / this._getRowOuterHeight()) + 1;
 };
 
 
-prototype.__getFirstVisibleCol_p__ = function() {
+prototype._getFirstVisibleCol = function() {
 	var scrollLeft = this.getScrollLeft(),
-		colLefts = this.__colLefts_Bd__,
+		colLefts = this._colLefts,
 		i = 0,
 		len = colLefts.length;
 
@@ -1159,9 +1159,9 @@ prototype.__getFirstVisibleCol_p__ = function() {
 	return len - 2;
 };
 
-prototype.__getFirstSafeVisibleCol_q__ = function() {
+prototype._getFirstSafeVisibleCol = function() {
 	var scrollLeft = this.getScrollLeft(),
-		colLefts = this.__colLefts_Bd__,
+		colLefts = this._colLefts,
 		i = 0,
 		len = colLefts.length;
 
@@ -1173,9 +1173,9 @@ prototype.__getFirstSafeVisibleCol_q__ = function() {
 	return len - 2;
 };
 
-prototype.__getLastVisibleCol_r__ = function() {
-	var scrollLeft = this.getScrollLeft() + this.__mask_a__[0].clientWidth,
-		colLefts = this.__colLefts_Bd__,
+prototype._getLastVisibleCol = function() {
+	var scrollLeft = this.getScrollLeft() + this._mask[0].clientWidth,
+		colLefts = this._colLefts,
 		i = 0,
 		len = colLefts.length;
 
@@ -1187,9 +1187,9 @@ prototype.__getLastVisibleCol_r__ = function() {
 	return len - 2;
 };
 
-prototype.__getLastSafeVisibleCol_s__ = function() {
-	var scrollLeft = this.getScrollLeft() + this.__mask_a__[0].clientWidth,
-		colLefts = this.__colLefts_Bd__,
+prototype._getLastSafeVisibleCol = function() {
+	var scrollLeft = this.getScrollLeft() + this._mask[0].clientWidth,
+		colLefts = this._colLefts,
 		i = 0,
 		len = colLefts.length;
 
@@ -1201,9 +1201,9 @@ prototype.__getLastSafeVisibleCol_s__ = function() {
 	return len - 2;
 };
 
-prototype.__getFirstColForSafe_t__ = function(col) {
-	var colLefts = this.__colLefts_Bd__,
-		left = colLefts[col + 1] - this.__mask_a__[0].clientWidth,
+prototype._getFirstColForSafe = function(col) {
+	var colLefts = this._colLefts,
+		left = colLefts[col + 1] - this._mask[0].clientWidth,
 		i = col;
 
 	if (left <= 0) {
@@ -1223,8 +1223,8 @@ prototype.__getFirstColForSafe_t__ = function(col) {
 };
 
 prototype.getScrollHForSafe = function(col) {
-	var colLefts = this.__colLefts_Bd__,
-		left = colLefts[col + 1] - this.__mask_a__[0].clientWidth;
+	var colLefts = this._colLefts,
+		left = colLefts[col + 1] - this._mask[0].clientWidth;
 
 	if (colLefts[col] <= left) {
 		return colLefts[col];
@@ -1234,8 +1234,8 @@ prototype.getScrollHForSafe = function(col) {
 };
 
 
-prototype.__getRenderRange_u__ = function() {
-	if (this._options['__autoHeight_w__']) {
+prototype._getRenderRange = function() {
+	if (this._options['_autoHeight']) {
 		return {start:0, end:this.grid.dataMgr.datalist.length - 1};
    }
 
@@ -1243,18 +1243,18 @@ prototype.__getRenderRange_u__ = function() {
 		max = this.grid.dataMgr.datalist.length - 1;
 
 	return {
-		start: (((tmp = (this.__getFirstVisibleRow_k__() - this._options['__bufferSize_d__'])) < 0) ? 0 : tmp),
-		end: (((tmp = (this.__getLastVisibleRow_m__() + this._options['__bufferSize_d__'])) > max) ? max : tmp)
+		start: (((tmp = (this._getFirstVisibleRow() - this._options['_bufferSize'])) < 0) ? 0 : tmp),
+		end: (((tmp = (this._getLastVisibleRow() + this._options['_bufferSize'])) > max) ? max : tmp)
 	};
 };
 
-prototype.__fitHeight_AY__ = function() {
-	this.__mask_a__[0].style.height = this.getCanvasHeight() + this.__heightPlus_AW__() + "px";
+prototype._fitHeight = function() {
+	this._mask[0].style.height = this.getCanvasHeight() + this._heightPlus() + "px";
 };
 
-prototype.__resizeWidth_AZ__ = function(e) {
-	if (this._options['__autoHeight_w__']) {
-		this.__fitHeight_AY__();
+prototype._resizeWidth = function(e) {
+	if (this._options['_autoHeight']) {
+		this._fitHeight();
    }
 };
 
@@ -1262,10 +1262,10 @@ prototype.onAfterRefresh = function(args) {
    if (args !== undefined && args['noRerender'] === true) {
       return;
    }
-   this.__rerender_Ba__();
+   this._rerender();
 };
 
-prototype.__rerender_Ba__ = function() {
+prototype._rerender = function() {
 	/**
 	그리드 뷰가 다시 렌더링 되기 전에 발생하는 이벤트 입니다.
 
@@ -1282,13 +1282,13 @@ prototype.__rerender_Ba__ = function() {
 
 	this.grid.event.trigger("onBeforeRerender");
 	this.unlockAllRows();
-	this.__removeRows_y__();
+	this._removeRows();
 	var rowLen = this.grid.dataMgr.datalist.length;
-	if (this._vars.__lastRowLen_l__ !== rowLen) {
-		this._vars.__lastRowLen_l__ = rowLen;
-		this.__setCanvasHeight_AS__(this.__calCanvasHeight_AR__());
+	if (this._vars._lastRowLen !== rowLen) {
+		this._vars._lastRowLen = rowLen;
+		this._setCanvasHeight(this._calCanvasHeight());
 	}
-	this.__render_w__();
+	this._render();
 
 	// resetting scrolls
 	this.setScrollTop(st);
@@ -1297,34 +1297,34 @@ prototype.__rerender_Ba__ = function() {
 	this.grid.event.trigger("onAfterRerender");
 };
 
-prototype.__render_w__ = function(range) {
+prototype._render = function(range) {
 	/*
-	if (this.__lockExist_Ad__()) {
-		this.__renderShift_x__(range);
+	if (this._lockExist()) {
+		this._renderShift(range);
 	}
 	else {
 	*/
-		this.__removeAndRenderRows_Am__(range);
+		this._removeAndRenderRows(range);
 	//}
 };
 
-prototype.__renderShift_x__ = function(range) {
+prototype._renderShift = function(range) {
 	if (Util.isNull(range)) {
-		range = this.__getRenderRange_u__();
+		range = this._getRenderRange();
 	}
 
-	this.__removeRowsExcept_z__(range);
-	this.__appendRows_Al__(range);
+	this._removeRowsExcept(range);
+	this._appendRows(range);
 };
 
-prototype.__removeRows_y__ = function(range) {
-	var canvas = this.__canvas_c__[0],
-		rendered = this.__renderedRows_A__,
-		locked = this.__lockedRows_B__,
+prototype._removeRows = function(range) {
+	var canvas = this._canvas[0],
+		rendered = this._renderedRows,
+		locked = this._lockedRows,
 		id;
 
 	if (Util.isNull(range)) {
-		if (this.__lockExist_Ad__()) {
+		if (this._lockExist()) {
 			for (id in rendered) {
 				if (rendered.hasOwnProperty(id)) {
 					if (locked.hasOwnProperty(id)) {
@@ -1335,7 +1335,7 @@ prototype.__removeRows_y__ = function(range) {
 			}
 		}
 		else {
-			this.__renderedRows_A__ = {};
+			this._renderedRows = {};
 			canvas.innerHTML = "";
 		}
 	}
@@ -1353,14 +1353,14 @@ prototype.__removeRows_y__ = function(range) {
 	}
 };
 
-prototype.__removeRowsExcept_z__ = function(range) {
-	var canvas = this.__canvas_c__[0],
-		rendered = this.__renderedRows_A__,
-		locked = this.__lockedRows_B__,
+prototype._removeRowsExcept = function(range) {
+	var canvas = this._canvas[0],
+		rendered = this._renderedRows,
+		locked = this._lockedRows,
 		id;
 
 	if (Util.isNull(range)) {
-		if (this.__lockExist_Ad__()) {
+		if (this._lockExist()) {
 			for (id in rendered) {
 				if (rendered.hasOwnProperty(id) && locked.hasOwnProperty(id) === false) {
 					canvas.removeChild(rendered[id]);
@@ -1369,7 +1369,7 @@ prototype.__removeRowsExcept_z__ = function(range) {
 			}
 		}
 		else {
-			this.__renderedRows_A__ = {};
+			this._renderedRows = {};
 			canvas.innerHTML = "";
 		}
 	}
@@ -1398,9 +1398,9 @@ prototype.destroyRow = function(datarow) {
 prototype.destroyRowById = function(id) {
 	if (Util.isNotNull(id)) {
 		this.unlockRowById(id);
-		if (this.__renderedRows_A__.hasOwnProperty(id)) {
-			this.__canvas_c__[0].removeChild(this.__renderedRows_A__[id]);
-			delete this.__renderedRows_A__[id];
+		if (this._renderedRows.hasOwnProperty(id)) {
+			this._canvas[0].removeChild(this._renderedRows[id]);
+			delete this._renderedRows[id];
 		}
 	}
 };
@@ -1409,8 +1409,8 @@ prototype.destroyRowByIdx = function(i) {
 	return this.destroyRowById(this.grid.dataMgr.getIdByIdx(i));
 };
 
-prototype.__lockExist_Ad__ = function() {
-	return Util.isNotEmptyObj(this.__lockedRows_B__);
+prototype._lockExist = function() {
+	return Util.isNotEmptyObj(this._lockedRows);
 };
 
 // isRowLocked
@@ -1431,7 +1431,7 @@ prototype.__lockExist_Ad__ = function() {
   */
 prototype.isRowLockedById = function(id) {
 	if (Util.isNotNull(id)) {
-		return this.__lockedRows_B__.hasOwnProperty(id);
+		return this._lockedRows.hasOwnProperty(id);
 	}
 	return false;
 };
@@ -1485,7 +1485,7 @@ prototype.isRowLockedByIdx = function(i) {
   */
 prototype.lockRowById = function(id) {
 	if (Util.isNotNull(id) && this.grid.dataMgr.hasById(id)) {
-		this.__lockedRows_B__[id] = true;
+		this._lockedRows[id] = true;
 	}
 };
 
@@ -1534,7 +1534,7 @@ prototype.lockRowByIdx = function(i) {
   */
 prototype.unlockRowById = function(id) {
 	if (this.isRowLockedById(id)) {
-		delete this.__lockedRows_B__[id];
+		delete this._lockedRows[id];
 	}
 };
 
@@ -1579,7 +1579,7 @@ prototype.unlockRowByIdx = function(i) {
   @version 1.3.0
   */
 prototype.unlockAllRows = function() {
-	this.__lockedRows_B__ = {};
+	this._lockedRows = {};
 };
 
 /**
@@ -1598,14 +1598,14 @@ prototype.rerenderRowById = function(id) {
 		return;
 	}
 
-	var rmap = this.__renderedRows_A__,
-		canvas = this.__canvas_c__[0],
+	var rmap = this._renderedRows,
+		canvas = this._canvas[0],
 		datam = this.grid.dataMgr,
 		i = datam.getIdxById(id),
 		datarow = datam.getById(id),
 		colDefs = this.grid.colDefMgr.get(),
-		colCommon = this.__getColCellClasses_An__(colDefs),
-		rowH = this.__getRowOuterHeight_AN__(),
+		colCommon = this._getColCellClasses(colDefs),
+		rowH = this._getRowOuterHeight(),
 		html = [],
 		newNodes;
 
@@ -1617,7 +1617,7 @@ prototype.rerenderRowById = function(id) {
 		this.grid.event.trigger("onBeforeRenderRows", [[i]]);
 
 		// render and append to canvas
-		this.__renderRow_Ap__(html, i, datarow, colDefs, colCommon, rowH);
+		this._renderRow(html, i, datarow, colDefs, colCommon, rowH);
 		rmap[id] = Util.appendHTML(canvas, html.join(""))[0];
 
 		// fire event to notify rendere completion
@@ -1677,7 +1677,7 @@ prototype.rerenderCellByIdAndKey = function(id, key) {
 			row = datam.getIdxById(id),
 			col = colm.getIdxByKey(key);
 
-		cellnode.innerHTML = this.__renderCell_Aq__([], row, col, datarow, colDef).join("");
+		cellnode.innerHTML = this._renderCell([], row, col, datarow, colDef).join("");
 	}
 };
 
@@ -1696,7 +1696,7 @@ prototype.rerenderCellByIdx = function(row, col) {
 	return this.rerenderCellByIdAndKey(this.grid.dataMgr.getIdByIdx(row), this.grid.colDefMgr.getKeyByIdx(col));
 };
 
-prototype.__appendRows_Al__ = function(range) {
+prototype._appendRows = function(range) {
 	this.grid.event.trigger("onBeforeRenderRows", [range]);
 	var html = [],
 		i = range.start,
@@ -1705,10 +1705,10 @@ prototype.__appendRows_Al__ = function(range) {
 		idKey = this.grid.dataMgr.idKey,
 		colDefs = this.grid.colDefMgr.get(),
 		collen = colDefs.length,
-		colCommon = this.__getColCellClasses_An__(colDefs),
-		rendered = this.__renderedRows_A__,
-		rowH = this.__getRowOuterHeight_AN__(),
-		canvas = this.__canvas_c__[0],
+		colCommon = this._getColCellClasses(colDefs),
+		rendered = this._renderedRows,
+		rowH = this._getRowOuterHeight(),
+		canvas = this._canvas[0],
 		datarow,
 		id,
 		added = [],
@@ -1721,7 +1721,7 @@ prototype.__appendRows_Al__ = function(range) {
 		if (rendered.hasOwnProperty(id = datarow[idKey])) {
 			continue;
 		}
-		this.__renderRow_Ap__(html, i, datarow, colDefs, colCommon, rowH);
+		this._renderRow(html, i, datarow, colDefs, colCommon, rowH);
 		added.push(id);
 	}	
 
@@ -1734,9 +1734,9 @@ prototype.__appendRows_Al__ = function(range) {
 	this.grid.event.trigger("onAppendRows", [range]);
 };
 
-prototype.__removeAndRenderRows_Am__ = function(range) {
+prototype._removeAndRenderRows = function(range) {
 	if (Util.isNull(range)) {
-		range = this.__getRenderRange_u__();
+		range = this._getRenderRange();
 	}
 	this.grid.event.trigger("onBeforeRenderRows", [range]);
 
@@ -1748,9 +1748,9 @@ prototype.__removeAndRenderRows_Am__ = function(range) {
 		idKey = dataMgr.idKey,
 		colDefs = this.grid.colDefMgr.get(),
 		collen = colDefs.length,
-		colCommon = this.__getColCellClasses_An__(colDefs),
-		canvas = this.__canvas_c__[0],
-		rowH = this.__getRowOuterHeight_AN__(),
+		colCommon = this._getColCellClasses(colDefs),
+		canvas = this._canvas[0],
+		rowH = this._getRowOuterHeight(),
 		datarow,
 		added = [],
 		newRendered = {},
@@ -1758,7 +1758,7 @@ prototype.__removeAndRenderRows_Am__ = function(range) {
 
 	for (; i <= end; i++) {
 		datarow = datalist[i];
-		this.__renderRow_Ap__(html, i, datarow, colDefs, colCommon, rowH);
+		this._renderRow(html, i, datarow, colDefs, colCommon, rowH);
 		added.push(datarow[idKey]);
 	}
 
@@ -1768,7 +1768,7 @@ prototype.__removeAndRenderRows_Am__ = function(range) {
 		newRendered[added[i]] = canvas.childNodes[i];
 	}
 
-	this.__renderedRows_A__ = newRendered;
+	this._renderedRows = newRendered;
 
 	/**
 	  그리드가 로우가 새로 렌더링 되었을 때 (로우가 추가되거나, 다시 렌더링 되거나) 발생하는 이벤트 입니다.
@@ -1783,8 +1783,8 @@ prototype.__removeAndRenderRows_Am__ = function(range) {
 	this.grid.event.trigger("onAppendRows", [range]);
 };
 
-prototype.__getColCellClass_Ao__ = function(colDef) {
-	var cssClass = this._options['__classCell_m__'] + " " + "k_" + colDef['key'];
+prototype._getColCellClass = function(colDef) {
+	var cssClass = this._options['_classCell'] + " " + "k_" + colDef['key'];
 	if (Util.isNotNull(colDef['colClass'])) {
 		cssClass += " " + colDef['colClass'];
 	}
@@ -1805,7 +1805,7 @@ prototype.__getColCellClass_Ao__ = function(colDef) {
 	return cssClass;
 };
 
-prototype.__getColCellClasses_An__ = function(colDefs) {
+prototype._getColCellClasses = function(colDefs) {
 	var cssClasses = [],
 		i = 0,
 		len = colDefs.length;
@@ -1813,15 +1813,15 @@ prototype.__getColCellClasses_An__ = function(colDefs) {
 		colDefs = this.grid.colDefMgr.get();
 	}
 	for (; i < len; i++) {
-		cssClasses.push(this.__getColCellClass_Ao__(colDefs[i]));
+		cssClasses.push(this._getColCellClass(colDefs[i]));
 	}
 	return cssClasses;
 };
 
-prototype.__renderRow_Ap__ = function(html, rowIdx, datarow, colDefs, colCommon, rowH) {
-	html.push("<div class='" + this._options['__classRow_l__'] +
+prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rowH) {
+	html.push("<div class='" + this._options['_classRow'] +
 			"' i='" + datarow[this.grid.dataMgr.idKey] +
-			"' " + this._options['__attrRowIdx_a__'] + "='" + rowIdx +
+			"' " + this._options['_attrRowIdx'] + "='" + rowIdx +
 			"' style='top:" + (rowH * rowIdx) + "px'>");
 	var i = 0,
 		collen = colDefs.length;
@@ -1844,14 +1844,14 @@ prototype.__renderRow_Ap__ = function(html, rowIdx, datarow, colDefs, colCommon,
 		  */
 		html.push("<div class='" + colCommon[i] + " " +
 				this.grid.event.trigger("onGetCellClass", [rowIdx, i, datarow, colDefs[i]]).join(" ") + "'>");
-		this.__renderCell_Aq__(html, rowIdx, i, datarow, colDefs[i]);
+		this._renderCell(html, rowIdx, i, datarow, colDefs[i]);
 		html.push("</div>");
 	}
 	html.push("</div>");
 	return html;
 };
 
-prototype.__renderCell_Aq__ = function(html, rowIdx, colIdx, datarow, colDef) {
+prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef) {
 	/**
 	  그리드 셀 안에 prepend 할 html 을 생성할 때 발생하는 이벤트입니다. prepend 할 내용이 있으면 html 에 push 해주면 됩니다.
 	  예) html.push("prepend 할 내용");
@@ -1926,7 +1926,7 @@ JGM.Cell.prototype.scrollTo = function() {
 };
 
 prototype._keydown = function(e) {
-	if (!Util.contains(this.__mask_a__[0], document.activeElement, this._ctnr[0])) {
+	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
 		return;
 	}
 
@@ -1957,7 +1957,7 @@ prototype._keydown = function(e) {
 };
 
 prototype._keyup = function(e) {
-	if (!Util.contains(this.__mask_a__[0], document.activeElement, this._ctnr[0])) {
+	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
 		return;
 	}
 
@@ -1988,7 +1988,7 @@ prototype._keyup = function(e) {
 };
 
 prototype._keypress = function(e) {
-	if (!Util.contains(this.__mask_a__[0], document.activeElement, this._ctnr[0])) {
+	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
 		return;
 	}
 
@@ -2067,10 +2067,10 @@ prototype._mousein = function(e) {
 	  @version 1.1.7
 	  */
 	if (this._vars.drag) {
-		this.__triggerMouseEvent_Ar__(e, {'event':"draginCanvas mouseinCanvas"});
+		this._triggerMouseEvent(e, {'event':"draginCanvas mouseinCanvas"});
 	}
 	else {
-		this.__triggerMouseEvent_Ar__(e, {'event':"mouseinCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseinCanvas"});
 	}
 };
 
@@ -2123,10 +2123,10 @@ prototype._mouseout = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._vars.drag) {
-		this.__triggerMouseEvent_Ar__(e, {'event':"dragoutCanvas mouseoutCanvas"});
+		this._triggerMouseEvent(e, {'event':"dragoutCanvas mouseoutCanvas"});
 	}
 	else {
-		this.__triggerMouseEvent_Ar__(e, {'event':"mouseoutCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseoutCanvas"});
 	}
 };
 
@@ -2179,10 +2179,10 @@ prototype._mouseenter = function(e) {
 	  @version 1.1.7
 	  */
 	if (this._vars.drag) {
-		this.__triggerMouseEvent_Ar__(e, {'event':"dragenterCanvas mouseenterCanvas"});
+		this._triggerMouseEvent(e, {'event':"dragenterCanvas mouseenterCanvas"});
 	}
 	else {
-		this.__triggerMouseEvent_Ar__(e, {'event':"mouseenterCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseenterCanvas"});
 	}
 };
 
@@ -2235,10 +2235,10 @@ prototype._mouseleave = function(e) {
 	  @version 1.1.7
 	  */
 	if (this._vars.drag) {
-		this.__triggerMouseEvent_Ar__(e, {'event':"dragleaveCanvas mouseleaveCanvas"});
+		this._triggerMouseEvent(e, {'event':"dragleaveCanvas mouseleaveCanvas"});
 	}
 	else {
-		this.__triggerMouseEvent_Ar__(e, {'event':"mouseleaveCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseleaveCanvas"});
 	}
 };
 
@@ -2291,10 +2291,10 @@ prototype._mousemove = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._vars.drag) {
-		this.__triggerMouseEvent_Ar__(e, {'event':"dragmoveCanvas mousemoveCanvas"});
+		this._triggerMouseEvent(e, {'event':"dragmoveCanvas mousemoveCanvas"});
 	}
 	else {
-		this.__triggerMouseEvent_Ar__(e, {'event':"mousemoveCanvas"});
+		this._triggerMouseEvent(e, {'event':"mousemoveCanvas"});
 	}
 };
 
@@ -2347,10 +2347,10 @@ prototype._mouseover = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._vars.drag) {
-		this.__triggerMouseEvent_Ar__(e, {'event':"dragoverCanvas mouseoverCanvas"});
+		this._triggerMouseEvent(e, {'event':"dragoverCanvas mouseoverCanvas"});
 	}
 	else {
-		this.__triggerMouseEvent_Ar__(e, {'event':"mouseoverCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseoverCanvas"});
 	}
 };
 
@@ -2378,7 +2378,7 @@ prototype._mousedown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this.__triggerMouseEvent_Ar__(e, {'event':"mousedownCanvas"})) {
+	if (this._triggerMouseEvent(e, {'event':"mousedownCanvas"})) {
 		this._vars.drag = true;
 		this.focus(e);
 	}
@@ -2409,7 +2409,7 @@ prototype._mouseup = function(e) {
 	  @version 1.0.0
 	  */
 	this._vars.drag = false;
-	if (this.__triggerMouseEvent_Ar__(e, {'event':"mouseupCanvas"})) {
+	if (this._triggerMouseEvent(e, {'event':"mouseupCanvas"})) {
 		this.focus(e);
 	}
 };
@@ -2438,7 +2438,7 @@ prototype._click = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.__triggerMouseEvent_Ar__(e, {'event':"clickCanvas"});
+	this._triggerMouseEvent(e, {'event':"clickCanvas"});
 };
 
 prototype._dblclick = function(e) {
@@ -2465,11 +2465,11 @@ prototype._dblclick = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.__triggerMouseEvent_Ar__(e, {'event':"dblclickCanvas"});
+	this._triggerMouseEvent(e, {'event':"dblclickCanvas"});
 };
 
-prototype.__triggerMouseEvent_Ar__ = function(e, args) {
-	var node = this.__getClosestCell_Az__(e.target),
+prototype._triggerMouseEvent = function(e, args) {
+	var node = this._getClosestCell(e.target),
 		arr,
 		earr,
 		i,
@@ -2494,11 +2494,11 @@ prototype.__triggerMouseEvent_Ar__ = function(e, args) {
 	return true;
 };
 
-prototype.__scroll_As__ = function() {
+prototype._scroll = function() {
 	var scrollTop = this.getScrollTop(),
-		scrollVDist = scrollTop - this._vars.__lastScrollTop_d__,
+		scrollVDist = scrollTop - this._vars._lastScrollTop,
 		scrollLeft = this.getScrollLeft(),
-		scrollHDist = scrollLeft - this._vars.__lastScrollLeft_e__;
+		scrollHDist = scrollLeft - this._vars._lastScrollLeft;
 
 	if (scrollVDist === 0 && scrollHDist === 0) {
 		return;
@@ -2516,7 +2516,7 @@ prototype.__scroll_As__ = function() {
 	this.grid.event.trigger("onScrollViewport");
 
 	if (scrollHDist !== 0) {
-		this._vars.__lastScrollLeft_e__ = scrollLeft;
+		this._vars._lastScrollLeft = scrollLeft;
 
 		/**
 		  그리드 뷰가 가로 스크롤 되었을 때 발생하는 이벤트 입니다.
@@ -2530,19 +2530,19 @@ prototype.__scroll_As__ = function() {
 		this.grid.event.trigger("onScrollViewportH", [scrollLeft]);
 	}
 
-	var numDiff = Math.abs(scrollVDist / this.__getRowOuterHeight_AN__());
+	var numDiff = Math.abs(scrollVDist / this._getRowOuterHeight());
 
-	if (numDiff < this._options['__appendThreshold_b__']) {
+	if (numDiff < this._options['_appendThreshold']) {
 		return;
 	}
 
-	this._vars.__lastScrollTop_d__ = scrollTop;
-	//if (numDiff >= this._options['__renderThreshold_c__']) {
-	this.__render_w__();
+	this._vars._lastScrollTop = scrollTop;
+	//if (numDiff >= this._options['_renderThreshold']) {
+	this._render();
 	/*
 	   }
 	   else {
-	   this.__renderShift_x__();
+	   this._renderShift();
 	   }
 	   */
 
@@ -2576,16 +2576,16 @@ prototype.focus = function(e) {
 
 	//var scr = Util.getBodyScroll();
 
-	if (this.__mask_a__[0] !== document.activeElement) {
-		if (Util.isFunction(this.__mask_a__[0].setActive)) {
+	if (this._mask[0] !== document.activeElement) {
+		if (Util.isFunction(this._mask[0].setActive)) {
 			try {
-				this.__mask_a__[0].setActive();
+				this._mask[0].setActive();
 			}
 			catch (exp) {}
 		}
-		this.__mask_a__[0].focus();
-		if (document.activeElement !== this.__mask_a__[0]) {
-			this.__mask_a__.focus();
+		this._mask[0].focus();
+		if (document.activeElement !== this._mask[0]) {
+			this._mask.focus();
 		}
 	}
 
@@ -2608,7 +2608,7 @@ prototype.focus = function(e) {
   */
 prototype.isRenderedById = function(id) {
 	if (Util.isNotNull(id)) {
-		return this.__renderedRows_A__.hasOwnProperty(id);
+		return this._renderedRows.hasOwnProperty(id);
 	}
 	return false;
 };
@@ -2649,7 +2649,7 @@ prototype.isRenderedByIdx = function(rowIdx) {
 //tested
 prototype.getRowById = function(id) {
 	if (this.isRenderedById(id)) {
-		return this.__renderedRows_A__[id];
+		return this._renderedRows[id];
 	}
 };
 
@@ -2665,7 +2665,7 @@ prototype.getRowByIdx = function(i) {
 //tested
 prototype.getRenderedRowById = function(id) {
 	if (this.isRenderedById(id)) {
-		return this.__renderedRows_A__[id];
+		return this._renderedRows[id];
 	}
 };
 
@@ -2678,8 +2678,8 @@ prototype.getRenderedRowByIdx = function(i) {
 };
 
 prototype.getRenderedRows = function() {
-	return Util.toArray(this.__renderedRows_A__);
-	return Array.prototype.slice.call(this.__canvas_c__[0].childNodes);
+	return Util.toArray(this._renderedRows);
+	return Array.prototype.slice.call(this._canvas[0].childNodes);
 };
 
 prototype.getCell = function(rowIdx, colIdx) {
@@ -2712,23 +2712,23 @@ prototype.getRenderedCellByIdAndKey = function(id, key) {
 	}
 };
 
-prototype.__getClosestCell_Az__ = function(obj) {
-	return Util.closestWithTag(obj, "DIV", this._options['__classCell_m__'], this.__canvas_c__[0]);
+prototype._getClosestCell = function(obj) {
+	return Util.closestWithTag(obj, "DIV", this._options['_classCell'], this._canvas[0]);
 };
 
-prototype.__getClosestRow_AA__ = function(obj) {
-	return Util.closestWithTag(obj, "DIV", this._options['__classRow_l__'], this.__canvas_c__[0]);
+prototype._getClosestRow = function(obj) {
+	return Util.closestWithTag(obj, "DIV", this._options['_classRow'], this._canvas[0]);
 };
 
-prototype.__getClosestRowIdx_AB__ = function(obj) {
-	return this.grid.dataMgr.getIdxByNode(this.__getClosestRow_AA__(obj));
+prototype._getClosestRowIdx = function(obj) {
+	return this.grid.dataMgr.getIdxByNode(this._getClosestRow(obj));
 };
 
-prototype.__canvasFind_AC__ = function(selector) {
-	return this.__canvas_c__.find(selector);
+prototype._canvasFind = function(selector) {
+	return this._canvas.find(selector);
 };
 
-ViewportManager.__renderer_AD__ = function(value, rowIdx, colIdx, datarow, colDef, viewMgr) {
+ViewportManager._renderer = function(value, rowIdx, colIdx, datarow, colDef, viewMgr) {
 	return Util.ifNull(value, "");
 };
 

@@ -46,7 +46,7 @@ JGM
 @scope JGM
 */
 
-JGM.__map_a__ = {
+JGM._map = {
 	// notloaded | loading | loaded
 	'ArrayExtIE':			{ cacheModule: false	},
 	'Cache':				{ cacheModule: true	},
@@ -99,8 +99,8 @@ JGM.create = function(name, args) {
 	if (!this.hasOwnProperty(name)) {
 		throw new Error('cannot find a grid module: name=' + name);
 	}
-	if (this.__map_a__.hasOwnProperty(name)) {
-		if (this.__map_a__[name].cacheModule) {
+	if (this._map.hasOwnProperty(name)) {
+		if (this._map[name].cacheModule) {
 			var mid = args.mid = "JGM" + this.m.length++;
 			var module = new this[name](args);
 			if (!this.m.hasOwnProperty(name)) {
@@ -137,7 +137,7 @@ JGM._destroy = function(obj, args) {
 						arr = Util.split(cur);
 						len = arr.length;
 						for (j = 0; j < len; j++) {
-							JGM.__deleteMap_l__(obj, arr[j]);
+							JGM._deleteMap(obj, arr[j]);
 						}
 					}
 					else if (cur instanceof Array) {
@@ -156,7 +156,7 @@ JGM._destroy = function(obj, args) {
 						arr = Util.split(cur);
 						len = arr.length;
 						for (j = 0; j < len; j++) {
-							JGM.__deleteArray_r__(obj, arr[j]);
+							JGM._deleteArray(obj, arr[j]);
 						}
 					}
 					else {
@@ -169,7 +169,7 @@ JGM._destroy = function(obj, args) {
 						arr = Util.split(cur);
 						len = arr.length;
 						for (j = 0; j < len; j++) {
-							JGM.__delete$_n__(obj, arr[j]);
+							JGM._delete$(obj, arr[j]);
 						}
 					}
 					else if (cur instanceof Array) {
@@ -188,7 +188,7 @@ JGM._destroy = function(obj, args) {
 						arr = Util.split(cur);
 						len = arr.length;
 						for (j = 0; j < len; j++) {
-							JGM.__deleteStyle_o__(obj, arr[j]);
+							JGM._deleteStyle(obj, arr[j]);
 						}
 					}
 					else if (cur instanceof Array) {
@@ -223,7 +223,7 @@ JGM._destroy = function(obj, args) {
 						arr = Util.split(cur);
 						len = arr.length;
 						for (j = 0; j < len; j++) {
-							JGM.__deleteModule_p__(obj, arr[j]);
+							JGM._deleteModule(obj, arr[j]);
 						}
 					}
 					else if (cur instanceof Array) {
@@ -238,7 +238,7 @@ JGM._destroy = function(obj, args) {
 				break;
 				case "name":
 					if (obj.hasOwnProperty("mid")) {
-						JGM.__remove_f__(args[i], obj.mid);
+						JGM._remove(args[i], obj.mid);
 						delete obj.mid;
 					}
 				break;
@@ -255,7 +255,7 @@ JGM._destroy = function(obj, args) {
 };
 
 // tested
-JGM.__deleteMap_l__ = function(obj, name) {
+JGM._deleteMap = function(obj, name) {
 	if (obj.hasOwnProperty(name)) {
 		Util.emptyObject(obj[name]);
 		delete obj[name];
@@ -263,7 +263,7 @@ JGM.__deleteMap_l__ = function(obj, name) {
 };
 
 // tested
-JGM.__deleteArray_r__ = function(obj, name) {
+JGM._deleteArray = function(obj, name) {
 	if (obj.hasOwnProperty(name)) {
 		obj[name].length = 0;
 		delete obj[name];
@@ -271,7 +271,7 @@ JGM.__deleteArray_r__ = function(obj, name) {
 };
 
 // tested
-JGM.__delete$_n__ = function(obj, name) {
+JGM._delete$ = function(obj, name) {
 	if (obj.hasOwnProperty(name)) {
 		Util$.unbindRemove(obj[name]);
 		delete obj[name];
@@ -279,21 +279,21 @@ JGM.__delete$_n__ = function(obj, name) {
 };
 
 // tested
-JGM.__deleteStyle_o__ = function(obj, name) {
+JGM._deleteStyle = function(obj, name) {
 	if (obj.hasOwnProperty(name)) {
 		Util.removeStyle(obj[name]);
 		delete obj[name];
 	}
 };
 
-JGM.__deleteModule_p__ = function(obj, name) {
+JGM._deleteModule = function(obj, name) {
 	if (obj.hasOwnProperty(name)) {
 		obj[name].destroy();
 		delete obj[name];
 	}
 };
 
-JGM.__remove_f__ = function(name, mid) {
+JGM._remove = function(name, mid) {
 	delete this.m[name][mid];
 };
 
@@ -324,7 +324,7 @@ JGM._add = function(name, module) {
 	this[name] = module;
 };
 
-JGM.__extend_e__ = function(defaults, options, map) {
+JGM._extend = function(defaults, options, map) {
 	// 옵션을 익스텐드합니다
 	var opt = Util.ifNull(options, {}),
 		i;
@@ -358,18 +358,18 @@ mid 를 가진 {@link JGM.CheckManager CheckManager} 를 가져오려면 <code>JGM.m.JGM1
 */
 JGM.m = {length:0};
 
-JGM.__CONST_g__ = {
-	__cssUnselectable_a__: "-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-o-user-select:none;user-select:none;",
-	__cssUnselectable_b__: "-webkit-user-drag:none;-moz-user-drag:none;user-drag:none;",
-	__checkboxWidth_c__: undefined,
-	__checkboxHeight_d__: undefined,
-	__radioWidth_e__: undefined,
-	__radioHeight_f__: undefined
+JGM._CONST = {
+	_cssUnselectable: "-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-o-user-select:none;user-select:none;",
+	_cssUnselectable: "-webkit-user-drag:none;-moz-user-drag:none;user-drag:none;",
+	_checkboxWidth: undefined,
+	_checkboxHeight: undefined,
+	_radioWidth: undefined,
+	_radioHeight: undefined
 };
 
-JGM.__globalEventsBound_h__ = false;
-JGM.__globalEvents_i__ = {
-	__mousemove_a__:function(e) {
+JGM._globalEventsBound = false;
+JGM._globalEvents = {
+	_mousemove:function(e) {
 		var i,
 			g = JGM.m.Grid;
 		for (i in g) {
@@ -378,7 +378,7 @@ JGM.__globalEvents_i__ = {
 			}
 		}
 	},
-	__mouseup_b__:function(e) {
+	_mouseup:function(e) {
 		var i,
 			g = JGM.m.Grid;
 		for (i in g) {
@@ -387,7 +387,7 @@ JGM.__globalEvents_i__ = {
 			}
 		}
 	},
-	__resize_c__:function(e) {
+	_resize:function(e) {
 		var i,
 			g = JGM.m.Grid;
 		for (i in g) {
@@ -399,24 +399,24 @@ JGM.__globalEvents_i__ = {
 };
 
 JGM._bindGlobalEvents = function() {
-	if (!this.__globalEventsBound_h__) {
+	if (!this._globalEventsBound) {
 		$(document).bind({
-			'mousemove':this.__globalEvents_i__.__mousemove_a__,
-			'mouseup':this.__globalEvents_i__.__mouseup_b__
+			'mousemove':this._globalEvents._mousemove,
+			'mouseup':this._globalEvents._mouseup
 		});
-		$(window).resize(this.__globalEvents_i__.__resize_c__);
-		this.__globalEventsBound_h__ = true;
+		$(window).resize(this._globalEvents._resize);
+		this._globalEventsBound = true;
 	}
 };
 
 JGM._unbindGlobalEvents = function() {
-	if (this.__globalEventsBound_h__) {
+	if (this._globalEventsBound) {
 		$(document).unbind({
-			'mousemove':this.__globalEvents_i__.__mousemove_a__,
-			'mouseup':this.__globalEvents_i__.__mouseup_b__
+			'mousemove':this._globalEvents._mousemove,
+			'mouseup':this._globalEvents._mouseup
 		});
-		$(window).unbind("resize", this.__globalEvents_i__.__resize_c__);
-		this.__globalEventsBound_h__ = false;
+		$(window).unbind("resize", this._globalEvents._resize);
+		this._globalEventsBound = false;
 	}
 };
 
