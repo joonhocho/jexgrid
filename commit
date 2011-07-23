@@ -2,4 +2,7 @@
 <?php
 $gridPath = __DIR__;
 $msg = implode(' ', array_slice($argv, 1));
+if (!$msg) {
+	$msg = date("F j, Y, g:i a");
+}
 system("git add -A; git commit -m \"$msg\"; git push");
