@@ -91,9 +91,10 @@ goog.provide('JGM.core.BaseModule');
 		});
 	}
 
-	goog.inherits(BaseModule, JGM.events.EventDispatcher);
+	goog.inherits(BaseModule, EventDispatcher);
 
-	var proto = BaseModule.prototype;
+	var proto = BaseModule.prototype,
+		superdispose = proto.dispose;
 
 	proto._beforedispose = function() {
 		this.dispose();
@@ -104,7 +105,7 @@ goog.provide('JGM.core.BaseModule');
 		this.dispatchEvent({
 			type:'beforedispose'
 		});
-		goog.base(this, 'dispose');
+		superdispose.call(this);
 		this.dispatchEvent({
 			type:'afterdispose'
 		});

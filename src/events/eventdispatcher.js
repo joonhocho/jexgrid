@@ -54,10 +54,11 @@ function EventDispatcher(args) {
 
 goog.inherits(EventDispatcher, JGM.lang.Disposable);
 
-var proto = EventDispatcher.prototype;
+var proto = EventDispatcher.prototype,
+	sdispose = proto.dispose;
 
 proto.dispose = function() {
-	goog.base(this, 'dispose', -1, true);
+	sdispose.call(this, -1, true);
 };
 
 /**

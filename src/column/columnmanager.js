@@ -1,8 +1,7 @@
 goog.require('Util');
 goog.require('JGM');
-goog.require('JGM.core.Grid');
-goog.require('JGM.column.Column');
 goog.require('JGM.core.BaseModule');
+goog.provide('JGM.column.Column');
 goog.provide('JGM.column.ColDefManager');
 
 /*!

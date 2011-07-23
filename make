@@ -79,27 +79,36 @@ echo $depsCommand . "\n\n\n";
 system($depsCommand);
 
 // read in closure compiler settings from ini file
-echo "[ reading compiler settings... ]\n\n\n";
+echo "[ reading compiler settings... ]\n\n";
 $compilerSettings = parse_ini_file($compilerIniFile);
 $compilerFlags = '';
 foreach ($compilerSettings as $k=>$v) {
 	if ($v) {
 		if ($v === 'FLAG_SET') {
 			$compilerFlags .= " --$k";
+			echo "--$k\n";
 		}
 		else {
 			$compilerFlags .= " --$k $v";
+			echo "--$k $v\n";
 		}
 	}
 }
+array_walk($libfilenames, function($n) { echo "--externs $n\n"; });
+array_walk($filenames, function($n) { echo "--js $n\n"; });
 $libFiles = implode(' ', array_map(function($n) { return "--externs $n"; }, $libfilenames));
 $sourceFiles = implode(' ', array_map(function($n) { return "--js $n"; }, $filenames));
+$outfile = "--js_output_file $distPath/$outputFileKr";
+echo "$outfile\n";
+$compilerFlags .= " $libFiles $sourceFiles $outfile";
+echo "\n\n";
+
 
 // compile
 echo "[ start compiling... ]\n\n";
-$compilerCommand = "java -jar $compilerJar$compilerFlags $libFiles $sourceFiles --js_output_file $distPath/$outputFileKr";
+$compilerCommand = "java -jar $compilerJar$compilerFlags";
 echo $compilerCommand."\n\n\n";
 
 // compile js sources
 system($compilerCommand);
-echo "[ finished compiling... ]\n";
+echo "\n\n[ finished compiling... ]\n\n";

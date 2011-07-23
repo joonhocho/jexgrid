@@ -1,7 +1,7 @@
 goog.require('Util');
 goog.require('JGM');
-goog.require('JGM.core.Disposable');
-goog.require('JGM.core.EventDispatcher');
+goog.require('JGM.lang.Disposable');
+goog.require('JGM.events.EventDispatcher');
 goog.require('JGM.core.BaseModule');
 goog.provide('JGM.data.DataManager');
 

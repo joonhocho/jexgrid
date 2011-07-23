@@ -1,10 +1,8 @@
 goog.require('Util');
 goog.require('Util$');
 goog.require('JGM');
-goog.require('JGM.core.Disposable');
-goog.require('JGM.core.EventDispatcher');
-goog.require('JGM.core.BaseModule');
-goog.require('JGM.core.ViewportManager');
+goog.require('JGM.lang.Disposable');
+goog.require('JGM.events.EventDispatcher');
 goog.provide('JGM.core.Grid');
 
 /*!

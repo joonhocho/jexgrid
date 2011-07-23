@@ -1,10 +1,9 @@
-goog.require('Util');
-goog.require('JGM');
-goog.require('JGM.core.Grid');
-goog.require('JGM.column.ColDefManager');
-goog.require('JGM.data.DataManager');
-goog.require('JGM.core.ViewportManager');
-goog.provide('JGM.cell.Cell');
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.Grid');
+goog.require('jx.grid.ColumnManager');
+goog.require('jx.grid.DataManager');
+goog.provide('jx.grid.Cell');
 
 /*!
  * AUTHOR
@@ -20,20 +19,16 @@ JGM
 */
 (function() {
 
- var JGM = goog.getObjectByName('JGM'),
- 	Util = goog.getObjectByName('Util');
-
-
- goog.exportSymbol('JGM.cell.Cell', Cell);
+ goog.exportSymbol('jx.grid.Cell', Cell);
 
 /**
 Cell 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
-@module Cell
-@requires JGM
-@requires JGM.Grid
-@requires JGM.ColDefManager
-@requires JGM.DataManager
-@requires JGM.ViewportManager
+@module jx.grid.Cell
+@requires jx.grid
+@requires jx.grid.Grid
+@requires jx.grid.ColDefManager
+@requires jx.grid.DataManager
+@requires jx.grid.ViewportManager
  */
 
 /**
