@@ -1,3 +1,4 @@
+goog.require('array_extension');
 goog.require('jx.util');
 
 goog.provide('Tracer');

@@ -1,3 +1,4 @@
+goog.require('array_extension');
 goog.provide('jx.util');
 goog.provide('Util');
 goog.provide('echo');

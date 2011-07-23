@@ -15,6 +15,5 @@ a.removeList;
 a.removeAt;
 a.addAt;
 a.pushList;
-a.push;
 a.pushListAt;
 })();

@@ -1,3 +1,4 @@
+goog.require('array_extension');
 goog.require('jx.util');
 goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');

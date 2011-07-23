@@ -1,3 +1,5 @@
+goog.require('array_extension');
+
 goog.provide('engine_extension');
 /*!
  * AUTHOR

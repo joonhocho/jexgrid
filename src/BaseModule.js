@@ -1,3 +1,4 @@
+goog.require('array_extension');
 goog.require('jx.lang.Disposable');
 goog.require('jx.events.EventDispatcher');
 goog.require('jx.grid');
