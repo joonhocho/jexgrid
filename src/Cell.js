@@ -108,31 +108,31 @@ var prototype = Cell.prototype;
 prototype.__init = function(args) {
    if (Util.isNull(this._datarow)) {
       if (Util.isNotNull(args['row'])) {
-         this._datarow = this.grid.dataMgr.getByIdx(args['row']);
+         this._datarow = this.grid['dataMgr'].getByIdx(args['row']);
       }
       else if (Util.isNotNull(args['node'])) {
-         this._datarow = this.grid.dataMgr.getByNode(args['node'].parentNode);
+         this._datarow = this.grid['dataMgr'].getByNode(args['node'].parentNode);
       }
       else if (Util.isNotNull(args['$'])) {
-         this._datarow = this.grid.dataMgr.getByNode(args['$'][0].parentNode);
+         this._datarow = this.grid['dataMgr'].getByNode(args['$'][0].parentNode);
       }
    }
    if (Util.isNull(this._colDef)) {
       if (Util.isNotNull(args['col'])) {
-         this._colDef = this.grid.colDefMgr.get(args['col']);
+         this._colDef = this.grid['colDefMgr'].get(args['col']);
       }
       else if (Util.isNotNull(args['node'])) {
-         this._colDef = this.grid.colDefMgr.get(Util.index(args['node']));
+         this._colDef = this.grid['colDefMgr'].get(Util.index(args['node']));
       }
       else if (Util.isNotNull(args['$'])) {
-         this._colDef = this.grid.colDefMgr.get(Util.index(args['$'][0]));
+         this._colDef = this.grid['colDefMgr'].get(Util.index(args['$'][0]));
       }
    }
 	if (Util.isNullOr(this._datarow, this._colDef) && Util.isNotNull(args['event'])) {
-      var node = this.grid.view._getClosestCell(args['event'].target);
+      var node = this.grid['view']._getClosestCell(args['event'].target);
       if (Util.isNotNull(node)) {
-         this._datarow = this.grid.dataMgr.getByNode(node.parentNode);
-         this._colDef = this.grid.colDefMgr.get(Util.index(node));
+         this._datarow = this.grid['dataMgr'].getByNode(node.parentNode);
+         this._colDef = this.grid['colDefMgr'].get(Util.index(node));
       }
 	}
 };
@@ -156,7 +156,7 @@ prototype.destroy = function() {
 */
 prototype.getRowIdx = function() {
 	if (Util.isNotNull(this._datarow)) {
-		return this.grid.dataMgr.getIdx(this._datarow);
+		return this.grid['dataMgr'].getIdx(this._datarow);
 	}
 };
 
@@ -173,7 +173,7 @@ prototype.getRowIdx = function() {
 */
 prototype.getColIdx = function() {
 	if (Util.isNotNull(this._colDef)) {
-		return this.grid.colDefMgr.getIdx(this._colDef);
+		return this.grid['colDefMgr'].getIdx(this._colDef);
 	}
 };
 
@@ -190,12 +190,12 @@ prototype.getColIdx = function() {
 */
 prototype.getNode = function() {
 	if (Util.isNotNullAnd(this._datarow, this._colDef)) {
-		return this.grid.view.getCellByIdAndKey(this.grid.dataMgr.getId(this._datarow), this._colDef.key);
+		return this.grid['view'].getCellByIdAndKey(this.grid['dataMgr'].getId(this._datarow), this._colDef.key);
 	}
 };
 
 prototype.getRowNode = function() {
-	return this.grid.view.getRow(this._datarow);
+	return this.grid['view'].getRow(this._datarow);
 };
 
 /**
@@ -265,7 +265,7 @@ prototype.getKey = function() {
 
 
 prototype.getId = function() {
-   return this.grid.dataMgr.getId(this._datarow);
+   return this.grid['dataMgr'].getId(this._datarow);
 };
 
 

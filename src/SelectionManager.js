@@ -97,7 +97,7 @@ function SelectionManager(args) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.selMgr = this;
+	this.grid['selMgr'] = this;
 
 	/**
 	SelectionManager 모듈의 기본 옵션 값들을 정의합니다.
@@ -121,7 +121,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'rowSelKey': this.grid.dataMgr.idKey,
+		'rowSelKey': this.grid['dataMgr'].idKey,
 
 		/**
 		현재 선택된 모든 셀들에 적용되는 배경색입니다. <br>기본값:<code>"#DCEBFE"</code>
@@ -143,7 +143,7 @@ function SelectionManager(args) {
 
 		@author 조준호
 		@since 1.0.0
-         colDefs = this.grid.colDefMgr.get(),
+         colDefs = this.grid['colDefMgr'].get(),
 		@version 1.0.0
 		*/
 		'bgColorLast': "#f1ca7f", //F5C795
@@ -247,7 +247,7 @@ prototype.__init = function() {
 };
 
 prototype.bindEvents = function() {
-	this.grid.event.bind({
+	this.grid['event'].bind({
 		'onGetCellClass': this._onGetCellClass,
 		'onCreateCss': this._onCreateCss,
 		'onDestroy': this._destroy,
@@ -286,8 +286,8 @@ prototype._destroy = function() {
 };
 
 prototype._onCreateCss = function() {
-	var rules = this.grid.event.trigger("onBeforeCreateSelCss"),
-      gridId = "#" + this.grid.mid + " .",
+	var rules = this.grid['event'].trigger("onBeforeCreateSelCss"),
+      gridId = "#" + this.grid['mid'] + " .",
       opt = this._options;
    if (opt['highlightRowEnabled'] === true) {
       rules.push(gridId + opt['classRowSelected']  + " > *{background:" + opt['bgColorRowSelected'] + "}");
@@ -337,7 +337,7 @@ prototype._mousedownCanvas = function(e, cell) {
 	@since 1.1.7
 	@version 1.1.7
 	*/
-	this.grid.event.trigger("onBeforeSelect", [e, cell]);
+	this.grid['event'].trigger("onBeforeSelect", [e, cell]);
 
 	if (this._options['multiSelectEnabled'] === false) {
 		this.selectCell(cell);
@@ -372,7 +372,7 @@ prototype._dragoverCanvas = function(e, cell) {
 prototype._keydownCanvas = function(e) {
 	if (Util.isNullOr(this._last, this._range)) {
 		if (this._consts._NAVKEYS[e.which]) {
-			this.selectCell(JGM.create("Cell", {'grid':this.grid, 'row':this.grid.view._getFirstSafeVisibleRow(), 'col':this.grid.view._getFirstSafeVisibleCol()}));
+			this.selectCell(JGM.create("Cell", {'grid':this.grid, 'row':this.grid['view']._getFirstSafeVisibleRow(), 'col':this.grid['view']._getFirstSafeVisibleCol()}));
       }
 		return;
 	}
@@ -388,7 +388,7 @@ prototype._keydownCanvas = function(e) {
 		@since 1.1.7
 		@version 1.2.3
 		*/
-		if (this.grid.event.triggerInvalid("onBeforeNavigate", [e])) {
+		if (this.grid['event'].triggerInvalid("onBeforeNavigate", [e])) {
 			return;
       }
 
@@ -518,12 +518,12 @@ prototype._keydownCanvas = function(e) {
 		@since 1.3.0
 		@version 1.3.0
 		*/
-		this.grid.event.trigger("onAfterNavigate", [nextCell]);
+		this.grid['event'].trigger("onAfterNavigate", [nextCell]);
 	}
 	else {
 		if (this._cols.length === 1) {
 			var key,
-            cmgr = this.grid.colDefMgr,
+            cmgr = this.grid['colDefMgr'],
             col,
             cols = this._cols;
 			for (col in cols) {
@@ -554,7 +554,7 @@ prototype._keydownCanvas = function(e) {
                  @since 1.1.7
                  @version 1.1.7
                  */
-               this.grid.event.trigger("keydownColSel_" + key + "_" + e.which + " keydownColSel_" + key, [e, cols[col], this._last]);
+               this.grid['event'].trigger("keydownColSel_" + key + "_" + e.which + " keydownColSel_" + key, [e, cols[col], this._last]);
             }
          }
 		}
@@ -589,7 +589,7 @@ prototype._keydownCanvas = function(e) {
             rows = this._rows;
 			for (row in rows) {
             if (rows.hasOwnProperty(row) && row !== "length") {
-               this.grid.event.trigger("keydownRowSel_" + e.which + " keydownRowSel", [e, rows[row], this._last]);
+               this.grid['event'].trigger("keydownRowSel_" + e.which + " keydownRowSel", [e, rows[row], this._last]);
             }
          }
       }
@@ -620,7 +620,7 @@ prototype._keydownCanvas = function(e) {
 		@since 1.1.7
 		@version 1.2.3
 		*/
-		this.grid.event.trigger("keydownSel_" + e.which + " keydownSel", [e, this._rows, this._cols]);
+		this.grid['event'].trigger("keydownSel_" + e.which + " keydownSel", [e, this._rows, this._cols]);
 	}
 };
 
@@ -661,13 +661,13 @@ prototype._isSelected = function(cell) {
 */
 //tested
 JGM.Cell.prototype.isSelected = function() {
-	return this.grid.selMgr._isSelected(this);
+	return this.grid['selMgr']._isSelected(this);
 };
 
 prototype._getCellIdxToNavigate = function(dir, row, col) {
 	switch (dir) {
 		case this._consts._RIGHT:
-			if (col < this.grid.colDefMgr.length() - 1) {
+			if (col < this.grid['colDefMgr'].length() - 1) {
 				col++;
          }
 		break;
@@ -677,7 +677,7 @@ prototype._getCellIdxToNavigate = function(dir, row, col) {
          }
 		break;
 		case this._consts._DOWN:
-			if (row < this.grid.dataMgr.datalist.length - 1) {
+			if (row < this.grid['dataMgr'].datalist.length - 1) {
 				row++;
          }
 		break;
@@ -687,13 +687,13 @@ prototype._getCellIdxToNavigate = function(dir, row, col) {
          }
 		break;
 		case this._consts._PGDN:
-			row += this.grid.view._options['rowsPerPage'];
-			if (row > this.grid.dataMgr.datalist.length - 1) {
-				row = this.grid.dataMgr.datalist.length - 1;
+			row += this.grid['view']._options['rowsPerPage'];
+			if (row > this.grid['dataMgr'].datalist.length - 1) {
+				row = this.grid['dataMgr'].datalist.length - 1;
          }
 		break;
 		case this._consts._PGUP:
-			row -= this.grid.view._options['rowsPerPage'];
+			row -= this.grid['view']._options['rowsPerPage'];
 			if (row < 0) {
 				row = 0;
          }
@@ -702,7 +702,7 @@ prototype._getCellIdxToNavigate = function(dir, row, col) {
 			row = 0;
 		break;
 		case this._consts._END:
-			row = this.grid.dataMgr.datalist.length - 1;
+			row = this.grid['dataMgr'].datalist.length - 1;
 		break;	
 	}
 	return [row, col];
@@ -755,7 +755,7 @@ prototype.selectCell = function(cell, noScroll) {
 	@since 1.3.0
 	@version 1.3.0
 	*/
-	this.grid.event.trigger("onBeforeSelectCell", [cell]);
+	this.grid['event'].trigger("onBeforeSelectCell", [cell]);
 
 	if (this._options['multiSelectEnabled'] && cell.getKey() === this._options['rowSelKey']) {
 		this.selectRow(cell);
@@ -779,7 +779,7 @@ prototype.selectCell = function(cell, noScroll) {
 	@since 1.3.0
 	@version 1.3.0
 	*/
-	this.grid.event.trigger("onAfterSelectCell", [cell]);
+	this.grid['event'].trigger("onAfterSelectCell", [cell]);
 };
 
 prototype.onBeforeDataChange = function() {
@@ -795,7 +795,7 @@ prototype._onBeforeRerender = function() {
 prototype.onAfterRerender = function() {
 	if (Util.isNotNull(this.toSelect)) {
 		this.selectCell(this.toSelect, true);
-		this.grid.view.scrollToRowLazy(this.toSelect.getRowIdx());
+		this.grid['view'].scrollToRowLazy(this.toSelect.getRowIdx());
 	}
 };
 
@@ -863,7 +863,7 @@ prototype.selectRange = function(cell) {
 
 	if (cell.getKey() === this._options['rowSelKey']) {
 		minCol = 0;
-		maxCol = this.grid.colDefMgr.length() - 1;
+		maxCol = this.grid['colDefMgr'].length() - 1;
 	}
 	else {
 		minCol = lastCol < col ? lastCol : col;
@@ -882,7 +882,7 @@ prototype._setLast = function(row, col, cell) {
 		lastRow = last.getRowIdx();
 			
 		if (row !== lastRow && (Util.isNotNull(this._range) &&  lastRow !== this._range.getRowIdx())) {
-			this.grid.view.unlockRowById(last.getId());
+			this.grid['view'].unlockRowById(last.getId());
       }
 
 		last.get$().removeClass(this._options['classLast']);
@@ -904,7 +904,7 @@ prototype._setLast = function(row, col, cell) {
       $(cell.getRowNode()).addClass(this._options['classRowSelected']);
    }
 	
-	this.grid.view.lockRowByIdx(row);
+	this.grid['view'].lockRowByIdx(row);
 };
 
 prototype._setRange = function(row, col, cell, noScroll) {
@@ -917,7 +917,7 @@ prototype._setRange = function(row, col, cell, noScroll) {
       }
 			
 		if (row !== rangeRow && (Util.isNotNull(this._last) &&  rangeRow !== this._last.getRowIdx())) {
-			this.grid.view.unlockRowById(range.getId());
+			this.grid['view'].unlockRowById(range.getId());
       }
 			
 		range.get$().removeClass(this._options['classRange']);
@@ -933,7 +933,7 @@ prototype._setRange = function(row, col, cell, noScroll) {
 		
 	(this._range = cell).get$().addClass(this._options['classRange']);
 	
-	var view = this.grid.view;
+	var view = this.grid['view'];
 	view.lockRowByIdx(row);
 
 	if (!noScroll) {
@@ -947,7 +947,7 @@ prototype._addSelMap = function(map) {
 		addrow,
 		r,
 		c,
-		view = this.grid.view,
+		view = this.grid['view'],
 		toAddClass = {};
 	for (r in map) {
       if (map.hasOwnProperty(r)) {
@@ -982,7 +982,7 @@ prototype._setSelMap = function(map) {
 		addrow,
 		r,
 		c,
-		view = this.grid.view,
+		view = this.grid['view'],
 		toRemoveClass = {},
 		toRemoveRow,
 		removeMap = {};
@@ -1030,7 +1030,7 @@ prototype.addOrRemoveCss = function(map, add) {
 		r,
 		c,
 		row,
-		view = this.grid.view;
+		view = this.grid['view'];
 	for (r in map) {
       if (map.hasOwnProperty(r)) {
          row = map[r];
@@ -1135,7 +1135,7 @@ prototype._getCellMap = function(row, col, cell) {
 
 prototype._getRowMap = function(row, col, cell) {
 	var map = {},
-		collen = this.grid.colDefMgr.length(),
+		collen = this.grid['colDefMgr'].length(),
 		i = 0;
 	
 	map[row] = {};

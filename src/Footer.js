@@ -101,7 +101,7 @@ function Footer(args) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.footer = this;
+	this.grid['footer'] = this;
 
 	/**
 	Footer 모듈의 기본 옵션 값들을 정의합니다.
@@ -418,7 +418,7 @@ prototype.__init = function() {
 };
 
 prototype.bindEvents = function() {
-	this.grid.event.bind({
+	this.grid['event'].bind({
 		'onCreateCss': this._onCreateCss,
 		'onDestroy': this._destroy,
 		'onDataChange': [this._updateTotalCount, this._updateSums],
@@ -447,7 +447,7 @@ prototype._destroy = function() {
 
 prototype._onCreateCss = function() {
 	var opt = this._options,
-      footerSel = "#" + this.grid.mid + " ." + opt['classFooter'],
+      footerSel = "#" + this.grid['mid'] + " ." + opt['classFooter'],
       rules = [];
 
 	rules.push(footerSel + "{float:left;cursor:default;width:100%;" + JGM._CONST._cssUnselectable + "background:" + opt['background'] +";border-top:" + opt['border'] + ";border-collapse:collapse;color:" + opt['color'] + ";font-size:" + opt['fontSize'] + ";font-weight:" + opt['fontWeight'] + ";padding-left:8px;" + opt['style'] + "}");
@@ -459,16 +459,16 @@ prototype._onCreateCss = function() {
 };
 
 prototype._updateTotalCount = function() {
-	this._foot.find("[name=totalCount]")[0].innerHTML = this.grid.dataMgr.getReal().length;
+	this._foot.find("[name=totalCount]")[0].innerHTML = this.grid['dataMgr'].getReal().length;
 };
 
 prototype._updateShownCount = function() {
-	this._foot.find("[name=shownCount]")[0].innerHTML = this.grid.dataMgr.filterReal(this.grid.dataMgr.datalist).length;
+	this._foot.find("[name=shownCount]")[0].innerHTML = this.grid['dataMgr'].filterReal(this.grid['dataMgr'].datalist).length;
 };
 
 prototype._initSumCells = function() {
-	var rows = this.grid.dataMgr.getReal(),
-      colDefs = this.grid.colDefMgr.get(),
+	var rows = this.grid['dataMgr'].getReal(),
+      colDefs = this.grid['colDefMgr'].get(),
       clen = colDefs.length,
       colDef,
       renderer,
@@ -511,10 +511,10 @@ prototype._initSumCells = function() {
 };
 
 prototype._updateSums = function() {
-	var rows = this.grid.dataMgr.getReal(),
+	var rows = this.grid['dataMgr'].getReal(),
       key,
       map = this._sumMap,
-      cmgr = this.grid.colDefMgr,
+      cmgr = this.grid['colDefMgr'],
       colDef,
       renderer,
       lower,

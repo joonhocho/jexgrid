@@ -302,7 +302,7 @@ prototype._defaultOptions = function() {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.name = this._options['name'];
+		this['name'] =  this._options['name'];
 
 		this._vars = {
 drag: false,
@@ -315,17 +315,17 @@ drag: false,
 
 		this._vars.scrollbarDim = Util$.calScrollbarDims(this._ctnr);
 
-		this.event = JGM.create("EventManager", {grid:this, 'options':this._options['EventManager']});
+		this['event'] =  JGM.create("EventManager", {grid:this, 'options':this._options['EventManager']});
 		delete this._options['EventManager'];
 
-		this.colDefMgr = JGM.create("ColDefManager", {grid:this, colDefs:args['colDefs'], 'options':this._options['ColDefManager']});
+		this['colDefMgr'] =  JGM.create("ColDefManager", {grid:this, colDefs:args['colDefs'], 'options':this._options['ColDefManager']});
 		delete this._options['ColDefManager'];
 
-		this.dataMgr = JGM.create("DataManager", {grid:this, datalist:args['datalist'], 'options':this._options['DataManager']});
+		this['dataMgr'] = JGM.create("DataManager", {grid:this, datalist:args['datalist'], 'options':this._options['DataManager']});
 		delete this._options['DataManager'];
 
 		if (this._options['CheckManager']) {
-			this.checkMgr = JGM.create("CheckManager", {grid:this, 'options':this._options['CheckManager']});
+			this['checkMgr'] =  JGM.create("CheckManager", {grid:this, 'options':this._options['CheckManager']});
 			delete this._options['CheckManager'];
 		}
 
@@ -341,56 +341,56 @@ drag: false,
 		}
 
 		if (this._options['Collapser']) {
-			this.collapser = JGM.create("Collapser", {grid:this, 'options':this._options['Collapser']});
+			this['collapser'] =  JGM.create("Collapser", {grid:this, 'options':this._options['Collapser']});
 			this.collapser.__init();
 			delete this._options['Collapser'];
 		}
 
 		if (this._options['ColGroup']) {
-			this.colGroup = JGM.create("ColGroup", {grid:this, 'options':this._options['ColGroup']});
+			this['colGroup'] =  JGM.create("ColGroup", {grid:this, 'options':this._options['ColGroup']});
 			delete this._options['ColGroup'];
 		}
 
 		if (this._options['SelectionManager']) {
-			this.selMgr = JGM.create("SelectionManager", {grid:this, 'options':this._options['SelectionManager']});
+			this['selMgr'] =  JGM.create("SelectionManager", {grid:this, 'options':this._options['SelectionManager']});
 			delete this._options['SelectionManager'];
 		}
 
 		if (this._options['EditManager']) {
-			this.editMgr = JGM.create("EditManager", {grid:this, 'options':this._options['EditManager']});
+			this['editMgr'] =  JGM.create("EditManager", {grid:this, 'options':this._options['EditManager']});
 			delete this._options['EditManager'];
 		}
 
 		if (this._options['ColHeader']) {
-			this.header = JGM.create("ColHeader", {grid:this, 'container':this._ctnr, 'options':this._options['ColHeader']});
+			this['header'] =  JGM.create("ColHeader", {grid:this, 'container':this._ctnr, 'options':this._options['ColHeader']});
 			delete this._options['ColHeader'];
 		}
 
 		if (this._options['SearchManager']) {
-			this.search = JGM.create("SearchManager", {grid:this, 'container':this._ctnr, 'options':this._options['SearchManager']});
+			this['search'] =  JGM.create("SearchManager", {grid:this, 'container':this._ctnr, 'options':this._options['SearchManager']});
 			delete this._options['SearchManager'];
 		}
 
 		if (this._options['MenuBar']) {
-			this.menubar = JGM.create("MenuBar", {grid:this, 'container':this._ctnr, 'options':this._options['MenuBar']});
+			this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':this._ctnr, 'options':this._options['MenuBar']});
 			delete this._options['MenuBar'];
 		}
 
-		this.view = JGM.create("ViewportManager", {grid:this, 'container':this._ctnr, 'options':this._options['ViewportManager']});
+		this['view'] =  JGM.create("ViewportManager", {grid:this, 'container':this._ctnr, 'options':this._options['ViewportManager']});
 		delete this._options['ViewportManager'];
 
 		if (this._options['TooltipManager']) {
-			this.tooltip = JGM.create("TooltipManager", {grid:this, 'container':this._ctnr, 'options':this._options['TooltipManager']});
+			this['tooltip'] =  JGM.create("TooltipManager", {grid:this, 'container':this._ctnr, 'options':this._options['TooltipManager']});
 			delete this._options['TooltipManager'];
 		}
 
 		if (this._options['DataCreator']) {
-			this.creator = JGM.create("DataCreator", {grid:this, 'container':this._ctnr, 'options':this._options['DataCreator']});
+			this['creator'] =  JGM.create("DataCreator", {grid:this, 'container':this._ctnr, 'options':this._options['DataCreator']});
 			delete this._options['DataCreator'];
 		}
 
 		if (this._options['Footer']) {
-			this.footer = JGM.create("Footer", {grid:this, 'container':this._ctnr, 'options':this._options['Footer']});
+			this['footer'] =  JGM.create("Footer", {grid:this, 'container':this._ctnr, 'options':this._options['Footer']});
 			delete this._options['Footer'];
 		}
 
@@ -434,7 +434,7 @@ drag: false,
 		  */
 		this.event.trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
 
-		this.msg = $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this._ctnr).hide();
+		this['msg'] =  $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this._ctnr).hide();
 
 		this._vars.lastW = this._ctnr[0].clientWidth;
 		this._vars.lastH = this._ctnr[0].clientHeight;

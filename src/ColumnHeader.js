@@ -102,7 +102,7 @@ function ColHeader(args) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.header = this;
+	this.grid['header'] = this;
 
 	/**
 	ColHeader 모듈의 기본 옵션 값들을 정의합니다.
@@ -150,7 +150,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'background': "url(" + this.grid._options['imageUrl'] + "column-headers-bg.png) repeat-x scroll center",
+		'background': "url(" + this.grid['_options']['imageUrl'] + "column-headers-bg.png) repeat-x scroll center",
 
 		/**
 		컬럼 헤더에 마우스가 오버되었을 때의 배경을 설정합니다. <br>기본값:<code>"url(" + imageUrl + "column-headers-over-bg.png) repeat-x scroll center"</code>
@@ -162,7 +162,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'backgroundHover': "url(" + this.grid._options['imageUrl'] + "column-headers-over-bg.png) repeat-x scroll center",
+		'backgroundHover': "url(" + this.grid['_options']['imageUrl'] + "column-headers-over-bg.png) repeat-x scroll center",
 
 		/**
 		컬럼 순서 변경 시에 컬럼 헤더의 빈 자리의 배경을 설정합니다. <br>기본값:<code>"#646464"</code>
@@ -186,7 +186,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'sortBackground': this.grid._options['imageUrl'] + "sort.png",
+		'sortBackground': this.grid['_options']['imageUrl'] + "sort.png",
 
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘의 오른쪽 마진 픽셀입니다. <br>기본값:<code>4</code>
@@ -222,7 +222,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'sortBackgroundAsc': this.grid._options['imageUrl'] + "sort-asc.png",
+		'sortBackgroundAsc': this.grid['_options']['imageUrl'] + "sort-asc.png",
 
 		/**
 		컬럼 로우 정렬 내림차순 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort-desc.png"</code>
@@ -234,7 +234,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'sortBackgroundDesc': this.grid._options['imageUrl'] + "sort-desc.png",
+		'sortBackgroundDesc': this.grid['_options']['imageUrl'] + "sort-desc.png",
 
 		/**
 		컬럼 헤더의 폰트 스타일입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
@@ -588,7 +588,7 @@ prototype.__init = function() {
 
 prototype.bindEvents = function() {
 	var events,
-		colDefs = this.grid.colDefMgr.get(),
+		colDefs = this.grid['colDefMgr'].get(),
 		len = colDefs.length,
 		i = 0;
 
@@ -613,7 +613,7 @@ prototype.bindEvents = function() {
 		}
 	}
 
-	this.grid.event.bind(events, this);
+	this.grid['event'].bind(events, this);
 };
 
 prototype._destroy = function() {	
@@ -633,17 +633,17 @@ prototype._destroy = function() {
 };
 
 prototype._onCreateCss = function() {
-	var gridId = "#" + this.grid.mid + " .",
+	var gridId = "#" + this.grid['mid'] + " .",
 		opt = this._options,
 		border = opt['borderThickness'] + "px " + opt['border'],
 		rules = [],
-		colDefs = this.grid.colDefMgr.get(),
+		colDefs = this.grid['colDefMgr'].get(),
 		len = colDefs.length,
 		i = 0;
 
 	rules.push(gridId + opt['classHeaderMask'] + "{position:relative;overflow:hidden;width:100%;font:" + opt['font'] + ";background:" + opt['background'] + ";border-bottom:" + border + ";" + opt['style'] + "}");
 	rules.push(gridId + opt['classHeader'] + "{position:relative;overflow:hidden;white-space:nowrap;cursor:default;left:" + (-opt['scrollerLeft']) + "px;width:" + opt['scrollerWidth'] + "px;line-height:" + opt['height'] + "px}");
-	rules.push(gridId + opt['classColHeader'] + "{position:relative;overflow:hidden;float:left;text-overflow:ellipsis;text-align:center;height:" + opt['height'] + "px;left:" + (opt['scrollerLeft'] - this.grid.view.getScrollLeft()) + "px;border-right:" + border + ";" + opt['headerStyle'] + "}");
+	rules.push(gridId + opt['classColHeader'] + "{position:relative;overflow:hidden;float:left;text-overflow:ellipsis;text-align:center;height:" + opt['height'] + "px;left:" + (opt['scrollerLeft'] - this.grid['view'].getScrollLeft()) + "px;border-right:" + border + ";" + opt['headerStyle'] + "}");
 	rules.push(gridId + opt['classColHeader'] + "." + opt['classInteractive'] + ":hover, " + gridId + opt['classColHeaderActive'] + "{background:" + opt['backgroundHover'] + "}");
 	rules.push(gridId + opt['classColHeaderActive'] + "{border-left:" + border + "}");
 	rules.push(gridId + opt['classColHeader'] + "." + opt['classColHeaderPlaceholder'] + "{background:" + opt['backgroundPlaceholder'] + "!important}");
@@ -669,7 +669,7 @@ prototype._onScrollViewportH = function(scrollLeft) {
 };
 
 prototype._onRenderModules = function() {
-	var colDefs = this.grid.colDefMgr.get(),
+	var colDefs = this.grid['colDefMgr'].get(),
 		len = colDefs.length,
 		i = 0,
 		colDef,
@@ -690,7 +690,7 @@ prototype._onRenderModules = function() {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.event.trigger("onRenderHeadersComplete");
+	this.grid['event'].trigger("onRenderHeadersComplete");
 };
 
 prototype._onAfterRenderModules = function() {
@@ -701,7 +701,7 @@ prototype._onAfterRenderModules = function() {
 	this._initResizeHandles();
 	
 	this._resizeGuide = $("<div class='" + this._options['classResizeGuide'] + "'>")
-		.appendTo(this.grid.view._mask);
+		.appendTo(this.grid['view']._mask);
 	this._resizeGuide[0].style.top = "0px";
 	this._resizeGuide[0].style.height = "0px";
 };
@@ -714,7 +714,7 @@ prototype._render = function(header, colDef, i) {
 		widthPlus = this._widthPlus();
 
 	header.push("<div id='" + this.mid + "h" + colDef['key'] + "' class='" + this._options['classColHeader'] + " " + (this._options['reorderEnabled'] || Util.isNotNull(colDef['sorter']) ? " " + this._options['classInteractive'] : "") +
-		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.grid.view._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + colDef['key'] + "'>");
+		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.grid['view']._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + colDef['key'] + "'>");
 
 	/**
 	ColHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 앞에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
@@ -725,7 +725,7 @@ prototype._render = function(header, colDef, i) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.grid.event.trigger("onRenderHeader_" + colDef['key'] + "_prepend", [header]);
+	this.grid['event'].trigger("onRenderHeader_" + colDef['key'] + "_prepend", [header]);
 
 	header.push(name);
 
@@ -738,7 +738,7 @@ prototype._render = function(header, colDef, i) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.grid.event.trigger("onRenderHeader_" + colDef['key'] + "_append", [header]);
+	this.grid['event'].trigger("onRenderHeader_" + colDef['key'] + "_append", [header]);
 
 	if (Util.isNotNull(colDef['sorter'])) {
 		header.push("<span class='" + this._options['classSort'] + "'></span>");
@@ -807,7 +807,7 @@ prototype._closest = function(obj) {
 };
 
 prototype._getDef = function(header) {
-	return this.grid.colDefMgr.getByKey(header.attr("colKey"));
+	return this.grid['colDefMgr'].getByKey(header.attr("colKey"));
 };
 
 
@@ -834,15 +834,15 @@ prototype._sort = function(e, colHeader, colDef) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.event.trigger("onBeforeColSort_" + colDef['key'] + " onBeforeColSort");
+	this.grid['event'].trigger("onBeforeColSort_" + colDef['key'] + " onBeforeColSort");
 
 	sorter.desc = (sorter.desc === false) ? true : false;
 
 	//this._setSortClass();
-	this.grid.dataMgr.refresh({'sorter':sorter});
+	this.grid['dataMgr'].refresh({'sorter':sorter});
 
 	// manually call this because IE cannot detect the scroll event
-	this.grid.view._scroll();
+	this.grid['view']._scroll();
 };
 
 prototype._onChangeSorter = function(oldSorter, newSorter) {
@@ -863,7 +863,7 @@ prototype._onChangeSorter = function(oldSorter, newSorter) {
 prototype._initReorder = function() {
 	var thisIns = this,
 		opt = this._options,
-		colDefMgr = this.grid.colDefMgr,
+		colDefMgr = this.grid['colDefMgr'],
 		container = this._head,
 		idSubLen = this.mid.length + 1,
 		updatefn = function(e, ui) {
@@ -941,7 +941,7 @@ prototype._click = function(e) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	if (this.grid.event.triggerInvalid("clickHeaderValid_" + colDef['key'], [e, colHeader, colDef])) {
+	if (this.grid['event'].triggerInvalid("clickHeaderValid_" + colDef['key'], [e, colHeader, colDef])) {
 		return;
 	}
 
@@ -968,18 +968,18 @@ prototype._click = function(e) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.grid.event.trigger("clickHeader_" + colDef['key'] + " clickHeader", [e, colHeader, colDef]);
+	this.grid['event'].trigger("clickHeader_" + colDef['key'] + " clickHeader", [e, colHeader, colDef]);
 };
 
 prototype._mousedown = function(e) {
 	if (Util.hasTagAndClass(e.target, "DIV", this._options['classResizeHandle'])) {
 		this._resizeKey = e.target.getAttribute("key");
 		this._resizeInitWidth = this.get(this._resizeKey)[0].clientWidth;
-		this._resizeInitColWidth = this.grid.colDefMgr.getByKey(this._resizeKey).width;
+		this._resizeInitColWidth = this.grid['colDefMgr'].getByKey(this._resizeKey).width;
 		this._resizeInitX = e.clientX;
 		this._resizeHandleInitX = this._resizeMap[this._resizeKey][0].offsetLeft;
 		this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (this._options['resizeHandleWidth'] - this._options['resizeGuideWidth']) / 2 - this._options['scrollerLeft']) + "px";
-		this._resizeGuide[0].style.height = this.grid.view.getInnerHeight() + "px";
+		this._resizeGuide[0].style.height = this.grid['view'].getInnerHeight() + "px";
 		return;
 	}
 	
@@ -998,7 +998,7 @@ prototype._mousedown = function(e) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.event.trigger("mousedownHeader", [e, colHeader]);
+	this.grid['event'].trigger("mousedownHeader", [e, colHeader]);
 
 	var colDef = this._getDef(colHeader);
 
@@ -1013,7 +1013,7 @@ prototype._mousedown = function(e) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.grid.event.trigger("mousedownHeader_" + colDef['key'], [e, colHeader, colDef]);
+	this.grid['event'].trigger("mousedownHeader_" + colDef['key'], [e, colHeader, colDef]);
 };
 
 prototype._dragmove = function(e) {
@@ -1021,18 +1021,18 @@ prototype._dragmove = function(e) {
 		return;
 	}
 		
-	var dx = this._getDx(e, this.grid.colDefMgr.getByKey(this._resizeKey));
+	var dx = this._getDx(e, this.grid['colDefMgr'].getByKey(this._resizeKey));
 	
 	if (Math.abs(dx) < 1) {
 		return;
 	}
 	
 	this.get(this._resizeKey)[0].style.width = this._resizeInitWidth + dx + "px";
-	this._moveResizeHandles(this._resizeHandleInitX + dx - this._resizeMap[this._resizeKey][0].offsetLeft, this.grid.colDefMgr.getIdxByKey(this._resizeKey));
+	this._moveResizeHandles(this._resizeHandleInitX + dx - this._resizeMap[this._resizeKey][0].offsetLeft, this.grid['colDefMgr'].getIdxByKey(this._resizeKey));
 	this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + dx + (this._options['resizeHandleWidth'] - this._options['resizeGuideWidth']) / 2 - this._options['scrollerLeft']) + "px";
 	
 	if (this._options['syncResize']) {
-		this.grid.view.setWidthByKey(this._resizeKey, this._resizeInitColWidth + dx);
+		this.grid['view'].setWidthByKey(this._resizeKey, this._resizeInitColWidth + dx);
 	}
 };
 
@@ -1043,10 +1043,10 @@ prototype._mouseup = function(e) {
 	
 	this._resizeGuide[0].style.height = "0px";
 		
-	var dx = this._getDx(e, this.grid.colDefMgr.getByKey(this._resizeKey));	
+	var dx = this._getDx(e, this.grid['colDefMgr'].getByKey(this._resizeKey));	
 	
 	if (Math.abs(dx) >= 1) {
-		this.grid.view.setWidthByKey(this._resizeKey, this._resizeInitColWidth + dx);
+		this.grid['view'].setWidthByKey(this._resizeKey, this._resizeInitColWidth + dx);
 	}
 	
 	delete this._resizeKey;
@@ -1057,9 +1057,9 @@ prototype._mouseup = function(e) {
 };
 
 prototype._setWidthByKey = function(key, w, o) {
-	this.get(key)[0].style.width = w + this.grid.view._colWidthPlus() - this._widthPlus() + "px";
+	this.get(key)[0].style.width = w + this.grid['view']._colWidthPlus() - this._widthPlus() + "px";
 	
-	this._syncResizeHandles(this.grid.colDefMgr.getIdxByKey(key));
+	this._syncResizeHandles(this.grid['colDefMgr'].getIdxByKey(key));
 };
 
 prototype._syncResizeHandles = function(i) {
@@ -1067,8 +1067,8 @@ prototype._syncResizeHandles = function(i) {
 		i = 0;
 	}
 		
-	var lefts = this.grid.view._getColLefts(),
-		colDefs = this.grid.colDefMgr.get(),
+	var lefts = this.grid['view']._getColLefts(),
+		colDefs = this.grid['colDefMgr'].get(),
 		len = colDefs.length,
 		rmap = this._resizeMap,
 		key;
@@ -1086,7 +1086,7 @@ prototype._moveResizeHandles = function(dx, i) {
 		i = 0;
 	}
 		
-	var colDefs = this.grid.colDefMgr.get(),
+	var colDefs = this.grid['colDefMgr'].get(),
 		len = colDefs.length,
 		rmap = this._resizeMap,
 		key,
@@ -1102,7 +1102,7 @@ prototype._moveResizeHandles = function(dx, i) {
 };
 
 prototype._onScrollViewportV = function() {
-	this._resizeGuide[0].style.top = this.grid.view.getScrollTop() + "px";
+	this._resizeGuide[0].style.top = this.grid['view'].getScrollTop() + "px";
 };
 
 prototype._destroyResizeHandles = function() {
@@ -1124,16 +1124,16 @@ prototype._destroyResizeHandles = function() {
 };
 
 prototype._initResizeHandles = function() {
-	var colDefs = this.grid.colDefMgr.get(),
+	var colDefs = this.grid['colDefMgr'].get(),
 		len = colDefs.length,
-		lefts = this.grid.view._getColLefts(),
+		lefts = this.grid['view']._getColLefts(),
 		opt = this._options,
 		rmap = this._resizeMap,
 		colDef,
 		key,
 		i = 0,
 		offset = this._resizeHandleOffset = Math.floor(opt['scrollerLeft'] - opt['resizeHandleWidth'] / 2),
-		vmid = this.grid.view.mid,
+		vmid = this.grid['view'].mid,
 		handle = opt['classResizeHandle'],
 		head = this._head;
 

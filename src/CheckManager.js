@@ -97,7 +97,7 @@ function CheckManager(args) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	// this.grid.checkMgr = this;
+	// this.grid['checkMgr'] = this;
 
 	/**
 	CheckManager 모듈의 기본 옵션 값들을 정의합니다.
@@ -229,8 +229,8 @@ prototype.__init = function() {
 		size,
 		con = JGM._CONST;
 
-	if (this.grid.colDefMgr.getByKey(opt['colDef'].key) === undefined) {
-		this.grid.colDefMgr.addAt(opt['colIdx'], opt['colDef']);
+	if (this.grid['colDefMgr'].getByKey(opt['colDef'].key) === undefined) {
+		this.grid['colDefMgr'].addAt(opt['colIdx'], opt['colDef']);
 	}
 	
 	if (Util.isNull(con._checkboxWidth)) {
@@ -266,7 +266,7 @@ prototype.bindEvents = function() {
 		events["onRenderHeader_" + key + "_prepend"] = this._onRenderHeader;
 		events.onRenderHeadersComplete = this._getMaster;
 	}
-	this.grid.event.bind(events, this);
+	this.grid['event'].bind(events, this);
 };
 
 prototype._destroy = function() {
@@ -295,12 +295,12 @@ prototype._onCreateCss = function() {
 	}
 	
 	checkCommon = "*overflow:hidden;padding:0;width:" + w + "px;height:" + h + "px;";
-	css = this.grid.view._getCellSelector() + " ." + this._options['classCheck'] + "[mid='" + this.mid + "']{" +
+	css = this.grid['view']._getCellSelector() + " ." + this._options['classCheck'] + "[mid='" + this.mid + "']{" +
 		checkCommon +
-		"margin:" + ((this.grid.view._getRowInnerHeight() - h) / 2) + "px 0 0 " + ((this._options['colDef']['width'] - this.grid.view._getPadding() - w) / 2) + "px}" +
+		"margin:" + ((this.grid['view']._getRowInnerHeight() - h) / 2) + "px 0 0 " + ((this._options['colDef']['width'] - this.grid['view']._getPadding() - w) / 2) + "px}" +
 		"#" + this.mid + "h{" +
 		checkCommon +
-		"margin:" + ((this.grid.header._options['height'] - h) / 2) + "px 0 0 0}";
+		"margin:" + ((this.grid['header']._options['height'] - h) / 2) + "px 0 0 0}";
 	return css;
 };
 
@@ -322,7 +322,7 @@ prototype._onCreateCss = function() {
 */
 prototype.checkList = function(list, nomap) {
 	if (!nomap) {
-		list = this.grid.dataMgr.mapList(list).mapped;
+		list = this.grid['dataMgr'].mapList(list).mapped;
 	}
 
 	var i = 0,
@@ -420,9 +420,9 @@ prototype.checkAll = function() {
 
 	CheckManager._check(this.getCheckboxes());
 
-	var list = this.grid.dataMgr.all,
+	var list = this.grid['dataMgr'].all,
 		len = list.length,
-		idKey = this.grid.dataMgr.idKey,
+		idKey = this.grid['dataMgr'].idKey,
 		map = this._map,
 		i = 0;
 
@@ -470,7 +470,7 @@ prototype.uncheckAll = function() {
 */
 prototype.toggleCheck = function(datarow, nomap) {
 	if (!nomap) {
-		datarow = this.grid.dataMgr.map(datarow);
+		datarow = this.grid['dataMgr'].map(datarow);
 	}
 
 	if (this.isChecked(datarow, true) && !this._options['isRadio']) {
@@ -495,7 +495,7 @@ prototype.toggleCheck = function(datarow, nomap) {
 */
 prototype.toggleDisable = function(datarow, nomap) {
 	if (!nomap) {
-		datarow = this.grid.dataMgr.map(datarow);
+		datarow = this.grid['dataMgr'].map(datarow);
 	}
 
 	if (this.isDisabled(datarow, true)) {
@@ -524,7 +524,7 @@ prototype.toggleDisable = function(datarow, nomap) {
  * 1.3.0 - toggle -> toggleById
  */
 prototype.toggleById = function(id) {
-	this.toggleCheck(this.grid.dataMgr.getById(id), true);
+	this.toggleCheck(this.grid['dataMgr'].getById(id), true);
 };
 
 
@@ -542,7 +542,7 @@ prototype.toggleById = function(id) {
 */
 prototype.check = function(datarow, nomap) {
 	if (!nomap) {
-		datarow = this.grid.dataMgr.map(datarow);
+		datarow = this.grid['dataMgr'].map(datarow);
 	}
 
 	if (!this._add(datarow)) {
@@ -564,7 +564,7 @@ prototype.check = function(datarow, nomap) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.event.trigger("onCheckChange", [datarow, true]);
+	this.grid['event'].trigger("onCheckChange", [datarow, true]);
 };
 
 
@@ -582,7 +582,7 @@ prototype.check = function(datarow, nomap) {
 */
 prototype.uncheck = function(datarow, nomap) {
 	if (!nomap) {
-		datarow = this.grid.dataMgr.map(datarow);
+		datarow = this.grid['dataMgr'].map(datarow);
 	}
 
 	if (!this._remove(datarow)) {
@@ -595,7 +595,7 @@ prototype.uncheck = function(datarow, nomap) {
 		CheckManager._uncheck(this._master);
 	}
 
-	this.grid.event.trigger("onCheckChange", [datarow, false]);
+	this.grid['event'].trigger("onCheckChange", [datarow, false]);
 };
 
 /**
@@ -611,7 +611,7 @@ prototype.uncheck = function(datarow, nomap) {
 @version 1.3.0
 */
 prototype.disable = function(datarow, nomap) {
-	var datam = this.grid.dataMgr;
+	var datam = this.grid['dataMgr'];
 
 	if (!nomap) {
 		datarow = datam.map(datarow);
@@ -637,7 +637,7 @@ prototype.disable = function(datarow, nomap) {
 	@since 1.3.0
 	@version 1.3.0
 	*/
-	this.grid.event.trigger("onDisableCheck", [datarow]);
+	this.grid['event'].trigger("onDisableCheck", [datarow]);
 };
 
 /**
@@ -653,10 +653,10 @@ prototype.disable = function(datarow, nomap) {
 @version 1.3.0
 */
 prototype.enable = function(datarow, nomap) {
-	var datam = this.grid.dataMgr;
+	var datam = this.grid['dataMgr'];
 
 	if (!nomap) {
-		datarow = this.grid.dataMgr.map(datarow);
+		datarow = this.grid['dataMgr'].map(datarow);
 	}
 
 	var id = datam.getId(datarow),
@@ -679,7 +679,7 @@ prototype.enable = function(datarow, nomap) {
 	@since 1.3.0
 	@version 1.3.0
 	*/
-	this.grid.event.trigger("onEnableCheck", [datarow]);
+	this.grid['event'].trigger("onEnableCheck", [datarow]);
 };
 
 prototype._updateMaster = function() {
@@ -689,7 +689,7 @@ prototype._updateMaster = function() {
 };
 
 prototype._add = function(datarow) {
-	var id = datarow[this.grid.dataMgr.idKey];
+	var id = datarow[this.grid['dataMgr'].idKey];
 		
 	if (this._map.hasOwnProperty(id)) {
 		return false;
@@ -707,7 +707,7 @@ prototype._add = function(datarow) {
 };
 
 prototype._remove = function(datarow) {
-	var id = datarow[this.grid.dataMgr.idKey],
+	var id = datarow[this.grid['dataMgr'].idKey],
 		map = this._map;
 		
 	if (!map.hasOwnProperty(id)) {
@@ -733,7 +733,7 @@ prototype._remove = function(datarow) {
 @version 1.1.0
 */
 prototype.isChecked = function(datarow, nomap) {
-	var datam = this.grid.dataMgr;
+	var datam = this.grid['dataMgr'];
 	if (!nomap) {
 		datarow = datam.map(datarow);
 	}
@@ -754,7 +754,7 @@ prototype.isChecked = function(datarow, nomap) {
 @version 1.3.0
 */
 prototype.isDisabled = function(datarow, nomap) {
-	var datam = this.grid.dataMgr;
+	var datam = this.grid['dataMgr'];
 	if (!nomap) {
 		datarow = datam.map(datarow);
 	}
@@ -764,14 +764,14 @@ prototype.isDisabled = function(datarow, nomap) {
 
 prototype.splitChecked = function(datalist, nomap) {
 	if (!nomap) {
-		datalist = this.grid.dataMgr.mapList(datalist).mapped;
+		datalist = this.grid['dataMgr'].mapList(datalist).mapped;
 	}
 		
 	var checked = [],
 		unchecked = [],
 		i = 0,
 		len = datalist.length,
-		idKey = this.grid.dataMgr.idKey,
+		idKey = this.grid['dataMgr'].idKey,
 		data,
 		map = this._map;
 	
@@ -799,7 +799,7 @@ prototype.splitChecked = function(datalist, nomap) {
 */
 prototype.isCheckedAll = function() {
 	return (this._count !== 0 &&
-		this._count === this.grid.dataMgr.all.length ? true : false);
+		this._count === this.grid['dataMgr'].all.length ? true : false);
 };
 
 /**
@@ -812,7 +812,7 @@ prototype.isCheckedAll = function() {
 @version 1.3.0
 */
 prototype.removeChecked = function() {
-   return this.grid.dataMgr.removeList(this.getCheckList());
+   return this.grid['dataMgr'].removeList(this.getCheckList());
 };
 
 prototype._getMaster = function() {
@@ -823,7 +823,7 @@ prototype._getChecks = function(rows) {
 	var len = rows.length,
 		checks = [],
 		i = 0,
-		col = this.grid.colDefMgr.getIdxByKey(this._options['colDef']['key']);
+		col = this.grid['colDefMgr'].getIdxByKey(this._options['colDef']['key']);
 	for (; i < len; i++) {
 		checks.push(rows[i].childNodes[col].childNodes[0]);
 	}
@@ -842,7 +842,7 @@ prototype._getChecks = function(rows) {
 @version 1.3.0
 */
 prototype.getCheckboxes = function() {
-	return this._getChecks(this.grid.view.getRenderedRows());
+	return this._getChecks(this.grid['view'].getRenderedRows());
 };
 
 /**
@@ -856,9 +856,9 @@ prototype.getCheckboxes = function() {
 @version 1.3.0
 */
 prototype.getCheckboxById = function(id) {
-	var row = this.grid.view.getRowById(id);
+	var row = this.grid['view'].getRowById(id);
 	if (Util.isNotNull(row)) {
-      return row.childNodes[this.grid.colDefMgr.getIdxByKey(this._options['colDef']['key'])].childNodes[0];
+      return row.childNodes[this.grid['colDefMgr'].getIdxByKey(this._options['colDef']['key'])].childNodes[0];
    }
 };
 
@@ -873,7 +873,7 @@ prototype.getCheckboxById = function(id) {
 @version 1.3.0
 */
 prototype.getCheckbox = function(datarow) {
-   return this.getCheckboxById(this.grid.dataMgr.getId(datarow));
+   return this.getCheckboxById(this.grid['dataMgr'].getId(datarow));
 };
 
 /**
@@ -887,7 +887,7 @@ prototype.getCheckbox = function(datarow) {
 @version 1.3.0
 */
 prototype.getCheckboxByIdx = function(i) {
-   return this.getCheckboxById(this.grid.dataMgr.getIdByIdx(i));
+   return this.getCheckboxById(this.grid['dataMgr'].getIdByIdx(i));
 };
 
 prototype._onRemoveDatarow = function(datarow) {
@@ -943,7 +943,7 @@ prototype._keydownColSel = function(e, colSelections, lastSelection) {
 	if (Util.isNotNullAnd(colSelections, lastSelection)) {
 		var checked = this.isChecked(lastSelection.getDatarow(), true),
 			row,
-			list = this.grid.dataMgr.datalist;
+			list = this.grid['dataMgr'].datalist;
 		if (this._options['isRadio']) {
 			for (row in colSelections) {
 				if (colSelections.hasOwnProperty(row)) {
@@ -985,7 +985,7 @@ prototype._onRenderHeader = function(headerHtml) {
 };
 
 prototype._onRenderCell = function(rowIdx, colIdx, datarow, colDef, cellHtml) {
-	cellHtml.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + datarow[this.grid.dataMgr.idKey] + "')\" type='" + (this._options['isRadio'] ? "radio" : "checkbox") + "' class='" + this._options['classCheck'] + "' mid='" + this.mid + "'");
+	cellHtml.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + datarow[this.grid['dataMgr'].idKey] + "')\" type='" + (this._options['isRadio'] ? "radio" : "checkbox") + "' class='" + this._options['classCheck'] + "' mid='" + this.mid + "'");
 	if (Util.isNotNull(this._options['name'])) {
 		cellHtml.push(" name='" + this._options['name'] + "'");
 	}

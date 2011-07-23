@@ -97,7 +97,7 @@ JGM._add("DataCreator", DataCreator);
 		  @since 1.1.6
 		  @version 1.1.6
 		  */
-		this.grid.creator = this;
+		this.grid['creator'] = this;
 
 		/**
 		  DataCreator 모듈의 기본 옵션 값들을 정의합니다.
@@ -264,7 +264,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  'creatorIconUrl': this.grid._options['imageUrl'] + "data-creator-icon.png",
+				  'creatorIconUrl': this.grid['_options']['imageUrl'] + "data-creator-icon.png",
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 폭 입니다. <br>기본값:<code>13</code>
@@ -354,11 +354,11 @@ prototype.bindEvents = function() {
 				 'onCreateCss': this._onCreateCss,
 				 'onDestroy': this._destroy
 	};
-	this.grid.event.bind(events, this);
+	this.grid['event'].bind(events, this);
 };
 
 prototype._onCreateCss = function() {
-	var gridId = "#" + this.grid.mid + " .",
+	var gridId = "#" + this.grid['mid'] + " .",
 		opt = this._options,
 		border = opt['borderThickness'] + "px " + opt['border'],
 		rules = [];
@@ -375,7 +375,7 @@ prototype._onCreateCss = function() {
 
 prototype._onRenderModules = function() {
 	var html = [],
-		colDefs = this.grid.colDefMgr.getAll(),
+		colDefs = this.grid['colDefMgr'].getAll(),
 		len = colDefs.length,
 		colDef,
 		opt = this._options,
@@ -407,8 +407,8 @@ prototype._onRenderModules = function() {
 		}
 	}
 
-	if (Util.isNotNull(this.grid.menubar)) {
-		this.grid.menubar.addIcon(opt['classCreatorIcon'], "데이터 로우를 추가합니다.", opt['creatorIconWidth'], opt['creatorIconHeight'], function() {
+	if (Util.isNotNull(this.grid['menubar'])) {
+		this.grid['menubar'].addIcon(opt['classCreatorIcon'], "데이터 로우를 추가합니다.", opt['creatorIconWidth'], opt['creatorIconHeight'], function() {
 				creator.toggle("fast");
 				});
 		creator.hide();
@@ -418,7 +418,7 @@ prototype._onRenderModules = function() {
 prototype._addData = function() {
 	var key,
 		imap = this._inputMap,
-		cmgr = this.grid.colDefMgr,
+		cmgr = this.grid['colDefMgr'],
 		colDef,
 		input,
 		newData = {},
@@ -452,13 +452,13 @@ prototype._addData = function() {
 	  @since 1.1.1
 	  @version 1.1.1
 	  */
-	this.grid.event.trigger("onAfterDataCreate", [newData]);
-	this.grid.dataMgr.add(newData, {'isNew':true});
+	this.grid['event'].trigger("onAfterDataCreate", [newData]);
+	this.grid['dataMgr'].add(newData, {'isNew':true});
 };
 
 prototype._reset = function() {
 	var key,
-		cmgr = this.grid.colDefMgr,
+		cmgr = this.grid['colDefMgr'],
 		colDef,
 		imap = this._inputMap;
 	for (key in imap) {

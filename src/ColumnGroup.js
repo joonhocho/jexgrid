@@ -106,7 +106,7 @@ function ColGroup(args) {
 	@since 1.1.0
 	@version 1.1.0
 	*/
-	this.grid.colGroup = this;
+	this.grid['colGroup'] = this;
 
 	/**
 	ColGroup 모듈의 기본 옵션 값들을 정의합니다.
@@ -249,7 +249,7 @@ prototype.bindEvents = function() {
 	
 	if (this._options['sumColKeys']['length'] !== 0) {
 		var mid = this.mid,
-		notReal = this.grid.dataMgr._consts._notReal,
+		notReal = this.grid['dataMgr']._consts._notReal,
 		i = 0,
 		sumfn,
 		sumkeys = this._options['sumColKeys'],
@@ -268,7 +268,7 @@ prototype.bindEvents = function() {
 		events.onCollapserTreeChange = this._onCollapserTreeChange;
 	}
 
-	this.grid.event.bind(events, this);
+	this.grid['event'].bind(events, this);
 };
 
 prototype._destroy = function() {
@@ -284,7 +284,7 @@ prototype._processData = function(datalist) {
 	var len = datalist.length,
 		key = this._options['key'],
 		padColKeys = this._options['padColKeys'],
-		datam = this.grid.dataMgr,
+		datam = this.grid['dataMgr'],
 		notReal = datam._consts._notReal,
 		idKey = datam.idKey,
 		collapser = this.collapser,
@@ -333,7 +333,7 @@ prototype._makeParent = function(data, key, idKey, keyVal, notReal, nodeKey, pad
 	parent[notReal] = this.mid;
 	parent[nodeKey] = this.mid + keyVal;
 	parent[key] = keyVal;
-	parent[idKey] = (this.grid.colDefMgr.getByKey(key).name || key) + ": " + keyVal;
+	parent[idKey] = (this.grid['colDefMgr'].getByKey(key).name || key) + ": " + keyVal;
 	for (; j < len; j++) {
 		parent[padColKeys[j]] = data[padColKeys[j]];
 	}
@@ -341,7 +341,7 @@ prototype._makeParent = function(data, key, idKey, keyVal, notReal, nodeKey, pad
 };
 
 prototype._isParent = function(datarow) {
-	return datarow[this.grid.dataMgr._consts._notReal] === this.mid;
+	return datarow[this.grid['dataMgr']._consts._notReal] === this.mid;
 };
 
 prototype._removeAll = function(datalist) {
@@ -351,7 +351,7 @@ prototype._removeAll = function(datalist) {
 prototype._onAddDatarow = function(datarow) {
 	var newParents = [],
 		opt = this._options,
-		datam = this.grid.dataMgr,
+		datam = this.grid['dataMgr'],
 		collapser = this.collapser,
 		ctopt = collapser._tree._options;
 
@@ -403,7 +403,7 @@ prototype._onUpdateDatarow = function(datarow, change, before) {
 		// get old parent tree node and delete the group parent if it has no children members anymore
 		oldp = tree.getNode(pmap[oldkey]);
 		if (oldp.children.length === 0) {
-			this.grid.dataMgr.all.remove(oldp.data);
+			this.grid['dataMgr'].all.remove(oldp.data);
 			delete pmap[oldkey];
 			collapser._onRemoveDatarow(oldp.data);
 		}
@@ -469,7 +469,7 @@ prototype._onUpdateDatalist = function(datalist, changes, befores) {
 		// remove group parents with no children members
 		if (removeList.length !== 0) {
 			collapser._onRemoveDatalist(removeList);
-			this.grid.dataMgr.all.removeList(removeList);
+			this.grid['dataMgr'].all.removeList(removeList);
 		}
 	}
 };
@@ -481,7 +481,7 @@ prototype._onRemoveDatarow = function(datarow) {
 	else {
 		var parentNode = this.collapser._tree.getNode(datarow).parent;
 		if (parentNode.children.length === 1) {
-			this.grid.dataMgr.remove(parentNode.data);
+			this.grid['dataMgr'].remove(parentNode.data);
 		}
 	}
 };
@@ -499,7 +499,7 @@ prototype._onCollapserTreeChange = function() {
 		sumKeys = this._options['sumColKeys'],
 		len = sumKeys.length,
 		i = 0,
-		notReal = this.grid.dataMgr._consts._notReal,
+		notReal = this.grid['dataMgr']._consts._notReal,
 		mid = this.mid,
 		data,
 		curKey,

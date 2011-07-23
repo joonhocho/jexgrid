@@ -99,7 +99,7 @@ function EditManager(args) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.editMgr = this;
+	this.grid['editMgr'] = this;
 
 	/**
 	EditManager 모듈의 기본 옵션 값들을 정의합니다.
@@ -230,7 +230,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'urlEditIcon': this.grid._options['imageUrl'] + "editable-small.png",
+		'urlEditIcon': this.grid['_options']['imageUrl'] + "editable-small.png",
 		
 		/**
 		에디팅 아이콘 이미지에 적용될 CSS 클래스 입니다. <br>기본값:<code>"edit-icon"</code>
@@ -333,7 +333,7 @@ prototype.bindEvents = function() {
 		'onBeforeFocusCanvas': this.notActive
 	};
 	
-	if (Util.isNull(this.grid.selMgr)) {
+	if (Util.isNull(this.grid['selMgr'])) {
 		events.onCreateCss = this._onBeforeCreateSelCss;
 	}
 	else {
@@ -345,7 +345,7 @@ prototype.bindEvents = function() {
 	}
 	
 	if (this._options['editIconEnabled']) {
-		var colDefs = this.grid.colDefMgr.get(),
+		var colDefs = this.grid['colDefMgr'].get(),
 			len = colDefs.length,
 			i = 0;
 		for (; i < len; i++) {
@@ -357,7 +357,7 @@ prototype.bindEvents = function() {
 		//events["onBeforeMousedown onBeforeMouseup onBeforeClick"] = this.cancelMouseEvent;
 	}
 		
-	this.grid.event.bind(events, this);
+	this.grid['event'].bind(events, this);
 };
 
 prototype._destroy = function() {
@@ -371,12 +371,12 @@ prototype._destroy = function() {
 };
 
 prototype._onBeforeCreateSelCss = function() {
-	var gridId = "#" + this.grid.mid + " .",
+	var gridId = "#" + this.grid['mid'] + " .",
 		opt = this._options,
 		rules = [],
-		height = this.grid.view._getRowInnerHeight();
+		height = this.grid['view']._getRowInnerHeight();
 
-	rules.push(this.grid.view._getCellSelector() + "." + opt['classEdit'] + "{background:" + opt['basicBackground'] + "}");
+	rules.push(this.grid['view']._getCellSelector() + "." + opt['classEdit'] + "{background:" + opt['basicBackground'] + "}");
 	
 	rules.push(gridId + opt['classEdit'] + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + opt['basicBackground'] + ";height:" + height + "px;line-height:" + height + "px}");
 
@@ -395,9 +395,9 @@ prototype._onBeforeCreateSelCss = function() {
 };
 
 prototype.onCreateDynamicCss = function() {
-	var cellSel = this.grid.view._getCellSelector(),
-		padding = this.grid.view._getPadding(),
-		colDefs = this.grid.colDefMgr.get(),
+	var cellSel = this.grid['view']._getCellSelector(),
+		padding = this.grid['view']._getPadding(),
+		colDefs = this.grid['colDefMgr'].get(),
 		i = 0,
 		str = "";
 		
@@ -415,8 +415,8 @@ prototype._onRenderHeader = function(html) {
 };
 
 prototype._onRenderCell = function(rowIdx, colIdx, datarow, colDef, cellHtml) {
-	if (this.grid.dataMgr.isReal(datarow)) {
-		cellHtml.push("<span class='" + this._options['classEditIcon'] + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + ".beginEdit(\"" + datarow[this.grid.dataMgr.idKey] + "\",\"" + colDef['key'] + "\")'></span>");
+	if (this.grid['dataMgr'].isReal(datarow)) {
+		cellHtml.push("<span class='" + this._options['classEditIcon'] + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + ".beginEdit(\"" + datarow[this.grid['dataMgr'].idKey] + "\",\"" + colDef['key'] + "\")'></span>");
 	}
 };
 
@@ -425,7 +425,7 @@ prototype.cancelMouseEvent = function(e) {
 };
 
 prototype.beginEdit = function(id, key) {
-	this.begin(JGM.create("Cell", {'grid':this.grid, 'datarow':this.grid.dataMgr.getById(id), 'colDef':this.grid.colDefMgr.getByKey(key)}));
+	this.begin(JGM.create("Cell", {'grid':this.grid, 'datarow':this.grid['dataMgr'].getById(id), 'colDef':this.grid['colDefMgr'].getByKey(key)}));
 };
 
 prototype._dblclickCanvas = function(e, cell) {
@@ -445,28 +445,28 @@ prototype._keydownCanvas = function(e) {
 			/*
 			switch (e.which) {
 				case "C".charCodeAt(0):
-					this.copy(this.grid.selMgr.getCell());
+					this.copy(this.grid['selMgr'].getCell());
 				break;
 				case "X".charCodeAt(0):
-					this.cut(this.grid.selMgr.getCell());
+					this.cut(this.grid['selMgr'].getCell());
 				break;
 				case "V".charCodeAt(0):
-					this.paste(this.grid.selMgr.getCell());
+					this.paste(this.grid['selMgr'].getCell());
 				break;
 			}
 			*/
 			return;
 		}
-		else if (!e.altKey && Util.isNotNull(this.grid.selMgr)) {
+		else if (!e.altKey && Util.isNotNull(this.grid['selMgr'])) {
 			if (e.which === Util.keyMapKeydown.del && this._options['deleteEnabled']) {
-				this._deleteContent(this.grid.selMgr.getCell());
+				this._deleteContent(this.grid['selMgr'].getCell());
 			}
 			else if (this._beginEditKeys[e.which]) {
-				this.begin(this.grid.selMgr.getCell());
+				this.begin(this.grid['selMgr'].getCell());
 			}
 			else if (e.which === Util.keyMapKeydown.f2) {
 				e.preventDefault();
-				this.begin(this.grid.selMgr.getCell());
+				this.begin(this.grid['selMgr'].getCell());
 			}
 		}
 	}
@@ -515,7 +515,7 @@ prototype._onGetColCellClass = function(colDef) {
 @version 1.0.0
 */
 JGM.Cell.prototype.isEdited = function() {
-	return this.grid.editMgr._isEdited(this);
+	return this.grid['editMgr']._isEdited(this);
 };
 
 /**
@@ -534,9 +534,9 @@ JGM.Cell.prototype.setValue = function(value) {
 		res;
 
 	if (Util.isNotNullAnd(datarow, key)) {
-		res = this.grid.dataMgr.updateByKey(datarow, key, value, {'noSort':true, 'noFilter':true, 'noRerender':true});
+		res = this.grid['dataMgr'].updateByKey(datarow, key, value, {'noSort':true, 'noFilter':true, 'noRerender':true});
       if (res === true) {
-			this.grid.view.rerenderRow(datarow);
+			this.grid['view'].rerenderRow(datarow);
       }
 	}
 	return res;
@@ -555,7 +555,7 @@ JGM.Cell.prototype.setValue = function(value) {
 @version 1.1.0
 */
 prototype.isEditable = function(cell) {
-	return Util.isNotNull(cell) && Util.isNotNull(cell.getColDef().editor) && this.grid.dataMgr.isReal(cell.getDatarow());
+	return Util.isNotNull(cell) && Util.isNotNull(cell.getColDef().editor) && this.grid['dataMgr'].isReal(cell.getDatarow());
 };
 
 /**
@@ -608,7 +608,7 @@ prototype.cancel = function() {
 	cell.getNode().innerHTML = this.editor.before;
 	this._deleteEditor();
 	cell.get$().removeClass(this._options['classEdit']);
-	this.grid.view.focus();
+	this.grid['view'].focus();
 };
 
 prototype._deleteEditor = function() {
@@ -660,9 +660,9 @@ prototype.commit = function() {
       }
       else {
          this._deleteEditor();
-         this.grid.view.focus();
+         this.grid['view'].focus();
 			classRes = this._options['classSuccess'];
-			this.grid.printMessage("Successfully Updated.");
+			this.grid['printMessage']("Successfully Updated.");
          $cell.addClass(classRes);
 			setTimeout(function() {$cell.removeClass(classRes);}, 1000);
       }
@@ -736,7 +736,7 @@ prototype._deleteContents = function(e, selectionRows, selectionCols) {
 				datarow = cell.getDatarow();
 			}
 
-			if (!this.grid.dataMgr.isReal(datarow)) {
+			if (!this.grid['dataMgr'].isReal(datarow)) {
 				fakerows[row] = true;
 				continue;
 			}
@@ -755,7 +755,7 @@ prototype._deleteContents = function(e, selectionRows, selectionCols) {
 	}
 
 	if (updatelist.length !== 0) {
-		this.grid.dataMgr.updateList(updatelist);
+		this.grid['dataMgr'].updateList(updatelist);
 	}
 };
 

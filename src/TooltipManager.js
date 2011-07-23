@@ -94,7 +94,7 @@ function TooltipManager(args) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.tooltip = this;
+	this.grid['tooltip'] = this;
 
 	this._ctnr = args['container'];
 
@@ -233,7 +233,7 @@ TooltipManager.getInstance = function(args) {
 var prototype = TooltipManager.prototype;
 
 prototype.__init = function() {
-	this.grid.event.bind({
+	this.grid['event'].bind({
 		'onCreateCss': this._onCreateCss,
 		'onDestroy': this._destroy,
 		'mouseoutCanvas': this._mouseoutCanvas,
@@ -253,7 +253,7 @@ prototype._destroy = function() {
 };
 
 prototype._onCreateCss = function() {
-	var gridId = "#" + this.grid.mid + " .",
+	var gridId = "#" + this.grid['mid'] + " .",
 		opt = this._options,
 		rules = [];
 

@@ -46,7 +46,7 @@ function SearchManager(args) {
 	@since 1.2.0
 	@version 1.2.1
 	*/
-	this.grid.search = this;
+	this.grid['search'] = this;
 
 	var options = {
 		'background': "#f0f0f0",
@@ -70,9 +70,9 @@ function SearchManager(args) {
 		'advButtonPadding': 5,
 
 		'advButtonBg': "",
-		'advButtonBgHover': "url(" + this.grid._options['imageUrl'] + "more-options-bg-hover.png) repeat-x scroll center",
-		'advButtonBgActive': "url(" + this.grid._options['imageUrl'] + "more-options-bg-active.png) repeat-x scroll center",
-		'advButtonBgOpened': "url(" + this.grid._options['imageUrl'] + "more-options-bg-opened.png) repeat-x scroll center",
+		'advButtonBgHover': "url(" + this.grid['_options']['imageUrl'] + "more-options-bg-hover.png) repeat-x scroll center",
+		'advButtonBgActive': "url(" + this.grid['_options']['imageUrl'] + "more-options-bg-active.png) repeat-x scroll center",
+		'advButtonBgOpened': "url(" + this.grid['_options']['imageUrl'] + "more-options-bg-opened.png) repeat-x scroll center",
 
 		'advButtonBorderThickness': 1,
 		'advButtonBorder': "solid transparent",
@@ -82,19 +82,19 @@ function SearchManager(args) {
 
 		'advButtonIconWidth': 9,
 		'advButtonIconMargin': 2,
-		'advButtonIconUrl': this.grid._options['imageUrl'] + "more-options.png",
-		'advButtonIconCloseUrl': this.grid._options['imageUrl'] + "more-options-close.png",
+		'advButtonIconUrl': this.grid['_options']['imageUrl'] + "more-options.png",
+		'advButtonIconCloseUrl': this.grid['_options']['imageUrl'] + "more-options-close.png",
 
 		'tagPadding': 2,
 		'tagBorder': "solid #93979D",
 		'tagBorderThickness': 1,
 		'tagFont': "bold 13px Arial",
 		'tagColor': "#282853",
-		'tagBackground': "url(" + this.grid._options['imageUrl'] + "tag-background.png) repeat-x scroll center",
+		'tagBackground': "url(" + this.grid['_options']['imageUrl'] + "tag-background.png) repeat-x scroll center",
 
 		'tagRemoveIconWidth': 12,
-		'tagRemoveIconUrl': this.grid._options['imageUrl'] + "tag-close.png",
-		'tagRemoveIconHoverUrl': this.grid._options['imageUrl'] + "tag-close-hover.png",
+		'tagRemoveIconUrl': this.grid['_options']['imageUrl'] + "tag-close.png",
+		'tagRemoveIconHoverUrl': this.grid['_options']['imageUrl'] + "tag-close-hover.png",
 
 		'advFont': "11px Arial",
 		'advInputWidth': 30,
@@ -113,11 +113,11 @@ function SearchManager(args) {
 		'classOptionCol': "search-option-col",
 		'classOption': "search-option",
 		'classSearchIcon': "search-icon",
-		'searchIconUrl': this.grid._options['imageUrl'] + "search-icon.png",
+		'searchIconUrl': this.grid['_options']['imageUrl'] + "search-icon.png",
 		'searchIconWidth': 15,
 		'searchIconHeight': 15,
 		'keyMap': undefined,
-		'tagRemoveIconActiveUrl': this.grid._options['imageUrl'] + "tag-close-active.png",
+		'tagRemoveIconActiveUrl': this.grid['_options']['imageUrl'] + "tag-close-active.png",
 		
 		'syncMaster': false
 	};
@@ -139,7 +139,7 @@ function SearchManager(args) {
 var prototype = SearchManager.prototype;
 
 prototype._onCreateCss = function() {
-	var gridId = "#" + this.grid.mid + " .",
+	var gridId = "#" + this.grid['mid'] + " .",
 		opt = this._options,
 		border = opt['borderThickness'] + "px " + opt['border'],
 		tagsBorderRadius = "border-radius:" + opt['tagsBorderRadius'] + "px;-moz-border-radius:" + opt['tagsBorderRadius'] + "px",
@@ -214,7 +214,7 @@ prototype.__init = function() {
 		}
 	});
 
-	hasFilter = this._hasFilter = this.grid.colDefMgr.get().some(function(a){return Util.isNotNull(a.filter);});
+	hasFilter = this._hasFilter = this.grid['colDefMgr'].get().some(function(a){return Util.isNotNull(a.filter);});
 	tag = this._tag =
 		$("<div class='" + opt['classTagbar'] + "'>" + (hasFilter ? "<div class='" + opt['classAdvButton'] + "'><div class='" + opt['classAdvButtonName'] + "'>추가 옵션</div><div class='" + opt['classAdvButtonIcon'] + "'></div></div>" : "") + "<button type='button' class='" + opt['classClearTags'] + "' onclick='JGM.m.SearchManager." + this.mid + "._removeAllOptions()'>모든 필터 제거</button></div>")
 		.appendTo(mask);
@@ -235,7 +235,7 @@ prototype.__init = function() {
 		});
 	}
 
-	this.grid.event.bind({
+	this.grid['event'].bind({
 		'onRenderModules': this._onRenderModules,
 		'onCreateCss': this._onCreateCss,
 		'onFilter': this._onFilter,
@@ -249,7 +249,7 @@ prototype._onRenderModules = function() {
 		opt = this._options,
 		mask = this._mask;
 	if (this._hasFilter) {			
-		var colDefs = this.grid.colDefMgr.get(),
+		var colDefs = this.grid['colDefMgr'].get(),
 			len = colDefs.length,
 			keymap = opt['keyMap'],
 			nmap = this._nameMap,
@@ -281,8 +281,8 @@ prototype._onRenderModules = function() {
 		this._adv[0].innerHTML = html.join("");
 	}
 	
-	if (Util.isNotNull(this.grid.menubar)) {
-		this.grid.menubar.addIcon(opt['classSearchIcon'], "데이터 검색을 합니다.", opt['searchIconWidth'], opt['searchIconHeight'], function() {
+	if (Util.isNotNull(this.grid['menubar'])) {
+		this.grid['menubar'].addIcon(opt['classSearchIcon'], "데이터 검색을 합니다.", opt['searchIconWidth'], opt['searchIconHeight'], function() {
 			mask.toggle("fast");
 		});
 		mask.hide();
@@ -399,7 +399,7 @@ prototype._onFilter = function(success, failed) {
 			j,
 			k,
 			val,
-			cols = this.grid.colDefMgr.get().filter(function(c){return !c.noSearch;}),
+			cols = this.grid['colDefMgr'].get().filter(function(c){return !c.noSearch;}),
 			keylen = cols.length,
 			keys = [];
 		for (i = 0; i < keylen; i++) {
@@ -599,7 +599,7 @@ prototype._parse = function(str) {
 	this._syncMasterInput();
 	
 	if (change) {
-		this.grid.dataMgr.refresh();
+		this.grid['dataMgr'].refresh();
 	}
 };
 
@@ -672,7 +672,7 @@ prototype._removeGlobal = function(index) {
 		delete item.list;
 		delete gmap[index];
 		this._syncMasterInput();
-		this.grid.dataMgr.refresh();
+		this.grid['dataMgr'].refresh();
 	}
 };
 
@@ -759,7 +759,7 @@ prototype._registerOption = function(key, nick, optionTag, base, norefresh) {
 
 	if (!norefresh) {
 		this._syncMasterInput();
-		this.grid.dataMgr.refresh();
+		this.grid['dataMgr'].refresh();
 	}
 
 	return true;
@@ -778,7 +778,7 @@ prototype._removeOption = function(key, tag, base) {
 		delete tktmap[base];
 		delete this._codeMap[key + "@T" + tag + "@B" + base];
 		this._syncMasterInput();
-		this.grid.dataMgr.refresh();
+		this.grid['dataMgr'].refresh();
 	}
 };
 
@@ -829,7 +829,7 @@ prototype._removeAllOptions = function() {
 	this._codeMap = {};
 	this._syncMasterInput();
 	
-	this.grid.dataMgr.refresh();
+	this.grid['dataMgr'].refresh();
 };
 
 prototype._createTag = function(key, option, base, nick) {

@@ -90,7 +90,7 @@ function ColDefManager(args) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid.colDefMgr = this;
+	this.grid['colDefMgr'] = this;
 
 	/**
 	ColDefManager 모듈의 기본 옵션 값들을 정의합니다.
@@ -462,7 +462,7 @@ ColDefManager.getInstance = function(args) {
 var prototype = ColDefManager.prototype;
 
 prototype.__init = function(args) {
-	this.grid.event.bind("onDestroy", this._destroy, this);
+	this.grid['event'].bind("onDestroy", this._destroy, this);
 	this.set(args['colDefs']);
 };
 
@@ -527,14 +527,14 @@ prototype.set = function(colDefs) {
 		colDefs.pushList(filtered);
 	}
 	
-	this.grid.event.trigger("onBeforeSetColDefs", [this._colDefs, colDefs]);
+	this.grid['event'].trigger("onBeforeSetColDefs", [this._colDefs, colDefs]);
 	
 	this._colDefs = [];
 	this._filtered.length = 0;
 	this._keyToIdx = {};
 	this._keyToDef = {};
 	
-	this.grid.event.trigger("onEmptyColDefs");
+	this.grid['event'].trigger("onEmptyColDefs");
 	
 	var i = 0,
 		len = colDefs.length,
@@ -546,16 +546,16 @@ prototype.set = function(colDefs) {
 		col = colDefs[i];
 		if (!col.hasOwnProperty('key')) {
 			this._keyToDef = {};
-			return this.grid.error("KEY_UNDEFINED", i);
+			return this.grid['error']("KEY_UNDEFINED", i);
 		}
 		key = col.key;
       if (Util.isEmptyString(key)) {
 			this._keyToDef = {};
-			return this.grid.error("BAD_NULL", i);
+			return this.grid['error']("BAD_NULL", i);
 		}
 		if (map.hasOwnProperty(key)) {
 			this._keyToDef = {};
-			return this.grid.error("DUP_KEY", key);
+			return this.grid['error']("DUP_KEY", key);
 		}
 		map[key] = col;
 	}
@@ -566,7 +566,7 @@ prototype.set = function(colDefs) {
 		this._extend(colDefs[i]);
 	}
 
-	this.grid.event.trigger("onAfterSetColDefs", [colDefs, this._filter()]);
+	this.grid['event'].trigger("onAfterSetColDefs", [colDefs, this._filter()]);
 	
 	return colDefs;
 };
@@ -618,14 +618,14 @@ prototype.addAt = function(i, colDef) {
 		i += filtered.length;
 	}
 	
-	this.grid.event.trigger("onBeforeAddColDef", [colDef]);
+	this.grid['event'].trigger("onBeforeAddColDef", [colDef]);
 	
 	if (Util.isNull(key)) {
-		return this.grid.error("KEY_UNDEFINED");
+		return this.grid['error']("KEY_UNDEFINED");
 	}
 	
 	if (map.hasOwnProperty(key)) {
-		return this.grid.error("DUP_KEY", key);
+		return this.grid['error']("DUP_KEY", key);
 	}
 	
 	this._colDefs.addAt(i, this._extend(map[key] = colDef));
@@ -635,7 +635,7 @@ prototype.addAt = function(i, colDef) {
       this._reidx();
 	}
 	
-	this.grid.event.trigger("onAfterAddColDef", [colDef, i]);
+	this.grid['event'].trigger("onAfterAddColDef", [colDef, i]);
 	
 	return filtered.length;
 };
@@ -681,7 +681,7 @@ prototype.hide = function(i) {
 	this._filtered.removeAt(i);
 	this._reidx();
 	
-	this.grid.event.trigger("onHideCol", [colDef, i]);
+	this.grid['event'].trigger("onHideCol", [colDef, i]);
 	
 	return colDef;
 };
@@ -722,7 +722,7 @@ prototype.show = function(key) {
 	this._filter();
 	this._reidx();
 	
-	this.grid.event.trigger("onShowCol", [colDef, this._keyToIdx[key]]);
+	this.grid['event'].trigger("onShowCol", [colDef, this._keyToIdx[key]]);
 	
 	return colDef;
 };
@@ -893,7 +893,7 @@ prototype.sortByKey = function(keys) {
 	@since 1.2.1
 	@version 1.2.1
 	*/
-	this.grid.event.trigger("onReorderCols", keys);
+	this.grid['event'].trigger("onReorderCols", keys);
 	return this._filtered;
 };
 

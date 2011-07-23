@@ -32,7 +32,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 */
 function MenuBar(args) {
 	goog.base(this, args);
-	this.grid.menubar = this;
+	this.grid['menubar'] = this;
 }
 
 goog.inherits(MenuBar, BaseModule);
@@ -45,7 +45,7 @@ var proto = MenuBar.prototype;
 
 proto._defaultOptions = function() {
 	return {
-		'background': "url(" + this.grid._options['imageUrl'] + "menubar-bg.png) repeat-x scroll center",
+		'background': "url(" + this.grid['_options']['imageUrl'] + "menubar-bg.png) repeat-x scroll center",
 		'borderThickness': 1,
 		'border': "solid #b6bac0",
 		'height': 27,
@@ -57,8 +57,8 @@ proto._defaultOptions = function() {
 		'iconBorderActive': "solid #9a9a9a",
 		'iconMargin': 2,
 		'iconBackground': "",
-		'iconBackgroundHover': "url(" + this.grid._options['imageUrl'] + "menu-icon-hover.png) repeat-x scroll center",
-		'iconBackgroundActive': "url(" + this.grid._options['imageUrl'] + "menu-icon-active.png) repeat-x scroll center",
+		'iconBackgroundHover': "url(" + this.grid['_options']['imageUrl'] + "menu-icon-hover.png) repeat-x scroll center",
+		'iconBackgroundActive': "url(" + this.grid['_options']['imageUrl'] + "menu-icon-active.png) repeat-x scroll center",
 		'iconHeight': 21,
 		'iconWidth': 21,
 		'iconBorderRadius': 4,
@@ -75,7 +75,7 @@ proto._init = function(args) {
 };
 
 proto._bindEvents = function(args) {
-	this.grid.event.bind({
+	this.grid['event'].bind({
 		'onCreateCss': this._onCreateCss,
 		'onDestroy': this._destroy
 	}, this);
@@ -92,7 +92,7 @@ proto._destroy = function() {
 };
 
 proto._onCreateCss = function() {
-	var gridId = "#" + this.grid.mid + " .",
+	var gridId = "#" + this.grid['mid'] + " .",
       opt = this._options,
       border = opt['borderThickness'] + "px " + opt['border'],
       rules = [];

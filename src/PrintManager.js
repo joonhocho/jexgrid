@@ -65,7 +65,7 @@ prototype.__init = function() {
 };
 
 prototype.print = function() {
-	var printHtml = this.getPrintHtml(this.grid.colDefMgr.get(), this.grid.dataMgr.datalist),
+	var printHtml = this.getPrintHtml(this.grid['colDefMgr'].get(), this.grid['dataMgr'].datalist),
       printWin = Util.open(this._options['winOptions']);
 	printWin.document.write(printHtml);
 	printWin.document.close();
