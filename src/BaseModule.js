@@ -33,7 +33,7 @@ goog.provide('jx.grid.BaseModule');
 
 		// options
 		var defaults = this._defaultOptions && this._defaultOptions(),
-			opts = args && args.options;
+			opts = args && args['options'];
 		if (opts || defaults) {
 			if (!defaults) {
 				defaults = {};
@@ -47,11 +47,11 @@ goog.provide('jx.grid.BaseModule');
 		// init
 		if (this._init) {
 			this.dispatchEvent({
-				type:'beforeinit'
+				'type':'beforeinit'
 			});
 			this._init(args);
 			this.dispatchEvent({
-				type:'afterinit'
+				'type':'afterinit'
 			});
 		}
 
@@ -80,17 +80,17 @@ goog.provide('jx.grid.BaseModule');
 		// bindEvents
 		if (this._bindEvents) {
 			this.dispatchEvent({
-				type:'beforebindevents'
+				'type':'beforebindevents'
 			});
 			this._bindEvents(args);
 			this.dispatchEvent({
-				type:'afterbindevents'
+				'type':'afterbindevents'
 			});
 		}
 
 		// complete instantiation
 		this.dispatchEvent({
-			type:'complete'
+			'type':'complete'
 		});
 	}
 
@@ -106,11 +106,11 @@ goog.provide('jx.grid.BaseModule');
 	proto.dispose = function() {
 		delete this.grid;
 		this.dispatchEvent({
-			type:'beforedispose'
+			'type':'beforedispose'
 		});
 		superdispose.call(this);
 		this.dispatchEvent({
-			type:'afterdispose'
+			'type':'afterdispose'
 		});
 	}
 

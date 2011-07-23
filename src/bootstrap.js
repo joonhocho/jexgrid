@@ -48,33 +48,33 @@ JGM
 
 JGM.__map_a__ = {
 	// notloaded | loading | loaded
-	ArrayExtIE:			{ cacheModule: false	},
-	Cache:				{ cacheModule: true	},
-	Cell:				{ cacheModule: false	},
-	CheckManager:		{ cacheModule: true	},
-	ColDefManager:		{ cacheModule: true	},
-	ColGroup:			{ cacheModule: true	},
-	ColHeader:			{ cacheModule: true	},
-	Collapser:			{ cacheModule: true	},
-	DataManager:		{ cacheModule: true	},
-	DataCreator:		{ cacheModule: true	},
-	EditManager:		{ cacheModule: true	},
-	Editor:				{ cacheModule: true	},
-	EngineExt:			{ cacheModule: false	},
-	EventManager:		{ cacheModule: true	},
-	Footer:				{ cacheModule: true	},
-	HeaderTree:			{ cacheModule: true	},
-	Grid:				{ cacheModule: true	},
-	GridManager:		{ cacheModule: false	},
-	MenuBar:			{ cacheModule: true	},
-	ViewportManager:	{ cacheModule: true	},
-	SelectionManager:	{ cacheModule: true	},
-	SearchManager:		{ cacheModule: true	},
-	TooltipManager:		{ cacheModule: true	},
-	Tracer:				{ cacheModule: false	},
-	Tree:				{ cacheModule: true	},
-	TreeNode:			{ cacheModule: false	},
-	Util:				{ cacheModule: false	},
+	'ArrayExtIE':			{ cacheModule: false	},
+	'Cache':				{ cacheModule: true	},
+	'Cell':				{ cacheModule: false	},
+	'CheckManager':		{ cacheModule: true	},
+	'ColDefManager':		{ cacheModule: true	},
+	'ColGroup':			{ cacheModule: true	},
+	'ColHeader':			{ cacheModule: true	},
+	'Collapser':			{ cacheModule: true	},
+	'DataManager':		{ cacheModule: true	},
+	'DataCreator':		{ cacheModule: true	},
+	'EditManager':		{ cacheModule: true	},
+	'Editor':				{ cacheModule: true	},
+	'EngineExt':			{ cacheModule: false	},
+	'EventManager':		{ cacheModule: true	},
+	'Footer':				{ cacheModule: true	},
+	'HeaderTree':			{ cacheModule: true	},
+	'Grid':				{ cacheModule: true	},
+	'GridManager':		{ cacheModule: false	},
+	'MenuBar':			{ cacheModule: true	},
+	'ViewportManager':	{ cacheModule: true	},
+	'SelectionManager':	{ cacheModule: true	},
+	'SearchManager':		{ cacheModule: true	},
+	'TooltipManager':		{ cacheModule: true	},
+	'Tracer':				{ cacheModule: false	},
+	'Tree':				{ cacheModule: true	},
+	'TreeNode':			{ cacheModule: false	},
+	'Util':				{ cacheModule: false	},
 	'Util$':			{ cacheModule: false	}
 };
 
@@ -401,8 +401,8 @@ JGM.__globalEvents_i__ = {
 JGM._bindGlobalEvents = function() {
 	if (!this.__globalEventsBound_h__) {
 		$(document).bind({
-			mousemove:this.__globalEvents_i__.__mousemove_a__,
-			mouseup:this.__globalEvents_i__.__mouseup_b__
+			'mousemove':this.__globalEvents_i__.__mousemove_a__,
+			'mouseup':this.__globalEvents_i__.__mouseup_b__
 		});
 		$(window).resize(this.__globalEvents_i__.__resize_c__);
 		this.__globalEventsBound_h__ = true;
@@ -412,8 +412,8 @@ JGM._bindGlobalEvents = function() {
 JGM._unbindGlobalEvents = function() {
 	if (this.__globalEventsBound_h__) {
 		$(document).unbind({
-			mousemove:this.__globalEvents_i__.__mousemove_a__,
-			mouseup:this.__globalEvents_i__.__mouseup_b__
+			'mousemove':this.__globalEvents_i__.__mousemove_a__,
+			'mouseup':this.__globalEvents_i__.__mouseup_b__
 		});
 		$(window).unbind("resize", this.__globalEvents_i__.__resize_c__);
 		this.__globalEventsBound_h__ = false;
@@ -421,22 +421,22 @@ JGM._unbindGlobalEvents = function() {
 };
 
 JGM.error = {
-   LENGTH_NOT_EQUAL: "Lengths are not equal",
-	NOT_MODIFIABLE: "Cannot modify value for '%0'.",
-	KEY_UNDEFINED: "Column '%0' is undefined.",
-   BAD_NULL: "Column '%0' cannot be null.",
-	DUP_KEY: "Duplicate column key '%0'.",
-	DUP_ENTRY: "Duplicate entry '%0' for '%1'.",
-	KEY_NOT_FOUND: "'%0' for '%1' doesn't exist in table.",
-	PARSE_ERROR: "Cannot parse '%0' for '%1'.",
-	INVALID_DEFAULT: "Invalid default value '%0' for '%1'.",
-	MULTIPLE_PRI_KEY: "Multiple primary key defined.",
-	DATA_TOO_LONG: "Data '%0' too long for column '%1'. Maximum is %2.",
-	DATA_TOO_SHORT: "Data '%0' too short for column '%1'. Minimum is %2.",
-   WRONG_LENGTH: "Length of data '%0' is not '%1' characters long for column '%2'.",
-	BIGGER_THAN: "Data '%0' too big for column '%1'. Maximum is %2.",
-	SMALLER_THAN: "Data '%0' too small for column '%1'. Minimum is %2.",
-	WRONG_VALUE: "Incorrect value: '%0' for '%1'."
+   'LENGTH_NOT_EQUAL': "Lengths are not equal",
+	'NOT_MODIFIABLE': "Cannot modify value for '%0'.",
+	'KEY_UNDEFINED': "Column '%0' is undefined.",
+   'BAD_NULL': "Column '%0' cannot be null.",
+	'DUP_KEY': "Duplicate column key '%0'.",
+	'DUP_ENTRY': "Duplicate entry '%0' for '%1'.",
+	'KEY_NOT_FOUND': "'%0' for '%1' doesn't exist in table.",
+	'PARSE_ERROR': "Cannot parse '%0' for '%1'.",
+	'INVALID_DEFAULT': "Invalid default value '%0' for '%1'.",
+	'MULTIPLE_PRI_KEY': "Multiple primary key defined.",
+	'DATA_TOO_LONG': "Data '%0' too long for column '%1'. Maximum is %2.",
+	'DATA_TOO_SHORT': "Data '%0' too short for column '%1'. Minimum is %2.",
+   'WRONG_LENGTH': "Length of data '%0' is not '%1' characters long for column '%2'.",
+	'BIGGER_THAN': "Data '%0' too big for column '%1'. Maximum is %2.",
+	'SMALLER_THAN': "Data '%0' too small for column '%1'. Minimum is %2.",
+	'WRONG_VALUE': "Incorrect value: '%0' for '%1'."
 };
 
 })();

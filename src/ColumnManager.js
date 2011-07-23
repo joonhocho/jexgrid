@@ -114,7 +114,7 @@ function ColDefManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__colDef_a__: {
+		'__colDef_a__': {
 			/**
 			로우 데이터에서 해당 컬럼 데이터를 가져올 때 사용되는 키입니다. 컬럼
 			정의 오브젝트에서 필수적으로 각 컬럼마다 유니크한 키 값을 지정해줘야
@@ -127,7 +127,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			key:			undefined,
+			'key':			undefined,
 
 			/**
 			컬럼 이름. 이 값이 지정될 경우 컬럼 헤더에 key 값 대신 이 값을
@@ -140,7 +140,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			name:			"",
+			'name':			"",
 
 			/**
 			컬럼 셀 노드들에 적용되는 CSS 클래스. <br>기본값:<code>undefined</code>
@@ -152,7 +152,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			colClass:		undefined,
+			'colClass':		undefined,
 
 			/**
 			새로운 로우 데이터를 생성하거나 셀의 데이터를 del 키를 눌러서 삭제했을 경우에
@@ -165,7 +165,7 @@ function ColDefManager(args) {
 			@since 1.1.1
 			@version 1.1.1
 			*/
-			defaultValue:		undefined,
+			'defaultValue':		undefined,
 
 			/**
 			{@link JGM.DataCreator DataCreator} 를 사용하여 새로운 로우 데이터를 생성할 경우,
@@ -178,7 +178,7 @@ function ColDefManager(args) {
 			@since 1.1.1
 			@version 1.1.1
 			*/
-			inputOnCreate:		undefined,
+			'inputOnCreate':		undefined,
 
 			/**
 			컬럼 셀 노드들에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -193,7 +193,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			style:		"",
+			'style':		"",
 
 			/**
 			컬럼 헤더에게 적용되는 CSS style 입니다.<br>
@@ -208,7 +208,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			headerStyle:		"",
+			'headerStyle':		"",
 
 			/**
 			컬럼의 기본 폭 픽셀. <br>기본값:<code>80</code>
@@ -220,7 +220,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			width:			80,
+			'width':			80,
 
 			/**
 			컬럼의 폭을 조절할 경우 사용되는 최소 폭 픽셀. <br>기본값:<code>30</code>
@@ -232,7 +232,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			minW:			30,
+			'minW':			30,
 
 			/**
 			컬럼의 폭을 조절할 경우 사용되는 최대 폭 픽셀. <br>기본값:<code>undefined</code>
@@ -244,7 +244,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			maxW:			undefined,
+			'maxW':			undefined,
 
 			/**
 			셀 에디팅을 할 때 사용되는 컬럼 에디터. <br>기본값:<code>undefined</code>
@@ -256,7 +256,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			editor:			undefined,
+			'editor':			undefined,
 
 			/**
 			컬럼 정렬할 때 사용되는 컬럼 정렬 오브젝트. <br>기본값:<code>undefined</code>
@@ -268,7 +268,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			sorter:			undefined,
+			'sorter':			undefined,
 
 			/**
 			컬럼의 숨기기 여부. <br>기본값:<code>false</code>
@@ -280,7 +280,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			hidden:			false,
+			'hidden':			false,
 
 			/**
 			컬럼 데이터 합계의 {@link JGM.Footer Footer} 에 표시 여부.
@@ -295,7 +295,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			sumRenderer:		undefined,
+			'sumRenderer':		undefined,
 
 			/**
 			마우스를 컬럼 셀위에 올려놓을 경우 보여지는 툴팁의 활성 여부. <br>기본값:<code>false</code>
@@ -307,7 +307,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			tooltipEnabled:	false,
+			'tooltipEnabled':	false,
 
 			/**
 			컬럼의 폭 조절 가능 여부. <br>기본값:<code>false</code>
@@ -319,7 +319,7 @@ function ColDefManager(args) {
 			@since 1.1.2
 			@version 1.1.2
 			*/
-			resizable:		false,
+			'resizable':		false,
 
 			/**
 			컬럼 셀 랜더러.
@@ -336,7 +336,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			renderer:		JGM.ViewportManager.__renderer_AD__,
+			'renderer':		JGM.ViewportManager.__renderer_AD__,
 
 			/**
 			컬럼 셀 {@link JGM.ColDefManager.options.colDef.renderer renderer} 함수에 보낼 파라미터 타입을 정하는 옵션. true 일 경우에는
@@ -351,7 +351,7 @@ function ColDefManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			rendererInput:	false,
+			'rendererInput':	false,
 
 			/**
 			컬럼 헤더에 타이틀 attribute 입력 여부. <br>기본값:<code>false</code>
@@ -363,7 +363,7 @@ function ColDefManager(args) {
 			@since 1.1.7
 			@version 1.1.7
 			*/
-			noTitle: false,
+			'noTitle': false,
 
 			/**
 			컬럼 헤더에 이름값 입력 여부. <br>기본값:<code>false</code>
@@ -375,7 +375,7 @@ function ColDefManager(args) {
 			@since 1.1.7
 			@version 1.1.7
 			*/
-			noName: false,
+			'noName': false,
 
 			/**
 			컬럼 헤더에 입력할 타이틀 attribute 의 내용. <br>기본값:<code>undefined</code>
@@ -387,7 +387,7 @@ function ColDefManager(args) {
 			@since 1.1.7
 			@version 1.1.7
 			*/
-			title: undefined,
+			'title': undefined,
 
 			/**
 			컬럼이 필터링 시에 검색에 포함되는지 여부.<br>기본값:<code>false</code>
@@ -399,7 +399,7 @@ function ColDefManager(args) {
 			@since 1.2.0
 			@version 1.2.0
 			*/
-			noSearch: false,
+			'noSearch': false,
 
 			/**
 			필터링 시에 사용될 추가 옵션 필터입니다. 커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.<br>기본값:<code>undefined</code>
@@ -411,7 +411,7 @@ function ColDefManager(args) {
 			@since 1.2.0
 			@version 1.2.0
 			*/
-			filter: undefined,
+			'filter': undefined,
 
 			/**
 			데이터 parsing 을 담당하는 함수입니다. 그리드에 입력되거나 내용이 변경되는 모든 데이터는 이 함수에 의해서
@@ -426,7 +426,7 @@ function ColDefManager(args) {
 			@since 1.3.0
 			@version 1.3.0
 			*/
-			parser: undefined,
+			'parser': undefined,
 
 			/**
 			필터링 시에 사용될 추가 옵션 필터입니다. 커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.<br>기본값:<code>undefined</code>
@@ -438,11 +438,11 @@ function ColDefManager(args) {
 			@since 1.3.0
 			@version 1.3.0
 			*/
-			validator: undefined
+			'validator': undefined
 		}
 	};
 
-	this._options = JGM.__extend_e__(options, args.options, {colDef:"__colDef_a__"});
+	this._options = JGM.__extend_e__(options, args['options'], {colDef:"__colDef_a__"});
 
 	this.__colDefs_a__ = [];
 
@@ -463,7 +463,7 @@ var prototype = ColDefManager.prototype;
 
 prototype.__init = function(args) {
 	this.grid.event.bind("onDestroy", this.__destroy_aA__, this);
-	this.set(args.colDefs);
+	this.set(args['colDefs']);
 };
 
 prototype.__destroy_aA__ = function() {
@@ -607,7 +607,7 @@ prototype.addAt = function(i, colDef) {
 		return;
 	}
 
-	var key = colDef.key,
+	var key = colDef['key'],
 		map = this.__keyToDef_c__,
 		filtered = this.__filtered_b__;
 
@@ -630,7 +630,7 @@ prototype.addAt = function(i, colDef) {
 	
 	this.__colDefs_a__.addAt(i, this.__extend_i__(map[key] = colDef));
 	
-	if (colDef.hidden !== true) {
+	if (colDef['hidden'] !== true) {
 		filtered.addAt(i, colDef);
       this.__reidx_f__();
 	}
@@ -649,14 +649,14 @@ prototype.__extend_i__ = function(colDef) {
 	var options = {},
 		sorter;
 		
-	$.extend(true, options, this._options.__colDef_a__);
+	$.extend(true, options, this._options['__colDef_a__']);
 	$.extend(true, options, colDef);
 	$.extend(true, colDef, options);
 
-	colDef.sorter = sorter = ColDefManager.sorter(colDef.sorter, colDef.key);
+	colDef['sorter'] = sorter = ColDefManager.sorter(colDef['sorter'], colDef['key']);
 	
 	if (Util.isNotNull(sorter)) {
-		sorter.key = colDef.key;
+		sorter.key = colDef['key'];
 	}
 	
 	return colDef;
@@ -676,7 +676,7 @@ prototype.hide = function(i) {
 		return;
 	}
 	
-	colDef.hidden = true;
+	colDef['hidden'] = true;
 	
 	this.__filtered_b__.removeAt(i);
 	this.__reidx_f__();
@@ -717,7 +717,7 @@ prototype.show = function(key) {
 	}
 	
 	colDef = map[key];
-	colDef.hidden = false;
+	colDef['hidden'] = false;
 	
 	this.__filter_e__();
 	this.__reidx_f__();
@@ -730,7 +730,7 @@ prototype.show = function(key) {
 // implicitly tested
 prototype.__filter_e__ = function() {
 	this.__filtered_b__ = this.__colDefs_a__.filter(function(colDef) {
-		return colDef.hidden !== true;
+		return colDef['hidden'] !== true;
 	});
 	this.__reidx_f__();
 	return this.__filtered_b__;
@@ -850,8 +850,8 @@ prototype.getIdxByKey = function(key) {
 @version 1.0.0
 */
 prototype.getIdx = function(colDef) {
-	if (Util.isNotNull(colDef) && this.__keyToIdx_d__.hasOwnProperty(colDef.key)) {
-		return this.__keyToIdx_d__[colDef.key];
+	if (Util.isNotNull(colDef) && this.__keyToIdx_d__.hasOwnProperty(colDef['key'])) {
+		return this.__keyToIdx_d__[colDef['key']];
 	}
 	return -1;
 };
@@ -920,12 +920,12 @@ ColDefManager.sorter = function(type, key, on) {
 	on = on ? true : false;
 
 	if (type === "text") {
-		return { lexi: key, on: on, key:key};
+		return { 'lexi': key, 'on': on, 'key':key};
 	}
 	if (type === "int") {
 		return {
-			on: on,
-			comparator: function(a, b) {
+			'on': on,
+			'comparator': function(a, b) {
 				var aVal = a[key],
 					bVal = b[key];
 				if (Util.isNull(aVal)) {
@@ -943,13 +943,13 @@ ColDefManager.sorter = function(type, key, on) {
 				
 				return aVal - bVal;
 			},
-			key:key
+			'key':key
 		};
 	}
 	if (type === "float 한국 tehu") {
 		return {
-			on: on,
-			comparator: function(a, b) {
+			'on': on,
+			'comparator': function(a, b) {
 				var aVal = a[key],
 					bVal = b[key];
 				if (Util.isNull(aVal)) {
@@ -966,7 +966,7 @@ ColDefManager.sorter = function(type, key, on) {
 				}
 				return aVal - bVal;
 			},
-			key:key
+			'key':key
 		};
 	}
 };

@@ -26,9 +26,9 @@ var Util = goog.getObjectByName('jx.util');
  goog.exportSymbol('Tree', Tree);
 
  function TreeNode(args) {
- this.tree = args.tree;
- this.data = args.data;
- this.nodeId = args.nodeId;
+ this.tree = args['tree'];
+ this.data = args['data'];
+ this.nodeId = args['nodeId'];
 
  this.level;
  this.parent;
@@ -64,7 +64,7 @@ var Util = goog.getObjectByName('jx.util');
 	 if (Util.isNotNull(this.parent)) {
 		 this.parent.removeChild(this);
 	 }
-	 this.traverse({post:true, fn:function() { this.destroy(); }});
+	 this.traverse({'post':true, 'fn':function() { this.destroy(); }});
  };
 
  prototype.detach = function() {
@@ -87,7 +87,7 @@ var Util = goog.getObjectByName('jx.util');
 	 if (Util.isNotNull(this.parent)) {
 		 this.parent.removeChild(this);
 	 }
-	 this.traverse({post:true, fn:function() { this.detach(); }});
+	 this.traverse({'post':true, 'fn':function() { this.detach(); }});
  };
 
  prototype.isRoot = function() {
@@ -221,27 +221,27 @@ var Util = goog.getObjectByName('jx.util');
  };
 
  prototype.getPath = function() {
-	 return this.traverse({res:[], up:true, post:true, fn:function(args) {
+	 return this.traverse({'res':[], 'up':true, 'post':true, 'fn':function(args) {
 			 if (!this.isRoot()) {
-			 args.res.push(this.getIdx());
+			 args['res'].push(this.getIdx());
 			 }
 			 }}).res;
  };
 
  prototype.getAncestors = function() {
-	 var args = {res:[], up:true, post:true, fn:function(args) {
-		 args.res.push(this);
+	 var args = {'res':[], 'up':true, 'post':true, 'fn':function(args) {
+		 args['res'].push(this);
 	 }};
 	 this.traverse(args);
-	 args.res.pop();
-	 return args.res;
+	 args['res'].pop();
+	 return args['res'];
  };
 
  prototype.getDescendents = function() {
-	 var args = {res:[], fn:function(args) { args.res.push(this); }};
+	 var args = {'res':[], 'fn':function(args) { args['res'].push(this); }};
 	 this.traverse(args);
-	 args.res.shift();
-	 return args.res;
+	 args['res'].shift();
+	 return args['res'];
  };
 
  prototype.getLevel = function() {
@@ -252,23 +252,23 @@ var Util = goog.getObjectByName('jx.util');
  };
 
  prototype.find = function(dataToFind) {
-	 return this.traverse({fn:function(args) {
+	 return this.traverse({'fn':function(args) {
 			 if (this.data === dataToFind) {
-			 args.res = this;
-			 args.stop = true;
+			 args['res'] = this;
+			 args['stop'] = true;
 			 }
 			 }}).res;
  };
 
  prototype.traverse = function(args, index) {
-	 if (args.stop) {
+	 if (args['stop']) {
 		 return args;
 	 }
-	 if (args.up) {
+	 if (args['up']) {
 		 if (this.isRoot()) {
 			 this.callFn(args);
 		 }
-		 else if (args.post) {
+		 else if (args['post']) {
 			 this.parent.traverse(args);
 			 this.callFn(args);
 		 }
@@ -281,7 +281,7 @@ var Util = goog.getObjectByName('jx.util');
 		 var i = 0,
 			 c = this.children,
 			 len = c.length;
-		 if (args.post) {
+		 if (args['post']) {
 			 for (; i < len; i++) {
 				 c[i].traverse(args, i);
 			 }
@@ -289,11 +289,11 @@ var Util = goog.getObjectByName('jx.util');
 		 }
 		 else {
 			 this.callFn(args, index);
-			 if (args.propagate === false) {
-				 delete args.propagate;
+			 if (args['propagate'] === false) {
+				 delete args['propagate'];
 			 }
 			 else {
-				 for (; !args.stop && i < len; i++) {
+				 for (; !args['stop'] && i < len; i++) {
 					 c[i].traverse(args, i);
 				 }
 			 }
@@ -318,30 +318,30 @@ var Util = goog.getObjectByName('jx.util');
  };
 
  prototype.callFn = function(args, index) {
-	 if (!args.stop) {
-		 if (Util.isNull(args.target)) {
-			 Util.callFn(this, args.fn, args, index);
+	 if (!args['stop']) {
+		 if (Util.isNull(args['target'])) {
+			 Util.callFn(this, args['fn'], args, index);
 		 }
 		 else {
-			 args.node = this;
-			 Util.callFn(args.target, args.fn, args, index);
+			 args['node'] = this;
+			 Util.callFn(args['target'], args['fn'], args, index);
 		 }
 	 }
  };
 
  function Tree(args) {
-	 this.list = args.list;
+	 this.list = args['list'];
 
 	 var options = {
-nodeKey: "nodeId",
-		 parentKey: "parentId"
+'nodeKey': "nodeId",
+		 'parentKey': "parentId"
 	 };
 
 	 // 옵션을 익스텐드합니다
-	 this._options = JGM.__extend_e__(options, args.options);
+	 this._options = JGM.__extend_e__(options, args['options']);
 
 	 this.map = {};
-	 this.root = new TreeNode({tree:this});
+	 this.root = new TreeNode({'tree':this});
 	 this.infants = {};
  }
 
@@ -392,7 +392,7 @@ nodeKey: "nodeId",
 		 list = this.list;
 	 }
 
-	 var nodeKey = this._options.nodeKey,
+	 var nodeKey = this._options['nodeKey'],
 		 map = this.map,
 		 len = list.length,
 		 i = 0;
@@ -413,11 +413,11 @@ nodeKey: "nodeId",
  };
 
  prototype.hasNode = function(data) {
-	 return Util.isNotNull(data) && this.map.hasOwnProperty(data[this._options.nodeKey]);
+	 return Util.isNotNull(data) && this.map.hasOwnProperty(data[this._options['nodeKey']]);
  };
 
  prototype.getNode = function(data) {
-	 return this.map[data[this._options.nodeKey]];
+	 return this.map[data[this._options['nodeKey']]];
  };
 
  prototype.getNodeByNodeId = function(nodeId) {
@@ -429,8 +429,8 @@ nodeKey: "nodeId",
 		 return;
 	 }
 
-	 var nodeId = data[this._options.nodeKey],
-		 node = new TreeNode({tree:this, data:data, nodeId:nodeId});
+	 var nodeId = data[this._options['nodeKey']],
+		 node = new TreeNode({'tree':this, 'data':data, 'nodeId':nodeId});
 	 this.map[nodeId] = node;
 	 this.attachNode(node);
 	 return node;
@@ -451,7 +451,7 @@ nodeKey: "nodeId",
 
  prototype.attachNode = function(node) {
 	 var nodeId = node.nodeId,
-		 parentId = node.data[this._options.parentKey];
+		 parentId = node.data[this._options['parentKey']];
 
 	 this.adoptInfants(node, nodeId);
 
@@ -478,7 +478,7 @@ nodeKey: "nodeId",
 	 this.map[newId] = node;
 
 	 this.removeChildren(node);
-	 node.nodeId = node.data[this._options.nodeKey] = newId;
+	 node.nodeId = node.data[this._options['nodeKey']] = newId;
 
 	 if (Util.isNotNull(node.parent)) {
 		 node.parent.childrenMap[newId] = node.parent.childrenMap[before];
@@ -499,7 +499,7 @@ nodeKey: "nodeId",
 
 	 var parent = this.map[newId];
 	 node.setParent(parent);
-	 node.data[this._options.parentKey] = newId;
+	 node.data[this._options['parentKey']] = newId;
 
 	 if (Util.isNull(parent)) {
 		 this.addToInfants(node, newId);
@@ -530,7 +530,7 @@ nodeKey: "nodeId",
 
  prototype.removeFromInfants = function(node, parentId) {
 	 if (Util.isNull(parentId)) {
-		 parentId = node.data[this._options.parentKey];
+		 parentId = node.data[this._options['parentKey']];
 	 }
 
 	 if (this.infants.hasOwnProperty(parentId)) {
@@ -558,7 +558,7 @@ nodeKey: "nodeId",
 	 else {
 		 list.length = 0;
 	 }
-	 this.root.traverseChildren({fn:function() {
+	 this.root.traverseChildren({'fn':function() {
 			 list.push(this.data);
 			 }});
  };

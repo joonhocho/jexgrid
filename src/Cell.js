@@ -89,11 +89,11 @@ function Cell(args) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid = args.grid;
+	this.grid = args['grid'];
 
-	this.__datarow_h__ = args.datarow;
+	this.__datarow_h__ = args['datarow'];
 
-	this.__colDef_i__ = args.colDef;
+	this.__colDef_i__ = args['colDef'];
 
 	this.__init(args);
 }
@@ -107,29 +107,29 @@ var prototype = Cell.prototype;
 
 prototype.__init = function(args) {
    if (Util.isNull(this.__datarow_h__)) {
-      if (Util.isNotNull(args.row)) {
-         this.__datarow_h__ = this.grid.dataMgr.getByIdx(args.row);
+      if (Util.isNotNull(args['row'])) {
+         this.__datarow_h__ = this.grid.dataMgr.getByIdx(args['row']);
       }
-      else if (Util.isNotNull(args.node)) {
-         this.__datarow_h__ = this.grid.dataMgr.getByNode(args.node.parentNode);
+      else if (Util.isNotNull(args['node'])) {
+         this.__datarow_h__ = this.grid.dataMgr.getByNode(args['node'].parentNode);
       }
-      else if (Util.isNotNull(args.$)) {
-         this.__datarow_h__ = this.grid.dataMgr.getByNode(args.$[0].parentNode);
+      else if (Util.isNotNull(args['$'])) {
+         this.__datarow_h__ = this.grid.dataMgr.getByNode(args['$'][0].parentNode);
       }
    }
    if (Util.isNull(this.__colDef_i__)) {
-      if (Util.isNotNull(args.col)) {
-         this.__colDef_i__ = this.grid.colDefMgr.get(args.col);
+      if (Util.isNotNull(args['col'])) {
+         this.__colDef_i__ = this.grid.colDefMgr.get(args['col']);
       }
-      else if (Util.isNotNull(args.node)) {
-         this.__colDef_i__ = this.grid.colDefMgr.get(Util.index(args.node));
+      else if (Util.isNotNull(args['node'])) {
+         this.__colDef_i__ = this.grid.colDefMgr.get(Util.index(args['node']));
       }
-      else if (Util.isNotNull(args.$)) {
-         this.__colDef_i__ = this.grid.colDefMgr.get(Util.index(args.$[0]));
+      else if (Util.isNotNull(args['$'])) {
+         this.__colDef_i__ = this.grid.colDefMgr.get(Util.index(args['$'][0]));
       }
    }
-	if (Util.isNullOr(this.__datarow_h__, this.__colDef_i__) && Util.isNotNull(args.event)) {
-      var node = this.grid.view.__getClosestCell_Az__(args.event.target);
+	if (Util.isNullOr(this.__datarow_h__, this.__colDef_i__) && Util.isNotNull(args['event'])) {
+      var node = this.grid.view.__getClosestCell_Az__(args['event'].target);
       if (Util.isNotNull(node)) {
          this.__datarow_h__ = this.grid.dataMgr.getByNode(node.parentNode);
          this.__colDef_i__ = this.grid.colDefMgr.get(Util.index(node));

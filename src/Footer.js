@@ -77,7 +77,7 @@ function Footer(args) {
 	*/
 	this.mid = args.mid;
 
-	this._ctnr = args.container;
+	this._ctnr = args['container'];
 
 	this.__foot_a__;
 
@@ -124,7 +124,7 @@ function Footer(args) {
 		@since 1.1.3
 		@version 1.1.3
 		*/
-		__classCell_a__: "footer-cell",
+		'__classCell_a__': "footer-cell",
 		
 		/**
 		Footer 의 배경입니다. <br>기본값:<code>"#F1F5FB"</code>
@@ -136,7 +136,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__background_b__: "#F1F5FB",
+		'__background_b__': "#F1F5FB",
 
 		/**
 		Footer 의 border 입니다. <br>기본값:<code>"0px solid #CCD9EA"</code>
@@ -148,7 +148,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__border_c__:		"0px solid #CCD9EA",
+		'__border_c__':		"0px solid #CCD9EA",
 
 		/**
 		Footer 의 기본 글씨 색 입니다. <br>기본값:<code>"#000"</code>
@@ -160,7 +160,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__color_d__: "#000",
+		'__color_d__': "#000",
 
 		/**
 		Footer 의 기본 폰트 크기 입니다. <br>기본값:<code>"13px"</code>
@@ -172,7 +172,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__fontSize_e__: "13px",
+		'__fontSize_e__': "13px",
 
 		/**
 		Footer 의 기본 폰트 무게 입니다. <br>기본값:<code>"normal"</code>
@@ -184,7 +184,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__fontWeight_f__: "normal",
+		'__fontWeight_f__': "normal",
 
 		/**
 		Footer 안 셀의 높이 픽셀 입니다. <br>기본값:<code>25</code>
@@ -196,7 +196,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__cellHeight_g__: 25,
+		'__cellHeight_g__': 25,
 
 		/**
 		Footer 안 셀의 right-padding 픽셀 입니다. <br>기본값:<code>30</code>
@@ -208,7 +208,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__cellPadding_h__: 40,
+		'__cellPadding_h__': 40,
 		
 		/**
 		Footer 의 총 건수를 보여주는 셀의 템플릿 입니다.<br>기본값:<code>"현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건"</code>
@@ -220,7 +220,7 @@ function Footer(args) {
 		@since 1.1.3
 		@version 1.1.3
 		*/
-		__countTemplate_i__: "현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건",
+		'__countTemplate_i__': "현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건",
 
 		/**
 		Footer 의 title 의 글씨 색 입니다. <br>기본값:<code>"#5A6779"</code>
@@ -232,7 +232,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__titleColor_j__: "#5A6779",
+		'__titleColor_j__': "#5A6779",
 
 		/**
 		Footer 의 title 의 폰트 크기 입니다. <br>기본값:<code>"12px"</code>
@@ -244,7 +244,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__titleFontSize_k__: "12px",
+		'__titleFontSize_k__': "12px",
 
 		/**
 		Footer 의 title 의 폰트 무게 입니다. <br>기본값:<code>"normal"</code>
@@ -256,7 +256,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__titleFontWeight_l__: "normal",
+		'__titleFontWeight_l__': "normal",
 
 		/**
 		Footer 의 content 의 글씨 색 입니다. <br>기본값:<code>"#1E395B"</code>
@@ -268,7 +268,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__contentColor_n__: "#1E395B",
+		'__contentColor_n__': "#1E395B",
 
 		/**
 		Footer 의 content 의 폰트 크기 입니다. <br>기본값:<code>"12px"</code>
@@ -280,7 +280,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__contentFontSize_o__: "12px",
+		'__contentFontSize_o__': "12px",
 
 		/**
 		Footer 의 content 의 폰트 무게 입니다. <br>기본값:<code>"normal"</code>
@@ -292,7 +292,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__contentFontWeight_p__: "normal",
+		'__contentFontWeight_p__': "normal",
 
 		/**
 		Footer 컨테이너에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-footer"</code>
@@ -304,7 +304,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classFooter_q__: "jgrid-footer",
+		'__classFooter_q__': "jgrid-footer",
 
 		/**
 		Footer 의 title 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"footer-title"</code>
@@ -316,7 +316,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classTitle_r__: "footer-title",
+		'__classTitle_r__': "footer-title",
 
 		/**
 		Footer 의 content 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"footer-content"</code>
@@ -328,7 +328,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classContent_s__: "footer-content",
+		'__classContent_s__': "footer-content",
 
 		/**
 		Footer 컨테이너에 적용되는 CSS style 입니다.<br>
@@ -343,7 +343,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__style_u__: "",
+		'__style_u__': "",
 
 		/**
 		Footer 셀에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -358,7 +358,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__cellStyle_v__: "",
+		'__cellStyle_v__': "",
 
 		/**
 		Footer 셀의 타이틀에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -373,7 +373,7 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__titleStyle_w__: "",
+		'__titleStyle_w__': "",
 
 		/**
 		Footer 셀의 컨텐트에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -388,10 +388,10 @@ function Footer(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__contentStyle_x__: ""
+		'__contentStyle_x__': ""
 	};
 
-	this._options = JGM.__extend_e__(options, args.options, {
+	this._options = JGM.__extend_e__(options, args['options'], {
 		classCell:"__classCell_a__",
 		background:"__background_b__",
 		border:"__border_c__",
@@ -429,10 +429,10 @@ var prototype = Footer.prototype;
 
 prototype.__init = function() {
 	this.__foot_a__ =
-		$("<div class='" + this._options.__classFooter_q__ + "'>")
+		$("<div class='" + this._options['__classFooter_q__'] + "'>")
 		.appendTo(this._ctnr);
 		
-	this.getNextCell().html(this._options.__countTemplate_i__);
+	this.getNextCell().html(this._options['__countTemplate_i__']);
 	this.__updateTotalCount_d__();
 	this.__updateShownCount_c__();
 	
@@ -442,10 +442,10 @@ prototype.__init = function() {
 
 prototype.bindEvents = function() {
 	this.grid.event.bind({
-		onCreateCss: this.__onCreateCss_V__,
-		onDestroy: this.__destroy_aA__,
-		onDataChange: [this.__updateTotalCount_d__, this.__updateSums_e__],
-		onAfterRefresh: this.__updateShownCount_c__
+		'onCreateCss': this.__onCreateCss_V__,
+		'onDestroy': this.__destroy_aA__,
+		'onDataChange': [this.__updateTotalCount_d__, this.__updateSums_e__],
+		'onAfterRefresh': this.__updateShownCount_c__
 	}, this);
 };
 
@@ -506,10 +506,10 @@ prototype.__initSumCells_f__ = function() {
       i = 0;
 	for (; i < clen; i++) {
 		colDef = colDefs[i];
-		renderer = colDef.sumRenderer;
+		renderer = colDef['sumRenderer'];
 		if (Util.isNotNull(renderer)) {
-			key = colDef.key;
-         name = colDef.name;
+			key = colDef['key'];
+         name = colDef['name'];
 			sum = sumfn(rows, key);
 			cell = map[key] = this.getNextCell();
          node = cell[0];
@@ -546,18 +546,18 @@ prototype.__updateSums_e__ = function() {
       sumfn = Footer.__calSum_a__,
       cell,
       node,
-      content = this._options.__classContent_s__;
+      content = this._options['__classContent_s__'];
 	for (key in map) {
       if (map.hasOwnProperty(key)) {
          colDef = cmgr.getByKey(key);
-         name = colDef.name;
-         renderer = colDef.sumRenderer;
+         name = colDef['name'];
+         renderer = colDef['sumRenderer'];
          sum = sumfn(rows, key);
          cell = map[key];
          node = cell[0];
 
          if (Util.isFunction(renderer)) {
-            node.innerHTML = renderer(colDef.name, sum);
+            node.innerHTML = renderer(colDef['name'], sum);
          }
          else if (Util.isString(renderer)) {
             lower = renderer.toLowerCase();
@@ -587,11 +587,11 @@ prototype.__updateSums_e__ = function() {
 @version 1.0.0
 */
 prototype.getNextCell = function() {
-	return $("<div class='" + this._options.__classCell_a__ + "'/>").appendTo(this.__foot_a__);
+	return $("<div class='" + this._options['__classCell_a__'] + "'/>").appendTo(this.__foot_a__);
 };
 
 prototype.__sumRenderer_h__ = function(name, sum) {
-	return "<span class='" + this._options.__classTitle_r__ + "'>" + name + " 합계: </span><span class='" + this._options.__classContent_s__ + "'>" + sum + "</span>";
+	return "<span class='" + this._options['__classTitle_r__'] + "'>" + name + " 합계: </span><span class='" + this._options['__classContent_s__'] + "'>" + sum + "</span>";
 };
 
 Footer.__calSum_a__ = function(datalist, key) {

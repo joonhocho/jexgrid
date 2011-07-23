@@ -73,7 +73,7 @@ JGM._add("DataCreator", DataCreator);
 		  */
 		this.mid = args.mid;
 
-		this._ctnr = args.container;
+		this._ctnr = args['container'];
 
 		this.__creator_a__;
 
@@ -120,7 +120,7 @@ JGM._add("DataCreator", DataCreator);
 			  @since 1.1.1
 			  @version 1.1.1
 			  */
-__background_a__: "#dfdfdf",
+'__background_a__': "#dfdfdf",
 
 				  /**
 					모듈의 border 의 두께를 정합니다. <br>기본값:<code>0</code>
@@ -132,7 +132,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __borderThickness_b__: 0,
+				  '__borderThickness_b__': 0,
 
 				  /**
 					모듈의 border 스타일을 정합니다. <br>기본값:<code>"solid #D6D6D6"</code>
@@ -144,7 +144,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __border_c__: "solid #D6D6D6",
+				  '__border_c__': "solid #D6D6D6",
 
 				  /**
 					모듈 내의 input 의 border 스타일을 정합니다. <br>기본값:<code>"solid #A7A7A7"</code>
@@ -156,7 +156,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __inputBorder_d__: "solid #A7A7A7",
+				  '__inputBorder_d__': "solid #A7A7A7",
 
 				  /**
 					모듈 내의 input 의 두께를 정합니다. <br>기본값:<code>1</code>
@@ -168,7 +168,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __inputBorderThickness_e__: 1,
+				  '__inputBorderThickness_e__': 1,
 
 				  /**
 					모듈 내의 input 의 높이를 정합니다. <br>기본값:<code>18</code>
@@ -180,7 +180,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __inputHeight_f__: 18,
+				  '__inputHeight_f__': 18,
 
 				  /**
 					모듈 내의 input 의 margin 을 정합니다. <br>기본값:<code>8</code>
@@ -192,7 +192,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __inputMargin_g__: 8,
+				  '__inputMargin_g__': 8,
 
 				  /**
 					모듈 내의 컬럼 명의 margin 을 정합니다. <br>기본값:<code>2</code>
@@ -204,7 +204,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __nameMargin_h__: 2,
+				  '__nameMargin_h__': 2,
 
 				  /**
 					모듈 내의 컬럼 명의 font 를 정합니다. <br>기본값:<code>"12px Arial,Helvetica,sans-serif"</code>
@@ -216,7 +216,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __font_i__: "12px Arial,Helvetica,sans-serif",
+				  '__font_i__': "12px Arial,Helvetica,sans-serif",
 
 				  /**
 					모듈의 높이를 정합니다. <br>기본값:<code>28</code>
@@ -228,7 +228,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __height_j__: 28,
+				  '__height_j__': 28,
 
 				  /**
 					모듈의 padding 을 정합니다. <br>기본값:<code>3</code>
@@ -240,7 +240,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __padding_k__: 3,
+				  '__padding_k__': 3,
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 CSS 클래스 입니다. <br>기본값:<code>"creator-icon"</code>
@@ -252,7 +252,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __classCreatorIcon_l__: "creator-icon",
+				  '__classCreatorIcon_l__': "creator-icon",
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 이미지 url 입니다. <br>기본값:<code>imageUrl + "data-creator-icon.png"</code>
@@ -264,7 +264,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __creatorIconUrl_m__: this.grid._options.imageUrl + "data-creator-icon.png",
+				  '__creatorIconUrl_m__': this.grid._options['imageUrl'] + "data-creator-icon.png",
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 폭 입니다. <br>기본값:<code>13</code>
@@ -276,7 +276,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __creatorIconWidth_n__: 13,
+				  '__creatorIconWidth_n__': 13,
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 높이 입니다. <br>기본값:<code>13</code>
@@ -288,7 +288,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __creatorIconHeight_o__: 13,
+				  '__creatorIconHeight_o__': 13,
 
 				  /**
 					모듈의 CSS 클래스 입니다. <br>기본값:<code>"data-creator"</code>
@@ -300,7 +300,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __classCreator_p__: "data-creator",
+				  '__classCreator_p__': "data-creator",
 
 				  /**
 					모듈 내의 컬럼 명의 CSS 클래스 입니다. <br>기본값:<code>"data-creator-name"</code>
@@ -312,7 +312,7 @@ __background_a__: "#dfdfdf",
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  __classColName_q__: "data-creator-name",
+				  '__classColName_q__': "data-creator-name",
 
 				  /**
 					모듈 내의 input tag 에 적용되는 border radius 입니다. <br>기본값:<code>3</code>
@@ -324,10 +324,10 @@ __background_a__: "#dfdfdf",
 					@since 1.1.7
 					@version 1.1.7
 					*/
-				  __inputBorderRadius_r__: 3
+				  '__inputBorderRadius_r__': 3
 		};
 
-		this._options = JGM.__extend_e__(options, args.options, {
+		this._options = JGM.__extend_e__(options, args['options'], {
 background:"__background_a__",
 borderThickness:"__borderThickness_b__",
 border:"__border_c__",
@@ -361,7 +361,7 @@ var prototype = DataCreator.prototype;
 
 prototype.__init = function() {
 	this.__creator_a__ =
-		$("<div class='" + this._options.__classCreator_p__ + "'>")
+		$("<div class='" + this._options['__classCreator_p__'] + "'>")
 		.appendTo(this._ctnr);
 
 	this.bindEvents();
@@ -369,9 +369,9 @@ prototype.__init = function() {
 
 prototype.bindEvents = function() {
 	var events = {
-onRenderModules: this.__onRenderModules_aE__,
-				 onCreateCss: this.__onCreateCss_V__,
-				 onDestroy: this.__destroy_aA__
+'onRenderModules': this.__onRenderModules_aE__,
+				 'onCreateCss': this.__onCreateCss_V__,
+				 'onDestroy': this.__destroy_aA__
 	};
 	this.grid.event.bind(events, this);
 };
@@ -412,8 +412,8 @@ prototype.__onRenderModules_aE__ = function() {
 
 	for (; i < len; i++) {
 		colDef = colDefs[i];
-		if (colDef.inputOnCreate === true) {
-			html.push("<div key='" + colDef.key + "' class='" + classCol + "'><div class='" + classColName + "'>" + colDef.name + "</div><input type='text' value='" + Util.ifNull(colDef.defaultValue, "") + "' style='width:" + colDef.width + "px'/></div>");
+		if (colDef['inputOnCreate'] === true) {
+			html.push("<div key='" + colDef['key'] + "' class='" + classCol + "'><div class='" + classColName + "'>" + colDef['name'] + "</div><input type='text' value='" + Util.ifNull(colDef['defaultValue'], "") + "' style='width:" + colDef['width'] + "px'/></div>");
 		}
 	}
 
@@ -421,8 +421,8 @@ prototype.__onRenderModules_aE__ = function() {
 
 	for (i = 0; i < len; i++) {
 		colDef = colDefs[i];
-		if (colDef.inputOnCreate === true) {
-			imap[colDef.key] = creator.find("div[key='" + colDef.key + "'] input").keyup(keyupfn);
+		if (colDef['inputOnCreate'] === true) {
+			imap[colDef['key']] = creator.find("div[key='" + colDef['key'] + "'] input").keyup(keyupfn);
 		}
 	}
 
@@ -452,12 +452,12 @@ prototype.__addData_d__ = function() {
 	}
 	for (; i < len; i++) {
 		colDef = colDefs[i];
-		key = colDef.key;
+		key = colDef['key'];
 		if (imap.hasOwnProperty(key)) {
 			newData[key] = imap[key][0].value;
 		}
-		else if (colDef.defaultValue !== undefined) {
-			newData[key] = colDef.defaultValue;
+		else if (colDef['defaultValue'] !== undefined) {
+			newData[key] = colDef['defaultValue'];
 		}
 	}
 
@@ -472,7 +472,7 @@ prototype.__addData_d__ = function() {
 	  @version 1.1.1
 	  */
 	this.grid.event.trigger("onAfterDataCreate", [newData]);
-	this.grid.dataMgr.add(newData, {isNew:true});
+	this.grid.dataMgr.add(newData, {'isNew':true});
 };
 
 prototype.__reset_e__ = function() {
@@ -483,8 +483,8 @@ prototype.__reset_e__ = function() {
 	for (key in imap) {
 		if (imap.hasOwnProperty(key)) {
 			colDef = cmgr.getByKey(key);
-			if (colDef.defaultValue !== undefined) {
-				imap[key][0].value = colDef.defaultValue;
+			if (colDef['defaultValue'] !== undefined) {
+				imap[key][0].value = colDef['defaultValue'];
 			}
 		}
 	}

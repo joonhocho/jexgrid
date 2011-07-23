@@ -122,7 +122,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classEdit_a__: "jgrid-edit",
+		'__classEdit_a__': "jgrid-edit",
 
 		/**
 		{@link JGM.EditManager.options.editableBgEnabled editableBgEnabled} 이 true 일 경우, 에디팅이 가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-editable"</code>
@@ -134,7 +134,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classCellEditable_b__: "jgrid-editable",
+		'__classCellEditable_b__': "jgrid-editable",
 
 		/**
 		{@link JGM.EditManager.options.notEditableBgEnabled notEditableBgEnabled} 이 true 일 경우, 에디팅이 불가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-notEditable"</code>
@@ -146,7 +146,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classCellNotEditable_c__: "jgrid-notEditable",
+		'__classCellNotEditable_c__': "jgrid-notEditable",
 
 		/**
 		true 일 경우, {@link JGM.EditManager.options.classCellEditable classCellEditable} 를 적용합니다. <br>기본값:<code>false</code>
@@ -158,7 +158,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__editableBgEnabled_d__: false,
+		'__editableBgEnabled_d__': false,
 
 		/**
 		true 일 경우, {@link JGM.EditManager.options.classCellNotEditable classCellNotEditable} 를 적용합니다. <br>기본값:<code>false</code>
@@ -170,7 +170,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__notEditableBgEnabled_e__: false,
+		'__notEditableBgEnabled_e__': false,
 
 		/**
 		{@link JGM.EditManager.options.classCellEditable classCellEditable} 에 적용될 배경입니다. <br>기본값:<code>"#FFF"</code>
@@ -182,7 +182,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__editableBg_f__: "#FFF",
+		'__editableBg_f__': "#FFF",
 
 		/**
 		{@link JGM.EditManager.options.classCellNotEditable classCellNotEditable} 에 적용될 배경입니다. <br>기본값:<code>"#F6F6F6"</code>
@@ -194,7 +194,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__notEditableBg_g__: "#F6F6F6",
+		'__notEditableBg_g__': "#F6F6F6",
 
 		/**
 		delete 키를 이용한 셀 내용 삭제 가능 여부입니다. <br>기본값:<code>false</code>
@@ -206,7 +206,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__deleteEnabled_h__: false,
+		'__deleteEnabled_h__': false,
 		
 		/**
 		에디팅 가능한 셀에 에디팅 아이콘을 보여줄지 여부입니다. <br>기본값:<code>true</code>
@@ -218,7 +218,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		__editIconEnabled_i__: true,
+		'__editIconEnabled_i__': true,
 		
 		/**
 		에디팅 가능한 셀에 보여줄 아이콘 이미지 url 입니다. <br>기본값:<code>imageUrl + "editable-small.png"</code>
@@ -230,7 +230,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		__urlEditIcon_j__: this.grid._options.imageUrl + "editable-small.png",
+		'__urlEditIcon_j__': this.grid._options['imageUrl'] + "editable-small.png",
 		
 		/**
 		에디팅 아이콘 이미지에 적용될 CSS 클래스 입니다. <br>기본값:<code>"edit-icon"</code>
@@ -242,7 +242,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		__classEditIcon_k__: "edit-icon",
+		'__classEditIcon_k__': "edit-icon",
 		
 		/**
 		에디팅 아이콘 이미지의 폭 픽셀 값입니다. <br>기본값:<code>11</code>
@@ -254,7 +254,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		__editIconWidth_l__: 12,
+		'__editIconWidth_l__': 12,
 		
 		/**
 		에디팅 아이콘 이미지의 padding 픽셀 값입니다. <br>기본값:<code>3</code>
@@ -266,7 +266,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		__editIconPadding_m__: 3,
+		'__editIconPadding_m__': 3,
 		
 		/**
 		기본 텍스트 에디터의 배경 스타일입니다. <br>기본값:<code>"#FFF9D7"</code>
@@ -278,19 +278,19 @@ function EditManager(args) {
 		@since 1.2.2
 		@version 1.2.2
 		*/
-		__basicBackground_n__: "#FFF9D7",
+		'__basicBackground_n__': "#FFF9D7",
 
-		classSuccess: "edit-success",
+		'classSuccess': "edit-success",
 
-		successBackground: "#cdf7b6",
+		'successBackground': "#cdf7b6",
 
-		classFailure: "edit-failure",
+		'classFailure': "edit-failure",
 
-		failureBackground: "#ffcec5"
+		'failureBackground': "#ffcec5"
 
 	};
 
-	this._options = JGM.__extend_e__(options, args.options, {
+	this._options = JGM.__extend_e__(options, args['options'], {
 		classEdit:"__classEdit_a__",
 		classCellEditable:"__classCellEditable_b__",
 		classCellNotEditable:"__classCellNotEditable_c__",
@@ -339,13 +339,13 @@ prototype.__init = function() {
 
 prototype.bindEvents = function() {
 	var events = {
-		onGetColCellClass: this.__onGetColCellClass_f__,
-		keydownCanvas: this.__keydownCanvas_ba__,
-		onDestroy: this.__destroy_aA__,
-		dblclickCanvas: this.__dblclickCanvas_bi__,
-		onCreateDynamicCss: this.onCreateDynamicCss,
+		'onGetColCellClass': this.__onGetColCellClass_f__,
+		'keydownCanvas': this.__keydownCanvas_ba__,
+		'onDestroy': this.__destroy_aA__,
+		'dblclickCanvas': this.__dblclickCanvas_bi__,
+		'onCreateDynamicCss': this.onCreateDynamicCss,
 		"onBeforeNavigate onBeforeRefresh onBeforeSelect": this.commit,
-		onBeforeFocusCanvas: this.notActive
+		'onBeforeFocusCanvas': this.notActive
 	};
 	
 	if (Util.isNull(this.grid.selMgr)) {
@@ -355,11 +355,11 @@ prototype.bindEvents = function() {
 		events.onBeforeCreateSelCss = this.__onBeforeCreateSelCss_d__;
 	}
 		
-	if (this._options.__deleteEnabled_h__) {
+	if (this._options['__deleteEnabled_h__']) {
 		events["keydownSel_" + Util.keyMapKeydown.del] = this.__deleteContents_i__;
 	}
 	
-	if (this._options.__editIconEnabled_i__) {
+	if (this._options['__editIconEnabled_i__']) {
 		var colDefs = this.grid.colDefMgr.get(),
 			len = colDefs.length,
 			i = 0;
@@ -426,21 +426,21 @@ prototype.onCreateDynamicCss = function() {
 };
 
 prototype.__onRenderHeader_aH__ = function(html) {
-	html.push("<span class='" + this._options.__classEditIcon_k__ + "'></span>");
+	html.push("<span class='" + this._options['__classEditIcon_k__'] + "'></span>");
 };
 
 prototype.__onRenderCell_aH__ = function(rowIdx, colIdx, datarow, colDef, cellHtml) {
 	if (this.grid.dataMgr.isReal(datarow)) {
-		cellHtml.push("<span class='" + this._options.__classEditIcon_k__ + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + ".beginEdit(\"" + datarow[this.grid.dataMgr.idKey] + "\",\"" + colDef.key + "\")'></span>");
+		cellHtml.push("<span class='" + this._options['__classEditIcon_k__'] + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + ".beginEdit(\"" + datarow[this.grid.dataMgr.idKey] + "\",\"" + colDef['key'] + "\")'></span>");
 	}
 };
 
 prototype.cancelMouseEvent = function(e) {
-	return !Util.hasTagAndClass(e.target, "DIV", this._options.__classEditIcon_k__);
+	return !Util.hasTagAndClass(e.target, "DIV", this._options['__classEditIcon_k__']);
 };
 
 prototype.beginEdit = function(id, key) {
-	this.begin(JGM.create("Cell", {grid:this.grid, datarow:this.grid.dataMgr.getById(id), colDef:this.grid.colDefMgr.getByKey(key)}));
+	this.begin(JGM.create("Cell", {'grid':this.grid, 'datarow':this.grid.dataMgr.getById(id), 'colDef':this.grid.colDefMgr.getByKey(key)}));
 };
 
 prototype.__dblclickCanvas_bi__ = function(e, cell) {
@@ -473,7 +473,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
 			return;
 		}
 		else if (!e.altKey && Util.isNotNull(this.grid.selMgr)) {
-			if (e.which === Util.keyMapKeydown.del && this._options.__deleteEnabled_h__) {
+			if (e.which === Util.keyMapKeydown.del && this._options['__deleteEnabled_h__']) {
 				this.__deleteContent_h__(this.grid.selMgr.getCell());
 			}
 			else if (this.__beginEditKeys_c__[e.which]) {
@@ -511,11 +511,11 @@ prototype.__isEdited_e__ = function(cell) {
 };
 
 prototype.__onGetColCellClass_f__ = function(colDef) {
-	if (Util.isNotNull(colDef.editor)) {
-		return this._options.__classCellEditable_b__;
+	if (Util.isNotNull(colDef['editor'])) {
+		return this._options['__classCellEditable_b__'];
 	}
 	else {
-		return this._options.__classCellNotEditable_c__;
+		return this._options['__classCellNotEditable_c__'];
 	}
 };
 
@@ -549,7 +549,7 @@ JGM.Cell.prototype.setValue = function(value) {
 		res;
 
 	if (Util.isNotNullAnd(datarow, key)) {
-		res = this.grid.dataMgr.updateByKey(datarow, key, value, {noSort:true, noFilter:true, noRerender:true});
+		res = this.grid.dataMgr.updateByKey(datarow, key, value, {'noSort':true, 'noFilter':true, 'noRerender':true});
       if (res === true) {
 			this.grid.view.rerenderRow(datarow);
       }
@@ -601,7 +601,7 @@ prototype.begin = function(cell) {
 	this.editor.before = node.innerHTML;
 	node.innerHTML = this.editor.edit(cell.getValue());
 
-	cell.get$().addClass(this._options.__classEdit_a__);
+	cell.get$().addClass(this._options['__classEdit_a__']);
 	this.editor.focus();
 };
 
@@ -622,7 +622,7 @@ prototype.cancel = function() {
 	var cell = this.editor.cell;
 	cell.getNode().innerHTML = this.editor.before;
 	this.__deleteEditor_g__();
-	cell.get$().removeClass(this._options.__classEdit_a__);
+	cell.get$().removeClass(this._options['__classEdit_a__']);
 	this.grid.view.focus();
 };
 
@@ -669,20 +669,20 @@ prototype.commit = function() {
 		$cell = cell.get$();
       if (res instanceof Error) {
          this.cancel();
-			classRes = this._options.classFailure;
+			classRes = this._options['classFailure'];
          $cell.addClass(classRes);
 			setTimeout(function() {$cell.removeClass(classRes);}, 1000);
       }
       else {
          this.__deleteEditor_g__();
          this.grid.view.focus();
-			classRes = this._options.classSuccess;
+			classRes = this._options['classSuccess'];
 			this.grid.printMessage("Successfully Updated.");
          $cell.addClass(classRes);
 			setTimeout(function() {$cell.removeClass(classRes);}, 1000);
       }
 	}
-	cell.get$().removeClass(this._options.__classEdit_a__);
+	cell.get$().removeClass(this._options['__classEdit_a__']);
 		
 	this.beingCommitted = false;
 };
@@ -692,11 +692,11 @@ prototype.__deleteContent_h__ = function(cell) {
 		return;
 	}
 	var colDef = cell.getColDef();
-	if (cell.getValue() === colDef.defaultValue) {
+	if (cell.getValue() === colDef['defaultValue']) {
 		return;
 	}
 
-	cell.setValue(colDef.defaultValue);
+	cell.setValue(colDef['defaultValue']);
 };
 
 prototype.__deleteContents_i__ = function(e, selectionRows, selectionCols) {
@@ -736,10 +736,10 @@ prototype.__deleteContents_i__ = function(e, selectionRows, selectionCols) {
 
 			if (Util.isNull(colDef)) {
 				colDef = cell.getColDef();
-				defaultValue = colDef.defaultValue;
-				key = colDef.key;
+				defaultValue = colDef['defaultValue'];
+				key = colDef['key'];
 
-				if (Util.isNull(colDef.editor)) {
+				if (Util.isNull(colDef['editor'])) {
 					continue col_loop;
 				}
 			}
@@ -761,7 +761,7 @@ prototype.__deleteContents_i__ = function(e, selectionRows, selectionCols) {
 			}
 
 			if (Util.isNull(updates[row])) {
-				updates[row] = {datarow:datarow, change:{}};
+				updates[row] = {'datarow':datarow, 'change':{}};
 				updatelist.push(updates[row]);
 			}
 

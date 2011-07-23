@@ -28,7 +28,7 @@ Util$.unbindRemove = function(obj) {
 
 jQuery.fn.getBoundingRect = function() {
 	var off = this.offset();
-	return { left: off.left, top: off.top, width: this.outerWidth(), height: this.outerHeight() };
+	return { 'left': off.left, 'top': off.top, 'width': this.outerWidth(), 'height': this.outerHeight() };
 };
 
 jQuery.fn.containsEvent = function(e) {
@@ -78,8 +78,8 @@ Util$.calScrollbarDims = function(container) {
 	cont[0].innerHTML = "<div id='scrollbardim' style='position:absolute;top:-10000px;left:-10000px;width:100px;height:100px;overflow:scroll;'></div>";
 	tmp = $(document.getElementById("scrollbardim"));
 	dim = {
-		w: tmp.width() - tmp[0].clientWidth,
-		h: tmp.height() - tmp[0].clientHeight
+		'w': tmp.width() - tmp[0].clientWidth,
+		'h': tmp.height() - tmp[0].clientHeight
 	};
 	cont[0].innerHTML = "";
 

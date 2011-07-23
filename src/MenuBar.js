@@ -45,39 +45,39 @@ var proto = MenuBar.prototype;
 
 proto._defaultOptions = function() {
 	return {
-		background: "url(" + this.grid._options.imageUrl + "menubar-bg.png) repeat-x scroll center",
-		borderThickness: 1,
-		border: "solid #b6bac0",
-		height: 27,
-		classMenuBar: "menubar",
-		classIcon: "menu-icon",
-		iconBorderThickness: 1,
-		iconBorder: "solid transparent",
-		iconBorderHover: "solid #d4d4d4",
-		iconBorderActive: "solid #9a9a9a",
-		iconMargin: 2,
-		iconBackground: "",
-		iconBackgroundHover: "url(" + this.grid._options.imageUrl + "menu-icon-hover.png) repeat-x scroll center",
-		iconBackgroundActive: "url(" + this.grid._options.imageUrl + "menu-icon-active.png) repeat-x scroll center",
-		iconHeight: 21,
-		iconWidth: 21,
-		iconBorderRadius: 4,
-		iconBorderFocus: "solid #5f5f5f"
+		'background': "url(" + this.grid._options['imageUrl'] + "menubar-bg.png) repeat-x scroll center",
+		'borderThickness': 1,
+		'border': "solid #b6bac0",
+		'height': 27,
+		'classMenuBar': "menubar",
+		'classIcon': "menu-icon",
+		'iconBorderThickness': 1,
+		'iconBorder': "solid transparent",
+		'iconBorderHover': "solid #d4d4d4",
+		'iconBorderActive': "solid #9a9a9a",
+		'iconMargin': 2,
+		'iconBackground': "",
+		'iconBackgroundHover': "url(" + this.grid._options['imageUrl'] + "menu-icon-hover.png) repeat-x scroll center",
+		'iconBackgroundActive': "url(" + this.grid._options['imageUrl'] + "menu-icon-active.png) repeat-x scroll center",
+		'iconHeight': 21,
+		'iconWidth': 21,
+		'iconBorderRadius': 4,
+		'iconBorderFocus': "solid #5f5f5f"
 	};
 }
 
 proto._init = function(args) {
-	this._ctnr = args.container;
+	this._ctnr = args['container'];
 	this.__menubar_a__ =
-		$("<div class='" + this._options.__classMenuBar_e__ + "'></div>")
+		$("<div class='" + this._options['__classMenuBar_e__'] + "'></div>")
 		.prependTo(this._ctnr);
 
 };
 
 proto._bindEvents = function(args) {
 	this.grid.event.bind({
-		onCreateCss: this.__onCreateCss_V__,
-		onDestroy: this.__destroy_aA__
+		'onCreateCss': this.__onCreateCss_V__,
+		'onDestroy': this.__destroy_aA__
 	}, this);
 }
 
@@ -107,7 +107,7 @@ proto.__onCreateCss_V__ = function() {
 };
 
 proto.addIcon = function(css, title, width, height, fn) {
-	return $("<div class='" + this._options.__classIcon_f__ + "' tabIndex='0' title='" + title + "'><div class='" + css + "' style='margin-top:" + ((this._options.__iconHeight_o__ - height) / 2) + "px;margin-left:" + ((this._options.__iconWidth_p__ - width) / 2) + "px'></div></div>").appendTo(this.__menubar_a__)
+	return $("<div class='" + this._options['__classIcon_f__'] + "' tabIndex='0' title='" + title + "'><div class='" + css + "' style='margin-top:" + ((this._options['__iconHeight_o__'] - height) / 2) + "px;margin-left:" + ((this._options['__iconWidth_p__'] - width) / 2) + "px'></div></div>").appendTo(this.__menubar_a__)
 	.click(function(e) {
 		fn();
 		$(this).toggleClass("active");

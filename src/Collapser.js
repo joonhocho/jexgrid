@@ -128,7 +128,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__key_e__: undefined,
+			'__key_e__': undefined,
 
 			/**
 			  {@link JGM.Collapser.options.key key} 가 지정되지 않아서, Collapser 컬럼을 새로 생성해야할 경우 사용될 컬럼 정의 오브젝트입니다.
@@ -142,7 +142,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__colDef_a__: {key:"collapser", width: 120, name:" ", noSearch:true},
+			'__colDef_a__': {'key':"collapser", 'width': 120, 'name':" ", 'noSearch':true},
 
 			/**
 			  {@link JGM.Collapser.options.colDef colDef} 를 몇번째 컬럼으로 넣을지를 정합니다.
@@ -155,7 +155,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__colIdx_b__: 0,
+			'__colIdx_b__': 0,
 
 			/**
 			  접힌 상태의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "collapsed.png"</code>
@@ -167,7 +167,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__urlCollapsed_c__: this.grid._options.imageUrl + "collapsed.png",
+			'__urlCollapsed_c__': this.grid._options['imageUrl'] + "collapsed.png",
 
 			/**
 			  접힌 상태위에 마우스가 오버되었을 때의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "collapsed-hover.png"</code>
@@ -179,7 +179,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__urlCollapsedHover_d__: this.grid._options.imageUrl + "collapsed-hover.png",
+			'__urlCollapsedHover_d__': this.grid._options['imageUrl'] + "collapsed-hover.png",
 
 			/**
 			  펼쳐진 상태의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "expanded.png"</code>
@@ -191,7 +191,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__urlExpanded_f__: this.grid._options.imageUrl + "expanded.png",
+			'__urlExpanded_f__': this.grid._options['imageUrl'] + "expanded.png",
 
 			/**
 			  펼쳐진 상태위에 마우스가 오버되었을 때의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "expanded-hover.png"</code>
@@ -203,7 +203,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__urlExpandedHover_g__: this.grid._options.imageUrl + "expanded-hover.png",
+			'__urlExpandedHover_g__': this.grid._options['imageUrl'] + "expanded-hover.png",
 
 			/**
 			  Collapser 토글 아이콘의 폭 픽셀입니다. <br>기본값:<code>6</code>
@@ -215,7 +215,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__width_h__: 6,
+			'__width_h__': 6,
 
 			/**
 			  Collapser 토글 아이콘의 좌우 padding 픽셀입니다. <br>기본값:<code>5</code>
@@ -227,7 +227,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__padding_i__: 5,
+			'__padding_i__': 5,
 
 			/**
 			  Collapser 토글 아이콘에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-collapser"</code>
@@ -239,7 +239,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__classCollapser_j__: "jgrid-collapser",
+			'__classCollapser_j__': "jgrid-collapser",
 
 			/**
 			  접혀진 상태 아이콘에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"collapsed"</code>
@@ -251,7 +251,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__classCollapsed_k__: "collapsed",
+			'__classCollapsed_k__': "collapsed",
 
 			/**
 			  펼쳐진 상태 아이콘에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"expanded"</code>
@@ -263,7 +263,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__classExpanded_l__: "expanded",
+			'__classExpanded_l__': "expanded",
 
 			/**
 			  Collapser 토글 아이콘을 indent 하는 div 에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"indent"</code>
@@ -275,7 +275,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__classIndent_m__: "indent",
+			'__classIndent_m__': "indent",
 
 			/**
 			  마스터 헤더 Collapser 토글에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"master"</code>
@@ -287,7 +287,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__classMasterCollapser_n__: "master",
+			'__classMasterCollapser_n__': "master",
 
 			/*
 			   마스터 헤더 Collapser 토글을 생성할지 여부입니다. <br>기본값:<code>true</code>
@@ -299,7 +299,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			   @since 1.0.0
 			   @version 1.0.0
 			   */
-			//master: true,
+			//'master': true,
 
 			/**
 			  트리 레벨당 우측으로 밀려지는 indent 폭 픽셀입니다. <br>기본값:<code>12</code>
@@ -311,7 +311,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__indentSize_o__: 12,
+			'__indentSize_o__': 12,
 
 			/**
 			  true 일 경우 모든 노드가 접힌 상태로, false 일 경우 펼쳐진 상태로 시작합니다. <br>기본값:<code>false</code>
@@ -323,7 +323,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__beginCollapsed_p__: false,
+			'__beginCollapsed_p__': false,
 
 			/**
 			  연동시킬 {@link JGM.CheckManager CheckManager} 에 넘겨줄 옵션 오브젝트입니다.
@@ -338,7 +338,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			CheckManager: undefined,
+			'CheckManager': undefined,
 
 			/**
 			  트리 구조 데이터 관리에 사용할 {@link JGM.Tree Tree} 에 넘겨줄 옵션 오브젝트입니다.
@@ -351,10 +351,10 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			Tree: undefined
+			'Tree': undefined
 		};
 
-		this._options = JGM.__extend_e__(options, args.options, {
+		this._options = JGM.__extend_e__(options, args['options'], {
 			colDef:"__colDef_a__",
 			colIdx:"__colIdx_b__",
 			urlCollapsed:"__urlCollapsed_c__",
@@ -373,7 +373,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			beginCollapsed:"__beginCollapsed_p__"
 		});
 
-		if (this._options.CheckManager) {
+		if (this._options['CheckManager']) {
 
 			/**
 			  Collapser 와 연동된 {@link JGM.CheckManager CheckManager} 입니다.
@@ -384,14 +384,14 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			this.checkMgr = JGM.create("CheckManager", {grid:this.grid, options:this._options.CheckManager});
-			delete this._options.CheckManager;
-			if (Util.isNull(this._options.__key_e__)) {
-				this._options.__colIdx_b__++;
+			this.checkMgr = JGM.create("CheckManager", {grid:this.grid, 'options':this._options['CheckManager']});
+			delete this._options['CheckManager'];
+			if (Util.isNull(this._options['__key_e__'])) {
+				this._options['__colIdx_b__']++;
 			}
 		}
 
-		this.__tree_a__ = new Tree({list:this.grid.dataMgr.all, options:this._options.Tree});
+		this.__tree_a__ = new Tree({'list':this.grid.dataMgr.all, 'options':this._options['Tree']});
 
 		this.__master_c__;
 		this.key;
@@ -404,14 +404,14 @@ var JGM = goog.getObjectByName('jx.grid'),
 	var prototype = Collapser.prototype;
 
 	prototype.__init = function() {
-		if (Util.isNull(this._options.__key_e__)) {
-			this.grid.colDefMgr.addAt(this._options.__colIdx_b__, this._options.__colDef_a__);
+		if (Util.isNull(this._options['__key_e__'])) {
+			this.grid.colDefMgr.addAt(this._options['__colIdx_b__'], this._options['__colDef_a__']);
 		}
 
 		this.__makeTree_d__();
 		this.__filterRefresh_g__();
 
-		this.key = Util.isNull(this._options.__key_e__) ? this._options.__colDef_a__.key : this._options.__key_e__;
+		this.key = Util.isNull(this._options['__key_e__']) ? this._options['__colDef_a__']['key'] : this._options['__key_e__'];
 
 		this.bindEvents();
 	};
@@ -421,17 +421,17 @@ var JGM = goog.getObjectByName('jx.grid'),
 			events;
 
 		events = {
-			onAfterFilter:				this.__onAfterFilter_as__,
-			onCreateCss:				this.__onCreateCss_V__,
-			onDestroy:					this.__destroy_aA__,
-			onAfterSetDatalist:			this.__onAfterSetDatalist_ab__,
-			onAddDatarow:				this.__onAddDatarow_ac__,
-			onAddDatalist:				this.__onAddDatalist_ad__,
-			onUpdateDatarow:			this.__onUpdateDatarow_ae__,
-			onUpdateDatalist:			this.__onUpdateDatalist_ah__,
-			onRemoveDatarow:			this.__onRemoveDatarow_A__,
-			onRemoveDatalist:			this.__onRemoveDatalist_ag__,
-			onRenderHeadersComplete:	this.__getMaster_h__
+			'onAfterFilter':				this.__onAfterFilter_as__,
+			'onCreateCss':				this.__onCreateCss_V__,
+			'onDestroy':					this.__destroy_aA__,
+			'onAfterSetDatalist':			this.__onAfterSetDatalist_ab__,
+			'onAddDatarow':				this.__onAddDatarow_ac__,
+			'onAddDatalist':				this.__onAddDatalist_ad__,
+			'onUpdateDatarow':			this.__onUpdateDatarow_ae__,
+			'onUpdateDatalist':			this.__onUpdateDatalist_ah__,
+			'onRemoveDatarow':			this.__onRemoveDatarow_A__,
+			'onRemoveDatalist':			this.__onRemoveDatalist_ag__,
+			'onRenderHeadersComplete':	this.__getMaster_h__
 		};
 
 		events["onRenderHeader_" + key + "_prepend"] = this.__onRenderHeader_aG__;
@@ -461,7 +461,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	prototype.__onCreateCss_V__ = function() {
 		var gridId = "#" + this.grid.mid + " .",
 			o = this._options,
-			rowSel = gridId + this.grid.view._options.__classRow_l__ + " .",
+			rowSel = gridId + this.grid.view._options['__classRow_l__'] + " .",
 			toggleSel = gridId + o.__classCollapser_j__,
 			expandedSel = toggleSel + "." + o.__classExpanded_l__,
 			collapsedSel = toggleSel + "." + o.__classCollapsed_k__,
@@ -478,7 +478,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		rules.push(collapsedSel + ":hover{background:url(" + o.__urlCollapsedHover_d__ + ") no-repeat center transparent}");
 
 		if (Util.isNotNull(header)) {
-			rules.push(gridId + header._options.__classColHeader_r__ + " ." + o.__classCollapser_j__ + "{height:" + header._options.__height_l__ + "px}");
+			rules.push(gridId + header._options['__classColHeader_r__'] + " ." + o.__classCollapser_j__ + "{height:" + header._options['__height_l__'] + "px}");
 		}
 
 		return rules.join("");
@@ -486,13 +486,13 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	prototype.__onAfterSetDatalist_ab__ = function(datalist) {
 		this.__tree_a__.destroy();
-		this.__tree_a__ = new Tree({list:this.grid.dataMgr.all, options:this._options.Tree});
+		this.__tree_a__ = new Tree({'list':this.grid.dataMgr.all, 'options':this._options['Tree']});
 		this.__makeTree_d__();
 	};
 
 	prototype.__onAddDatarow_ac__ = function(datarow) {
 		var node = this.__tree_a__.createNode(datarow);
-		node._collapsed = this._options.__beginCollapsed_p__;
+		node._collapsed = this._options['__beginCollapsed_p__'];
 		if (Util.isNotNull(node.parent) && (node.parent === node.tree.root || (node.parent._shown && !node.parent._collapsed))) {
 			node._shown = true;
 		}
@@ -515,7 +515,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 					this._shown = true;
 				}
 				else {
-					args.propagate = false;
+					args['propagate'] = false;
 					this.traverse({fn:function(args) {
 						this._shown = false;
 					}});
@@ -539,7 +539,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			len = datalist.length,
 			tree = this.__tree_a__,
 			root = tree.root,
-			collapsed = this._options.__beginCollapsed_p__,
+			collapsed = this._options['__beginCollapsed_p__'],
 			key = this.key,
 			view = this.grid.view,
 			datam = this.grid.dataMgr,
@@ -570,7 +570,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				this._shown = true;
 			}
 			else {
-				args.propagate = false;
+				args['propagate'] = false;
 				this.traverse({fn:function(args) {
 					this._shown = false;
 				}});
@@ -581,8 +581,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	prototype.__onUpdateDatarow_ae__ = function(datarow, change, before) {
 		var tree = this.__tree_a__,
-			nodeKey = tree._options.nodeKey,
-			parentKey = tree._options.parentKey,
+			nodeKey = tree._options['nodeKey'],
+			parentKey = tree._options['parentKey'],
 			node;
 
 		if (change.hasOwnProperty(nodeKey)) {
@@ -601,8 +601,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	prototype.__onUpdateDatalist_ah__ = function(datalist, changes, befores) {
 		var tree = this.__tree_a__,
-			nodeKey = tree._options.nodeKey,
-			parentKey = tree._options.parentKey,
+			nodeKey = tree._options['nodeKey'],
+			parentKey = tree._options['parentKey'],
 			before,
 			datarow,
 			treeNode,
@@ -687,7 +687,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 							}
 						}
 						else {
-							args.stop = true;
+							args['stop'] = true;
 						}
 					};
 
@@ -736,13 +736,13 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.__clickHeaderValid_bO__ = function(e, colheader) {
-		if (Util.hasTagAndClass(e.target, "DIV", this._options.__classCollapser_j__)) {
+		if (Util.hasTagAndClass(e.target, "DIV", this._options['__classCollapser_j__'])) {
 			return false;
 		}
 	};
 
 	prototype.__dblclickCanvas_bi__ = function(e, cell) {
-		if (Util.hasTagAndClass(e.target, 'DIV', this._options.__classCollapser_j__)) {
+		if (Util.hasTagAndClass(e.target, 'DIV', this._options['__classCollapser_j__'])) {
 			return;
 		}
 		this.toggleCollapse(this.__tree_a__.getNode(cell.getDatarow()));
@@ -783,7 +783,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		tree.__init();
 		map = tree.map;
 		root = tree.root;
-		if (this._options.__beginCollapsed_p__) {
+		if (this._options['__beginCollapsed_p__']) {
 			for (i in map) {
 				if (map.hasOwnProperty(i)) {
 					map[i]._collapsed = true;
@@ -811,12 +811,12 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 
 	prototype.__onRenderHeader_aG__ = function(headerHtml) {
-		headerHtml.push("<div id='" + this.mid + "h' onmousedown='JGM.m.Collapser." + this.mid + ".toggleMaster();' class='" + this._options.__classCollapser_j__ + " " + this._options.__classMasterCollapser_n__);
+		headerHtml.push("<div id='" + this.mid + "h' onmousedown='JGM.m.Collapser." + this.mid + ".toggleMaster();' class='" + this._options['__classCollapser_j__'] + " " + this._options['__classMasterCollapser_n__']);
 		if (this.__tree_a__.root._collapsed) {
-			headerHtml.push(" " + this._options.__classCollapsed_k__);
+			headerHtml.push(" " + this._options['__classCollapsed_k__']);
 		}
 		else {
-			headerHtml.push(" " + this._options.__classExpanded_l__);
+			headerHtml.push(" " + this._options['__classExpanded_l__']);
 		}
 		headerHtml.push("'></div>");
 	};
@@ -876,7 +876,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		node.traverseChildren({fn:function(args) {
 			this._shown = false;
 			if (this._collapsed) {
-				args.propagate = false;
+				args['propagate'] = false;
 			}
 		}});
 		var collapser = this.__getCollapser_i__(node.data);
@@ -908,7 +908,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		node.traverseChildren({fn:function(args) {
 			this._shown = true;
 			if (this._collapsed) {
-				args.propagate = false;
+				args['propagate'] = false;
 			}
 		}});
 		var collapser = this.__getCollapser_i__(node.data),
@@ -1007,7 +1007,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		if (check) {
 			node.traverseChildren({fn:function(args) {
 				if (checkMgr.isChecked(this.data)) {
-					args.propagate = false;
+					args['propagate'] = false;
 				}
 				else {
 					checkMgr.__add_f__(this.data);
@@ -1018,7 +1018,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}});
 			node.traverseParent({up:true, fn:function(args) {
 				if (Util.isNull(this.data) || checkMgr.isChecked(this.data)) {
-					args.stop = true;
+					args['stop'] = true;
 				}
 				else {
 					checkMgr.__add_f__(this.data);
@@ -1033,7 +1033,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		else {
 			node.traverseChildren({fn:function(args) {
 				if (!checkMgr.isChecked(this.data)) {
-					args.propagate = false;
+					args['propagate'] = false;
 				}
 				else {
 					checkMgr.__remove_g__(this.data);
@@ -1044,7 +1044,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}});
 			node.traverseParent({up:true, fn:function(args) {
 				if (Util.isNull(this.data) || !checkMgr.isChecked(this.data)) {
-					args.stop = true;
+					args['stop'] = true;
 				}
 				else {
 					var i = 0,
@@ -1052,7 +1052,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				clen = children.length;
 			for (; i < clen; i++) {
 				if (checkMgr.isChecked(children[i].data)) {
-					args.stop = true;
+					args['stop'] = true;
 					return;
 				}
 			}
@@ -1080,7 +1080,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var found = Util.findFirstByTagAndClass(
 				this.grid.view.getCell(this.grid.dataMgr.getIdx(datarow), this.grid.colDefMgr.getIdxByKey(this.key)),
 				"DIV",
-				this._options.__classCollapser_j__);
+				this._options['__classCollapser_j__']);
 
 		if (found === undefined) {
 			return $([]);

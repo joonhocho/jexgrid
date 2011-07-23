@@ -387,7 +387,7 @@ Util.toArrayWithKey = function(obj) {
 		i;
 	for (i in obj) {
 		if (obj.hasOwnProperty(i)) {
-			arr.push({key:i, val:obj[i]});
+			arr.push({'key':i, 'val':obj[i]});
 		}
 	}
 	return arr;
@@ -1266,23 +1266,23 @@ Util.print = function(var_args) {
 
 Util.open = function(options) {
 	var ops = {
-		url:			"about:blank",
-		name:			"_blank",		// _blank, _parent, _self, _top, name
-		channelmode:	"no",
-		directories:	"yes",
-		fullscreen:		"no",
-		height:			undefined,
-		left:			undefined,
-		location:		"yes",
-		menubar:		"yes",
-		resizable:		"yes",
-		scrollbars:		"yes",
-		status:			"yes",
-		titlebar:		"yes",
-		toolbar:		"yes",
-		top:			undefined,
-		width:			undefined,
-		replace:		undefined
+		'url':			"about:blank",
+		'name':			"_blank",		// _blank, _parent, _self, _top, name
+		'channelmode':	"no",
+		'directories':	"yes",
+		'fullscreen':		"no",
+		'height':			undefined,
+		'left':			undefined,
+		'location':		"yes",
+		'menubar':		"yes",
+		'resizable':		"yes",
+		'scrollbars':		"yes",
+		'status':			"yes",
+		'titlebar':		"yes",
+		'toolbar':		"yes",
+		'top':			undefined,
+		'width':			undefined,
+		'replace':		undefined
 	},
 		opt,
 		specs;

@@ -73,10 +73,10 @@ options: Grid 의 옵션과 모든 서브 옵션을 포함한 옵션 오브젝트<br>
 
 @constructor {Grid} Grid
 @param {Object} args - Grid 모듈 파라미터 오브젝트
-@... {(DOMElement | jQuery)} args.container - Grid 를 위한 컨테이너 오브젝트
-@... {Array.<Object>} args.datalist - 데이터 어레이
-@... {Array.<Object>} args.colDefs - 컬럼 정의 어레이
-@... {Object} args.options - Grid 옵션 오브젝트
+@... {(DOMElement | jQuery)} args['container ']- Grid 를 위한 컨테이너 오브젝트
+@... {Array.<Object>} args['datalist ']- 데이터 어레이
+@... {Array.<Object>} args['colDefs ']- 컬럼 정의 어레이
+@... {Object} args['options ']- Grid 옵션 오브젝트
 @returns {Grid} Grid 모듈 인스턴스를 리턴합니다.
 
 @author 조준호
@@ -117,7 +117,7 @@ prototype._defaultOptions = function() {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-classGrid: "jgrid",
+'classGrid': "jgrid",
 
 			   /**
 				 컨테이너에 적용되는 CSS border 스타일 입니다. <br>기본값:<code>"1px solid #868686"</code>
@@ -129,7 +129,7 @@ classGrid: "jgrid",
 				 @since 1.0.0
 				 @version 1.0.0
 				 */
-			   border: "1px solid #868686",
+			   'border': "1px solid #868686",
 
 			   /**
 				 컨테이너에 적용되는 CSS width 픽셀값 입니다. 이 옵션 값이 입력되지 않을 경우 <code>width:100%</code> 로 설정하는 것과 같은 효과를 가집니다.<br>기본값:<code>undefined</code>
@@ -141,7 +141,7 @@ classGrid: "jgrid",
 				 @since 1.0.0
 				 @version 1.0.0
 				 */
-			   width: undefined,
+			   'width': undefined,
 
 			   /**
 				 컨테이너에 적용되는 CSS font 스타일 입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
@@ -153,7 +153,7 @@ classGrid: "jgrid",
 				 @since 1.0.0
 				 @version 1.0.0
 				 */
-			   font: "15px Arial,Helvetica,sans-serif",
+			   'font': "15px Arial,Helvetica,sans-serif",
 
 			   /**
 				 그리드 컨테이너에 적용될 CSS Style 입니다.<br>
@@ -168,7 +168,7 @@ classGrid: "jgrid",
 				 @since 1.0.0
 				 @version 1.0.0
 				 */
-			   style: "",
+			   'style': "",
 
 			   /**
 				 컨테이너에 적용되는 border 가 사이드에도 적용될지 여부입니다. <br>기본값:<code>true</code>
@@ -180,7 +180,7 @@ classGrid: "jgrid",
 				 @since 1.0.0
 				 @version 1.0.0
 				 */
-			   borderSide: true,
+			   'borderSide': true,
 
 			   /**
 				 그리드에서 사용되는 이미지들이 있는 폴더의 url 입니다.<br>기본값:<code>"../images/"</code>
@@ -192,7 +192,7 @@ classGrid: "jgrid",
 				 @since 1.1.3
 				 @version 1.1.3
 				 */
-			   imageUrl: "../images/",
+			   'imageUrl': "../images/",
 
 			   /**
 				 그리드 서브 모듈의 함수 또는 데이터를 그리드에서 직접 접근할 수 있도록
@@ -230,32 +230,32 @@ classGrid: "jgrid",
 				 @since 1.1.6
 				 @version 1.1.6
 				 */
-			   links: {
-data: "dataMgr.all",
-		  datalen: "dataMgr.all.length",
-		  shown: "dataMgr.datalist",
-		  set: "dataMgr.set",
-		  add: "dataMgr.add",
-		  addList: "dataMgr.addList",
-		  update: "dataMgr.update",
-		  updateByKey: "dataMgr.updateByKey",
-		  updateList: "dataMgr.updateList",
-		  remove: "dataMgr.remove",
-		  removeList: "dataMgr.removeList",
-		  select: "dataMgr.executeSelect",
-		  undo: "dataMgr.undo",
-		  redo: "dataMgr.redo",
-		  addFilter: "dataMgr.addFilter",
-		  removeFilter: "dataMgr.removeFilter",
-		  check: "collapser.checkMgr.checkList checkMgr.checkList",
-		  checked: "collapser.checkMgr.getCheckList checkMgr.getCheckList",
-		  removeChecked: "collapser.checkMgr.removeChecked checkMgr.removeChecked",
-		  register: "event.register",
-		  trigger: "event.trigger",
-		  bind: "event.bind",
-		  unregister: "event.unregister",
-		  unbind: "event.unregister",
-		  collen: "colDefMgr.length"
+			   'links': {
+'data': "dataMgr.all",
+		  'datalen': "dataMgr.all.length",
+		  'shown': "dataMgr.datalist",
+		  'set': "dataMgr.set",
+		  'add': "dataMgr.add",
+		  'addList': "dataMgr.addList",
+		  'update': "dataMgr.update",
+		  'updateByKey': "dataMgr.updateByKey",
+		  'updateList': "dataMgr.updateList",
+		  'remove': "dataMgr.remove",
+		  'removeList': "dataMgr.removeList",
+		  'select': "dataMgr.executeSelect",
+		  'undo': "dataMgr.undo",
+		  'redo': "dataMgr.redo",
+		  'addFilter': "dataMgr.addFilter",
+		  'removeFilter': "dataMgr.removeFilter",
+		  'check': "collapser.checkMgr.checkList checkMgr.checkList",
+		  'checked': "collapser.checkMgr.getCheckList checkMgr.getCheckList",
+		  'removeChecked': "collapser.checkMgr.removeChecked checkMgr.removeChecked",
+		  'register': "event.register",
+		  'trigger': "event.trigger",
+		  'bind': "event.bind",
+		  'unregister': "event.unregister",
+		  'unbind': "event.unregister",
+		  'collen': "colDefMgr.length"
 			   },
 
 			   /**
@@ -268,9 +268,9 @@ data: "dataMgr.all",
 				 @since 1.1.7
 				 @version 1.1.7
 				 */
-autoWidth: false,
+'autoWidth': false,
 
-		   showMessage: false
+		   'showMessage': false
 
 			   /**
 				 서브 모듈 들에게 전달할 옵션을 정의합니다. 예를 들어
@@ -290,7 +290,7 @@ autoWidth: false,
 	}
 
 	prototype._init = function(args) {
-		this._ctnr = args.container;
+		this._ctnr = args['container'];
 
 		/**
 		  Grid 모듈의 기본 옵션 값들을 정의합니다.
@@ -302,7 +302,7 @@ autoWidth: false,
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.name = this._options.name;
+		this.name = this._options['name'];
 
 		this._vars = {
 drag: false,
@@ -311,22 +311,22 @@ drag: false,
 	  lastH: undefined
 		};
 
-		this._ctnr = $("<div id='" + this.mid + "' class='" + this._options.classGrid + "' " + (Util.isNull(this._options.width) ? "" : "style='width:" + this._options.width + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(this._ctnr));
+		this._ctnr = $("<div id='" + this.mid + "' class='" + this._options['classGrid'] + "' " + (Util.isNull(this._options['width']) ? "" : "style='width:" + this._options['width'] + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(this._ctnr));
 
 		this._vars.scrollbarDim = Util$.calScrollbarDims(this._ctnr);
 
-		this.event = JGM.create("EventManager", {grid:this, options:this._options.EventManager});
-		delete this._options.EventManager;
+		this.event = JGM.create("EventManager", {grid:this, 'options':this._options['EventManager']});
+		delete this._options['EventManager'];
 
-		this.colDefMgr = JGM.create("ColDefManager", {grid:this, colDefs:args.colDefs, options:this._options.ColDefManager});
-		delete this._options.ColDefManager;
+		this.colDefMgr = JGM.create("ColDefManager", {grid:this, colDefs:args['colDefs'], 'options':this._options['ColDefManager']});
+		delete this._options['ColDefManager'];
 
-		this.dataMgr = JGM.create("DataManager", {grid:this, datalist:args.datalist, options:this._options.DataManager});
-		delete this._options.DataManager;
+		this.dataMgr = JGM.create("DataManager", {grid:this, datalist:args['datalist'], 'options':this._options['DataManager']});
+		delete this._options['DataManager'];
 
-		if (this._options.CheckManager) {
-			this.checkMgr = JGM.create("CheckManager", {grid:this, options:this._options.CheckManager});
-			delete this._options.CheckManager;
+		if (this._options['CheckManager']) {
+			this.checkMgr = JGM.create("CheckManager", {grid:this, 'options':this._options['CheckManager']});
+			delete this._options['CheckManager'];
 		}
 
 		var i = 10,
@@ -334,67 +334,67 @@ drag: false,
 			len = colDefs.length;
 		for (; i < len; i++) {
 			colDef = colDefs[i];
-			if (colDef.CheckManager) {
-				colDef.CheckManager.colDef = colDef;
-				colDef.checkMgr = JGM.create("CheckManager", {grid:this, options:colDef.CheckManager});
+			if (colDef['CheckManager']) {
+				colDef['CheckManager'].colDef = colDef;
+				colDef['checkMgr'] = JGM.create("CheckManager", {grid:this, 'options':colDef['CheckManager']});
 			}
 		}
 
-		if (this._options.Collapser) {
-			this.collapser = JGM.create("Collapser", {grid:this, options:this._options.Collapser});
+		if (this._options['Collapser']) {
+			this.collapser = JGM.create("Collapser", {grid:this, 'options':this._options['Collapser']});
 			this.collapser.__init();
-			delete this._options.Collapser;
+			delete this._options['Collapser'];
 		}
 
-		if (this._options.ColGroup) {
-			this.colGroup = JGM.create("ColGroup", {grid:this, options:this._options.ColGroup});
-			delete this._options.ColGroup;
+		if (this._options['ColGroup']) {
+			this.colGroup = JGM.create("ColGroup", {grid:this, 'options':this._options['ColGroup']});
+			delete this._options['ColGroup'];
 		}
 
-		if (this._options.SelectionManager) {
-			this.selMgr = JGM.create("SelectionManager", {grid:this, options:this._options.SelectionManager});
-			delete this._options.SelectionManager;
+		if (this._options['SelectionManager']) {
+			this.selMgr = JGM.create("SelectionManager", {grid:this, 'options':this._options['SelectionManager']});
+			delete this._options['SelectionManager'];
 		}
 
-		if (this._options.EditManager) {
-			this.editMgr = JGM.create("EditManager", {grid:this, options:this._options.EditManager});
-			delete this._options.EditManager;
+		if (this._options['EditManager']) {
+			this.editMgr = JGM.create("EditManager", {grid:this, 'options':this._options['EditManager']});
+			delete this._options['EditManager'];
 		}
 
-		if (this._options.ColHeader) {
-			this.header = JGM.create("ColHeader", {grid:this, container:this._ctnr, options:this._options.ColHeader});
-			delete this._options.ColHeader;
+		if (this._options['ColHeader']) {
+			this.header = JGM.create("ColHeader", {grid:this, 'container':this._ctnr, 'options':this._options['ColHeader']});
+			delete this._options['ColHeader'];
 		}
 
-		if (this._options.SearchManager) {
-			this.search = JGM.create("SearchManager", {grid:this, container:this._ctnr, options:this._options.SearchManager});
-			delete this._options.SearchManager;
+		if (this._options['SearchManager']) {
+			this.search = JGM.create("SearchManager", {grid:this, 'container':this._ctnr, 'options':this._options['SearchManager']});
+			delete this._options['SearchManager'];
 		}
 
-		if (this._options.MenuBar) {
-			this.menubar = JGM.create("MenuBar", {grid:this, container:this._ctnr, options:this._options.MenuBar});
-			delete this._options.MenuBar;
+		if (this._options['MenuBar']) {
+			this.menubar = JGM.create("MenuBar", {grid:this, 'container':this._ctnr, 'options':this._options['MenuBar']});
+			delete this._options['MenuBar'];
 		}
 
-		this.view = JGM.create("ViewportManager", {grid:this, container:this._ctnr, options:this._options.ViewportManager});
-		delete this._options.ViewportManager;
+		this.view = JGM.create("ViewportManager", {grid:this, 'container':this._ctnr, 'options':this._options['ViewportManager']});
+		delete this._options['ViewportManager'];
 
-		if (this._options.TooltipManager) {
-			this.tooltip = JGM.create("TooltipManager", {grid:this, container:this._ctnr, options:this._options.TooltipManager});
-			delete this._options.TooltipManager;
+		if (this._options['TooltipManager']) {
+			this.tooltip = JGM.create("TooltipManager", {grid:this, 'container':this._ctnr, 'options':this._options['TooltipManager']});
+			delete this._options['TooltipManager'];
 		}
 
-		if (this._options.DataCreator) {
-			this.creator = JGM.create("DataCreator", {grid:this, container:this._ctnr, options:this._options.DataCreator});
-			delete this._options.DataCreator;
+		if (this._options['DataCreator']) {
+			this.creator = JGM.create("DataCreator", {grid:this, 'container':this._ctnr, 'options':this._options['DataCreator']});
+			delete this._options['DataCreator'];
 		}
 
-		if (this._options.Footer) {
-			this.footer = JGM.create("Footer", {grid:this, container:this._ctnr, options:this._options.Footer});
-			delete this._options.Footer;
+		if (this._options['Footer']) {
+			this.footer = JGM.create("Footer", {grid:this, 'container':this._ctnr, 'options':this._options['Footer']});
+			delete this._options['Footer'];
 		}
 
-		if (this._options.autoWidth) {
+		if (this._options['autoWidth']) {
 			this.event.bind("onResizeCanvasWidth", this.width, this);
 		}
 
@@ -439,7 +439,7 @@ drag: false,
 		this._vars.lastW = this._ctnr[0].clientWidth;
 		this._vars.lastH = this._ctnr[0].clientHeight;
 
-		this._registerLinks(this._options.links);
+		this._registerLinks(this._options['links']);
 	}
 
 	prototype._bindEvents = function() {
@@ -447,17 +447,17 @@ drag: false,
 
 		var thisIns = this;
 		this._ctnr.bind({
-keydown:function(e) { thisIns._keydown(e); },
-keyup:function(e) { thisIns._keyup(e); },
-keypress:function(e) { thisIns._keypress(e); },
-mousein:function(e) { thisIns._mousein(e); },
-mouseout:function(e) { thisIns._mouseout(e); },
-mouseenter:function(e) { thisIns._mouseenter(e); },
-mouseleave:function(e) { thisIns._mouseleave(e); },
-mouseover:function(e) { thisIns._mouseover(e); },
-mousedown:function(e) { thisIns._mousedown(e); },
-click:function(e) { thisIns._click(e); },
-dblclick:function(e) { thisIns._dblclick(e); }
+'keydown':function(e) { thisIns._keydown(e); },
+'keyup':function(e) { thisIns._keyup(e); },
+'keypress':function(e) { thisIns._keypress(e); },
+'mousein':function(e) { thisIns._mousein(e); },
+'mouseout':function(e) { thisIns._mouseout(e); },
+'mouseenter':function(e) { thisIns._mouseenter(e); },
+'mouseleave':function(e) { thisIns._mouseleave(e); },
+'mouseover':function(e) { thisIns._mouseover(e); },
+'mousedown':function(e) { thisIns._mousedown(e); },
+'click':function(e) { thisIns._click(e); },
+'dblclick':function(e) { thisIns._dblclick(e); }
 });
 };
 
@@ -581,13 +581,13 @@ prototype._createCss = function() {
 	  @version 1.2.2
 	  */
 	var style = Util.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {
-selector: "#" + this.mid,
-font: this._options.font,
-border: this._options.borderSide ?
-"border:" + this._options.border + ";" :
-"border-top:" + this._options.border + ";border-bottom:" + this._options.border + ";",
-style: this._options.style,
-submodule: this.event.trigger("onCreateCss").join("")
+'selector': "#" + this.mid,
+'font': this._options['font'],
+'border': this._options['borderSide'] ?
+"border:" + this._options['border'] + ";" :
+"border-top:" + this._options['border'] + ";border-bottom:" + this._options['border'] + ";",
+'style': this._options['style'],
+'submodule': this.event.trigger("onCreateCss").join("")
 });
 this._style = Util.createStyle(style);
 
@@ -1244,11 +1244,11 @@ prototype.height = function(h) {
 };
 
 prototype.getCellByIdAndKey = function(id, key) {
-	return JGM.create("Cell", {grid:this, datarow:this.dataMgr.getById(id), colDef:this.colDefMgr.getByKey(key)});
+	return JGM.create("Cell", {'grid':this, 'datarow':this.dataMgr.getById(id), 'colDef':this.colDefMgr.getByKey(key)});
 };
 
 prototype.getCellByIdx = function(rowIdx, colIdx) {
-	return JGM.create("Cell", {grid:this, row:rowIdx, col:colIdx});
+	return JGM.create("Cell", {'grid':this, 'row':rowIdx, 'col':colIdx});
 };
 
 /**
@@ -1272,7 +1272,7 @@ prototype.error = function(code) {
 };
 
 prototype.printError = function(str) {
-	if (this._options.showMessage) {
+	if (this._options['showMessage']) {
 		var msg = this.msg;
 		msg[0].innerHTML = str;
 		msg[0].style.width = this._ctnr[0].clientWidth + 'px';
@@ -1287,7 +1287,7 @@ prototype.printError = function(str) {
 };
 
 prototype.printMessage = function(str) {
-	if (this._options.showMessage) {
+	if (this._options['showMessage']) {
 		var msg = this.msg;
 		msg[0].innerHTML = str;
 		msg[0].style.width = this._ctnr[0].clientWidth + 'px';

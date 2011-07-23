@@ -96,7 +96,7 @@ function TooltipManager(args) {
 	*/
 	this.grid.tooltip = this;
 
-	this._ctnr = args.container;
+	this._ctnr = args['container'];
 
 
 	/**
@@ -120,7 +120,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classTooltip_a__:					"jgrid-tooltip",
+		'__classTooltip_a__':					"jgrid-tooltip",
 
 		/**
 		툴팁이 마우스를 실시간으로 따라다닐지를 정합니다. true 일 경우 따라다니고,
@@ -133,7 +133,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__tooltipSyncEnabled_b__:			true,
+		'__tooltipSyncEnabled_b__':			true,
 
 		/**
 		툴팁의 마우스 포인터로부터의 우측 offset 을 정합니다.<br>기본값:<code>0</code>
@@ -145,7 +145,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__offsetX_c__:					0,
+		'__offsetX_c__':					0,
 
 		/**
 		툴팁의 마우스 포인터로부터의 아래 방향 offset 을 정합니다.<br>기본값:<code>18</code>
@@ -157,7 +157,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__offsetY_d__:					18,
+		'__offsetY_d__':					18,
 
 		/**
 		툴팁의 배경을 설정합니다. <br>기본값:<code>"#F5F5F5"</code>
@@ -169,7 +169,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__background_e__:					"#F5F5F5",
+		'__background_e__':					"#F5F5F5",
 
 		/**
 		툴팁의 border 를 설정합니다. <br>기본값:<code>"1px solid #868686"</code>
@@ -181,7 +181,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__border_f__:						"1px solid #868686",
+		'__border_f__':						"1px solid #868686",
 
 		/**
 		툴팁의 padding 을 설정합니다. <br>기본값:<code>"2px 10px"</code>
@@ -193,7 +193,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__padding_g__:					"2px 10px",
+		'__padding_g__':					"2px 10px",
 
 		/**
 		툴팁의 폰트를 설정합니다. <br>기본값:<code>"14px Arial,Helvetica,sans-serif"</code>
@@ -205,7 +205,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__font_h__:						"14px Arial,Helvetica,sans-serif",
+		'__font_h__':						"14px Arial,Helvetica,sans-serif",
 
 		/**
 		툴팁의 글자색을 설정합니다. <br>기본값:<code>"#333"</code>
@@ -217,10 +217,10 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__color_i__:				"#333"
+		'__color_i__':				"#333"
 	};
 
-	this._options = JGM.__extend_e__(options, args.options, {
+	this._options = JGM.__extend_e__(options, args['options'], {
 		classTooltip:"__classTooltip_a__",
 		tooltipSyncEnabled:"__tooltipSyncEnabled_b__",
 		offsetX:"__offsetX_c__",
@@ -244,11 +244,11 @@ var prototype = TooltipManager.prototype;
 
 prototype.__init = function() {
 	this.grid.event.bind({
-		onCreateCss: this.__onCreateCss_V__,
-		onDestroy: this.__destroy_aA__,
-		mouseoutCanvas: this.__mouseoutCanvas_bb__,
-		mousemoveCanvas: this.__mousemoveCanvas_bc__,
-		mouseoverCanvas: this.__mouseoverCanvas_bd__
+		'onCreateCss': this.__onCreateCss_V__,
+		'onDestroy': this.__destroy_aA__,
+		'mouseoutCanvas': this.__mouseoutCanvas_bb__,
+		'mousemoveCanvas': this.__mousemoveCanvas_bc__,
+		'mouseoverCanvas': this.__mouseoverCanvas_bd__
 	}, this);
 };
 
@@ -282,7 +282,7 @@ prototype.__mouseoutCanvas_bb__ = function(e, cell) {
 prototype.__mousemoveCanvas_bc__ = function(e, cell) {
 	var opt = this._options;
 	if (opt.__tooltipSyncEnabled_b__ && Util.isNotNull(this.__tooltip_a__)) {
-		this.__tooltip_a__.css({left:(e.pageX + opt.__offsetX_c__) + "px", top:(e.pageY + opt.__offsetY_d__) + "px"});
+		this.__tooltip_a__.css({'left':(e.pageX + opt.__offsetX_c__) + "px", 'top':(e.pageY + opt.__offsetY_d__) + "px"});
 	}
 };
 

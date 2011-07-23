@@ -9,10 +9,10 @@ goog.provide('jx.grid.Column');
 	goog.exportSymbol('jx.grid.Column', Column);
 
 	function Column(args) {
-		if (!(args.manager && typeof args.manager == 'object')) {
+		if (!(args['manager'] && typeof args['manager']== 'object')) {
 			throw new Error('Column needs a valid manager!');
 		}
-		this.manager = args.manager;
+		this.manager = args['manager'];
 
 		/**
 		  로우 데이터에서 해당 컬럼 데이터를 가져올 때 사용되는 키입니다. 컬럼
@@ -27,7 +27,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// stringify
-		this.key = args.key + '';
+		this.key = args['key']+ '';
 		if (!this.key) {
 			throw new Error('Column needs a non-empty key!');
 		}
@@ -50,7 +50,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// stringify
-		this.name = args.name ? args.name + '' : '';
+		this.name = args['name']? args['name']+ '' : '';
 
 		/**
 		  컬럼 헤더에 입력할 타이틀 attribute 의 내용. <br>기본값:<code>undefined</code>
@@ -63,7 +63,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.1.7
 		  */
 		// stringify
-		this.title = args.title ? args.title + '' : '';
+		this.title = args['title']? args['title']+ '' : '';
 
 		/**
 		  컬럼 헤더에 이름값 입력 여부. <br>기본값:<code>false</code>
@@ -76,7 +76,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.1.7
 		  */
 		// booleanify
-		this.noName = !!args.noName;
+		this.noName = !!args['noName'];
 
 		/**
 		  컬럼 헤더에 타이틀 attribute 입력 여부. <br>기본값:<code>false</code>
@@ -89,10 +89,10 @@ goog.provide('jx.grid.Column');
 		  @version 1.1.7
 		  */
 		// booleanify
-		this.noTitle = !!args.noTitle;
+		this.noTitle = !!args['noTitle'];
 
 		// stringify
-		this.type = args.type + '' || null;
+		this.type = args['type']+ '' || null;
 
 		/**
 		  새로운 로우 데이터를 생성하거나 셀의 데이터를 del 키를 눌러서 삭제했을 경우에
@@ -106,7 +106,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.1.1
 		  */
 		// as is
-		this.defaultValue = args.defaultValue;
+		this.defaultValue = args['defaultValue'];
 
 		/**
 		  {@link jgrid.grid.DataCreator DataCreator} 를 사용하여 새로운 로우 데이터를 생성할 경우,
@@ -120,7 +120,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.1.1
 		  */
 		// booleanify
-		this.inputOnCreate = !!args.inputOnCreate;
+		this.inputOnCreate = !!args['inputOnCreate'];
 
 		/**
 		  컬럼의 기본 폭 픽셀. <br>기본값:<code>80</code>
@@ -133,7 +133,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// numberify
-		this.width = Number(args.width);
+		this.width = Number(args['width']);
 		this.width = this.width || 90;
 
 		/**
@@ -147,7 +147,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// numberify
-		this.minW = Number(args.minW);
+		this.minW = Number(args['minW']);
 		this.minW = this.minW || 30;
 
 		/**
@@ -161,7 +161,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// numberify
-		this.maxW = Number(args.maxW) || null;
+		this.maxW = Number(args['maxW']) || null;
 
 		/**
 		  컬럼의 폭 조절 가능 여부. <br>기본값:<code>false</code>
@@ -174,7 +174,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.1.2
 		  */
 		// booleanify
-		this.resizable = !!args.resizable;
+		this.resizable = !!args['resizable'];
 
 		/**
 		  컬럼의 숨기기 여부. <br>기본값:<code>false</code>
@@ -187,7 +187,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// booleanify
-		this.hidden = !!args.hidden;
+		this.hidden = !!args['hidden'];
 
 		/**
 		  컬럼이 필터링 시에 검색에 포함되는지 여부.<br>기본값:<code>false</code>
@@ -200,7 +200,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.2.0
 		  */
 		// booleanify
-		this.noSearch = !!args.noSearch;
+		this.noSearch = !!args['noSearch'];
 
 		/**
 		  마우스를 컬럼 셀위에 올려놓을 경우 보여지는 툴팁의 활성 여부. <br>기본값:<code>false</code>
@@ -213,7 +213,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// booleanify
-		this.tooltipEnabled = !!args.tooltipEnabled;
+		this.tooltipEnabled = !!args['tooltipEnabled'];
 
 		/**
 		  컬럼 셀 노드들에 적용되는 CSS 클래스. <br>기본값:<code>undefined</code>
@@ -226,7 +226,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// stringify
-		this.colClass = args.colClass + '' || null;
+		this.colClass = args['colClass']+ '' || null;
 
 		/**
 		  컬럼 셀 노드들에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -242,7 +242,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// stringify
-		this.style = args.style + '' || null;
+		this.style = args['style']+ '' || null;
 
 		/**
 		  컬럼 헤더에게 적용되는 CSS style 입니다.<br>
@@ -258,7 +258,7 @@ goog.provide('jx.grid.Column');
 		  @version 1.0.0
 		  */
 		// stringify
-		this.headerStyle = args.headerStyle + '' || null;
+		this.headerStyle = args['headerStyle']+ '' || null;
 
 		/**
 		  데이터 parsing 을 담당하는 함수입니다. 그리드에 입력되거나 내용이 변경되는 모든 데이터는 이 함수에 의해서
@@ -273,10 +273,10 @@ goog.provide('jx.grid.Column');
 		  @since 1.3.0
 		  @version 1.3.0
 		  */
-		if (args.parser && typeof args.parser != 'function') {
+		if (args['parser']&& typeof args['parser']!= 'function') {
 			throw new Error('Invalid parser!' + error);
 		}
-		this.parser = args.parser || null;
+		this.parser = args['parser']|| null;
 
 		/**
 		  필터링 시에 사용될 추가 옵션 필터입니다. 커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.<br>기본값:<code>undefined</code>
@@ -288,10 +288,10 @@ goog.provide('jx.grid.Column');
 		  @since 1.3.0
 		  @version 1.3.0
 		  */
-		if (args.validator && typeof args.validator != 'function') {
+		if (args['validator']&& typeof args['validator']!= 'function') {
 			throw new Error('Invalid validator!' + error);
 		}
-		this.validator = args.validator || null;
+		this.validator = args['validator']|| null;
 
 		/**
 		  컬럼 셀 랜더러.
@@ -308,10 +308,10 @@ goog.provide('jx.grid.Column');
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		if (args.renderer && typeof args.renderer != 'function') {
+		if (args['renderer']&& typeof args['renderer']!= 'function') {
 			throw new Error('Invalid renderer!' + error);
 		}
-		this.renderer = args.renderer || null;
+		this.renderer = args['renderer']|| null;
 
 		/**
 		  컬럼 데이터 합계의 {@link jgrid.grid.Footer Footer} 에 표시 여부.
@@ -326,10 +326,10 @@ goog.provide('jx.grid.Column');
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		if (args.sumRenderer && typeof args.sumRenderer != 'function') {
+		if (args['sumRenderer']&& typeof args['sumRenderer']!= 'function') {
 			throw new Error('Invalid sum renderer!' + error);
 		}
-		this.sumRenderer = args.sumRenderer || null;
+		this.sumRenderer = args['sumRenderer']|| null;
 
 		/**
 		  셀 에디팅을 할 때 사용되는 컬럼 에디터. <br>기본값:<code>undefined</code>
@@ -341,10 +341,10 @@ goog.provide('jx.grid.Column');
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		if (args.editor && typeof args.editor != 'object') {
+		if (args['editor']&& typeof args['editor']!= 'object') {
 			throw new Error('Invalid editor!' + error);
 		}
-		this.editor = args.editor || null;
+		this.editor = args['editor']|| null;
 
 		/**
 		  컬럼 정렬할 때 사용되는 컬럼 정렬 오브젝트. <br>기본값:<code>undefined</code>
@@ -356,7 +356,7 @@ goog.provide('jx.grid.Column');
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.sorter = args.sorter || null;
+		this.sorter = args['sorter']|| null;
 
 		/**
 		  필터링 시에 사용될 추가 옵션 필터입니다. 커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.<br>기본값:<code>undefined</code>
@@ -368,7 +368,7 @@ goog.provide('jx.grid.Column');
 		  @since 1.2.0
 		  @version 1.2.0
 		  */
-		this.filter = args.filter || null;
+		this.filter = args['filter']|| null;
 	}
 
 	goog.inherits(Column, EventDispatcher);
@@ -379,8 +379,8 @@ goog.provide('jx.grid.Column');
 		if (this.hidden) {
 			this.hidden = false;
 			this.dispatchEvent({
-				type: 'hidden',
-				value: false
+				'type': 'hidden',
+				'value': false
 			});
 			return true;
 		}
@@ -391,8 +391,8 @@ goog.provide('jx.grid.Column');
 		if (!this.hidden) {
 			this.hidden = true;
 			this.dispatchEvent({
-				type: 'hidden',
-				value: true
+				'type': 'hidden',
+				'value': true
 			});
 			return true;
 		}
@@ -408,8 +408,8 @@ goog.provide('jx.grid.Column');
 		if (w && this.width !== w) {
 			this.width = w;
 			this.dispatchEvent({
-				type: 'width',
-				value: w
+				'type': 'width',
+				'value': w
 			});
 			return w;
 		}
@@ -424,8 +424,8 @@ goog.provide('jx.grid.Column');
 			}
 			this.renderer = renderer || null;
 			this.dispatchEvent({
-				type: 'renderer',
-				value: renderer
+				'type': 'renderer',
+				'value': renderer
 			});
 		}
 	}

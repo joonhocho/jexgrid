@@ -151,7 +151,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__idKey_a__: undefined,
+			'__idKey_a__': undefined,
 
 			/**
 			  데이터 로우의 primary key 가 하나 이상일 경우에 이 어레이에 키 값들을 넣어줍니다.<br>기본값:<code>[]</code>
@@ -163,12 +163,12 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			__idColKeys_c__: [],
+			'__idColKeys_c__': [],
 
-			uniqueKeys: []
+			'uniqueKeys': []
 		};
 
-		this._options = JGM.__extend_e__(options, args.options, {
+		this._options = JGM.__extend_e__(options, args['options'], {
 			idKey:"__idKey_a__",
 			idColKeys:"__idColKeys_c__"
 		});
@@ -192,7 +192,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			"enum":5
 		};
 
-		if (Util.isNotNull(this._options.__idKey_a__)) {
+		if (Util.isNotNull(this._options['__idKey_a__'])) {
 			this.__idMode_m__ = this.__consts_n__.__given_b__;
 
 			/**
@@ -205,9 +205,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			this.idKey = this._options.__idKey_a__;
+			this.idKey = this._options['__idKey_a__'];
 		}
-		else if (this._options.__idColKeys_c__.length !== 0) {
+		else if (this._options['__idColKeys_c__']['length'] !== 0) {
 			this.__idMode_m__ = this.__consts_n__.__composite_c__;
 			this.idKey = "J@I" + this.mid + "@" + Util.random(10000);
 		}
@@ -242,7 +242,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	prototype.__init = function(args) {
 		var i = 0,
-			 ukeys = this._options.uniqueKeys,
+			 ukeys = this._options['uniqueKeys'],
 			 ukey,
 			 umap = this.uniqueMap,
 			 len = ukeys.length,
@@ -261,18 +261,18 @@ var JGM = goog.getObjectByName('jx.grid'),
 		len = colDefs.length;
 		for (i = 0; i < len; i++) {
 			colDef = colDefs[i];
-			key = colDef.key;
-			if (colDef.hasOwnProperty("unique") && colDef.unique === true && !umap.hasOwnProperty(key)) {
+			key = colDef['key'];
+			if (colDef.hasOwnProperty("unique") && colDef['unique'] === true && !umap.hasOwnProperty(key)) {
 				umap[key] = {};
 			}
-			tmap[key] = this.mapDatatype(colDef.type);
+			tmap[key] = this.mapDatatype(colDef['type']);
 		}
 
-		Util.ifNull(args.datalist, []);
+		Util.ifNull(args['datalist'], []);
 
 		this.bindEvents();
 
-		this.set(args.datalist);
+		this.set(args['datalist']);
 	};
 
 	prototype.mapDatatype = function(type) {
@@ -298,8 +298,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	prototype.bindEvents = function() {
 		this.grid.event.bind({
-			onDestroy: this.__destroy_aA__,
-			keydownCanvas: this.__keydownCanvas_ba__
+			'onDestroy': this.__destroy_aA__,
+			'keydownCanvas': this.__keydownCanvas_ba__
 		}, this);
 	};
 
@@ -717,7 +717,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				if (change.hasOwnProperty(idKey)) {
 					return this.grid.error("NOT_MODIFIABLE", idKey);
 				}
-				var idKeys = this._options.__idColKeys_c__,
+				var idKeys = this._options['__idColKeys_c__'],
 					 keylen = idKeys.length,
 					 i = 0;
 				for (; i < keylen; i++) {
@@ -782,7 +782,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				var idMap = this.__idToData_a__,
 					 datarow,
 					 change,
-					 idKeys = this._options.__idColKeys_c__,
+					 idKeys = this._options['__idColKeys_c__'],
 					 keylen = idKeys.length,
 					 newId,
 					 oldIds = [],
@@ -884,16 +884,16 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var colDefs = this.grid.colDefMgr.getAll(),
 			 clen = colDefs.length,
 			 key,
-			 isNew = args !== undefined && args.isNew,
+			 isNew = args !== undefined && args['isNew'],
 			 colDef,
 			 i = 0;
 
 		if (isNew) {
 			for (; i < clen; i++) {
 				colDef = colDefs[i];
-				key = colDef.key;
+				key = colDef['key'];
 				// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-				if (colDef.nullOnCreate && Util.isNull(datarow[key])) {
+				if (colDef['nullOnCreate'] && Util.isNull(datarow[key])) {
 					datarow[key] = "J@H" + this.__increment_l__++;
 				}
 			}
@@ -908,7 +908,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 clen = colDefs.length,
 			 len = datalist.length,
 			 key,
-			 isNew = args !== undefined && args.isNew,
+			 isNew = args !== undefined && args['isNew'],
 			 colDef,
 			 i = 0,
 			 j;
@@ -916,9 +916,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 		if (isNew) {
 			for (; i < clen; i++) {
 				colDef = colDefs[i];
-				key = colDef.key;
+				key = colDef['key'];
 				// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-				if (colDef.nullOnCreate) {
+				if (colDef['nullOnCreate']) {
 					for (j = 0; len; j++) {
 						datalist[j][key] = "J@H" + this.__increment_l__++;
 					}
@@ -1034,18 +1034,18 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 clen = colDefs.length,
 			 parser,
 			 key,
-			 isNew = args !== undefined && args.isNew,
+			 isNew = args !== undefined && args['isNew'],
 			 colDef,
 			 i = 0;
 		for (; i < clen; i++) {
 			colDef = colDefs[i];
 			// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-			if (isNew && colDef.nullOnCreate) {
+			if (isNew && colDef['nullOnCreate']) {
 				continue;
 			}
 
-			if (Util.isFunction(parser = colDef.parser)) {
-				key = colDef.key;
+			if (Util.isFunction(parser = colDef['parser'])) {
+				key = colDef['key'];
 				if (datarow.hasOwnProperty(key)) {
 					try {
 						datarow[key] = parser(datarow[key], datarow);
@@ -1079,18 +1079,18 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 key,
 			 i = 0,
 			 j,
-			 isNew = args !== undefined && args.isNew,
+			 isNew = args !== undefined && args['isNew'],
 			 colDef,
 			 datarow;
 		for (; i < clen; i++) {
 			colDef = colDefs[i];
 			// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-			if (isNew && colDef.nullOnCreate) {
+			if (isNew && colDef['nullOnCreate']) {
 				continue;
 			}
 
-			if (Util.isFunction(parser = colDef.parser)) {
-				key = colDef.key;
+			if (Util.isFunction(parser = colDef['parser'])) {
+				key = colDef['key'];
 				try {
 					for (j = 0; j < len; j++) {
 						datarow = list[j];
@@ -1127,22 +1127,22 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 val,
 			 stringval,
 			 test,
-			 isNew = args !== undefined && args.isNew,
+			 isNew = args !== undefined && args['isNew'],
 			 i = 0;
 		for (; i < clen; i++) {
 			colDef = colDefs[i];
-			key = colDef.key;
+			key = colDef['key'];
 			val = undefined;
 			isnull = false;
 			emptystr = false;
 
 			// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-			if (isNew && colDef.nullOnCreate) {
+			if (isNew && colDef['nullOnCreate']) {
 				continue;
 			}
 
 			// validate not null
-			if (colDef.notNull === true) {
+			if (colDef['notNull'] === true) {
 				if (datarow.hasOwnProperty(key) === false || Util.isEmptyString(val = datarow[key])) {
 					return this.grid.error("BAD_NULL", key);
 				}
@@ -1166,32 +1166,32 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}
 			if (isnull === false) {
 				// test if value does not violate max limit
-				if (Util.isNotNull(test = colDef.max)) {
+				if (Util.isNotNull(test = colDef['max'])) {
 					if (emptystr === false && val > test) {
 						return this.grid.error("BIGGER_THAN", val, key, test);
 					}
 				}
 				// test if value does not violate min limit
-				if (Util.isNotNull(test = colDef.min)) {
+				if (Util.isNotNull(test = colDef['min'])) {
 					if (emptystr === false && val < test) {
 						return this.grid.error("SMALLER_THAN", val, key, test);
 					}
 				}
 				// test if value does not violate length 
-				if (Util.isNotNull(test = colDef.length)) {
+				if (Util.isNotNull(test = colDef['length'])) {
 					if (emptystr === true || stringval.length !== test) {
 						return this.grid.error("WRONG_LENGTH", stringval, test, key);
 					}
 				}
 				else {
 					// test if value does not violate max length 
-					if (Util.isNotNull(test = colDef.maxlength)) {
+					if (Util.isNotNull(test = colDef['maxlength'])) {
 						if (emptystr === false && stringval.length > test) {
 							return this.grid.error("DATA_TOO_LONG", stringval, key, test);
 						}
 					}
 					// test if value does not violate min length 
-					if (Util.isNotNull(test = colDef.minlength)) {
+					if (Util.isNotNull(test = colDef['minlength'])) {
 						if (emptystr === true || stringval.length < test) {
 							return this.grid.error("DATA_TOO_SHORT", stringval, key, test);
 						}
@@ -1199,7 +1199,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				}
 			}
 			// test if value passes validator 
-			if (Util.isFunction(validator = colDef.validator)) {
+			if (Util.isFunction(validator = colDef['validator'])) {
 				try {
 					if (validator(val, datarow, stringval, isnull, emptystr) !== true) {
 						return this.grid.error("WRONG_VALUE", stringval, key);
@@ -1233,25 +1233,25 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 emptystrs, // has true for empty rows
 			 val,
 			 test,
-			 isNew = args !== undefined && args.isNew,
+			 isNew = args !== undefined && args['isNew'],
 			 vals = [], // has values for all rows for current column
 			 stringvals = []; // has string values for all rows for current column
 		for (; i < clen; i++) {
 			// initialize column validation test
 			colDef = colDefs[i];
-			key = colDef.key;
+			key = colDef['key'];
 			nulls = {};
 			emptystrs = {};
 			vals.length = 0;
 			stringvals.length = 0;
 
 			// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-			if (isNew && colDef.nullOnCreate) {
+			if (isNew && colDef['nullOnCreate']) {
 				continue;
 			}
 
 			// validate not null
-			if (colDef.notNull === true) {
+			if (colDef['notNull'] === true) {
 				for (j = 0; j < len; j++) {
 					if (list[j].hasOwnProperty(key) === false || Util.isEmptyString(val = list[j][key])) {
 						return this.grid.error("BAD_NULL", key);
@@ -1281,7 +1281,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				}
 			}
 			// test if value does not violate max limit
-			if (Util.isNotNull(test = colDef.max)) {
+			if (Util.isNotNull(test = colDef['max'])) {
 				for (j = 0; j < len; j++) {
 					if (emptystrs.hasOwnProperty(j) === false && vals[j] > test) {
 						return this.grid.error("BIGGER_THAN", vals[j], key, test);
@@ -1289,7 +1289,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				}
 			}
 			// test if value does not violate min limit
-			if (Util.isNotNull(test = colDef.min)) {
+			if (Util.isNotNull(test = colDef['min'])) {
 				for (j = 0; j < len; j++) {
 					if (emptystrs.hasOwnProperty(j) === false && vals[j] < test) {
 						return this.grid.error("SMALLER_THAN", vals[j], key, test);
@@ -1297,7 +1297,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				}
 			}
 			// test if value does not violate length 
-			if (Util.isNotNull(test = colDef.length)) {
+			if (Util.isNotNull(test = colDef['length'])) {
 				for (j = 0; j < len; j++) {
 					if (nulls.hasOwnProperty(j) === false && (emptystrs.hasOwnProperty(j) || stringvals[j].length !== test)) {
 						return this.grid.error("WRONG_LENGTH", stringvals[j], test, key);
@@ -1306,7 +1306,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}
 			else {
 				// test if value does not violate max length 
-				if (Util.isNotNull(test = colDef.maxlength)) {
+				if (Util.isNotNull(test = colDef['maxlength'])) {
 					for (j = 0; j < len; j++) {
 						if (emptystrs.hasOwnProperty(j) === false && stringvals[j].length > test) {
 							return this.grid.error("DATA_TOO_LONG", stringvals[j], key, test);
@@ -1314,7 +1314,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 					}
 				}
 				// test if value does not violate min length 
-				if (Util.isNotNull(test = colDef.minlength)) {
+				if (Util.isNotNull(test = colDef['minlength'])) {
 					for (j = 0; j < len; j++) {
 						if (nulls.hasOwnProperty(j) === false && (emptystrs.hasOwnProperty(j) || stringvals[j].length < test)) {
 							return this.grid.error("DATA_TOO_SHORT", stringvals[j], key, test);
@@ -1323,7 +1323,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				}
 			}
 			// test if value passes validator 
-			if (Util.isFunction(validator = colDef.validator)) {
+			if (Util.isFunction(validator = colDef['validator'])) {
 				try {
 					for (j = 0; j < len; j++) {
 						if (validator(vals[j], list[j], stringvals[j], nulls.hasOwnProperty(j), emptystrs.hasOwnProperty(j)) !== true) {
@@ -1345,7 +1345,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 
 		if (update === true || datarow.hasOwnProperty(this.idKey) === false) {
-			var idColKeys = this._options.__idColKeys_c__,
+			var idColKeys = this._options['__idColKeys_c__'],
 				keylen = idColKeys.length,
 						 i = 0,
 						 id = "";
@@ -1363,7 +1363,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 		var idKey = this.idKey,
 			 datalen = datalist.length,
-			 idColKeys = this._options.__idColKeys_c__,
+			 idColKeys = this._options['__idColKeys_c__'],
 			 keylen = idColKeys.length,
 			 data,
 			 i = 0,
@@ -1437,7 +1437,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  */
 	prototype.mapList = function(list) {
 		if (Util.isEmptyArray(list)) { 
-			return {mapped:[], unmapped:[]};
+			return {'mapped':[], 'unmapped':[]};
 		}
 
 		this.makeCompositeKeyList(list);
@@ -1460,7 +1460,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}
 		}
 
-		return {mapped:mapped, unmapped:unmapped};
+		return {'mapped':mapped, 'unmapped':unmapped};
 	};
 
 	/**
@@ -1849,7 +1849,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 		this.all.push(datarow);
 
-		if (Util.isNull(args) || args.undo !== true) {
+		if (Util.isNull(args) || args['undo'] !== true) {
 			this.__history_e__.push({
 				__action_a__:this.__consts_n__.__add_e__,
 				__target_b__:datarow
@@ -1870,7 +1870,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.grid.event.trigger("onAddDatarow", [datarow, args]);
 		this.grid.event.trigger("onDataChange");
 
-		if (args === undefined || args.noRefresh !== true) {
+		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
 		}
 
@@ -1922,7 +1922,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 		this.all.pushList(toAdd);
 
-		if (Util.isNull(args) || args.undo !== true) {
+		if (Util.isNull(args) || args['undo'] !== true) {
 			this.__history_e__.push({
 				__action_a__:this.__consts_n__.__addList_f__,
 				__target_b__:toAdd
@@ -1943,7 +1943,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.grid.event.trigger("onAddDatalist", [toAdd, args]);
 		this.grid.event.trigger("onDataChange");
 
-		if (args === undefined || args.noRefresh !== true) {
+		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
 		}
 
@@ -2059,7 +2059,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			this.grid.event.trigger("onIdChange", [datarow, res, datarow[this.idKey]]);
 		}
 
-		if (Util.isNull(args) || args.undo !== true) {
+		if (Util.isNull(args) || args['undo'] !== true) {
 			this.__history_e__.push({
 				__action_a__:this.__consts_n__.__update_g__,
 				__target_b__:datarow,
@@ -2085,7 +2085,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.grid.event.trigger("onUpdateDatarow", [datarow, change, before, args]);
 		this.grid.event.trigger("onDataChange");
 
-		if (args === undefined || args.noRefresh !== true) {
+		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
 		}
 
@@ -2203,7 +2203,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			this.grid.event.trigger("onIdListChange", [res.list, res.befores, this.idKey]);
 		}
 
-		if (Util.isNull(args) || args.undo !== true) {
+		if (Util.isNull(args) || args['undo'] !== true) {
 			this.__history_e__.push({
 				__action_a__:this.__consts_n__.__updateList_h__,
 				__target_b__:datalist,
@@ -2232,7 +2232,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.grid.event.trigger("onUpdateDatalist", [datalist, changes, befores, args]);	
 		this.grid.event.trigger("onDataChange");
 
-		if (args === undefined || args.noRefresh !== true) {
+		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
 		}
 
@@ -2293,7 +2293,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.all.remove(mapped);
 		this.removeId(mapped);
 
-		if (Util.isNull(args) || args.undo !== true) {
+		if (Util.isNull(args) || args['undo'] !== true) {
 			this.__history_e__.push({
 				__action_a__:this.__consts_n__.__remove_i__,
 				__target_b__:mapped
@@ -2314,7 +2314,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.grid.event.trigger("onRemoveDatarow", [mapped, args]);
 		this.grid.event.trigger("onDataChange");
 
-		if (args === undefined || args.noRefresh !== true) {
+		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
 		}
 
@@ -2352,7 +2352,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.all.removeList(mapped);
 		this.cleanList(mapped);
 
-		if (Util.isNull(args) || args.undo !== true) {
+		if (Util.isNull(args) || args['undo'] !== true) {
 			this.__history_e__.push({
 				__action_a__:this.__consts_n__.__removeList_j__,
 				__target_b__:mapped
@@ -2373,7 +2373,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.grid.event.trigger("onRemoveDatalist", [mapped, args]);
 		this.grid.event.trigger("onDataChange");
 
-		if (args === undefined || args.noRefresh !== true) {
+		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
 		}
 
@@ -2415,23 +2415,23 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 bef = hist.__before_c__;
 		switch (hist.__action_a__) {
 			case this.__consts_n__.__add_e__:
-				return this.remove(tar, {undo:true});
+				return this.remove(tar, {'undo':true});
 			case this.__consts_n__.__addList_f__:
-				return this.removeList(tar, {undo:true});		
+				return this.removeList(tar, {'undo':true});		
 			case this.__consts_n__.__update_g__:
-				return this.update(tar, bef, {undo:true});
+				return this.update(tar, bef, {'undo':true});
 			case this.__consts_n__.__updateList_h__:
 				var list = [],
 					 i = 0,
 					 len = tar.length;
 				for (; i < len; i++) {
-					list.push({datarow:tar[i], change:bef[i]});
+					list.push({'datarow':tar[i], 'change':bef[i]});
 				}
-				return this.updateList(list, {undo:true});		
+				return this.updateList(list, {'undo':true});		
 			case this.__consts_n__.__remove_i__:
-				return this.add(tar, {undo:true});
+				return this.add(tar, {'undo':true});
 			case this.__consts_n__.__removeList_j__:
-				return this.addList(tar, {undo:true});
+				return this.addList(tar, {'undo':true});
 		}
 	};
 
@@ -2457,23 +2457,23 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var cha = hist.__change_d__;
 		switch (hist.__action_a__) {
 			case this.__consts_n__.__add_e__:
-				return this.add(tar, {undo:true});
+				return this.add(tar, {'undo':true});
 			case this.__consts_n__.__addList_f__:
-				return this.addList(tar, {undo:true});		
+				return this.addList(tar, {'undo':true});		
 			case this.__consts_n__.__update_g__:
-				return this.update(tar, cha, {undo:true});
+				return this.update(tar, cha, {'undo':true});
 			case this.__consts_n__.__updateList_h__:
 				var list = [],
 					 i = 0,
 					 len = tar.length;
 				for (; i < len; i++) {
-					list.push({datarow:tar[i], change:cha[i]});
+					list.push({'datarow':tar[i], 'change':cha[i]});
 				}
-				return this.updateList(list, {undo:true});
+				return this.updateList(list, {'undo':true});
 			case this.__consts_n__.__remove_i__:
-				return this.remove(tar, {undo:true});
+				return this.remove(tar, {'undo':true});
 			case this.__consts_n__.__removeList_j__:
-				return this.removeList(tar, {undo:true});
+				return this.removeList(tar, {'undo':true});
 		}
 	};
 
@@ -2875,11 +2875,11 @@ var JGM = goog.getObjectByName('jx.grid'),
 		if (args === undefined) {
 			this.__sort_i__();
 		}
-		else if (args.noSort !== true) {
-			this.__sort_i__(args.sorter);
+		else if (args['noSort'] !== true) {
+			this.__sort_i__(args['sorter']);
 		}
 
-		if (args === undefined || args.noFilter !== true) {
+		if (args === undefined || args['noFilter'] !== true) {
 			this.__filter_j__();
 		}
 

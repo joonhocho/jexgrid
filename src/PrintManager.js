@@ -24,30 +24,30 @@ var JGM = goog.getObjectByName('jx.grid'),
 function PrintManager(args) {
 	this.mid = args.mid;
 
-	this._ctnr = Util$.safe$(args.container);
+	this._ctnr = Util$.safe$(args['container']);
 	this.grid = args.grid;
 
 	var options = {
-		title:					"Print Preview",
-		font:					"15px arial,sans-serif",
-		headerFontColor:		"#27413E",
-		headerBackgroundColor:	"#DCDEDE",
-		tableBorderColor:		"#6E7174",
-		headerBorderColor:		"#909192",
-		cellBorderColor:		"#D0D7E5",
-		winOptions: {
-			name:			"Print Preview",
-			width:			800,
-			height:			600,
-			directories:	"no",
-			location:		"no",
-			menubar:		"no",
-			status:			"no",
-			toolbar:		"no"
+		'title':					"Print Preview",
+		'font':					"15px arial,sans-serif",
+		'headerFontColor':		"#27413E",
+		'headerBackgroundColor':	"#DCDEDE",
+		'tableBorderColor':		"#6E7174",
+		'headerBorderColor':		"#909192",
+		'cellBorderColor':		"#D0D7E5",
+		'winOptions': {
+			'name':			"Print Preview",
+			'width':			800,
+			'height':			600,
+			'directories':	"no",
+			'location':		"no",
+			'menubar':		"no",
+			'status':			"no",
+			'toolbar':		"no"
 		}
 	};
 
-	this._options = JGM.__extend_e__(options, args.options);
+	this._options = JGM.__extend_e__(options, args['options']);
 
 	this.__init();
 }
@@ -66,7 +66,7 @@ prototype.__init = function() {
 
 prototype.print = function() {
 	var printHtml = this.getPrintHtml(this.grid.colDefMgr.get(), this.grid.dataMgr.datalist),
-      printWin = Util.open(this._options.winOptions);
+      printWin = Util.open(this._options['winOptions']);
 	printWin.document.write(printHtml);
 	printWin.document.close();
 };

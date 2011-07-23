@@ -25,11 +25,11 @@ var JGM = goog.getObjectByName('jx.grid'),
  var renderer = JGM.renderer = jx.grid.renderer;
 
  renderer.selectBox = function(args) {
-	var mappings = args.mapping,
-		 attr = args.attr,
+	var mappings = args['mapping'],
+		 attr = args['attr'],
 		 defaultVal = args['default'],
-		 style = args.style,
-		 callback = args.callback,
+		 style = args['style'],
+		 callback = args['callback'],
 		 label,
 		 defaultIdx,
 		 val,

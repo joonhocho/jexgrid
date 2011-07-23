@@ -26,7 +26,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 function SearchManager(args) {
 	this.mid = args.mid;
 
-	this._ctnr = args.container;
+	this._ctnr = args['container'];
 	this.__mask_a__;
 
 	this.__search_c__;
@@ -49,80 +49,80 @@ function SearchManager(args) {
 	this.grid.search = this;
 
 	var options = {
-		__background_a__: "#f0f0f0",
-		__borderThickness_b__: 1,
-		__border_c__: "solid #d6d6d6",
+		'__background_a__': "#f0f0f0",
+		'__borderThickness_b__': 1,
+		'__border_c__': "solid #d6d6d6",
 
-		__inputBorder_d__: "1px solid #A7A7A7",
-		__inputPadding_e__: 0,
+		'__inputBorder_d__': "1px solid #A7A7A7",
+		'__inputPadding_e__': 0,
 
-		__searchbarAlign_f__: "center",
-		__searchbarMargin_g__: 3,
-		__searchbarWidth_h__: "99%",
-		__searchbarHeight_i__: 20,
+		'__searchbarAlign_f__': "center",
+		'__searchbarMargin_g__': 3,
+		'__searchbarWidth_h__': "99%",
+		'__searchbarHeight_i__': 20,
 
-		__tagsHeight_j__: 26,
-		__tagsPadding_k__: 2,
-		__tagsBorderRadius_l__: 3,
+		'__tagsHeight_j__': 26,
+		'__tagsPadding_k__': 2,
+		'__tagsBorderRadius_l__': 3,
 
-		__advButtonColor_m__: "#123272",
-		__advButtonFont_n__: "bold 12px Arial,Helvetica,sans-serif",
-		__advButtonPadding_o__: 5,
+		'__advButtonColor_m__': "#123272",
+		'__advButtonFont_n__': "bold 12px Arial,Helvetica,sans-serif",
+		'__advButtonPadding_o__': 5,
 
-		__advButtonBg_p__: "",
-		__advButtonBgHover_q__: "url(" + this.grid._options.imageUrl + "more-options-bg-hover.png) repeat-x scroll center",
-		__advButtonBgActive_r__: "url(" + this.grid._options.imageUrl + "more-options-bg-active.png) repeat-x scroll center",
-		__advButtonBgOpened_s__: "url(" + this.grid._options.imageUrl + "more-options-bg-opened.png) repeat-x scroll center",
+		'__advButtonBg_p__': "",
+		'__advButtonBgHover_q__': "url(" + this.grid._options['imageUrl'] + "more-options-bg-hover.png) repeat-x scroll center",
+		'__advButtonBgActive_r__': "url(" + this.grid._options['imageUrl'] + "more-options-bg-active.png) repeat-x scroll center",
+		'__advButtonBgOpened_s__': "url(" + this.grid._options['imageUrl'] + "more-options-bg-opened.png) repeat-x scroll center",
 
-		__advButtonBorderThickness_t__: 1,
-		__advButtonBorder_u__: "solid transparent",
-		__advButtonBorderHover_v__: "solid #a4a4a4",
-		__advButtonBorderActive_w__: "solid #c5c5c5",
-		__advButtonBorderOpened_x__: "solid #bfbfbf",
+		'__advButtonBorderThickness_t__': 1,
+		'__advButtonBorder_u__': "solid transparent",
+		'__advButtonBorderHover_v__': "solid #a4a4a4",
+		'__advButtonBorderActive_w__': "solid #c5c5c5",
+		'__advButtonBorderOpened_x__': "solid #bfbfbf",
 
-		__advButtonIconWidth_y__: 9,
-		__advButtonIconMargin_z__: 2,
-		__advButtonIconUrl_A__: this.grid._options.imageUrl + "more-options.png",
-		__advButtonIconCloseUrl_B__: this.grid._options.imageUrl + "more-options-close.png",
+		'__advButtonIconWidth_y__': 9,
+		'__advButtonIconMargin_z__': 2,
+		'__advButtonIconUrl_A__': this.grid._options['imageUrl'] + "more-options.png",
+		'__advButtonIconCloseUrl_B__': this.grid._options['imageUrl'] + "more-options-close.png",
 
-		__tagPadding_C__: 2,
-		__tagBorder_D__: "solid #93979D",
-		__tagBorderThickness_E__: 1,
-		__tagFont_F__: "bold 13px Arial",
-		__tagColor_G__: "#282853",
-		__tagBackground_H__: "url(" + this.grid._options.imageUrl + "tag-background.png) repeat-x scroll center",
+		'__tagPadding_C__': 2,
+		'__tagBorder_D__': "solid #93979D",
+		'__tagBorderThickness_E__': 1,
+		'__tagFont_F__': "bold 13px Arial",
+		'__tagColor_G__': "#282853",
+		'__tagBackground_H__': "url(" + this.grid._options['imageUrl'] + "tag-background.png) repeat-x scroll center",
 
-		__tagRemoveIconWidth_I__: 12,
-		__tagRemoveIconUrl_J__: this.grid._options.imageUrl + "tag-close.png",
-		__tagRemoveIconHoverUrl_K__: this.grid._options.imageUrl + "tag-close-hover.png",
+		'__tagRemoveIconWidth_I__': 12,
+		'__tagRemoveIconUrl_J__': this.grid._options['imageUrl'] + "tag-close.png",
+		'__tagRemoveIconHoverUrl_K__': this.grid._options['imageUrl'] + "tag-close-hover.png",
 
-		__advFont_L__: "11px Arial",
-		__advInputWidth_M__: 30,
+		'__advFont_L__': "11px Arial",
+		'__advInputWidth_M__': 30,
 
-		__classMask_N__: "search-mask",
-		__classSearchbar_O__: "search-bar",
-		__classAdvButtonName_P__: "more-option-name",
-		__classAdvButton_Q__: "more-options",
-		__classAdvButtonIcon_R__: "more-icon",
-		__classClearTags_S__: "clear-tags",
-		__classTagbar_T__: "search-tags",
-		__classTag_U__: "search-tag",
-		__classTagName_V__: "search-tag-name",
-		__classRemoveTag_W__: "search-tag-remove",
-		__classAdvanced_X__: "search-advanced",
-		__classOptionCol_Y__: "search-option-col",
-		__classOption_Z__: "search-option",
-		__classSearchIcon_aa__: "search-icon",
-		__searchIconUrl_ab__: this.grid._options.imageUrl + "search-icon.png",
-		__searchIconWidth_ac__: 15,
-		__searchIconHeight_ad__: 15,
-		__keyMap_ae__: undefined,
-		__tagRemoveIconActiveUrl_af__: this.grid._options.imageUrl + "tag-close-active.png",
+		'__classMask_N__': "search-mask",
+		'__classSearchbar_O__': "search-bar",
+		'__classAdvButtonName_P__': "more-option-name",
+		'__classAdvButton_Q__': "more-options",
+		'__classAdvButtonIcon_R__': "more-icon",
+		'__classClearTags_S__': "clear-tags",
+		'__classTagbar_T__': "search-tags",
+		'__classTag_U__': "search-tag",
+		'__classTagName_V__': "search-tag-name",
+		'__classRemoveTag_W__': "search-tag-remove",
+		'__classAdvanced_X__': "search-advanced",
+		'__classOptionCol_Y__': "search-option-col",
+		'__classOption_Z__': "search-option",
+		'__classSearchIcon_aa__': "search-icon",
+		'__searchIconUrl_ab__': this.grid._options['imageUrl'] + "search-icon.png",
+		'__searchIconWidth_ac__': 15,
+		'__searchIconHeight_ad__': 15,
+		'__keyMap_ae__': undefined,
+		'__tagRemoveIconActiveUrl_af__': this.grid._options['imageUrl'] + "tag-close-active.png",
 		
-		__syncMaster_ag__: false
+		'__syncMaster_ag__': false
 	};
 
-	this._options = JGM.__extend_e__(options, args.options, {
+	this._options = JGM.__extend_e__(options, args['options'], {
 
 		background:"__background_a__",
 		borderThickness:"__borderThickness_b__",
@@ -309,11 +309,11 @@ prototype.__init = function() {
 	}
 
 	this.grid.event.bind({
-		onRenderModules: this.__onRenderModules_aE__,
-		onCreateCss: this.__onCreateCss_V__,
-		onFilter: this.__onFilter_ar__,
-		onDestroy: this.__destroy_aA__,
-		onAfterRenderModules: this.__onAfterRenderModules_aF__
+		'onRenderModules': this.__onRenderModules_aE__,
+		'onCreateCss': this.__onCreateCss_V__,
+		'onFilter': this.__onFilter_ar__,
+		'onDestroy': this.__destroy_aA__,
+		'onAfterRenderModules': this.__onAfterRenderModules_aF__
 	}, this);
 };
 
@@ -333,10 +333,10 @@ prototype.__onRenderModules_aE__ = function() {
 			i = 0;
 		for (; i < len; i++) {
 			colDef = colDefs[i];
-			if (Util.isNotNull(colDef.filter)) {
-				key = colDef.key;
+			if (Util.isNotNull(colDef['filter'])) {
+				key = colDef['key'];
 				if (Util.isNull(keymap) || !keymap.hasOwnProperty(key)) {
-					nick = colDef.name || key;
+					nick = colDef['name'] || key;
 				}
 				else {
 					nick = keymap[key];
@@ -346,7 +346,7 @@ prototype.__onRenderModules_aE__ = function() {
 				kmap[key] = nick;
 
 				html.push("<div class='" + opt.__classOptionCol_Y__ + "'>");
-				this.__registerFilter_j__(key, nick, colDef.name, colDef.filter, html);
+				this.__registerFilter_j__(key, nick, colDef['name'], colDef['filter'], html);
 				html.push("</div>");
 			}
 		}
@@ -565,13 +565,13 @@ prototype.__registerFilter_j__ = function(key, nick, name, filter, html) {
 		len = filter.length,
 		i = 0,
 		mid = this.mid,
-		classOpt = this._options.__classOption_Z__,
+		classOpt = this._options['__classOption_Z__'],
 		fkmap,
 		tmap,
 		tag,
 		oname;
 		
-	fkmap = this.__filterMap_f__[key] = {andor:this.constructor.CONST.and};
+	fkmap = this.__filterMap_f__[key] = {'andor':this.constructor.CONST.and};
 	tmap = this.__tagMap_g__[key] = {};
 
 	html.push("<table>");
@@ -588,7 +588,7 @@ prototype.__registerFilter_j__ = function(key, nick, name, filter, html) {
 			continue;
 		}
 		tag = option.tag;
-		fkmap[tag] = {option:option};
+		fkmap[tag] = {'option':option};
 		tmap[tag] = {};
 		html.push("<tr title='" + option.comment(name, "입력값") + "'><td><div class='" + classOpt + "'>" + name + " " + tag +
 			"</td><td><input id='" + key + oname + "' key='" + key + "' tag='" + tag + "' type='text'><button type='button' onclick=\"JGM.m.SearchManager." + mid + ".__registerOption_l__('" + key + "','" + nick + "','" + tag + "',this.previousSibling.value)\">등록</button></div></td></tr>");
@@ -603,7 +603,7 @@ prototype.__parse_k__ = function(str) {
 		tag,
 		base,
 		args = Util.split(str),
-		len = args.length,
+		len = args['length'],
 		status = 2,
 		change = false,
 		global = [],
@@ -677,7 +677,7 @@ prototype.__parse_k__ = function(str) {
 };
 
 prototype.__syncMasterInput_u__ = function() {
-	if (this._options.__syncMaster_ag__) {
+	if (this._options['__syncMaster_ag__']) {
 		var inputStr = this.__global_r__.join(" "),
 			tagMap = this.__tagMap_g__,
 			keyToName = this.__keyToName_y__,
@@ -916,16 +916,16 @@ prototype.__createTag_o__ = function(key, option, base, nick) {
 };
 
 var con = SearchManager.CONST = {
-		lt:0,
-		lte:1,
-		eq:2,
-		neq:3,
-		gt:4,
-		gte:5,
-		and:6,
-		or:7,
-		T:8,
-		F:9
+		'lt':0,
+		'lte':1,
+		'eq':2,
+		'neq':3,
+		'gt':4,
+		'gte':5,
+		'and':6,
+		'or':7,
+		'T':8,
+		'F':9
 	},
 	lt = con.lt,
 	gt = con.gt,
@@ -1011,13 +1011,13 @@ SearchManager.__checkDisable_c__ = function(toEnable, other, andor, base, otherb
 
 SearchManager.__numberFilter_d__ = [
 	{
-		name:"gt",
-		tag:">",
-		type:gt,
-		comment:function(name, base) {
+		'name':"gt",
+		'tag':">",
+		'type':gt,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "보다 큰";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			if (Util.isString(base)) {
 				base = base.toFloat();
 			}
@@ -1027,13 +1027,13 @@ SearchManager.__numberFilter_d__ = [
 		}
 	},
 	{
-		name:"gte",
-		tag:">=",
-		type:gt,
-		comment:function(name, base) {
+		'name':"gte",
+		'tag':">=",
+		'type':gt,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "보다 크거나 같은";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			if (Util.isString(base)) {
 				base = base.toFloat();
 			}
@@ -1043,13 +1043,13 @@ SearchManager.__numberFilter_d__ = [
 		}
 	},
 	{
-		name:"lt",
-		tag:"<",
-		type:lt,
-		comment:function(name, base) {
+		'name':"lt",
+		'tag':"<",
+		'type':lt,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "보다 작은";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			if (Util.isString(base)) {
 				base = base.toFloat();
 			}
@@ -1059,13 +1059,13 @@ SearchManager.__numberFilter_d__ = [
 		}
 	},
 	{
-		name:"lte",
-		tag:"<=",
-		type:lt,
-		comment:function(name, base) {
+		'name':"lte",
+		'tag':"<=",
+		'type':lt,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "보다 작거나 같은";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			if (Util.isString(base)) {
 				base = base.toFloat();
 			}
@@ -1075,13 +1075,13 @@ SearchManager.__numberFilter_d__ = [
 		}
 	},
 	{
-		name:"eq",
-		tag:"=",
-		type:eq,
-		comment:function(name, base) {
+		'name':"eq",
+		'tag':"=",
+		'type':eq,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "인";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			if (Util.isString(base)) {
 				base = base.toFloat();
 			}
@@ -1091,13 +1091,13 @@ SearchManager.__numberFilter_d__ = [
 		}
 	},
 	{
-		name:"neq",
-		tag:"!=",
-		type:neq,
-		comment:function(name, base) {
+		'name':"neq",
+		'tag':"!=",
+		'type':neq,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "이(가) 아닌";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			if (Util.isString(base)) {
 				base = base.toFloat();
 			}
@@ -1107,12 +1107,12 @@ SearchManager.__numberFilter_d__ = [
 		}
 	},
 	{
-		name:"contains",
-		tag:"*=",
-		comment:function(name, base) {
+		'name':"contains",
+		'tag':"*=",
+		'comment':function(name, base) {
 			return name + " 이(가) 숫자 " + base + "를 포함하는";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			if (Util.isNumber(base)) {
 				base = base.toString();
 			}
@@ -1125,14 +1125,14 @@ SearchManager.__numberFilter_d__ = [
 		}
 	},
 	{
-		name:"parser",
-		fn:function(str) {
+		'name':"parser",
+		'fn':function(str) {
 			return str.toFloat();
 		}
 	},
 	{
-		name:"validator",
-		fn:function(val) {
+		'name':"validator",
+		'fn':function(val) {
 			return !isNaN(val);
 		}
 	}
@@ -1140,13 +1140,13 @@ SearchManager.__numberFilter_d__ = [
 
 SearchManager.__stringFilter_e__ = [
 	{
-		name:"to",
-		tag:"<=",
-		type:lt,
-		comment:function(name, base) {
+		'name':"to",
+		'tag':"<=",
+		'type':lt,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "보다 사전에서 이전인";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			base = $.trim(base).toLowerCase();
 			return function(value) {
 				return value.toLowerCase() <= base;
@@ -1154,13 +1154,13 @@ SearchManager.__stringFilter_e__ = [
 		}
 	},
 	{
-		name:"from",
-		tag:">=",
-		type:gt,
-		comment:function(name, base) {
+		'name':"from",
+		'tag':">=",
+		'type':gt,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "보다 사전에서 이후인";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			base = $.trim(base).toLowerCase();
 			return function(value) {
 				return value.toLowerCase() >= base;
@@ -1168,13 +1168,13 @@ SearchManager.__stringFilter_e__ = [
 		}
 	},
 	{
-		name:"equals",
-		tag:"=",
-		type:eq,
-		comment:function(name, base) {
+		'name':"equals",
+		'tag':"=",
+		'type':eq,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "와(과) 같은";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			base = $.trim(base).toLowerCase();
 			return function(value) {
 				return value.toLowerCase() === base;
@@ -1182,13 +1182,13 @@ SearchManager.__stringFilter_e__ = [
 		}
 	},
 	{
-		name:"notEquals",
-		tag:"!=",
-		type:neq,
-		comment:function(name, base) {
+		'name':"notEquals",
+		'tag':"!=",
+		'type':neq,
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "이(가) 아닌";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			base = $.trim(base).toLowerCase();
 			return function(value) {
 				return value.toLowerCase() !== base;
@@ -1196,12 +1196,12 @@ SearchManager.__stringFilter_e__ = [
 		}
 	},
 	{
-		name:"startsWith",
-		tag:"^=",
-		comment:function(name, base) {
+		'name':"startsWith",
+		'tag':"^=",
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "(으)로 시작하는";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			base = $.trim(base).toLowerCase();
 			var baselen = base.length;
 			return function(value) {
@@ -1210,12 +1210,12 @@ SearchManager.__stringFilter_e__ = [
 		}
 	},
 	{
-		name:"endsWith",
-		tag:"$=",
-		comment:function(name, base) {
+		'name':"endsWith",
+		'tag':"$=",
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "(으)로 끝나는";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			base = $.trim(base).toLowerCase();
 			var baselen = base.length;
 			return function(value) {
@@ -1224,12 +1224,12 @@ SearchManager.__stringFilter_e__ = [
 		}
 	},
 	{
-		name:"contains",
-		tag:"*=",
-		comment:function(name, base) {
+		'name':"contains",
+		'tag':"*=",
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "을(를) 포함하는";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			base = $.trim(base).toLowerCase();
 			return function(value) {
 				return value.toLowerCase().indexOf(base) !== -1;
@@ -1237,12 +1237,12 @@ SearchManager.__stringFilter_e__ = [
 		}
 	},
 	{
-		name:"containsAny",
-		tag:"|=",
-		comment:function(name, base) {
+		'name':"containsAny",
+		'tag':"|=",
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "들 중 하나 이상을 포함하는";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			base = base.toLowerCase();
 			var baseArr = Util.split(base),
 				baseArrlen = baseArr.length;
@@ -1264,12 +1264,12 @@ SearchManager.__stringFilter_e__ = [
 		}
 	},
 	{
-		name:"containsAll",
-		tag:"&=",
-		comment:function(name, base) {
+		'name':"containsAll",
+		'tag':"&=",
+		'comment':function(name, base) {
 			return name + " 이(가) " + base + "들 모두를 포함하는";
 		},
-		fn:function(base) {
+		'fn':function(base) {
 			base = base.toLowerCase();
 			var baseArr = Util.split(base),
 				baseArrlen = baseArr.length;

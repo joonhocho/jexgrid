@@ -237,7 +237,7 @@ prototype.__addHandler_c__ = function(e, fn, target) {
 		this.__map_a__[e] = [];
 	}
 
-	this.__map_a__[e].push({fn:fn, target:target});
+	this.__map_a__[e].push({'fn':fn, 'target':target});
 };
 
 /**

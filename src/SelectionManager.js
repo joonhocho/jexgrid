@@ -121,7 +121,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__rowSelKey_a__: this.grid.dataMgr.idKey,
+		'__rowSelKey_a__': this.grid.dataMgr.idKey,
 
 		/**
 		현재 선택된 모든 셀들에 적용되는 배경색입니다. <br>기본값:<code>"#DCEBFE"</code>
@@ -133,7 +133,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__bgColorSelection_b__: "#DCEBFE", //EAECF5
+		'__bgColorSelection_b__': "#DCEBFE", //EAECF5
 
 		/**
 		마지막으로 선택된 셀에 적용되는 배경색입니다. <br>기본값:<code>"#C1DBFC"</code>
@@ -146,7 +146,7 @@ function SelectionManager(args) {
          colDefs = this.grid.colDefMgr.get(),
 		@version 1.0.0
 		*/
-		__bgColorLast_c__: "#f1ca7f", //F5C795
+		'__bgColorLast_c__': "#f1ca7f", //F5C795
 
 		/**
 		범위 선택시 범위 끝의 셀에 적용되는 배경색입니다. <br>기본값:<code>"#D9D9D9"</code>
@@ -158,7 +158,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__bgColorRange_d__: "#D9D9D9", //B8BFC4
+		'__bgColorRange_d__': "#D9D9D9", //B8BFC4
 
 		/**
 		현재 선택된 모든 셀들에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-selection"</code>
@@ -170,7 +170,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classSelection_e__: "jgrid-selection",
+		'__classSelection_e__': "jgrid-selection",
 
 		/**
 		마지막으로 선택된 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"selection-last"</code>
@@ -182,7 +182,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classLast_f__: "selection-last",
+		'__classLast_f__': "selection-last",
 
 		/**
 		범위 선택시에 범위 끝의 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"selection-range"</code>
@@ -194,7 +194,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__classRange_g__: "selection-range",
+		'__classRange_g__': "selection-range",
 
 		/**
 		범위 선택 가능 여부입니다. <br>기본값:<code>false</code>
@@ -206,13 +206,13 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		__multiSelectEnabled_h__: false,
-      classRowSelected: "rowSelected",
-      highlightRowEnabled: true,
-      bgColorRowSelected: "#d8dfea"
+		'__multiSelectEnabled_h__': false,
+      'classRowSelected': "rowSelected",
+      'highlightRowEnabled': true,
+      'bgColorRowSelected': "#d8dfea"
 	};
 
-	this._options = JGM.__extend_e__(options, args.options, {
+	this._options = JGM.__extend_e__(options, args['options'], {
 		rowSelKey:"__rowSelKey_a__",
 		bgColorSelection:"__bgColorSelection_b__",
 		bgColorLast:"__bgColorLast_c__",
@@ -257,15 +257,15 @@ prototype.__init = function() {
 
 prototype.bindEvents = function() {
 	this.grid.event.bind({
-		onGetCellClass: this.__onGetCellClass_aI__,
-		onCreateCss: this.__onCreateCss_V__,
-		onDestroy: this.__destroy_aA__,
-		keydownCanvas: this.__keydownCanvas_ba__,
-		dragoverCanvas: this.__dragoverCanvas_be__,
-		mousedownCanvas: this.__mousedownCanvas_bf__,
-		onBeforeRerender: this.__onBeforeRerender_t__,
-		onAfterRerender: this.onAfterRerender,
-		onBeforeDataChange: this.onBeforeDataChange
+		'onGetCellClass': this.__onGetCellClass_aI__,
+		'onCreateCss': this.__onCreateCss_V__,
+		'onDestroy': this.__destroy_aA__,
+		'keydownCanvas': this.__keydownCanvas_ba__,
+		'dragoverCanvas': this.__dragoverCanvas_be__,
+		'mousedownCanvas': this.__mousedownCanvas_bf__,
+		'onBeforeRerender': this.__onBeforeRerender_t__,
+		'onAfterRerender': this.onAfterRerender,
+		'onBeforeDataChange': this.onBeforeDataChange
 	}, this);
 };
 
@@ -348,7 +348,7 @@ prototype.__mousedownCanvas_bf__ = function(e, cell) {
 	*/
 	this.grid.event.trigger("onBeforeSelect", [e, cell]);
 
-	if (this._options.__multiSelectEnabled_h__ === false) {
+	if (this._options['__multiSelectEnabled_h__'] === false) {
 		this.selectCell(cell);
    }
 	else {
@@ -356,7 +356,7 @@ prototype.__mousedownCanvas_bf__ = function(e, cell) {
 			this.selectRange(cell);
       }
 		else if (e.ctrlKey) {
-			if (cell.getKey() === this._options.__rowSelKey_a__) {
+			if (cell.getKey() === this._options['__rowSelKey_a__']) {
 				this.addRow(cell);
          }
 			else {
@@ -370,7 +370,7 @@ prototype.__mousedownCanvas_bf__ = function(e, cell) {
 };
 
 prototype.__dragoverCanvas_be__ = function(e, cell) {
-	if (this._options.__multiSelectEnabled_h__ === false) {
+	if (this._options['__multiSelectEnabled_h__'] === false) {
 		this.selectCell(cell);
    }
 	else if (Util.isNotNullAnd(this.__last_b__, this.__range_c__)) {
@@ -381,7 +381,7 @@ prototype.__dragoverCanvas_be__ = function(e, cell) {
 prototype.__keydownCanvas_ba__ = function(e) {
 	if (Util.isNullOr(this.__last_b__, this.__range_c__)) {
 		if (this.__consts_a__.__NAVKEYS_e__[e.which]) {
-			this.selectCell(JGM.create("Cell", {grid:this.grid, row:this.grid.view.__getFirstSafeVisibleRow_l__(), col:this.grid.view.__getFirstSafeVisibleCol_q__()}));
+			this.selectCell(JGM.create("Cell", {'grid':this.grid, 'row':this.grid.view.__getFirstSafeVisibleRow_l__(), 'col':this.grid.view.__getFirstSafeVisibleCol_q__()}));
       }
 		return;
 	}
@@ -426,7 +426,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.up:
-				if (this._options.__multiSelectEnabled_h__ && e.shiftKey) {
+				if (this._options['__multiSelectEnabled_h__'] && e.shiftKey) {
 					nextCell = this.__idxToCell_j__(this.__consts_a__.__UP_a__, this.__range_c__);
 					this.selectRange(nextCell);
             }
@@ -436,7 +436,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.down:
-				if (this._options.__multiSelectEnabled_h__ && e.shiftKey) {
+				if (this._options['__multiSelectEnabled_h__'] && e.shiftKey) {
 					nextCell = this.__idxToCell_j__(this.__consts_a__.__DOWN_b__, this.__range_c__);
 					this.selectRange(nextCell);
             }
@@ -446,7 +446,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.left:
-				if (this._options.__multiSelectEnabled_h__ && e.shiftKey) {
+				if (this._options['__multiSelectEnabled_h__'] && e.shiftKey) {
 					nextCell = this.__idxToCell_j__(this.__consts_a__.__LEFT_c__, this.__range_c__);
 					this.selectRange(nextCell);
             }
@@ -456,7 +456,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.right:
-				if (this._options.__multiSelectEnabled_h__ && e.shiftKey) {
+				if (this._options['__multiSelectEnabled_h__'] && e.shiftKey) {
 					nextCell = this.__idxToCell_j__(this.__consts_a__.__RIGHT_d__, this.__range_c__);
 					this.selectRange(nextCell);
             }
@@ -466,7 +466,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.pgup:
-				if (this._options.__multiSelectEnabled_h__ && e.shiftKey) {
+				if (this._options['__multiSelectEnabled_h__'] && e.shiftKey) {
 					nextCell = this.__idxToCell_j__(this.__consts_a__.__PGUP_g__, this.__range_c__);
 					this.selectRange(nextCell);
             }
@@ -476,7 +476,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.pgdn:
-				if (this._options.__multiSelectEnabled_h__ && e.shiftKey) {
+				if (this._options['__multiSelectEnabled_h__'] && e.shiftKey) {
 					nextCell = this.__idxToCell_j__(this.__consts_a__.__PGDN_f__, this.__range_c__);
 					this.selectRange(nextCell);
             }
@@ -496,7 +496,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.home:
-				if (this._options.__multiSelectEnabled_h__ && e.shiftKey) {
+				if (this._options['__multiSelectEnabled_h__'] && e.shiftKey) {
 					nextCell = this.__idxToCell_j__(this.__consts_a__.__HOME_h__, this.__range_c__);
 					this.selectRange(nextCell);
             }
@@ -506,7 +506,7 @@ prototype.__keydownCanvas_ba__ = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.end:
-				if (this._options.__multiSelectEnabled_h__ && e.shiftKey) {
+				if (this._options['__multiSelectEnabled_h__'] && e.shiftKey) {
 					nextCell = this.__idxToCell_j__(this.__consts_a__.__END_i__, this.__range_c__);
 					this.selectRange(nextCell);
             }
@@ -696,13 +696,13 @@ prototype.__getCellIdxToNavigate_i__ = function(dir, row, col) {
          }
 		break;
 		case this.__consts_a__.__PGDN_f__:
-			row += this.grid.view._options.__rowsPerPage_e__;
+			row += this.grid.view._options['__rowsPerPage_e__'];
 			if (row > this.grid.dataMgr.datalist.length - 1) {
 				row = this.grid.dataMgr.datalist.length - 1;
          }
 		break;
 		case this.__consts_a__.__PGUP_g__:
-			row -= this.grid.view._options.__rowsPerPage_e__;
+			row -= this.grid.view._options['__rowsPerPage_e__'];
 			if (row < 0) {
 				row = 0;
          }
@@ -719,7 +719,7 @@ prototype.__getCellIdxToNavigate_i__ = function(dir, row, col) {
 
 prototype.__idxToCell_j__ = function(dir, idx) {
 	var newIdx = this.__getCellIdxToNavigate_i__(dir, idx.getRowIdx(), idx.getColIdx());
-	return JGM.create("Cell", {grid: this.grid, row:newIdx[0], col:newIdx[1]});
+	return JGM.create("Cell", {'grid': this.grid, 'row':newIdx[0], 'col':newIdx[1]});
 };
 
 
@@ -766,7 +766,7 @@ prototype.selectCell = function(cell, noScroll) {
 	*/
 	this.grid.event.trigger("onBeforeSelectCell", [cell]);
 
-	if (this._options.__multiSelectEnabled_h__ && cell.getKey() === this._options.__rowSelKey_a__) {
+	if (this._options['__multiSelectEnabled_h__'] && cell.getKey() === this._options['__rowSelKey_a__']) {
 		this.selectRow(cell);
    }
 	else {
@@ -870,7 +870,7 @@ prototype.selectRange = function(cell) {
 		
 	this.__setRange_l__(row, col, cell);
 
-	if (cell.getKey() === this._options.__rowSelKey_a__) {
+	if (cell.getKey() === this._options['__rowSelKey_a__']) {
 		minCol = 0;
 		maxCol = this.grid.colDefMgr.length() - 1;
 	}
@@ -894,9 +894,9 @@ prototype.__setLast_k__ = function(row, col, cell) {
 			this.grid.view.unlockRowById(last.getId());
       }
 
-		last.get$().removeClass(this._options.__classLast_f__);
-      if (this._options.highlightRowEnabled === true) {
-         $(last.getRowNode()).removeClass(this._options.classRowSelected);
+		last.get$().removeClass(this._options['__classLast_f__']);
+      if (this._options['highlightRowEnabled'] === true) {
+         $(last.getRowNode()).removeClass(this._options['classRowSelected']);
       }
 		
 		if (Util.isNull(cell)) {
@@ -908,9 +908,9 @@ prototype.__setLast_k__ = function(row, col, cell) {
 		return;
    }
 	
-	(this.__last_b__ = cell).get$().addClass(this._options.__classLast_f__);
-   if (this._options.highlightRowEnabled === true) {
-      $(cell.getRowNode()).addClass(this._options.classRowSelected);
+	(this.__last_b__ = cell).get$().addClass(this._options['__classLast_f__']);
+   if (this._options['highlightRowEnabled'] === true) {
+      $(cell.getRowNode()).addClass(this._options['classRowSelected']);
    }
 	
 	this.grid.view.lockRowByIdx(row);
@@ -929,7 +929,7 @@ prototype.__setRange_l__ = function(row, col, cell, noScroll) {
 			this.grid.view.unlockRowById(range.getId());
       }
 			
-		range.get$().removeClass(this._options.__classRange_g__);
+		range.get$().removeClass(this._options['__classRange_g__']);
 
 		if (Util.isNull(cell)) {
 			delete this.__range_c__;
@@ -940,7 +940,7 @@ prototype.__setRange_l__ = function(row, col, cell, noScroll) {
 		return;
    }
 		
-	(this.__range_c__ = cell).get$().addClass(this._options.__classRange_g__);
+	(this.__range_c__ = cell).get$().addClass(this._options['__classRange_g__']);
 	
 	var view = this.grid.view;
 	view.lockRowByIdx(row);
@@ -1057,10 +1057,10 @@ prototype.addOrRemoveCss = function(map, add) {
 	}
 	list = list.filter(function(n) {return Util.isNotNull(n);});
 	if (add) {
-		$(list).addClass(this._options.__classSelection_e__);
+		$(list).addClass(this._options['__classSelection_e__']);
    }
 	else {
-		$(list).removeClass(this._options.__classSelection_e__);		
+		$(list).removeClass(this._options['__classSelection_e__']);		
    }
 };
 
