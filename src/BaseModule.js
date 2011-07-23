@@ -15,7 +15,7 @@ goog.provide('jx.grid.BaseModule');
 
 (function() {
 
- var EventDispatcher = goog.getObjectByName('EventDispatcher');
+ var EventDispatcher = goog.getObjectByName('jx.grid.EventDispatcher');
 	goog.exportSymbol('jx.grid.BaseModule', BaseModule);
 
 	function BaseModule(args) {
