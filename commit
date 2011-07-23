@@ -1,0 +1,5 @@
+#!/usr/bin/php
+<?php
+$gridPath = __DIR__;
+$msg = implode(' ', array_slice($argv, 1));
+system("git add -A; git commit -m $msg; git push");
