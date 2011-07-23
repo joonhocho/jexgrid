@@ -2,8 +2,8 @@ goog.require('engine_extension');
 goog.require('jx.util');
 goog.require('jx.events.EventDispatcher');
 
-goog.provide('jx.data.TreeNode');
-goog.provide('jx.data.Tree');
+goog.provide('jx.struct.TreeNode');
+goog.provide('jx.struct.Tree');
 goog.provide('TreeNode');
 goog.provide('Tree');
 
@@ -19,8 +19,8 @@ goog.provide('Tree');
 var Util = goog.getObjectByName('jx.util');
 	
 
- goog.exportSymbol('jx.data.TreeNode', TreeNode);
- goog.exportSymbol('jx.data.Tree', Tree);
+ goog.exportSymbol('jx.struct.TreeNode', TreeNode);
+ goog.exportSymbol('jx.struct.Tree', Tree);
 
  goog.exportSymbol('TreeNode', TreeNode);
  goog.exportSymbol('Tree', Tree);

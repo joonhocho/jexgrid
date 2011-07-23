@@ -6,8 +6,8 @@ goog.require('jx.grid.Grid');
 goog.require('jx.grid.ColumnManager');
 goog.require('jx.grid.CheckManager');
 goog.require('jx.data.DataManager');
-goog.require('jx.data.Tree');
-goog.require('jx.data.TreeNode');
+goog.require('jx.struct.Tree');
+goog.require('jx.struct.TreeNode');
 
 goog.provide('jx.grid.Collapser');
 
@@ -27,7 +27,8 @@ goog.provide('jx.grid.Collapser');
 (function() {
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
-	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Tree = goog.getObjectByName('jx.struct.Tree');
 
  goog.exportSymbol('JGM.module.Collapser', Collapser);
  JGM._add("Collapser", Collapser);

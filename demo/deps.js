@@ -25,6 +25,6 @@ goog.require('jx.util$');
 goog.require('jx.util');
 goog.require('jx.grid.DataCreator');
 goog.require('jx.lang.Disposable');
-goog.require('jx.data.TreeNode');
+goog.require('jx.struct.TreeNode');
 goog.require('jx.grid.SearchManager');
 goog.require('jx.grid.Grid');

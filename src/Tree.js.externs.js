@@ -2,11 +2,11 @@
  * @externs
  */
 (function(){
- goog.require('jx.data.TreeNode');
- goog.require('jx.data.Tree');
- var c = jx.data.TreeNode,
+ goog.require('jx.struct.TreeNode');
+ goog.require('jx.struct.Tree');
+ var c = jx.struct.TreeNode,
  p = c.prototype,
- c2 = jx.data.Tree,
+ c2 = jx.struct.Tree,
  p2 = c2.prototype;
 
 

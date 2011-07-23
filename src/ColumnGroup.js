@@ -7,8 +7,8 @@ goog.require('jx.grid.ColumnManager');
 goog.require('jx.grid.CheckManager');
 goog.require('jx.grid.Collapser');
 goog.require('jx.data.DataManager');
-goog.require('jx.data.Tree');
-goog.require('jx.data.TreeNode');
+goog.require('jx.struct.Tree');
+goog.require('jx.struct.TreeNode');
 
 goog.provide('jx.grid.ColumnGroup');
 
