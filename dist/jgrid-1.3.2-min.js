@@ -1721,7 +1721,7 @@ var F = {};
     this.Je && (this.dispatchEvent({type:"beforebindevents"}), this.Je(b), this.dispatchEvent({type:"afterbindevents"}));
     this.dispatchEvent({type:"complete"})
   }
-  var f = goog.F("jx.grid.EventDispatcher");
+  var f = goog.F("jx.events.EventDispatcher");
   goog.N("jx.grid.BaseModule", c);
   goog.oc(c, f);
   var f = c.prototype, d = f.dispose;
