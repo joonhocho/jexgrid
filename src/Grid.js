@@ -330,7 +330,7 @@ drag: false,
 		}
 
 		var i = 10,
-			colDefs = this.colDefMgr.getAll(),
+			colDefs = this['colDefMgr']getAll(),
 			len = colDefs.length;
 		for (; i < len; i++) {
 			colDef = colDefs[i];
@@ -342,7 +342,7 @@ drag: false,
 
 		if (this._options['Collapser']) {
 			this['collapser'] =  JGM.create("Collapser", {grid:this, 'options':this._options['Collapser']});
-			this.collapser.__init();
+			this['collapser'].__init();
 			delete this._options['Collapser'];
 		}
 
@@ -395,7 +395,7 @@ drag: false,
 		}
 
 		if (this._options['autoWidth']) {
-			this.event.bind("onResizeCanvasWidth", this.width, this);
+			this['event'].bind("onResizeCanvasWidth", this.width, this);
 		}
 
 		this._createCss();
@@ -432,7 +432,7 @@ drag: false,
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.event.trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
+		this['event'].trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
 
 		this['msg'] =  $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this._ctnr).hide();
 
@@ -488,7 +488,7 @@ prototype.destroy = function() {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.event.trigger("onDestroy");
+		this['event']trigger("onDestroy");
 
 		JGM._destroy(this, {
 name: "Grid",
@@ -587,7 +587,7 @@ prototype._createCss = function() {
 "border:" + this._options['border'] + ";" :
 "border-top:" + this._options['border'] + ";border-bottom:" + this._options['border'] + ";",
 'style': this._options['style'],
-'submodule': this.event.trigger("onCreateCss").join("")
+'submodule': this['event']trigger("onCreateCss").join("")
 });
 this._style = Util.createStyle(style);
 
@@ -602,11 +602,11 @@ this._style = Util.createStyle(style);
   @version 1.2.2
   */
 
-this._dynStyle = Util.createStyle(this.event.trigger("onCreateDynamicCss").join(""));
+this._dynStyle = Util.createStyle(this['event']trigger("onCreateDynamicCss").join(""));
 };
 
 prototype._recreateDynamicCss = function() {
-	Util.setStyle(this._dynStyle, this.event.trigger("onCreateDynamicCss").join(""));
+	Util.setStyle(this._dynStyle, this['event']trigger("onCreateDynamicCss").join(""));
 };
 
 prototype._keydown = function(e) {
@@ -622,7 +622,7 @@ prototype._keydown = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeKeydown", [e])) {
+	if (this['event']triggerInvalid("onBeforeKeydown", [e])) {
 		return;
 	}
 
@@ -649,7 +649,7 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.event.trigger("keydown_" + e.which + " keydown", [e]);
+	this['event']trigger("keydown_" + e.which + " keydown", [e]);
 };
 
 prototype._keyup = function(e) {
@@ -665,7 +665,7 @@ prototype._keyup = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeKeyup", [e])) {
+	if (this['event']triggerInvalid("onBeforeKeyup", [e])) {
 		return;
 	}
 
@@ -692,7 +692,7 @@ prototype._keyup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.event.trigger("keyup_" + e.which + " keyup", [e]);
+	this['event'].trigger("keyup_" + e.which + " keyup", [e]);
 };
 
 prototype._keypress = function(e) {
@@ -708,7 +708,7 @@ prototype._keypress = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeKeypress", [e])) {
+	if (this['event'].triggerInvalid("onBeforeKeypress", [e])) {
 		return;
 	}
 
@@ -735,7 +735,7 @@ prototype._keypress = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.event.trigger("keypress_" + e.which + " keypress", [e]);
+	this['event'].trigger("keypress_" + e.which + " keypress", [e]);
 };
 
 prototype._mousein = function(e) {
@@ -751,7 +751,7 @@ prototype._mousein = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeMousein", [e])) {
+	if (this['event'].triggerInvalid("onBeforeMousein", [e])) {
 		return;
 	}
 
@@ -777,10 +777,10 @@ prototype._mousein = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._vars.drag) {
-		this.event.trigger("dragin mousein", [e]);
+		this['event'].trigger("dragin mousein", [e]);
 	}
 	else {
-		this.event.trigger("mousein", [e]);
+		this['event'].trigger("mousein", [e]);
 	}
 };
 
@@ -797,7 +797,7 @@ prototype._mouseout = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeMouseout", [e])) {
+	if (this['event'].triggerInvalid("onBeforeMouseout", [e])) {
 		return;
 	}
 
@@ -823,10 +823,10 @@ prototype._mouseout = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._vars.drag) {
-		this.event.trigger("dragout mouseout", [e]);
+		this['event'].trigger("dragout mouseout", [e]);
 	}
 	else {
-		this.event.trigger("mouseout", [e]);
+		this['event'].trigger("mouseout", [e]);
 	}
 };
 
@@ -843,7 +843,7 @@ prototype._mouseenter = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeMouseenter", [e])) {
+	if (this['event'].triggerInvalid("onBeforeMouseenter", [e])) {
 		return;
 	}
 
@@ -869,10 +869,10 @@ prototype._mouseenter = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._vars.drag) {
-		this.event.trigger("dragenter mouseenter", [e]);
+		this['event'].trigger("dragenter mouseenter", [e]);
 	}
 	else {
-		this.event.trigger("mouseenter", [e]);
+		this['event'].trigger("mouseenter", [e]);
 	}
 };
 
@@ -889,7 +889,7 @@ prototype._mouseleave = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeMouseleave", [e])) {
+	if (this['event'].triggerInvalid("onBeforeMouseleave", [e])) {
 		return;
 	}
 
@@ -915,10 +915,10 @@ prototype._mouseleave = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._vars.drag) {
-		this.event.trigger("dragleave mouseleave", [e]);
+		this['event'].trigger("dragleave mouseleave", [e]);
 	}
 	else {
-		this.event.trigger("mouseleave", [e]);
+		this['event'].trigger("mouseleave", [e]);
 	}
 };
 
@@ -935,7 +935,7 @@ prototype._mousemove = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeMousemove", [e])) {
+	if (this['event'].triggerInvalid("onBeforeMousemove", [e])) {
 		return;
 	}
 
@@ -962,10 +962,10 @@ prototype._mousemove = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._vars.drag) {
-		this.event.trigger("dragmove mousemove", [e]);
+		this['event'].trigger("dragmove mousemove", [e]);
 	}
 	else {
-		this.event.trigger("mousemove", [e]);
+		this['event'].trigger("mousemove", [e]);
 	}
 };
 
@@ -982,7 +982,7 @@ prototype._mouseover = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeMouseover", [e])) {
+	if (this['event'].triggerInvalid("onBeforeMouseover", [e])) {
 		return;
 	}
 
@@ -1008,10 +1008,10 @@ prototype._mouseover = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._vars.drag) {
-		this.event.trigger("dragover mouseover", [e]);
+		this['event'].trigger("dragover mouseover", [e]);
 	}
 	else {
-		this.event.trigger("mouseover", [e]);
+		this['event'].trigger("mouseover", [e]);
 	}
 };
 
@@ -1030,7 +1030,7 @@ prototype._mousedown = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeMousedown", [e])) {
+	if (this['event'].triggerInvalid("onBeforeMousedown", [e])) {
 		return;
 	}
 
@@ -1044,12 +1044,12 @@ prototype._mousedown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.event.trigger("mousedown", [e]);
+	this['event'].trigger("mousedown", [e]);
 };
 
 prototype._mouseup = function(e) {
 	this._vars.drag = false;	
-	this.event.trigger("unsetDrag");
+	this['event'].trigger("unsetDrag");
 	if (!this.containsEvent(e)) {
 		return;
 	}
@@ -1066,7 +1066,7 @@ prototype._mouseup = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeMouseup", [e])) {
+	if (this['event'].triggerInvalid("onBeforeMouseup", [e])) {
 		return;
 	}
 
@@ -1081,7 +1081,7 @@ prototype._mouseup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.event.trigger("mouseup", [e]);
+	this['event'].trigger("mouseup", [e]);
 };
 
 prototype._click = function(e) {
@@ -1097,7 +1097,7 @@ prototype._click = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeClick", [e])) {
+	if (this['event'].triggerInvalid("onBeforeClick", [e])) {
 		return;
 	}
 
@@ -1111,7 +1111,7 @@ prototype._click = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.event.trigger("click", [e]);
+	this['event'].trigger("click", [e]);
 };
 
 prototype._dblclick = function(e) {
@@ -1127,7 +1127,7 @@ prototype._dblclick = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this.event.triggerInvalid("onBeforeDblclick", [e])) {
+	if (this['event'].triggerInvalid("onBeforeDblclick", [e])) {
 		return;
 	}
 
@@ -1141,7 +1141,7 @@ prototype._dblclick = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.event.trigger("dblclick", [e]);
+	this['event'].trigger("dblclick", [e]);
 };
 
 prototype._resize = function(e) {
@@ -1159,7 +1159,7 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-		this.event.trigger("resizeWidth", [width, this._vars.lastW]);
+		this['event'].trigger("resizeWidth", [width, this._vars.lastW]);
 		this._vars.lastW = width;
 		change = true;
 	}
@@ -1175,7 +1175,7 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-		this.event.trigger("resizeHeight", [height, this._vars.lastH]);
+		this['event'].trigger("resizeHeight", [height, this._vars.lastH]);
 		this._vars.lastH = height;
 		change = true;
 	}
@@ -1190,7 +1190,7 @@ prototype._resize = function(e) {
 	  @version 1.1.5
 	  */
 	if (change) {
-		this.event.trigger("resize", [e]);
+		this['event'].trigger("resize", [e]);
 	}
 };
 
@@ -1212,10 +1212,10 @@ prototype.width = function(w) {
 	}
 
 	this._ctnr[0].style.width = w + "px";
-	this.event.trigger("resizeWidth", [w, this._vars.lastW]);
+	this['event'].trigger("resizeWidth", [w, this._vars.lastW]);
 	this._vars.lastW = w;
 
-	this.event.trigger("resize");
+	this['event'].trigger("resize");
 	return w;
 };
 
@@ -1236,15 +1236,15 @@ prototype.height = function(h) {
 	}
 
 	this._ctnr[0].style.height = h + "px";
-	this.event.trigger("resizeHeight", [h, this._vars.lastH]);
+	this['event'].trigger("resizeHeight", [h, this._vars.lastH]);
 	this._vars.lastH = h;
 
-	this.event.trigger("resize");
+	this['event'].trigger("resize");
 	return h;
 };
 
 prototype.getCellByIdAndKey = function(id, key) {
-	return JGM.create("Cell", {'grid':this, 'datarow':this.dataMgr.getById(id), 'colDef':this.colDefMgr.getByKey(key)});
+	return JGM.create("Cell", {'grid':this, 'datarow':this['dataMgr'].getById(id), 'colDef':this['colDefMgr']getByKey(key)});
 };
 
 prototype.getCellByIdx = function(rowIdx, colIdx) {
@@ -1267,13 +1267,13 @@ prototype.error = function(code) {
 	e = new Error(str);
 	e.code = code;
 	this.printError(e.message);
-	this.event.trigger("onError", [e]);
+	this['event'].trigger("onError", [e]);
 	return e;
 };
 
 prototype.printError = function(str) {
 	if (this._options['showMessage']) {
-		var msg = this.msg;
+		var msg = this['msg'];
 		msg[0].innerHTML = str;
 		msg[0].style.width = this._ctnr[0].clientWidth + 'px';
 		msg[0].style.background = '#ffebe8';
@@ -1288,7 +1288,7 @@ prototype.printError = function(str) {
 
 prototype.printMessage = function(str) {
 	if (this._options['showMessage']) {
-		var msg = this.msg;
+		var msg = this['msg'];
 		msg[0].innerHTML = str;
 		msg[0].style.width = this._ctnr[0].clientWidth + 'px';
 		msg[0].style.background = '#dfdfdf';
