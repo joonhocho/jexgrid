@@ -9,7 +9,7 @@ goog.require('jx.data.DataManager');
 goog.require('jx.data.Tree');
 goog.require('jx.data.TreeNode');
 
-goog.provide('jx.grid.ColGroup');
+goog.provide('jx.grid.ColumnGroup');
 
 /*!
  * AUTHOR
@@ -26,7 +26,7 @@ JGM
 
 (function() {
 
- goog.exportSymbol('jx.grid.ColGroup', ColGroup);
+ goog.exportSymbol('jx.grid.ColumnGroup', ColGroup);
  JGM._add("ColGroup", ColGroup);
 
 /**

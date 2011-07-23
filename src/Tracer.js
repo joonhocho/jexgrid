@@ -17,7 +17,7 @@ goog.provide('Tracer');
 
  goog.exportSymbol('Tracer', Tracer);
 
-var Tracer = window.Tracer = function() {
+Tracer = function() {
 	this.stack = "";
 	this.timers = {};
 };

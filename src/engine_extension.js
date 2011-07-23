@@ -5,14 +5,18 @@
  * COPYRIGHT
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
-if (!Number.prototype.toFixedFloat) {
-	Number.prototype.toFixedFloat = function(n) {
+(function(){
+var nProto = Number.prototype,
+	sProto = String.prototype,
+	aProto = Array.prototype;
+if (!nProto.toFixedFloat) {
+	nProto.toFixedFloat = function(n) {
 		return parseFloat(this.toFixed(n));
 	};
 }
 
-if (!String.prototype.toInt) {
-	String.prototype.toInt = function() {
+if (!sProto.toInt) {
+	sProto.toInt = function() {
 		var a;
 		if ((a = this.replace(/[^\d\.\-]/g, '')).length === 0) {
 			return NaN;
@@ -52,8 +56,8 @@ if (!String.prototype.toInt) {
 	};
 }
 
-if (!String.prototype.toFloat) {
-	String.prototype.toFloat = function() {
+if (!sProto.toFloat) {
+	sProto.toFloat = function() {
 		var a;
 		if ((a = this.replace(/[^-\d\.]/g, '')).length === 0) {
 			return NaN;
@@ -88,8 +92,8 @@ if (!String.prototype.toFloat) {
 	};
 }
 
-if (!Array.prototype.remove) {
-	Array.prototype.remove = function(el) {
+if (!aProto.remove) {
+	aProto.remove = function(el) {
 		if (this.length === 0) {
 			return -1;
 		}
@@ -103,8 +107,8 @@ if (!Array.prototype.remove) {
 	};
 }
 
-if (!Array.prototype.removeAll) {
-	Array.prototype.removeAll = function(el) {
+if (!aProto.removeAll) {
+	aProto.removeAll = function(el) {
 		if (this.length === 0) {
 			return this;
 		}
@@ -120,8 +124,8 @@ if (!Array.prototype.removeAll) {
 	};
 }
 
-if (!Array.prototype.removeList) {
-	Array.prototype.removeList = function(array) {
+if (!aProto.removeList) {
+	aProto.removeList = function(array) {
 		if (this.length === 0 || array.length === 0) {
 			return this;
 		}
@@ -138,8 +142,8 @@ if (!Array.prototype.removeList) {
 	};
 }
 
-if (!Array.prototype.removeAt) {
-	Array.prototype.removeAt = function(i) {
+if (!aProto.removeAt) {
+	aProto.removeAt = function(i) {
 		if (this.length === 0) {
 			return;
 		}
@@ -156,32 +160,33 @@ if (!Array.prototype.removeAt) {
 	};
 }
 
-if (!Array.prototype.addAt) {
-	Array.prototype.addAt = function(index, el) {
+if (!aProto.addAt) {
+	aProto.addAt = function(index, el) {
 		this.splice(index, 0, el);
 		return el;
 	};
 }
 
-if (!Array.prototype.pushList) {
-	Array.prototype.pushList = function(array) {
+if (!aProto.pushList) {
+	aProto.pushList = function(array) {
 		if (array.length === 0) {
 			return this.length;
 		}
 
-		return Array.prototype.push.apply(this, array);
+		return aProto.push.apply(this, array);
 	};
 }
 
-if (!Array.prototype.pushListAt) {
-	Array.prototype.pushListAt = function(index, array) {
+if (!aProto.pushListAt) {
+	aProto.pushListAt = function(index, array) {
 		if (array.length === 0) {
 			return this.length;
 		}
 
 		var param = [index, 0];
-		Array.prototype.push.apply(param, array);
-		Array.prototype.splice.apply(this, param);
+		aProto.push.apply(param, array);
+		aProto.splice.apply(this, param);
 		return this.length;
 	};
 }
+})();

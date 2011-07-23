@@ -86,8 +86,7 @@ if (!proto.lastIndexOf) {
 	};
 }
 
-if (!proto.filter)
-{
+if (!proto.filter) {
 	proto.filter = function(fun /*, thisp */)
 	{
 		"use strict";
@@ -152,8 +151,7 @@ if ( !proto.forEach ) {
 }
 
 
-if (!proto.every)
-{
+if (!proto.every) {
 	proto.every = function(fun /*, thisp */)
 	{
 		"use strict";
@@ -177,8 +175,7 @@ if (!proto.every)
 	};
 }
 
-if (!proto.map)
-{
+if (!proto.map) {
 	proto.map = function(fun /*, thisp */)
 	{
 		"use strict";
@@ -204,8 +201,7 @@ if (!proto.map)
 }
 
 
-if (!proto.some)
-{
+if (!proto.some) {
 	proto.some = function(fun /*, thisp */)
 	{
 		"use strict";
@@ -256,8 +252,7 @@ if ( !proto.reduce ) {
 	};
 }
 
-if (!proto.reduceRight)
-{
+if (!proto.reduceRight) {
 	proto.reduceRight = function(callbackfn /*, initialValue */)
 	{
 		"use strict";

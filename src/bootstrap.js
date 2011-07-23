@@ -334,7 +334,7 @@ JGM.grid = function(args) {
 JGM.gridMap = {};
 
 JGM.getGrid = function(name) {
-   if (Util.isNotNull(name) && this.gridMap.hasOwnProperty(name)) {
+   if (this.gridMap.hasOwnProperty(name)) {
       return this.gridMap[name];
    }
 };
@@ -345,126 +345,6 @@ JGM._add = function(name, module) {
 	}
 	this.__map_a__[name].readyState = "loaded";
 	$("body").trigger({ type:"moduleload.Grid", modulename:name, readyState:"loaded" }); // TBR
-};
-
-JGM.__has_c__ = function(name) {
-	return this.__map_a__[name].readyState === "loaded";
-};
-
-JGM.__load_d__ = function(name, callback) {
-	var url,
-		baseurl = Util$.baseurlOfHeadScript(this.GridManager.filename),
-		i,
-		len,
-		toAdd,
-		contains,
-		j,
-		checker;
-	if (name instanceof Array) {
-		url = [];
-		len = name.length;
-		for (i = 0; i < len; i++) {
-			toAdd = baseurl + this[name[i]].filename;
-			contains = false;
-			for (j = 0; j < url.length; j++) {
-				if (url[j] === toAdd) {
-					contains = true;
-					break;
-				}
-			}
-			if (!contains && !this.__has_c__(name[i])) {
-				url.push(toAdd);
-			}
-		}
-		if (Util.isFunction(callback)) {
-			checker = function() {
-				var i = 0;
-				for (; i < name.length; i++) {
-					if (!JGM.__has_c__(name[i])) {
-						return false;
-					}
-				}
-				return true;
-			};
-			$("body").bind("moduleload.Grid", function(e) {
-				if (checker()) {
-					$("body").unbind("moduleload.Grid");
-					callback();
-				}
-			});
-		}
-		if (url.length === 0) {
-			callback();
-		}
-
-		for (i = 0; i < url.length; i++) {
-			Util.appendScriptFile(url[i]);
-		}
-	}
-	else {
-		if (this.__has_c__(name)) {
-			if (Util.isFunction(callback)) {
-				callback();
-			}
-		}
-		url = baseurl + this.__map_a__[name].filename;
-		if (Util.isFunction(callback)) {
-			$("body").bind("moduleload.Grid", function(e) {
-				if (e.modulename === name && e.readyState === "loaded") {
-					$("body").unbind("moduleload.Grid");
-					callback();
-				}
-			});
-		}
-		Util.appendScriptFile(url);
-	}
-};
-
-JGM.start = function(gridOptions, colDefs, callback) {
-	var requiredModules = [],
-		i = 3,
-		len = arguments.length,
-		module,
-		map = JGM.__map_a__;
-
-	for (; i < len; i++) {
-		requiredModules.push(arguments[i]);
-	}
-
-	if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-		requiredModules.push('ArrayExtIE');
-	}
-
-	if (Util.isNotNull(gridOptions.CheckManager)) {
-		requiredModules.push('CheckManager');
-	}
-
-	if (Util.isNotNull(gridOptions.Collapser)) {
-		requiredModules.push('Collapser');
-	}
-
-	if (Util.isNotNull(gridOptions.EditManager)) {
-		requiredModules.push('EditManager');
-	}
-
-	/** check required **/
-	len = requiredModules.length;
-	for (i = 0; i < len; i++) {
-		map[requiredModules[i]].required = true;
-	}
-
-	/** filter not loaded **/
-	requiredModules = [];
-	for (i in map) {
-		if (map.hasOwnProperty(i)) {
-			module = map[i];
-			if (!Util.isFunction(module) && module.readyState === 'notloaded' && module.required === true) {
-				requiredModules.push(i);
-			}
-		}
-	}
-
-	this.__load_d__(requiredModules, callback);
 };
 
 JGM.__extend_e__ = function(defaults, options, map) {

@@ -3,6 +3,7 @@ goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.Grid');
 goog.require('jx.data.DataManager');
+goog.require('jx.grid.Cell');
 
 goog.provide('jx.grid.SelectionManager');
 

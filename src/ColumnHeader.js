@@ -4,7 +4,7 @@ goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.Grid');
 goog.require('jx.grid.ColumnManager');
 
-goog.provide('jx.grid.ColHeader');
+goog.provide('jx.grid.ColumnHeader');
 
 /*!
  * AUTHOR
@@ -21,7 +21,7 @@ JGM
 
 (function() {
 
- goog.exportSymbol('jx.grid.ColHeader', ColHeader);
+ goog.exportSymbol('jx.grid.ColumnHeader', ColHeader);
  JGM._add("ColHeader", ColHeader);
 
 /**

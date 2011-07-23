@@ -2,6 +2,7 @@ goog.require('jx.util');
 goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.Grid');
+goog.require('jx.grid.Cell');
 
 goog.provide('jx.grid.EditManager');
 goog.provide('jx.grid.Editor');
