@@ -150,7 +150,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'background': "url(" + this.grid['_options']['imageUrl'] + "column-headers-bg.png) repeat-x scroll center",
+		'background': "url(" + this.grid._options.['imageUrl'] + "column-headers-bg.png) repeat-x scroll center",
 
 		/**
 		컬럼 헤더에 마우스가 오버되었을 때의 배경을 설정합니다. <br>기본값:<code>"url(" + imageUrl + "column-headers-over-bg.png) repeat-x scroll center"</code>
@@ -162,7 +162,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'backgroundHover': "url(" + this.grid['_options']['imageUrl'] + "column-headers-over-bg.png) repeat-x scroll center",
+		'backgroundHover': "url(" + this.grid._options.['imageUrl'] + "column-headers-over-bg.png) repeat-x scroll center",
 
 		/**
 		컬럼 순서 변경 시에 컬럼 헤더의 빈 자리의 배경을 설정합니다. <br>기본값:<code>"#646464"</code>
@@ -186,7 +186,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'sortBackground': this.grid['_options']['imageUrl'] + "sort.png",
+		'sortBackground': this.grid._options.['imageUrl'] + "sort.png",
 
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘의 오른쪽 마진 픽셀입니다. <br>기본값:<code>4</code>
@@ -222,7 +222,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'sortBackgroundAsc': this.grid['_options']['imageUrl'] + "sort-asc.png",
+		'sortBackgroundAsc': this.grid._options.['imageUrl'] + "sort-asc.png",
 
 		/**
 		컬럼 로우 정렬 내림차순 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort-desc.png"</code>
@@ -234,7 +234,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'sortBackgroundDesc': this.grid['_options']['imageUrl'] + "sort-desc.png",
+		'sortBackgroundDesc': this.grid._options.['imageUrl'] + "sort-desc.png",
 
 		/**
 		컬럼 헤더의 폰트 스타일입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>

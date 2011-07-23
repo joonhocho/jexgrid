@@ -70,9 +70,9 @@ function SearchManager(args) {
 		'advButtonPadding': 5,
 
 		'advButtonBg': "",
-		'advButtonBgHover': "url(" + this.grid['_options']['imageUrl'] + "more-options-bg-hover.png) repeat-x scroll center",
-		'advButtonBgActive': "url(" + this.grid['_options']['imageUrl'] + "more-options-bg-active.png) repeat-x scroll center",
-		'advButtonBgOpened': "url(" + this.grid['_options']['imageUrl'] + "more-options-bg-opened.png) repeat-x scroll center",
+		'advButtonBgHover': "url(" + this.grid._options.['imageUrl'] + "more-options-bg-hover.png) repeat-x scroll center",
+		'advButtonBgActive': "url(" + this.grid._options.['imageUrl'] + "more-options-bg-active.png) repeat-x scroll center",
+		'advButtonBgOpened': "url(" + this.grid._options.['imageUrl'] + "more-options-bg-opened.png) repeat-x scroll center",
 
 		'advButtonBorderThickness': 1,
 		'advButtonBorder': "solid transparent",
@@ -82,19 +82,19 @@ function SearchManager(args) {
 
 		'advButtonIconWidth': 9,
 		'advButtonIconMargin': 2,
-		'advButtonIconUrl': this.grid['_options']['imageUrl'] + "more-options.png",
-		'advButtonIconCloseUrl': this.grid['_options']['imageUrl'] + "more-options-close.png",
+		'advButtonIconUrl': this.grid._options.['imageUrl'] + "more-options.png",
+		'advButtonIconCloseUrl': this.grid._options.['imageUrl'] + "more-options-close.png",
 
 		'tagPadding': 2,
 		'tagBorder': "solid #93979D",
 		'tagBorderThickness': 1,
 		'tagFont': "bold 13px Arial",
 		'tagColor': "#282853",
-		'tagBackground': "url(" + this.grid['_options']['imageUrl'] + "tag-background.png) repeat-x scroll center",
+		'tagBackground': "url(" + this.grid._options.['imageUrl'] + "tag-background.png) repeat-x scroll center",
 
 		'tagRemoveIconWidth': 12,
-		'tagRemoveIconUrl': this.grid['_options']['imageUrl'] + "tag-close.png",
-		'tagRemoveIconHoverUrl': this.grid['_options']['imageUrl'] + "tag-close-hover.png",
+		'tagRemoveIconUrl': this.grid._options.['imageUrl'] + "tag-close.png",
+		'tagRemoveIconHoverUrl': this.grid._options.['imageUrl'] + "tag-close-hover.png",
 
 		'advFont': "11px Arial",
 		'advInputWidth': 30,
@@ -113,11 +113,11 @@ function SearchManager(args) {
 		'classOptionCol': "search-option-col",
 		'classOption': "search-option",
 		'classSearchIcon': "search-icon",
-		'searchIconUrl': this.grid['_options']['imageUrl'] + "search-icon.png",
+		'searchIconUrl': this.grid._options.['imageUrl'] + "search-icon.png",
 		'searchIconWidth': 15,
 		'searchIconHeight': 15,
 		'keyMap': undefined,
-		'tagRemoveIconActiveUrl': this.grid['_options']['imageUrl'] + "tag-close-active.png",
+		'tagRemoveIconActiveUrl': this.grid._options.['imageUrl'] + "tag-close-active.png",
 		
 		'syncMaster': false
 	};

@@ -264,7 +264,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  'creatorIconUrl': this.grid['_options']['imageUrl'] + "data-creator-icon.png",
+				  'creatorIconUrl': this.grid._options.['imageUrl'] + "data-creator-icon.png",
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 폭 입니다. <br>기본값:<code>13</code>

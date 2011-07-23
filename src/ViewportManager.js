@@ -800,7 +800,7 @@ prototype._getRowInnerHeight = function() {
 
 prototype._calHeight = function() {
 	if (this._options['autoHeight']) {
-		return this._calCanvasHeight() + (this.grid['width']() < this._calCanvasWidth() ? this.grid['_vars'].scrollbarDim.h: 0);
+		return this._calCanvasHeight() + (this.grid['width']() < this._calCanvasWidth() ? this.grid._vars.scrollbarDim.h: 0);
    }
 	return this._getRowOuterHeight() * this._options['rowsPerPage'];
 };
@@ -1000,7 +1000,7 @@ prototype.setWidthByKey = function(key, w) {
 
 	this._setCanvasWidth(this._setColLefts(this.grid['colDefMgr'].getIdxByKey(key))[this.grid['colDefMgr'].length()]);
 
-	this.grid['_recreateDynamicCss']();
+	this.grid._recreateDynamicCss();
 
 	/**
 	컬럼의 폭이 변했을 경우 트리거되는 이벤트 입니다.
