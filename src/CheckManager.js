@@ -121,7 +121,7 @@ function CheckManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_colDef': {'key':"checkbox", 'width': 20, 'name':" ", 'noTitle':true, 'resizable':false, 'sorter':null, 'filter':null, 'noSearch':true, 'editor':null, 'inputOnCreate':false},
+		'colDef': {'key':"checkbox", 'width': 20, 'name':" ", 'noTitle':true, 'resizable':false, 'sorter':null, 'filter':null, 'noSearch':true, 'editor':null, 'inputOnCreate':false},
 
 		/**
 		{@link JGM.CheckManager.options.colDef colDef} 을 몇번째 컬럼으로 넣을지를 정합니다. <br>기본값:<code>0</code>
@@ -133,7 +133,7 @@ function CheckManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_colIdx': 0,
+		'colIdx': 0,
 
 		/**
 		체크 input 들의 name attribute 에 공통적으로 넣을 값입니다. <br>기본값:<code>undefined</code>
@@ -145,7 +145,7 @@ function CheckManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_name': undefined,
+		'name': undefined,
 
 		/**
 		체크 input 들에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"checkmg"</code>
@@ -157,7 +157,7 @@ function CheckManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classCheck': "checkmg",
+		'classCheck': "checkmg",
 
 		/**
 		마스터 헤더 체크 input 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"checkm"</code>
@@ -169,7 +169,7 @@ function CheckManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classMasterCheck': "checkm",
+		'classMasterCheck': "checkm",
 
 		/**
 		checkbox 를 위한 마스터 헤더 체크를 생성할지 여부입니다. <br>기본값:<code>true</code>
@@ -181,7 +181,7 @@ function CheckManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_master': true,
+		'master': true,
 
 		/**
 		true 일 경우 radio 타입의 input, false 일 경우 checkbox 타입의 input 을 생성합니다. <br>기본값:<code>false</code>
@@ -193,24 +193,16 @@ function CheckManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_isRadio': false
+		'isRadio': false
 	};
 
-	this._options = JGM._extend(options, args['options'], {
-		colDef:"_colDef",
-		colIdx:"_colIdx",
-		name:"_name",
-		classCheck:"_classCheck",
-		classMasterCheck:"_classMasterCheck",
-		master:"_master",
-		isRadio:"_isRadio"
-	});
+	this._options = JGM._extend(options, args['options']);
 
-	if (this._options['_isRadio']) {
-		if (Util.isNull(this._options['_name'])) {
-			this._options['_name'] = "radio" + this.mid;
+	if (this._options['isRadio']) {
+		if (Util.isNull(this._options['name'])) {
+			this._options['name'] = "radio" + this.mid;
 		}
-		this._options['_master'] = false;
+		this._options['master'] = false;
 	}
 
 	this._map = {};
@@ -237,8 +229,8 @@ prototype.__init = function() {
 		size,
 		con = JGM._CONST;
 
-	if (this.grid.colDefMgr.getByKey(opt._colDef.key) === undefined) {
-		this.grid.colDefMgr.addAt(opt._colIdx, opt._colDef);
+	if (this.grid.colDefMgr.getByKey(opt.colDef.key) === undefined) {
+		this.grid.colDefMgr.addAt(opt.colIdx, opt.colDef);
 	}
 	
 	if (Util.isNull(con._checkboxWidth)) {
@@ -254,7 +246,7 @@ prototype.__init = function() {
 
 prototype.bindEvents = function() {
 	var opt = this._options,
-		key = opt._colDef.key,
+		key = opt.colDef.key,
 		events;
 
 	events = {
@@ -270,7 +262,7 @@ prototype.bindEvents = function() {
 	events["onRenderCell_" + key + "_prepend"] = this._onRenderCell;
 	events["keydownColSel_" + key + "_" + Util.keyMapKeydown.space] = this._keydownColSel;
 	
-	if (opt._master) {
+	if (opt.master) {
 		events["onRenderHeader_" + key + "_prepend"] = this._onRenderHeader;
 		events.onRenderHeadersComplete = this._getMaster;
 	}
@@ -281,9 +273,9 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "CheckManager",
 		path: "checkMgr",
-		"$": "_master",
-		property: "_count _disabled",
-		map: "_map _options"
+		"$": "master",
+		property: "count _disabled",
+		map: "map _options"
 	});
 };
 
@@ -293,7 +285,7 @@ prototype._onCreateCss = function() {
 		checkCommon,
 		css;
 
-	if (this._options['_isRadio']) {
+	if (this._options['isRadio']) {
 		w = JGM._CONST._radioWidth;
 		h = JGM._CONST._radioHeight;
 	}
@@ -303,12 +295,12 @@ prototype._onCreateCss = function() {
 	}
 	
 	checkCommon = "*overflow:hidden;padding:0;width:" + w + "px;height:" + h + "px;";
-	css = this.grid.view._getCellSelector() + " ." + this._options['_classCheck'] + "[mid='" + this.mid + "']{" +
+	css = this.grid.view._getCellSelector() + " ." + this._options['classCheck'] + "[mid='" + this.mid + "']{" +
 		checkCommon +
-		"margin:" + ((this.grid.view._getRowInnerHeight() - h) / 2) + "px 0 0 " + ((this._options['_colDef']['width'] - this.grid.view._getPadding() - w) / 2) + "px}" +
+		"margin:" + ((this.grid.view._getRowInnerHeight() - h) / 2) + "px 0 0 " + ((this._options['colDef']['width'] - this.grid.view._getPadding() - w) / 2) + "px}" +
 		"#" + this.mid + "h{" +
 		checkCommon +
-		"margin:" + ((this.grid.header._options['_height'] - h) / 2) + "px 0 0 0}";
+		"margin:" + ((this.grid.header._options['height'] - h) / 2) + "px 0 0 0}";
 	return css;
 };
 
@@ -422,7 +414,7 @@ prototype.toggleCheckAll = function() {
 @version 1.0.0
 */
 prototype.checkAll = function() {
-	if (this._options['_master']) {
+	if (this._options['master']) {
 		CheckManager._check(this._master);
 	}
 
@@ -452,7 +444,7 @@ prototype.checkAll = function() {
 @version 1.0.0
 */
 prototype.uncheckAll = function() {
-	if (this._options['_master']) {
+	if (this._options['master']) {
 		CheckManager._uncheck(this._master);
 	}
 
@@ -481,7 +473,7 @@ prototype.toggleCheck = function(datarow, nomap) {
 		datarow = this.grid.dataMgr.map(datarow);
 	}
 
-	if (this.isChecked(datarow, true) && !this._options['_isRadio']) {
+	if (this.isChecked(datarow, true) && !this._options['isRadio']) {
 		this.uncheck(datarow, true);
 	}
 	else {
@@ -599,7 +591,7 @@ prototype.uncheck = function(datarow, nomap) {
 
 	CheckManager._uncheck(this.getCheckbox(datarow));
 
-	if (this._options['_master']) {
+	if (this._options['master']) {
 		CheckManager._uncheck(this._master);
 	}
 
@@ -691,7 +683,7 @@ prototype.enable = function(datarow, nomap) {
 };
 
 prototype._updateMaster = function() {
-	if (this._options['_master']) {
+	if (this._options['master']) {
 		CheckManager._setCheck(this._master, this.isCheckedAll());
 	}
 };
@@ -703,7 +695,7 @@ prototype._add = function(datarow) {
 		return false;
 	}
 		
-	if (this._options['_isRadio'] === true) {
+	if (this._options['isRadio'] === true) {
 		this._map = {};
 		this._count = 0;
 	}
@@ -831,7 +823,7 @@ prototype._getChecks = function(rows) {
 	var len = rows.length,
 		checks = [],
 		i = 0,
-		col = this.grid.colDefMgr.getIdxByKey(this._options['_colDef']['key']);
+		col = this.grid.colDefMgr.getIdxByKey(this._options['colDef']['key']);
 	for (; i < len; i++) {
 		checks.push(rows[i].childNodes[col].childNodes[0]);
 	}
@@ -866,7 +858,7 @@ prototype.getCheckboxes = function() {
 prototype.getCheckboxById = function(id) {
 	var row = this.grid.view.getRowById(id);
 	if (Util.isNotNull(row)) {
-      return row.childNodes[this.grid.colDefMgr.getIdxByKey(this._options['_colDef']['key'])].childNodes[0];
+      return row.childNodes[this.grid.colDefMgr.getIdxByKey(this._options['colDef']['key'])].childNodes[0];
    }
 };
 
@@ -952,7 +944,7 @@ prototype._keydownColSel = function(e, colSelections, lastSelection) {
 		var checked = this.isChecked(lastSelection.getDatarow(), true),
 			row,
 			list = this.grid.dataMgr.datalist;
-		if (this._options['_isRadio']) {
+		if (this._options['isRadio']) {
 			for (row in colSelections) {
 				if (colSelections.hasOwnProperty(row)) {
 					if (row === "length") {
@@ -982,7 +974,7 @@ prototype._keydownColSel = function(e, colSelections, lastSelection) {
 };
 
 prototype._onRenderHeader = function(headerHtml) {
-	headerHtml.push("<input id='" + this.mid + "h' type='checkbox' tabIndex='-1' onclick='JGM.m.CheckManager." + this.mid + ".toggleCheckAll();' class='" + this._options['_classCheck'] + " " + this._options['_classMasterCheck'] + "' mid='" + this.mid + "'");
+	headerHtml.push("<input id='" + this.mid + "h' type='checkbox' tabIndex='-1' onclick='JGM.m.CheckManager." + this.mid + ".toggleCheckAll();' class='" + this._options['classCheck'] + " " + this._options['classMasterCheck'] + "' mid='" + this.mid + "'");
 	if (this.isCheckedAll()) {
 		headerHtml.push(" checked='checked'");
 	}
@@ -993,9 +985,9 @@ prototype._onRenderHeader = function(headerHtml) {
 };
 
 prototype._onRenderCell = function(rowIdx, colIdx, datarow, colDef, cellHtml) {
-	cellHtml.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + datarow[this.grid.dataMgr.idKey] + "')\" type='" + (this._options['_isRadio'] ? "radio" : "checkbox") + "' class='" + this._options['_classCheck'] + "' mid='" + this.mid + "'");
-	if (Util.isNotNull(this._options['_name'])) {
-		cellHtml.push(" name='" + this._options['_name'] + "'");
+	cellHtml.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + datarow[this.grid.dataMgr.idKey] + "')\" type='" + (this._options['isRadio'] ? "radio" : "checkbox") + "' class='" + this._options['classCheck'] + "' mid='" + this.mid + "'");
+	if (Util.isNotNull(this._options['name'])) {
+		cellHtml.push(" name='" + this._options['name'] + "'");
 	}
 	if (this.isChecked(datarow, true)) {
 		cellHtml.push(" checked='checked'");
@@ -1027,7 +1019,7 @@ prototype.disableAll = function() {
 		
 	this._disabled = true;
 	
-	if (this._options['_master']) {
+	if (this._options['master']) {
 		this._master.attr("disabled", "disabled");
 	}
 		
@@ -1055,7 +1047,7 @@ prototype.enableAll = function() {
 		
 	this._disabled = false;
 	
-	if (this._options['_master']) {
+	if (this._options['master']) {
 		this._master.removeAttr("disabled");
 	}
 		

@@ -122,7 +122,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classEdit': "jgrid-edit",
+		'classEdit': "jgrid-edit",
 
 		/**
 		{@link JGM.EditManager.options.editableBgEnabled editableBgEnabled} 이 true 일 경우, 에디팅이 가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-editable"</code>
@@ -134,7 +134,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classCellEditable': "jgrid-editable",
+		'classCellEditable': "jgrid-editable",
 
 		/**
 		{@link JGM.EditManager.options.notEditableBgEnabled notEditableBgEnabled} 이 true 일 경우, 에디팅이 불가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-notEditable"</code>
@@ -146,7 +146,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classCellNotEditable': "jgrid-notEditable",
+		'classCellNotEditable': "jgrid-notEditable",
 
 		/**
 		true 일 경우, {@link JGM.EditManager.options.classCellEditable classCellEditable} 를 적용합니다. <br>기본값:<code>false</code>
@@ -158,7 +158,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_editableBgEnabled': false,
+		'editableBgEnabled': false,
 
 		/**
 		true 일 경우, {@link JGM.EditManager.options.classCellNotEditable classCellNotEditable} 를 적용합니다. <br>기본값:<code>false</code>
@@ -170,7 +170,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_notEditableBgEnabled': false,
+		'notEditableBgEnabled': false,
 
 		/**
 		{@link JGM.EditManager.options.classCellEditable classCellEditable} 에 적용될 배경입니다. <br>기본값:<code>"#FFF"</code>
@@ -182,7 +182,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_editableBg': "#FFF",
+		'editableBg': "#FFF",
 
 		/**
 		{@link JGM.EditManager.options.classCellNotEditable classCellNotEditable} 에 적용될 배경입니다. <br>기본값:<code>"#F6F6F6"</code>
@@ -194,7 +194,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_notEditableBg': "#F6F6F6",
+		'notEditableBg': "#F6F6F6",
 
 		/**
 		delete 키를 이용한 셀 내용 삭제 가능 여부입니다. <br>기본값:<code>false</code>
@@ -206,7 +206,7 @@ function EditManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_deleteEnabled': false,
+		'deleteEnabled': false,
 		
 		/**
 		에디팅 가능한 셀에 에디팅 아이콘을 보여줄지 여부입니다. <br>기본값:<code>true</code>
@@ -218,7 +218,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'_editIconEnabled': true,
+		'editIconEnabled': true,
 		
 		/**
 		에디팅 가능한 셀에 보여줄 아이콘 이미지 url 입니다. <br>기본값:<code>imageUrl + "editable-small.png"</code>
@@ -230,7 +230,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'_urlEditIcon': this.grid._options['imageUrl'] + "editable-small.png",
+		'urlEditIcon': this.grid._options['imageUrl'] + "editable-small.png",
 		
 		/**
 		에디팅 아이콘 이미지에 적용될 CSS 클래스 입니다. <br>기본값:<code>"edit-icon"</code>
@@ -242,7 +242,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'_classEditIcon': "edit-icon",
+		'classEditIcon': "edit-icon",
 		
 		/**
 		에디팅 아이콘 이미지의 폭 픽셀 값입니다. <br>기본값:<code>11</code>
@@ -254,7 +254,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'_editIconWidth': 12,
+		'editIconWidth': 12,
 		
 		/**
 		에디팅 아이콘 이미지의 padding 픽셀 값입니다. <br>기본값:<code>3</code>
@@ -266,7 +266,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'_editIconPadding': 3,
+		'editIconPadding': 3,
 		
 		/**
 		기본 텍스트 에디터의 배경 스타일입니다. <br>기본값:<code>"#FFF9D7"</code>
@@ -278,7 +278,7 @@ function EditManager(args) {
 		@since 1.2.2
 		@version 1.2.2
 		*/
-		'_basicBackground': "#FFF9D7",
+		'basicBackground': "#FFF9D7",
 
 		'classSuccess': "edit-success",
 
@@ -290,22 +290,7 @@ function EditManager(args) {
 
 	};
 
-	this._options = JGM._extend(options, args['options'], {
-		classEdit:"_classEdit",
-		classCellEditable:"_classCellEditable",
-		classCellNotEditable:"_classCellNotEditable",
-		editableBgEnabled:"_editableBgEnabled",
-		notEditableBgEnabled:"_notEditableBgEnabled",
-		editableBg:"_editableBg",
-		notEditableBg:"_notEditableBg",
-		deleteEnabled:"_deleteEnabled",
-		editIconEnabled: "_editIconEnabled",
-		urlEditIcon: "_urlEditIcon",
-		classEditIcon: "_classEditIcon",
-		editIconWidth: "_editIconWidth",
-		editIconPadding: "_editIconPadding",
-		basicBackground:"_basicBackground"
-	});
+	this._options = JGM._extend(options, args['options']);
 
 	/**
 	현재 EditManager 에서 사용되고 있는 {@link JGM.Editor} 인스턴스 입니다. 현재
@@ -355,11 +340,11 @@ prototype.bindEvents = function() {
 		events.onBeforeCreateSelCss = this._onBeforeCreateSelCss;
 	}
 		
-	if (this._options['_deleteEnabled']) {
+	if (this._options['deleteEnabled']) {
 		events["keydownSel_" + Util.keyMapKeydown.del] = this._deleteContents;
 	}
 	
-	if (this._options['_editIconEnabled']) {
+	if (this._options['editIconEnabled']) {
 		var colDefs = this.grid.colDefMgr.get(),
 			len = colDefs.length,
 			i = 0;
@@ -381,7 +366,7 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "EditManager",
 		path: "editMgr",
-		map: "_beginEditKeys _options"
+		map: "beginEditKeys _options"
 	});
 };
 
@@ -391,18 +376,18 @@ prototype._onBeforeCreateSelCss = function() {
 		rules = [],
 		height = this.grid.view._getRowInnerHeight();
 
-	rules.push(this.grid.view._getCellSelector() + "." + o._classEdit + "{background:" + o._basicBackground + "}");
+	rules.push(this.grid.view._getCellSelector() + "." + o.classEdit + "{background:" + o.basicBackground + "}");
 	
-	rules.push(gridId + o._classEdit + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + o._basicBackground + ";height:" + height + "px;line-height:" + height + "px}");
+	rules.push(gridId + o.classEdit + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + o.basicBackground + ";height:" + height + "px;line-height:" + height + "px}");
 
-	if (o._editableBgEnabled) {
-		rules.push(gridId + o._classCellEditable + "{background:" + o._editableBg + "}");
+	if (o.editableBgEnabled) {
+		rules.push(gridId + o.classCellEditable + "{background:" + o.editableBg + "}");
 	}
-	if (o._notEditableBgEnabled) {
-		rules.push(gridId + o._classCellNotEditable + "{background:" + o._notEditableBg + "}");
+	if (o.notEditableBgEnabled) {
+		rules.push(gridId + o.classCellNotEditable + "{background:" + o.notEditableBg + "}");
 	}
-	if (o._editIconEnabled) {
-		rules.push(gridId + o._classEditIcon + "{float:left;position:absolute;left:0;top:0;padding:0 " + o._editIconPadding + "px;width:" + o._editIconWidth + "px;height:" + height + "px;background:url(" + o._urlEditIcon + ") no-repeat center transparent}");
+	if (o.editIconEnabled) {
+		rules.push(gridId + o.classEditIcon + "{float:left;position:absolute;left:0;top:0;padding:0 " + o.editIconPadding + "px;width:" + o.editIconWidth + "px;height:" + height + "px;background:url(" + o.urlEditIcon + ") no-repeat center transparent}");
 	}
 	rules.push(gridId + o.classSuccess + "{background:" + o.successBackground + "}");
 	rules.push(gridId + o.classFailure + "{background:" + o.failureBackground + "}");
@@ -426,17 +411,17 @@ prototype.onCreateDynamicCss = function() {
 };
 
 prototype._onRenderHeader = function(html) {
-	html.push("<span class='" + this._options['_classEditIcon'] + "'></span>");
+	html.push("<span class='" + this._options['classEditIcon'] + "'></span>");
 };
 
 prototype._onRenderCell = function(rowIdx, colIdx, datarow, colDef, cellHtml) {
 	if (this.grid.dataMgr.isReal(datarow)) {
-		cellHtml.push("<span class='" + this._options['_classEditIcon'] + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + ".beginEdit(\"" + datarow[this.grid.dataMgr.idKey] + "\",\"" + colDef['key'] + "\")'></span>");
+		cellHtml.push("<span class='" + this._options['classEditIcon'] + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + ".beginEdit(\"" + datarow[this.grid.dataMgr.idKey] + "\",\"" + colDef['key'] + "\")'></span>");
 	}
 };
 
 prototype.cancelMouseEvent = function(e) {
-	return !Util.hasTagAndClass(e.target, "DIV", this._options['_classEditIcon']);
+	return !Util.hasTagAndClass(e.target, "DIV", this._options['classEditIcon']);
 };
 
 prototype.beginEdit = function(id, key) {
@@ -473,7 +458,7 @@ prototype._keydownCanvas = function(e) {
 			return;
 		}
 		else if (!e.altKey && Util.isNotNull(this.grid.selMgr)) {
-			if (e.which === Util.keyMapKeydown.del && this._options['_deleteEnabled']) {
+			if (e.which === Util.keyMapKeydown.del && this._options['deleteEnabled']) {
 				this._deleteContent(this.grid.selMgr.getCell());
 			}
 			else if (this._beginEditKeys[e.which]) {
@@ -512,10 +497,10 @@ prototype._isEdited = function(cell) {
 
 prototype._onGetColCellClass = function(colDef) {
 	if (Util.isNotNull(colDef['editor'])) {
-		return this._options['_classCellEditable'];
+		return this._options['classCellEditable'];
 	}
 	else {
-		return this._options['_classCellNotEditable'];
+		return this._options['classCellNotEditable'];
 	}
 };
 
@@ -601,7 +586,7 @@ prototype.begin = function(cell) {
 	this.editor.before = node.innerHTML;
 	node.innerHTML = this.editor.edit(cell.getValue());
 
-	cell.get$().addClass(this._options['_classEdit']);
+	cell.get$().addClass(this._options['classEdit']);
 	this.editor.focus();
 };
 
@@ -622,7 +607,7 @@ prototype.cancel = function() {
 	var cell = this.editor.cell;
 	cell.getNode().innerHTML = this.editor.before;
 	this._deleteEditor();
-	cell.get$().removeClass(this._options['_classEdit']);
+	cell.get$().removeClass(this._options['classEdit']);
 	this.grid.view.focus();
 };
 
@@ -682,7 +667,7 @@ prototype.commit = function() {
 			setTimeout(function() {$cell.removeClass(classRes);}, 1000);
       }
 	}
-	cell.get$().removeClass(this._options['_classEdit']);
+	cell.get$().removeClass(this._options['classEdit']);
 		
 	this.beingCommitted = false;
 };

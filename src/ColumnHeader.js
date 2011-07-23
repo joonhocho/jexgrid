@@ -125,7 +125,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_reorderEnabled': false,
+		'reorderEnabled': false,
 
 		/**
 		컬럼 순서 변경을 할 경우, 컬럼 셀들이 컬럼 헤더와 함께
@@ -138,7 +138,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_reorderSyncEnabled': true,
+		'reorderSyncEnabled': true,
 
 		/**
 		컬럼 헤더의 기본 배경을 설정합니다. <br>기본값:<code>"url(" + imageUrl + "column-headers-bg.png) repeat-x scroll center"</code>
@@ -150,7 +150,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_background': "url(" + this.grid._options['imageUrl'] + "column-headers-bg.png) repeat-x scroll center",
+		'background': "url(" + this.grid._options['imageUrl'] + "column-headers-bg.png) repeat-x scroll center",
 
 		/**
 		컬럼 헤더에 마우스가 오버되었을 때의 배경을 설정합니다. <br>기본값:<code>"url(" + imageUrl + "column-headers-over-bg.png) repeat-x scroll center"</code>
@@ -162,7 +162,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_backgroundHover': "url(" + this.grid._options['imageUrl'] + "column-headers-over-bg.png) repeat-x scroll center",
+		'backgroundHover': "url(" + this.grid._options['imageUrl'] + "column-headers-over-bg.png) repeat-x scroll center",
 
 		/**
 		컬럼 순서 변경 시에 컬럼 헤더의 빈 자리의 배경을 설정합니다. <br>기본값:<code>"#646464"</code>
@@ -174,7 +174,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_backgroundPlaceholder': "#646464",
+		'backgroundPlaceholder': "#646464",
 
 		/**
 		컬럼 로우 정렬 기본 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort.png"</code>
@@ -186,7 +186,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_sortBackground': this.grid._options['imageUrl'] + "sort.png",
+		'sortBackground': this.grid._options['imageUrl'] + "sort.png",
 
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘의 오른쪽 마진 픽셀입니다. <br>기본값:<code>4</code>
@@ -198,7 +198,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_sortRight': 4,
+		'sortRight': 4,
 
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘의 폭 픽셀입니다. <br>기본값:<code>7</code>
@@ -210,7 +210,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_sortWidth': 7,
+		'sortWidth': 7,
 
 		/**
 		컬럼 로우 정렬 오름차순 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort-asc.png"</code>
@@ -222,7 +222,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_sortBackgroundAsc': this.grid._options['imageUrl'] + "sort-asc.png",
+		'sortBackgroundAsc': this.grid._options['imageUrl'] + "sort-asc.png",
 
 		/**
 		컬럼 로우 정렬 내림차순 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort-desc.png"</code>
@@ -234,7 +234,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_sortBackgroundDesc': this.grid._options['imageUrl'] + "sort-desc.png",
+		'sortBackgroundDesc': this.grid._options['imageUrl'] + "sort-desc.png",
 
 		/**
 		컬럼 헤더의 폰트 스타일입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
@@ -246,7 +246,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_font': "15px Arial,Helvetica,sans-serif",
+		'font': "15px Arial,Helvetica,sans-serif",
 
 		/**
 		컬럼 헤더의 높이 픽셀 입니다. <br>기본값:<code>21</code>
@@ -258,7 +258,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_height': 21,
+		'height': 21,
 
 		/**
 		컬럼 헤더 border 의 두께 입니다. <br>기본값:<code>1</code>
@@ -270,7 +270,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_borderThickness': 1,
+		'borderThickness': 1,
 
 		/**
 		컬럼 헤더 border 의 스타일 입니다. <br>기본값:<code>"solid #909192"</code>
@@ -282,7 +282,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_border': "solid #909192",
+		'border': "solid #909192",
 
 		/**
 		컬럼 헤더 컨테이너 마스크에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-header-mask"</code>
@@ -294,7 +294,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classHeaderMask': "jgrid-header-mask",
+		'classHeaderMask': "jgrid-header-mask",
 
 		/**
 		컬럼 헤더 컨테이너에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-header"</code>
@@ -306,7 +306,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classHeader': "jgrid-header",
+		'classHeader': "jgrid-header",
 
 		/**
 		각 컬럼 헤더에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader"</code>
@@ -318,7 +318,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classColHeader': "jgrid-colheader",
+		'classColHeader': "jgrid-colheader",
 
 		/**
 		컬럼 헤더 순서 변경시 변경되는 컬럼에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader-active"</code>
@@ -330,7 +330,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classColHeaderActive': "jgrid-colheader-active",
+		'classColHeaderActive': "jgrid-colheader-active",
 
 		/**
 		컬럼 헤더 순서 변경시 변경되는 컬럼의 빈자리에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader-placeholder"</code>
@@ -342,7 +342,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classColHeaderPlaceholder': "jgrid-colheader-placeholder",
+		'classColHeaderPlaceholder': "jgrid-colheader-placeholder",
 
 		/**
 		interactive 한 컬럼 헤더들에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"interactive"</code>
@@ -354,7 +354,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classInteractive': "interactive",
+		'classInteractive': "interactive",
 
 		/**
 		현재 로우 정렬 중인 컬럼 헤더에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader-sorted"</code>
@@ -366,7 +366,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classColHeaderSorted': "jgrid-colheader-sorted",
+		'classColHeaderSorted': "jgrid-colheader-sorted",
 
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-sort"</code>
@@ -378,7 +378,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classSort': "jgrid-sort",
+		'classSort': "jgrid-sort",
 
 		/**
 		컬럼 로우 정렬 오름차순 상태 표시 아이콘에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-sort-asc"</code>
@@ -390,7 +390,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classSortAsc': "jgrid-sort-asc",
+		'classSortAsc': "jgrid-sort-asc",
 
 		/**
 		컬럼 로우 정렬 내림차순 상태 표시 아이콘에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-sort-desc"</code>
@@ -402,7 +402,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classSortDesc': "jgrid-sort-desc",
+		'classSortDesc': "jgrid-sort-desc",
 
 		/**
 		컬럼 폭 조절 핸들의 CSS 클래스 입니다.<br>기본값:<code>"jgrid-resize-handle"</code>
@@ -414,7 +414,7 @@ function ColHeader(args) {
 		@since 1.1.2
 		@version 1.1.2
 		*/
-		'_classResizeHandle': "jgrid-resize-handle",
+		'classResizeHandle': "jgrid-resize-handle",
 
 		/**
 		컬럼 폭 조절 핸들의 폭입니다. <br>기본값:<code>11</code>
@@ -426,7 +426,7 @@ function ColHeader(args) {
 		@since 1.1.2
 		@version 1.1.2
 		*/
-		'_resizeHandleWidth': 11,
+		'resizeHandleWidth': 11,
 
 		/**
 		컬럼 헤더 컨테이너 마스크에 적용되는 CSS style 입니다.<br>
@@ -441,7 +441,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_style': "",
+		'style': "",
 
 		/**
 		컬럼 헤더들에 공통적으로 CSS style 입니다.<br>
@@ -456,7 +456,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_headerStyle': "",
+		'headerStyle': "",
 
 		/**
 		스크롤러의 시작 style.left
@@ -469,7 +469,7 @@ function ColHeader(args) {
 		@since 1.1.7
 		@version 1.1.7
 		*/
-		'_scrollerLeft': 10000,
+		'scrollerLeft': 10000,
 		
 		/**
 		스크롤러의 width
@@ -482,7 +482,7 @@ function ColHeader(args) {
 		@since 1.1.7
 		@version 1.1.7
 		*/
-		'_scrollerWidth': 100000,
+		'scrollerWidth': 100000,
 		
 		/**
 		컬럼 리사이즈를 할 때 생기는 가이드에 적용되는 CSS 클래스 입니다.
@@ -495,7 +495,7 @@ function ColHeader(args) {
 		@since 1.1.7
 		@version 1.1.7
 		*/
-		'_classResizeGuide': "resize-guide",
+		'classResizeGuide': "resize-guide",
 		
 		/**
 		컬럼 리사이즈를 할 때 생기는 가이드의 폭 픽셀입니다.
@@ -508,7 +508,7 @@ function ColHeader(args) {
 		@since 1.1.7
 		@version 1.1.7
 		*/
-		'_resizeGuideWidth': 1,
+		'resizeGuideWidth': 1,
 		
 		/**
 		컬럼 리사이즈를 할 때 생기는 가이드의 배경 style 입니다.
@@ -521,7 +521,7 @@ function ColHeader(args) {
 		@since 1.1.7
 		@version 1.1.7
 		*/
-		'_resizeBackground': "black;filter:alpha(opacity=40);opacity:0.4",
+		'resizeBackground': "black;filter:alpha(opacity=40);opacity:0.4",
 		
 		/**
 		컬럼 리사이즈를 할 때 컬럼 셀들을 동시에 사이즈 변경할지 여부입니다.
@@ -534,7 +534,7 @@ function ColHeader(args) {
 		@since 1.1.7
 		@version 1.1.7
 		*/
-		'_syncResize': false,
+		'syncResize': false,
 		
 		/**
 		컬럼 리사이즈 핸들의 배경 style 입니다.
@@ -547,46 +547,10 @@ function ColHeader(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'_resizeHandleBackground': "black;filter:alpha(opacity=5);opacity:0.05"
+		'resizeHandleBackground': "black;filter:alpha(opacity=5);opacity:0.05"
 	};
 
-	this._options = JGM._extend(options, args['options'], {
-		reorderEnabled:"_reorderEnabled",
-		reorderSyncEnabled:"_reorderSyncEnabled",
-		background:"_background",
-		backgroundHover:"_backgroundHover",
-		backgroundPlaceholder:"_backgroundPlaceholder",
-		sortBackground:"_sortBackground",
-		sortRight:"_sortRight",
-		sortWidth:"_sortWidth",
-		sortBackgroundAsc:"_sortBackgroundAsc",
-		sortBackgroundDesc:"_sortBackgroundDesc",
-		font:"_font",
-		height:"_height",
-		borderThickness:"_borderThickness",
-		border:"_border",
-		classHeaderMask:"_classHeaderMask",
-		classHeader:"_classHeader",
-		classColHeader:"_classColHeader",
-		classColHeaderActive:"_classColHeaderActive",
-		classColHeaderPlaceholder:"_classColHeaderPlaceholder",
-		classInteractive:"_classInteractive",
-		classColHeaderSorted:"_classColHeaderSorted",
-		classSort:"_classSort",
-		classSortAsc:"_classSortAsc",
-		classSortDesc:"_classSortDesc",
-		classResizeHandle:"_classResizeHandle",
-		resizeHandleWidth:"_resizeHandleWidth",
-		style:"_style",
-		headerStyle:"_headerStyle",
-		scrollerLeft:"_scrollerLeft",
-		scrollerWidth:"_scrollerWidth",
-		classResizeGuide:"_classResizeGuide",
-		resizeGuideWidth:"_resizeGuideWidth",
-		resizeBackground:"_resizeBackground",
-		syncResize:"_syncResize",
-		resizeHandleBackground:"_resizeHandleBackground"
-	});
+	this._options = JGM._extend(options, args['options']);
 
 	this._map = {};
 	
@@ -610,11 +574,11 @@ var prototype = ColHeader.prototype;
 
 prototype.__init = function() {
 	this._mask =
-		$("<div class='" + this._options['_classHeaderMask'] + "'>")
+		$("<div class='" + this._options['classHeaderMask'] + "'>")
 		.prependTo(this._ctnr);
 
 	this._head =
-		$("<div class='" + this._options['_classHeader'] + "'>")
+		$("<div class='" + this._options['classHeader'] + "'>")
 		.appendTo(this._mask);
 
 	ColHeader._disableSel(this._head);
@@ -662,46 +626,46 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "ColHeader",
 		path: "header",
-		"$": "_resizeGuide _mask _head",
-		property: "_ctnr _resizeMap",
-		map: "_map _options"
+		"$": "resizeGuide _mask _head",
+		property: "ctnr _resizeMap",
+		map: "map _options"
 	});
 };
 
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		border = o._borderThickness + "px " + o._border,
+		border = o.borderThickness + "px " + o.border,
 		rules = [],
 		colDefs = this.grid.colDefMgr.get(),
 		len = colDefs.length,
 		i = 0;
 
-	rules.push(gridId + o._classHeaderMask + "{position:relative;overflow:hidden;width:100%;font:" + o._font + ";background:" + o._background + ";border-bottom:" + border + ";" + o._style + "}");
-	rules.push(gridId + o._classHeader + "{position:relative;overflow:hidden;white-space:nowrap;cursor:default;left:" + (-o._scrollerLeft) + "px;width:" + o._scrollerWidth + "px;line-height:" + o._height + "px}");
-	rules.push(gridId + o._classColHeader + "{position:relative;overflow:hidden;float:left;text-overflow:ellipsis;text-align:center;height:" + o._height + "px;left:" + (o._scrollerLeft - this.grid.view.getScrollLeft()) + "px;border-right:" + border + ";" + o._headerStyle + "}");
-	rules.push(gridId + o._classColHeader + "." + o._classInteractive + ":hover, " + gridId + o._classColHeaderActive + "{background:" + o._backgroundHover + "}");
-	rules.push(gridId + o._classColHeaderActive + "{border-left:" + border + "}");
-	rules.push(gridId + o._classColHeader + "." + o._classColHeaderPlaceholder + "{background:" + o._backgroundPlaceholder + "!important}");
-	rules.push(gridId + o._classSort + "{position:absolute;height:" + o._height + "px;right:" + o._sortRight + "px;width:" + o._sortWidth + "px;background:url(" + o._sortBackground + ") no-repeat center transparent}");
-	rules.push(gridId + o._classSortAsc + "{background:url(" + o._sortBackgroundAsc + ") no-repeat center transparent}");
-	rules.push(gridId + o._classSortDesc + "{background:url(" + o._sortBackgroundDesc + ") no-repeat center transparent}");
-	rules.push(gridId + o._classResizeHandle + "{z-index:10;background:" + o._resizeHandleBackground + ";cursor:e-resize;position:absolute;height:" + o._height + "px;width:" + o._resizeHandleWidth + "px}");
-	rules.push(gridId + o._classResizeGuide + "{z-index:10;position:absolute;background:" + o._resizeBackground + ";width:" + o._resizeGuideWidth + "px}");
+	rules.push(gridId + o.classHeaderMask + "{position:relative;overflow:hidden;width:100%;font:" + o.font + ";background:" + o.background + ";border-bottom:" + border + ";" + o.style + "}");
+	rules.push(gridId + o.classHeader + "{position:relative;overflow:hidden;white-space:nowrap;cursor:default;left:" + (-o.scrollerLeft) + "px;width:" + o.scrollerWidth + "px;line-height:" + o.height + "px}");
+	rules.push(gridId + o.classColHeader + "{position:relative;overflow:hidden;float:left;text-overflow:ellipsis;text-align:center;height:" + o.height + "px;left:" + (o.scrollerLeft - this.grid.view.getScrollLeft()) + "px;border-right:" + border + ";" + o.headerStyle + "}");
+	rules.push(gridId + o.classColHeader + "." + o.classInteractive + ":hover, " + gridId + o.classColHeaderActive + "{background:" + o.backgroundHover + "}");
+	rules.push(gridId + o.classColHeaderActive + "{border-left:" + border + "}");
+	rules.push(gridId + o.classColHeader + "." + o.classColHeaderPlaceholder + "{background:" + o.backgroundPlaceholder + "!important}");
+	rules.push(gridId + o.classSort + "{position:absolute;height:" + o.height + "px;right:" + o.sortRight + "px;width:" + o.sortWidth + "px;background:url(" + o.sortBackground + ") no-repeat center transparent}");
+	rules.push(gridId + o.classSortAsc + "{background:url(" + o.sortBackgroundAsc + ") no-repeat center transparent}");
+	rules.push(gridId + o.classSortDesc + "{background:url(" + o.sortBackgroundDesc + ") no-repeat center transparent}");
+	rules.push(gridId + o.classResizeHandle + "{z-index:10;background:" + o.resizeHandleBackground + ";cursor:e-resize;position:absolute;height:" + o.height + "px;width:" + o.resizeHandleWidth + "px}");
+	rules.push(gridId + o.classResizeGuide + "{z-index:10;position:absolute;background:" + o.resizeBackground + ";width:" + o.resizeGuideWidth + "px}");
 	
 	for (; i < len; i++) {
-		rules.push(gridId + o._classColHeader + "#" + this.mid + "h" + colDefs[i].key + "{" + colDefs[i].headerStyle + "}");
+		rules.push(gridId + o.classColHeader + "#" + this.mid + "h" + colDefs[i].key + "{" + colDefs[i].headerStyle + "}");
 	}
 	
 	return rules.join("");
 };
 
 prototype._widthPlus = function() {
-	return this._options['_borderThickness'];
+	return this._options['borderThickness'];
 };
 
 prototype._onScrollViewportH = function(scrollLeft) {
-	this._head[0].style.left = (-this._options['_scrollerLeft'] - scrollLeft) + "px";
+	this._head[0].style.left = (-this._options['scrollerLeft'] - scrollLeft) + "px";
 };
 
 prototype._onRenderModules = function() {
@@ -730,13 +694,13 @@ prototype._onRenderModules = function() {
 };
 
 prototype._onAfterRenderModules = function() {
-	if (this._options['_reorderEnabled']) {
+	if (this._options['reorderEnabled']) {
 		this._initReorder();
 	}
 	
 	this._initResizeHandles();
 	
-	this._resizeGuide = $("<div class='" + this._options['_classResizeGuide'] + "'>")
+	this._resizeGuide = $("<div class='" + this._options['classResizeGuide'] + "'>")
 		.appendTo(this.grid.view._mask);
 	this._resizeGuide[0].style.top = "0px";
 	this._resizeGuide[0].style.height = "0px";
@@ -749,7 +713,7 @@ prototype._render = function(header, colDef, i) {
 	var name = (colDef['noName'] ? "" : colDef['name'] || colDef['key']),
 		widthPlus = this._widthPlus();
 
-	header.push("<div id='" + this.mid + "h" + colDef['key'] + "' class='" + this._options['_classColHeader'] + " " + (this._options['_reorderEnabled'] || Util.isNotNull(colDef['sorter']) ? " " + this._options['_classInteractive'] : "") +
+	header.push("<div id='" + this.mid + "h" + colDef['key'] + "' class='" + this._options['classColHeader'] + " " + (this._options['reorderEnabled'] || Util.isNotNull(colDef['sorter']) ? " " + this._options['classInteractive'] : "") +
 		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.grid.view._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + colDef['key'] + "'>");
 
 	/**
@@ -777,7 +741,7 @@ prototype._render = function(header, colDef, i) {
 	this.grid.event.trigger("onRenderHeader_" + colDef['key'] + "_append", [header]);
 
 	if (Util.isNotNull(colDef['sorter'])) {
-		header.push("<span class='" + this._options['_classSort'] + "'></span>");
+		header.push("<span class='" + this._options['classSort'] + "'></span>");
 	}
 
 	header.push("</div>");
@@ -822,24 +786,24 @@ prototype._updateIndicator = function(key, status) {
 	}
 
 	var opt = this._options,
-		indicator = colHeader.find("." + opt._classSort);
+		indicator = colHeader.find("." + opt.classSort);
 	if (status === 0) {
-		colHeader.removeClass(opt._classColHeaderSorted);
-		indicator.removeClass(opt._classSortAsc + " " + opt._classSortDesc);
+		colHeader.removeClass(opt.classColHeaderSorted);
+		indicator.removeClass(opt.classSortAsc + " " + opt.classSortDesc);
 	}
 	else {
-		colHeader.addClass(opt._classColHeaderSorted);
+		colHeader.addClass(opt.classColHeaderSorted);
 		if (status === 1) {
-			indicator.addClass(opt._classSortAsc).removeClass(opt._classSortDesc);
+			indicator.addClass(opt.classSortAsc).removeClass(opt.classSortDesc);
 		}
 		else if (status === 2) {
-			indicator.addClass(opt._classSortDesc).removeClass(opt._classSortAsc);
+			indicator.addClass(opt.classSortDesc).removeClass(opt.classSortAsc);
 		}
 	}
 };
 
 prototype._closest = function(obj) {
-	return Util$.safe$(obj).closest("div." + this._options['_classColHeader'], this._head);
+	return Util$.safe$(obj).closest("div." + this._options['classColHeader'], this._head);
 };
 
 prototype._getDef = function(header) {
@@ -920,22 +884,22 @@ prototype._initReorder = function() {
 		};
 
 	container.sortable({
-		'items': "." + opt._classColHeader,
+		'items': "." + opt.classColHeader,
 		'axis': "x",
 		'forcePlaceholderSize': true,
-		'placeholder': opt._classColHeaderPlaceholder + " " + opt._classColHeader,
+		'placeholder': opt.classColHeaderPlaceholder + " " + opt.classColHeader,
 		'tolerance': "pointer",
 		'start': function(e, ui) {
-			ui.item.addClass(thisIns._options['_classColHeaderActive']);
+			ui.item.addClass(thisIns._options['classColHeaderActive']);
 		},
 		'stop': function(e, ui) {
-			ui.item.removeClass(thisIns._options['_classColHeaderActive']);
+			ui.item.removeClass(thisIns._options['classColHeaderActive']);
 			thisIns._syncResizeHandles();
 		},
 		'update': updatefn
 	});
 
-	if (opt._reorderSyncEnabled) {
+	if (opt.reorderSyncEnabled) {
 		container.sortable("option", "change", updatefn);
 	}
 };
@@ -1008,13 +972,13 @@ prototype._click = function(e) {
 };
 
 prototype._mousedown = function(e) {
-	if (Util.hasTagAndClass(e.target, "DIV", this._options['_classResizeHandle'])) {
+	if (Util.hasTagAndClass(e.target, "DIV", this._options['classResizeHandle'])) {
 		this._resizeKey = e.target.getAttribute("key");
 		this._resizeInitWidth = this.get(this._resizeKey)[0].clientWidth;
 		this._resizeInitColWidth = this.grid.colDefMgr.getByKey(this._resizeKey).width;
 		this._resizeInitX = e.clientX;
 		this._resizeHandleInitX = this._resizeMap[this._resizeKey][0].offsetLeft;
-		this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (this._options['_resizeHandleWidth'] - this._options['_resizeGuideWidth']) / 2 - this._options['_scrollerLeft']) + "px";
+		this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (this._options['resizeHandleWidth'] - this._options['resizeGuideWidth']) / 2 - this._options['scrollerLeft']) + "px";
 		this._resizeGuide[0].style.height = this.grid.view.getInnerHeight() + "px";
 		return;
 	}
@@ -1065,9 +1029,9 @@ prototype._dragmove = function(e) {
 	
 	this.get(this._resizeKey)[0].style.width = this._resizeInitWidth + dx + "px";
 	this._moveResizeHandles(this._resizeHandleInitX + dx - this._resizeMap[this._resizeKey][0].offsetLeft, this.grid.colDefMgr.getIdxByKey(this._resizeKey));
-	this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + dx + (this._options['_resizeHandleWidth'] - this._options['_resizeGuideWidth']) / 2 - this._options['_scrollerLeft']) + "px";
+	this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + dx + (this._options['resizeHandleWidth'] - this._options['resizeGuideWidth']) / 2 - this._options['scrollerLeft']) + "px";
 	
-	if (this._options['_syncResize']) {
+	if (this._options['syncResize']) {
 		this.grid.view.setWidthByKey(this._resizeKey, this._resizeInitColWidth + dx);
 	}
 };
@@ -1168,9 +1132,9 @@ prototype._initResizeHandles = function() {
 		colDef,
 		key,
 		i = 0,
-		offset = this._resizeHandleOffset = Math.floor(opt._scrollerLeft - opt._resizeHandleWidth / 2),
+		offset = this._resizeHandleOffset = Math.floor(opt.scrollerLeft - opt.resizeHandleWidth / 2),
 		vmid = this.grid.view.mid,
-		handle = opt._classResizeHandle,
+		handle = opt.classResizeHandle,
 		head = this._head;
 
 	for (; i < len; i++) {

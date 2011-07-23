@@ -124,7 +124,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_attrRowIdx':					"r",
+		'attrRowIdx':					"r",
 
 		/**
 		뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 미만일 경우
@@ -137,7 +137,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_appendThreshold':			3,
+		'appendThreshold':			3,
 
 		/**
 		뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 이상일 경우
@@ -150,7 +150,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_renderThreshold':			10,
+		'renderThreshold':			10,
 
 		/**
 		캔버스를 렌더링 할 경우, 스크롤의 자연스러움을 위해 화면에 보이는 로우들 이외에
@@ -163,7 +163,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_bufferSize':					6,
+		'bufferSize':					6,
 
 		/**
 		뷰포트가 한 스크롤 페이지에 보여줄 데이터 로우들의 수를 정합니다. 뷰포트의
@@ -176,7 +176,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_rowsPerPage':			10,
+		'rowsPerPage':			10,
 
 		/**
 		로우의 높이의 픽셀값 입니다. padding 과 border 를 제외한 그 안의 높이입니다. <br>기본값:<code>20</code>
@@ -188,7 +188,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_rowH':						21,
+		'rowH':						21,
 
 		/**
 		셀 border 의 두께의 픽셀값 입니다. <br>기본값:<code>1</code>
@@ -200,7 +200,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_borderThickness': 1,
+		'borderThickness': 1,
 
 		/**
 		셀 border 의 스타일을 정합니다. <br>기본값:<code>"solid #D0D7E5"</code>
@@ -212,7 +212,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_border':						"solid #D0D7E5",
+		'border':						"solid #D0D7E5",
 
 		/**
 		셀 padding 의 픽셀값 입니다. <br>기본값:<code>1</code>
@@ -224,7 +224,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_padding':					1,
+		'padding':					1,
 
 		/**
 		홀수번째 로우와 짝수번째 로우의 바탕색을 다르게 할 지 정합니다. <br>기본값:<code>false</code>
@@ -236,7 +236,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_evenOddRows':				false,
+		'evenOddRows':				false,
 
 		/**
 		{@link JGM.ViewportManager.options.evenOddRows evenOddRows} 가 true 일 경우,
@@ -249,7 +249,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_oddRowsBackground':			"#F4F4F4",
+		'oddRowsBackground':			"#F4F4F4",
 
 		/**
 		ViewportManager 컨테이너에 적용되는 CSS style 입니다.<br>
@@ -264,7 +264,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_style': "",
+		'style': "",
 
 		/**
 		그리드 캔바스에 적용되는 CSS style 입니다.<br>
@@ -279,7 +279,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_canvasStyle': "",
+		'canvasStyle': "",
 
 		/**
 		모든 그리드 로우에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -294,7 +294,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_rowStyle': "",
+		'rowStyle': "",
 
 		/**
 		모든 그리드 셀에 공통적으로 적용되는 CSS style 입니다.<br>
@@ -309,7 +309,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_cellStyle': "",
+		'cellStyle': "",
 
 		/**
 		모든 그리드 로우에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-row"</code>
@@ -321,7 +321,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classRow':						"jgrid-row",
+		'classRow':						"jgrid-row",
 
 		/**
 		모든 그리드 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-cell"</code>
@@ -333,7 +333,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classCell':					"jgrid-cell",
+		'classCell':					"jgrid-cell",
 
 		/**
 		그리드 뷰포트에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-viewport"</code>
@@ -345,7 +345,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classView':				"jgrid-viewport",
+		'classView':				"jgrid-viewport",
 
 		/**
 		그리드 캔버스에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-canvas"</code>
@@ -357,7 +357,7 @@ function ViewportManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classCanvas':				"jgrid-canvas",
+		'classCanvas':				"jgrid-canvas",
 
 		/**
 		그리드 뷰가 포커스 되었을 경우 보여지는 뷰의 배경 스타일입니다. <br>기본값:<code>"#FFF"</code>
@@ -369,7 +369,7 @@ function ViewportManager(args) {
 		@since 1.1.5
 		@version 1.1.5
 		*/
-		'_focusBackground':			"#FFF",
+		'focusBackground':			"#FFF",
 
 		/**
 		그리드 뷰가 포커스 되었을 경우 보여지는 아웃라인 스타일입니다. <br>기본값:<code>"2px solid #f1ca7f"</code>
@@ -381,7 +381,7 @@ function ViewportManager(args) {
 		@since 1.1.5
 		@version 1.1.5
 		*/
-		'_focusOutline': "2px solid #f1ca7f",
+		'focusOutline': "2px solid #f1ca7f",
 
 		/**
 		true 로 설정되있을 경우 view 의 높이가 모든 로우를 포함하도록 자동 변경됩니다. <br>기본값:<code>false</code>
@@ -393,36 +393,12 @@ function ViewportManager(args) {
 		@since 1.1.7
 		@version 1.1.7
 		*/
-		'_autoHeight': false,
+		'autoHeight': false,
 
-		'_autoWidth': false
+		'autoWidth': false
 	};
 
-	this._options = JGM._extend(options, args['options'], {
-		attrRowIdx:"_attrRowIdx",
-		appendThreshold:"_appendThreshold",
-		renderThreshold:"_renderThreshold",
-		bufferSize:"_bufferSize",
-		rowsPerPage:"_rowsPerPage",
-		rowH:"_rowH",
-		borderThickness:"_borderThickness",
-		border:"_border",
-		padding:"_padding",
-		evenOddRows:"_evenOddRows",
-		oddRowsBackground:"_oddRowsBackground",
-		classRow:"_classRow",
-		classCell:"_classCell",
-		classView:"_classView",
-		classCanvas:"_classCanvas",
-		style:"_style",
-		canvasStyle:"_canvasStyle",
-		rowStyle:"_rowStyle",
-		cellStyle:"_cellStyle",
-		focusBackground:"_focusBackground",
-		focusOutline:"_focusOutline",
-		autoHeight:"_autoHeight",
-		autoWidth:"_autoWidth"
-	});
+	this._options = JGM._extend(options, args['options']);
 
 	this._vars = {
 		drag:			false,
@@ -447,11 +423,11 @@ var prototype = ViewportManager.prototype;
 
 prototype.__init = function() {
 	this._mask =
-		$("<div class='" + this._options['_classView'] + "' tabIndex='0' onscroll='JGM.m.ViewportManager." + this.mid + "._scroll()'>")
+		$("<div class='" + this._options['classView'] + "' tabIndex='0' onscroll='JGM.m.ViewportManager." + this.mid + "._scroll()'>")
 		.appendTo(this._ctnr);
 
 	this._canvas =
-		$("<div class='" + this._options['_classCanvas'] + "'>")
+		$("<div class='" + this._options['classCanvas'] + "'>")
 		.appendTo(this._mask);
 
 	// disable text selection in grid cells except in input and textarea
@@ -509,37 +485,37 @@ prototype._onDestroy = function() {
 	JGM._destroy(this, {
 		name: "ViewportManager",
 		path: "view",
-		"$": "_canvas _mask",
-		property: "_ctnr",
-		map: "_vars _lockedRows _renderedRows _options"
+		"$": "canvas _mask",
+		property: "ctnr",
+		map: "vars _lockedRows _renderedRows _options"
 	});
 };
 
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		cellSel = gridId + o._classCell,
-		rowSel = gridId + o._classRow,
-		border = o._borderThickness + "px " + o._border,
-		attrRowIdx = rowSel + "[" + o._attrRowIdx,
+		cellSel = gridId + o.classCell,
+		rowSel = gridId + o.classRow,
+		border = o.borderThickness + "px " + o.border,
+		attrRowIdx = rowSel + "[" + o.attrRowIdx,
 		colDefs = this.grid.colDefMgr.get(),
       clen = colDefs.length,
       i = 0,
 		rules = [];
 
-	rules.push(gridId + o._classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + o._rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + o._style + "}");
-	rules.push(gridId + o._classView + ":focus{background:" + o._focusBackground + ";outline:" + o._focusOutline + "}");
-	rules.push(gridId + o._classCanvas + "{height:" + this._calCanvasHeight() + "px;" + o._canvasStyle + ";background:#fff}");
-	rules.push(rowSel + "{position:absolute;" + o._rowStyle + "}");
-	rules.push(cellSel + "{height:" + o._rowH + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + o._padding + "px;border-right:" + border + ";" + o._cellStyle + "}");
+	rules.push(gridId + o.classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + o.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + o.style + "}");
+	rules.push(gridId + o.classView + ":focus{background:" + o.focusBackground + ";outline:" + o.focusOutline + "}");
+	rules.push(gridId + o.classCanvas + "{height:" + this._calCanvasHeight() + "px;" + o.canvasStyle + ";background:#fff}");
+	rules.push(rowSel + "{position:absolute;" + o.rowStyle + "}");
+	rules.push(cellSel + "{height:" + o.rowH + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + o.padding + "px;border-right:" + border + ";" + o.cellStyle + "}");
 	
-	if (o._evenOddRows) {
+	if (o.evenOddRows) {
 		rules.push(
 			attrRowIdx + "$='1']," +
 			attrRowIdx + "$='3']," +
 			attrRowIdx + "$='5']," +
 			attrRowIdx + "$='7']," +
-			attrRowIdx + "$='9']{background:" + o._oddRowsBackground + "}");
+			attrRowIdx + "$='9']{background:" + o.oddRowsBackground + "}");
    }
 
 	for (; i < clen; i++) {
@@ -550,7 +526,7 @@ prototype._onCreateCss = function() {
 };
 
 prototype._onCreateDynamicCss = function() {
-	var cellSel = "#" + this.grid.mid + " ." + this._options['_classCell'],
+	var cellSel = "#" + this.grid.mid + " ." + this._options['classCell'],
       str = this._getRowSelector() + "{width:" + this._calCanvasWidth() + "px}",
       colDefs = this.grid.colDefMgr.get(),
       clen = colDefs.length,
@@ -635,11 +611,11 @@ prototype.onIdListChange = function(datalist, befores, idKey) {
 };
 
 prototype._getCellSelector = function() {
-	return "#" + this.grid.mid + " ." + this._options['_classCell'];
+	return "#" + this.grid.mid + " ." + this._options['classCell'];
 };
 
 prototype._getRowSelector = function() {
-	return "#" + this.grid.mid + " ." + this._options['_classRow'];
+	return "#" + this.grid.mid + " ." + this._options['classRow'];
 };
 
 /**
@@ -780,7 +756,7 @@ prototype._getColInnerWidthByKey = function(i) {
 @version 1.1.7
 */
 prototype.getColWidth = function(i) {
-	return this.grid.colDefMgr.get(i).width + this._options['_padding'];
+	return this.grid.colDefMgr.get(i).width + this._options['padding'];
 };
 
 /**
@@ -795,38 +771,38 @@ prototype.getColWidth = function(i) {
 @version 1.1.7
 */
 prototype.getColWidthByKey = function(i) {
-	return this.grid.colDefMgr.getByKey(i).width + this._options['_padding'];
+	return this.grid.colDefMgr.getByKey(i).width + this._options['padding'];
 };
 
 prototype._getColOuterWidth = function(i) {
-	return this.grid.colDefMgr.get(i).width + this._options['_padding'] + this._options['_borderThickness'];
+	return this.grid.colDefMgr.get(i).width + this._options['padding'] + this._options['borderThickness'];
 };
 
 prototype._getColOuterWidthByKey = function(i) {
-	return this.grid.colDefMgr.getByKey(i).width + this._options['_padding'] + this._options['_borderThickness'];
+	return this.grid.colDefMgr.getByKey(i).width + this._options['padding'] + this._options['borderThickness'];
 };
 
 prototype._getPadding = function() {
-	return this._options['_padding'];
+	return this._options['padding'];
 };
 
 prototype._colWidthPlus = function() {
-	return this._options['_padding'] + this._options['_borderThickness'];
+	return this._options['padding'] + this._options['borderThickness'];
 };
 
 prototype._getRowOuterHeight = function() {
-	return this._options['_rowH'] + this._options['_borderThickness'];
+	return this._options['rowH'] + this._options['borderThickness'];
 };
 
 prototype._getRowInnerHeight = function() {
-	return this._options['_rowH'];
+	return this._options['rowH'];
 };
 
 prototype._calHeight = function() {
-	if (this._options['_autoHeight']) {
+	if (this._options['autoHeight']) {
 		return this._calCanvasHeight() + (this.grid.width() < this._calCanvasWidth() ? this.grid._vars.scrollbarDim.h: 0);
    }
-	return this._getRowOuterHeight() * this._options['_rowsPerPage'];
+	return this._getRowOuterHeight() * this._options['rowsPerPage'];
 };
 
 /**
@@ -1235,7 +1211,7 @@ prototype.getScrollHForSafe = function(col) {
 
 
 prototype._getRenderRange = function() {
-	if (this._options['_autoHeight']) {
+	if (this._options['autoHeight']) {
 		return {start:0, end:this.grid.dataMgr.datalist.length - 1};
    }
 
@@ -1243,8 +1219,8 @@ prototype._getRenderRange = function() {
 		max = this.grid.dataMgr.datalist.length - 1;
 
 	return {
-		start: (((tmp = (this._getFirstVisibleRow() - this._options['_bufferSize'])) < 0) ? 0 : tmp),
-		end: (((tmp = (this._getLastVisibleRow() + this._options['_bufferSize'])) > max) ? max : tmp)
+		start: (((tmp = (this._getFirstVisibleRow() - this._options['bufferSize'])) < 0) ? 0 : tmp),
+		end: (((tmp = (this._getLastVisibleRow() + this._options['bufferSize'])) > max) ? max : tmp)
 	};
 };
 
@@ -1253,7 +1229,7 @@ prototype._fitHeight = function() {
 };
 
 prototype._resizeWidth = function(e) {
-	if (this._options['_autoHeight']) {
+	if (this._options['autoHeight']) {
 		this._fitHeight();
    }
 };
@@ -1784,7 +1760,7 @@ prototype._removeAndRenderRows = function(range) {
 };
 
 prototype._getColCellClass = function(colDef) {
-	var cssClass = this._options['_classCell'] + " " + "k_" + colDef['key'];
+	var cssClass = this._options['classCell'] + " " + "k_" + colDef['key'];
 	if (Util.isNotNull(colDef['colClass'])) {
 		cssClass += " " + colDef['colClass'];
 	}
@@ -1819,9 +1795,9 @@ prototype._getColCellClasses = function(colDefs) {
 };
 
 prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rowH) {
-	html.push("<div class='" + this._options['_classRow'] +
+	html.push("<div class='" + this._options['classRow'] +
 			"' i='" + datarow[this.grid.dataMgr.idKey] +
-			"' " + this._options['_attrRowIdx'] + "='" + rowIdx +
+			"' " + this._options['attrRowIdx'] + "='" + rowIdx +
 			"' style='top:" + (rowH * rowIdx) + "px'>");
 	var i = 0,
 		collen = colDefs.length;
@@ -2532,12 +2508,12 @@ prototype._scroll = function() {
 
 	var numDiff = Math.abs(scrollVDist / this._getRowOuterHeight());
 
-	if (numDiff < this._options['_appendThreshold']) {
+	if (numDiff < this._options['appendThreshold']) {
 		return;
 	}
 
 	this._vars._lastScrollTop = scrollTop;
-	//if (numDiff >= this._options['_renderThreshold']) {
+	//if (numDiff >= this._options['renderThreshold']) {
 	this._render();
 	/*
 	   }
@@ -2713,11 +2689,11 @@ prototype.getRenderedCellByIdAndKey = function(id, key) {
 };
 
 prototype._getClosestCell = function(obj) {
-	return Util.closestWithTag(obj, "DIV", this._options['_classCell'], this._canvas[0]);
+	return Util.closestWithTag(obj, "DIV", this._options['classCell'], this._canvas[0]);
 };
 
 prototype._getClosestRow = function(obj) {
-	return Util.closestWithTag(obj, "DIV", this._options['_classRow'], this._canvas[0]);
+	return Util.closestWithTag(obj, "DIV", this._options['classRow'], this._canvas[0]);
 };
 
 prototype._getClosestRowIdx = function(obj) {

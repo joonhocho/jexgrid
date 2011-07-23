@@ -120,7 +120,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classTooltip':					"jgrid-tooltip",
+		'classTooltip':					"jgrid-tooltip",
 
 		/**
 		툴팁이 마우스를 실시간으로 따라다닐지를 정합니다. true 일 경우 따라다니고,
@@ -133,7 +133,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_tooltipSyncEnabled':			true,
+		'tooltipSyncEnabled':			true,
 
 		/**
 		툴팁의 마우스 포인터로부터의 우측 offset 을 정합니다.<br>기본값:<code>0</code>
@@ -145,7 +145,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_offsetX':					0,
+		'offsetX':					0,
 
 		/**
 		툴팁의 마우스 포인터로부터의 아래 방향 offset 을 정합니다.<br>기본값:<code>18</code>
@@ -157,7 +157,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_offsetY':					18,
+		'offsetY':					18,
 
 		/**
 		툴팁의 배경을 설정합니다. <br>기본값:<code>"#F5F5F5"</code>
@@ -169,7 +169,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_background':					"#F5F5F5",
+		'background':					"#F5F5F5",
 
 		/**
 		툴팁의 border 를 설정합니다. <br>기본값:<code>"1px solid #868686"</code>
@@ -181,7 +181,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_border':						"1px solid #868686",
+		'border':						"1px solid #868686",
 
 		/**
 		툴팁의 padding 을 설정합니다. <br>기본값:<code>"2px 10px"</code>
@@ -193,7 +193,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_padding':					"2px 10px",
+		'padding':					"2px 10px",
 
 		/**
 		툴팁의 폰트를 설정합니다. <br>기본값:<code>"14px Arial,Helvetica,sans-serif"</code>
@@ -205,7 +205,7 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_font':						"14px Arial,Helvetica,sans-serif",
+		'font':						"14px Arial,Helvetica,sans-serif",
 
 		/**
 		툴팁의 글자색을 설정합니다. <br>기본값:<code>"#333"</code>
@@ -217,20 +217,10 @@ function TooltipManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_color':				"#333"
+		'color':				"#333"
 	};
 
-	this._options = JGM._extend(options, args['options'], {
-		classTooltip:"_classTooltip",
-		tooltipSyncEnabled:"_tooltipSyncEnabled",
-		offsetX:"_offsetX",
-		offsetY:"_offsetY",
-		background:"_background",
-		border:"_border",
-		padding:"_padding",
-		font:"_font",
-		color:"_color"
-	});
+	this._options = JGM._extend(options, args['options']);
 	
 	this._tooltip;
 	this.__init();
@@ -256,9 +246,9 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "TooltipManager",
 		path: "tooltip",
-		"$": "_tooltip",
-		property: "_ctnr",
-		map: "_options"
+		"$": "tooltip",
+		property: "ctnr",
+		map: "options"
 	});
 };
 
@@ -267,7 +257,7 @@ prototype._onCreateCss = function() {
 		opt = this._options,
 		rules = [];
 
-	rules.push(gridId + opt._classTooltip + "{position:absolute;z-index:10;background:" + opt._background + ";border:" + opt._border + ";padding:" + opt._padding + ";color:" + opt._color + ";font:" + opt._font + "}");
+	rules.push(gridId + opt.classTooltip + "{position:absolute;z-index:10;background:" + opt.background + ";border:" + opt.border + ";padding:" + opt.padding + ";color:" + opt.color + ";font:" + opt.font + "}");
 
 	return rules.join("");
 };
@@ -281,8 +271,8 @@ prototype._mouseoutCanvas = function(e, cell) {
 
 prototype._mousemoveCanvas = function(e, cell) {
 	var opt = this._options;
-	if (opt._tooltipSyncEnabled && Util.isNotNull(this._tooltip)) {
-		this._tooltip.css({'left':(e.pageX + opt._offsetX) + "px", 'top':(e.pageY + opt._offsetY) + "px"});
+	if (opt.tooltipSyncEnabled && Util.isNotNull(this._tooltip)) {
+		this._tooltip.css({'left':(e.pageX + opt.offsetX) + "px", 'top':(e.pageY + opt.offsetY) + "px"});
 	}
 };
 
@@ -291,7 +281,7 @@ prototype._mouseoverCanvas = function(e, cell) {
 		if (Util.isNull(this._tooltip)) {
 			var opt = this._options,
 				temp = document.createElement("div");
-			temp.innerHTML = "<div class='" + opt._classTooltip + "' style='left:" + (e.pageX + opt._offsetX) + "px;top:" + (e.pageY + opt._offsetY) + "px'>" + cell.getValue() + "</div>";
+			temp.innerHTML = "<div class='" + opt.classTooltip + "' style='left:" + (e.pageX + opt.offsetX) + "px;top:" + (e.pageY + opt.offsetY) + "px'>" + cell.getValue() + "</div>";
 			this._tooltip = $(temp.firstChild);
 			this._ctnr[0].appendChild(this._tooltip[0]);
 		}

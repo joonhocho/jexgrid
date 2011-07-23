@@ -49,153 +49,80 @@ function SearchManager(args) {
 	this.grid.search = this;
 
 	var options = {
-		'_background': "#f0f0f0",
-		'_borderThickness': 1,
-		'_border': "solid #d6d6d6",
+		'background': "#f0f0f0",
+		'borderThickness': 1,
+		'border': "solid #d6d6d6",
 
-		'_inputBorder': "1px solid #A7A7A7",
-		'_inputPadding': 0,
+		'inputBorder': "1px solid #A7A7A7",
+		'inputPadding': 0,
 
-		'_searchbarAlign': "center",
-		'_searchbarMargin': 3,
-		'_searchbarWidth': "99%",
-		'_searchbarHeight': 20,
+		'searchbarAlign': "center",
+		'searchbarMargin': 3,
+		'searchbarWidth': "99%",
+		'searchbarHeight': 20,
 
-		'_tagsHeight': 26,
-		'_tagsPadding': 2,
-		'_tagsBorderRadius': 3,
+		'tagsHeight': 26,
+		'tagsPadding': 2,
+		'tagsBorderRadius': 3,
 
-		'_advButtonColor': "#123272",
-		'_advButtonFont': "bold 12px Arial,Helvetica,sans-serif",
-		'_advButtonPadding': 5,
+		'advButtonColor': "#123272",
+		'advButtonFont': "bold 12px Arial,Helvetica,sans-serif",
+		'advButtonPadding': 5,
 
-		'_advButtonBg': "",
-		'_advButtonBgHover': "url(" + this.grid._options['imageUrl'] + "more-options-bg-hover.png) repeat-x scroll center",
-		'_advButtonBgActive': "url(" + this.grid._options['imageUrl'] + "more-options-bg-active.png) repeat-x scroll center",
-		'_advButtonBgOpened': "url(" + this.grid._options['imageUrl'] + "more-options-bg-opened.png) repeat-x scroll center",
+		'advButtonBg': "",
+		'advButtonBgHover': "url(" + this.grid._options['imageUrl'] + "more-options-bg-hover.png) repeat-x scroll center",
+		'advButtonBgActive': "url(" + this.grid._options['imageUrl'] + "more-options-bg-active.png) repeat-x scroll center",
+		'advButtonBgOpened': "url(" + this.grid._options['imageUrl'] + "more-options-bg-opened.png) repeat-x scroll center",
 
-		'_advButtonBorderThickness': 1,
-		'_advButtonBorder': "solid transparent",
-		'_advButtonBorderHover': "solid #a4a4a4",
-		'_advButtonBorderActive': "solid #c5c5c5",
-		'_advButtonBorderOpened': "solid #bfbfbf",
+		'advButtonBorderThickness': 1,
+		'advButtonBorder': "solid transparent",
+		'advButtonBorderHover': "solid #a4a4a4",
+		'advButtonBorderActive': "solid #c5c5c5",
+		'advButtonBorderOpened': "solid #bfbfbf",
 
-		'_advButtonIconWidth': 9,
-		'_advButtonIconMargin': 2,
-		'_advButtonIconUrl': this.grid._options['imageUrl'] + "more-options.png",
-		'_advButtonIconCloseUrl': this.grid._options['imageUrl'] + "more-options-close.png",
+		'advButtonIconWidth': 9,
+		'advButtonIconMargin': 2,
+		'advButtonIconUrl': this.grid._options['imageUrl'] + "more-options.png",
+		'advButtonIconCloseUrl': this.grid._options['imageUrl'] + "more-options-close.png",
 
-		'_tagPadding': 2,
-		'_tagBorder': "solid #93979D",
-		'_tagBorderThickness': 1,
-		'_tagFont': "bold 13px Arial",
-		'_tagColor': "#282853",
-		'_tagBackground': "url(" + this.grid._options['imageUrl'] + "tag-background.png) repeat-x scroll center",
+		'tagPadding': 2,
+		'tagBorder': "solid #93979D",
+		'tagBorderThickness': 1,
+		'tagFont': "bold 13px Arial",
+		'tagColor': "#282853",
+		'tagBackground': "url(" + this.grid._options['imageUrl'] + "tag-background.png) repeat-x scroll center",
 
-		'_tagRemoveIconWidth': 12,
-		'_tagRemoveIconUrl': this.grid._options['imageUrl'] + "tag-close.png",
-		'_tagRemoveIconHoverUrl': this.grid._options['imageUrl'] + "tag-close-hover.png",
+		'tagRemoveIconWidth': 12,
+		'tagRemoveIconUrl': this.grid._options['imageUrl'] + "tag-close.png",
+		'tagRemoveIconHoverUrl': this.grid._options['imageUrl'] + "tag-close-hover.png",
 
-		'_advFont': "11px Arial",
-		'_advInputWidth': 30,
+		'advFont': "11px Arial",
+		'advInputWidth': 30,
 
-		'_classMask': "search-mask",
-		'_classSearchbar': "search-bar",
-		'_classAdvButtonName': "more-option-name",
-		'_classAdvButton': "more-options",
-		'_classAdvButtonIcon': "more-icon",
-		'_classClearTags': "clear-tags",
-		'_classTagbar': "search-tags",
-		'_classTag': "search-tag",
-		'_classTagName': "search-tag-name",
-		'_classRemoveTag': "search-tag-remove",
-		'_classAdvanced': "search-advanced",
-		'_classOptionCol': "search-option-col",
-		'_classOption': "search-option",
-		'_classSearchIcon': "search-icon",
-		'_searchIconUrl': this.grid._options['imageUrl'] + "search-icon.png",
-		'_searchIconWidth': 15,
-		'_searchIconHeight': 15,
-		'_keyMap': undefined,
-		'_tagRemoveIconActiveUrl': this.grid._options['imageUrl'] + "tag-close-active.png",
+		'classMask': "search-mask",
+		'classSearchbar': "search-bar",
+		'classAdvButtonName': "more-option-name",
+		'classAdvButton': "more-options",
+		'classAdvButtonIcon': "more-icon",
+		'classClearTags': "clear-tags",
+		'classTagbar': "search-tags",
+		'classTag': "search-tag",
+		'classTagName': "search-tag-name",
+		'classRemoveTag': "search-tag-remove",
+		'classAdvanced': "search-advanced",
+		'classOptionCol': "search-option-col",
+		'classOption': "search-option",
+		'classSearchIcon': "search-icon",
+		'searchIconUrl': this.grid._options['imageUrl'] + "search-icon.png",
+		'searchIconWidth': 15,
+		'searchIconHeight': 15,
+		'keyMap': undefined,
+		'tagRemoveIconActiveUrl': this.grid._options['imageUrl'] + "tag-close-active.png",
 		
-		'_syncMaster': false
+		'syncMaster': false
 	};
 
-	this._options = JGM._extend(options, args['options'], {
-
-		background:"_background",
-		borderThickness:"_borderThickness",
-		border:"_border",
-
-		inputBorder:"_inputBorder",
-		inputPadding:"_inputPadding",
-
-		searchbarAlign:"_searchbarAlign",
-		searchbarMargin:"_searchbarMargin",
-		searchbarWidth:"_searchbarWidth",
-		searchbarHeight:"_searchbarHeight",
-
-		tagsHeight:"_tagsHeight",
-		tagsPadding:"_tagsPadding",
-		tagsBorderRadius:"_tagsBorderRadius",
-
-		advButtonColor:"_advButtonColor",
-		advButtonFont:"_advButtonFont",
-		advButtonPadding:"_advButtonPadding",
-
-		advButtonBg:"_advButtonBg",
-		advButtonBgHover:"_advButtonBgHover",
-		advButtonBgActive:"_advButtonBgActive",
-		advButtonBgOpened:"_advButtonBgOpened",
-
-		advButtonBorderThickness:"_advButtonBorderThickness",
-		advButtonBorder:"_advButtonBorder",
-		advButtonBorderHover:"_advButtonBorderHover",
-		advButtonBorderActive:"_advButtonBorderActive",
-		advButtonBorderOpened:"_advButtonBorderOpened",
-
-		advButtonIconWidth:"_advButtonIconWidth",
-		advButtonIconMargin:"_advButtonIconMargin",
-		advButtonIconUrl:"_advButtonIconUrl",
-		advButtonIconCloseUrl:"_advButtonIconCloseUrl",
-
-		tagPadding:"_tagPadding",
-		tagBorder:"_tagBorder",
-		tagBorderThickness:"_tagBorderThickness",
-		tagFont:"_tagFont",
-		tagColor:"_tagColor",
-		tagBackground:"_tagBackground",
-
-		tagRemoveIconWidth:"_tagRemoveIconWidth",
-		tagRemoveIconUrl:"_tagRemoveIconUrl",
-		tagRemoveIconHoverUrl:"_tagRemoveIconHoverUrl",
-
-		advFont:"_advFont",
-		advInputWidth:"_advInputWidth",
-
-		classMask:"_classMask",
-		classSearchbar:"_classSearchbar",
-		classAdvButtonName:"_classAdvButtonName",
-		classAdvButton:"_classAdvButton",
-		classAdvButtonIcon:"_classAdvButtonIcon",
-		classClearTags:"_classClearTags",
-		classTagbar:"_classTagbar",
-		classTag:"_classTag",
-		classTagName:"_classTagName",
-		classRemoveTag:"_classRemoveTag",
-		classAdvanced:"_classAdvanced",
-		classOptionCol:"_classOptionCol",
-		classOption:"_classOption",
-
-		classSearchIcon:"_classSearchIcon",
-		searchIconUrl:"_searchIconUrl",
-		searchIconWidth:"_searchIconWidth",
-		searchIconHeight:"_searchIconHeight",
-		keyMap: "_keyMap",
-		tagRemoveIconActiveUrl: "_tagRemoveIconActiveUrl",
-		syncMaster:"_syncMaster"
-	});
+	this._options = JGM._extend(options, args['options']);
 
 	this._filterMap = {};
 	this._tagMap = {};
@@ -214,51 +141,51 @@ var prototype = SearchManager.prototype;
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		border = o._borderThickness + "px " + o._border,
-		tagsBorderRadius = "border-radius:" + o._tagsBorderRadius + "px;-moz-border-radius:" + o._tagsBorderRadius + "px",
-		advButtonBorder = o._advButtonBorderThickness + "px " + o._advButtonBorder,
-		advButtonBorderHover = o._advButtonBorderThickness + "px " + o._advButtonBorderHover,
-		advButtonBorderActive = o._advButtonBorderThickness + "px " + o._advButtonBorderActive,
-		advButtonBorderOpened = o._advButtonBorderThickness + "px " + o._advButtonBorderOpened,
-		tagsInnerHeight = o._tagsHeight - 2 * o._tagsPadding,
-		advButtonHeight = tagsInnerHeight - 2 * o._advButtonBorderThickness,
-		tagHeight = tagsInnerHeight - 2 * o._tagBorderThickness,
-		classMask = gridId + o._classMask,
-		classSearchar = gridId + o._classSearchbar,
-		classAdvButton = gridId + o._classAdvButton,
-		classRemoveTag = gridId + o._classRemoveTag,
+		border = o.borderThickness + "px " + o.border,
+		tagsBorderRadius = "border-radius:" + o.tagsBorderRadius + "px;-moz-border-radius:" + o.tagsBorderRadius + "px",
+		advButtonBorder = o.advButtonBorderThickness + "px " + o.advButtonBorder,
+		advButtonBorderHover = o.advButtonBorderThickness + "px " + o.advButtonBorderHover,
+		advButtonBorderActive = o.advButtonBorderThickness + "px " + o.advButtonBorderActive,
+		advButtonBorderOpened = o.advButtonBorderThickness + "px " + o.advButtonBorderOpened,
+		tagsInnerHeight = o.tagsHeight - 2 * o.tagsPadding,
+		advButtonHeight = tagsInnerHeight - 2 * o.advButtonBorderThickness,
+		tagHeight = tagsInnerHeight - 2 * o.tagBorderThickness,
+		classMask = gridId + o.classMask,
+		classSearchar = gridId + o.classSearchbar,
+		classAdvButton = gridId + o.classAdvButton,
+		classRemoveTag = gridId + o.classRemoveTag,
 		rules = [];
 
-	rules.push(classMask + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + o._background +"}");
+	rules.push(classMask + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + o.background +"}");
 	rules.push(classMask + " button{margin:0;padding:0 3px}");
-	rules.push(classMask + " input{border:" + o._inputBorder + ";padding:" + o._inputPadding + "}");
+	rules.push(classMask + " input{border:" + o.inputBorder + ";padding:" + o.inputPadding + "}");
 
-	rules.push(classSearchar + "{text-align:" + o._searchbarAlign + ";border-bottom:" + border + "}");
-	rules.push(classSearchar + " input{width:" + o._searchbarWidth + ";margin:" + o._searchbarMargin + "px 0;height:" + o._searchbarHeight + "px;" + tagsBorderRadius + "}");
+	rules.push(classSearchar + "{text-align:" + o.searchbarAlign + ";border-bottom:" + border + "}");
+	rules.push(classSearchar + " input{width:" + o.searchbarWidth + ";margin:" + o.searchbarMargin + "px 0;height:" + o.searchbarHeight + "px;" + tagsBorderRadius + "}");
 
-	rules.push(gridId + o._classTagbar + "{cursor:default;height:" + (o._tagsHeight - o._tagsPadding) + "px;padding:" + o._tagsPadding + "px 0 0 " + o._tagsPadding + "px;border-bottom:" + border + "}");
+	rules.push(gridId + o.classTagbar + "{cursor:default;height:" + (o.tagsHeight - o.tagsPadding) + "px;padding:" + o.tagsPadding + "px 0 0 " + o.tagsPadding + "px;border-bottom:" + border + "}");
 
-	rules.push(classAdvButton + "{float:left;margin-right:" + o._tagsPadding + "px;background:" + o._advButtonBg + ";border:" + advButtonBorder + ";padding:0 " + o._advButtonPadding + "px;" + tagsBorderRadius + "}");
-	rules.push(classAdvButton + ":hover{background:" + o._advButtonBgHover + ";border:" + advButtonBorderHover + "}");
-	rules.push(classAdvButton + ".opened{background:" + o._advButtonBgOpened + ";border:" + advButtonBorderOpened + "}");
-	rules.push(classAdvButton + ":active{background:" + o._advButtonBgActive + ";border:" + advButtonBorderActive + "}");
+	rules.push(classAdvButton + "{float:left;margin-right:" + o.tagsPadding + "px;background:" + o.advButtonBg + ";border:" + advButtonBorder + ";padding:0 " + o.advButtonPadding + "px;" + tagsBorderRadius + "}");
+	rules.push(classAdvButton + ":hover{background:" + o.advButtonBgHover + ";border:" + advButtonBorderHover + "}");
+	rules.push(classAdvButton + ".opened{background:" + o.advButtonBgOpened + ";border:" + advButtonBorderOpened + "}");
+	rules.push(classAdvButton + ":active{background:" + o.advButtonBgActive + ";border:" + advButtonBorderActive + "}");
 
-	rules.push(gridId + o._classAdvButtonName + "{float:left;color:" + o._advButtonColor + ";font:" + o._advButtonFont + ";line-height:" + advButtonHeight + "px}");
-	rules.push(gridId + o._classAdvButtonIcon + "{float:left;height:" + advButtonHeight + "px;margin-left:" + o._advButtonIconMargin + "px;background:url(" + o._advButtonIconUrl + ") no-repeat center;width:" + o._advButtonIconWidth + "px}");
-	rules.push(classAdvButton + ".opened ." + o._classAdvButtonIcon + "{background:url(" + o._advButtonIconCloseUrl + ") no-repeat center}");
+	rules.push(gridId + o.classAdvButtonName + "{float:left;color:" + o.advButtonColor + ";font:" + o.advButtonFont + ";line-height:" + advButtonHeight + "px}");
+	rules.push(gridId + o.classAdvButtonIcon + "{float:left;height:" + advButtonHeight + "px;margin-left:" + o.advButtonIconMargin + "px;background:url(" + o.advButtonIconUrl + ") no-repeat center;width:" + o.advButtonIconWidth + "px}");
+	rules.push(classAdvButton + ".opened ." + o.classAdvButtonIcon + "{background:url(" + o.advButtonIconCloseUrl + ") no-repeat center}");
 
-	rules.push(gridId + o._classTag + "{float:left;border:" + o._tagBorderThickness + "px " + o._tagBorder + ";margin:0 " + o._tagsPadding + "px " + o._tagsPadding + "px 0;padding:0 " + o._tagPadding + "px;background:" + o._tagBackground + ";" + tagsBorderRadius + "}");
-	rules.push(gridId + o._classTagName + "{float:left;color:" + o._tagColor + ";font:" + o._tagFont + ";line-height:" + tagHeight + "px}");
-	rules.push(classRemoveTag + "{float:left;margin-left:" + o._tagPadding + "px;background:url(" + o._tagRemoveIconUrl + ") no-repeat center;width:" + o._tagRemoveIconWidth + "px;height:" + tagHeight + "px}");
-	rules.push(classRemoveTag + ":hover{background:url(" + o._tagRemoveIconHoverUrl + ") no-repeat center}");
-	rules.push(classRemoveTag + ":active{background:url(" + o._tagRemoveIconActiveUrl + ") no-repeat center}");
+	rules.push(gridId + o.classTag + "{float:left;border:" + o.tagBorderThickness + "px " + o.tagBorder + ";margin:0 " + o.tagsPadding + "px " + o.tagsPadding + "px 0;padding:0 " + o.tagPadding + "px;background:" + o.tagBackground + ";" + tagsBorderRadius + "}");
+	rules.push(gridId + o.classTagName + "{float:left;color:" + o.tagColor + ";font:" + o.tagFont + ";line-height:" + tagHeight + "px}");
+	rules.push(classRemoveTag + "{float:left;margin-left:" + o.tagPadding + "px;background:url(" + o.tagRemoveIconUrl + ") no-repeat center;width:" + o.tagRemoveIconWidth + "px;height:" + tagHeight + "px}");
+	rules.push(classRemoveTag + ":hover{background:url(" + o.tagRemoveIconHoverUrl + ") no-repeat center}");
+	rules.push(classRemoveTag + ":active{background:url(" + o.tagRemoveIconActiveUrl + ") no-repeat center}");
 
-	rules.push(gridId + o._classClearTags + "{height:" + tagsInnerHeight + "px}");
+	rules.push(gridId + o.classClearTags + "{height:" + tagsInnerHeight + "px}");
 
-	rules.push(gridId + o._classAdvanced + "{cursor:default;font:" + o._advFont + ";border-bottom:" + border + "}");
-	rules.push(gridId + o._classOptionCol + "{display:inline-block;vertical-align:top}");
-	rules.push(gridId + o._classOptionCol + " input{width:" + o._advInputWidth + "px;margin-right:2px;" + tagsBorderRadius + "}");
-	rules.push(gridId + o._classSearchIcon + "{background:url(" + o._searchIconUrl + ") no-repeat center;width:" + o._searchIconWidth + "px;height:" + o._searchIconHeight + "px}");
+	rules.push(gridId + o.classAdvanced + "{cursor:default;font:" + o.advFont + ";border-bottom:" + border + "}");
+	rules.push(gridId + o.classOptionCol + "{display:inline-block;vertical-align:top}");
+	rules.push(gridId + o.classOptionCol + " input{width:" + o.advInputWidth + "px;margin-right:2px;" + tagsBorderRadius + "}");
+	rules.push(gridId + o.classSearchIcon + "{background:url(" + o.searchIconUrl + ") no-repeat center;width:" + o.searchIconWidth + "px;height:" + o.searchIconHeight + "px}");
 
 	return rules.join("");
 };
@@ -274,9 +201,9 @@ prototype.__init = function() {
 		hasFilter,
 		tag;
 
-	mask = this._mask = $("<div class='" + opt._classMask + "'>").prependTo(this._ctnr);
+	mask = this._mask = $("<div class='" + opt.classMask + "'>").prependTo(this._ctnr);
 
-	this._search = $("<div class='" + opt._classSearchbar + "'><input type='text'/></div>").appendTo(mask);
+	this._search = $("<div class='" + opt.classSearchbar + "'><input type='text'/></div>").appendTo(mask);
 
 	this._masterInput = this._search.children(":eq(0)").keyup(function(e) {
 		if (e.which === Util.keyMapKeydown.enter) {
@@ -289,11 +216,11 @@ prototype.__init = function() {
 
 	hasFilter = this._hasFilter = this.grid.colDefMgr.get().some(function(a){return Util.isNotNull(a.filter);});
 	tag = this._tag =
-		$("<div class='" + opt._classTagbar + "'>" + (hasFilter ? "<div class='" + opt._classAdvButton + "'><div class='" + opt._classAdvButtonName + "'>추가 옵션</div><div class='" + opt._classAdvButtonIcon + "'></div></div>" : "") + "<button type='button' class='" + opt._classClearTags + "' onclick='JGM.m.SearchManager." + this.mid + "._removeAllOptions()'>모든 필터 제거</button></div>")
+		$("<div class='" + opt.classTagbar + "'>" + (hasFilter ? "<div class='" + opt.classAdvButton + "'><div class='" + opt.classAdvButtonName + "'>추가 옵션</div><div class='" + opt.classAdvButtonIcon + "'></div></div>" : "") + "<button type='button' class='" + opt.classClearTags + "' onclick='JGM.m.SearchManager." + this.mid + "._removeAllOptions()'>모든 필터 제거</button></div>")
 		.appendTo(mask);
 
 	if (hasFilter) {
-		var adv = this._adv = $("<div class='" + opt._classAdvanced + "'>").appendTo(mask).hide()
+		var adv = this._adv = $("<div class='" + opt.classAdvanced + "'>").appendTo(mask).hide()
 			.keyup(function(e) {
 				if (e.which === Util.keyMapKeydown.enter) {
 					var key = e.target.getAttribute("key");
@@ -324,7 +251,7 @@ prototype._onRenderModules = function() {
 	if (this._hasFilter) {			
 		var colDefs = this.grid.colDefMgr.get(),
 			len = colDefs.length,
-			keymap = opt._keyMap,
+			keymap = opt.keyMap,
 			nmap = this._nameMap,
 			kmap = this._keyToName,
 			colDef,
@@ -345,7 +272,7 @@ prototype._onRenderModules = function() {
 				nmap[nick] = key;
 				kmap[key] = nick;
 
-				html.push("<div class='" + opt._classOptionCol + "'>");
+				html.push("<div class='" + opt.classOptionCol + "'>");
 				this._registerFilter(key, nick, colDef['name'], colDef['filter'], html);
 				html.push("</div>");
 			}
@@ -355,7 +282,7 @@ prototype._onRenderModules = function() {
 	}
 	
 	if (Util.isNotNull(this.grid.menubar)) {
-		this.grid.menubar.addIcon(opt._classSearchIcon, "데이터 검색을 합니다.", opt._searchIconWidth, opt._searchIconHeight, function() {
+		this.grid.menubar.addIcon(opt.classSearchIcon, "데이터 검색을 합니다.", opt.searchIconWidth, opt.searchIconHeight, function() {
 			mask.toggle("fast");
 		});
 		mask.hide();
@@ -439,10 +366,10 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "SearchManager",
 		path: "search",
-		"$": "_masterInput _advButton _mask _search _tag _adv",
-		property: "_ctnr _hasFilter",
-		array: "_global",
-		map: "_globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"
+		"$": "masterInput _advButton _mask _search _tag _adv",
+		property: "ctnr _hasFilter",
+		array: "global",
+		map: "globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"
 	});
 };
 
@@ -565,7 +492,7 @@ prototype._registerFilter = function(key, nick, name, filter, html) {
 		len = filter.length,
 		i = 0,
 		mid = this.mid,
-		classOpt = this._options['_classOption'],
+		classOpt = this._options['classOption'],
 		fkmap,
 		tmap,
 		tag,
@@ -677,7 +604,7 @@ prototype._parse = function(str) {
 };
 
 prototype._syncMasterInput = function() {
-	if (this._options['_syncMaster']) {
+	if (this._options['syncMaster']) {
 		var inputStr = this._global.join(" "),
 			tagMap = this._tagMap,
 			keyToName = this._keyToName,
@@ -727,8 +654,8 @@ prototype._registerGlobal = function(toAdd) {
 		
 	var opt = this._options;
 	this._globalMap[toAdd[0]] = {
-		tag:$("<div class='" + opt._classTag + "' title='" + toAdd.join(", ") + " 를 포함하는'><div class='" + opt._classTagName + "'>" + toAdd.join(" ") +
-		"</div><div class='" + opt._classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeGlobal('" + toAdd[0] + "')\"></div></div>").appendTo(this._tag),
+		tag:$("<div class='" + opt.classTag + "' title='" + toAdd.join(", ") + " 를 포함하는'><div class='" + opt.classTagName + "'>" + toAdd.join(" ") +
+		"</div><div class='" + opt.classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeGlobal('" + toAdd[0] + "')\"></div></div>").appendTo(this._tag),
 		list: toAdd
 	};
 	return true;
@@ -908,8 +835,8 @@ prototype._removeAllOptions = function() {
 prototype._createTag = function(key, option, base, nick) {
 	var opt = this._options;
 	return (this._tagMap[key][option.tag][base] = {
-		tag:$("<div class='" + opt._classTag + "' title='" + option.comment(nick, base) + "'><div class='" + opt._classTagName + "'>@" + nick + " " + option.tag + " " + base +
-		"</div><div class='" + opt._classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeOption('" + key + "','" + option.tag + "','" + base + "')\"></div></div>").appendTo(this._tag),
+		tag:$("<div class='" + opt.classTag + "' title='" + option.comment(nick, base) + "'><div class='" + opt.classTagName + "'>@" + nick + " " + option.tag + " " + base +
+		"</div><div class='" + opt.classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeOption('" + key + "','" + option.tag + "','" + base + "')\"></div></div>").appendTo(this._tag),
 		option:option,
 		fn:option.fn(base)
 	});

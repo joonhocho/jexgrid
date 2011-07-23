@@ -69,7 +69,7 @@ proto._defaultOptions = function() {
 proto._init = function(args) {
 	this._ctnr = args['container'];
 	this._menubar =
-		$("<div class='" + this._options['_classMenuBar'] + "'></div>")
+		$("<div class='" + this._options['classMenuBar'] + "'></div>")
 		.prependTo(this._ctnr);
 
 };
@@ -85,29 +85,29 @@ proto._destroy = function() {
 	JGM._destroy(this, {
 		name: "MenuBar",
 		path: "menubar",
-		"$": "_menubar",
-		property: "_ctnr",
-		map: "_options"
+		"$": "menubar",
+		property: "ctnr",
+		map: "options"
 	});
 };
 
 proto._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
       o = this._options,
-      border = o._borderThickness + "px " + o._border,
+      border = o.borderThickness + "px " + o.border,
       rules = [];
 
-	rules.push(gridId + o._classMenuBar + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + o._background + ";border-bottom:" + border + ";height:" + o._height + "px}");
-	rules.push(gridId + o._classIcon + "{float:left;height:" + o._iconHeight + "px;width:" + o._iconWidth + "px;border:" + o._iconBorderThickness + "px " + o._iconBorder + ";margin:" + o._iconMargin + "px 0 0 " + o._iconMargin + "px;background:" + o._iconBackground + ";border-radius:" + o._iconBorderRadius + "px;-moz-border-radius:" + o._iconBorderRadius + "px}");
-	rules.push(gridId + o._classIcon + ":hover," + gridId + o._classIcon + ":focus{background:" + o._iconBackgroundHover + ";border:" + o._iconBorderThickness + "px " + o._iconBorderHover + "}");
-	rules.push(gridId + o._classIcon + ":active," + gridId + o._classIcon + ".active{cursor:default;background:" + o._iconBackgroundActive + ";border:" + o._iconBorderThickness + "px " + o._iconBorderActive + "}");
-	rules.push(gridId + o._classIcon + ".active:focus{border:" + o._iconBorderThickness + "px " + o._iconBorderFocus + "}");
+	rules.push(gridId + o.classMenuBar + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + o.background + ";border-bottom:" + border + ";height:" + o.height + "px}");
+	rules.push(gridId + o.classIcon + "{float:left;height:" + o.iconHeight + "px;width:" + o.iconWidth + "px;border:" + o.iconBorderThickness + "px " + o.iconBorder + ";margin:" + o.iconMargin + "px 0 0 " + o.iconMargin + "px;background:" + o.iconBackground + ";border-radius:" + o.iconBorderRadius + "px;-moz-border-radius:" + o.iconBorderRadius + "px}");
+	rules.push(gridId + o.classIcon + ":hover," + gridId + o.classIcon + ":focus{background:" + o.iconBackgroundHover + ";border:" + o.iconBorderThickness + "px " + o.iconBorderHover + "}");
+	rules.push(gridId + o.classIcon + ":active," + gridId + o.classIcon + ".active{cursor:default;background:" + o.iconBackgroundActive + ";border:" + o.iconBorderThickness + "px " + o.iconBorderActive + "}");
+	rules.push(gridId + o.classIcon + ".active:focus{border:" + o.iconBorderThickness + "px " + o.iconBorderFocus + "}");
 	
 	return rules.join("");
 };
 
 proto.addIcon = function(css, title, width, height, fn) {
-	return $("<div class='" + this._options['_classIcon'] + "' tabIndex='0' title='" + title + "'><div class='" + css + "' style='margin-top:" + ((this._options['_iconHeight'] - height) / 2) + "px;margin-left:" + ((this._options['_iconWidth'] - width) / 2) + "px'></div></div>").appendTo(this._menubar)
+	return $("<div class='" + this._options['classIcon'] + "' tabIndex='0' title='" + title + "'><div class='" + css + "' style='margin-top:" + ((this._options['iconHeight'] - height) / 2) + "px;margin-left:" + ((this._options['iconWidth'] - width) / 2) + "px'></div></div>").appendTo(this._menubar)
 	.click(function(e) {
 		fn();
 		$(this).toggleClass("active");

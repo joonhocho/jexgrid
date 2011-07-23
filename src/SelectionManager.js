@@ -121,7 +121,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_rowSelKey': this.grid.dataMgr.idKey,
+		'rowSelKey': this.grid.dataMgr.idKey,
 
 		/**
 		현재 선택된 모든 셀들에 적용되는 배경색입니다. <br>기본값:<code>"#DCEBFE"</code>
@@ -133,7 +133,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_bgColorSelection': "#DCEBFE", //EAECF5
+		'bgColorSelection': "#DCEBFE", //EAECF5
 
 		/**
 		마지막으로 선택된 셀에 적용되는 배경색입니다. <br>기본값:<code>"#C1DBFC"</code>
@@ -146,7 +146,7 @@ function SelectionManager(args) {
          colDefs = this.grid.colDefMgr.get(),
 		@version 1.0.0
 		*/
-		'_bgColorLast': "#f1ca7f", //F5C795
+		'bgColorLast': "#f1ca7f", //F5C795
 
 		/**
 		범위 선택시 범위 끝의 셀에 적용되는 배경색입니다. <br>기본값:<code>"#D9D9D9"</code>
@@ -158,7 +158,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_bgColorRange': "#D9D9D9", //B8BFC4
+		'bgColorRange': "#D9D9D9", //B8BFC4
 
 		/**
 		현재 선택된 모든 셀들에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-selection"</code>
@@ -170,7 +170,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classSelection': "jgrid-selection",
+		'classSelection': "jgrid-selection",
 
 		/**
 		마지막으로 선택된 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"selection-last"</code>
@@ -182,7 +182,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classLast': "selection-last",
+		'classLast': "selection-last",
 
 		/**
 		범위 선택시에 범위 끝의 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"selection-range"</code>
@@ -194,7 +194,7 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_classRange': "selection-range",
+		'classRange': "selection-range",
 
 		/**
 		범위 선택 가능 여부입니다. <br>기본값:<code>false</code>
@@ -206,22 +206,13 @@ function SelectionManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_multiSelectEnabled': false,
+		'multiSelectEnabled': false,
       'classRowSelected': "rowSelected",
       'highlightRowEnabled': true,
       'bgColorRowSelected': "#d8dfea"
 	};
 
-	this._options = JGM._extend(options, args['options'], {
-		rowSelKey:"_rowSelKey",
-		bgColorSelection:"_bgColorSelection",
-		bgColorLast:"_bgColorLast",
-		bgColorRange:"_bgColorRange",
-		classSelection:"_classSelection",
-		classLast:"_classLast",
-		classRange:"_classRange",
-		multiSelectEnabled:"_multiSelectEnabled"
-	});
+	this._options = JGM._extend(options, args['options']);
 
 	this._consts = {
 		_UP:		1,
@@ -290,7 +281,7 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "SelectionManager",
 		path: "selMgr",
-		map: "_rows _cols _range _last _consts _options"
+		map: "rows _cols _range _last _consts _options"
 	});
 };
 
@@ -301,11 +292,11 @@ prototype._onCreateCss = function() {
    if (opt.highlightRowEnabled === true) {
       rules.push(gridId + opt.classRowSelected  + " > *{background:" + opt.bgColorRowSelected + "}");
    }
-	if (opt._multiSelectEnabled === true) {
-		rules.push(gridId + opt._classSelection +  "{background:" + opt._bgColorSelection + "}");
-		rules.push(gridId + opt._classRange +  "{background:" + opt._bgColorRange + "}");
+	if (opt.multiSelectEnabled === true) {
+		rules.push(gridId + opt.classSelection +  "{background:" + opt.bgColorSelection + "}");
+		rules.push(gridId + opt.classRange +  "{background:" + opt.bgColorRange + "}");
 	}
-	rules.push(gridId + opt._classLast  + "{background:" + opt._bgColorLast + "}");
+	rules.push(gridId + opt.classLast  + "{background:" + opt.bgColorLast + "}");
 	
 	return rules.join("\n");
 };
@@ -317,15 +308,15 @@ prototype._onGetCellClass = function(row, col, datarow, colDef) {
       rows = this._rows,
       opt = this._options;
 	if (Util.isNotNull(last) && last.getDatarow() === datarow && last.getColDef() === colDef) {
-		css += opt._classLast;
+		css += opt.classLast;
    }
 
-	if (opt._multiSelectEnabled === true) {
+	if (opt.multiSelectEnabled === true) {
 		if (Util.isNotNull(range) && range.getDatarow() === datarow && range.getColDef() === colDef) {
-			css += " " + opt._classRange;
+			css += " " + opt.classRange;
       }
 		if (rows.hasOwnProperty(row) && rows[row].hasOwnProperty(col)) {
-			css += " " + opt._classSelection;
+			css += " " + opt.classSelection;
       }
 	}
 	return css;
@@ -348,7 +339,7 @@ prototype._mousedownCanvas = function(e, cell) {
 	*/
 	this.grid.event.trigger("onBeforeSelect", [e, cell]);
 
-	if (this._options['_multiSelectEnabled'] === false) {
+	if (this._options['multiSelectEnabled'] === false) {
 		this.selectCell(cell);
    }
 	else {
@@ -356,7 +347,7 @@ prototype._mousedownCanvas = function(e, cell) {
 			this.selectRange(cell);
       }
 		else if (e.ctrlKey) {
-			if (cell.getKey() === this._options['_rowSelKey']) {
+			if (cell.getKey() === this._options['rowSelKey']) {
 				this.addRow(cell);
          }
 			else {
@@ -370,7 +361,7 @@ prototype._mousedownCanvas = function(e, cell) {
 };
 
 prototype._dragoverCanvas = function(e, cell) {
-	if (this._options['_multiSelectEnabled'] === false) {
+	if (this._options['multiSelectEnabled'] === false) {
 		this.selectCell(cell);
    }
 	else if (Util.isNotNullAnd(this._last, this._range)) {
@@ -426,7 +417,7 @@ prototype._keydownCanvas = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.up:
-				if (this._options['_multiSelectEnabled'] && e.shiftKey) {
+				if (this._options['multiSelectEnabled'] && e.shiftKey) {
 					nextCell = this._idxToCell(this._consts._UP, this._range);
 					this.selectRange(nextCell);
             }
@@ -436,7 +427,7 @@ prototype._keydownCanvas = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.down:
-				if (this._options['_multiSelectEnabled'] && e.shiftKey) {
+				if (this._options['multiSelectEnabled'] && e.shiftKey) {
 					nextCell = this._idxToCell(this._consts._DOWN, this._range);
 					this.selectRange(nextCell);
             }
@@ -446,7 +437,7 @@ prototype._keydownCanvas = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.left:
-				if (this._options['_multiSelectEnabled'] && e.shiftKey) {
+				if (this._options['multiSelectEnabled'] && e.shiftKey) {
 					nextCell = this._idxToCell(this._consts._LEFT, this._range);
 					this.selectRange(nextCell);
             }
@@ -456,7 +447,7 @@ prototype._keydownCanvas = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.right:
-				if (this._options['_multiSelectEnabled'] && e.shiftKey) {
+				if (this._options['multiSelectEnabled'] && e.shiftKey) {
 					nextCell = this._idxToCell(this._consts._RIGHT, this._range);
 					this.selectRange(nextCell);
             }
@@ -466,7 +457,7 @@ prototype._keydownCanvas = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.pgup:
-				if (this._options['_multiSelectEnabled'] && e.shiftKey) {
+				if (this._options['multiSelectEnabled'] && e.shiftKey) {
 					nextCell = this._idxToCell(this._consts._PGUP, this._range);
 					this.selectRange(nextCell);
             }
@@ -476,7 +467,7 @@ prototype._keydownCanvas = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.pgdn:
-				if (this._options['_multiSelectEnabled'] && e.shiftKey) {
+				if (this._options['multiSelectEnabled'] && e.shiftKey) {
 					nextCell = this._idxToCell(this._consts._PGDN, this._range);
 					this.selectRange(nextCell);
             }
@@ -496,7 +487,7 @@ prototype._keydownCanvas = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.home:
-				if (this._options['_multiSelectEnabled'] && e.shiftKey) {
+				if (this._options['multiSelectEnabled'] && e.shiftKey) {
 					nextCell = this._idxToCell(this._consts._HOME, this._range);
 					this.selectRange(nextCell);
             }
@@ -506,7 +497,7 @@ prototype._keydownCanvas = function(e) {
             }
 			break;
 			case Util.keyMapKeydown.end:
-				if (this._options['_multiSelectEnabled'] && e.shiftKey) {
+				if (this._options['multiSelectEnabled'] && e.shiftKey) {
 					nextCell = this._idxToCell(this._consts._END, this._range);
 					this.selectRange(nextCell);
             }
@@ -696,13 +687,13 @@ prototype._getCellIdxToNavigate = function(dir, row, col) {
          }
 		break;
 		case this._consts._PGDN:
-			row += this.grid.view._options['_rowsPerPage'];
+			row += this.grid.view._options['rowsPerPage'];
 			if (row > this.grid.dataMgr.datalist.length - 1) {
 				row = this.grid.dataMgr.datalist.length - 1;
          }
 		break;
 		case this._consts._PGUP:
-			row -= this.grid.view._options['_rowsPerPage'];
+			row -= this.grid.view._options['rowsPerPage'];
 			if (row < 0) {
 				row = 0;
          }
@@ -766,7 +757,7 @@ prototype.selectCell = function(cell, noScroll) {
 	*/
 	this.grid.event.trigger("onBeforeSelectCell", [cell]);
 
-	if (this._options['_multiSelectEnabled'] && cell.getKey() === this._options['_rowSelKey']) {
+	if (this._options['multiSelectEnabled'] && cell.getKey() === this._options['rowSelKey']) {
 		this.selectRow(cell);
    }
 	else {
@@ -870,7 +861,7 @@ prototype.selectRange = function(cell) {
 		
 	this._setRange(row, col, cell);
 
-	if (cell.getKey() === this._options['_rowSelKey']) {
+	if (cell.getKey() === this._options['rowSelKey']) {
 		minCol = 0;
 		maxCol = this.grid.colDefMgr.length() - 1;
 	}
@@ -894,7 +885,7 @@ prototype._setLast = function(row, col, cell) {
 			this.grid.view.unlockRowById(last.getId());
       }
 
-		last.get$().removeClass(this._options['_classLast']);
+		last.get$().removeClass(this._options['classLast']);
       if (this._options['highlightRowEnabled'] === true) {
          $(last.getRowNode()).removeClass(this._options['classRowSelected']);
       }
@@ -908,7 +899,7 @@ prototype._setLast = function(row, col, cell) {
 		return;
    }
 	
-	(this._last = cell).get$().addClass(this._options['_classLast']);
+	(this._last = cell).get$().addClass(this._options['classLast']);
    if (this._options['highlightRowEnabled'] === true) {
       $(cell.getRowNode()).addClass(this._options['classRowSelected']);
    }
@@ -929,7 +920,7 @@ prototype._setRange = function(row, col, cell, noScroll) {
 			this.grid.view.unlockRowById(range.getId());
       }
 			
-		range.get$().removeClass(this._options['_classRange']);
+		range.get$().removeClass(this._options['classRange']);
 
 		if (Util.isNull(cell)) {
 			delete this._range;
@@ -940,7 +931,7 @@ prototype._setRange = function(row, col, cell, noScroll) {
 		return;
    }
 		
-	(this._range = cell).get$().addClass(this._options['_classRange']);
+	(this._range = cell).get$().addClass(this._options['classRange']);
 	
 	var view = this.grid.view;
 	view.lockRowByIdx(row);
@@ -1057,10 +1048,10 @@ prototype.addOrRemoveCss = function(map, add) {
 	}
 	list = list.filter(function(n) {return Util.isNotNull(n);});
 	if (add) {
-		$(list).addClass(this._options['_classSelection']);
+		$(list).addClass(this._options['classSelection']);
    }
 	else {
-		$(list).removeClass(this._options['_classSelection']);		
+		$(list).removeClass(this._options['classSelection']);		
    }
 };
 

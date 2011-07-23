@@ -114,7 +114,7 @@ function ColDefManager(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'_colDef': {
+		'colDef': {
 			/**
 			로우 데이터에서 해당 컬럼 데이터를 가져올 때 사용되는 키입니다. 컬럼
 			정의 오브젝트에서 필수적으로 각 컬럼마다 유니크한 키 값을 지정해줘야
@@ -442,7 +442,7 @@ function ColDefManager(args) {
 		}
 	};
 
-	this._options = JGM._extend(options, args['options'], {colDef:"_colDef"});
+	this._options = JGM._extend(options, args['options']);
 
 	this._colDefs = [];
 
@@ -470,9 +470,9 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "ColDefManager",
 		path: "colDefMgr",
-		property: "_colDefs",
-		map: "_keyToIdx _keyToDef _options",
-		array: "_filtered"
+		property: "colDefs",
+		map: "keyToIdx _keyToDef _options",
+		array: "filtered"
 	});
 };
 
@@ -649,7 +649,7 @@ prototype._extend = function(colDef) {
 	var options = {},
 		sorter;
 		
-	$.extend(true, options, this._options['_colDef']);
+	$.extend(true, options, this._options['colDef']);
 	$.extend(true, options, colDef);
 	$.extend(true, colDef, options);
 

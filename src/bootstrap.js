@@ -324,21 +324,10 @@ JGM._add = function(name, module) {
 	this[name] = module;
 };
 
-JGM._extend = function(defaults, options, map) {
+JGM._extend = function(defaults, options) {
 	// 옵션을 익스텐드합니다
 	var opt = Util.ifNull(options, {}),
 		i;
-		
-	if (Util.isNotNull(map)) {
-		for (i in map) {
-			if (map.hasOwnProperty(i)) {
-				if (opt.hasOwnProperty(i)) {
-					opt[map[i]] = opt[i];
-					delete opt[i];
-				}
-			}
-		}
-	}
 	
 	$.extend(true, defaults, opt);
 	$.extend(true, opt, defaults);

@@ -151,7 +151,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'_idKey': undefined,
+			'idKey': undefined,
 
 			/**
 			  데이터 로우의 primary key 가 하나 이상일 경우에 이 어레이에 키 값들을 넣어줍니다.<br>기본값:<code>[]</code>
@@ -163,15 +163,12 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'_idColKeys': [],
+			'idColKeys': [],
 
 			'uniqueKeys': []
 		};
 
-		this._options = JGM._extend(options, args['options'], {
-			idKey:"_idKey",
-			idColKeys:"_idColKeys"
-		});
+		this._options = JGM._extend(options, args['options']);
 
 		this._consts = {
 			_auto: 0,
@@ -192,7 +189,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			"enum":5
 		};
 
-		if (Util.isNotNull(this._options['_idKey'])) {
+		if (Util.isNotNull(this._options['idKey'])) {
 			this._idMode = this._consts._given;
 
 			/**
@@ -205,9 +202,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			this.idKey = this._options['_idKey'];
+			this.idKey = this._options['idKey'];
 		}
-		else if (this._options['_idColKeys']['length'] !== 0) {
+		else if (this._options['idColKeys']['length'] !== 0) {
 			this._idMode = this._consts._composite;
 			this.idKey = "J@I" + this.mid + "@" + Util.random(10000);
 		}
@@ -310,7 +307,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			name: "DataManager",
 			path: "dataMgr",
 			property: "all _idMode _increment idKey _sorter",
-			map: "_consts _idToIdx _idToData _options",
+			map: "consts _idToIdx _idToData _options",
 			array: "datalist failed _history _redoHistory _filters"
 		});
 	};
@@ -717,7 +714,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				if (change.hasOwnProperty(idKey)) {
 					return this.grid.error("NOT_MODIFIABLE", idKey);
 				}
-				var idKeys = this._options['_idColKeys'],
+				var idKeys = this._options['idColKeys'],
 					 keylen = idKeys.length,
 					 i = 0;
 				for (; i < keylen; i++) {
@@ -782,7 +779,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				var idMap = this._idToData,
 					 datarow,
 					 change,
-					 idKeys = this._options['_idColKeys'],
+					 idKeys = this._options['idColKeys'],
 					 keylen = idKeys.length,
 					 newId,
 					 oldIds = [],
@@ -1345,7 +1342,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 
 		if (update === true || datarow.hasOwnProperty(this.idKey) === false) {
-			var idColKeys = this._options['_idColKeys'],
+			var idColKeys = this._options['idColKeys'],
 				keylen = idColKeys.length,
 						 i = 0,
 						 id = "";
@@ -1363,7 +1360,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 		var idKey = this.idKey,
 			 datalen = datalist.length,
-			 idColKeys = this._options['_idColKeys'],
+			 idColKeys = this._options['idColKeys'],
 			 keylen = idColKeys.length,
 			 data,
 			 i = 0,

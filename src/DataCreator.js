@@ -120,7 +120,7 @@ JGM._add("DataCreator", DataCreator);
 			  @since 1.1.1
 			  @version 1.1.1
 			  */
-'_background': "#dfdfdf",
+'background': "#dfdfdf",
 
 				  /**
 					모듈의 border 의 두께를 정합니다. <br>기본값:<code>0</code>
@@ -132,7 +132,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_borderThickness': 0,
+				  'borderThickness': 0,
 
 				  /**
 					모듈의 border 스타일을 정합니다. <br>기본값:<code>"solid #D6D6D6"</code>
@@ -144,7 +144,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_border': "solid #D6D6D6",
+				  'border': "solid #D6D6D6",
 
 				  /**
 					모듈 내의 input 의 border 스타일을 정합니다. <br>기본값:<code>"solid #A7A7A7"</code>
@@ -156,7 +156,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_inputBorder': "solid #A7A7A7",
+				  'inputBorder': "solid #A7A7A7",
 
 				  /**
 					모듈 내의 input 의 두께를 정합니다. <br>기본값:<code>1</code>
@@ -168,7 +168,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_inputBorderThickness': 1,
+				  'inputBorderThickness': 1,
 
 				  /**
 					모듈 내의 input 의 높이를 정합니다. <br>기본값:<code>18</code>
@@ -180,7 +180,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_inputHeight': 18,
+				  'inputHeight': 18,
 
 				  /**
 					모듈 내의 input 의 margin 을 정합니다. <br>기본값:<code>8</code>
@@ -192,7 +192,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_inputMargin': 8,
+				  'inputMargin': 8,
 
 				  /**
 					모듈 내의 컬럼 명의 margin 을 정합니다. <br>기본값:<code>2</code>
@@ -204,7 +204,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_nameMargin': 2,
+				  'nameMargin': 2,
 
 				  /**
 					모듈 내의 컬럼 명의 font 를 정합니다. <br>기본값:<code>"12px Arial,Helvetica,sans-serif"</code>
@@ -216,7 +216,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_font': "12px Arial,Helvetica,sans-serif",
+				  'font': "12px Arial,Helvetica,sans-serif",
 
 				  /**
 					모듈의 높이를 정합니다. <br>기본값:<code>28</code>
@@ -228,7 +228,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_height': 28,
+				  'height': 28,
 
 				  /**
 					모듈의 padding 을 정합니다. <br>기본값:<code>3</code>
@@ -240,7 +240,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_padding': 3,
+				  'padding': 3,
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 CSS 클래스 입니다. <br>기본값:<code>"creator-icon"</code>
@@ -252,7 +252,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_classCreatorIcon': "creator-icon",
+				  'classCreatorIcon': "creator-icon",
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 이미지 url 입니다. <br>기본값:<code>imageUrl + "data-creator-icon.png"</code>
@@ -264,7 +264,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_creatorIconUrl': this.grid._options['imageUrl'] + "data-creator-icon.png",
+				  'creatorIconUrl': this.grid._options['imageUrl'] + "data-creator-icon.png",
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 폭 입니다. <br>기본값:<code>13</code>
@@ -276,7 +276,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_creatorIconWidth': 13,
+				  'creatorIconWidth': 13,
 
 				  /**
 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 높이 입니다. <br>기본값:<code>13</code>
@@ -288,7 +288,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_creatorIconHeight': 13,
+				  'creatorIconHeight': 13,
 
 				  /**
 					모듈의 CSS 클래스 입니다. <br>기본값:<code>"data-creator"</code>
@@ -300,7 +300,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_classCreator': "data-creator",
+				  'classCreator': "data-creator",
 
 				  /**
 					모듈 내의 컬럼 명의 CSS 클래스 입니다. <br>기본값:<code>"data-creator-name"</code>
@@ -312,7 +312,7 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.1
 					@version 1.1.1
 					*/
-				  '_classColName': "data-creator-name",
+				  'classColName': "data-creator-name",
 
 				  /**
 					모듈 내의 input tag 에 적용되는 border radius 입니다. <br>기본값:<code>3</code>
@@ -324,29 +324,10 @@ JGM._add("DataCreator", DataCreator);
 					@since 1.1.7
 					@version 1.1.7
 					*/
-				  '_inputBorderRadius': 3
+				  'inputBorderRadius': 3
 		};
 
-		this._options = JGM._extend(options, args['options'], {
-background:"_background",
-borderThickness:"_borderThickness",
-border:"_border",
-inputBorder:"_inputBorder",
-inputBorderThickness:"_inputBorderThickness",
-inputHeight:"_inputHeight",
-inputMargin:"_inputMargin",
-nameMargin:"_nameMargin",
-font:"_font",
-height:"_height",
-padding:"_padding",
-classCreatorIcon:"_classCreatorIcon",
-creatorIconUrl:"_creatorIconUrl",
-creatorIconWidth:"_creatorIconWidth",
-creatorIconHeight:"_creatorIconHeight",
-classCreator:"_classCreator",
-classColName:"_classColName",
-inputBorderRadius:"_inputBorderRadius"
-});
+		this._options = JGM._extend(options, args['options']);
 
 this._inputMap = {};
 
@@ -361,7 +342,7 @@ var prototype = DataCreator.prototype;
 
 prototype.__init = function() {
 	this._creator =
-		$("<div class='" + this._options['_classCreator'] + "'>")
+		$("<div class='" + this._options['classCreator'] + "'>")
 		.appendTo(this._ctnr);
 
 	this.bindEvents();
@@ -379,15 +360,15 @@ prototype.bindEvents = function() {
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid.mid + " .",
 		o = this._options,
-		border = o._borderThickness + "px " + o._border,
+		border = o.borderThickness + "px " + o.border,
 		rules = [];
 
-	rules.push(gridId + o._classCreator + "{" + JGM._CONST._cssUnselectable + "float:left;width:100%;padding-left:8px;background:" + o._background + ";border-top:" + border + ";font:" + o._font + "}");
-	rules.push(gridId + o._classCreator + " button{float:left;margin:" + o._padding + "px " + o._padding + "px 0 0;height:" + (o._height - 2 * o._padding) + "px}");
-	rules.push(gridId + o._classCreator + " input{float:left;padding:0;margin-top:" + ((o._height - o._inputHeight - 2 * o._inputBorderThickness) / 2) + "px;height:" + o._inputHeight + "px;border:" + o._inputBorderThickness + "px " + o._inputBorder + ";border-radius:" + o._inputBorderRadius + "px;-moz-border-radius:" + o._inputBorderRadius + "px}");
-	rules.push(gridId + o.classCol + "{float:left;overflow:hidden;white-space:nowrap;line-height:" + o._height + "px;margin-right:" + o._inputMargin + "px}");
-	rules.push(gridId + o._classColName + "{float:left;margin-right:" + o._nameMargin + "px}");
-	rules.push(gridId + o._classCreatorIcon + "{background:url(" + o._creatorIconUrl + ") no-repeat center;width:" + o._creatorIconWidth + "px;height:" + o._creatorIconHeight + "px}");
+	rules.push(gridId + o.classCreator + "{" + JGM._CONST._cssUnselectable + "float:left;width:100%;padding-left:8px;background:" + o.background + ";border-top:" + border + ";font:" + o.font + "}");
+	rules.push(gridId + o.classCreator + " button{float:left;margin:" + o.padding + "px " + o.padding + "px 0 0;height:" + (o.height - 2 * o.padding) + "px}");
+	rules.push(gridId + o.classCreator + " input{float:left;padding:0;margin-top:" + ((o.height - o.inputHeight - 2 * o.inputBorderThickness) / 2) + "px;height:" + o.inputHeight + "px;border:" + o.inputBorderThickness + "px " + o.inputBorder + ";border-radius:" + o.inputBorderRadius + "px;-moz-border-radius:" + o.inputBorderRadius + "px}");
+	rules.push(gridId + o.classCol + "{float:left;overflow:hidden;white-space:nowrap;line-height:" + o.height + "px;margin-right:" + o.inputMargin + "px}");
+	rules.push(gridId + o.classColName + "{float:left;margin-right:" + o.nameMargin + "px}");
+	rules.push(gridId + o.classCreatorIcon + "{background:url(" + o.creatorIconUrl + ") no-repeat center;width:" + o.creatorIconWidth + "px;height:" + o.creatorIconHeight + "px}");
 
 	return rules.join("");
 };
@@ -399,7 +380,7 @@ prototype._onRenderModules = function() {
 		colDef,
 		opt = this._options,
 		classCol = opt.classCol,
-		classColName = opt._classColName,
+		classColName = opt.classColName,
 		thisIns = this,
 		creator = this._creator,
 		imap = this._inputMap,
@@ -427,7 +408,7 @@ prototype._onRenderModules = function() {
 	}
 
 	if (Util.isNotNull(this.grid.menubar)) {
-		this.grid.menubar.addIcon(opt._classCreatorIcon, "데이터 로우를 추가합니다.", opt._creatorIconWidth, opt._creatorIconHeight, function() {
+		this.grid.menubar.addIcon(opt.classCreatorIcon, "데이터 로우를 추가합니다.", opt.creatorIconWidth, opt.creatorIconHeight, function() {
 				creator.toggle("fast");
 				});
 		creator.hide();
@@ -502,8 +483,8 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 name: "DataCreator",
 path: "creator",
-"$": "_creator",
-map: "_inputMap _options"
+"$": "creator",
+map: "inputMap _options"
 });
 };
 }());

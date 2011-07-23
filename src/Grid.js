@@ -493,9 +493,9 @@ prototype.destroy = function() {
 		JGM._destroy(this, {
 name: "Grid",
 module: "event",
-"$": "_ctnr",
-map: "_vars _options",
-style: "_style _dynStyle"
+"$": "ctnr",
+map: "vars _options",
+style: "style _dynStyle"
 });
 }
 catch (e) {

@@ -129,7 +129,7 @@ function ColGroup(args) {
 		@since 1.1.0
 		@version 1.1.0
 		*/
-		'_key':		undefined,
+		'key':		undefined,
 
 		/**
 		패딩 처리를 할 컬럼들의 키들을 가진 어레이입니다. 그룹의 데이터들이 여기에
@@ -142,7 +142,7 @@ function ColGroup(args) {
 		@since 1.1.0
 		@version 1.1.0
 		*/
-		'_padColKeys': [],
+		'padColKeys': [],
 
 		/**
 		합계를 구할 컬럼들의 키들을 가진 어레이입니다. 여기에 지정되는 컬럼들의
@@ -155,7 +155,7 @@ function ColGroup(args) {
 		@since 1.1.0
 		@version 1.1.0
 		*/
-		'_sumColKeys': [],
+		'sumColKeys': [],
 
 		/**
 		소계 부분의 prefix 를 정합니다.
@@ -185,12 +185,8 @@ function ColGroup(args) {
 		}
 	};
 
-	this._options = JGM._extend(options, args['options'], {
-		key:"_key",
-		padColKeys:"_padColKeys",
-		sumColKeys:"_sumColKeys"
-	});
-	this._options['Collapser']['key'] = this._options['_key'];
+	this._options = JGM._extend(options, args['options']);
+	this._options['Collapser']['key'] = this._options['key'];
 
 	/**
 	ColGroup 과 연동된 {@link JGM.Collapser Collapser} 입니다.
@@ -251,12 +247,12 @@ prototype.bindEvents = function() {
 		'onDestroy': this._destroy
 	};
 	
-	if (this._options['_sumColKeys']['length'] !== 0) {
+	if (this._options['sumColKeys']['length'] !== 0) {
 		var mid = this.mid,
 		notReal = this.grid.dataMgr._consts._notReal,
 		i = 0,
 		sumfn,
-		sumkeys = this._options['_sumColKeys'],
+		sumkeys = this._options['sumColKeys'],
 		prefix = this._options['prefix'],
 		len = sumkeys.length;
 
@@ -280,14 +276,14 @@ prototype._destroy = function() {
 		name: "ColGroup",
 		path: "colGroup",
 		property: "collapser",
-		map: "_parentMap _options"
+		map: "parentMap _options"
 	});
 };
 
 prototype._processData = function(datalist) {
 	var len = datalist.length,
-		key = this._options['_key'],
-		padColKeys = this._options['_padColKeys'],
+		key = this._options['key'],
+		padColKeys = this._options['padColKeys'],
 		datam = this.grid.dataMgr,
 		notReal = datam._consts._notReal,
 		idKey = datam.idKey,
@@ -361,12 +357,12 @@ prototype._onAddDatarow = function(datarow) {
 
 	this._addData(
 		datarow,
-		opt._key,
+		opt.key,
 		datam.idKey,
 		datam._consts._notReal,
 		ctopt.nodeKey,
 		ctopt.parentKey,
-		opt._padColKeys,
+		opt.padColKeys,
 		newParents
 	);
 
@@ -380,8 +376,8 @@ prototype._onAddDatarow = function(datarow) {
 };
 
 prototype._onUpdateDatarow = function(datarow, change, before) {
-	if (change.hasOwnProperty(this._options['_key'])) {
-		var key = this._options['_key'],	// group key
+	if (change.hasOwnProperty(this._options['key'])) {
+		var key = this._options['key'],	// group key
 			newkey = change[key],	// new group key value
 			oldkey = before[key],	// old group key value
 			mid = this.mid,	// colgroup's module id
@@ -415,7 +411,7 @@ prototype._onUpdateDatarow = function(datarow, change, before) {
 };
 
 prototype._onUpdateDatalist = function(datalist, changes, befores) {
-	var key = this._options['_key'],	// group key
+	var key = this._options['key'],	// group key
 		mid = this.mid,	// colgroup's module id
 		collapser = this.collapser,	// collapser used by colgroup
 		tree = collapser._tree,	// tree used by collapser
@@ -480,7 +476,7 @@ prototype._onUpdateDatalist = function(datalist, changes, befores) {
 
 prototype._onRemoveDatarow = function(datarow) {
 	if (this._isParent(datarow)) {
-		delete this._parentMap[datarow[this._options['_key']]];
+		delete this._parentMap[datarow[this._options['key']]];
 	}
 	else {
 		var parentNode = this.collapser._tree.getNode(datarow).parent;
@@ -500,7 +496,7 @@ prototype._onRemoveDatalist = function(datalist) {
 
 prototype._onCollapserTreeChange = function() {
 	var sums = {},
-		sumKeys = this._options['_sumColKeys'],
+		sumKeys = this._options['sumColKeys'],
 		len = sumKeys.length,
 		i = 0,
 		notReal = this.grid.dataMgr._consts._notReal,

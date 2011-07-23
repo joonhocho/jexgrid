@@ -1267,7 +1267,7 @@ Util.print = function(var_args) {
 Util.open = function(options) {
 	var ops = {
 		'url':			"about:blank",
-		'name':			"_blank",		// _blank, _parent, _self, _top, name
+		'name': "_blank",		// _blank, _parent, _self, _top, name
 		'channelmode':	"no",
 		'directories':	"yes",
 		'fullscreen':		"no",
