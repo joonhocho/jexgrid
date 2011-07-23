@@ -2,7 +2,8 @@ goog.require('jx.util');
 goog.require('jx.grid');
 goog.require('jx.grid.Grid');
 goog.require('jx.grid.ColumnManager');
-goog.require('jx.grid.DataManager');
+goog.require('jx.data.DataManager');
+
 goog.provide('jx.grid.Cell');
 
 /*!
@@ -19,7 +20,9 @@ JGM
 */
 (function() {
 
- goog.exportSymbol('jx.grid.Cell', Cell);
+goog.exportSymbol('jx.grid.Cell', Cell);
+JGM._add("Cell", Cell);
+
 
 /**
 Cell 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
@@ -360,5 +363,4 @@ prototype.equals = function(cell) {
 		Util.isNotNull(this.__colDef_i__) && this.__colDef_i__ === cell.getColDef();
 };
 
-JGM._add("Cell", Cell);
 }());

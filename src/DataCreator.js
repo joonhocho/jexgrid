@@ -1,8 +1,10 @@
-goog.require('JGM');
-goog.require('Util');
-goog.require('JGM.core.BaseModule');
-goog.require('JGM.core.Grid');
-goog.provide('JGM.data.DataCreator');
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+
+goog.provide('jx.grid.DataCreator');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -18,7 +20,8 @@ goog.provide('JGM.data.DataCreator');
 
 (function() {
 
- goog.exportSymbol('JGM.data.DataCreator', DataCreator);
+ goog.exportSymbol('jx.grid.DataCreator', DataCreator);
+JGM._add("DataCreator", DataCreator);
 
  /**
    DataCreator 모듈. 새로운 데이터의 생성과 추가를 담당하는 모듈입니다.
@@ -500,6 +503,4 @@ path: "creator",
 map: "__inputMap_c__ _options"
 });
 };
-
-JGM._add("DataCreator", DataCreator);
 }());

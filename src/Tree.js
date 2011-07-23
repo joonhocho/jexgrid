@@ -1,7 +1,8 @@
-goog.require('Util');
-goog.require('JGM');
-goog.provide('JGM.data.TreeNode');
-goog.provide('JGM.data.Tree');
+goog.require('jx.util');
+goog.require('jx.events.EventDispatcher');
+
+goog.provide('jx.data.TreeNode');
+goog.provide('jx.data.Tree');
 goog.provide('TreeNode');
 goog.provide('Tree');
 
@@ -15,8 +16,8 @@ goog.provide('Tree');
 
 (function() {
 
- goog.exportSymbol('JGM.dataTreeNode', TreeNode);
- goog.exportSymbol('JGM.dataTree', Tree);
+ goog.exportSymbol('jx.data.TreeNode', TreeNode);
+ goog.exportSymbol('jx.data.Tree', Tree);
 
  goog.exportSymbol('TreeNode', TreeNode);
  goog.exportSymbol('Tree', Tree);
@@ -561,10 +562,5 @@ nodeKey: "nodeId",
 			 list.push(this.data);
 			 }});
  };
-
- if (JGM) {
-	 JGM._add("Tree", Tree);
-	 JGM._add("TreeNode", TreeNode);
- }
 
 })();

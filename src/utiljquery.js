@@ -1,3 +1,8 @@
+goog.require('jx.util');
+
+goog.provide('jx.util$');
+goog.provide('Util$');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -7,12 +12,7 @@
  */
 (function () {
 
- goog.require('Util');
- goog.provide('Util$');
-
- var Util = goog.getObjectByName('Util');
-
- goog.exportSymbol('Util$', Util$);
+ goog.exportSymbol('jx.util$', Util$);
 
 Util$.is$ = function(val) {
 	return (val instanceof jQuery) ? true : false;

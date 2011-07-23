@@ -1,2 +1,1 @@
-goog.require('JGM.cell.Cell');
-JGM.cell.Cell;
+goog.require('jx.grid.Cell');

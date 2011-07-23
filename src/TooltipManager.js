@@ -1,3 +1,11 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+goog.require('jx.data.DataManager');
+
+goog.provide('jx.grid.TooltipManager');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,11 +21,8 @@ JGM
 
 (function() {
 
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.module.TooltipManager');
-
- goog.exportSymbol('JGM.module.TooltipManager', TooltipManager);
+ goog.exportSymbol('jx.grid.TooltipManager', TooltipManager);
+ JGM._add("TooltipManager", TooltipManager);
 
 /**
 TooltipManager 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
@@ -290,5 +295,4 @@ prototype.__mouseoverCanvas_bd__ = function(e, cell) {
 	}
 };
 
-JGM._add("TooltipManager", TooltipManager);
 }());

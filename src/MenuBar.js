@@ -1,3 +1,11 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+goog.require('jx.grid.ColumnManager');
+
+goog.provide('jx.grid.MenuBar');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -7,11 +15,8 @@
  */
 (function() {
 
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.module.MenuBar');
-
- goog.exportSymbol('JGM.module.MenuBar', MenuBar);
+ goog.exportSymbol('jx.grid.MenuBar', MenuBar);
+ JGM._add("MenuBar", MenuBar);
 
 /**
 메뉴 바를 생성하고 관리하는 {@link JGM.MenuBar MenuBar} 인스턴스 입니다.
@@ -114,5 +119,4 @@ proto.addIcon = function(css, title, width, height, fn) {
 	});
 };
 
-JGM._add("MenuBar", MenuBar);
 }());

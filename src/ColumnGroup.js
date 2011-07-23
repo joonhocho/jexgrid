@@ -1,3 +1,16 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+goog.require('jx.grid.ColumnManager');
+goog.require('jx.grid.CheckManager');
+goog.require('jx.grid.Collapser');
+goog.require('jx.data.DataManager');
+goog.require('jx.data.Tree');
+goog.require('jx.data.TreeNode');
+
+goog.provide('jx.grid.ColGroup');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,12 +26,8 @@ JGM
 
 (function() {
 
- goog.require('JGM.core.BaseModule');
- goog.require('JGM.module.Collapser');
-
- goog.provide('JGM.module.ColGroup');
-
- goog.exportSymbol('JGM.module.ColGroup', ColGroup);
+ goog.exportSymbol('jx.grid.ColGroup', ColGroup);
+ JGM._add("ColGroup", ColGroup);
 
 /**
 ColGroup 모듈. 트리 구조의 데이터를 담당하는 모듈입니다.
@@ -521,5 +530,4 @@ prototype.__onCollapserTreeChange_g__ = function() {
 	}});
 };
 
-JGM._add("ColGroup", ColGroup);
 }());

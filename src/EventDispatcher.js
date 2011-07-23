@@ -1,3 +1,7 @@
+goog.require('jx.lang.Disposable');
+
+goog.provide('jx.events.EventDispatcher');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,11 +17,7 @@ JGM
 
 (function() {
 
-	goog.require('JGM.lang.Disposable');
-
- 	goog.provide('JGM.events.EventDispatcher');
-
-	goog.exportSymbol('JGM.events.EventDispatcher', EventDispatcher);
+	goog.exportSymbol('jx.events.EventDispatcher', EventDispatcher);
 
 /**
 Grid 의 이벤트를 담당하는 모듈. 모듈들 간의 원활한 커뮤니케이트를 가능하게
@@ -175,7 +175,5 @@ proto.dispatchEvent = function(event) {
 	}
 	return true;
 };
-
-JGM.events.EventDispatcher = EventDispatcher;
 
 })();

@@ -1,11 +1,10 @@
-goog.require('JGM');
-goog.provide('JGM.column.Column');
+goog.require('jx.grid');
+goog.require('jx.events.EventDispatcher');
+
+goog.provide('jx.grid.Column');
 
 (function() {
-
-
-
-	goog.exportSymbol('JGM.column.Column', Column);
+	goog.exportSymbol('jx.grid.Column', Column);
 
 	function Column(args) {
 		if (!(args.manager && typeof args.manager == 'object')) {
@@ -370,7 +369,7 @@ goog.provide('JGM.column.Column');
 		this.filter = args.filter || null;
 	}
 
-	goog.inherits(Column, JGM.events.EventDispatcher);
+	goog.inherits(Column, jx.events.EventDispatcher);
 
 	var proto = Column.prototype;
 
@@ -428,7 +427,5 @@ goog.provide('JGM.column.Column');
 			});
 		}
 	}
-
-	JGM.grids.Column = Column;
 
 }());

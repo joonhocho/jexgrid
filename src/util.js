@@ -1,3 +1,7 @@
+goog.provide('jx.util');
+goog.provide('Util');
+goog.provide('echo');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -6,8 +10,6 @@
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
 (function(){
-
- goog.provide('Util');
 
 var undefined = (function(){})(),
 	console = window.console,
@@ -28,7 +30,7 @@ else {
 	}
 }
 
- goog.exportSymbol('Util', Util);
+ goog.exportSymbol('jx.util', Util);
  goog.exportSymbol('echo', echo);
 
 // tested

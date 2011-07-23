@@ -1,7 +1,8 @@
-goog.require('JGM');
-goog.require('JGM.lang.Disposable');
-goog.require('JGM.events.EventDispatcher');
-goog.provide('JGM.core.BaseModule');
+goog.require('jx.lang.Disposable');
+goog.require('jx.events.EventDispatcher');
+goog.require('jx.grid');
+
+goog.provide('jx.grid.BaseModule');
 
 /*!
  * AUTHOR
@@ -13,7 +14,7 @@ goog.provide('JGM.core.BaseModule');
 
 (function() {
 
-	goog.exportSymbol('JGM.core.BaseModule', BaseModule);
+	goog.exportSymbol('jx.grid.BaseModule', BaseModule);
 
 	function BaseModule(args) {
 		if (args) {

@@ -1,9 +1,9 @@
-goog.require('Util');
-goog.require('JGM');
-goog.require('JGM.lang.Disposable');
-goog.require('JGM.events.EventDispatcher');
-goog.require('JGM.core.BaseModule');
-goog.provide('JGM.data.DataManager');
+goog.require('jx.util');
+goog.require('jx.events.EventDispatcher');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+
+goog.provide('jx.data.DataManager');
 
 /*!
  * AUTHOR
@@ -20,7 +20,8 @@ goog.provide('JGM.data.DataManager');
 
 (function() {
 
- goog.exportSymbol('JGM.data.DataManager', DataManager);
+ goog.exportSymbol('jx.data.DataManager', DataManager);
+	JGM._add("DataManager", DataManager);
 
 	/**
 	  DataManager 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
@@ -2938,6 +2939,4 @@ goog.provide('JGM.data.DataManager');
 			datalist.reverse();
 		}
 	};
-
-	JGM._add("DataManager", DataManager);
 }());

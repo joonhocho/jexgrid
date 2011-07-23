@@ -1,3 +1,11 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+
+goog.provide('jx.grid.EditManager');
+goog.provide('jx.grid.Editor');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,11 +21,11 @@ JGM
 
 (function() {
 
- goog.require('JGM.core.BaseModule');
+ goog.exportSymbol('jx.grid.EditManager', EditManager);
+ goog.exportSymbol('jx.grid.Editor', Editor);
 
- goog.provide('JGM.edit.EditManager');
-
- goog.exportSymbol('JGM.edit.EditManager', EditManager);
+ JGM._add("EditManager", EditManager);
+ JGM._add("Editor", Editor);
 
 /**
 EditManager 모듈. 데이터 에디팅을 담당하는 모듈입니다.
@@ -962,7 +970,4 @@ Editor.alphabetEdit = function(cell) {
 	var value = cell.getValue();
 	return "<input type='text' class='basic-editor' onkeydown='if (!JGM.Editor.isAlphabet(event.which)) return false;' value='" + Util.ifNull(value, "") + "'/>";
 };
-
-JGM._add("EditManager", EditManager);
-JGM._add("Editor", Editor);
 }());

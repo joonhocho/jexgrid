@@ -1,3 +1,12 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+goog.require('jx.grid.ColumnManager');
+goog.require('jx.data.DataManager');
+
+goog.provide('jx.grid.Footer');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -12,12 +21,8 @@ JGM
 */
 
 (function() {
-
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.module.Footer');
-
- goog.exportSymbol('JGM.module.Footer', Footer);
+ goog.exportSymbol('jx.grid.Footer', Footer);
+ JGM._add("Footer", Footer);
 
 /**
 Footer 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
@@ -598,5 +603,4 @@ Footer.__calSum_a__ = function(datalist, key) {
 	return sum;
 };
 
-JGM._add("Footer", Footer);
 }());

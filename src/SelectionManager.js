@@ -1,3 +1,11 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+goog.require('jx.data.DataManager');
+
+goog.provide('jx.grid.SelectionManager');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,11 +21,8 @@ JGM
 
 (function() {
 
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.module.SelectionManager');
-
- goog.exportSymbol('JGM.module.SelectionManager', SelectionManager);
+ goog.exportSymbol('jx.grid.SelectionManager', SelectionManager);
+ JGM._add("SelectionManager", SelectionManager);
 
 /**
 SelectionManager 모듈. 셀의 (범위) 선택을 담당하는 모듈입니다.
@@ -1178,5 +1183,4 @@ prototype.empty = function() {
 	this.__setSelMap_p__({});
 };
 
-JGM._add("SelectionManager", SelectionManager);
 }());

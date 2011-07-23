@@ -1,3 +1,9 @@
+goog.require('jx.util');
+goog.require('jx.util$');
+goog.require('jx.grid');
+
+goog.provide('jx.grid.renderer');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,11 +19,10 @@ JGM
 
 (function() {
 
- goog.require('JGM');
+ goog.exportSymbol('jx.grid.renderer', renderer);
+ var renderer = JGM.renderer = jx.grid.renderer;
 
- goog.provide('JGM.renderer');
-
-JGM.renderer.selectBox = function(args) {
+ renderer.selectBox = function(args) {
 	var mappings = args.mapping,
 		 attr = args.attr,
 		 defaultVal = args['default'],

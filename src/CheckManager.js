@@ -1,3 +1,12 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+goog.require('jx.grid.ColumnManager');
+goog.require('jx.data.DataManager');
+
+goog.provide('jx.grid.CheckManager');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,11 +22,8 @@ JGM
 
 (function() {
 
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.module.CheckManager');
-
- goog.exportSymbol('JGM.module.CheckManager', CheckManager);
+ goog.exportSymbol('jx.grid.CheckManager', CheckManager);
+ JGM._add("CheckManager", CheckManager);
 
 
 /**
@@ -1084,6 +1090,4 @@ CheckManager.__setCheck_c__ = function(obj, check) {
 		CheckManager.__uncheck_b__(obj);
 	}
 };
-
-JGM._add("CheckManager", CheckManager);
 }());

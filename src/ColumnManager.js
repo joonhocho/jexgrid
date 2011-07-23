@@ -1,8 +1,9 @@
-goog.require('Util');
-goog.require('JGM');
-goog.require('JGM.core.BaseModule');
-goog.provide('JGM.column.Column');
-goog.provide('JGM.column.ColDefManager');
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Column');
+
+goog.provide('jx.grid.ColumnManager');
 
 /*!
  * AUTHOR
@@ -18,8 +19,8 @@ JGM
 */
 (function() {
 
-
- goog.exportSymbol('JGM.column.ColDefManager', ColDefManager);
+ goog.exportSymbol('jx.grid.ColumnManager', ColDefManager);
+ JGM._add("ColDefManager", ColDefManager);
 
 /**
 ColDefManager 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
@@ -962,6 +963,4 @@ ColDefManager.sorter = function(type, key, on) {
 		};
 	}
 };
-
-JGM._add("ColDefManager", ColDefManager);
 }());

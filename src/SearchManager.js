@@ -1,3 +1,11 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+goog.require('jx.data.DataManager');
+
+goog.provide('jx.grid.SearchManager');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -7,11 +15,8 @@
  */
 (function() {
 
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.module.SearchManager');
-
- goog.exportSymbol('JGM.module.SearchManager', SearchManager);
+ goog.exportSymbol('jx.grid.SearchManager', SearchManager);
+ JGM._add("SearchManager", SearchManager);
 
 function SearchManager(args) {
 	this.mid = args.mid;
@@ -1282,5 +1287,4 @@ SearchManager.__stringFilter_e__ = [
 	}
 ];
 
-JGM._add("SearchManager", SearchManager);
 }());

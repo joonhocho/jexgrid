@@ -1,12 +1,12 @@
-goog.require('Util');
-goog.require('JGM');
-goog.require('JGM.core.BaseModule');
-goog.require('JGM.core.Grid');
-goog.require('JGM.cell.Cell');
-goog.require('JGM.cell.Column');
-goog.require('JGM.column.ColDefManager');
-goog.require('JGM.data.DataManager');
-goog.provide('JGM.core.ViewportManager');
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+goog.require('jx.grid.Cell');
+goog.require('jx.grid.ColumnManager');
+goog.require('jx.data.DataManager');
+
+goog.provide('jx.grid.ViewportManager');
 
 /*!
  * AUTHOR
@@ -23,7 +23,8 @@ JGM
 
 (function() {
 
- goog.exportSymbol('JGM.core.ViewportManager', ViewportManager);
+ goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
+JGM._add("ViewportManager", ViewportManager);
 
 /**
 ViewportManager 모듈. 그리드 로우와 셀을 가진 테이블을 담당하는 모듈입니다.
@@ -2728,5 +2729,4 @@ ViewportManager.__renderer_AD__ = function(value, rowIdx, colIdx, datarow, colDe
 	return Util.ifNull(value, "");
 };
 
-JGM._add("ViewportManager", ViewportManager);
 }());

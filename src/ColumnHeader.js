@@ -1,3 +1,11 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+goog.require('jx.grid.ColumnManager');
+
+goog.provide('jx.grid.ColHeader');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,11 +21,8 @@ JGM
 
 (function() {
 
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.module.ColHeader');
-
- goog.exportSymbol('JGM.module.ColHeader', ColHeader);
+ goog.exportSymbol('jx.grid.ColHeader', ColHeader);
+ JGM._add("ColHeader", ColHeader);
 
 /**
 ColHeader 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
@@ -1176,5 +1181,4 @@ prototype.__initResizeHandles_u__ = function() {
 	}
 };
 
-JGM._add("ColHeader", ColHeader);
 }());

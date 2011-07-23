@@ -1,4 +1,5 @@
-goog.require('Util');
+goog.require('jx.util');
+
 goog.provide('Tracer');
 
 /*!
@@ -76,7 +77,5 @@ prototype.removeStack = function() {
 prototype.clearStack = function() {
 	this.stack = "";
 };
-
-if (window.JGM !== undefined) { window.JGM._add("Tracer", undefined); }// TBR
 
 })();

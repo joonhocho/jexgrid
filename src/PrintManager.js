@@ -1,3 +1,11 @@
+goog.require('jx.util');
+goog.require('jx.util$');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.Grid');
+
+goog.provide('jx.grid.PrintManager');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -7,11 +15,8 @@
  */
 (function() {
 
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.module.PrintManager');
-
- goog.exportSymbol('JGM.module.PrintManager', PrintManager);
+ goog.exportSymbol('jx.grid.PrintManager', PrintManager);
+ JGM._add("PrintManager", PrintManager);
 
 function PrintManager(args) {
 	this.mid = args.mid;
@@ -139,5 +144,4 @@ prototype.getPrintHtml = function(colDefs, datalist) {
 	return html.join("");
 };
 
-JGM._add("PrintManager", PrintManager);
 }());

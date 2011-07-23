@@ -1,3 +1,9 @@
+goog.require('jx.util');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+
+goog.provide('jx.grid.EventManager');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,11 +19,8 @@
 
 (function() {
 
- goog.require('JGM.core.BaseModule');
-
- goog.provide('JGM.events.EventManager');
-
- goog.exportSymbol('JGM.events.EventManager', EventManager);
+ goog.exportSymbol('jx.grid.EventManager', EventManager);
+ JGM._add("EventManager", EventManager);
 
  /**
    Grid 의 이벤트를 담당하는 모듈. 모듈들 간의 원활한 커뮤니케이트를 가능하게
@@ -413,6 +416,4 @@ prototype.sendToFront = function(event, fn) {
 		eventQueue.unshift(handler);
 	}
 };
-
-JGM._add("EventManager", EventManager);
 }());

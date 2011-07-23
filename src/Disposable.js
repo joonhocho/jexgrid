@@ -1,3 +1,7 @@
+goog.require('jx.util');
+
+goog.provide('jx.lang.Disposable');
+
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
@@ -13,11 +17,8 @@
 
 (function() {
 
- goog.require('Util');
- goog.provide('JGM.lang.Disposable');
- goog.exportSymbol('JGM.lang.Disposable', Disposable);
+ goog.exportSymbol('jx.lang.Disposable', Disposable);
  goog.exportProperty(Disposable.prototype, 'dispose', dispose);
- var Util = goog.getObjectByName('Util');
 
  /**
    Grid 의 이벤트를 담당하는 모듈. 모듈들 간의 원활한 커뮤니케이트를 가능하게

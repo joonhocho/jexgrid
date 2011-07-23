@@ -1,9 +1,12 @@
-goog.require('Util');
-goog.require('Util$');
-goog.require('JGM');
-goog.require('JGM.lang.Disposable');
-goog.require('JGM.events.EventDispatcher');
-goog.provide('JGM.core.Grid');
+goog.require('jx.util');
+goog.require('jx.util$');
+goog.require('jx.lang.Disposable');
+goog.require('jx.events.EventDispatcher');
+goog.require('jx.grid');
+goog.require('jx.grid.BaseModule');
+goog.require('jx.grid.EventManager');
+
+goog.provide('jx.grid.Grid');
 
 /*!
  * AUTHOR
@@ -34,7 +37,8 @@ goog.provide('JGM.core.Grid');
 
 (function() {
 
- goog.exportSymbol('JGM.core.Grid', Grid);
+ goog.exportSymbol('jx.grid.Grid', Grid);
+ JGM._add("Grid", Grid);
 
 
  /**
@@ -1297,6 +1301,4 @@ prototype.printMessage = function(str) {
 prototype.containsEvent = function(e) {
 	return Util.contains(this._ctnr[0], e.target);
 };
-
-JGM._add("Grid", Grid);
 }());
