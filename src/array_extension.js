@@ -1,3 +1,4 @@
+goog.provide('array_extension');
 /*!
  * AUTHOR
  *	The JexGrid was written and is maintained by:

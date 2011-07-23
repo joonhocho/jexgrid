@@ -94,7 +94,7 @@ function Grid(args) {
   @version 1.0.0
   */
 
-goog.inherits(Grid, JGM.core.BaseModule);
+goog.inherits(Grid, jx.grid.BaseModule);
 
 Grid.getInstance = function(args) {
 	return new Grid(args);

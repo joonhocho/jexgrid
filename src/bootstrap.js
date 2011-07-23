@@ -46,64 +46,35 @@ JGM
 
 JGM.__map_a__ = {
 	// notloaded | loading | loaded
-	ArrayExtIE:			{ filename: 'array_ext_ie.js',				readyState: 'notloaded',	required: false,	cacheModule: false	},
-	Cache:				{ filename: 'jgrid_cache.js',				readyState: 'notloaded',	required: true,		cacheModule: true	},
-	Cell:				{ filename: 'jgrid_cell.js',				readyState: 'notloaded',	required: true,		cacheModule: false	},
-	CheckManager:		{ filename: 'jgrid_checkmanager.js',		readyState: 'notloaded',	required: false,	cacheModule: true	},
-	ColDefManager:		{ filename: 'jgrid_coldefmanager.js',		readyState: 'notloaded',	required: true,		cacheModule: true	},
-	ColGroup:			{ filename: 'jgrid_colgroup.js',			readyState: 'notloaded',	required: false,	cacheModule: true	},
-	ColHeader:			{ filename: 'jgrid_colheader.js',			readyState: 'notloaded',	required: true,		cacheModule: true	},
-	Collapser:			{ filename: 'jgrid_collapser.js',			readyState: 'notloaded',	required: false,	cacheModule: true	},
-	DataManager:		{ filename: 'jgrid_datamanager.js',			readyState: 'notloaded',	required: true,		cacheModule: true	},
-	DataCreator:		{ filename: 'jgrid_datacreator.js',			readyState: 'notloaded',	required: false,	cacheModule: true	},
-	EditManager:		{ filename: 'jgrid_editmanager.js',			readyState: 'notloaded',	required: true,		cacheModule: true	},
-	Editor:				{ filename: 'jgrid_editmanager.js',			readyState: 'notloaded',	required: true,		cacheModule: true	},
-	EngineExt:			{ filename: 'engine_ext.js',				readyState: 'notloaded',	required: true,		cacheModule: false	},
-	EventManager:		{ filename: 'jgrid_eventmanager.js',		readyState: 'notloaded',	required: true,		cacheModule: true	},
-	Footer:				{ filename: 'jgrid_footer.js',				readyState: 'notloaded',	required: false,	cacheModule: true	},
-	HeaderTree:			{ filename: 'jgrid_headertree.js',			readyState: 'notloaded',	required: false,	cacheModule: true	},
-	Grid:				{ filename: 'jgrid_grid.js',				readyState: 'notloaded',	required: true,		cacheModule: true	},
-	GridManager:		{ filename: 'jgrid_manager.js',				readyState: 'loaded',		required: true,		cacheModule: false	},
-	MenuBar:			{ filename: 'jgrid_menubar.js',				readyState: 'notloaded',	required: true,		cacheModule: true	},
-	ViewportManager:	{ filename: 'jgrid_viewportmanager.js',		readyState: 'notloaded',	required: true,		cacheModule: true	},
-	SelectionManager:	{ filename: 'jgrid_selectionmanager.js',	readyState: 'notloaded',	required: false,	cacheModule: true	},
-	SearchManager:		{ filename: 'jgrid_searchmanager.js',		readyState: 'notloaded',	required: false,	cacheModule: true	},
-	TooltipManager:		{ filename: 'jgrid_tooltipmanager.js',		readyState: 'notloaded',	required: false,	cacheModule: true	},
-	Tracer:				{ filename: 'tracer.js',					readyState: 'notloaded',	required: false,	cacheModule: false	},
-	Tree:				{ filename: 'tree.js',						readyState: 'notloaded',	required: false,	cacheModule: true	},
-	TreeNode:			{ filename: 'tree.js',						readyState: 'notloaded',	required: false,	cacheModule: false	},
-	Util:				{ filename: 'util.js',						readyState: 'notloaded',	required: true,		cacheModule: false	},
-	'Util$':			{ filename: 'util_jquery.js',				readyState: 'notloaded',	required: true,		cacheModule: false	}
+	ArrayExtIE:			{ cacheModule: false	},
+	Cache:				{ cacheModule: true	},
+	Cell:				{ cacheModule: false	},
+	CheckManager:		{ cacheModule: true	},
+	ColDefManager:		{ cacheModule: true	},
+	ColGroup:			{ cacheModule: true	},
+	ColHeader:			{ cacheModule: true	},
+	Collapser:			{ cacheModule: true	},
+	DataManager:		{ cacheModule: true	},
+	DataCreator:		{ cacheModule: true	},
+	EditManager:		{ cacheModule: true	},
+	Editor:				{ cacheModule: true	},
+	EngineExt:			{ cacheModule: false	},
+	EventManager:		{ cacheModule: true	},
+	Footer:				{ cacheModule: true	},
+	HeaderTree:			{ cacheModule: true	},
+	Grid:				{ cacheModule: true	},
+	GridManager:		{ cacheModule: false	},
+	MenuBar:			{ cacheModule: true	},
+	ViewportManager:	{ cacheModule: true	},
+	SelectionManager:	{ cacheModule: true	},
+	SearchManager:		{ cacheModule: true	},
+	TooltipManager:		{ cacheModule: true	},
+	Tracer:				{ cacheModule: false	},
+	Tree:				{ cacheModule: true	},
+	TreeNode:			{ cacheModule: false	},
+	Util:				{ cacheModule: false	},
+	'Util$':			{ cacheModule: false	}
 };
-
-/*
-if (Util === undefined) {
-	window.Util = {};
-	Util.isNull = function(val) {
-		return (val === undefined || val === null) ? true : false;
-	}
-	Util.isNotNull = function(val) {
-		return (val === undefined || val === null) ? false : true;
-	}
-	Util.isFunction = function(val) {
-		return (typeof val === "function") ? true : false;
-	}
-	Util.appendScriptFile = function(filename) {
-		var script = document.createElement('script');
-		script.type = 'text/javascript';
-		script.src = filename;
-		document.getElementsByTagName('head')[0].appendChild(script);
-	}
-}
-
-if (Util$ === undefined) {
-	window.Util$ = {};
-	Util$.baseurlOfHeadScript = function(filename) {
-		var url = $(document.getElementsByTagName('head')[0]).find("script[src$='" + filename + "']").attr('src');
-		return url.substring(0, url.indexOf(filename));
-	}
-}
-*/
 
 /**
 Grid 모듈을 instantiate 하고 생성된 오브젝트 인스턴스를 리턴합니다. JGM 에
@@ -123,20 +94,25 @@ JGM.create = function(name, args) {
 	if (Util.isNull(args)) {
 		args = {};
 	}
-	if (this.__map_a__[name].cacheModule) {
-		args.mid = "JGM" + this.m.length++;
-		var module = this[name].getInstance(args);
-		if (!this.m.hasOwnProperty(name)) {
-			this.m[name] = {};
+	if (!this.hasOwnProperty(name)) {
+		throw new Error('cannot find a grid module: name=' + name);
+	}
+	if (this.__map_a__.hasOwnProperty(name)) {
+		if (this.__map_a__[name].cacheModule) {
+			var mid = args.mid = "JGM" + this.m.length++;
+			var module = new this[name](args);
+			if (!this.m.hasOwnProperty(name)) {
+				this.m[name] = {};
+			}
+			this.m[name][mid] = module;
+			if (name === "Grid" && module.name) {
+				this.gridMap[module.name] = module;
+			}
+			return module;
 		}
-		this.m[name][module.mid] = module;
-      if (name === "Grid" && Util.isNotNull(module.name)) {
-         this.gridMap[module.name] = module;
-      }
-		return module;
 	}
 	else {
-		return this[name].getInstance(args);
+		return new this[name](args);
 	}
 };
 
@@ -340,11 +316,7 @@ JGM.getGrid = function(name) {
 };
 
 JGM._add = function(name, module) {
-	if (Util.isNotNull(module)) {
-		this[name] = module;
-	}
-	this.__map_a__[name].readyState = "loaded";
-	$("body").trigger({ type:"moduleload.Grid", modulename:name, readyState:"loaded" }); // TBR
+	this[name] = module;
 };
 
 JGM.__extend_e__ = function(defaults, options, map) {

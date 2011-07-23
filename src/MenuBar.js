@@ -32,7 +32,7 @@ function MenuBar(args) {
 	this.grid.menubar = this;
 }
 
-goog.inherits(MenuBar, JGM.grids.BaseModule);
+goog.inherits(MenuBar, jx.grid.BaseModule);
 
 MenuBar.getInstance = function(args) {
 	return new MenuBar(args);

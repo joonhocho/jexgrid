@@ -52,7 +52,7 @@ EventDispatcher 컨스트럭터 입니다.
 function EventDispatcher(args) {
 }
 
-goog.inherits(EventDispatcher, JGM.lang.Disposable);
+goog.inherits(EventDispatcher, jx.lang.Disposable);
 
 var proto = EventDispatcher.prototype,
 	sdispose = proto.dispose;

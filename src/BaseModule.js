@@ -92,7 +92,7 @@ goog.provide('jx.grid.BaseModule');
 		});
 	}
 
-	goog.inherits(BaseModule, EventDispatcher);
+	goog.inherits(BaseModule, jx.events.EventDispatcher);
 
 	var proto = BaseModule.prototype,
 		superdispose = proto.dispose;

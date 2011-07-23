@@ -1,3 +1,4 @@
+goog.provide('engine_extension');
 /*!
  * AUTHOR
  *   The JexGrid was written and is maintained by:
