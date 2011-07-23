@@ -388,7 +388,7 @@ goog.provide('jx.grid.Collapser');
 			}
 		}
 
-		this.__tree_a__ = JGM.create("Tree", {list:this.grid.dataMgr.all, options:this._options.Tree});
+		this.__tree_a__ = new Tree({list:this.grid.dataMgr.all, options:this._options.Tree});
 
 		this.__master_c__;
 		this.key;
@@ -483,7 +483,7 @@ goog.provide('jx.grid.Collapser');
 
 	prototype.__onAfterSetDatalist_ab__ = function(datalist) {
 		this.__tree_a__.destroy();
-		this.__tree_a__ = JGM.create("Tree", {list:this.grid.dataMgr.all, options:this._options.Tree});
+		this.__tree_a__ = new Tree({list:this.grid.dataMgr.all, options:this._options.Tree});
 		this.__makeTree_d__();
 	};
 

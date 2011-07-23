@@ -110,6 +110,9 @@ JGM.create = function(name, args) {
 			}
 			return module;
 		}
+		else {
+			return new this[name](args);
+		}
 	}
 	else {
 		return new this[name](args);

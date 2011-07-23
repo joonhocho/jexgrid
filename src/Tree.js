@@ -328,8 +328,6 @@ goog.provide('Tree');
  };
 
  function Tree(args) {
-	 this.mid = args.mid;
-
 	 this.list = args.list;
 
 	 var options = {
@@ -366,7 +364,6 @@ nodeKey: "nodeId",
 	 delete this.root;
 	 delete this.infants;
 
-	 JGM.__remove_f__("Tree", this.mid);
 	 delete this.mid;
  };
 
