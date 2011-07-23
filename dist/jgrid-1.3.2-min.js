@@ -271,26 +271,26 @@ function x(d) {
 })();
 var goog = goog || {};
 goog.global = window;
-window.Fi = goog;
-goog.Ge = !0;
-goog.Jh = "en";
-goog.jj = function(d) {
-  goog.ve(d)
+window.yi = goog;
+goog.Ae = !0;
+goog.Bh = "en";
+goog.cj = function(d) {
+  goog.qe(d)
 };
-goog.mj = function(d) {
-  goog.Ge || (d = d || "", r(Error("Importing test-only code into non-debug environment" + d ? ": " + d : ".")))
+goog.fj = function(d) {
+  goog.Ae || (d = d || "", r(Error("Importing test-only code into non-debug environment" + d ? ": " + d : ".")))
 };
-goog.ve = function(d, g, c) {
+goog.qe = function(d, g, c) {
   d = d.split(".");
   c = c || goog.global;
   !(d[0] in c) && c.execScript && c.execScript("var " + d[0]);
   for(var b;d.length && (b = d.shift());) {
-    !d.length && goog.Tg(g) ? c[b] = g : c = c[b] ? c[b] : c[b] = {}
+    !d.length && goog.Lg(g) ? c[b] = g : c = c[b] ? c[b] : c[b] = {}
   }
 };
-goog.H = function(d) {
+goog.D = function(d) {
   for(var d = d.split("."), g = goog.global, c;c = d.shift();) {
-    if(goog.Ug(g[c])) {
+    if(goog.Mg(g[c])) {
       g = g[c]
     }else {
       return t
@@ -298,29 +298,29 @@ goog.H = function(d) {
   }
   return g
 };
-goog.Ei = function(d, g) {
+goog.xi = function(d, g) {
   var c = g || goog.global, b;
   for(b in d) {
     c[b] = d[b]
   }
 };
-goog.gi = v();
-goog.Hh = !0;
+goog.$h = v();
+goog.zh = !0;
 goog.require = v();
-goog.ji = "";
-goog.Yi = v();
-goog.Ji = function(d) {
+goog.ci = "";
+goog.Ri = v();
+goog.Ci = function(d) {
   return d
 };
-goog.fi = function() {
+goog.Zh = function() {
   r(Error("unimplemented abstract method"))
 };
-goog.hi = function(d) {
-  d.Z = function() {
-    return d.Sg || (d.Sg = new d)
+goog.ai = function(d) {
+  d.X = function() {
+    return d.Kg || (d.Kg = new d)
   }
 };
-goog.Jb = function(d) {
+goog.Gb = function(d) {
   var g = typeof d;
   if(g == "object") {
     if(d) {
@@ -351,7 +351,7 @@ goog.Jb = function(d) {
   }
   return g
 };
-goog.mh = function(d, g) {
+goog.fh = function(d, g) {
   if(g in d) {
     for(var c in d) {
       if(c == g && Object.prototype.hasOwnProperty.call(d, g)) {
@@ -361,76 +361,76 @@ goog.mh = function(d, g) {
   }
   return!1
 };
-goog.ij = function(d, g) {
-  return d instanceof Object ? Object.prototype.propertyIsEnumerable.call(d, g) : goog.mh(d, g)
+goog.bj = function(d, g) {
+  return d instanceof Object ? Object.prototype.propertyIsEnumerable.call(d, g) : goog.fh(d, g)
 };
-goog.Tg = function(d) {
+goog.Lg = function(d) {
   return d !== s
 };
 goog.isNull = function(d) {
   return d === t
 };
-goog.Ug = function(d) {
+goog.Mg = function(d) {
   return d != t
 };
 goog.isArray = function(d) {
-  return goog.Jb(d) == "array"
+  return goog.Gb(d) == "array"
 };
-goog.Li = function(d) {
-  var g = goog.Jb(d);
+goog.Ei = function(d) {
+  var g = goog.Gb(d);
   return g == "array" || g == "object" && typeof d.length == "number"
 };
-goog.Ni = function(d) {
+goog.Gi = function(d) {
   return goog.isObject(d) && typeof d.getFullYear == "function"
 };
 goog.isString = function(d) {
   return typeof d == "string"
 };
-goog.Mi = function(d) {
+goog.Fi = function(d) {
   return typeof d == "boolean"
 };
 goog.isNumber = function(d) {
   return typeof d == "number"
 };
 goog.isFunction = function(d) {
-  return goog.Jb(d) == "function"
+  return goog.Gb(d) == "function"
 };
 goog.isObject = function(d) {
-  d = goog.Jb(d);
+  d = goog.Gb(d);
   return d == "object" || d == "array" || d == "function"
 };
-goog.Pg = function(d) {
-  return d[goog.Kb] || (d[goog.Kb] = ++goog.Ah)
+goog.Hg = function(d) {
+  return d[goog.Hb] || (d[goog.Hb] = ++goog.sh)
 };
-goog.th = function(d) {
-  "removeAttribute" in d && d.removeAttribute(goog.Kb);
+goog.mh = function(d) {
+  "removeAttribute" in d && d.removeAttribute(goog.Hb);
   try {
-    delete d[goog.Kb]
+    delete d[goog.Hb]
   }catch(g) {
   }
 };
-goog.Kb = "closure_uid_" + Math.floor(Math.random() * 2147483648).toString(36);
-goog.Ah = 0;
-goog.Bi = goog.Pg;
-goog.kj = goog.th;
-goog.yg = function(d) {
-  var g = goog.Jb(d);
+goog.Hb = "closure_uid_" + Math.floor(Math.random() * 2147483648).toString(36);
+goog.sh = 0;
+goog.ti = goog.Hg;
+goog.dj = goog.mh;
+goog.rg = function(d) {
+  var g = goog.Gb(d);
   if(g == "object" || g == "array") {
     if(d.clone) {
       return d.clone()
     }
     var g = g == "array" ? [] : {}, c;
     for(c in d) {
-      g[c] = goog.yg(d[c])
+      g[c] = goog.rg(d[c])
     }
     return g
   }
   return d
 };
-goog.vg = function(d, g, c) {
+goog.og = function(d, g, c) {
   return d.call.apply(d.bind, arguments)
 };
-goog.ug = function(d, g, c) {
+goog.ng = function(d, g, c) {
   d || r(Error());
   if(arguments.length > 2) {
     var b = Array.prototype.slice.call(arguments, 2);
@@ -446,10 +446,10 @@ goog.ug = function(d, g, c) {
   }
 };
 goog.bind = function(d, g, c) {
-  goog.bind = Function.prototype.bind && Function.prototype.bind.toString().indexOf("native code") != -1 ? goog.vg : goog.ug;
+  goog.bind = Function.prototype.bind && Function.prototype.bind.toString().indexOf("native code") != -1 ? goog.og : goog.ng;
   return goog.bind.apply(t, arguments)
 };
-goog.fj = function(d, g) {
+goog.Zi = function(d, g) {
   var c = Array.prototype.slice.call(arguments, 1);
   return function() {
     var b = Array.prototype.slice.call(arguments);
@@ -457,7 +457,7 @@ goog.fj = function(d, g) {
     return d.apply(this, b)
   }
 };
-goog.Ui = function(d, g) {
+goog.Ni = function(d, g) {
   for(var c in g) {
     d[c] = g[c]
   }
@@ -470,10 +470,10 @@ goog.globalEval = function(d) {
     goog.global.execScript(d, "JavaScript")
   }else {
     if(goog.global.eval) {
-      if(goog.kc == t) {
-        goog.global.eval("var _et_ = 1;"), typeof goog.global._et_ != "undefined" ? (delete goog.global._et_, goog.kc = !0) : goog.kc = !1
+      if(goog.hc == t) {
+        goog.global.eval("var _et_ = 1;"), typeof goog.global._et_ != "undefined" ? (delete goog.global._et_, goog.hc = !0) : goog.hc = !1
       }
-      if(goog.kc) {
+      if(goog.hc) {
         goog.global.eval(d)
       }else {
         var g = goog.global.document, c = g.createElement("script");
@@ -488,13 +488,13 @@ goog.globalEval = function(d) {
     }
   }
 };
-goog.kc = t;
-goog.Ai = function(d, g) {
+goog.hc = t;
+goog.si = function(d, g) {
   function c(a) {
-    return goog.se[a] || a
+    return goog.oe[a] || a
   }
   var b;
-  b = goog.se ? goog.Cg == "BY_WHOLE" ? c : function(a) {
+  b = goog.oe ? goog.ug == "BY_WHOLE" ? c : function(a) {
     for(var a = a.split("-"), e = [], f = 0;f < a.length;f++) {
       e.push(c(a[f]))
     }
@@ -504,37 +504,37 @@ goog.Ai = function(d, g) {
   };
   return g ? d + "-" + b(g) : b(d)
 };
-goog.lj = function(d, g) {
-  goog.se = d;
-  goog.Cg = g
+goog.ej = function(d, g) {
+  goog.oe = d;
+  goog.ug = g
 };
-goog.Di = function(d, g) {
+goog.wi = function(d, g) {
   var c = g || {}, b;
   for(b in c) {
     var a = ("" + c[b]).replace(/\$/g, "$$$$"), d = d.replace(RegExp("\\{\\$" + b + "\\}", "gi"), a)
   }
   return d
 };
-goog.N = function(d, g) {
-  goog.ve(d, g, s)
+goog.L = function(d, g) {
+  goog.qe(d, g, s)
 };
-goog.Kg = function(d, g) {
+goog.Dg = function(d, g) {
   d.dispose = g
 };
-goog.Gb = function(d, g) {
+goog.Db = function(d, g) {
   function c() {
   }
   c.prototype = g.prototype;
-  d.mc = g.prototype;
+  d.jc = g.prototype;
   d.prototype = new c;
   d.prototype.constructor = d
 };
-goog.ii = function(d, g, c) {
+goog.bi = function(d, g, c) {
   var b = arguments.callee.caller;
-  if(b.mc) {
-    return b.mc.constructor.apply(d, Array.prototype.slice.call(arguments, 1))
+  if(b.jc) {
+    return b.jc.constructor.apply(d, Array.prototype.slice.call(arguments, 1))
   }
-  for(var a = Array.prototype.slice.call(arguments, 2), e = !1, f = d.constructor;f;f = f.mc && f.mc.constructor) {
+  for(var a = Array.prototype.slice.call(arguments, 2), e = !1, f = d.constructor;f;f = f.jc && f.jc.constructor) {
     if(f.prototype[g] === b) {
       e = !0
     }else {
@@ -560,8 +560,8 @@ var z = {};
   } : function(b) {
     g.push.apply(g, arguments)
   };
-  goog.N("jx.util", z);
-  goog.N("echo", c);
+  goog.L("jx.util", z);
+  goog.L("echo", c);
   z.isNull = function(b) {
     return b == t
   };
@@ -848,7 +848,7 @@ var z = {};
       return!0
     }
     if(b.className) {
-      for(var e = b.jd ? b.jd : z.split(b.className), f = 0, i = e.length;f < i;f++) {
+      for(var e = b.ed ? b.ed : z.split(b.className), f = 0, i = e.length;f < i;f++) {
         if(e[f] === a) {
           return!0
         }
@@ -865,7 +865,7 @@ var z = {};
         return!0
       }
       if(b.className && b.className.length >= e.length) {
-        for(var b = b.jd ? b.jd : z.split(b.className), a = 0, f = b.length;a < f;a++) {
+        for(var b = b.ed ? b.ed : z.split(b.className), a = 0, f = b.length;a < f;a++) {
           if(b[a] === e) {
             return!0
           }
@@ -941,7 +941,7 @@ var z = {};
     return f
   };
   z.getHead = function() {
-    return document.Qg ? document.Qg : document.getElementsByTagName("head")[0]
+    return document.Ig ? document.Ig : document.getElementsByTagName("head")[0]
   };
   z.appendTag = function(b, a) {
     return b.appendChild(document.createElement(a))
@@ -1144,11 +1144,11 @@ var z = {};
     var b = {}, a = document.createElement("div");
     document.body.appendChild(a);
     a.innerHTML = "<input type='checkbox' style='margin:0;padding:0;overflow:hidden'/>";
-    b.xg = a.childNodes[0].offsetWidth;
-    b.wg = a.childNodes[0].offsetHeight;
+    b.qg = a.childNodes[0].offsetWidth;
+    b.pg = a.childNodes[0].offsetHeight;
     a.innerHTML = "<input type='radio' style='margin:0;padding:0;overflow:hidden'/>";
-    b.oh = a.childNodes[0].offsetWidth;
-    b.nh = a.childNodes[0].offsetHeight;
+    b.hh = a.childNodes[0].offsetWidth;
+    b.gh = a.childNodes[0].offsetHeight;
     document.body.removeChild(a);
     return b
   };
@@ -1203,25 +1203,25 @@ var z = {};
         a.hasOwnProperty(e) && (a[e] = b[e])
       }
     }
-    b = z.ifNull(a.height, "", "height=" + a.height + ", ") + z.ifNull(a.left, "", "left=" + a.left + ", ") + z.ifNull(a.top, "", "top=" + a.top + ", ") + z.ifNull(a.width, "", "width=" + a.width + ", ") + "channelmode=" + a.mi + ", directories=" + a.directories + ", fullscreen=" + a.yi + ", location=" + a.location + ", menubar=" + a.menubar + ", resizable=" + a.vh + ", scrollbars=" + a.scrollbars + ", status=" + a.status + ", titlebar=" + a.pj + ", toolbar=" + a.toolbar;
+    b = z.ifNull(a.height, "", "height=" + a.height + ", ") + z.ifNull(a.left, "", "left=" + a.left + ", ") + z.ifNull(a.top, "", "top=" + a.top + ", ") + z.ifNull(a.width, "", "width=" + a.width + ", ") + "channelmode=" + a.fi + ", directories=" + a.directories + ", fullscreen=" + a.qi + ", location=" + a.location + ", menubar=" + a.menubar + ", resizable=" + a.oh + ", scrollbars=" + a.scrollbars + ", status=" + a.status + ", titlebar=" + a.ij + ", toolbar=" + a.toolbar;
     return z.isNull(a.replace) ? window.open(a.url, a.name, b) : window.open(a.url, a.name, b, a.replace)
   }
 })();
 (function() {
   function d() {
     this.stack = "";
-    this.Ee = {}
+    this.ye = {}
   }
-  var g = goog.H("jx.util");
-  goog.N("Tracer", d);
+  var g = goog.D("jx.util");
+  goog.L("Tracer", d);
   var c = d.prototype;
   c.print = function(b, a, e) {
     b === s && (b = "");
     a === s && (a = "timer");
     e === s && (e = !0);
-    var f = this.Ee[a], i = (new Date).getTime(), f = g.isNull(f) ? 0 : i - f;
+    var f = this.ye[a], i = (new Date).getTime(), f = g.isNull(f) ? 0 : i - f;
     g.print((this.stack.length > 0 ? this.stack + " :: " : "") + b + ", Time elapsed since last update: " + f + "ms");
-    e && (this.Ee[a] = i)
+    e && (this.ye[a] = i)
   };
   c.addStack = function(b) {
     this.stack = this.stack + " > " + b
@@ -1234,7 +1234,7 @@ var z = {};
   }
 })();
 var A = {};
-goog.N("jx.util$", A);
+goog.L("jx.util$", A);
 A.is$ = function(d) {
   return d instanceof jQuery ? !0 : !1
 };
@@ -1244,21 +1244,21 @@ A.safe$ = function(d) {
 A.unbindRemove = function(d) {
   d.unbind().remove()
 };
-jQuery.fn.xe = function() {
+jQuery.fn.se = function() {
   var d = this.offset();
   return{left:d.left, top:d.top, width:this.outerWidth(), height:this.outerHeight()}
 };
-jQuery.fn.re = function(d) {
+jQuery.fn.ne = function(d) {
   if(this.length === 0) {
     return!1
   }
   var g, c, b, a;
   if(this.length <= 1) {
-    return g = this.xe(), b = d.pageX, a = d.pageY, b >= g.left && b <= g.left + g.width && a >= g.top && a <= g.top + g.height
+    return g = this.se(), b = d.pageX, a = d.pageY, b >= g.left && b <= g.left + g.width && a >= g.top && a <= g.top + g.height
   }
   c = !1;
   this.each(function() {
-    g = $(this).xe();
+    g = $(this).se();
     b = d.pageX;
     a = d.pageY;
     if(b >= g.left && b <= g.left + g.width && a >= g.top && a <= g.top + g.height) {
@@ -1272,35 +1272,35 @@ A.baseurlOfHeadScript = function(d) {
   return g.substring(0, g.indexOf(d))
 };
 A.calScrollbarDims = function(d) {
-  if(z.isNotNull(window.Qb)) {
-    return window.Qb
+  if(z.isNotNull(window.Nb)) {
+    return window.Nb
   }
-  if(z.isNotNull(window.opener) && z.isNotNull(window.opener.Qb)) {
-    return window.opener.Qb
+  if(z.isNotNull(window.opener) && z.isNotNull(window.opener.Nb)) {
+    return window.opener.Nb
   }
   var d = A.safe$(d), g;
   d[0].innerHTML = "<div id='scrollbardim' style='position:absolute;top:-10000px;left:-10000px;width:100px;height:100px;overflow:scroll;'></div>";
   g = $(document.getElementById("scrollbardim"));
   g = {w:g.width() - g[0].clientWidth, h:g.height() - g[0].clientHeight};
   d[0].innerHTML = "";
-  return window.Qb = g
+  return window.Nb = g
 };
 var D = {};
 (function() {
-  var d = goog.H("jx.util"), g = goog.H("jx.util$");
-  goog.N("JGM", D);
-  goog.N("jx.grid", D);
+  var d = goog.D("jx.util"), g = goog.D("jx.util$");
+  goog.L("JGM", D);
+  goog.L("jx.grid", D);
   D.version = "1.2.3";
-  D.U = {ArrayExtIE:{R:!1}, Cache:{R:!0}, Cell:{R:!1}, CheckManager:{R:!0}, ColDefManager:{R:!0}, ColGroup:{R:!0}, ColHeader:{R:!0}, Collapser:{R:!0}, DataManager:{R:!0}, DataCreator:{R:!0}, EditManager:{R:!0}, Editor:{R:!0}, EngineExt:{R:!1}, EventManager:{R:!0}, Footer:{R:!0}, HeaderTree:{R:!0}, Grid:{R:!0}, GridManager:{R:!1}, MenuBar:{R:!0}, ViewportManager:{R:!0}, SelectionManager:{R:!0}, SearchManager:{R:!0}, TooltipManager:{R:!0}, Tracer:{R:!1}, Tree:{R:!0}, TreeNode:{R:!1}, Util:{R:!1}, Util$:{R:!1}};
+  D.R = {ArrayExtIE:{P:!1}, Cache:{P:!0}, Cell:{P:!1}, CheckManager:{P:!0}, ColDefManager:{P:!0}, ColGroup:{P:!0}, ColHeader:{P:!0}, Collapser:{P:!0}, DataManager:{P:!0}, DataCreator:{P:!0}, EditManager:{P:!0}, Editor:{P:!0}, EngineExt:{P:!1}, EventManager:{P:!0}, Footer:{P:!0}, HeaderTree:{P:!0}, Grid:{P:!0}, GridManager:{P:!1}, MenuBar:{P:!0}, ViewportManager:{P:!0}, SelectionManager:{P:!0}, SearchManager:{P:!0}, TooltipManager:{P:!0}, Tracer:{P:!1}, Tree:{P:!0}, TreeNode:{P:!1}, Util:{P:!1}, Util$:{P:!1}};
   D.create = function(c, b) {
     d.isNull(b) && (b = {});
     this.hasOwnProperty(c) || r(Error("cannot find a grid module: name=" + c));
-    if(this.U.hasOwnProperty(c)) {
-      if(this.U[c].R) {
-        var a = b.D = "JGM" + this.m.length++, e = new this[c](b);
+    if(this.R.hasOwnProperty(c)) {
+      if(this.R[c].P) {
+        var a = b.C = "JGM" + this.m.length++, e = new this[c](b);
         this.m.hasOwnProperty(c) || (this.m[c] = {});
         this.m[c][a] = e;
-        c === "Grid" && e.name && (this.ld[e.name] = e);
+        c === "Grid" && e.name && (this.gd[e.name] = e);
         return e
       }else {
         return new this[c](b)
@@ -1309,7 +1309,7 @@ var D = {};
       return new this[c](b)
     }
   };
-  D.J = function(c, b) {
+  D.H = function(c, b) {
     var a, e, f, i;
     for(e in b) {
       if(b.hasOwnProperty(e)) {
@@ -1320,7 +1320,7 @@ var D = {};
               a = d.split(a);
               i = a.length;
               for(f = 0;f < i;f++) {
-                D.Ca(c, a[f])
+                D.Aa(c, a[f])
               }
             }else {
               if(a instanceof Array) {
@@ -1339,7 +1339,7 @@ var D = {};
               a = d.split(a);
               i = a.length;
               for(f = 0;f < i;f++) {
-                D.Bc(c, a[f])
+                D.yc(c, a[f])
               }
             }else {
               a.length = 0
@@ -1351,7 +1351,7 @@ var D = {};
               a = d.split(a);
               i = a.length;
               for(f = 0;f < i;f++) {
-                D.ub(c, a[f])
+                D.rb(c, a[f])
               }
             }else {
               if(a instanceof Array) {
@@ -1370,7 +1370,7 @@ var D = {};
               a = d.split(a);
               i = a.length;
               for(f = 0;f < i;f++) {
-                D.Ue(c, a[f])
+                D.Oe(c, a[f])
               }
             }else {
               if(a instanceof Array) {
@@ -1406,7 +1406,7 @@ var D = {};
               a = d.split(a);
               i = a.length;
               for(f = 0;f < i;f++) {
-                D.Te(c, a[f])
+                D.Ne(c, a[f])
               }
             }else {
               if(a instanceof Array) {
@@ -1420,7 +1420,7 @@ var D = {};
             }
             break;
           case "name":
-            c.hasOwnProperty("mid") && (D.Da(b[e], c.D), delete c.D);
+            c.hasOwnProperty("mid") && (D.Ba(b[e], c.C), delete c.C);
             break;
           case "path":
             c.hasOwnProperty("grid") && c.grid.hasOwnProperty(b[e]) && (delete c.grid[b[e]], delete c.grid)
@@ -1429,71 +1429,71 @@ var D = {};
     }
     d.emptyObject(c)
   };
-  D.Ca = function(c, b) {
+  D.Aa = function(c, b) {
     c.hasOwnProperty(b) && (d.emptyObject(c[b]), delete c[b])
   };
-  D.Bc = function(c, b) {
+  D.yc = function(c, b) {
     if(c.hasOwnProperty(b)) {
       c[b].length = 0, delete c[b]
     }
   };
-  D.ub = function(c, b) {
+  D.rb = function(c, b) {
     c.hasOwnProperty(b) && (g.unbindRemove(c[b]), delete c[b])
   };
-  D.Ue = function(c, b) {
+  D.Oe = function(c, b) {
     c.hasOwnProperty(b) && (d.removeStyle(c[b]), delete c[b])
   };
-  D.Te = function(c, b) {
+  D.Ne = function(c, b) {
     c.hasOwnProperty(b) && (c[b].destroy(), delete c[b])
   };
-  D.Da = function(c, b) {
+  D.Ba = function(c, b) {
     delete this.m[c][b]
   };
   D.grid = function(c) {
     return this.create("Grid", c)
   };
-  D.ld = {};
+  D.gd = {};
   D.getGrid = function(c) {
-    if(this.ld.hasOwnProperty(c)) {
-      return this.ld[c]
+    if(this.gd.hasOwnProperty(c)) {
+      return this.gd[c]
     }
   };
-  D.S = function(c, b) {
+  D.Q = function(c, b) {
     this[c] = b
   };
-  D.da = function(c, b) {
+  D.ba = function(c, b) {
     var a = d.ifNull(b, {});
     $.extend(!0, c, a);
     $.extend(!0, a, c);
     return a
   };
   D.m = {length:0};
-  D.Ba = {tb:"-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-o-user-select:none;user-select:none;", tb:"-webkit-user-drag:none;-moz-user-drag:none;user-drag:none;", xc:s, Dd:s, Zd:s, Yd:s};
-  D.Vb = !1;
-  D.cb = {gb:function(c) {
+  D.za = {qb:"-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-o-user-select:none;user-select:none;", qb:"-webkit-user-drag:none;-moz-user-drag:none;user-drag:none;", uc:s, yd:s, Ud:s, Td:s};
+  D.Sb = !1;
+  D.ab = {eb:function(c) {
     var b, a = D.m.Grid;
     for(b in a) {
-      a.hasOwnProperty(b) && a[b].gb(c)
+      a.hasOwnProperty(b) && a[b].eb(c)
     }
-  }, La:function(c) {
+  }, Ia:function(c) {
     var b, a = D.m.Grid;
     for(b in a) {
-      a.hasOwnProperty(b) && a[b].La(c)
+      a.hasOwnProperty(b) && a[b].Ia(c)
     }
-  }, bc:function(c) {
+  }, Zb:function(c) {
     var b, a = D.m.Grid;
     for(b in a) {
-      a.hasOwnProperty(b) && a[b].bc(c)
+      a.hasOwnProperty(b) && a[b].Zb(c)
     }
   }};
-  D.Ke = function() {
-    if(!this.Vb) {
-      $(document).bind({mousemove:this.cb.gb, mouseup:this.cb.La}), $(window).resize(this.cb.bc), this.Vb = !0
+  D.Ee = function() {
+    if(!this.Sb) {
+      $(document).bind({mousemove:this.ab.eb, mouseup:this.ab.Ia}), $(window).resize(this.ab.Zb), this.Sb = !0
     }
   };
-  D.pg = function() {
-    if(this.Vb) {
-      $(document).unbind({mousemove:this.cb.gb, mouseup:this.cb.La}), $(window).unbind("resize", this.cb.bc), this.Vb = !1
+  D.ig = function() {
+    if(this.Sb) {
+      $(document).unbind({mousemove:this.ab.eb, mouseup:this.ab.Ia}), $(window).unbind("resize", this.ab.Zb), this.Sb = !1
     }
   };
   D.error = {LENGTH_NOT_EQUAL:"Lengths are not equal", NOT_MODIFIABLE:"Cannot modify value for '%0'.", KEY_UNDEFINED:"Column '%0' is undefined.", BAD_NULL:"Column '%0' cannot be null.", DUP_KEY:"Duplicate column key '%0'.", DUP_ENTRY:"Duplicate entry '%0' for '%1'.", KEY_NOT_FOUND:"'%0' for '%1' doesn't exist in table.", PARSE_ERROR:"Cannot parse '%0' for '%1'.", INVALID_DEFAULT:"Invalid default value '%0' for '%1'.", MULTIPLE_PRI_KEY:"Multiple primary key defined.", DATA_TOO_LONG:"Data '%0' too long for column '%1'. Maximum is %2.", 
@@ -1501,9 +1501,9 @@ var D = {};
 })();
 var F = {};
 (function() {
-  var d = goog.H("jx.grid");
-  goog.H("jx.util");
-  goog.N("jx.grid.renderer", g);
+  var d = goog.D("jx.grid");
+  goog.D("jx.util");
+  goog.L("jx.grid.renderer", g);
   var g = d.renderer = F;
   g.selectBox = function(c) {
     var b = c.mapping, a = c.attr, e = c["default"], f = c.style, i = c.callback, h, j, d, g = 0, k = [], o = [], n = "<select";
@@ -1567,19 +1567,19 @@ var F = {};
       }
     }
   }
-  var c = goog.H("jx.util");
-  goog.N("jx.lang.Disposable", d);
-  goog.Kg(d.prototype, g);
+  var c = goog.D("jx.util");
+  goog.L("jx.lang.Disposable", d);
+  goog.Dg(d.prototype, g);
   var b = c.isArray
 })();
 (function() {
   function d() {
   }
-  goog.H("jx.grid");
-  goog.H("jx.util");
-  var g = goog.H("jx.lang.Disposable");
-  goog.N("jx.events.EventDispatcher", d);
-  goog.Gb(d, g);
+  goog.D("jx.grid");
+  goog.D("jx.util");
+  var g = goog.D("jx.lang.Disposable");
+  goog.L("jx.events.EventDispatcher", d);
+  goog.Db(d, g);
   var g = d.prototype, c = g.dispose;
   g.dispose = function() {
     c.call(this, -1, !0)
@@ -1587,17 +1587,17 @@ var F = {};
   g.addEventListener = function(b, a) {
     b || r(Error("Invalid event type: " + b));
     typeof a != "function" && r(Error("Event listener must be a function"));
-    if(!this.eb) {
-      this.eb = {}
+    if(!this.bb) {
+      this.bb = {}
     }
-    var e = this.eb, b = (b + "").toLowerCase();
+    var e = this.bb, b = (b + "").toLowerCase();
     e.hasOwnProperty(b) || (e[b] = []);
     e = e[b];
     e.indexOf(a) === -1 && e.push(a)
   };
   g.removeEventListener = function(b, a) {
-    if(this.eb) {
-      var b = (b + "").toLowerCase(), e = this.eb;
+    if(this.bb) {
+      var b = (b + "").toLowerCase(), e = this.bb;
       if(e.hasOwnProperty(b)) {
         for(var f = e[b], i = -1;(i = f.indexOf(a, i + 1)) !== -1;) {
           f.splice(i, 1)
@@ -1608,67 +1608,67 @@ var F = {};
   };
   g.dispatchEvent = function(b) {
     (!b || !b.type) && r(Error("Invalid event"));
-    if(!this.eb) {
-      if(b.cancelable && b.Fg) {
+    if(!this.bb) {
+      if(b.cancelable && b.yg) {
         return!1
       }
-      b.kd && b.kd(this);
+      b.fd && b.fd(this);
       return!0
     }
-    var a = this.eb, e = (b.type + "").toLowerCase();
+    var a = this.bb, e = (b.type + "").toLowerCase();
     b.target = this;
     if(a.hasOwnProperty(e)) {
       for(var a = a[e], e = 0, f = a.length, i;e < f && !b.stopPropagation;e++) {
         i = a[e], i.handleEvent ? i.handleEvent(b) : i.call(this, b)
       }
     }
-    if(b.cancelable && b.Fg) {
+    if(b.cancelable && b.yg) {
       return!1
     }
-    b.kd && b.kd(this);
+    b.fd && b.fd(this);
     return!0
   }
 })();
 (function() {
   function d(c) {
     c.manager && typeof c.manager == "object" || r(Error("Column needs a valid manager!"));
-    this.Xg = c.manager;
+    this.Pg = c.manager;
     (this.key = c.key + "") || r(Error("Column needs a non-empty key!"));
     var b = "column key=" + this.key;
-    this.Xg.Ii(this.key) && r(Error("Duplicate column key!" + b));
+    this.Pg.Bi(this.key) && r(Error("Duplicate column key!" + b));
     this.name = c.name ? c.name + "" : "";
     this.title = c.title ? c.title + "" : "";
-    this.Wi = !!c.noName;
-    this.Xi = !!c.noTitle;
+    this.Pi = !!c.noName;
+    this.Qi = !!c.noTitle;
     this.type = c.type + "" || t;
     this.defaultValue = c.defaultValue;
-    this.Ki = !!c.inputOnCreate;
+    this.Di = !!c.inputOnCreate;
     this.width = (this.width = Number(c.width)) || 90;
-    this.Ae = (this.Ae = Number(c.minW)) || 30;
-    this.Ri = Number(c.maxW) || t;
-    this.vh = !!c.resizable;
+    this.ve = (this.ve = Number(c.minW)) || 30;
+    this.Ki = Number(c.maxW) || t;
+    this.oh = !!c.resizable;
     this.hidden = !!c.hidden;
-    this.$g = !!c.noSearch;
-    this.zh = !!c.tooltipEnabled;
-    this.ni = c.colClass + "" || t;
+    this.Tg = !!c.noSearch;
+    this.rh = !!c.tooltipEnabled;
+    this.gi = c.colClass + "" || t;
     this.style = c.style + "" || t;
-    this.Rg = c.headerStyle + "" || t;
+    this.Jg = c.headerStyle + "" || t;
     c.parser && typeof c.parser != "function" && r(Error("Invalid parser!" + b));
-    this.Hb = c.parser || t;
+    this.Eb = c.parser || t;
     c.validator && typeof c.validator != "function" && r(Error("Invalid validator!" + b));
-    this.vd = c.validator || t;
+    this.qd = c.validator || t;
     c.renderer && typeof c.renderer != "function" && r(Error("Invalid renderer!" + b));
     this.renderer = c.renderer || t;
     c.sumRenderer && typeof c.sumRenderer != "function" && r(Error("Invalid sum renderer!" + b));
-    this.nj = c.sumRenderer || t;
+    this.gj = c.sumRenderer || t;
     c.editor && typeof c.editor != "object" && r(Error("Invalid editor!" + b));
-    this.Y = c.editor || t;
+    this.W = c.editor || t;
     this.sorter = c.sorter || t;
     this.filter = c.filter || t
   }
-  var g = goog.H("jx.events.EventDispatcher");
-  goog.N("jx.grid.Column", d);
-  goog.Gb(d, g);
+  var g = goog.D("jx.events.EventDispatcher");
+  goog.L("jx.grid.Column", d);
+  goog.Db(d, g);
   g = d.prototype;
   g.show = function() {
     return this.hidden ? (this.hidden = !1, this.dispatchEvent({type:"hidden", value:!1}), !0) : !1
@@ -1691,14 +1691,14 @@ var F = {};
 (function() {
   function d(b) {
     if(b) {
-      if(b.D != t) {
-        this.D = b.D
+      if(b.C != t) {
+        this.C = b.C
       }
       if(b.grid) {
         this.grid = b.grid
       }
     }
-    var a = this.Ac && this.Ac(), e = b && b.options;
+    var a = this.xc && this.xc(), e = b && b.options;
     if(e || a) {
       a || (a = {}), e && $.extend(!0, a, e), this.A = a
     }
@@ -1713,14 +1713,14 @@ var F = {};
         return f[b](a)
       })
     });
-    this.vc && (this.dispatchEvent({type:"beforebindevents"}), this.vc(b), this.dispatchEvent({type:"afterbindevents"}));
+    this.sc && (this.dispatchEvent({type:"beforebindevents"}), this.sc(b), this.dispatchEvent({type:"afterbindevents"}));
     this.dispatchEvent({type:"complete"})
   }
-  var g = goog.H("jx.events.EventDispatcher");
-  goog.N("jx.grid.BaseModule", d);
-  goog.Gb(d, g);
+  var g = goog.D("jx.events.EventDispatcher");
+  goog.L("jx.grid.BaseModule", d);
+  goog.Db(d, g);
   var g = d.prototype, c = g.dispose;
-  g.Nh = function() {
+  g.Fh = function() {
     this.dispose()
   };
   g.dispose = function() {
@@ -1732,70 +1732,70 @@ var F = {};
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
+    this.C = a.C;
     this.grid = a.grid;
-    this.grid.B = this;
+    this.grid.dataMgr = this;
     this.all = [];
-    this.W = [];
-    this.we = [];
-    this.A = g.da({idKey:s, idColKeys:[], uniqueKeys:[]}, a.options);
-    this.C = {qb:0, Ra:1, Ia:2, ya:this.D + "@NR" + c.random(1E4), S:0, tc:1, dd:2, ed:3, Da:4, Yc:5, Bh:0, ah:1, wh:2, "boolean":3, Eg:4, "enum":5};
-    c.isNotNull(this.A.idKey) ? (this.wa = this.C.Ra, this.O = this.A.idKey) : (this.wa = this.A.idColKeys.length !== 0 ? this.C.Ia : this.C.qb, this.O = "J@I" + this.D + "@" + c.random(1E4));
-    this.Xb = 0;
-    this.Vg = {};
-    this.fb = {};
+    this.U = [];
+    this.re = [];
+    this.A = g.ba({idKey:s, idColKeys:[], uniqueKeys:[]}, a.options);
+    this.B = {nb:0, Oa:1, Fa:2, wa:this.C + "@NR" + c.random(1E4), Q:0, qc:1, ad:2, bd:3, Ba:4, Vc:5, th:0, Ug:1, ph:2, "boolean":3, xg:4, "enum":5};
+    c.isNotNull(this.A.idKey) ? (this.ua = this.B.Oa, this.M = this.A.idKey) : (this.ua = this.A.idColKeys.length !== 0 ? this.B.Fa : this.B.nb, this.M = "J@I" + this.C + "@" + c.random(1E4));
+    this.Ub = 0;
+    this.Ng = {};
+    this.cb = {};
+    this.la = {};
+    this.$a = [];
+    this.ta = [];
+    this.xa = [];
     this.na = {};
-    this.bb = [];
-    this.va = [];
-    this.za = [];
-    this.pa = {};
-    this.P(a)
+    this.N(a)
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.data.DataManager", d);
-  g.S("DataManager", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.data.DataManager", d);
+  g.Q("DataManager", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function(a) {
-    for(var e = 0, f = this.A.uniqueKeys, b, h = this.pa, j = f.length, d = this.Vg, g = this.grid.G.getAll();e < j;e++) {
+  b.N = function(a) {
+    for(var e = 0, f = this.A.uniqueKeys, b, h = this.na, j = f.length, d = this.Ng, g = this.grid.colDefMgr.getAll();e < j;e++) {
       b = f[e], typeof b === "string" && (h[b] = {})
     }
     j = g.length;
     for(e = 0;e < j;e++) {
-      f = g[e], b = f.key, f.hasOwnProperty("unique") && f.unique === !0 && !h.hasOwnProperty(b) && (h[b] = {}), d[b] = this.Yg(f.type)
+      f = g[e], b = f.key, f.hasOwnProperty("unique") && f.unique === !0 && !h.hasOwnProperty(b) && (h[b] = {}), d[b] = this.Qg(f.type)
     }
     c.ifNull(a.datalist, []);
     this.bindEvents();
     this.set(a.datalist)
   };
-  b.Yg = function(a) {
+  b.Qg = function(a) {
     if(typeof a === "string") {
       switch(a = a.toLowerCase(), a) {
         case "number":
-          return this.C.ah;
+          return this.B.Ug;
         case "string":
-          return this.C.wh;
+          return this.B.ph;
         case "boolean":
-          return this.C["boolean"];
+          return this.B["boolean"];
         case "date":
-          return this.C.Eg;
+          return this.B.xg;
         case "enum":
-          return this.C["enum"]
+          return this.B["enum"]
       }
     }
-    return this.C.Bh
+    return this.B.th
   };
   b.bindEvents = function() {
-    this.grid.event.bind({onDestroy:this.J, keydownCanvas:this.vb}, this)
+    this.grid.event.bind({onDestroy:this.H, keydownCanvas:this.sb}, this)
   };
-  b.J = function() {
+  b.H = function() {
     this.cleanList(this.all);
-    g.J(this, {name:"DataManager", path:"dataMgr", Aa:"all _idMode _increment idKey _sorter", map:"consts _idToIdx _idToData _options", pe:"datalist failed _history _redoHistory _filters"})
+    g.H(this, {name:"DataManager", path:"dataMgr", ya:"all _idMode _increment idKey _sorter", map:"consts _idToIdx _idToData _options", ke:"datalist failed _history _redoHistory _filters"})
   };
-  b.me = function(a, e, f) {
+  b.he = function(a, e, f) {
     if(c.isNull(a) || c.isEmptyString(e) || c.isNull(f)) {
       return!1
     }
@@ -1812,7 +1812,7 @@ var F = {};
     a[b] = f;
     return!0
   };
-  b.ne = function(a, e, f) {
+  b.ie = function(a, e, f) {
     if(c.isNull(a) || c.isEmptyString(e) || c.isEmptyArray(f)) {
       return!1
     }
@@ -1820,16 +1820,16 @@ var F = {};
     for(b = 0;b < h;b++) {
       if(!c.isNull(g = f[b])) {
         if(g.hasOwnProperty(e) === !1) {
-          return this.Ib(a, e, j), this.grid.error("KEY_UNDEFINED", e)
+          return this.Fb(a, e, j), this.grid.error("KEY_UNDEFINED", e)
         }
         if(c.isEmptyString(d = g[e])) {
-          return this.Ib(a, e, j), this.grid.error("BAD_NULL", e)
+          return this.Fb(a, e, j), this.grid.error("BAD_NULL", e)
         }
         if(a.hasOwnProperty(d)) {
           if(a[d] === g) {
             continue
           }
-          this.Ib(a, e, j);
+          this.Fb(a, e, j);
           return this.grid.error("DUP_ENTRY", d, e)
         }
         j.push(a[d] = g)
@@ -1837,7 +1837,7 @@ var F = {};
     }
     return j.length > 0
   };
-  b.oc = function(a, e, f, b, h) {
+  b.lc = function(a, e, f, b, h) {
     if(c.isEmptyObj(a) || c.isEmptyString(e) || c.isNullOr(f, h) || c.isEmptyObj(b)) {
       return!1
     }
@@ -1860,7 +1860,7 @@ var F = {};
     delete a[h];
     return h
   };
-  b.Na = function(a, e, f, b, h) {
+  b.Ka = function(a, e, f, b, h) {
     if(c.isEmptyObj(a) || c.isEmptyString(e) || c.isEmptyArray(f) || c.isEmptyArray(b) || c.isEmptyArray(h)) {
       return!1
     }
@@ -1872,19 +1872,19 @@ var F = {};
         if((o = b[j]).hasOwnProperty(e) !== !1) {
           k = h[j];
           if(k.hasOwnProperty(e) === !1 || g.hasOwnProperty(e) === !1) {
-            return this.Na(a, e, n, p, q), this.grid.error("KEY_UNDEFINED", e)
+            return this.Ka(a, e, n, p, q), this.grid.error("KEY_UNDEFINED", e)
           }
           if(a.hasOwnProperty(w = k[e]) === !1) {
-            return this.Na(a, e, n, p, q), this.grid.error("KEY_NOT_FOUND", w, e)
+            return this.Ka(a, e, n, p, q), this.grid.error("KEY_NOT_FOUND", w, e)
           }
           if(c.isEmptyString(u = o[e])) {
-            return this.Na(a, e, n, p, q), this.grid.error("BAD_NULL", e)
+            return this.Ka(a, e, n, p, q), this.grid.error("BAD_NULL", e)
           }
           if(a.hasOwnProperty(u)) {
             if(a[u] === g) {
               continue
             }
-            this.Na(a, e, n, p, q);
+            this.Ka(a, e, n, p, q);
             return this.grid.error("DUP_ENTRY", u, e)
           }
           a[u] = g;
@@ -1895,15 +1895,15 @@ var F = {};
         }
       }
     }
-    return n.length === 0 ? !1 : {W:n, li:q, tg:p}
+    return n.length === 0 ? !1 : {U:n, ei:q, mg:p}
   };
-  b.Ce = function(a, e, f) {
+  b.we = function(a, e, f) {
     if(!c.isEmptyObj(a) && !c.isEmptyString(e) && !c.isEmptyObj(f)) {
       var b;
       f.hasOwnProperty(e) && a.hasOwnProperty(b = f[e]) && delete a[b]
     }
   };
-  b.Ib = function(a, e, f) {
+  b.Fb = function(a, e, f) {
     if(!c.isEmptyObj(a) && !c.isEmptyString(e) && !c.isEmptyArray(f)) {
       var b, h = f.length, j, d;
       for(b = 0;b < h;b++) {
@@ -1911,20 +1911,20 @@ var F = {};
       }
     }
   };
-  b.rg = function(a) {
-    if(c.isEmptyObj(a) || c.isEmptyObj(this.pa)) {
+  b.kg = function(a) {
+    if(c.isEmptyObj(a) || c.isEmptyObj(this.na)) {
       return!1
     }
-    var e = [], f, b = this.pa, h;
+    var e = [], f, b = this.na, h;
     for(f in b) {
       if(b.hasOwnProperty(f)) {
-        if(h = this.me(b[f], f, a), h === !0) {
+        if(h = this.he(b[f], f, a), h === !0) {
           e.push(f)
         }else {
           if(h instanceof Error) {
             f = 0;
             for(var j = e.length;f < j;f++) {
-              this.Ce(b[e[f]], e[f], a)
+              this.we(b[e[f]], e[f], a)
             }
             return h
           }
@@ -1933,20 +1933,20 @@ var F = {};
     }
     return e.length > 0
   };
-  b.je = function(a) {
-    if(c.isEmptyArray(a) || c.isEmptyObj(this.pa)) {
+  b.ee = function(a) {
+    if(c.isEmptyArray(a) || c.isEmptyObj(this.na)) {
       return!1
     }
-    var e = this.pa, f = [], b, h;
+    var e = this.na, f = [], b, h;
     for(b in e) {
       if(e.hasOwnProperty(b)) {
-        if(h = this.ne(e[b], b, a), h === !0) {
+        if(h = this.ie(e[b], b, a), h === !0) {
           f.push(b)
         }else {
           if(h instanceof Error) {
             b = 0;
             for(var j = f.length;b < j;b++) {
-              this.Ib(e[f[b]], f[b], a)
+              this.Fb(e[f[b]], f[b], a)
             }
             return h
           }
@@ -1955,18 +1955,18 @@ var F = {};
     }
     return f.length > 0
   };
-  b.Gh = function(a, e, f) {
-    if(c.isNullOr(a, e, f) || c.isEmptyObj(this.pa)) {
+  b.yh = function(a, e, f) {
+    if(c.isNullOr(a, e, f) || c.isEmptyObj(this.na)) {
       return!1
     }
-    var b, h = this.pa, j = [], d;
+    var b, h = this.na, j = [], d;
     for(b in h) {
       if(h.hasOwnProperty(b)) {
-        d = this.oc(h[b], b, a, e, f);
+        d = this.lc(h[b], b, a, e, f);
         if(d instanceof Error) {
           b = 0;
           for(var g = j.length;b < g;b++) {
-            this.oc(h[j[b]], j[b], a, f, e)
+            this.lc(h[j[b]], j[b], a, f, e)
           }
           return d
         }
@@ -1975,21 +1975,21 @@ var F = {};
     }
     return j.length > 0
   };
-  b.Fh = function(a, e, f) {
-    if(c.isEmptyArray(a) || c.isEmptyArray(e) || c.isEmptyArray(f) || c.isEmptyObj(this.pa)) {
+  b.xh = function(a, e, f) {
+    if(c.isEmptyArray(a) || c.isEmptyArray(e) || c.isEmptyArray(f) || c.isEmptyObj(this.na)) {
       return!1
     }
     if(a.length !== e.length || a.length !== f.length) {
       return this.grid.error("LENGTH_NOT_EQUAL")
     }
-    var b, h = this.pa, j = [], d;
+    var b, h = this.na, j = [], d;
     for(b in h) {
       if(h.hasOwnProperty(b)) {
-        d = this.Na(h[b], b, a, e, f);
+        d = this.Ka(h[b], b, a, e, f);
         if(d instanceof Error) {
           b = 0;
           for(var g = j.length;b < g;b++) {
-            this.Na(h[j[b]], j[b], a, f, e)
+            this.Ka(h[j[b]], j[b], a, f, e)
           }
           return d
         }
@@ -1998,71 +1998,71 @@ var F = {};
     }
     return j.length > 0
   };
-  b.qh = function(a) {
-    if(!c.isEmptyObj(a) && !c.isEmptyObj(this.pa)) {
-      var e, f = this.pa;
+  b.jh = function(a) {
+    if(!c.isEmptyObj(a) && !c.isEmptyObj(this.na)) {
+      var e, f = this.na;
       for(e in f) {
-        f.hasOwnProperty(e) && this.Ce(f[e], e, a)
+        f.hasOwnProperty(e) && this.we(f[e], e, a)
       }
     }
   };
-  b.sh = function(a) {
-    if(!c.isEmptyArray(a) && !c.isEmptyObj(this.pa)) {
-      var e, f = this.pa;
+  b.lh = function(a) {
+    if(!c.isEmptyArray(a) && !c.isEmptyObj(this.na)) {
+      var e, f = this.na;
       for(e in f) {
-        f.hasOwnProperty(e) && this.Ib(f[e], e, a)
+        f.hasOwnProperty(e) && this.Fb(f[e], e, a)
       }
     }
   };
-  b.le = function(a) {
+  b.ge = function(a) {
     if(c.isNull(a)) {
       return!1
     }
-    var e = this.O;
-    switch(this.wa) {
-      case this.C.qb:
-        a.hasOwnProperty(e) === !1 && (a[e] = this.Xb++);
-      case this.C.Ra:
+    var e = this.M;
+    switch(this.ua) {
+      case this.B.nb:
+        a.hasOwnProperty(e) === !1 && (a[e] = this.Ub++);
+      case this.B.Oa:
       ;
-      case this.C.Ia:
-        return this.me(this.na, e, a)
+      case this.B.Fa:
+        return this.he(this.la, e, a)
     }
     return!1
   };
-  b.gd = function(a) {
+  b.dd = function(a) {
     if(c.isEmptyArray(a)) {
       return!1
     }
-    var e = this.O;
-    switch(this.wa) {
-      case this.C.qb:
+    var e = this.M;
+    switch(this.ua) {
+      case this.B.nb:
         for(var f = 0, b, h = a.length;f < h;f++) {
           if((b = a[f]).hasOwnProperty(e) === !1) {
-            b[e] = this.Xb++
+            b[e] = this.Ub++
           }
         }
       ;
-      case this.C.Ra:
+      case this.B.Oa:
       ;
-      case this.C.Ia:
-        return this.ne(this.na, e, a)
+      case this.B.Fa:
+        return this.ie(this.la, e, a)
     }
     return!1
   };
-  b.Dh = function(a, e, f) {
+  b.vh = function(a, e, f) {
     if(c.isNullOr(a, f) || c.isEmptyObj(e)) {
       return!1
     }
-    var b = this.O;
-    switch(this.wa) {
-      case this.C.qb:
+    var b = this.M;
+    switch(this.ua) {
+      case this.B.nb:
         if(e.hasOwnProperty(b)) {
           return this.grid.error("NOT_MODIFIABLE", b)
         }
       ;
-      case this.C.Ra:
-        return this.oc(this.na, b, a, e, f);
-      case this.C.Ia:
+      case this.B.Oa:
+        return this.lc(this.la, b, a, e, f);
+      case this.B.Fa:
         if(e.hasOwnProperty(b)) {
           return this.grid.error("NOT_MODIFIABLE", b)
         }
@@ -2082,7 +2082,7 @@ var F = {};
             if(j === d) {
               break
             }
-            e = this.oc(this.na, b, a, n, q);
+            e = this.lc(this.la, b, a, n, q);
             e instanceof Error && (a[b] = j);
             return e
           }
@@ -2090,23 +2090,23 @@ var F = {};
     }
     return!1
   };
-  b.Eh = function(a, e, f) {
+  b.wh = function(a, e, f) {
     if(c.isEmptyArray(a) || c.isEmptyArray(e) || c.isEmptyArray(f)) {
       return!1
     }
-    var b = this.O, h = a.length, j = 0;
-    switch(this.wa) {
-      case this.C.qb:
+    var b = this.M, h = a.length, j = 0;
+    switch(this.ua) {
+      case this.B.nb:
         for(;j < h;j++) {
           if(e[j].hasOwnProperty(b)) {
             return this.grid.error("NOT_MODIFIABLE", b)
           }
         }
       ;
-      case this.C.Ra:
-        return this.Na(this.na, b, a, e, f);
-      case this.C.Ia:
-        for(var d = this.na, g, k, o = this.A.idColKeys, n = o.length, q, f = [], p = [], u = [], w = [], y, B, C, E;j < h;j++) {
+      case this.B.Oa:
+        return this.Ka(this.la, b, a, e, f);
+      case this.B.Fa:
+        for(var d = this.la, g, k, o = this.A.idColKeys, n = o.length, q, f = [], p = [], u = [], w = [], y, B, C, E;j < h;j++) {
           g = a[j];
           k = e[j];
           if(k.hasOwnProperty(b)) {
@@ -2140,7 +2140,7 @@ var F = {};
         if(p.length === 0) {
           break
         }
-        a = this.Na(d, b, p, u, w);
+        a = this.Ka(d, b, p, u, w);
         if(a instanceof Error) {
           y = 0;
           for(h = f.length;y < h;y++) {
@@ -2151,35 +2151,35 @@ var F = {};
     }
     return!1
   };
-  b.ph = function(a) {
-    var e = this.O, f = this.na, b;
+  b.ih = function(a) {
+    var e = this.M, f = this.la, b;
     c.isNotNull(a) && a.hasOwnProperty(e) && f.hasOwnProperty(b = a[e]) && delete f[b]
   };
-  b.rh = function(a) {
+  b.kh = function(a) {
     if(!c.isEmptyArray(a)) {
-      for(var e = this.O, f = a.length, b = this.na, h, j, d = 0;d < f;d++) {
+      for(var e = this.M, f = a.length, b = this.la, h, j, d = 0;d < f;d++) {
         j = a[d], j.hasOwnProperty(e) && b.hasOwnProperty(h = j[e]) && delete b[h]
       }
     }
   };
-  b.Mg = function(a, e) {
+  b.Fg = function(a, e) {
     if(!c.isNull(a)) {
-      var f = this.grid.G.getAll(), b = f.length, h, j, d = 0;
+      var f = this.grid.colDefMgr.getAll(), b = f.length, h, j, d = 0;
       if(e !== s && e.isNew) {
         for(;d < b;d++) {
-          j = f[d], h = j.key, j.nullOnCreate && c.isNull(a[h]) && (a[h] = "J@H" + this.Xb++)
+          j = f[d], h = j.key, j.nullOnCreate && c.isNull(a[h]) && (a[h] = "J@H" + this.Ub++)
         }
       }
     }
   };
-  b.Ng = function(a, e) {
+  b.Gg = function(a, e) {
     if(!c.isEmptyArray(a)) {
-      var f = this.grid.G.getAll(), b = f.length, h = a.length, j, d, g = 0;
+      var f = this.grid.colDefMgr.getAll(), b = f.length, h = a.length, j, d, g = 0;
       if(e !== s && e.isNew) {
         for(;g < b;g++) {
           if(d = f[g], j = d.key, d.nullOnCreate) {
             for(d = 0;h;d++) {
-              a[d][j] = "J@H" + this.Xb++
+              a[d][j] = "J@H" + this.Ub++
             }
           }
         }
@@ -2196,16 +2196,16 @@ var F = {};
           case "select":
             return this.executeSelect(f, j);
           case "insert":
-            return this.vi(f, j);
+            return this.ni(f, j);
           case "update":
-            return this.wi(f, j);
+            return this.oi(f, j);
           case "delete":
-            return this.ti(f, j)
+            return this.mi(f, j)
         }
       }
     }
   };
-  b.ej = v();
+  b.Yi = v();
   b.executeSelect = function(a) {
     var a = c.split(a, /[\s,]+/), e = a.length, f = 0, b = {}, h = this.all, j = [];
     if(e === 0) {
@@ -2227,7 +2227,7 @@ var F = {};
     if(c.isNull(a)) {
       return!1
     }
-    for(var f = this.grid.G.getAll(), b = f.length, h, j, d = e !== s && e.isNew, g = 0;g < b;g++) {
+    for(var f = this.grid.colDefMgr.getAll(), b = f.length, h, j, d = e !== s && e.isNew, g = 0;g < b;g++) {
       if(j = f[g], !d || !j.nullOnCreate) {
         if(c.isFunction(h = j.parser)) {
           if(j = j.key, a.hasOwnProperty(j)) {
@@ -2242,14 +2242,14 @@ var F = {};
     }
     return!0
   };
-  b.qd = function(a, e) {
+  b.ld = function(a, e) {
     if(c.isNull(a)) {
       return!1
     }
     if(a.length === 0) {
       return!0
     }
-    for(var f = this.grid.G.getAll(), b = f.length, h = a.length, j, d, g = 0, k, o = e !== s && e.isNew, n;g < b;g++) {
+    for(var f = this.grid.colDefMgr.getAll(), b = f.length, h = a.length, j, d, g = 0, k, o = e !== s && e.isNew, n;g < b;g++) {
       if(d = f[g], !o || !d.nullOnCreate) {
         if(c.isFunction(j = d.parser)) {
           d = d.key;
@@ -2265,11 +2265,11 @@ var F = {};
     }
     return!0
   };
-  b.Fe = function(a, e) {
+  b.ze = function(a, e) {
     if(c.isNull(a)) {
       return!1
     }
-    for(var f = this.grid.G.getAll(), b = f.length, h, d, g, m, k, o, n, q = e !== s && e.isNew, p = 0;p < b;p++) {
+    for(var f = this.grid.colDefMgr.getAll(), b = f.length, h, d, g, m, k, o, n, q = e !== s && e.isNew, p = 0;p < b;p++) {
       if(h = f[p], d = h.key, k = s, m = g = !1, !q || !h.nullOnCreate) {
         if(h.notNull === !0) {
           if(a.hasOwnProperty(d) === !1 || c.isEmptyString(k = a[d])) {
@@ -2314,14 +2314,14 @@ var F = {};
     }
     return!0
   };
-  b.ud = function(a, e) {
+  b.pd = function(a, e) {
     if(c.isNull(a)) {
       return!1
     }
     if(a.length === 0) {
       return!0
     }
-    for(var f = this.grid.G.getAll(), b = f.length, h = a.length, d, g, m = 0, k, o, n, q, p, u = e !== s && e.isNew, w = [], y = [];m < b;m++) {
+    for(var f = this.grid.colDefMgr.getAll(), b = f.length, h = a.length, d, g, m = 0, k, o, n, q, p, u = e !== s && e.isNew, w = [], y = [];m < b;m++) {
       if(d = f[m], g = d.key, o = {}, n = {}, w.length = 0, y.length = 0, !u || !d.nullOnCreate) {
         if(d.notNull === !0) {
           for(k = 0;k < h;k++) {
@@ -2387,19 +2387,19 @@ var F = {};
     }
     return!0
   };
-  b.lc = function(a, e) {
-    if(!(this.wa !== this.C.Ia || c.isNull(a))) {
-      if(e === !0 || a.hasOwnProperty(this.O) === !1) {
+  b.ic = function(a, e) {
+    if(!(this.ua !== this.B.Fa || c.isNull(a))) {
+      if(e === !0 || a.hasOwnProperty(this.M) === !1) {
         for(var f = this.A.idColKeys, b = f.length, h = 0, d = "";h < b;h++) {
           d += "&" + a[f[h]]
         }
-        a[this.O] = d
+        a[this.M] = d
       }
     }
   };
-  b.nd = function(a, e) {
-    if(!(this.wa !== this.C.Ia || a.length === 0)) {
-      var b = this.O, i = a.length, c = this.A.idColKeys, d = c.length, g, m = 0, k, o;
+  b.hd = function(a, e) {
+    if(!(this.ua !== this.B.Fa || a.length === 0)) {
+      var b = this.M, i = a.length, c = this.A.idColKeys, d = c.length, g, m = 0, k, o;
       if(e === !0) {
         for(;m < i;m++) {
           g = a[m];
@@ -2424,8 +2424,8 @@ var F = {};
   };
   b.map = function(a) {
     if(!c.isNull(a)) {
-      var e = this.na, b = this.O, i;
-      this.lc(a);
+      var e = this.la, b = this.M, i;
+      this.ic(a);
       if(a.hasOwnProperty(b) && e.hasOwnProperty(i = a[b])) {
         return e[i]
       }
@@ -2435,20 +2435,20 @@ var F = {};
     if(c.isEmptyArray(a)) {
       return{mapped:[], unmapped:[]}
     }
-    this.nd(a);
-    for(var e = [], b = [], i = this.O, h = this.na, d = a.length, g = 0, m, k;g < d;g++) {
+    this.hd(a);
+    for(var e = [], b = [], i = this.M, h = this.la, d = a.length, g = 0, m, k;g < d;g++) {
       (m = a[g]).hasOwnProperty(i) && h.hasOwnProperty(k = m[i]) ? e.push(h[k]) : b.push(m)
     }
     return{mapped:e, unmapped:b}
   };
   b.getById = function(a) {
-    if(c.isNotNull(a) && this.na.hasOwnProperty(a)) {
-      return this.na[a]
+    if(c.isNotNull(a) && this.la.hasOwnProperty(a)) {
+      return this.la[a]
     }
   };
   b.getByIdx = function(a) {
-    if(c.isNotNull(a) && this.W.hasOwnProperty(a)) {
-      return this.W[a]
+    if(c.isNotNull(a) && this.U.hasOwnProperty(a)) {
+      return this.U[a]
     }
   };
   b.getByNode = function(a) {
@@ -2458,14 +2458,14 @@ var F = {};
     return this.getIdxById(this.getId(a))
   };
   b.getIdxById = function(a) {
-    return c.isNotNull(a) && this.fb.hasOwnProperty(a) ? this.fb[a] : -1
+    return c.isNotNull(a) && this.cb.hasOwnProperty(a) ? this.cb[a] : -1
   };
   b.getIdxByNode = function(a) {
     return this.getIdxById(this.getIdByNode(a))
   };
   b.getId = function(a) {
-    if(c.isNotNull(a) && a.hasOwnProperty(this.O)) {
-      return a[this.O]
+    if(c.isNotNull(a) && a.hasOwnProperty(this.M)) {
+      return a[this.M]
     }
   };
   b.getIdByIdx = function(a) {
@@ -2476,27 +2476,27 @@ var F = {};
       return a.getAttribute("i")
     }
   };
-  b.Xc = function(a) {
+  b.Uc = function(a) {
     c.isNull(a) && (a = 0);
-    for(var e = this.W, b = e.length, i = this.O, h = this.fb;a < b;a++) {
+    for(var e = this.U, b = e.length, i = this.M, h = this.cb;a < b;a++) {
       h[e[a][i]] = a
     }
   };
-  b.Ua = function() {
-    this.fb = {};
-    this.Xc()
+  b.Ra = function() {
+    this.cb = {};
+    this.Uc()
   };
   b.has = function(a) {
     return this.hasById(this.getId(a))
   };
   b.hasById = function(a) {
-    return c.isNotNull(a) ? this.fb.hasOwnProperty(a) : !1
+    return c.isNotNull(a) ? this.cb.hasOwnProperty(a) : !1
   };
   b.contains = function(a) {
     return this.containsById(this.getId(a))
   };
   b.containsById = function(a) {
-    return c.isNotNull(a) ? this.na.hasOwnProperty(a) : !1
+    return c.isNotNull(a) ? this.la.hasOwnProperty(a) : !1
   };
   b.set = function(a) {
     if(this.all === a || c.isEmptyArray(a) && this.all === 0) {
@@ -2505,26 +2505,26 @@ var F = {};
     this.grid.event.trigger("onBeforeDataChange");
     this.grid.event.trigger("onBeforeSetDatalist", [this.all, a]);
     this.cleanList(this.all);
-    var e, b = this.pa;
+    var e, b = this.na;
     for(e in b) {
       b.hasOwnProperty(e) && (b[e] = {})
     }
-    this.na = {};
+    this.la = {};
     this.all = [];
-    this.va.length = 0;
-    this.za.length = 0;
+    this.ta.length = 0;
+    this.xa.length = 0;
     c.isNull(a) && (a = []);
-    if((e = this.qd(a)) instanceof Error) {
+    if((e = this.ld(a)) instanceof Error) {
       return e
     }
-    if((e = this.ud(a)) instanceof Error) {
+    if((e = this.pd(a)) instanceof Error) {
       return e
     }
-    if((e = this.je(a)) instanceof Error) {
+    if((e = this.ee(a)) instanceof Error) {
       return e
     }
-    this.nd(a, !0);
-    if((e = this.gd(a)) instanceof Error) {
+    this.hd(a, !0);
+    if((e = this.dd(a)) instanceof Error) {
       return e
     }
     this.all = a;
@@ -2538,23 +2538,23 @@ var F = {};
       return!1
     }
     this.grid.event.trigger("onBeforeDataChange");
-    this.Mg(a, e);
+    this.Fg(a, e);
     var b;
     if((b = this.parse(a, e)) instanceof Error) {
       return b
     }
-    if((b = this.Fe(a, e)) instanceof Error) {
+    if((b = this.ze(a, e)) instanceof Error) {
       return b
     }
-    if((b = this.rg(a)) instanceof Error) {
+    if((b = this.kg(a)) instanceof Error) {
       return b
     }
-    if((b = this.le(a)) instanceof Error) {
+    if((b = this.ge(a)) instanceof Error) {
       return b
     }
     this.all.push(a);
     if(c.isNull(e) || e.undo !== !0) {
-      this.va.push({Oa:this.C.S, Wa:a}), this.za.length = 0
+      this.ta.push({La:this.B.Q, Ta:a}), this.xa.length = 0
     }
     this.grid.event.trigger("onAddDatarow", [a, e]);
     this.grid.event.trigger("onDataChange");
@@ -2565,28 +2565,28 @@ var F = {};
     if(c.isEmptyArray(a)) {
       return!1
     }
-    var b = this.mapList(a).qj;
+    var b = this.mapList(a).jj;
     if(b.length === 0) {
       return!1
     }
     this.grid.event.trigger("onBeforeDataChange");
-    this.Ng(a, e);
+    this.Gg(a, e);
     var i;
-    if((i = this.qd(b, e)) instanceof Error) {
+    if((i = this.ld(b, e)) instanceof Error) {
       return i
     }
-    if((i = this.ud(b, e)) instanceof Error) {
+    if((i = this.pd(b, e)) instanceof Error) {
       return i
     }
-    if((i = this.je(b)) instanceof Error) {
+    if((i = this.ee(b)) instanceof Error) {
       return i
     }
-    if((i = this.gd(b)) instanceof Error) {
+    if((i = this.dd(b)) instanceof Error) {
       return i
     }
     this.all.pushList(b);
     if(c.isNull(e) || e.undo !== !0) {
-      this.va.push({Oa:this.C.tc, Wa:b}), this.za.length = 0
+      this.ta.push({La:this.B.qc, Ta:b}), this.xa.length = 0
     }
     this.grid.event.trigger("onAddDatalist", [b, e]);
     this.grid.event.trigger("onDataChange");
@@ -2612,20 +2612,20 @@ var F = {};
       return!1
     }
     if((h = this.parse(a, b)) instanceof Error) {
-      return this.ec(a, i), h
+      return this.bc(a, i), h
     }
-    if((h = this.Fe(a, b)) instanceof Error) {
-      return this.ec(a, i), h
+    if((h = this.ze(a, b)) instanceof Error) {
+      return this.bc(a, i), h
     }
-    if((h = this.Gh(a, e, i)) instanceof Error) {
-      return this.ec(a, i), h
+    if((h = this.yh(a, e, i)) instanceof Error) {
+      return this.bc(a, i), h
     }
-    if((h = this.Dh(a, e, i)) instanceof Error) {
-      return this.ec(a, i), h
+    if((h = this.vh(a, e, i)) instanceof Error) {
+      return this.bc(a, i), h
     }
-    h !== !1 && this.grid.event.trigger("onIdChange", [a, h, a[this.O]]);
+    h !== !1 && this.grid.event.trigger("onIdChange", [a, h, a[this.M]]);
     if(c.isNull(b) || b.undo !== !0) {
-      this.va.push({Oa:this.C.dd, Wa:a, yd:i, Cd:e}), this.za.length = 0
+      this.ta.push({La:this.B.ad, Ta:a, td:i, xd:e}), this.xa.length = 0
     }
     this.grid.event.trigger("onUpdateDatarow", [a, e, i, b]);
     this.grid.event.trigger("onDataChange");
@@ -2640,7 +2640,7 @@ var F = {};
     this.grid.event.trigger("onBeforeUpdateDatalist", [a]);
     for(var b = [], i = [], h = [], d, g, m, k = a.length, o = 0, n;o < k;o++) {
       g = {};
-      d = a[o].Dg;
+      d = a[o].wg;
       m = a[o].change;
       for(n in m) {
         m.hasOwnProperty(n) && (d[n] === m[n] ? delete m[n] : (g[n] = d[n], d[n] = m[n]))
@@ -2650,33 +2650,33 @@ var F = {};
     if(b.length === 0) {
       return!1
     }
-    if((d = this.qd(b, e)) instanceof Error) {
-      return this.fc(b, i), d
+    if((d = this.ld(b, e)) instanceof Error) {
+      return this.cc(b, i), d
     }
-    if((d = this.ud(b, e)) instanceof Error) {
-      return this.fc(b, i), d
+    if((d = this.pd(b, e)) instanceof Error) {
+      return this.cc(b, i), d
     }
-    if((d = this.Fh(b, h, i)) instanceof Error) {
-      return this.fc(b, i), d
+    if((d = this.xh(b, h, i)) instanceof Error) {
+      return this.cc(b, i), d
     }
-    if((d = this.Eh(b, h, i)) instanceof Error) {
-      return this.fc(b, i), d
+    if((d = this.wh(b, h, i)) instanceof Error) {
+      return this.cc(b, i), d
     }
-    d !== !1 && this.grid.event.trigger("onIdListChange", [d.list, d.tg, this.O]);
+    d !== !1 && this.grid.event.trigger("onIdListChange", [d.list, d.mg, this.M]);
     if(c.isNull(e) || e.undo !== !0) {
-      this.va.push({Oa:this.C.ed, Wa:b, yd:i, Cd:h}), this.za.length = 0
+      this.ta.push({La:this.B.bd, Ta:b, td:i, xd:h}), this.xa.length = 0
     }
     this.grid.event.trigger("onUpdateDatalist", [b, h, i, e]);
     this.grid.event.trigger("onDataChange");
     (e === s || e.noRefresh !== !0) && this.refresh(e);
     return!0
   };
-  b.ec = function(a, e) {
+  b.bc = function(a, e) {
     for(var b in e) {
       e.hasOwnProperty(b) && (a[b] = e[b])
     }
   };
-  b.fc = function(a, e) {
+  b.cc = function(a, e) {
     for(var b = a.length, i = 0, c, d, g;i < b;i++) {
       for(g in c = a[i], d = e[i], d) {
         d.hasOwnProperty(g) && (c[g] = d[g])
@@ -2692,12 +2692,12 @@ var F = {};
       return!1
     }
     this.grid.event.trigger("onBeforeDataChange");
-    this.ph(b);
-    this.qh(b);
+    this.ih(b);
+    this.jh(b);
     this.all.remove(b);
     this.removeId(b);
     if(c.isNull(e) || e.undo !== !0) {
-      this.va.push({Oa:this.C.Da, Wa:b}), this.za.length = 0
+      this.ta.push({La:this.B.Ba, Ta:b}), this.xa.length = 0
     }
     this.grid.event.trigger("onRemoveDatarow", [b, e]);
     this.grid.event.trigger("onDataChange");
@@ -2708,24 +2708,24 @@ var F = {};
     if(c.isEmptyArray(a)) {
       return!1
     }
-    var b = this.mapList(a).ze;
+    var b = this.mapList(a).ue;
     if(b.length === 0) {
       return!1
     }
     this.grid.event.trigger("onBeforeDataChange");
-    this.rh(b);
-    this.sh(b);
+    this.kh(b);
+    this.lh(b);
     this.all.removeList(b);
     this.cleanList(b);
     if(c.isNull(e) || e.undo !== !0) {
-      this.va.push({Oa:this.C.Yc, Wa:b}), this.za.length = 0
+      this.ta.push({La:this.B.Vc, Ta:b}), this.xa.length = 0
     }
     this.grid.event.trigger("onRemoveDatalist", [b, e]);
     this.grid.event.trigger("onDataChange");
     (e === s || e.noRefresh !== !0) && this.refresh(e);
     return!0
   };
-  b.vb = function(a) {
+  b.sb = function(a) {
     if(a.ctrlKey) {
       switch(a.which) {
         case "Z".charCodeAt(0):
@@ -2737,52 +2737,52 @@ var F = {};
     }
   };
   b.undo = function() {
-    if(this.va.length === 0) {
+    if(this.ta.length === 0) {
       return!1
     }
-    var a = this.va.pop();
-    this.za.push(a);
-    var e = a.Wa, b = a.yd;
-    switch(a.Oa) {
-      case this.C.S:
+    var a = this.ta.pop();
+    this.xa.push(a);
+    var e = a.Ta, b = a.td;
+    switch(a.La) {
+      case this.B.Q:
         return this.remove(e, {undo:!0});
-      case this.C.tc:
+      case this.B.qc:
         return this.removeList(e, {undo:!0});
-      case this.C.dd:
+      case this.B.ad:
         return this.update(e, b, {undo:!0});
-      case this.C.ed:
+      case this.B.bd:
         for(var a = [], c = 0, h = e.length;c < h;c++) {
           a.push({datarow:e[c], change:b[c]})
         }
         return this.updateList(a, {undo:!0});
-      case this.C.Da:
+      case this.B.Ba:
         return this.add(e, {undo:!0});
-      case this.C.Yc:
+      case this.B.Vc:
         return this.addList(e, {undo:!0})
     }
   };
   b.redo = function() {
-    if(this.za.length === 0) {
+    if(this.xa.length === 0) {
       return!1
     }
-    var a = this.za.pop();
-    this.va.push(a);
-    var e = a.Wa, b = a.Cd;
-    switch(a.Oa) {
-      case this.C.S:
+    var a = this.xa.pop();
+    this.ta.push(a);
+    var e = a.Ta, b = a.xd;
+    switch(a.La) {
+      case this.B.Q:
         return this.add(e, {undo:!0});
-      case this.C.tc:
+      case this.B.qc:
         return this.addList(e, {undo:!0});
-      case this.C.dd:
+      case this.B.ad:
         return this.update(e, b, {undo:!0});
-      case this.C.ed:
+      case this.B.bd:
         for(var a = [], c = 0, h = e.length;c < h;c++) {
           a.push({datarow:e[c], change:b[c]})
         }
         return this.updateList(a, {undo:!0});
-      case this.C.Da:
+      case this.B.Ba:
         return this.remove(e, {undo:!0});
-      case this.C.Yc:
+      case this.B.Vc:
         return this.removeList(e, {undo:!0})
     }
   };
@@ -2793,41 +2793,41 @@ var F = {};
     if(a === e) {
       return!0
     }
-    this.wa === this.C.Ia && (this.lc(a), this.lc(e));
-    var b = this.O;
+    this.ua === this.B.Fa && (this.ic(a), this.ic(e));
+    var b = this.M;
     return c.isNull(a[b]) || c.isNull(e[b]) ? !1 : a[b] === e[b]
   };
   b.getReal = function() {
-    var a = this.C.ya;
+    var a = this.B.wa;
     return this.all.filter(function(e) {
       return e.hasOwnProperty(a) === !1
     })
   };
   b.filterReal = function(a) {
-    var e = this.C.ya;
+    var e = this.B.wa;
     return a.filter(function(a) {
       return a.hasOwnProperty(e) === !1
     })
   };
   b.isReal = function(a) {
-    return c.isNotNull(a) && a.hasOwnProperty(this.C.ya) === !1
+    return c.isNotNull(a) && a.hasOwnProperty(this.B.wa) === !1
   };
   b.dropNonReal = function(a) {
     if(!c.isEmptyArray(a)) {
-      for(var e = this.C.ya, b = a.length - 1;b >= 0;b--) {
+      for(var e = this.B.wa, b = a.length - 1;b >= 0;b--) {
         a[b].hasOwnProperty(e) && (delete a[b][e], a.removeAt(b))
       }
     }
   };
   b.removeIdCol = function(a) {
-    if(!(this.wa === this.C.Ra || c.isEmptyArray(a))) {
-      for(var e = this.O, b = 0, i = a.length;b < i;b++) {
+    if(!(this.ua === this.B.Oa || c.isEmptyArray(a))) {
+      for(var e = this.M, b = 0, i = a.length;b < i;b++) {
         a[b].hasOwnProperty(e) && delete a[b][e]
       }
     }
   };
   b.removeId = function(a) {
-    c.isNotNull(a) && this.wa !== this.C.Ra && a.hasOwnProperty(this.O) && delete a[this.O]
+    c.isNotNull(a) && this.ua !== this.B.Oa && a.hasOwnProperty(this.M) && delete a[this.M]
   };
   b.cleanList = function(a) {
     c.isEmptyArray(a) || (this.removeIdCol(a), this.dropNonReal(a))
@@ -2839,7 +2839,7 @@ var F = {};
     if(c.isEmptyArray(a)) {
       return[]
     }
-    for(var e = [], b = a.length, i = 0, h, d, g = this.C.ya;i < b;i++) {
+    for(var e = [], b = a.length, i = 0, h, d, g = this.B.wa;i < b;i++) {
       if((d = a[i]).hasOwnProperty(g) === !1) {
         for(h in e.push({}), d) {
         }
@@ -2848,34 +2848,34 @@ var F = {};
     return e
   };
   b.setSorter = function(a) {
-    this.grid.event.trigger("onChangeSorter", [this.ce, a]);
-    this.ce = a
+    this.grid.event.trigger("onChangeSorter", [this.Yd, a]);
+    this.Yd = a
   };
-  b.hc = function(a) {
-    c.isNull(a) ? a = this.ce : this.setSorter(a);
+  b.ec = function(a) {
+    c.isNull(a) ? a = this.Yd : this.setSorter(a);
     if(!c.isNull(a)) {
       var e = this.all;
       this.grid.event.trigger("onBeforeSort", [e]);
-      c.isNotNull(a.Ag) ? (e.sort(a.Ag), a.ic && e.reverse()) : c.isNotNull(a.Wg) && this.constructor.vf(e, a.Wg, a.ic);
+      c.isNotNull(a.tg) ? (e.sort(a.tg), a.fc && e.reverse()) : c.isNotNull(a.Og) && this.constructor.pf(e, a.Og, a.fc);
       this.grid.event.trigger("onAfterSort", [e])
     }
   };
   b.addFilter = function(a) {
-    this.bb.push(a);
+    this.$a.push(a);
     this.refresh()
   };
   b.removeFilter = function(a) {
-    var e = this.bb.length;
-    this.bb.remove(a);
-    e !== this.bb.length && this.refresh()
+    var e = this.$a.length;
+    this.$a.remove(a);
+    e !== this.$a.length && this.refresh()
   };
-  b.Qa = function() {
-    var a = this.W, e = this.we, b = 0, c = this.bb.length, h, d;
+  b.Na = function() {
+    var a = this.U, e = this.re, b = 0, c = this.$a.length, h, d;
     this.grid.event.trigger("onBeforeFilter", [a, e]);
     a.length = 0;
     a.pushList(this.all);
     for(e.length = 0;b < c;b++) {
-      h = this.bb[b];
+      h = this.$a[b];
       for(d = a.length - 1;d >= 0;d--) {
         h(a[d]) || (e.push(a[d]), a.removeAt(d))
       }
@@ -2883,29 +2883,29 @@ var F = {};
     this.grid.event.trigger("onFilter", [a, e]);
     this.grid.event.trigger("onAfterFilter", [a, e])
   };
-  b.Gd = function(a) {
-    this.Ua();
+  b.Bd = function(a) {
+    this.Ra();
     this.grid.event.trigger("onAfterRefresh", [a])
   };
   b.refresh = function(a) {
     this.grid.event.trigger("onBeforeRefresh");
-    a === s ? this.hc() : a.noSort !== !0 && this.hc(a.sorter);
-    (a === s || a.noFilter !== !0) && this.Qa();
-    this.Gd(a)
+    a === s ? this.ec() : a.noSort !== !0 && this.ec(a.sorter);
+    (a === s || a.noFilter !== !0) && this.Na();
+    this.Bd(a)
   };
   b.exportRowToArray = function(a, e) {
-    if(!(a in this.W)) {
+    if(!(a in this.U)) {
       return t
     }
-    e || (e = this.grid.G.getKeys());
-    for(var b = this.W[a], c = [], h, d = 0, g = e.length;d < g;d++) {
+    e || (e = this.grid.colDefMgr.getKeys());
+    for(var b = this.U[a], c = [], h, d = 0, g = e.length;d < g;d++) {
       h = e[d], c.push(h in b ? b[h] : t)
     }
     return c
   };
   b.exportToArray = function(a, e, b) {
-    a || (a = this.grid.G.getKeys());
-    for(var e = this.W.slice(e, b), c = [], h, d, g = 0, m = e.length, k, o = a.length;g < m;g++) {
+    a || (a = this.grid.colDefMgr.getKeys());
+    for(var e = this.U.slice(e, b), c = [], h, d, g = 0, m = e.length, k, o = a.length;g < m;g++) {
       h = e[g];
       k = 0;
       for(b = [];k < o;k++) {
@@ -2915,7 +2915,7 @@ var F = {};
     }
     return c
   };
-  d.vf = function(a, e, b) {
+  d.pf = function(a, e, b) {
     var i = Object.prototype.toString;
     Object.prototype.toString = c.isFunction(e) ? e : function() {
       return this[e]
@@ -2927,78 +2927,78 @@ var F = {};
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
+    this.C = a.C;
     a.grid.event = this;
-    this.U = {}
+    this.R = {}
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.EventManager", d);
-  g.S("EventManager", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.EventManager", d);
+  g.Q("EventManager", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
   b.destroy = function() {
-    var a, e = this.U;
+    var a, e = this.R;
     for(a in e) {
-      e.hasOwnProperty(a) && g.Bc(e, a)
+      e.hasOwnProperty(a) && g.yc(e, a)
     }
-    g.J(this, {name:"EventManager", path:"event", map:"map"})
+    g.H(this, {name:"EventManager", path:"event", map:"map"})
   };
   b.register = function(a, e, b) {
     if(c.isString(a)) {
-      this.Bb(a, e, b)
+      this.yb(a, e, b)
     }else {
-      if(c.isNotNull(a.te)) {
-        this.Bb(a.te, a.Lg, a.xh)
+      if(c.isNotNull(a.pe)) {
+        this.yb(a.pe, a.Eg, a.qh)
       }else {
         for(var i, e = a.length, h;i < e;i++) {
-          c.isNotNull(h = a[i]) && this.Bb(h.te, h.Lg, h.xh)
+          c.isNotNull(h = a[i]) && this.yb(h.pe, h.Eg, h.qh)
         }
       }
     }
   };
   b.bind = function(a, e, b) {
     if(c.isString(a)) {
-      this.Bb(a, e, b)
+      this.yb(a, e, b)
     }else {
       for(var i in a) {
-        a.hasOwnProperty(i) && this.Bb(i, a[i], e)
+        a.hasOwnProperty(i) && this.yb(i, a[i], e)
       }
     }
   };
-  b.Bb = function(a, e, b) {
+  b.yb = function(a, e, b) {
     c.isNull(b) && (b = window);
     var a = c.split(a), i = a.length, h = 0;
     if(c.isFunction(e)) {
       for(;h < i;h++) {
-        this.sc(a[h], e, b)
+        this.pc(a[h], e, b)
       }
     }else {
       if(c.isString(e)) {
         for(var e = c.split(e), d = e.length, g, m;h < i;h++) {
           g = a[h];
           for(m = 0;m < d;m++) {
-            this.sc(g, b[e[m]], b)
+            this.pc(g, b[e[m]], b)
           }
         }
       }else {
         for(d = e.length;h < i;h++) {
           g = a[h];
           for(m = 0;m < d;m++) {
-            this.sc(g, e[m], b)
+            this.pc(g, e[m], b)
           }
         }
       }
     }
   };
-  b.sc = function(a, e, b) {
-    this.U.hasOwnProperty(a) || (this.U[a] = []);
-    this.U[a].push({fn:e, target:b})
+  b.pc = function(a, e, b) {
+    this.R.hasOwnProperty(a) || (this.R[a] = []);
+    this.R[a].push({fn:e, target:b})
   };
   b.unregister = function(a, e) {
-    var b = this.U;
+    var b = this.R;
     if(b.hasOwnProperty(a)) {
       var i = b[a];
       if(c.isNull(e)) {
@@ -3015,7 +3015,7 @@ var F = {};
     }
   };
   b.trigger = function(a, e, b) {
-    for(var i, h, d = this.U, g = [], a = c.split(a), m = a.length, k = c.isEmptyArray(e), o = c.isFunction(b), n, q = 0;q < m;q++) {
+    for(var i, h, d = this.R, g = [], a = c.split(a), m = a.length, k = c.isEmptyArray(e), o = c.isFunction(b), n, q = 0;q < m;q++) {
       if(i = a[q], d.hasOwnProperty(i) && (i = d[i], h = i.length, h !== 0)) {
         if(n = 0, o) {
           var p;
@@ -3049,7 +3049,7 @@ var F = {};
     }).length !== 0
   };
   b.sendToBack = function(a, e) {
-    for(var b = this.U[a], c = b.length, h, d = -1, g = 0;g < c;g++) {
+    for(var b = this.R[a], c = b.length, h, d = -1, g = 0;g < c;g++) {
       if(b[g].fn === e) {
         d = g;
         h = b[g];
@@ -3059,7 +3059,7 @@ var F = {};
     d > -1 && (b.removeAt(g), b.push(h))
   };
   b.sendToFront = function(a, e) {
-    for(var b = this.U[a], c = b.length, h, d = -1, g = 0;g < c;g++) {
+    for(var b = this.R[a], c = b.length, h, d = -1, g = 0;g < c;g++) {
       if(b[g].fn === e) {
         d = g;
         h = b[g];
@@ -3071,35 +3071,35 @@ var F = {};
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
+    this.C = a.C;
     this.grid = a.grid;
-    this.grid.G = this;
-    this.A = g.da({colDef:{key:s, name:"", colClass:s, defaultValue:s, inputOnCreate:s, style:"", headerStyle:"", width:80, minW:30, maxW:s, editor:s, sorter:s, hidden:!1, sumRenderer:s, tooltipEnabled:!1, resizable:!1, renderer:g.ViewportManager.fg, rendererInput:!1, noTitle:!1, noName:!1, title:s, noSearch:!1, filter:s, parser:s, validator:s}}, a.options);
-    this.Ha = [];
-    this.fa = [];
-    this.xa = {};
-    this.sa = {};
-    this.P(a)
+    this.grid.colDefMgr = this;
+    this.A = g.ba({colDef:{key:s, name:"", colClass:s, defaultValue:s, inputOnCreate:s, style:"", headerStyle:"", width:80, minW:30, maxW:s, editor:s, sorter:s, hidden:!1, sumRenderer:s, tooltipEnabled:!1, resizable:!1, renderer:g.ViewportManager.Zf, rendererInput:!1, noTitle:!1, noName:!1, title:s, noSearch:!1, filter:s, parser:s, validator:s}}, a.options);
+    this.Ea = [];
+    this.da = [];
+    this.va = {};
+    this.qa = {};
+    this.N(a)
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.H("jx.grid.Column");
-  goog.N("jx.grid.ColumnManager", d);
-  g.S("ColDefManager", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.D("jx.grid.Column");
+  goog.L("jx.grid.ColumnManager", d);
+  g.Q("ColDefManager", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function(a) {
-    this.grid.event.bind("onDestroy", this.J, this);
+  b.N = function(a) {
+    this.grid.event.bind("onDestroy", this.H, this);
     this.set(a.colDefs)
   };
-  b.J = function() {
-    g.J(this, {name:"ColDefManager", path:"colDefMgr", Aa:"colDefs", map:"keyToIdx _keyToDef _options", pe:"filtered"})
+  b.H = function() {
+    g.H(this, {name:"ColDefManager", path:"colDefMgr", ya:"colDefs", map:"keyToIdx _keyToDef _options", ke:"filtered"})
   };
-  b.getAll = x("Ha");
+  b.getAll = x("Ea");
   b.set = function(a) {
-    if(this.Ha === a || c.areEqualArrays(this.Ha, a)) {
+    if(this.Ea === a || c.areEqualArrays(this.Ea, a)) {
       return a
     }
     if(c.isNull(a)) {
@@ -3111,39 +3111,39 @@ var F = {};
       a.length = 0;
       a.pushList(e)
     }
-    this.grid.event.trigger("onBeforeSetColDefs", [this.Ha, a]);
-    this.Ha = [];
-    this.fa.length = 0;
-    this.sa = {};
-    this.xa = {};
+    this.grid.event.trigger("onBeforeSetColDefs", [this.Ea, a]);
+    this.Ea = [];
+    this.da.length = 0;
+    this.qa = {};
+    this.va = {};
     this.grid.event.trigger("onEmptyColDefs");
-    for(var e = 0, b = a.length, i = this.xa, h, d;e < b;e++) {
+    for(var e = 0, b = a.length, i = this.va, h, d;e < b;e++) {
       h = a[e];
       if(!h.hasOwnProperty("key")) {
-        return this.xa = {}, this.grid.error("KEY_UNDEFINED", e)
+        return this.va = {}, this.grid.error("KEY_UNDEFINED", e)
       }
       d = h.key;
       if(c.isEmptyString(d)) {
-        return this.xa = {}, this.grid.error("BAD_NULL", e)
+        return this.va = {}, this.grid.error("BAD_NULL", e)
       }
       if(i.hasOwnProperty(d)) {
-        return this.xa = {}, this.grid.error("DUP_KEY", d)
+        return this.va = {}, this.grid.error("DUP_KEY", d)
       }
       i[d] = h
     }
-    this.Ha = a;
+    this.Ea = a;
     for(e = 0;e < b;e++) {
-      this.da(a[e])
+      this.ba(a[e])
     }
-    this.grid.event.trigger("onAfterSetColDefs", [a, this.Qa()]);
+    this.grid.event.trigger("onAfterSetColDefs", [a, this.Na()]);
     return a
   };
   b.push = function(a) {
-    return this.addAt(this.fa.length, a)
+    return this.addAt(this.da.length, a)
   };
   b.addAt = function(a, e) {
     if(!c.isNull(e)) {
-      var b = e.key, i = this.xa, d = this.fa;
+      var b = e.key, i = this.va, d = this.da;
       c.isNull(a) || a > d.length ? a = d.length : a < 0 && (a += d.length);
       this.grid.event.trigger("onBeforeAddColDef", [e]);
       if(c.isNull(b)) {
@@ -3152,13 +3152,13 @@ var F = {};
       if(i.hasOwnProperty(b)) {
         return this.grid.error("DUP_KEY", b)
       }
-      this.Ha.addAt(a, this.da(i[b] = e));
-      e.hidden !== !0 && (d.addAt(a, e), this.Ua());
+      this.Ea.addAt(a, this.ba(i[b] = e));
+      e.hidden !== !0 && (d.addAt(a, e), this.Ra());
       this.grid.event.trigger("onAfterAddColDef", [e, a]);
       return d.length
     }
   };
-  b.da = function(a) {
+  b.ba = function(a) {
     if(!c.isNull(a)) {
       var e = {};
       $.extend(!0, e, this.A.colDef);
@@ -3172,9 +3172,9 @@ var F = {};
     }
   };
   b.hide = function(a) {
-    var e = this.fa[a];
+    var e = this.da[a];
     if(!c.isNull(e)) {
-      return e.hidden = !0, this.fa.removeAt(a), this.Ua(), this.grid.event.trigger("onHideCol", [e, a]), e
+      return e.hidden = !0, this.da.removeAt(a), this.Ra(), this.grid.event.trigger("onHideCol", [e, a]), e
     }
   };
   b.show = function(a) {
@@ -3185,71 +3185,71 @@ var F = {};
         }
         a = a.key
       }
-      var e = this.xa;
+      var e = this.va;
       if(e.hasOwnProperty(a)) {
-        if(this.sa.hasOwnProperty(a)) {
+        if(this.qa.hasOwnProperty(a)) {
           return e[a]
         }
         e = e[a];
         e.hidden = !1;
-        this.Qa();
-        this.Ua();
-        this.grid.event.trigger("onShowCol", [e, this.sa[a]]);
+        this.Na();
+        this.Ra();
+        this.grid.event.trigger("onShowCol", [e, this.qa[a]]);
         return e
       }
     }
   };
-  b.Qa = function() {
-    this.fa = this.Ha.filter(function(a) {
+  b.Na = function() {
+    this.da = this.Ea.filter(function(a) {
       return a.hidden !== !0
     });
-    this.Ua();
-    return this.fa
+    this.Ra();
+    return this.da
   };
-  b.Ua = function() {
-    this.sa = {};
-    return this.Xc()
+  b.Ra = function() {
+    this.qa = {};
+    return this.Uc()
   };
-  b.Xc = function(a) {
+  b.Uc = function(a) {
     c.isNull(a) && (a = 0);
-    for(var e = this.fa, b = e.length, i = this.sa;a < b;a++) {
+    for(var e = this.da, b = e.length, i = this.qa;a < b;a++) {
       i[e[a].key] = a
     }
     return i
   };
   b.get = function(a) {
     if(c.isNull(a)) {
-      return this.fa
+      return this.da
     }
-    if(this.fa.hasOwnProperty(a)) {
-      return this.fa[a]
+    if(this.da.hasOwnProperty(a)) {
+      return this.da[a]
     }
   };
   b.getByKey = function(a) {
-    if(c.isNotNull(a) && this.xa.hasOwnProperty(a)) {
-      return this.xa[a]
+    if(c.isNotNull(a) && this.va.hasOwnProperty(a)) {
+      return this.va[a]
     }
   };
   b.length = function() {
-    return this.fa.length
+    return this.da.length
   };
   b.getIdxByKey = function(a) {
-    return this.sa.hasOwnProperty(a) ? this.sa[a] : -1
+    return this.qa.hasOwnProperty(a) ? this.qa[a] : -1
   };
   b.getIdx = function(a) {
-    return c.isNotNull(a) && this.sa.hasOwnProperty(a.key) ? this.sa[a.key] : -1
+    return c.isNotNull(a) && this.qa.hasOwnProperty(a.key) ? this.qa[a.key] : -1
   };
   b.sortByKey = function(a) {
-    this.fa.length = 0;
-    this.sa = {};
-    for(var e = 0, b = a.length, c = this.fa, d = this.sa, g = this.xa;e < b;e++) {
+    this.da.length = 0;
+    this.qa = {};
+    for(var e = 0, b = a.length, c = this.da, d = this.qa, g = this.va;e < b;e++) {
       c.push(g[a[e]]), d[a[e]] = e
     }
     this.grid.event.trigger("onReorderCols", a);
-    return this.fa
+    return this.da
   };
   b.getKeys = function() {
-    return this.fa.map(function(a) {
+    return this.da.map(function(a) {
       return a.key
     })
   };
@@ -3278,42 +3278,42 @@ var F = {};
 })();
 (function() {
   function d(a) {
-    this.nc = a.tree;
+    this.kc = a.tree;
     this.data = a.data;
-    this.ja = a.nodeId;
-    this.la = {};
+    this.ha = a.nodeId;
+    this.ja = {};
     this.children = []
   }
   function g(a) {
     this.list = a.list;
-    this.A = D.da({nodeKey:"nodeId", parentKey:"parentId"}, a.options);
+    this.A = D.ba({nodeKey:"nodeId", parentKey:"parentId"}, a.options);
     this.map = {};
     this.root = new d({tree:this});
-    this.ia = {}
+    this.ga = {}
   }
-  var c = goog.H("jx.util");
-  goog.N("jx.struct.TreeNode", d);
-  goog.N("jx.struct.Tree", g);
-  goog.N("TreeNode", d);
-  goog.N("Tree", g);
-  d.Z = function(a) {
+  var c = goog.D("jx.util");
+  goog.L("jx.struct.TreeNode", d);
+  goog.L("jx.struct.Tree", g);
+  goog.L("TreeNode", d);
+  goog.L("Tree", g);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
   b.destroy = function() {
     this.detach();
-    delete this.nc;
+    delete this.kc;
     delete this.data;
+    delete this.ha;
     delete this.ja;
-    delete this.la;
     delete this.children
   };
   b.destroyCompletely = function() {
     this.detachCompletely();
-    delete this.nc;
+    delete this.kc;
     delete this.data;
+    delete this.ha;
     delete this.ja;
-    delete this.la;
     delete this.children
   };
   b.destroyDown = function() {
@@ -3324,15 +3324,15 @@ var F = {};
   };
   b.detach = function() {
     delete this.parent;
-    delete this.Za;
+    delete this.Xa;
     this.children.length = 0;
-    this.la = {}
+    this.ja = {}
   };
   b.detachCompletely = function() {
     c.isNotNull(this.parent) && this.parent.removeChild(this);
     this.removeAllChildren();
     delete this.parent;
-    delete this.Za
+    delete this.Xa
   };
   b.detachDown = function() {
     c.isNotNull(this.parent) && this.parent.removeChild(this);
@@ -3349,19 +3349,19 @@ var F = {};
   };
   b.setParent = function(a) {
     if(this.parent !== a) {
-      c.isNotNull(this.parent) && this.parent.removeChild(this), this.parent = a, delete this.Za, c.isNotNull(a) && a.addChild(this)
+      c.isNotNull(this.parent) && this.parent.removeChild(this), this.parent = a, delete this.Xa, c.isNotNull(a) && a.addChild(this)
     }
   };
   b.hasChild = function(a) {
-    return this.la.hasOwnProperty(a.ja)
+    return this.ja.hasOwnProperty(a.ha)
   };
   b.addChild = function(a) {
-    this.hasChild(a) || (this.children.push(a), this.la[a.ja] = this.children.length - 1, a.setParent(this))
+    this.hasChild(a) || (this.children.push(a), this.ja[a.ha] = this.children.length - 1, a.setParent(this))
   };
   b.addChildAt = function(a, e) {
     var b;
     if(this.hasChild(e)) {
-      b = this.la[e.ja];
+      b = this.ja[e.ha];
       if(b === a) {
         return
       }
@@ -3373,34 +3373,34 @@ var F = {};
   };
   b.removeChild = function(a) {
     if(this.hasChild(a)) {
-      var e = this.la[a.ja];
+      var e = this.ja[a.ha];
       this.children.removeAt(e);
-      delete this.la[a.ja];
+      delete this.ja[a.ha];
       this.resetChildIdx(e);
       delete a.parent;
-      delete a.Za
+      delete a.Xa
     }
   };
   b.removeChildAt = function(a) {
     var e = this.children[a];
     this.children.removeAt(a);
-    delete this.la[e.ja];
+    delete this.ja[e.ha];
     this.resetChildIdx(a);
     delete e.parent;
-    delete e.Za
+    delete e.Xa
   };
   b.resetChildIdx = function(a) {
     c.isNull(a) && (a = 0);
-    for(var e = this.children, b = e.length, i = this.la;a < b;a++) {
-      i[e[a].ja] = a
+    for(var e = this.children, b = e.length, i = this.ja;a < b;a++) {
+      i[e[a].ha] = a
     }
   };
   b.removeAllChildren = function() {
     for(var a = 0, e = this.children, b = e.length;a < b;a++) {
-      delete e[a].parent, delete e[a].Za
+      delete e[a].parent, delete e[a].Xa
     }
     e.length = 0;
-    this.la = {}
+    this.ja = {}
   };
   b.getSiblings = function() {
     if(this.isRoot()) {
@@ -3411,7 +3411,7 @@ var F = {};
     return a
   };
   b.getChildIdx = function(a) {
-    return this.la[a.ja]
+    return this.ja[a.ha]
   };
   b.getIdx = function() {
     return this.isRoot() ? -1 : this.parent.getChildIdx(this)
@@ -3419,7 +3419,7 @@ var F = {};
   b.getPath = function() {
     return this.traverse({res:[], up:!0, post:!0, fn:function(a) {
       this.isRoot() || a.res.push(this.getIdx())
-    }}).uh
+    }}).nh
   };
   b.getAncestors = function() {
     var a = {res:[], up:!0, post:!0, fn:function(a) {
@@ -3438,14 +3438,14 @@ var F = {};
     return a.res
   };
   b.getLevel = function() {
-    return this.isRoot() ? this.Za = -1 : this.Za = this.parent.getLevel() + 1
+    return this.isRoot() ? this.Xa = -1 : this.Xa = this.parent.getLevel() + 1
   };
   b.find = function(a) {
     return this.traverse({fn:function(e) {
       if(this.data === a) {
         e.res = this, e.stop = !0
       }
-    }}).uh
+    }}).nh
   };
   b.traverse = function(a, e) {
     if(a.stop) {
@@ -3485,11 +3485,11 @@ var F = {};
       c.isNull(a.target) ? c.callFn(this, a.fn, a, e) : (a.node = this, c.callFn(a.target, a.fn, a, e))
     }
   };
-  g.Z = function(a) {
+  g.X = function(a) {
     return new g(a)
   };
   b = g.prototype;
-  b.P = function() {
+  b.N = function() {
     this.makeTree()
   };
   b.destroy = function() {
@@ -3500,21 +3500,21 @@ var F = {};
     delete this.A;
     delete this.map;
     delete this.root;
-    delete this.ia;
-    delete this.D
+    delete this.ga;
+    delete this.C
   };
   b.detach = function() {
     this.root.detachDown();
     this.emptyInfants()
   };
   b.emptyInfants = function() {
-    var a, e = this.ia;
+    var a, e = this.ga;
     for(a in e) {
       if(e.hasOwnProperty(a)) {
         e[a].length = 0
       }
     }
-    this.ia = {}
+    this.ga = {}
   };
   b.reattach = function(a) {
     this.detach();
@@ -3551,16 +3551,16 @@ var F = {};
     }
   };
   b.adoptInfants = function(a, e) {
-    if(this.ia.hasOwnProperty(e)) {
-      for(var b = this.ia[e], c = 0, d = b.length;c < d;c++) {
+    if(this.ga.hasOwnProperty(e)) {
+      for(var b = this.ga[e], c = 0, d = b.length;c < d;c++) {
         a.addChild(b[c])
       }
       b.length = 0;
-      delete this.ia[e]
+      delete this.ga[e]
     }
   };
   b.attachNode = function(a) {
-    var e = a.ja, b = a.data[this.A.parentKey];
+    var e = a.ha, b = a.data[this.A.parentKey];
     this.adoptInfants(a, e);
     if(c.isNull(b) || b == e) {
       return this.root.addChild(a), !0
@@ -3573,7 +3573,7 @@ var F = {};
   };
   b.changeNodeId = function(a, e, b) {
     if(e !== b) {
-      delete this.map[e], this.map[b] = a, this.removeChildren(a), a.ja = a.data[this.A.nodeKey] = b, c.isNotNull(a.parent) && (a.parent.la[b] = a.parent.la[e], delete a.parent.la[e]), this.adoptInfants(a, b)
+      delete this.map[e], this.map[b] = a, this.removeChildren(a), a.ha = a.data[this.A.nodeKey] = b, c.isNotNull(a.parent) && (a.parent.ja[b] = a.parent.ja[e], delete a.parent.ja[e]), this.adoptInfants(a, b)
     }
   };
   b.changeParentId = function(a, e, b) {
@@ -3589,18 +3589,18 @@ var F = {};
     a.destroyCompletely()
   };
   b.removeFromMap = function(a) {
-    delete this.map[a.ja]
+    delete this.map[a.ha]
   };
   b.addToInfants = function(a, e) {
-    this.ia.hasOwnProperty(e) || (this.ia[e] = []);
-    this.ia[e].push(a)
+    this.ga.hasOwnProperty(e) || (this.ga[e] = []);
+    this.ga[e].push(a)
   };
   b.removeFromInfants = function(a, e) {
     c.isNull(e) && (e = a.data[this.A.parentKey]);
-    this.ia.hasOwnProperty(e) && (this.ia[e].remove(a), this.ia[e].length === 0 && delete this.ia[e])
+    this.ga.hasOwnProperty(e) && (this.ga[e].remove(a), this.ga[e].length === 0 && delete this.ga[e])
   };
   b.removeChildren = function(a) {
-    a.children.length !== 0 && (this.ia.hasOwnProperty(a.ja) || (this.ia[a.ja] = []), this.ia[a.ja].pushList(a.children), a.removeAllChildren())
+    a.children.length !== 0 && (this.ga.hasOwnProperty(a.ha) || (this.ga[a.ha] = []), this.ga[a.ha].pushList(a.children), a.removeAllChildren())
   };
   b.sortList = function(a) {
     c.isNull(a) ? a = [] : a.length = 0;
@@ -3613,113 +3613,113 @@ var F = {};
   function d(a) {
     b.call(this, a)
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util"), b = goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.Grid", d);
-  g.S("Grid", d);
-  goog.Gb(d, b);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util"), b = goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.Grid", d);
+  g.Q("Grid", d);
+  goog.Db(d, b);
+  d.X = function(a) {
     return new d(a)
   };
   var a = d.prototype;
-  a.Ac = function() {
+  a.xc = function() {
     return{classGrid:"jgrid", border:"1px solid #868686", width:s, font:"15px Arial,Helvetica,sans-serif", style:"", borderSide:!0, imageUrl:"../images/", links:{data:"dataMgr.all", datalen:"dataMgr.all.length", shown:"dataMgr.datalist", set:"dataMgr.set", add:"dataMgr.add", addList:"dataMgr.addList", update:"dataMgr.update", updateByKey:"dataMgr.updateByKey", updateList:"dataMgr.updateList", remove:"dataMgr.remove", removeList:"dataMgr.removeList", select:"dataMgr.executeSelect", undo:"dataMgr.undo", 
     redo:"dataMgr.redo", addFilter:"dataMgr.addFilter", removeFilter:"dataMgr.removeFilter", check:"collapser.checkMgr.checkList checkMgr.checkList", checked:"collapser.checkMgr.getCheckList checkMgr.getCheckList", removeChecked:"collapser.checkMgr.removeChecked checkMgr.removeChecked", register:"event.register", trigger:"event.trigger", bind:"event.bind", unregister:"event.unregister", unbind:"event.unregister", collen:"colDefMgr.length"}, autoWidth:!1, showMessage:!1}
   };
   a._init = function(a) {
-    this.I = a.container;
+    this.G = a.container;
     this.name = this.A.name;
-    this.L = {drag:!1, De:s, ob:s, nb:s};
-    this.I = $("<div id='" + this.D + "' class='" + this.A.classGrid + "' " + (c.isNull(this.A.width) ? "" : "style='width:" + this.A.width + "px' ") + "tabIndex='0'>").appendTo(A.safe$(this.I));
-    this.L.De = A.calScrollbarDims(this.I);
+    this.J = {drag:!1, xe:s, mb:s, lb:s};
+    this.G = $("<div id='" + this.C + "' class='" + this.A.classGrid + "' " + (c.isNull(this.A.width) ? "" : "style='width:" + this.A.width + "px' ") + "tabIndex='0'>").appendTo(A.safe$(this.G));
+    this.J.xe = A.calScrollbarDims(this.G);
     this.event = g.create("EventManager", {grid:this, options:this.A.EventManager});
     delete this.A.EventManager;
-    this.G = g.create("ColDefManager", {grid:this, pi:a.colDefs, options:this.A.ColDefManager});
+    this.colDefMgr = g.create("ColDefManager", {grid:this, ii:a.colDefs, options:this.A.ColDefManager});
     delete this.A.ColDefManager;
-    this.B = g.create("DataManager", {grid:this, W:a.datalist, options:this.A.DataManager});
+    this.dataMgr = g.create("DataManager", {grid:this, U:a.datalist, options:this.A.DataManager});
     delete this.A.DataManager;
     if(this.A.CheckManager) {
-      this.hd = g.create("CheckManager", {grid:this, options:this.A.CheckManager}), delete this.A.CheckManager
+      this.checkMgr = g.create("CheckManager", {grid:this, options:this.A.CheckManager}), delete this.A.CheckManager
     }
-    for(var a = 10, b = this.G.getAll(), i = b.length;a < i;a++) {
+    for(var a = 10, b = this.sg.getAll(), i = b.length;a < i;a++) {
       if(colDef = b[a], colDef.CheckManager) {
-        colDef.CheckManager.oi = colDef, colDef.checkMgr = g.create("CheckManager", {grid:this, options:colDef.CheckManager})
+        colDef.CheckManager.hi = colDef, colDef.checkMgr = g.create("CheckManager", {grid:this, options:colDef.CheckManager})
       }
     }
     if(this.A.Collapser) {
-      this.Fa = g.create("Collapser", {grid:this, options:this.A.Collapser}), this.Fa.P(), delete this.A.Collapser
+      this.collapser = g.create("Collapser", {grid:this, options:this.A.Collapser}), this.Wa.N(), delete this.A.Collapser
     }
     if(this.A.ColGroup) {
-      this.zg = g.create("ColGroup", {grid:this, options:this.A.ColGroup}), delete this.A.ColGroup
+      this.colGroup = g.create("ColGroup", {grid:this, options:this.A.ColGroup}), delete this.A.ColGroup
     }
     if(this.A.SelectionManager) {
-      this.pb = g.create("SelectionManager", {grid:this, options:this.A.SelectionManager}), delete this.A.SelectionManager
+      this.selMgr = g.create("SelectionManager", {grid:this, options:this.A.SelectionManager}), delete this.A.SelectionManager
     }
     if(this.A.EditManager) {
-      this.ue = g.create("EditManager", {grid:this, options:this.A.EditManager}), delete this.A.EditManager
+      this.editMgr = g.create("EditManager", {grid:this, options:this.A.EditManager}), delete this.A.EditManager
     }
     if(this.A.ColHeader) {
-      this.md = g.create("ColHeader", {grid:this, container:this.I, options:this.A.ColHeader}), delete this.A.ColHeader
+      this.header = g.create("ColHeader", {grid:this, container:this.G, options:this.A.ColHeader}), delete this.A.ColHeader
     }
     if(this.A.SearchManager) {
-      this.search = g.create("SearchManager", {grid:this, container:this.I, options:this.A.SearchManager}), delete this.A.SearchManager
+      this.search = g.create("SearchManager", {grid:this, container:this.G, options:this.A.SearchManager}), delete this.A.SearchManager
     }
     if(this.A.MenuBar) {
-      this.menubar = g.create("MenuBar", {grid:this, container:this.I, options:this.A.MenuBar}), delete this.A.MenuBar
+      this.menubar = g.create("MenuBar", {grid:this, container:this.G, options:this.A.MenuBar}), delete this.A.MenuBar
     }
-    this.view = g.create("ViewportManager", {grid:this, container:this.I, options:this.A.ViewportManager});
+    this.view = g.create("ViewportManager", {grid:this, container:this.G, options:this.A.ViewportManager});
     delete this.A.ViewportManager;
     if(this.A.TooltipManager) {
-      this.yh = g.create("TooltipManager", {grid:this, container:this.I, options:this.A.TooltipManager}), delete this.A.TooltipManager
+      this.tooltip = g.create("TooltipManager", {grid:this, container:this.G, options:this.A.TooltipManager}), delete this.A.TooltipManager
     }
     if(this.A.DataCreator) {
-      this.Bg = g.create("DataCreator", {grid:this, container:this.I, options:this.A.DataCreator}), delete this.A.DataCreator
+      this.creator = g.create("DataCreator", {grid:this, container:this.G, options:this.A.DataCreator}), delete this.A.DataCreator
     }
     if(this.A.Footer) {
-      this.Og = g.create("Footer", {grid:this, container:this.I, options:this.A.Footer}), delete this.A.Footer
+      this.footer = g.create("Footer", {grid:this, container:this.G, options:this.A.Footer}), delete this.A.Footer
     }
     this.A.autoWidth && this.event.bind("onResizeCanvasWidth", this.width, this);
-    this.Oe();
+    this.Ie();
     this.event.trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
-    this.Be = $("<div id='" + this.D + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this.I).hide();
-    this.L.ob = this.I[0].clientWidth;
-    this.L.nb = this.I[0].clientHeight;
-    this.Zf(this.A.links)
+    this.msg = $("<div id='" + this.C + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this.G).hide();
+    this.J.mb = this.G[0].clientWidth;
+    this.J.lb = this.G[0].clientHeight;
+    this.Sf(this.A.links)
   };
-  a.vc = function() {
-    g.Ke();
+  a.sc = function() {
+    g.Ee();
     var a = this;
-    this.I.bind({keydown:function(b) {
-      a.Kc(b)
+    this.G.bind({keydown:function(b) {
+      a.Hc(b)
     }, keyup:function(b) {
-      a.Nc(b)
+      a.Kc(b)
     }, keypress:function(b) {
-      a.Mc(b)
+      a.Jc(b)
     }, mousein:function(b) {
-      a.Qc(b)
+      a.Nc(b)
     }, mouseout:function(b) {
-      a.Sc(b)
-    }, mouseenter:function(b) {
       a.Pc(b)
+    }, mouseenter:function(b) {
+      a.Mc(b)
     }, mouseleave:function(b) {
-      a.Rc(b)
+      a.Oc(b)
     }, mouseover:function(b) {
-      a.Tc(b)
+      a.Qc(b)
     }, mousedown:function(b) {
-      a.wb(b)
+      a.tb(b)
     }, click:function(b) {
-      a.sb(b)
+      a.pb(b)
     }, dblclick:function(b) {
-      a.yc(b)
+      a.vc(b)
     }})
   };
   a.destroy = function() {
     try {
-      c.isEmptyObj(g.m.Grid) && g.pg(), this.event.trigger("onDestroy"), g.J(this, {name:"Grid", Zg:"event", $:"ctnr", map:"vars _options", style:"style _dynStyle"})
+      c.isEmptyObj(g.m.Grid) && g.ig(), this.event.trigger("onDestroy"), g.H(this, {name:"Grid", Rg:"event", $:"ctnr", map:"vars _options", style:"style _dynStyle"})
     }catch(a) {
       return a
     }
   };
-  a.Zf = function(a) {
+  a.Sf = function(a) {
     var b, i, d, g, l, m, k, o, n, q;
     a:for(b in a) {
       if(a.hasOwnProperty(b) && !(b in this)) {
@@ -3738,105 +3738,105 @@ var F = {};
                 continue b
               }
             }
-            this.Yf(b, k, o, n);
+            this.Rf(b, k, o, n);
             continue a
           }
         }
       }
     }
   };
-  a.Yf = function(a, b, i, d) {
+  a.Rf = function(a, b, i, d) {
     this.hasOwnProperty(a) || (this[a] = c.isFunction(b) ? function() {
       return b.apply(i, arguments)
     } : function() {
       return i[d]
     })
   };
-  a.Oe = function() {
-    var a = c.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {selector:"#" + this.D, font:this.A.font, border:this.A.borderSide ? "border:" + this.A.border + ";" : "border-top:" + this.A.border + ";border-bottom:" + this.A.border + ";", style:this.A.style, submodule:this.event.trigger("onCreateCss").join("")});
-    this.ei = c.createStyle(a);
-    this.$e = c.createStyle(this.event.trigger("onCreateDynamicCss").join(""))
+  a.Ie = function() {
+    var a = c.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {selector:"#" + this.C, font:this.A.font, border:this.A.borderSide ? "border:" + this.A.border + ";" : "border-top:" + this.A.border + ";border-bottom:" + this.A.border + ";", style:this.A.style, submodule:this.event.trigger("onCreateCss").join("")});
+    this.Yh = c.createStyle(a);
+    this.Ue = c.createStyle(this.event.trigger("onCreateDynamicCss").join(""))
   };
-  a.Vf = function() {
-    c.setStyle(this.$e, this.event.trigger("onCreateDynamicCss").join(""))
+  a.Th = function() {
+    c.setStyle(this.Ue, this.event.trigger("onCreateDynamicCss").join(""))
   };
-  a.Kc = function(a) {
+  a.Hc = function(a) {
     this.event.triggerInvalid("onBeforeKeydown", [a]) || this.event.trigger("keydown_" + a.which + " keydown", [a])
   };
-  a.Nc = function(a) {
+  a.Kc = function(a) {
     this.event.triggerInvalid("onBeforeKeyup", [a]) || this.event.trigger("keyup_" + a.which + " keyup", [a])
   };
-  a.Mc = function(a) {
+  a.Jc = function(a) {
     this.event.triggerInvalid("onBeforeKeypress", [a]) || this.event.trigger("keypress_" + a.which + " keypress", [a])
   };
-  a.Qc = function(a) {
-    this.event.triggerInvalid("onBeforeMousein", [a]) || (this.L.drag ? this.event.trigger("dragin mousein", [a]) : this.event.trigger("mousein", [a]))
-  };
-  a.Sc = function(a) {
-    this.event.triggerInvalid("onBeforeMouseout", [a]) || (this.L.drag ? this.event.trigger("dragout mouseout", [a]) : this.event.trigger("mouseout", [a]))
+  a.Nc = function(a) {
+    this.event.triggerInvalid("onBeforeMousein", [a]) || (this.J.drag ? this.event.trigger("dragin mousein", [a]) : this.event.trigger("mousein", [a]))
   };
   a.Pc = function(a) {
-    this.event.triggerInvalid("onBeforeMouseenter", [a]) || (this.L.drag ? this.event.trigger("dragenter mouseenter", [a]) : this.event.trigger("mouseenter", [a]))
+    this.event.triggerInvalid("onBeforeMouseout", [a]) || (this.J.drag ? this.event.trigger("dragout mouseout", [a]) : this.event.trigger("mouseout", [a]))
   };
-  a.Rc = function(a) {
-    this.event.triggerInvalid("onBeforeMouseleave", [a]) || (this.L.drag ? this.event.trigger("dragleave mouseleave", [a]) : this.event.trigger("mouseleave", [a]))
+  a.Mc = function(a) {
+    this.event.triggerInvalid("onBeforeMouseenter", [a]) || (this.J.drag ? this.event.trigger("dragenter mouseenter", [a]) : this.event.trigger("mouseenter", [a]))
   };
-  a.gb = function(a) {
-    this.event.triggerInvalid("onBeforeMousemove", [a]) || (this.L.drag ? this.event.trigger("dragmove mousemove", [a]) : this.event.trigger("mousemove", [a]))
+  a.Oc = function(a) {
+    this.event.triggerInvalid("onBeforeMouseleave", [a]) || (this.J.drag ? this.event.trigger("dragleave mouseleave", [a]) : this.event.trigger("mouseleave", [a]))
   };
-  a.Tc = function(a) {
-    this.event.triggerInvalid("onBeforeMouseover", [a]) || (this.L.drag ? this.event.trigger("dragover mouseover", [a]) : this.event.trigger("mouseover", [a]))
+  a.eb = function(a) {
+    this.event.triggerInvalid("onBeforeMousemove", [a]) || (this.J.drag ? this.event.trigger("dragmove mousemove", [a]) : this.event.trigger("mousemove", [a]))
   };
-  a.wb = function(a) {
-    this.L.drag = !0;
+  a.Qc = function(a) {
+    this.event.triggerInvalid("onBeforeMouseover", [a]) || (this.J.drag ? this.event.trigger("dragover mouseover", [a]) : this.event.trigger("mouseover", [a]))
+  };
+  a.tb = function(a) {
+    this.J.drag = !0;
     this.event.triggerInvalid("onBeforeMousedown", [a]) || this.event.trigger("mousedown", [a])
   };
-  a.La = function(a) {
-    this.L.drag = !1;
+  a.Ia = function(a) {
+    this.J.drag = !1;
     this.event.trigger("unsetDrag");
-    this.re(a) && (this.event.triggerInvalid("onBeforeMouseup", [a]) || this.event.trigger("mouseup", [a]))
+    this.ne(a) && (this.event.triggerInvalid("onBeforeMouseup", [a]) || this.event.trigger("mouseup", [a]))
   };
-  a.sb = function(a) {
+  a.pb = function(a) {
     this.event.triggerInvalid("onBeforeClick", [a]) || this.event.trigger("click", [a])
   };
-  a.yc = function(a) {
+  a.vc = function(a) {
     this.event.triggerInvalid("onBeforeDblclick", [a]) || this.event.trigger("dblclick", [a])
   };
-  a.bc = function(a) {
-    var b = !1, c = this.I[0].clientWidth;
-    if(c >= 1 && this.L.ob !== c) {
-      this.event.trigger("resizeWidth", [c, this.L.ob]), this.L.ob = c, b = !0
+  a.Zb = function(a) {
+    var b = !1, c = this.G[0].clientWidth;
+    if(c >= 1 && this.J.mb !== c) {
+      this.event.trigger("resizeWidth", [c, this.J.mb]), this.J.mb = c, b = !0
     }
-    c = this.I[0].clientHeight;
-    if(c >= 1 && this.L.nb !== c) {
-      this.event.trigger("resizeHeight", [c, this.L.nb]), this.L.nb = c, b = !0
+    c = this.G[0].clientHeight;
+    if(c >= 1 && this.J.lb !== c) {
+      this.event.trigger("resizeHeight", [c, this.J.lb]), this.J.lb = c, b = !0
     }
     b && this.event.trigger("resize", [a])
   };
   a.width = function(a) {
     a = parseInt(a);
-    if(c.isNull(a) || isNaN(a) || a < 1 || a === this.I[0].clientWidth) {
-      return this.I[0].clientWidth
+    if(c.isNull(a) || isNaN(a) || a < 1 || a === this.G[0].clientWidth) {
+      return this.G[0].clientWidth
     }
-    this.I[0].style.width = a + "px";
-    this.event.trigger("resizeWidth", [a, this.L.ob]);
-    this.L.ob = a;
+    this.G[0].style.width = a + "px";
+    this.event.trigger("resizeWidth", [a, this.J.mb]);
+    this.J.mb = a;
     this.event.trigger("resize");
     return a
   };
   a.height = function(a) {
     a = parseInt(a);
-    if(c.isNull(a) || isNaN(a) || a < 1 || a === this.I[0].clientHeight) {
-      return this.I[0].clientHeight
+    if(c.isNull(a) || isNaN(a) || a < 1 || a === this.G[0].clientHeight) {
+      return this.G[0].clientHeight
     }
-    this.I[0].style.height = a + "px";
-    this.event.trigger("resizeHeight", [a, this.L.nb]);
-    this.L.nb = a;
+    this.G[0].style.height = a + "px";
+    this.event.trigger("resizeHeight", [a, this.J.lb]);
+    this.J.lb = a;
     this.event.trigger("resize");
     return a
   };
   a.getCellByIdAndKey = function(a, b) {
-    return g.create("Cell", {grid:this, datarow:this.B.getById(a), colDef:this.G.getByKey(b)})
+    return g.create("Cell", {grid:this, datarow:this.vg.getById(a), colDef:this.sg.getByKey(b)})
   };
   a.getCellByIdx = function(a, b) {
     return g.create("Cell", {grid:this, row:a, col:b})
@@ -3853,9 +3853,9 @@ var F = {};
   };
   a.printError = function(a) {
     if(this.A.showMessage) {
-      var b = this.Be;
+      var b = this.Sg;
       b[0].innerHTML = a;
-      b[0].style.width = this.I[0].clientWidth + "px";
+      b[0].style.width = this.G[0].clientWidth + "px";
       b[0].style.background = "#ffebe8";
       b[0].style.color = "#333";
       b.show();
@@ -3867,9 +3867,9 @@ var F = {};
   };
   a.printMessage = function(a) {
     if(this.A.showMessage) {
-      var b = this.Be;
+      var b = this.Sg;
       b[0].innerHTML = a;
-      b[0].style.width = this.I[0].clientWidth + "px";
+      b[0].style.width = this.G[0].clientWidth + "px";
       b[0].style.background = "#dfdfdf";
       b[0].style.color = "#6f6f6f";
       b.show();
@@ -3879,8 +3879,8 @@ var F = {};
       }, 5E3)
     }
   };
-  a.re = function(a) {
-    return c.contains(this.I[0], a.target)
+  a.ne = function(a) {
+    return c.contains(this.G[0], a.target)
   }
 })();
 (function() {
@@ -3888,31 +3888,31 @@ var F = {};
     b.call(this, a);
     this.grid.menubar = this
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util"), b = goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.MenuBar", d);
-  g.S("MenuBar", d);
-  goog.Gb(d, b);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util"), b = goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.MenuBar", d);
+  g.Q("MenuBar", d);
+  goog.Db(d, b);
+  d.X = function(a) {
     return new d(a)
   };
   var a = d.prototype;
-  a.Ac = function() {
-    return{background:"url(" + this.grid.A.imageUrl + "menubar-bg.png) repeat-x scroll center", borderThickness:1, border:"solid #b6bac0", height:27, classMenuBar:"menubar", classIcon:"menu-icon", iconBorderThickness:1, iconBorder:"solid transparent", iconBorderHover:"solid #d4d4d4", iconBorderActive:"solid #9a9a9a", iconMargin:2, iconBackground:"", iconBackgroundHover:"url(" + this.grid.A.imageUrl + "menu-icon-hover.png) repeat-x scroll center", iconBackgroundActive:"url(" + this.grid.A.imageUrl + 
+  a.xc = function() {
+    return{background:"url(" + this.grid._options.imageUrl + "menubar-bg.png) repeat-x scroll center", borderThickness:1, border:"solid #b6bac0", height:27, classMenuBar:"menubar", classIcon:"menu-icon", iconBorderThickness:1, iconBorder:"solid transparent", iconBorderHover:"solid #d4d4d4", iconBorderActive:"solid #9a9a9a", iconMargin:2, iconBackground:"", iconBackgroundHover:"url(" + this.grid._options.imageUrl + "menu-icon-hover.png) repeat-x scroll center", iconBackgroundActive:"url(" + this.grid._options.imageUrl + 
     "menu-icon-active.png) repeat-x scroll center", iconHeight:21, iconWidth:21, iconBorderRadius:4, iconBorderFocus:"solid #5f5f5f"}
   };
   a._init = function(a) {
-    this.I = a.container;
-    this.xf = $("<div class='" + this.A.classMenuBar + "'></div>").prependTo(this.I)
+    this.G = a.container;
+    this.rf = $("<div class='" + this.A.classMenuBar + "'></div>").prependTo(this.G)
   };
-  a.vc = function() {
-    this.grid.event.bind({onCreateCss:this.aa, onDestroy:this.J}, this)
+  a.sc = function() {
+    this.grid.event.bind({onCreateCss:this.Y, onDestroy:this.H}, this)
   };
-  a.J = function() {
-    g.J(this, {name:"MenuBar", path:"menubar", $:"menubar", Aa:"ctnr", map:"options"})
+  a.H = function() {
+    g.H(this, {name:"MenuBar", path:"menubar", $:"menubar", ya:"ctnr", map:"options"})
   };
-  a.aa = function() {
-    var a = "#" + this.grid.D + " .", b = this.A, c = [];
-    c.push(a + b.classMenuBar + "{" + g.Ba.tb + "overflow:hidden;width:100%;background:" + b.background + ";border-bottom:" + (b.borderThickness + "px " + b.border) + ";height:" + b.height + "px}");
+  a.Y = function() {
+    var a = "#" + this.grid.mid + " .", b = this.A, c = [];
+    c.push(a + b.classMenuBar + "{" + g.za.qb + "overflow:hidden;width:100%;background:" + b.background + ";border-bottom:" + (b.borderThickness + "px " + b.border) + ";height:" + b.height + "px}");
     c.push(a + b.classIcon + "{float:left;height:" + b.iconHeight + "px;width:" + b.iconWidth + "px;border:" + b.iconBorderThickness + "px " + b.iconBorder + ";margin:" + b.iconMargin + "px 0 0 " + b.iconMargin + "px;background:" + b.iconBackground + ";border-radius:" + b.iconBorderRadius + "px;-moz-border-radius:" + b.iconBorderRadius + "px}");
     c.push(a + b.classIcon + ":hover," + a + b.classIcon + ":focus{background:" + b.iconBackgroundHover + ";border:" + b.iconBorderThickness + "px " + b.iconBorderHover + "}");
     c.push(a + b.classIcon + ":active," + a + b.classIcon + ".active{cursor:default;background:" + b.iconBackgroundActive + ";border:" + b.iconBorderThickness + "px " + b.iconBorderActive + "}");
@@ -3920,12 +3920,12 @@ var F = {};
     return c.join("")
   };
   a.addIcon = function(a, b, i, d, g) {
-    return $("<div class='" + this.A.classIcon + "' tabIndex='0' title='" + b + "'><div class='" + a + "' style='margin-top:" + (this.A.iconHeight - d) / 2 + "px;margin-left:" + (this.A.iconWidth - i) / 2 + "px'></div></div>").appendTo(this.xf).click(function(a) {
+    return $("<div class='" + this.A.classIcon + "' tabIndex='0' title='" + b + "'><div class='" + a + "' style='margin-top:" + (this.A.iconHeight - d) / 2 + "px;margin-left:" + (this.A.iconWidth - i) / 2 + "px'></div></div>").appendTo(this.rf).click(function(a) {
       g();
       $(this).toggleClass("active");
       a.preventDefault()
     }).keydown(function(a) {
-      if(a.which === c.keyMapKeydown.jc || a.which === c.keyMapKeydown.rd) {
+      if(a.which === c.keyMapKeydown.gc || a.which === c.keyMapKeydown.md) {
         g(), $(this).toggleClass("active"), a.preventDefault()
       }
     })
@@ -3933,122 +3933,122 @@ var F = {};
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
+    this.C = a.C;
     this.grid = a.grid;
-    this.grid.yh = this;
-    this.I = a.container;
-    this.A = g.da({classTooltip:"jgrid-tooltip", tooltipSyncEnabled:!0, offsetX:0, offsetY:18, background:"#F5F5F5", border:"1px solid #868686", padding:"2px 10px", font:"14px Arial,Helvetica,sans-serif", color:"#333"}, a.options);
-    this.P()
+    this.grid.tooltip = this;
+    this.G = a.container;
+    this.A = g.ba({classTooltip:"jgrid-tooltip", tooltipSyncEnabled:!0, offsetX:0, offsetY:18, background:"#F5F5F5", border:"1px solid #868686", padding:"2px 10px", font:"14px Arial,Helvetica,sans-serif", color:"#333"}, a.options);
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.TooltipManager", d);
-  g.S("TooltipManager", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.TooltipManager", d);
+  g.Q("TooltipManager", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function() {
-    this.grid.event.bind({onCreateCss:this.aa, onDestroy:this.J, mouseoutCanvas:this.Af, mousemoveCanvas:this.zf, mouseoverCanvas:this.Bf}, this)
+  b.N = function() {
+    this.grid.event.bind({onCreateCss:this.Y, onDestroy:this.H, mouseoutCanvas:this.uf, mousemoveCanvas:this.tf, mouseoverCanvas:this.vf}, this)
   };
-  b.J = function() {
-    g.J(this, {name:"TooltipManager", path:"tooltip", $:"tooltip", Aa:"ctnr", map:"options"})
+  b.H = function() {
+    g.H(this, {name:"TooltipManager", path:"tooltip", $:"tooltip", ya:"ctnr", map:"options"})
   };
-  b.aa = function() {
+  b.Y = function() {
     var a = this.A, b = [];
-    b.push("#" + this.grid.D + " ." + a.classTooltip + "{position:absolute;z-index:10;background:" + a.background + ";border:" + a.border + ";padding:" + a.padding + ";color:" + a.color + ";font:" + a.font + "}");
+    b.push("#" + this.grid.mid + " ." + a.classTooltip + "{position:absolute;z-index:10;background:" + a.background + ";border:" + a.border + ";padding:" + a.padding + ";color:" + a.color + ";font:" + a.font + "}");
     return b.join("")
   };
-  b.Af = function() {
-    c.isNotNull(this.Xa) && (this.I[0].removeChild(this.Xa[0]), delete this.Xa)
+  b.uf = function() {
+    c.isNotNull(this.Ua) && (this.G[0].removeChild(this.Ua[0]), delete this.Ua)
   };
-  b.zf = function(a) {
+  b.tf = function(a) {
     var b = this.A;
-    b.tooltipSyncEnabled && c.isNotNull(this.Xa) && this.Xa.css({left:a.pageX + b.offsetX + "px", top:a.pageY + b.offsetY + "px"})
+    b.tooltipSyncEnabled && c.isNotNull(this.Ua) && this.Ua.css({left:a.pageX + b.offsetX + "px", top:a.pageY + b.offsetY + "px"})
   };
-  b.Bf = function(a, b) {
-    if(b.getColDef().zh && c.isNull(this.Xa)) {
+  b.vf = function(a, b) {
+    if(b.getColDef().rh && c.isNull(this.Ua)) {
       var f = this.A, i = document.createElement("div");
       i.innerHTML = "<div class='" + f.classTooltip + "' style='left:" + (a.pageX + f.offsetX) + "px;top:" + (a.pageY + f.offsetY) + "px'>" + b.getValue() + "</div>";
-      this.Xa = $(i.firstChild);
-      this.I[0].appendChild(this.Xa[0])
+      this.Ua = $(i.firstChild);
+      this.G[0].appendChild(this.Ua[0])
     }
   }
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
-    this.I = a.container;
+    this.C = a.C;
+    this.G = a.container;
     this.grid = a.grid;
-    this.grid.Og = this;
-    this.A = g.da({classCell:"footer-cell", background:"#F1F5FB", border:"0px solid #CCD9EA", color:"#000", fontSize:"13px", fontWeight:"normal", cellHeight:25, cellPadding:40, countTemplate:"현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건", titleColor:"#5A6779", titleFontSize:"12px", titleFontWeight:"normal", contentColor:"#1E395B", contentFontSize:"12px", contentFontWeight:"normal", classFooter:"jgrid-footer", classTitle:"footer-title", classContent:"footer-content", 
+    this.grid.footer = this;
+    this.A = g.ba({classCell:"footer-cell", background:"#F1F5FB", border:"0px solid #CCD9EA", color:"#000", fontSize:"13px", fontWeight:"normal", cellHeight:25, cellPadding:40, countTemplate:"현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건", titleColor:"#5A6779", titleFontSize:"12px", titleFontWeight:"normal", contentColor:"#1E395B", contentFontSize:"12px", contentFontWeight:"normal", classFooter:"jgrid-footer", classTitle:"footer-title", classContent:"footer-content", 
     style:"", cellStyle:"", titleStyle:"", contentStyle:""}, a.options);
-    this.bd = {};
-    this.P()
+    this.Zc = {};
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.Footer", d);
-  g.S("Footer", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.Footer", d);
+  g.Q("Footer", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function() {
-    this.Dc = $("<div class='" + this.A.classFooter + "'>").appendTo(this.I);
-    this.ye().html(this.A.countTemplate);
-    this.ie();
-    this.he();
-    this.sf();
+  b.N = function() {
+    this.Ac = $("<div class='" + this.A.classFooter + "'>").appendTo(this.G);
+    this.te().html(this.A.countTemplate);
+    this.de();
+    this.ce();
+    this.mf();
     this.bindEvents()
   };
   b.bindEvents = function() {
-    this.grid.event.bind({onCreateCss:this.aa, onDestroy:this.J, onDataChange:[this.ie, this.qg], onAfterRefresh:this.he}, this)
+    this.grid.event.bind({onCreateCss:this.Y, onDestroy:this.H, onDataChange:[this.de, this.jg], onAfterRefresh:this.ce}, this)
   };
-  b.J = function() {
-    var a, b = this.bd;
+  b.H = function() {
+    var a, b = this.Zc;
     for(a in b) {
       b.hasOwnProperty(a) && b[a].remove()
     }
-    g.J(this, {name:"Footer", path:"footer", $:"foot", Aa:"ctnr", map:"sumMap _options"})
+    g.H(this, {name:"Footer", path:"footer", $:"foot", ya:"ctnr", map:"sumMap _options"})
   };
-  b.aa = function() {
-    var a = this.A, b = "#" + this.grid.D + " ." + a.classFooter, f = [];
-    f.push(b + "{float:left;cursor:default;width:100%;" + g.Ba.tb + "background:" + a.background + ";border-top:" + a.border + ";border-collapse:collapse;color:" + a.color + ";font-size:" + a.fontSize + ";font-weight:" + a.fontWeight + ";padding-left:8px;" + a.style + "}");
+  b.Y = function() {
+    var a = this.A, b = "#" + this.grid.mid + " ." + a.classFooter, f = [];
+    f.push(b + "{float:left;cursor:default;width:100%;" + g.za.qb + "background:" + a.background + ";border-top:" + a.border + ";border-collapse:collapse;color:" + a.color + ";font-size:" + a.fontSize + ";font-weight:" + a.fontWeight + ";padding-left:8px;" + a.style + "}");
     f.push(b + " ." + a.classCell + "{float:left;white-space:nowrap;line-height:" + a.cellHeight + "px;padding-right:" + a.cellPadding + "px;" + a.cellStyle + "}");
     f.push(b + " ." + a.classTitle + "{text-align:right;color:" + a.titleColor + ";font-size:" + a.titleFontSize + ";font-weight:" + a.titleFontWeight + ";" + a.titleStyle + "}");
     f.push(b + " ." + a.classContent + "{color:" + a.contentColor + ";font-size:" + a.contentFontSize + ";font-weight:" + a.contentFontWeight + ";" + a.contentStyle + "}");
     return f.join("")
   };
-  b.ie = function() {
-    this.Dc.find("[name=totalCount]")[0].innerHTML = this.grid.B.getReal().length
+  b.de = function() {
+    this.Ac.find("[name=totalCount]")[0].innerHTML = this.grid.dataMgr.getReal().length
   };
-  b.he = function() {
-    this.Dc.find("[name=shownCount]")[0].innerHTML = this.grid.B.filterReal(this.grid.B.W).length
+  b.ce = function() {
+    this.Ac.find("[name=shownCount]")[0].innerHTML = this.grid.dataMgr.filterReal(this.grid.dataMgr.U).length
   };
-  b.sf = function() {
-    for(var a = this.grid.B.getReal(), b = this.grid.G.get(), f = b.length, i, h, g, l, m = d.Ad, k = this.bd, o, n = 0;n < f;n++) {
+  b.mf = function() {
+    for(var a = this.grid.dataMgr.getReal(), b = this.grid.colDefMgr.get(), f = b.length, i, h, g, l, m = d.vd, k = this.Zc, o, n = 0;n < f;n++) {
       if(i = b[n], h = i.sumRenderer, c.isNotNull(h)) {
-        if(g = i.key, i = i.name, l = m(a, g), g = k[g] = this.ye(), o = g[0], c.isFunction(h)) {
+        if(g = i.key, i = i.name, l = m(a, g), g = k[g] = this.te(), o = g[0], c.isFunction(h)) {
           o.innerHTML = h(i, l)
         }else {
           if(c.isString(h)) {
             if(g = h.toLowerCase(), g === "krw" || h === "\\") {
-              o.innerHTML = this.cd(i, c.formatNumber(l))
+              o.innerHTML = this.$c(i, c.formatNumber(l))
             }else {
               if(g === "usd" || h === "$") {
-                o.innerHTML = this.cd(i, c.formatNumber(l, 2, "$ "))
+                o.innerHTML = this.$c(i, c.formatNumber(l, 2, "$ "))
               }
             }
           }else {
-            o.innerHTML = this.cd(i, l)
+            o.innerHTML = this.$c(i, l)
           }
         }
       }
     }
   };
-  b.qg = function() {
-    var a = this.grid.B.getReal(), b, f = this.bd, i = this.grid.G, h, g, l, m = d.Ad, k, o, n = this.A.classContent;
+  b.jg = function() {
+    var a = this.grid.dataMgr.getReal(), b, f = this.Zc, i = this.grid.colDefMgr, h, g, l, m = d.vd, k, o, n = this.A.classContent;
     for(b in f) {
       if(f.hasOwnProperty(b)) {
         if(h = i.getByKey(b), g = h.sumRenderer, l = m(a, b), k = f[b], o = k[0], c.isFunction(g)) {
@@ -4069,13 +4069,13 @@ var F = {};
       }
     }
   };
-  b.ye = function() {
-    return $("<div class='" + this.A.classCell + "'/>").appendTo(this.Dc)
+  b.te = function() {
+    return $("<div class='" + this.A.classCell + "'/>").appendTo(this.Ac)
   };
-  b.cd = function(a, b) {
+  b.$c = function(a, b) {
     return"<span class='" + this.A.classTitle + "'>" + a + " 합계: </span><span class='" + this.A.classContent + "'>" + b + "</span>"
   };
-  d.Ad = function(a, b) {
+  d.vd = function(a, b) {
     for(var f = 0, c, d = a.length, g = 0;g < d;g++) {
       if(typeof(c = a[g][b]) === "string") {
         c = c.toFloat()
@@ -4088,88 +4088,88 @@ var F = {};
 (function() {
   function d(b) {
     this.grid = b.grid;
-    this.ca = b.datarow;
-    this.ba = b.colDef;
-    this.P(b)
+    this.aa = b.datarow;
+    this.Z = b.colDef;
+    this.N(b)
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.N("jx.grid.Cell", d);
-  g.S("Cell", d);
-  d.Z = function(b) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.L("jx.grid.Cell", d);
+  g.Q("Cell", d);
+  d.X = function(b) {
     return new d(b)
   };
   g = d.prototype;
-  g.P = function(b) {
-    if(c.isNull(this.ca)) {
+  g.N = function(b) {
+    if(c.isNull(this.aa)) {
       if(c.isNotNull(b.row)) {
-        this.ca = this.grid.B.getByIdx(b.row)
+        this.aa = this.grid.dataMgr.getByIdx(b.row)
       }else {
         if(c.isNotNull(b.node)) {
-          this.ca = this.grid.B.getByNode(b.node.parentNode)
+          this.aa = this.grid.dataMgr.getByNode(b.node.parentNode)
         }else {
           if(c.isNotNull(b.$)) {
-            this.ca = this.grid.B.getByNode(b.$[0].parentNode)
+            this.aa = this.grid.dataMgr.getByNode(b.$[0].parentNode)
           }
         }
       }
     }
-    if(c.isNull(this.ba)) {
+    if(c.isNull(this.Z)) {
       if(c.isNotNull(b.col)) {
-        this.ba = this.grid.G.get(b.col)
+        this.Z = this.grid.colDefMgr.get(b.col)
       }else {
         if(c.isNotNull(b.node)) {
-          this.ba = this.grid.G.get(c.index(b.node))
+          this.Z = this.grid.colDefMgr.get(c.index(b.node))
         }else {
           if(c.isNotNull(b.$)) {
-            this.ba = this.grid.G.get(c.index(b.$[0]))
+            this.Z = this.grid.colDefMgr.get(c.index(b.$[0]))
           }
         }
       }
     }
-    if(c.isNullOr(this.ca, this.ba) && c.isNotNull(b.event) && (b = this.grid.view.Id(b.event.target), c.isNotNull(b))) {
-      this.ca = this.grid.B.getByNode(b.parentNode), this.ba = this.grid.G.get(c.index(b))
+    if(c.isNullOr(this.aa, this.Z) && c.isNotNull(b.event) && (b = this.grid.view.Dd(b.event.target), c.isNotNull(b))) {
+      this.aa = this.grid.dataMgr.getByNode(b.parentNode), this.Z = this.grid.colDefMgr.get(c.index(b))
     }
   };
   g.destroy = function() {
     delete this.grid;
-    delete this.ca;
-    delete this.ba
+    delete this.aa;
+    delete this.Z
   };
   g.getRowIdx = function() {
-    if(c.isNotNull(this.ca)) {
-      return this.grid.B.getIdx(this.ca)
+    if(c.isNotNull(this.aa)) {
+      return this.grid.dataMgr.getIdx(this.aa)
     }
   };
   g.getColIdx = function() {
-    if(c.isNotNull(this.ba)) {
-      return this.grid.G.getIdx(this.ba)
+    if(c.isNotNull(this.Z)) {
+      return this.grid.colDefMgr.getIdx(this.Z)
     }
   };
   g.getNode = function() {
-    if(c.isNotNullAnd(this.ca, this.ba)) {
-      return this.grid.view.getCellByIdAndKey(this.grid.B.getId(this.ca), this.ba.key)
+    if(c.isNotNullAnd(this.aa, this.Z)) {
+      return this.grid.view.getCellByIdAndKey(this.grid.dataMgr.getId(this.aa), this.Z.key)
     }
   };
   g.getRowNode = function() {
-    return this.grid.view.getRow(this.ca)
+    return this.grid.view.getRow(this.aa)
   };
   g.get$ = function() {
     var b = this.getNode();
     return b !== s ? $(b) : $([])
   };
-  g.getDatarow = x("ca");
-  g.getColDef = x("ba");
+  g.getDatarow = x("aa");
+  g.getColDef = x("Z");
   g.getKey = function() {
-    if(c.isNotNull(this.ba)) {
-      return this.ba.key
+    if(c.isNotNull(this.Z)) {
+      return this.Z.key
     }
   };
   g.getId = function() {
-    return this.grid.B.getId(this.ca)
+    return this.grid.dataMgr.getId(this.aa)
   };
   g.getValue = function() {
-    if(c.isNotNullAnd(this.ca, this.ba)) {
-      return this.ca[this.ba.key]
+    if(c.isNotNullAnd(this.aa, this.Z)) {
+      return this.aa[this.Z.key]
     }
   };
   g.isValid = function() {
@@ -4185,181 +4185,181 @@ var F = {};
     return this.get$().length !== 0
   };
   g.equals = function(b) {
-    return c.isNotNull(b) && c.isNotNull(this.ca) && this.ca === b.getDatarow() && c.isNotNull(this.ba) && this.ba === b.getColDef()
+    return c.isNotNull(b) && c.isNotNull(this.aa) && this.aa === b.getDatarow() && c.isNotNull(this.Z) && this.Z === b.getColDef()
   }
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
+    this.C = a.C;
     this.grid = a.grid;
-    this.grid.pb = this;
-    this.A = g.da({rowSelKey:this.grid.B.O, bgColorSelection:"#DCEBFE", bgColorLast:"#f1ca7f", bgColorRange:"#D9D9D9", classSelection:"jgrid-selection", classLast:"selection-last", classRange:"selection-range", multiSelectEnabled:!1, classRowSelected:"rowSelected", highlightRowEnabled:!0, bgColorRowSelected:"#d8dfea"}, a.options);
-    this.C = {Rb:1, Lb:2, Mb:3, Pb:4, Nb:5, Ob:6, qc:7, pc:8, rc:{}};
-    this.C.rc = c.which(["enter", "tab", "arrow", "pgdn", "pgup", "home", "end"]);
-    this.Ea = {length:0};
-    this.$a = {length:0};
-    this.P()
+    this.grid.selMgr = this;
+    this.A = g.ba({rowSelKey:this.grid.dataMgr.M, bgColorSelection:"#DCEBFE", bgColorLast:"#f1ca7f", bgColorRange:"#D9D9D9", classSelection:"jgrid-selection", classLast:"selection-last", classRange:"selection-range", multiSelectEnabled:!1, classRowSelected:"rowSelected", highlightRowEnabled:!0, bgColorRowSelected:"#d8dfea"}, a.options);
+    this.B = {Ob:1, Ib:2, Jb:3, Mb:4, Kb:5, Lb:6, nc:7, mc:8, oc:{}};
+    this.B.oc = c.which(["enter", "tab", "arrow", "pgdn", "pgup", "home", "end"]);
+    this.Ca = {length:0};
+    this.Ya = {length:0};
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.SelectionManager", d);
-  g.S("SelectionManager", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.SelectionManager", d);
+  g.Q("SelectionManager", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function() {
+  b.N = function() {
     this.bindEvents()
   };
   b.bindEvents = function() {
-    this.grid.event.bind({onGetCellClass:this.Nf, onCreateCss:this.aa, onDestroy:this.J, keydownCanvas:this.vb, dragoverCanvas:this.Ze, mousedownCanvas:this.yf, onBeforeRerender:this.Gf, onAfterRerender:this.dh, onBeforeDataChange:this.eh}, this)
+    this.grid.event.bind({onGetCellClass:this.Hf, onCreateCss:this.Y, onDestroy:this.H, keydownCanvas:this.sb, dragoverCanvas:this.Te, mousedownCanvas:this.sf, onBeforeRerender:this.Af, onAfterRerender:this.Wg, onBeforeDataChange:this.Xg}, this)
   };
-  b.J = function() {
-    g.Ca(this.C, "_NAVKEYS");
-    var a, b = this.Ea, f = this.$a;
+  b.H = function() {
+    g.Aa(this.B, "_NAVKEYS");
+    var a, b = this.Ca, f = this.Ya;
     for(a in b) {
-      b.hasOwnProperty(a) && a !== "length" && g.Ca(b, a)
+      b.hasOwnProperty(a) && a !== "length" && g.Aa(b, a)
     }
     for(a in f) {
-      f.hasOwnProperty(a) && a !== "length" && g.Ca(f, a)
+      f.hasOwnProperty(a) && a !== "length" && g.Aa(f, a)
     }
-    g.J(this, {name:"SelectionManager", path:"selMgr", map:"rows _cols _range _last _consts _options"})
+    g.H(this, {name:"SelectionManager", path:"selMgr", map:"rows _cols _range _last _consts _options"})
   };
-  b.aa = function() {
-    var a = this.grid.event.trigger("onBeforeCreateSelCss"), b = "#" + this.grid.D + " .", f = this.A;
+  b.Y = function() {
+    var a = this.grid.event.trigger("onBeforeCreateSelCss"), b = "#" + this.grid.mid + " .", f = this.A;
     f.highlightRowEnabled === !0 && a.push(b + f.classRowSelected + " > *{background:" + f.bgColorRowSelected + "}");
     f.multiSelectEnabled === !0 && (a.push(b + f.classSelection + "{background:" + f.bgColorSelection + "}"), a.push(b + f.classRange + "{background:" + f.bgColorRange + "}"));
     a.push(b + f.classLast + "{background:" + f.bgColorLast + "}");
     return a.join("\n")
   };
-  b.Nf = function(a, b, f, i) {
-    var d = "", g = this.M, l = this.ga, m = this.Ea, k = this.A;
+  b.Hf = function(a, b, f, i) {
+    var d = "", g = this.K, l = this.ea, m = this.Ca, k = this.A;
     c.isNotNull(g) && g.getDatarow() === f && g.getColDef() === i && (d += k.classLast);
     k.multiSelectEnabled === !0 && (c.isNotNull(l) && l.getDatarow() === f && l.getColDef() === i && (d += " " + k.classRange), m.hasOwnProperty(a) && m[a].hasOwnProperty(b) && (d += " " + k.classSelection));
     return d
   };
-  b.yf = function(a, b) {
-    if(!c.isNotNull(this.M) || !this.M.equals(b)) {
-      this.grid.event.trigger("onBeforeSelect", [a, b]), this.A.multiSelectEnabled === !1 ? this.selectCell(b) : a.shiftKey && c.isNotNullAnd(this.M, this.ga) ? this.selectRange(b) : a.ctrlKey ? b.getKey() === this.A.rowSelKey ? this.addRow(b) : this.addCell(b) : this.selectCell(b)
+  b.sf = function(a, b) {
+    if(!c.isNotNull(this.K) || !this.K.equals(b)) {
+      this.grid.event.trigger("onBeforeSelect", [a, b]), this.A.multiSelectEnabled === !1 ? this.selectCell(b) : a.shiftKey && c.isNotNullAnd(this.K, this.ea) ? this.selectRange(b) : a.ctrlKey ? b.getKey() === this.A.rowSelKey ? this.addRow(b) : this.addCell(b) : this.selectCell(b)
     }
   };
-  b.Ze = function(a, b) {
-    this.A.multiSelectEnabled === !1 ? this.selectCell(b) : c.isNotNullAnd(this.M, this.ga) && this.selectRange(b)
+  b.Te = function(a, b) {
+    this.A.multiSelectEnabled === !1 ? this.selectCell(b) : c.isNotNullAnd(this.K, this.ea) && this.selectRange(b)
   };
-  b.vb = function(a) {
-    if(c.isNullOr(this.M, this.ga)) {
-      this.C.rc[a.which] && this.selectCell(g.create("Cell", {grid:this.grid, row:this.grid.view.Nd(), col:this.grid.view.Md()}))
+  b.sb = function(a) {
+    if(c.isNullOr(this.K, this.ea)) {
+      this.B.oc[a.which] && this.selectCell(g.create("Cell", {grid:this.grid, row:this.grid.view.Id(), col:this.grid.view.Hd()}))
     }else {
-      if(this.C.rc[a.which]) {
+      if(this.B.oc[a.which]) {
         if(!this.grid.event.triggerInvalid("onBeforeNavigate", [a])) {
           var b;
           a.preventDefault();
           switch(a.which) {
-            case c.keyMapKeydown.oj:
-              b = a.shiftKey ? this.X(this.C.Mb, this.M) : this.X(this.C.Pb, this.M);
+            case c.keyMapKeydown.hj:
+              b = a.shiftKey ? this.V(this.B.Jb, this.K) : this.V(this.B.Mb, this.K);
               this.selectCell(b);
               break;
-            case c.keyMapKeydown.jc:
-              b = a.shiftKey ? this.X(this.C.Rb, this.M) : this.X(this.C.Lb, this.M);
+            case c.keyMapKeydown.gc:
+              b = a.shiftKey ? this.V(this.B.Ob, this.K) : this.V(this.B.Ib, this.K);
               this.selectCell(b);
               break;
-            case c.keyMapKeydown.td:
-              this.A.multiSelectEnabled && a.shiftKey ? (b = this.X(this.C.Rb, this.ga), this.selectRange(b)) : (b = this.X(this.C.Rb, this.M), this.selectCell(b));
+            case c.keyMapKeydown.od:
+              this.A.multiSelectEnabled && a.shiftKey ? (b = this.V(this.B.Ob, this.ea), this.selectRange(b)) : (b = this.V(this.B.Ob, this.K), this.selectCell(b));
               break;
-            case c.keyMapKeydown.ri:
-              this.A.multiSelectEnabled && a.shiftKey ? (b = this.X(this.C.Lb, this.ga), this.selectRange(b)) : (b = this.X(this.C.Lb, this.M), this.selectCell(b));
+            case c.keyMapKeydown.ki:
+              this.A.multiSelectEnabled && a.shiftKey ? (b = this.V(this.B.Ib, this.ea), this.selectRange(b)) : (b = this.V(this.B.Ib, this.K), this.selectCell(b));
               break;
             case c.keyMapKeydown.left:
-              this.A.multiSelectEnabled && a.shiftKey ? (b = this.X(this.C.Mb, this.ga), this.selectRange(b)) : (b = this.X(this.C.Mb, this.M), this.selectCell(b));
+              this.A.multiSelectEnabled && a.shiftKey ? (b = this.V(this.B.Jb, this.ea), this.selectRange(b)) : (b = this.V(this.B.Jb, this.K), this.selectCell(b));
               break;
             case c.keyMapKeydown.right:
-              this.A.multiSelectEnabled && a.shiftKey ? (b = this.X(this.C.Pb, this.ga), this.selectRange(b)) : (b = this.X(this.C.Pb, this.M), this.selectCell(b));
+              this.A.multiSelectEnabled && a.shiftKey ? (b = this.V(this.B.Mb, this.ea), this.selectRange(b)) : (b = this.V(this.B.Mb, this.K), this.selectCell(b));
               break;
-            case c.keyMapKeydown.hj:
-              this.A.multiSelectEnabled && a.shiftKey ? (b = this.X(this.C.Ob, this.ga), this.selectRange(b)) : (b = this.X(this.C.Ob, this.M), this.selectCell(b));
+            case c.keyMapKeydown.aj:
+              this.A.multiSelectEnabled && a.shiftKey ? (b = this.V(this.B.Lb, this.ea), this.selectRange(b)) : (b = this.V(this.B.Lb, this.K), this.selectCell(b));
               break;
-            case c.keyMapKeydown.gj:
-              this.A.multiSelectEnabled && a.shiftKey ? (b = this.X(this.C.Nb, this.ga), this.selectRange(b)) : (b = this.X(this.C.Nb, this.M), this.selectCell(b));
+            case c.keyMapKeydown.$i:
+              this.A.multiSelectEnabled && a.shiftKey ? (b = this.V(this.B.Kb, this.ea), this.selectRange(b)) : (b = this.V(this.B.Kb, this.K), this.selectCell(b));
               break;
-            case c.keyMapKeydown.rd:
-              b = a.shiftKey ? this.X(this.C.Ob, this.M) : this.X(this.C.Nb, this.M);
+            case c.keyMapKeydown.md:
+              b = a.shiftKey ? this.V(this.B.Lb, this.K) : this.V(this.B.Kb, this.K);
               this.selectCell(b);
               break;
             case c.keyMapKeydown.home:
-              this.A.multiSelectEnabled && a.shiftKey ? (b = this.X(this.C.qc, this.ga), this.selectRange(b)) : (b = this.X(this.C.qc, this.M), this.selectCell(b));
+              this.A.multiSelectEnabled && a.shiftKey ? (b = this.V(this.B.nc, this.ea), this.selectRange(b)) : (b = this.V(this.B.nc, this.K), this.selectCell(b));
               break;
             case c.keyMapKeydown.end:
-              this.A.multiSelectEnabled && a.shiftKey ? (b = this.X(this.C.pc, this.ga), this.selectRange(b)) : (b = this.X(this.C.pc, this.M), this.selectCell(b))
+              this.A.multiSelectEnabled && a.shiftKey ? (b = this.V(this.B.mc, this.ea), this.selectRange(b)) : (b = this.V(this.B.mc, this.K), this.selectCell(b))
           }
           this.grid.event.trigger("onAfterNavigate", [b])
         }
       }else {
-        if(this.$a.length === 1) {
-          var f = this.grid.G, i, d = this.$a;
+        if(this.Ya.length === 1) {
+          var f = this.grid.colDefMgr, i, d = this.Ya;
           for(i in d) {
             if(d.hasOwnProperty(i) && i !== "length") {
-              b = f.get(i).key, this.grid.event.trigger("keydownColSel_" + b + "_" + a.which + " keydownColSel_" + b, [a, d[i], this.M])
+              b = f.get(i).key, this.grid.event.trigger("keydownColSel_" + b + "_" + a.which + " keydownColSel_" + b, [a, d[i], this.K])
             }
           }
         }
-        if(this.Ea.length === 1) {
+        if(this.Ca.length === 1) {
           var j;
-          i = this.Ea;
+          i = this.Ca;
           for(j in i) {
-            i.hasOwnProperty(j) && j !== "length" && this.grid.event.trigger("keydownRowSel_" + a.which + " keydownRowSel", [a, i[j], this.M])
+            i.hasOwnProperty(j) && j !== "length" && this.grid.event.trigger("keydownRowSel_" + a.which + " keydownRowSel", [a, i[j], this.K])
           }
         }
-        this.grid.event.trigger("keydownSel_" + a.which + " keydownSel", [a, this.Ea, this.$a])
+        this.grid.event.trigger("keydownSel_" + a.which + " keydownSel", [a, this.Ca, this.Ya])
       }
     }
   };
   b.getCell = function() {
-    if(c.isNotNull(this.M)) {
-      return this.M
+    if(c.isNotNull(this.K)) {
+      return this.K
     }
   };
-  b.$h = function(a) {
-    return c.isNotNull(this.M) && this.M.equals(a)
+  b.Sh = function(a) {
+    return c.isNotNull(this.K) && this.K.equals(a)
   };
-  b.bf = function(a, b, f) {
+  b.We = function(a, b, f) {
     switch(a) {
-      case this.C.Pb:
-        f < this.grid.G.length() - 1 && f++;
+      case this.B.Mb:
+        f < this.grid.colDefMgr.length() - 1 && f++;
         break;
-      case this.C.Mb:
+      case this.B.Jb:
         f > 0 && f--;
         break;
-      case this.C.Lb:
-        b < this.grid.B.W.length - 1 && b++;
+      case this.B.Ib:
+        b < this.grid.dataMgr.U.length - 1 && b++;
         break;
-      case this.C.Rb:
+      case this.B.Ob:
         b > 0 && b--;
         break;
-      case this.C.Nb:
+      case this.B.Kb:
         b += this.grid.view.A.rowsPerPage;
-        b > this.grid.B.W.length - 1 && (b = this.grid.B.W.length - 1);
+        b > this.grid.dataMgr.U.length - 1 && (b = this.grid.dataMgr.U.length - 1);
         break;
-      case this.C.Ob:
+      case this.B.Lb:
         b -= this.grid.view.A.rowsPerPage;
         b < 0 && (b = 0);
         break;
-      case this.C.qc:
+      case this.B.nc:
         b = 0;
         break;
-      case this.C.pc:
-        b = this.grid.B.W.length - 1
+      case this.B.mc:
+        b = this.grid.dataMgr.U.length - 1
     }
     return[b, f]
   };
-  b.X = function(a, b) {
-    var f = this.bf(a, b.getRowIdx(), b.getColIdx());
+  b.V = function(a, b) {
+    var f = this.We(a, b.getRowIdx(), b.getColIdx());
     return g.create("Cell", {grid:this.grid, row:f[0], col:f[1]})
   };
   b.selectRow = function(a) {
     var b = a.getRowIdx(), f = a.getColIdx();
-    this.kb(b, f, a);
-    this.Eb(b, a);
-    this.gc(this.Pd(b, f, a))
+    this.ib(b, f, a);
+    this.Bb(b, a);
+    this.dc(this.Kd(b, f, a))
   };
   b.selectCell = function(a, b) {
     this.grid.event.trigger("onBeforeSelectCell", [a]);
@@ -4367,65 +4367,65 @@ var F = {};
       this.selectRow(a)
     }else {
       var f = a.getRowIdx(), c = a.getColIdx();
-      this.kb(f, c, a, b);
-      this.Eb(f, a);
-      this.gc(this.Hd(f, c, a))
+      this.ib(f, c, a, b);
+      this.Bb(f, a);
+      this.dc(this.Cd(f, c, a))
     }
     this.grid.event.trigger("onAfterSelectCell", [a])
   };
-  b.eh = v();
-  b.Gf = function() {
-    if(c.isNotNull(this.M)) {
-      this.sd = this.M
+  b.Xg = v();
+  b.Af = function() {
+    if(c.isNotNull(this.K)) {
+      this.nd = this.K
     }
     this.empty()
   };
-  b.dh = function() {
-    c.isNotNull(this.sd) && (this.selectCell(this.sd, !0), this.grid.view.scrollToRowLazy(this.sd.getRowIdx()))
+  b.Wg = function() {
+    c.isNotNull(this.nd) && (this.selectCell(this.nd, !0), this.grid.view.scrollToRowLazy(this.nd.getRowIdx()))
   };
   b.addRow = function(a) {
     var b = a.getRowIdx(), f = a.getColIdx();
-    this.kb(b, f, a);
-    this.Eb(b, a);
-    this.uc(this.Pd(b, f, a))
+    this.ib(b, f, a);
+    this.Bb(b, a);
+    this.rc(this.Kd(b, f, a))
   };
   b.addCell = function(a) {
     var b = a.getRowIdx(), f = a.getColIdx();
-    this.kb(b, f, a);
-    this.Eb(b, a);
-    this.uc(this.Hd(b, f, a))
+    this.ib(b, f, a);
+    this.Bb(b, a);
+    this.rc(this.Cd(b, f, a))
   };
   b.selectRange = function(a) {
-    var b = a.getRowIdx(), f = a.getColIdx(), c = this.M.getRowIdx(), d = this.M.getColIdx(), g = c < b ? c : b, c = c < b ? b : c, l;
-    this.kb(b, f, a);
-    a.getKey() === this.A.rowSelKey ? (l = 0, d = this.grid.G.length() - 1) : (l = d < f ? d : f, d = d < f ? f : d);
-    this.gc(this.mf(g, l, c, d, b, f, a));
-    return{Ti:g, Si:l, Qi:c, Pi:d}
+    var b = a.getRowIdx(), f = a.getColIdx(), c = this.K.getRowIdx(), d = this.K.getColIdx(), g = c < b ? c : b, c = c < b ? b : c, l;
+    this.ib(b, f, a);
+    a.getKey() === this.A.rowSelKey ? (l = 0, d = this.grid.colDefMgr.length() - 1) : (l = d < f ? d : f, d = d < f ? f : d);
+    this.dc(this.ff(g, l, c, d, b, f, a));
+    return{Mi:g, Li:l, Ji:c, Ii:d}
   };
-  b.Eb = function(a, b) {
-    var f = this.M, i;
-    c.isNotNull(f) && (i = f.getRowIdx(), a !== i && c.isNotNull(this.ga) && i !== this.ga.getRowIdx() && this.grid.view.unlockRowById(f.getId()), f.get$().removeClass(this.A.classLast), this.A.highlightRowEnabled === !0 && $(f.getRowNode()).removeClass(this.A.classRowSelected), c.isNull(b) && delete this.M);
+  b.Bb = function(a, b) {
+    var f = this.K, i;
+    c.isNotNull(f) && (i = f.getRowIdx(), a !== i && c.isNotNull(this.ea) && i !== this.ea.getRowIdx() && this.grid.view.unlockRowById(f.getId()), f.get$().removeClass(this.A.classLast), this.A.highlightRowEnabled === !0 && $(f.getRowNode()).removeClass(this.A.classRowSelected), c.isNull(b) && delete this.K);
     if(!c.isNull(b)) {
-      (this.M = b).get$().addClass(this.A.classLast), this.A.highlightRowEnabled === !0 && $(b.getRowNode()).addClass(this.A.classRowSelected), this.grid.view.lockRowByIdx(a)
+      (this.K = b).get$().addClass(this.A.classLast), this.A.highlightRowEnabled === !0 && $(b.getRowNode()).addClass(this.A.classRowSelected), this.grid.view.lockRowByIdx(a)
     }
   };
-  b.kb = function(a, b, f, i) {
-    var d = this.ga;
+  b.ib = function(a, b, f, i) {
+    var d = this.ea;
     if(c.isNotNull(d)) {
       var g = d.getRowIdx();
       if(a === g && b === d.getColIdx()) {
         return
       }
-      a !== g && c.isNotNull(this.M) && g !== this.M.getRowIdx() && this.grid.view.unlockRowById(d.getId());
+      a !== g && c.isNotNull(this.K) && g !== this.K.getRowIdx() && this.grid.view.unlockRowById(d.getId());
       d.get$().removeClass(this.A.classRange);
-      c.isNull(f) && delete this.ga
+      c.isNull(f) && delete this.ea
     }
     if(!c.isNull(f)) {
-      (this.ga = f).get$().addClass(this.A.classRange), f = this.grid.view, f.lockRowByIdx(a), i || f.scrollToLazy(a, b)
+      (this.ea = f).get$().addClass(this.A.classRange), f = this.grid.view, f.lockRowByIdx(a), i || f.scrollToLazy(a, b)
     }
   };
-  b.uc = function(a) {
-    var b = this.Ea, f, c, d, j;
+  b.rc = function(a) {
+    var b = this.Ca, f, c, d, j;
     for(d in a) {
       if(a.hasOwnProperty(d) && (c = a[d], b.hasOwnProperty(d))) {
         for(j in f = b[d], c) {
@@ -4433,11 +4433,11 @@ var F = {};
         }
       }
     }
-    this.ke(!0);
-    this.He(a)
+    this.fe(!0);
+    this.Be(a)
   };
-  b.gc = function(a) {
-    var b = this.Ea, f, c, d, j, l = {};
+  b.dc = function(a) {
+    var b = this.Ca, f, c, d, j, l = {};
     for(d in b) {
       if(b.hasOwnProperty(d) && d !== "length") {
         if(f = b[d], a.hasOwnProperty(d)) {
@@ -4451,11 +4451,11 @@ var F = {};
         }
       }
     }
-    this.cg(l);
-    this.ke(!1);
-    this.uc(a)
+    this.Wf(l);
+    this.fe(!1);
+    this.rc(a)
   };
-  b.ke = function(a) {
+  b.fe = function(a) {
     var b = {}, f = [], d, h, j, l = this.grid.view;
     for(d in b) {
       if(b.hasOwnProperty(d)) {
@@ -4469,8 +4469,8 @@ var F = {};
     });
     a ? $(f).addClass(this.A.classSelection) : $(f).removeClass(this.A.classSelection)
   };
-  b.He = function(a) {
-    var b, f, d, h = this.Ea, g = this.$a, l;
+  b.Be = function(a) {
+    var b, f, d, h = this.Ca, g = this.Ya, l;
     for(b in a) {
       if(a.hasOwnProperty(b)) {
         for(f in l = a[b], l) {
@@ -4479,8 +4479,8 @@ var F = {};
       }
     }
   };
-  b.cg = function(a) {
-    var b, f, c = this.Ea, d = this.$a, g;
+  b.Wf = function(a) {
+    var b, f, c = this.Ca, d = this.Ya, g;
     for(b in a) {
       if(a.hasOwnProperty(b)) {
         for(f in g = a[b], g) {
@@ -4489,21 +4489,21 @@ var F = {};
       }
     }
   };
-  b.Hd = function(a, b, f) {
+  b.Cd = function(a, b, f) {
     var c = {};
     c[a] = {};
     c[a][b] = f;
     return c
   };
-  b.Pd = function(a, b, f) {
-    var c = {}, d = this.grid.G.length(), g = 0;
+  b.Kd = function(a, b, f) {
+    var c = {}, d = this.grid.colDefMgr.length(), g = 0;
     for(c[a] = {};g < d;g++) {
       c[a][g] = !0
     }
     c[a][b] = f;
     return c
   };
-  b.mf = function(a, b, f, c, d, g, l) {
+  b.ff = function(a, b, f, c, d, g, l) {
     for(var m = {}, k;a <= f;a++) {
       m[a] = {};
       for(k = b;k <= c;k++) {
@@ -4514,61 +4514,61 @@ var F = {};
     return m
   };
   b.empty = function() {
-    this.Eb();
-    this.kb();
-    this.gc({})
+    this.Bb();
+    this.ib();
+    this.dc({})
   }
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
+    this.C = a.C;
     this.grid = a.grid;
-    this.grid.ue = this;
-    this.A = c.da({classEdit:"jgrid-edit", classCellEditable:"jgrid-editable", classCellNotEditable:"jgrid-notEditable", editableBgEnabled:!1, notEditableBgEnabled:!1, editableBg:"#FFF", notEditableBg:"#F6F6F6", deleteEnabled:!1, editIconEnabled:!0, urlEditIcon:this.grid.A.imageUrl + "editable-small.png", classEditIcon:"edit-icon", editIconWidth:12, editIconPadding:3, basicBackground:"#FFF9D7", classSuccess:"edit-success", successBackground:"#cdf7b6", classFailure:"edit-failure", failureBackground:"#ffcec5"}, 
+    this.grid.editMgr = this;
+    this.A = c.ba({classEdit:"jgrid-edit", classCellEditable:"jgrid-editable", classCellNotEditable:"jgrid-notEditable", editableBgEnabled:!1, notEditableBgEnabled:!1, editableBg:"#FFF", notEditableBg:"#F6F6F6", deleteEnabled:!1, editIconEnabled:!0, urlEditIcon:this.grid._options.imageUrl + "editable-small.png", classEditIcon:"edit-icon", editIconWidth:12, editIconPadding:3, basicBackground:"#FFF9D7", classSuccess:"edit-success", successBackground:"#cdf7b6", classFailure:"edit-failure", failureBackground:"#ffcec5"}, 
     a.options);
-    this.Je = b.which(["number", "alphabet", "del", "backspace"]);
-    this.P()
+    this.De = b.which(["number", "alphabet", "del", "backspace"]);
+    this.N()
   }
   function g(a) {
     for(var b in a) {
       a.hasOwnProperty(b) && (this[b] = a[b])
     }
   }
-  var c = goog.H("jx.grid"), b = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.EditManager", d);
-  goog.N("jx.grid.Editor", g);
-  c.S("EditManager", d);
-  c.S("Editor", g);
-  d.Z = function(a) {
+  var c = goog.D("jx.grid"), b = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.EditManager", d);
+  goog.L("jx.grid.Editor", g);
+  c.Q("EditManager", d);
+  c.Q("Editor", g);
+  d.X = function(a) {
     return new d(a)
   };
   var a = d.prototype;
-  a.P = function() {
+  a.N = function() {
     this.bindEvents()
   };
   a.bindEvents = function() {
-    var a = {onGetColCellClass:this.Of, keydownCanvas:this.vb, onDestroy:this.J, dblclickCanvas:this.zc, onCreateDynamicCss:this.fh, "onBeforeNavigate onBeforeRefresh onBeforeSelect":this.commit, onBeforeFocusCanvas:this.notActive};
-    b.isNull(this.grid.pb) ? a.bj = this.Xd : a.Zi = this.Xd;
+    var a = {onGetColCellClass:this.If, keydownCanvas:this.sb, onDestroy:this.H, dblclickCanvas:this.wc, onCreateDynamicCss:this.Yg, "onBeforeNavigate onBeforeRefresh onBeforeSelect":this.commit, onBeforeFocusCanvas:this.notActive};
+    b.isNull(this.grid.selMgr) ? a.Vi = this.Sd : a.Si = this.Sd;
     if(this.A.deleteEnabled) {
-      a["keydownSel_" + b.keyMapKeydown.Gg] = this.Se
+      a["keydownSel_" + b.keyMapKeydown.zg] = this.Me
     }
     if(this.A.editIconEnabled) {
-      for(var f = this.grid.G.get(), c = f.length, d = 0;d < c;d++) {
-        if(b.isNotNull(f[d].Y)) {
-          a["onRenderHeader_" + f[d].key + "_prepend"] = this.yb
+      for(var f = this.grid.colDefMgr.get(), c = f.length, d = 0;d < c;d++) {
+        if(b.isNotNull(f[d].W)) {
+          a["onRenderHeader_" + f[d].key + "_prepend"] = this.vb
         }
       }
     }
     this.grid.event.bind(a, this)
   };
-  a.J = function() {
-    this.Cc();
-    c.J(this, {name:"EditManager", path:"editMgr", map:"beginEditKeys _options"})
+  a.H = function() {
+    this.zc();
+    c.H(this, {name:"EditManager", path:"editMgr", map:"beginEditKeys _options"})
   };
-  a.Xd = function() {
-    var a = "#" + this.grid.D + " .", b = this.A, c = [], d = this.grid.view.Ic();
-    c.push(this.grid.view.Ec() + "." + b.classEdit + "{background:" + b.basicBackground + "}");
+  a.Sd = function() {
+    var a = "#" + this.grid.mid + " .", b = this.A, c = [], d = this.grid.view.Fc();
+    c.push(this.grid.view.Bc() + "." + b.classEdit + "{background:" + b.basicBackground + "}");
     c.push(a + b.classEdit + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + b.basicBackground + ";height:" + d + "px;line-height:" + d + "px}");
     b.editableBgEnabled && c.push(a + b.classCellEditable + "{background:" + b.editableBg + "}");
     b.notEditableBgEnabled && c.push(a + b.classCellNotEditable + "{background:" + b.notEditableBg + "}");
@@ -4577,124 +4577,124 @@ var F = {};
     c.push(a + b.classFailure + "{background:" + b.failureBackground + "}");
     return c.join("")
   };
-  a.fh = function() {
-    for(var a = this.grid.view.Ec(), f = this.grid.view.Hc(), c = this.grid.G.get(), d = 0, g = "";d < c.length;d++) {
-      b.isNotNull(c[d].Y) && (g += a + ".k_" + c[d].key + " .basic-editor{width:" + (c[d].width - 2 * f) + "px}")
+  a.Yg = function() {
+    for(var a = this.grid.view.Bc(), f = this.grid.view.Ec(), c = this.grid.colDefMgr.get(), d = 0, g = "";d < c.length;d++) {
+      b.isNotNull(c[d].W) && (g += a + ".k_" + c[d].key + " .basic-editor{width:" + (c[d].width - 2 * f) + "px}")
     }
     return g
   };
-  a.yb = function(a) {
+  a.vb = function(a) {
     a.push("<span class='" + this.A.classEditIcon + "'></span>")
   };
-  a.Zb = function(a, b, c, d, g) {
-    this.grid.B.isReal(c) && g.push("<span class='" + this.A.classEditIcon + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.D + '.beginEdit("' + c[this.grid.B.O] + '","' + d.key + "\")'></span>")
+  a.Wb = function(a, b, c, d, g) {
+    this.grid.dataMgr.isReal(c) && g.push("<span class='" + this.A.classEditIcon + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.C + '.beginEdit("' + c[this.grid.dataMgr.M] + '","' + d.key + "\")'></span>")
   };
-  a.ki = function(a) {
+  a.di = function(a) {
     return!b.hasTagAndClass(a.target, "DIV", this.A.classEditIcon)
   };
   a.beginEdit = function(a, b) {
-    this.begin(c.create("Cell", {grid:this.grid, datarow:this.grid.B.getById(a), colDef:this.grid.G.getByKey(b)}))
+    this.begin(c.create("Cell", {grid:this.grid, datarow:this.grid.dataMgr.getById(a), colDef:this.grid.colDefMgr.getByKey(b)}))
   };
-  a.zc = function(a, b) {
+  a.wc = function(a, b) {
     b.isEdited() || this.begin(b)
   };
-  a.vb = function(a) {
-    this.active() ? a.which === b.keyMapKeydown.Jg && this.cancel() : !a.ctrlKey && !a.altKey && b.isNotNull(this.grid.pb) && (a.which === b.keyMapKeydown.Gg && this.A.deleteEnabled ? this.Re(this.grid.pb.getCell()) : this.Je[a.which] ? this.begin(this.grid.pb.getCell()) : a.which === b.keyMapKeydown.xi && (a.preventDefault(), this.begin(this.grid.pb.getCell())))
+  a.sb = function(a) {
+    this.active() ? a.which === b.keyMapKeydown.Cg && this.cancel() : !a.ctrlKey && !a.altKey && b.isNotNull(this.grid.selMgr) && (a.which === b.keyMapKeydown.zg && this.A.deleteEnabled ? this.Le(this.grid.selMgr.getCell()) : this.De[a.which] ? this.begin(this.grid.selMgr.getCell()) : a.which === b.keyMapKeydown.pi && (a.preventDefault(), this.begin(this.grid.selMgr.getCell())))
   };
   a.active = function() {
-    return b.isNotNull(this.Y)
+    return b.isNotNull(this.W)
   };
   a.notActive = function() {
-    return b.isNull(this.Y)
+    return b.isNull(this.W)
   };
-  a.tf = function(a) {
-    return this.active() && this.Y.Ya.equals(a)
+  a.nf = function(a) {
+    return this.active() && this.W.Va.equals(a)
   };
-  a.Of = function(a) {
+  a.If = function(a) {
     return b.isNotNull(a.editor) ? this.A.classCellEditable : this.A.classCellNotEditable
   };
   c.Cell.prototype.isEdited = function() {
-    return this.grid.ue.tf(this)
+    return this.grid.editMgr.nf(this)
   };
   c.Cell.prototype.setValue = function(a) {
     var f = this.getDatarow(), c = this.getKey(), d;
-    b.isNotNullAnd(f, c) && (d = this.grid.B.updateByKey(f, c, a, {noSort:!0, noFilter:!0, noRerender:!0}), d === !0 && this.grid.view.rerenderRow(f));
+    b.isNotNullAnd(f, c) && (d = this.grid.dataMgr.updateByKey(f, c, a, {noSort:!0, noFilter:!0, noRerender:!0}), d === !0 && this.grid.view.rerenderRow(f));
     return d
   };
   a.isEditable = function(a) {
-    return b.isNotNull(a) && b.isNotNull(a.getColDef().Y) && this.grid.B.isReal(a.getDatarow())
+    return b.isNotNull(a) && b.isNotNull(a.getColDef().W) && this.grid.dataMgr.isReal(a.getDatarow())
   };
   a.begin = function(a) {
     this.active() && this.commit();
     if(this.isEditable(a)) {
-      this.Y = a.getColDef().Y;
-      this.Y.Ya = a;
-      this.Y.grid = this.grid;
+      this.W = a.getColDef().W;
+      this.W.Va = a;
+      this.W.grid = this.grid;
       var b = a.getNode();
-      this.Y.before = b.innerHTML;
-      b.innerHTML = this.Y.edit(a.getValue());
+      this.W.before = b.innerHTML;
+      b.innerHTML = this.W.edit(a.getValue());
       a.get$().addClass(this.A.classEdit);
-      this.Y.focus()
+      this.W.focus()
     }
   };
   a.cancel = function() {
     if(this.active()) {
-      var a = this.Y.Ya;
-      a.getNode().innerHTML = this.Y.before;
-      this.Cc();
+      var a = this.W.Va;
+      a.getNode().innerHTML = this.W.before;
+      this.zc();
       a.get$().removeClass(this.A.classEdit);
       this.grid.view.focus()
     }
   };
-  a.Cc = function() {
-    b.isNotNull(this.Y) && (delete this.Y.grid, delete this.Y.Ya, delete this.Y.before, delete this.Y)
+  a.zc = function() {
+    b.isNotNull(this.W) && (delete this.W.grid, delete this.W.Va, delete this.W.before, delete this.W)
   };
   a.commit = function() {
-    if(!this.qe && this.active()) {
-      this.qe = !0;
-      var a = this.Y.Ya, b = this.Y.value(a.getNode()), c;
+    if(!this.le && this.active()) {
+      this.le = !0;
+      var a = this.W.Va, b = this.W.value(a.getNode()), c;
       if(b == a.getValue()) {
         this.cancel()
       }else {
         var b = a.setValue(b), d;
         c = a.get$();
-        b instanceof Error ? (this.cancel(), d = this.A.classFailure) : (this.Cc(), this.grid.view.focus(), d = this.A.classSuccess, this.grid.printMessage("Successfully Updated."));
+        b instanceof Error ? (this.cancel(), d = this.A.classFailure) : (this.zc(), this.grid.view.focus(), d = this.A.classSuccess, this.grid.printMessage("Successfully Updated."));
         c.addClass(d);
         setTimeout(function() {
           c.removeClass(d)
         }, 1E3)
       }
       a.get$().removeClass(this.A.classEdit);
-      this.qe = !1
+      this.le = !1
     }
   };
-  a.Re = function(a) {
+  a.Le = function(a) {
     if(!this.active() && this.isEditable(a)) {
       var b = a.getColDef();
       a.getValue() !== b.defaultValue && a.setValue(b.defaultValue)
     }
   };
-  a.Se = function(a, f, c) {
+  a.Me = function(a, f, c) {
     if(!this.active()) {
       var a = {}, f = {}, d = [], g, l, m, k, o, n, q;
       a:for(g in c) {
         if(c.hasOwnProperty(g) && g !== "length") {
           for(q in k = m = l = s, n = c[g], n) {
             if(n.hasOwnProperty(q) && !(q === "length" || f.hasOwnProperty(q))) {
-              o = n[q].Ya;
+              o = n[q].Va;
               if(b.isNull(l) && (l = o.getColDef(), m = l.defaultValue, k = l.key, b.isNull(l.editor))) {
                 continue a
               }
-              o = b.isNotNull(a[q]) ? a[q].Dg : o.getDatarow();
-              this.grid.B.isReal(o) ? m !== o[k] && (b.isNull(a[q]) && (a[q] = {datarow:o, change:{}}, d.push(a[q])), a[q].change[k] = m) : f[q] = !0
+              o = b.isNotNull(a[q]) ? a[q].wg : o.getDatarow();
+              this.grid.dataMgr.isReal(o) ? m !== o[k] && (b.isNull(a[q]) && (a[q] = {datarow:o, change:{}}, d.push(a[q])), a[q].change[k] = m) : f[q] = !0
             }
           }
         }
       }
-      d.length !== 0 && this.grid.B.updateList(d)
+      d.length !== 0 && this.grid.dataMgr.updateList(d)
     }
   };
-  g.Z = function(a) {
+  g.X = function(a) {
     return new g(a)
   };
   a = g.prototype;
@@ -4702,7 +4702,7 @@ var F = {};
     return"<input type='text' class='basic-editor' value='" + b.ifNull(a, "") + "' style='position:relative'/>"
   };
   a.focus = function() {
-    var a = this.Ya.getNode().childNodes[0];
+    var a = this.Va.getNode().childNodes[0];
     if(b.isFunction(a.setActive)) {
       try {
         a.setActive()
@@ -4710,13 +4710,13 @@ var F = {};
       }
     }
     a.focus();
-    document.activeElement !== a && this.Ya.get$().children(":eq(0)").focus()
+    document.activeElement !== a && this.Va.get$().children(":eq(0)").focus()
   };
   a.value = function(a) {
     return a.childNodes[0].value
   };
   a.path = function() {
-    return"JGM.m.Editor." + this.D
+    return"JGM.m.Editor." + this.C
   };
   g.numberKeys = b.which(["number", "del", "backspace"]);
   g.isNumberKey = function(a) {
@@ -4745,29 +4745,29 @@ var F = {};
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
-    this.I = A.safe$(a.container);
+    this.C = a.C;
+    this.G = A.safe$(a.container);
     this.grid = a.grid;
-    this.A = g.da({title:"Print Preview", font:"15px arial,sans-serif", headerFontColor:"#27413E", headerBackgroundColor:"#DCDEDE", tableBorderColor:"#6E7174", headerBorderColor:"#909192", cellBorderColor:"#D0D7E5", winOptions:{name:"Print Preview", width:800, height:600, directories:"no", location:"no", menubar:"no", status:"no", toolbar:"no"}}, a.options);
-    this.P()
+    this.A = g.ba({title:"Print Preview", font:"15px arial,sans-serif", headerFontColor:"#27413E", headerBackgroundColor:"#DCDEDE", tableBorderColor:"#6E7174", headerBorderColor:"#909192", cellBorderColor:"#D0D7E5", winOptions:{name:"Print Preview", width:800, height:600, directories:"no", location:"no", menubar:"no", status:"no", toolbar:"no"}}, a.options);
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.PrintManager", d);
-  g.S("PrintManager", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.PrintManager", d);
+  g.Q("PrintManager", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function() {
+  b.N = function() {
     var a = this;
-    this.I[0].innerHTML = "<button type='button'>Print</button>";
-    this.I.click(function() {
+    this.G[0].innerHTML = "<button type='button'>Print</button>";
+    this.G.click(function() {
       a.print()
     })
   };
   b.print = function() {
-    var a = this.getPrintHtml(this.grid.G.get(), this.grid.B.W), b = c.open(this.A.winOptions);
+    var a = this.getPrintHtml(this.grid.colDefMgr.get(), this.grid.dataMgr.U), b = c.open(this.A.winOptions);
     b.document.write(a);
     b.document.close()
   };
@@ -4809,47 +4809,47 @@ var F = {};
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
-    this.I = a.container;
+    this.C = a.C;
+    this.G = a.container;
     this.grid = a.grid;
-    this.grid.md = this;
-    this.A = g.da({reorderEnabled:!1, reorderSyncEnabled:!0, background:"url(" + this.grid.A.imageUrl + "column-headers-bg.png) repeat-x scroll center", backgroundHover:"url(" + this.grid.A.imageUrl + "column-headers-over-bg.png) repeat-x scroll center", backgroundPlaceholder:"#646464", sortBackground:this.grid.A.imageUrl + "sort.png", sortRight:4, sortWidth:7, sortBackgroundAsc:this.grid.A.imageUrl + "sort-asc.png", sortBackgroundDesc:this.grid.A.imageUrl + "sort-desc.png", font:"15px Arial,Helvetica,sans-serif", 
-    height:21, borderThickness:1, border:"solid #909192", classHeaderMask:"jgrid-header-mask", classHeader:"jgrid-header", classColHeader:"jgrid-colheader", classColHeaderActive:"jgrid-colheader-active", classColHeaderPlaceholder:"jgrid-colheader-placeholder", classInteractive:"interactive", classColHeaderSorted:"jgrid-colheader-sorted", classSort:"jgrid-sort", classSortAsc:"jgrid-sort-asc", classSortDesc:"jgrid-sort-desc", classResizeHandle:"jgrid-resize-handle", resizeHandleWidth:11, style:"", 
-    headerStyle:"", scrollerLeft:1E4, scrollerWidth:1E5, classResizeGuide:"resize-guide", resizeGuideWidth:1, resizeBackground:"black;filter:alpha(opacity=40);opacity:0.4", syncResize:!1, resizeHandleBackground:"black;filter:alpha(opacity=5);opacity:0.05"}, a.options);
-    this.U = {};
-    this.ib = {};
-    this.P()
+    this.grid.header = this;
+    this.A = g.ba({reorderEnabled:!1, reorderSyncEnabled:!0, background:"url(" + this.grid._options.imageUrl + "column-headers-bg.png) repeat-x scroll center", backgroundHover:"url(" + this.grid._options.imageUrl + "column-headers-over-bg.png) repeat-x scroll center", backgroundPlaceholder:"#646464", sortBackground:this.grid._options.imageUrl + "sort.png", sortRight:4, sortWidth:7, sortBackgroundAsc:this.grid._options.imageUrl + "sort-asc.png", sortBackgroundDesc:this.grid._options.imageUrl + "sort-desc.png", 
+    font:"15px Arial,Helvetica,sans-serif", height:21, borderThickness:1, border:"solid #909192", classHeaderMask:"jgrid-header-mask", classHeader:"jgrid-header", classColHeader:"jgrid-colheader", classColHeaderActive:"jgrid-colheader-active", classColHeaderPlaceholder:"jgrid-colheader-placeholder", classInteractive:"interactive", classColHeaderSorted:"jgrid-colheader-sorted", classSort:"jgrid-sort", classSortAsc:"jgrid-sort-asc", classSortDesc:"jgrid-sort-desc", classResizeHandle:"jgrid-resize-handle", 
+    resizeHandleWidth:11, style:"", headerStyle:"", scrollerLeft:1E4, scrollerWidth:1E5, classResizeGuide:"resize-guide", resizeGuideWidth:1, resizeBackground:"black;filter:alpha(opacity=40);opacity:0.4", syncResize:!1, resizeHandleBackground:"black;filter:alpha(opacity=5);opacity:0.05"}, a.options);
+    this.R = {};
+    this.gb = {};
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.ColumnHeader", d);
-  g.S("ColHeader", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.ColumnHeader", d);
+  g.Q("ColHeader", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function() {
-    this.K = $("<div class='" + this.A.classHeaderMask + "'>").prependTo(this.I);
-    this.Ka = $("<div class='" + this.A.classHeader + "'>").appendTo(this.K);
-    d.Xe(this.Ka);
+  b.N = function() {
+    this.I = $("<div class='" + this.A.classHeaderMask + "'>").prependTo(this.G);
+    this.Ha = $("<div class='" + this.A.classHeader + "'>").appendTo(this.I);
+    d.Re(this.Ha);
     this.bindEvents()
   };
   b.bindEvents = function() {
-    var a, b = this.grid.G.get(), f = b.length, d = 0;
-    for(a = {onRenderModules:this.zb, onAfterRenderModules:this.Uc, onCreateCss:this.aa, onDestroy:this.J, mousedown:this.wb, mouseup:this.La, dragmove:this.Ye, onScrollViewportH:this.Sf, onScrollViewportV:this.Tf, onChangeSorter:this.Hf, click:this.sb, onResizeCol:this.ng};d < f;d++) {
+    var a, b = this.grid.colDefMgr.get(), f = b.length, d = 0;
+    for(a = {onRenderModules:this.wb, onAfterRenderModules:this.Rc, onCreateCss:this.Y, onDestroy:this.H, mousedown:this.tb, mouseup:this.Ia, dragmove:this.Se, onScrollViewportH:this.Mf, onScrollViewportV:this.Nf, onChangeSorter:this.Bf, click:this.pb, onResizeCol:this.gg};d < f;d++) {
       if(c.isNotNull(b[d].sorter)) {
-        a["clickHeader_" + b[d].key] = this.hc
+        a["clickHeader_" + b[d].key] = this.ec
       }
     }
     this.grid.event.bind(a, this)
   };
-  b.J = function() {
-    this.Ka.sortable && this.Ka.sortable("destroy");
-    this.Ve();
-    g.J(this, {name:"ColHeader", path:"header", $:"resizeGuide _mask _head", Aa:"ctnr _resizeMap", map:"map _options"})
+  b.H = function() {
+    this.Ha.sortable && this.Ha.sortable("destroy");
+    this.Pe();
+    g.H(this, {name:"ColHeader", path:"header", $:"resizeGuide _mask _head", ya:"ctnr _resizeMap", map:"map _options"})
   };
-  b.aa = function() {
-    var a = "#" + this.grid.D + " .", b = this.A, f = b.borderThickness + "px " + b.border, c = [], d = this.grid.G.get(), g = d.length, l = 0;
+  b.Y = function() {
+    var a = "#" + this.grid.mid + " .", b = this.A, f = b.borderThickness + "px " + b.border, c = [], d = this.grid.colDefMgr.get(), g = d.length, l = 0;
     c.push(a + b.classHeaderMask + "{position:relative;overflow:hidden;width:100%;font:" + b.font + ";background:" + b.background + ";border-bottom:" + f + ";" + b.style + "}");
     c.push(a + b.classHeader + "{position:relative;overflow:hidden;white-space:nowrap;cursor:default;left:" + -b.scrollerLeft + "px;width:" + b.scrollerWidth + "px;line-height:" + b.height + "px}");
     c.push(a + b.classColHeader + "{position:relative;overflow:hidden;float:left;text-overflow:ellipsis;text-align:center;height:" + b.height + "px;left:" + (b.scrollerLeft - this.grid.view.getScrollLeft()) + "px;border-right:" + f + ";" + b.headerStyle + "}");
@@ -4861,34 +4861,34 @@ var F = {};
     c.push(a + b.classSortDesc + "{background:url(" + b.sortBackgroundDesc + ") no-repeat center transparent}");
     c.push(a + b.classResizeHandle + "{z-index:10;background:" + b.resizeHandleBackground + ";cursor:e-resize;position:absolute;height:" + b.height + "px;width:" + b.resizeHandleWidth + "px}");
     for(c.push(a + b.classResizeGuide + "{z-index:10;position:absolute;background:" + b.resizeBackground + ";width:" + b.resizeGuideWidth + "px}");l < g;l++) {
-      c.push(a + b.classColHeader + "#" + this.D + "h" + d[l].key + "{" + d[l].Rg + "}")
+      c.push(a + b.classColHeader + "#" + this.C + "h" + d[l].key + "{" + d[l].Jg + "}")
     }
     return c.join("")
   };
-  b.fd = function() {
+  b.cd = function() {
     return this.A.borderThickness
   };
-  b.Sf = function(a) {
-    this.Ka[0].style.left = -this.A.scrollerLeft - a + "px"
+  b.Mf = function(a) {
+    this.Ha[0].style.left = -this.A.scrollerLeft - a + "px"
   };
-  b.zb = function() {
-    for(var a = this.grid.G.get(), b = a.length, f = 0, c, d = [];f < b;f++) {
-      (c = a[f]).hidden || this.Cb(d, c, f)
+  b.wb = function() {
+    for(var a = this.grid.colDefMgr.get(), b = a.length, f = 0, c, d = [];f < b;f++) {
+      (c = a[f]).hidden || this.zb(d, c, f)
     }
-    this.Ka[0].innerHTML = d.join("");
+    this.Ha[0].innerHTML = d.join("");
     this.grid.event.trigger("onRenderHeadersComplete")
   };
-  b.Uc = function() {
-    this.A.reorderEnabled && this.qf();
-    this.rf();
-    this.Va = $("<div class='" + this.A.classResizeGuide + "'>").appendTo(this.grid.view.K);
-    this.Va[0].style.top = "0px";
-    this.Va[0].style.height = "0px"
+  b.Rc = function() {
+    this.A.reorderEnabled && this.kf();
+    this.lf();
+    this.Sa = $("<div class='" + this.A.classResizeGuide + "'>").appendTo(this.grid.view.I);
+    this.Sa[0].style.top = "0px";
+    this.Sa[0].style.height = "0px"
   };
-  b.Cb = function(a, b, f) {
+  b.zb = function(a, b, f) {
     if(!c.isNull(b)) {
-      var d = b.noName ? "" : b.name || b.key, g = this.fd();
-      a.push("<div id='" + this.D + "h" + b.key + "' class='" + this.A.classColHeader + " " + (this.A.reorderEnabled || c.isNotNull(b.sorter) ? " " + this.A.classInteractive : "") + "' " + (b.noTitle ? "" : "title='" + (b.title || d) + "' ") + "style='width:" + (this.grid.view.ff(f) - g) + "px;' colKey='" + b.key + "'>");
+      var d = b.noName ? "" : b.name || b.key, g = this.cd();
+      a.push("<div id='" + this.C + "h" + b.key + "' class='" + this.A.classColHeader + " " + (this.A.reorderEnabled || c.isNotNull(b.sorter) ? " " + this.A.classInteractive : "") + "' " + (b.noTitle ? "" : "title='" + (b.title || d) + "' ") + "style='width:" + (this.grid.view.$e(f) - g) + "px;' colKey='" + b.key + "'>");
       this.grid.event.trigger("onRenderHeader_" + b.key + "_prepend", [a]);
       a.push(d);
       this.grid.event.trigger("onRenderHeader_" + b.key + "_append", [a]);
@@ -4896,128 +4896,128 @@ var F = {};
       a.push("</div>")
     }
   };
-  d.Xe = function(a) {
+  d.Re = function(a) {
     A.safe$(a).attr("unselectable", "on").css("MozUserSelect", "none").bind("selectstart.ui", function() {
       return!1
     })
   };
   b.get = function(a) {
-    if(this.U.hasOwnProperty(a)) {
-      return this.U[a]
+    if(this.R.hasOwnProperty(a)) {
+      return this.R[a]
     }
-    var b = document.getElementById(this.D + "h" + a);
-    return c.isNull(b) ? $([]) : this.U[a] = $(b)
+    var b = document.getElementById(this.C + "h" + a);
+    return c.isNull(b) ? $([]) : this.R[a] = $(b)
   };
-  b.fe = function(a, b) {
+  b.ae = function(a, b) {
     var f = this.get(a);
     if(f.length !== 0) {
       var c = this.A, d = f.find("." + c.classSort);
       b === 0 ? (f.removeClass(c.classColHeaderSorted), d.removeClass(c.classSortAsc + " " + c.classSortDesc)) : (f.addClass(c.classColHeaderSorted), b === 1 ? d.addClass(c.classSortAsc).removeClass(c.classSortDesc) : b === 2 && d.addClass(c.classSortDesc).removeClass(c.classSortAsc))
     }
   };
-  b.Ed = function(a) {
-    return A.safe$(a).closest("div." + this.A.classColHeader, this.Ka)
+  b.zd = function(a) {
+    return A.safe$(a).closest("div." + this.A.classColHeader, this.Ha)
   };
-  b.Kd = function(a) {
-    return this.grid.G.getByKey(a.attr("colKey"))
+  b.Fd = function(a) {
+    return this.grid.colDefMgr.getByKey(a.attr("colKey"))
   };
-  b.hc = function(a, b, f) {
+  b.ec = function(a, b, f) {
     a = f.sorter;
     if(!c.isNull(a)) {
-      this.grid.event.trigger("onBeforeColSort_" + f.key + " onBeforeColSort"), a.ic = a.ic === !1 ? !0 : !1, this.grid.B.refresh({sorter:a}), this.grid.view.be()
+      this.grid.event.trigger("onBeforeColSort_" + f.key + " onBeforeColSort"), a.fc = a.fc === !1 ? !0 : !1, this.grid.dataMgr.refresh({sorter:a}), this.grid.view.Xd()
     }
   };
-  b.Hf = function(a, b) {
-    a !== b && c.isNotNull(a) && this.fe(a.key, 0);
-    c.isNotNull(b) && this.fe(b.key, b.ic ? 2 : 1)
+  b.Bf = function(a, b) {
+    a !== b && c.isNotNull(a) && this.ae(a.key, 0);
+    c.isNotNull(b) && this.ae(b.key, b.fc ? 2 : 1)
   };
-  b.qf = function() {
+  b.kf = function() {
     function a(a, b) {
       for(var e = $(d).sortable("toArray"), f = e.length, n, q = 0;q < f;q++) {
         n = e[q], e[q] = n === "" ? b.item.attr("id").substring(g) : n.substring(g)
       }
       c.sortByKey(e)
     }
-    var b = this, f = this.A, c = this.grid.G, d = this.Ka, g = this.D.length + 1;
+    var b = this, f = this.A, c = this.grid.colDefMgr, d = this.Ha, g = this.C.length + 1;
     d.sortable({items:"." + f.classColHeader, axis:"x", forcePlaceholderSize:!0, placeholder:f.classColHeaderPlaceholder + " " + f.classColHeader, tolerance:"pointer", start:function(a, f) {
       f.item.addClass(b.A.classColHeaderActive)
     }, stop:function(a, f) {
       f.item.removeClass(b.A.classColHeaderActive);
-      b.de()
+      b.Zd()
     }, update:a});
     f.reorderSyncEnabled && d.sortable("option", "change", a)
   };
-  b.Ld = function(a, b) {
-    var f = a.clientX - this.$c, d = b.minW, g = c.ifNull(b.maxW, Number.MAX_VALUE), j = this.dc;
+  b.Gd = function(a, b) {
+    var f = a.clientX - this.Xc, d = b.minW, g = c.ifNull(b.maxW, Number.MAX_VALUE), j = this.ac;
     j + f < d && (f = d - j);
     j + f > g && (f = g - j);
     return f
   };
-  b.sb = function(a) {
-    var b = this.Ed(a.target);
+  b.pb = function(a) {
+    var b = this.zd(a.target);
     if(b.length !== 0) {
-      var f = this.Kd(b);
+      var f = this.Fd(b);
       this.grid.event.triggerInvalid("clickHeaderValid_" + f.key, [a, b, f]) || this.grid.event.trigger("clickHeader_" + f.key + " clickHeader", [a, b, f])
     }
   };
-  b.wb = function(a) {
+  b.tb = function(a) {
     if(c.hasTagAndClass(a.target, "DIV", this.A.classResizeHandle)) {
-      this.oa = a.target.getAttribute("key"), this.dc = this.get(this.oa)[0].clientWidth, this.cc = this.grid.G.getByKey(this.oa).width, this.$c = a.clientX, this.Db = this.ib[this.oa][0].offsetLeft, this.Va[0].style.left = Math.floor(this.Db + (this.A.resizeHandleWidth - this.A.resizeGuideWidth) / 2 - this.A.scrollerLeft) + "px", this.Va[0].style.height = this.grid.view.getInnerHeight() + "px"
+      this.ma = a.target.getAttribute("key"), this.ac = this.get(this.ma)[0].clientWidth, this.$b = this.grid.colDefMgr.getByKey(this.ma).width, this.Xc = a.clientX, this.Ab = this.gb[this.ma][0].offsetLeft, this.Sa[0].style.left = Math.floor(this.Ab + (this.A.resizeHandleWidth - this.A.resizeGuideWidth) / 2 - this.A.scrollerLeft) + "px", this.Sa[0].style.height = this.grid.view.getInnerHeight() + "px"
     }else {
-      var b = this.Ed(a.target);
+      var b = this.zd(a.target);
       if(b.length !== 0) {
         this.grid.event.trigger("mousedownHeader", [a, b]);
-        var f = this.Kd(b);
+        var f = this.Fd(b);
         this.grid.event.trigger("mousedownHeader_" + f.key, [a, b, f])
       }
     }
   };
-  b.Ye = function(a) {
-    if(!c.isNull(this.oa) && (a = this.Ld(a, this.grid.G.getByKey(this.oa)), !(Math.abs(a) < 1))) {
-      this.get(this.oa)[0].style.width = this.dc + a + "px", this.Cf(this.Db + a - this.ib[this.oa][0].offsetLeft, this.grid.G.getIdxByKey(this.oa)), this.Va[0].style.left = Math.floor(this.Db + a + (this.A.resizeHandleWidth - this.A.resizeGuideWidth) / 2 - this.A.scrollerLeft) + "px", this.A.syncResize && this.grid.view.setWidthByKey(this.oa, this.cc + a)
+  b.Se = function(a) {
+    if(!c.isNull(this.ma) && (a = this.Gd(a, this.grid.colDefMgr.getByKey(this.ma)), !(Math.abs(a) < 1))) {
+      this.get(this.ma)[0].style.width = this.ac + a + "px", this.wf(this.Ab + a - this.gb[this.ma][0].offsetLeft, this.grid.colDefMgr.getIdxByKey(this.ma)), this.Sa[0].style.left = Math.floor(this.Ab + a + (this.A.resizeHandleWidth - this.A.resizeGuideWidth) / 2 - this.A.scrollerLeft) + "px", this.A.syncResize && this.grid.view.setWidthByKey(this.ma, this.$b + a)
     }
   };
-  b.La = function(a) {
-    if(!c.isNull(this.oa)) {
-      this.Va[0].style.height = "0px", a = this.Ld(a, this.grid.G.getByKey(this.oa)), Math.abs(a) >= 1 && this.grid.view.setWidthByKey(this.oa, this.cc + a), delete this.oa, delete this.$c, delete this.Db, delete this.dc, delete this.cc
+  b.Ia = function(a) {
+    if(!c.isNull(this.ma)) {
+      this.Sa[0].style.height = "0px", a = this.Gd(a, this.grid.colDefMgr.getByKey(this.ma)), Math.abs(a) >= 1 && this.grid.view.setWidthByKey(this.ma, this.$b + a), delete this.ma, delete this.Xc, delete this.Ab, delete this.ac, delete this.$b
     }
   };
-  b.ng = function(a, b) {
-    this.get(a)[0].style.width = b + this.grid.view.Fd() - this.fd() + "px";
-    this.de(this.grid.G.getIdxByKey(a))
+  b.gg = function(a, b) {
+    this.get(a)[0].style.width = b + this.grid.view.Ad() - this.cd() + "px";
+    this.Zd(this.grid.colDefMgr.getIdxByKey(a))
   };
-  b.de = function(a) {
+  b.Zd = function(a) {
     c.isNull(a) && (a = 0);
-    for(var b = this.grid.view.ma, f = this.grid.G.get(), d = f.length, g = this.ib, j;a < d;a++) {
+    for(var b = this.grid.view.ka, f = this.grid.colDefMgr.get(), d = f.length, g = this.gb, j;a < d;a++) {
       if(j = f[a].key, g.hasOwnProperty(j)) {
-        g[j][0].style.left = b[a + 1] + this.gg + "px"
+        g[j][0].style.left = b[a + 1] + this.$f + "px"
       }
     }
   };
-  b.Cf = function(a, b) {
+  b.wf = function(a, b) {
     c.isNull(b) && (b = 0);
-    for(var f = this.grid.G.get(), d = f.length, g = this.ib, j;b < d;b++) {
+    for(var f = this.grid.colDefMgr.get(), d = f.length, g = this.gb, j;b < d;b++) {
       if(j = f[b].key, g.hasOwnProperty(j)) {
         j = g[j][0], j.style.left = j.offsetLeft + a + "px"
       }
     }
   };
-  b.Tf = function() {
-    this.Va[0].style.top = this.grid.view.getScrollTop() + "px"
+  b.Nf = function() {
+    this.Sa[0].style.top = this.grid.view.getScrollTop() + "px"
   };
-  b.Ve = function() {
-    var a = this.ib, b;
+  b.Pe = function() {
+    var a = this.gb, b;
     for(b in a) {
       a.hasOwnProperty(b) && (a[b].remove(), delete a[b])
     }
-    delete this.oa;
-    delete this.$c;
-    delete this.Db;
-    delete this.dc;
-    delete this.cc
+    delete this.ma;
+    delete this.Xc;
+    delete this.Ab;
+    delete this.ac;
+    delete this.$b
   };
-  b.rf = function() {
-    for(var a = this.grid.G.get(), b = a.length, f = this.grid.view.ma, c = this.A, d = this.ib, g, l = 0, m = this.gg = Math.floor(c.scrollerLeft - c.resizeHandleWidth / 2), k = this.grid.view.D, o = c.classResizeHandle, n = this.Ka;l < b;l++) {
+  b.lf = function() {
+    for(var a = this.grid.colDefMgr.get(), b = a.length, f = this.grid.view.ka, c = this.A, d = this.gb, g, l = 0, m = this.$f = Math.floor(c.scrollerLeft - c.resizeHandleWidth / 2), k = this.grid.view.C, o = c.classResizeHandle, n = this.Ha;l < b;l++) {
       if(c = a[l], c.resizable) {
         g = c.key, d[g] = $("<div class='" + o + "' key='" + g + "' ondblclick='JGM.m.ViewportManager." + k + '._autoColWidth("' + g + "\")' style='left:" + (m + f[l + 1]) + "px' title='" + c.name + " 컬럼의 폭을 조절합니다.'>").appendTo(n)
       }
@@ -5026,56 +5026,56 @@ var F = {};
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
+    this.C = a.C;
     this.grid = a.grid;
-    this.A = g.da({colDef:{key:"checkbox", width:20, name:" ", noTitle:!0, resizable:!1, sorter:t, filter:t, noSearch:!0, editor:t, inputOnCreate:!1}, colIdx:0, name:s, classCheck:"checkmg", classMasterCheck:"checkm", master:!0, isRadio:!1}, a.options);
+    this.A = g.ba({colDef:{key:"checkbox", width:20, name:" ", noTitle:!0, resizable:!1, sorter:t, filter:t, noSearch:!0, editor:t, inputOnCreate:!1}, colIdx:0, name:s, classCheck:"checkmg", classMasterCheck:"checkm", master:!0, isRadio:!1}, a.options);
     if(this.A.isRadio) {
-      c.isNull(this.A.name) && (this.A.name = "radio" + this.D), this.A.master = !1
+      c.isNull(this.A.name) && (this.A.name = "radio" + this.C), this.A.master = !1
     }
-    this.U = {};
-    this.mb = {};
-    this.Pa = 0;
-    this.ab = !1;
-    this.P()
+    this.R = {};
+    this.kb = {};
+    this.Ma = 0;
+    this.Za = !1;
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.CheckManager", d);
-  g.S("CheckManager", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.CheckManager", d);
+  g.Q("CheckManager", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function() {
-    var a = this.A, b = g.Ba;
-    this.grid.G.getByKey(a.colDef.key) === s && this.grid.G.addAt(a.colIdx, a.colDef);
-    if(c.isNull(b.xc)) {
-      a = c.calCheckSize(), b.xc = a.xg, b.Dd = a.wg, b.Zd = a.oh, b.Yd = a.nh
+  b.N = function() {
+    var a = this.A, b = g.za;
+    this.grid.colDefMgr.getByKey(a.colDef.key) === s && this.grid.colDefMgr.addAt(a.colIdx, a.colDef);
+    if(c.isNull(b.uc)) {
+      a = c.calCheckSize(), b.uc = a.qg, b.yd = a.pg, b.Ud = a.hh, b.Td = a.gh
     }
     this.bindEvents()
   };
   b.bindEvents = function() {
     var a = this.A, b = a.colDef.key, f;
-    f = {onCreateCss:this.aa, onDestroy:this.J, onAfterSetDatalist:this.uncheckAll, onIdChange:this.Pf, onIdListChange:this.Qf, onRemoveDatarow:this.Ta, onRemoveDatalist:this.hb};
-    f["onRenderCell_" + b + "_prepend"] = this.Zb;
-    f["keydownColSel_" + b + "_" + c.keyMapKeydown.rd] = this.Lc;
+    f = {onCreateCss:this.Y, onDestroy:this.H, onAfterSetDatalist:this.uncheckAll, onIdChange:this.Jf, onIdListChange:this.Kf, onRemoveDatarow:this.Qa, onRemoveDatalist:this.fb};
+    f["onRenderCell_" + b + "_prepend"] = this.Wb;
+    f["keydownColSel_" + b + "_" + c.keyMapKeydown.md] = this.Ic;
     if(a.master) {
-      f["onRenderHeader_" + b + "_prepend"] = this.yb, f.cj = this.Gc
+      f["onRenderHeader_" + b + "_prepend"] = this.vb, f.Wi = this.Dc
     }
     this.grid.event.bind(f, this)
   };
-  b.J = function() {
-    g.J(this, {name:"CheckManager", path:"checkMgr", $:"master", Aa:"count _disabled", map:"map _options"})
+  b.H = function() {
+    g.H(this, {name:"CheckManager", path:"checkMgr", $:"master", ya:"count _disabled", map:"map _options"})
   };
-  b.aa = function() {
+  b.Y = function() {
     var a, b, f;
-    this.A.isRadio ? (a = g.Ba.Zd, b = g.Ba.Yd) : (a = g.Ba.xc, b = g.Ba.Dd);
+    this.A.isRadio ? (a = g.za.Ud, b = g.za.Td) : (a = g.za.uc, b = g.za.yd);
     f = "*overflow:hidden;padding:0;width:" + a + "px;height:" + b + "px;";
-    return this.grid.view.Ec() + " ." + this.A.classCheck + "[mid='" + this.D + "']{" + f + "margin:" + (this.grid.view.Ic() - b) / 2 + "px 0 0 " + (this.A.colDef.width - this.grid.view.Hc() - a) / 2 + "px}#" + this.D + "h{" + f + "margin:" + (this.grid.md.A.height - b) / 2 + "px 0 0 0}"
+    return this.grid.view.Bc() + " ." + this.A.classCheck + "[mid='" + this.C + "']{" + f + "margin:" + (this.grid.view.Fc() - b) / 2 + "px 0 0 " + (this.A.colDef.width - this.grid.view.Ec() - a) / 2 + "px}#" + this.C + "h{" + f + "margin:" + (this.grid.header.A.height - b) / 2 + "px 0 0 0}"
   };
   b.checkList = function(a, b) {
     if(!b) {
-      a = this.grid.B.mapList(a).ze
+      a = this.grid.dataMgr.mapList(a).ue
     }
     for(var f = 0, c = a.length;f < c;f++) {
       this.check(a[f], !0)
@@ -5086,155 +5086,155 @@ var F = {};
     this.checkList(a, b)
   };
   b.getCheckList = function() {
-    return c.toArray(this.U)
+    return c.toArray(this.R)
   };
   b.getDisableds = function() {
-    return c.toArray(this.mb)
+    return c.toArray(this.kb)
   };
   b.toggleCheckAll = function() {
     this.isCheckedAll() ? this.uncheckAll() : this.checkAll()
   };
   b.checkAll = function() {
-    this.A.master && d.rb(this.ua);
-    d.rb(this.getCheckboxes());
-    for(var a = this.grid.B.all, b = a.length, f = this.grid.B.O, c = this.U, g = 0;g < b;g++) {
+    this.A.master && d.ob(this.sa);
+    d.ob(this.getCheckboxes());
+    for(var a = this.grid.dataMgr.all, b = a.length, f = this.grid.dataMgr.M, c = this.R, g = 0;g < b;g++) {
       c[a[g][f]] = a[g]
     }
-    this.Pa = b
+    this.Ma = b
   };
   b.uncheckAll = function() {
-    this.A.master && d.lb(this.ua);
-    d.lb(this.getCheckboxes());
-    this.U = {};
-    this.Pa = 0
+    this.A.master && d.jb(this.sa);
+    d.jb(this.getCheckboxes());
+    this.R = {};
+    this.Ma = 0
   };
   b.toggleCheck = function(a, b) {
-    b || (a = this.grid.B.map(a));
+    b || (a = this.grid.dataMgr.map(a));
     this.isChecked(a, !0) && !this.A.isRadio ? this.uncheck(a, !0) : this.check(a, !0)
   };
   b.toggleDisable = function(a, b) {
-    b || (a = this.grid.B.map(a));
+    b || (a = this.grid.dataMgr.map(a));
     this.isDisabled(a, !0) ? this.enable(a, !0) : this.disable(a, !0)
   };
   b.toggleById = function(a) {
-    this.toggleCheck(this.grid.B.getById(a), !0)
+    this.toggleCheck(this.grid.dataMgr.getById(a), !0)
   };
   b.check = function(a, b) {
-    b || (a = this.grid.B.map(a));
-    this.S(a) && (d.rb(this.getCheckbox(a)), this.ge(), this.grid.event.trigger("onCheckChange", [a, !0]))
+    b || (a = this.grid.dataMgr.map(a));
+    this.Q(a) && (d.ob(this.getCheckbox(a)), this.be(), this.grid.event.trigger("onCheckChange", [a, !0]))
   };
   b.uncheck = function(a, b) {
-    b || (a = this.grid.B.map(a));
-    this.Da(a) && (d.lb(this.getCheckbox(a)), this.A.master && d.lb(this.ua), this.grid.event.trigger("onCheckChange", [a, !1]))
+    b || (a = this.grid.dataMgr.map(a));
+    this.Ba(a) && (d.jb(this.getCheckbox(a)), this.A.master && d.jb(this.sa), this.grid.event.trigger("onCheckChange", [a, !1]))
   };
   b.disable = function(a, b) {
-    var f = this.grid.B;
+    var f = this.grid.dataMgr;
     b || (a = f.map(a));
-    var f = f.getId(a), c = this.mb;
-    c.hasOwnProperty(f) || (c[f] = a, d.Hg(this.getCheckbox(a)), this.grid.event.trigger("onDisableCheck", [a]))
+    var f = f.getId(a), c = this.kb;
+    c.hasOwnProperty(f) || (c[f] = a, d.Ag(this.getCheckbox(a)), this.grid.event.trigger("onDisableCheck", [a]))
   };
   b.enable = function(a, b) {
-    var f = this.grid.B;
-    b || (a = this.grid.B.map(a));
-    var f = f.getId(a), c = this.mb;
-    c.hasOwnProperty(f) && (delete c[f], d.Ig(this.getCheckbox(a)), this.grid.event.trigger("onEnableCheck", [a]))
+    var f = this.grid.dataMgr;
+    b || (a = this.grid.dataMgr.map(a));
+    var f = f.getId(a), c = this.kb;
+    c.hasOwnProperty(f) && (delete c[f], d.Bg(this.getCheckbox(a)), this.grid.event.trigger("onEnableCheck", [a]))
   };
-  b.ge = function() {
-    this.A.master && d.lg(this.ua, this.isCheckedAll())
+  b.be = function() {
+    this.A.master && d.eg(this.sa, this.isCheckedAll())
   };
-  b.S = function(a) {
-    var b = a[this.grid.B.O];
-    if(this.U.hasOwnProperty(b)) {
+  b.Q = function(a) {
+    var b = a[this.grid.dataMgr.M];
+    if(this.R.hasOwnProperty(b)) {
       return!1
     }
     if(this.A.isRadio === !0) {
-      this.U = {}, this.Pa = 0
+      this.R = {}, this.Ma = 0
     }
-    this.U[b] = a;
-    this.Pa++;
+    this.R[b] = a;
+    this.Ma++;
     return!0
   };
-  b.Da = function(a) {
-    var a = a[this.grid.B.O], b = this.U;
+  b.Ba = function(a) {
+    var a = a[this.grid.dataMgr.M], b = this.R;
     if(!b.hasOwnProperty(a)) {
       return!1
     }
     delete b[a];
-    this.Pa--;
+    this.Ma--;
     return!0
   };
   b.isChecked = function(a, b) {
-    var f = this.grid.B;
+    var f = this.grid.dataMgr;
     b || (a = f.map(a));
-    return this.U.hasOwnProperty(f.getId(a))
+    return this.R.hasOwnProperty(f.getId(a))
   };
   b.isDisabled = function(a, b) {
-    var f = this.grid.B;
+    var f = this.grid.dataMgr;
     b || (a = f.map(a));
-    return this.mb.hasOwnProperty(f.getId(a))
+    return this.kb.hasOwnProperty(f.getId(a))
   };
   b.splitChecked = function(a, b) {
     if(!b) {
-      a = this.grid.B.mapList(a).ze
+      a = this.grid.dataMgr.mapList(a).ue
     }
-    for(var f = [], c = [], d = 0, g = a.length, l = this.grid.B.O, m, k = this.U;d < g;d++) {
+    for(var f = [], c = [], d = 0, g = a.length, l = this.grid.dataMgr.M, m, k = this.R;d < g;d++) {
       k.hasOwnProperty((m = a[d])[l]) ? f.push(m) : c.push(m)
     }
     return{checked:f, unchecked:c}
   };
   b.isCheckedAll = function() {
-    return this.Pa !== 0 && this.Pa === this.grid.B.all.length ? !0 : !1
+    return this.Ma !== 0 && this.Ma === this.grid.dataMgr.all.length ? !0 : !1
   };
   b.removeChecked = function() {
-    return this.grid.B.removeList(this.getCheckList())
+    return this.grid.dataMgr.removeList(this.getCheckList())
   };
-  b.Gc = function() {
-    this.ua = $(document.getElementById(this.D + "h"))
+  b.Dc = function() {
+    this.sa = $(document.getElementById(this.C + "h"))
   };
-  b.cf = function(a) {
-    for(var b = a.length, f = [], c = 0, d = this.grid.G.getIdxByKey(this.A.colDef.key);c < b;c++) {
+  b.Xe = function(a) {
+    for(var b = a.length, f = [], c = 0, d = this.grid.colDefMgr.getIdxByKey(this.A.colDef.key);c < b;c++) {
       f.push(a[c].childNodes[d].childNodes[0])
     }
     return f
   };
   b.getCheckboxes = function() {
-    return this.cf(this.grid.view.getRenderedRows())
+    return this.Xe(this.grid.view.getRenderedRows())
   };
   b.getCheckboxById = function(a) {
     a = this.grid.view.getRowById(a);
     if(c.isNotNull(a)) {
-      return a.childNodes[this.grid.G.getIdxByKey(this.A.colDef.key)].childNodes[0]
+      return a.childNodes[this.grid.colDefMgr.getIdxByKey(this.A.colDef.key)].childNodes[0]
     }
   };
   b.getCheckbox = function(a) {
-    return this.getCheckboxById(this.grid.B.getId(a))
+    return this.getCheckboxById(this.grid.dataMgr.getId(a))
   };
-  b.zi = function(a) {
-    return this.getCheckboxById(this.grid.B.getIdByIdx(a))
+  b.ri = function(a) {
+    return this.getCheckboxById(this.grid.dataMgr.getIdByIdx(a))
   };
-  b.Ta = function(a) {
+  b.Qa = function(a) {
     this.uncheck(a, !0);
     this.enable(a, !0)
   };
-  b.hb = function(a) {
+  b.fb = function(a) {
     for(var b = 0, f = a.length;b < f;b++) {
       this.uncheck(a[b], !0), this.enable(a[b], !0)
     }
   };
-  b.Pf = function(a, b, f) {
-    var c = this.U, d = this.mb;
+  b.Jf = function(a, b, f) {
+    var c = this.R, d = this.kb;
     c.hasOwnProperty(b) && (delete c[b], c[f] = a);
     d.hasOwnProperty(b) && (delete d[b], d[f] = a)
   };
-  b.Qf = function(a, b, f) {
-    for(var c = 0, d = a.length, g = this.U, l = this.mb, m, k;c < d;c++) {
+  b.Kf = function(a, b, f) {
+    for(var c = 0, d = a.length, g = this.R, l = this.kb, m, k;c < d;c++) {
       m = a[c], k = b[c], g.hasOwnProperty(k) && (delete g[k], g[m[f]] = m), l.hasOwnProperty(k) && (delete l[k], l[m[f]] = m)
     }
   };
-  b.Lc = function(a, b, f) {
+  b.Ic = function(a, b, f) {
     a.preventDefault();
     if(c.isNotNullAnd(b, f)) {
-      var a = this.isChecked(f.getDatarow(), !0), d, f = this.grid.B.W;
+      var a = this.isChecked(f.getDatarow(), !0), d, f = this.grid.dataMgr.U;
       if(this.A.isRadio) {
         for(d in b) {
           if(b.hasOwnProperty(d) && d !== "length") {
@@ -5249,91 +5249,91 @@ var F = {};
       }
     }
   };
-  b.yb = function(a) {
-    a.push("<input id='" + this.D + "h' type='checkbox' tabIndex='-1' onclick='JGM.m.CheckManager." + this.D + ".toggleCheckAll();' class='" + this.A.classCheck + " " + this.A.classMasterCheck + "' mid='" + this.D + "'");
+  b.vb = function(a) {
+    a.push("<input id='" + this.C + "h' type='checkbox' tabIndex='-1' onclick='JGM.m.CheckManager." + this.C + ".toggleCheckAll();' class='" + this.A.classCheck + " " + this.A.classMasterCheck + "' mid='" + this.C + "'");
     this.isCheckedAll() && a.push(" checked='checked'");
-    this.ab && a.push(" disabled='disabled'");
+    this.Za && a.push(" disabled='disabled'");
     a.push("/>")
   };
-  b.Zb = function(a, b, f, d, g) {
-    g.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.D + ".toggleById('" + f[this.grid.B.O] + "')\" type='" + (this.A.isRadio ? "radio" : "checkbox") + "' class='" + this.A.classCheck + "' mid='" + this.D + "'");
+  b.Wb = function(a, b, f, d, g) {
+    g.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.C + ".toggleById('" + f[this.grid.dataMgr.M] + "')\" type='" + (this.A.isRadio ? "radio" : "checkbox") + "' class='" + this.A.classCheck + "' mid='" + this.C + "'");
     c.isNotNull(this.A.name) && g.push(" name='" + this.A.name + "'");
     this.isChecked(f, !0) && g.push(" checked='checked'");
-    (this.ab || this.isDisabled(f, !0)) && g.push(" disabled='disabled'");
+    (this.Za || this.isDisabled(f, !0)) && g.push(" disabled='disabled'");
     g.push("/>")
   };
-  b.qi = function() {
-    if(!this.ab) {
-      this.ab = !0, this.A.master && this.ua.attr("disabled", "disabled"), $(this.getCheckboxes()).attr("disabled", "disabled")
+  b.ji = function() {
+    if(!this.Za) {
+      this.Za = !0, this.A.master && this.sa.attr("disabled", "disabled"), $(this.getCheckboxes()).attr("disabled", "disabled")
     }
   };
-  b.si = function() {
-    if(this.ab) {
-      this.ab = !1, this.A.master && this.ua.removeAttr("disabled"), $(this.getCheckboxes()).removeAttr("disabled")
+  b.li = function() {
+    if(this.Za) {
+      this.Za = !1, this.A.master && this.sa.removeAttr("disabled"), $(this.getCheckboxes()).removeAttr("disabled")
     }
   };
-  d.rb = function(a) {
+  d.ob = function(a) {
     c.isNotNull(a) && A.safe$(a).attr("checked", "checked")
   };
-  d.lb = function(a) {
+  d.jb = function(a) {
     c.isNotNull(a) && A.safe$(a).removeAttr("checked")
   };
-  d.Hg = function(a) {
+  d.Ag = function(a) {
     c.isNotNull(a) && A.safe$(a).attr("disabled", "disabled")
   };
-  d.Ig = function(a) {
+  d.Bg = function(a) {
     c.isNotNull(a) && A.safe$(a).removeAttr("disabled")
   };
-  d.lg = function(a, b) {
-    b ? d.rb(a) : d.lb(a)
+  d.eg = function(a, b) {
+    b ? d.ob(a) : d.jb(a)
   }
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
+    this.C = a.C;
     this.grid = a.grid;
-    this.grid.Fa = this;
-    this.A = g.da({key:s, colDef:{key:"collapser", width:120, name:" ", noSearch:!0}, colIdx:0, urlCollapsed:this.grid.A.imageUrl + "collapsed.png", urlCollapsedHover:this.grid.A.imageUrl + "collapsed-hover.png", urlExpanded:this.grid.A.imageUrl + "expanded.png", urlExpandedHover:this.grid.A.imageUrl + "expanded-hover.png", width:6, padding:5, classCollapser:"jgrid-collapser", classCollapsed:"collapsed", classExpanded:"expanded", classIndent:"indent", classMasterCollapser:"master", indentSize:12, 
-    beginCollapsed:!1, CheckManager:s, Tree:s}, a.options);
+    this.grid.collapser = this;
+    this.A = g.ba({key:s, colDef:{key:"collapser", width:120, name:" ", noSearch:!0}, colIdx:0, urlCollapsed:this.grid._options.imageUrl + "collapsed.png", urlCollapsedHover:this.grid._options.imageUrl + "collapsed-hover.png", urlExpanded:this.grid._options.imageUrl + "expanded.png", urlExpandedHover:this.grid._options.imageUrl + "expanded-hover.png", width:6, padding:5, classCollapser:"jgrid-collapser", classCollapsed:"collapsed", classExpanded:"expanded", classIndent:"indent", classMasterCollapser:"master", 
+    indentSize:12, beginCollapsed:!1, CheckManager:s, Tree:s}, a.options);
     if(this.A.CheckManager) {
-      this.hd = g.create("CheckManager", {grid:this.grid, options:this.A.CheckManager}), delete this.A.CheckManager, c.isNull(this.A.key) && this.A.colIdx++
+      this.me = g.create("CheckManager", {grid:this.grid, options:this.A.CheckManager}), delete this.A.CheckManager, c.isNull(this.A.key) && this.A.colIdx++
     }
-    this.Q = new b({list:this.grid.B.all, options:this.A.Tree})
+    this.O = new b({list:this.grid.dataMgr.all, options:this.A.Tree})
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  var b = goog.H("jx.struct.Tree");
-  goog.N("JGM.module.Collapser", d);
-  g.S("Collapser", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  var b = goog.D("jx.struct.Tree");
+  goog.L("JGM.module.Collapser", d);
+  g.Q("Collapser", d);
+  d.X = function(a) {
     return new d(a)
   };
   var a = d.prototype;
-  a.P = function() {
-    c.isNull(this.A.key) && this.grid.G.addAt(this.A.colIdx, this.A.colDef);
-    this.Td();
-    this.Ub();
+  a.N = function() {
+    c.isNull(this.A.key) && this.grid.colDefMgr.addAt(this.A.colIdx, this.A.colDef);
+    this.Od();
+    this.Rb();
     this.key = c.isNull(this.A.key) ? this.A.colDef.key : this.A.key;
     this.bindEvents()
   };
   a.bindEvents = function() {
     var a = this.key, b;
-    b = {onAfterFilter:this.Ef, onCreateCss:this.aa, onDestroy:this.J, onAfterSetDatalist:this.Ff, onAddDatarow:this.xb, onAddDatalist:this.Wd, onUpdateDatarow:this.ac, onUpdateDatalist:this.$b, onRemoveDatarow:this.Ta, onRemoveDatalist:this.hb, onRenderHeadersComplete:this.Gc};
-    b["onRenderHeader_" + a + "_prepend"] = this.yb;
-    b["clickHeaderValid_" + a] = this.Ne;
-    b["onRenderCell_" + a + "_prepend"] = this.Zb;
-    b["dblclickCanvas_" + a] = this.zc;
-    b["keydownColSel_" + a + "_" + c.keyMapKeydown.rd] = this.Lc;
-    if(c.isNotNull(this.hd)) {
-      b.$i = this.If
+    b = {onAfterFilter:this.yf, onCreateCss:this.Y, onDestroy:this.H, onAfterSetDatalist:this.zf, onAddDatarow:this.ub, onAddDatalist:this.Rd, onUpdateDatarow:this.Yb, onUpdateDatalist:this.Xb, onRemoveDatarow:this.Qa, onRemoveDatalist:this.fb, onRenderHeadersComplete:this.Dc};
+    b["onRenderHeader_" + a + "_prepend"] = this.vb;
+    b["clickHeaderValid_" + a] = this.He;
+    b["onRenderCell_" + a + "_prepend"] = this.Wb;
+    b["dblclickCanvas_" + a] = this.wc;
+    b["keydownColSel_" + a + "_" + c.keyMapKeydown.md] = this.Ic;
+    if(c.isNotNull(this.me)) {
+      b.Ti = this.Cf
     }
     this.grid.event.bind(b, this)
   };
-  a.J = function() {
-    g.J(this, {name:"Collapser", path:"collapser", Zg:"tree", $:"master", Aa:"checkMgr", map:"options"})
+  a.H = function() {
+    g.H(this, {name:"Collapser", path:"collapser", Rg:"tree", $:"master", ya:"checkMgr", map:"options"})
   };
-  a.aa = function() {
-    var a = "#" + this.grid.D + " .", b = this.A, d = a + this.grid.view.A.classRow + " .", g = a + b.classCollapser, j = g + "." + b.classExpanded, l = g + "." + b.classCollapsed, m = this.grid.view.Ic(), k = [], o = this.grid.md;
+  a.Y = function() {
+    var a = "#" + this.grid.mid + " .", b = this.A, d = a + this.grid.view.A.classRow + " .", g = a + b.classCollapser, j = g + "." + b.classExpanded, l = g + "." + b.classCollapsed, m = this.grid.view.Fc(), k = [], o = this.grid.header;
     k.push(a + b.classIndent + "{height:" + m + "px;float:left;}");
     k.push(g + "{width:" + b.width + "px;float:left;padding:0 " + b.padding + "px}");
     k.push(d + b.classCollapser + "{height:" + m + "px}");
@@ -5344,28 +5344,28 @@ var F = {};
     c.isNotNull(o) && k.push(a + o.A.classColHeader + " ." + b.classCollapser + "{height:" + o.A.height + "px}");
     return k.join("")
   };
-  a.Ff = function() {
-    this.Q.destroy();
-    this.Q = new b({list:this.grid.B.all, options:this.A.Tree});
-    this.Td()
+  a.zf = function() {
+    this.O.destroy();
+    this.O = new b({list:this.grid.dataMgr.all, options:this.A.Tree});
+    this.Od()
   };
-  a.xb = function(a) {
-    a = this.Q.createNode(a);
-    a.V = this.A.beginCollapsed;
-    a.ka = c.isNotNull(a.parent) && (a.parent === a.nc.root || a.parent.ka && !a.parent.V) ? !0 : !1;
-    c.isNotNull(a.parent) && a.parent.children.length === 1 && this.grid.view.rerenderCellByIdAndKey(this.grid.B.getId(a.parent.data), this.key);
-    a.V === !0 || a.ka === !1 ? a.traverseChildren({fn:function() {
-      this.ka = !1
+  a.ub = function(a) {
+    a = this.O.createNode(a);
+    a.S = this.A.beginCollapsed;
+    a.ia = c.isNotNull(a.parent) && (a.parent === a.kc.root || a.parent.ia && !a.parent.S) ? !0 : !1;
+    c.isNotNull(a.parent) && a.parent.children.length === 1 && this.grid.view.rerenderCellByIdAndKey(this.grid.dataMgr.getId(a.parent.data), this.key);
+    a.S === !0 || a.ia === !1 ? a.traverseChildren({fn:function() {
+      this.ia = !1
     }}) : a.traverseChildren({fn:function(a) {
-      c.isNotNull(this.parent) && (this.parent === this.nc.root || this.parent.ka && !this.parent.V) ? this.ka = !0 : (a.propagate = !1, this.traverse({fn:function() {
-        this.ka = !1
+      c.isNotNull(this.parent) && (this.parent === this.kc.root || this.parent.ia && !this.parent.S) ? this.ia = !0 : (a.propagate = !1, this.traverse({fn:function() {
+        this.ia = !1
       }}))
     }});
     this.grid.event.trigger("onCollapserTreeChange")
   };
-  a.Wd = function(a) {
-    for(var b = 0, d = a.length, g = this.Q, j = g.root, l = this.A.beginCollapsed, m = this.key, k = this.grid.view, o = this.grid.B, n, q = [], p;b < d;b++) {
-      n = g.createNode(a[b]), n.V = l, c.isNotNull(n.parent) && n.parent.children.length === 1 && q.push(n.parent.data)
+  a.Rd = function(a) {
+    for(var b = 0, d = a.length, g = this.O, j = g.root, l = this.A.beginCollapsed, m = this.key, k = this.grid.view, o = this.grid.dataMgr, n, q = [], p;b < d;b++) {
+      n = g.createNode(a[b]), n.S = l, c.isNotNull(n.parent) && n.parent.children.length === 1 && q.push(n.parent.data)
     }
     if(k !== s) {
       b = 0;
@@ -5375,20 +5375,20 @@ var F = {};
     }
     j.traverseChildren({fn:function(a) {
       p = this.parent;
-      c.isNotNull(p) && (p === j || p.ka && !p.V) ? this.ka = !0 : (a.propagate = !1, this.traverse({fn:function() {
-        this.ka = !1
+      c.isNotNull(p) && (p === j || p.ia && !p.S) ? this.ia = !0 : (a.propagate = !1, this.traverse({fn:function() {
+        this.ia = !1
       }}))
     }});
     this.grid.event.trigger("onCollapserTreeChange")
   };
-  a.ac = function(a, b, d) {
-    var g = this.Q, j = g.A.nodeKey, l = g.A.parentKey, m;
+  a.Yb = function(a, b, d) {
+    var g = this.O, j = g.A.nodeKey, l = g.A.parentKey, m;
     b.hasOwnProperty(j) && (m = g.getNodeByNodeId(d[j]), g.changeNodeId(m, d[j], b[j]), this.grid.event.trigger("onCollapserTreeChange"));
     b.hasOwnProperty(l) && (c.isNull(m) && (m = g.getNode(a)), g.changeParentId(m, d[l], b[l]), this.grid.event.trigger("onCollapserTreeChange"))
   };
-  a.$b = function(a, b, d) {
-    for(var b = this.Q, g = b.A.nodeKey, j = b.A.parentKey, l, m, k, o = [], n = [], q = 0, p = a.length;q < p;q++) {
-      l = d[q], m = a[q], k = s, l.hasOwnProperty(g) && (c.isNull(k) && (k = b.getNodeByNodeId(l[g])), o.push({pd:k, before:l[g], od:m[g]})), l.hasOwnProperty(j) && (c.isNull(k) && (k = b.getNode(m)), n.push({pd:k, before:l[j], od:m[j]}))
+  a.Xb = function(a, b, d) {
+    for(var b = this.O, g = b.A.nodeKey, j = b.A.parentKey, l, m, k, o = [], n = [], q = 0, p = a.length;q < p;q++) {
+      l = d[q], m = a[q], k = s, l.hasOwnProperty(g) && (c.isNull(k) && (k = b.getNodeByNodeId(l[g])), o.push({kd:k, before:l[g], jd:m[g]})), l.hasOwnProperty(j) && (c.isNull(k) && (k = b.getNode(m)), n.push({kd:k, before:l[j], jd:m[j]}))
     }
     a = o.length;
     d = n.length;
@@ -5397,192 +5397,192 @@ var F = {};
         b.reattach()
       }else {
         for(q = 0;q < a;q++) {
-          g = o[q], b.changeNodeId(g.pd, g.before, g.od)
+          g = o[q], b.changeNodeId(g.kd, g.before, g.jd)
         }
         for(q = 0;q < d;q++) {
-          g = n[q], b.changeParentId(g.pd, g.before, g.od)
+          g = n[q], b.changeParentId(g.kd, g.before, g.jd)
         }
       }
       this.grid.event.trigger("onCollapserTreeChange")
     }
   };
-  a.Ta = function(a) {
-    this.Q.destroyNodeByData(a);
+  a.Qa = function(a) {
+    this.O.destroyNodeByData(a);
     this.grid.event.trigger("onCollapserTreeChange")
   };
-  a.hb = function(a) {
-    for(var b = 0, c = a.length, d = this.Q;b < c;b++) {
+  a.fb = function(a) {
+    for(var b = 0, c = a.length, d = this.O;b < c;b++) {
       d.destroyNodeByData(a[b])
     }
     this.grid.event.trigger("onCollapserTreeChange")
   };
-  a.Ef = function(a, b) {
-    var d = this.Q;
+  a.yf = function(a, b) {
+    var d = this.O;
     if(b.length > 0) {
-      var g = this.grid.B, j = a.length, l = g.fb, m = g.O, k, o = 0, n = function(d) {
+      var g = this.grid.dataMgr, j = a.length, l = g.cb, m = g.M, k, o = 0, n = function(d) {
         c.isNotNull(this.parent) ? (k = this.parent.data, c.isNotNull(k) && !g.has(k) && (a.push(k), b.remove(k), l[k[m]] = -1)) : d.stop = !0
       };
-      g.Ua();
+      g.Ra();
       for(d.reattach();o < j;o++) {
-        d.getNode(a[o]).traverse({td:!0, fn:n})
+        d.getNode(a[o]).traverse({od:!0, fn:n})
       }
       d.reattach(a);
       d.sortList(a);
       this.grid.event.trigger("onCollapserTreeChange")
     }else {
-      d.reattach(a), this.grid.event.trigger("onCollapserTreeChange"), this.Qa(a, b)
+      d.reattach(a), this.grid.event.trigger("onCollapserTreeChange"), this.Na(a, b)
     }
   };
-  a.Qa = function(a, b) {
+  a.Na = function(a, b) {
     a.length = 0;
-    this.Q.root.traverseChildren({fn:function() {
-      this.ka ? a.push(this.data) : b.push(this.data)
+    this.O.root.traverseChildren({fn:function() {
+      this.ia ? a.push(this.data) : b.push(this.data)
     }})
   };
   a.toggleById = function(a) {
     if(c.isNotNull(a)) {
-      return this.toggleCollapse(this.Q.getNode(this.grid.B.getById(a)))
+      return this.toggleCollapse(this.O.getNode(this.grid.dataMgr.getById(a)))
     }
   };
   a.toggle = function(a) {
-    return this.toggleById(this.grid.B.getId(a))
+    return this.toggleById(this.grid.dataMgr.getId(a))
   };
   a.toggleByIdx = function(a) {
-    return this.toggleById(this.grid.B.getIdByIdx(a))
+    return this.toggleById(this.grid.dataMgr.getIdByIdx(a))
   };
-  a.Ne = function(a) {
+  a.He = function(a) {
     if(c.hasTagAndClass(a.target, "DIV", this.A.classCollapser)) {
       return!1
     }
   };
-  a.zc = function(a, b) {
-    c.hasTagAndClass(a.target, "DIV", this.A.classCollapser) || this.toggleCollapse(this.Q.getNode(b.getDatarow()))
+  a.wc = function(a, b) {
+    c.hasTagAndClass(a.target, "DIV", this.A.classCollapser) || this.toggleCollapse(this.O.getNode(b.getDatarow()))
   };
-  a.Lc = function(a, b, d) {
+  a.Ic = function(a, b, d) {
     a.preventDefault();
     if(c.isNotNullAnd(b, d)) {
-      var a = this.Q, d = a.getNode(d.getDatarow()).V, g = this.grid.B.W, j, l;
+      var a = this.O, d = a.getNode(d.getDatarow()).S, g = this.grid.dataMgr.U, j, l;
       for(l in b) {
         b.hasOwnProperty(l) && l !== "length" && (j = a.getNode(g[l]), d ? this.expand(j) : this.collapse(j))
       }
-      this.Ub()
+      this.Rb()
     }
   };
-  a.Td = function() {
-    var a = this.Q, b, c;
-    a.P();
+  a.Od = function() {
+    var a = this.O, b, c;
+    a.N();
     c = a.map;
     a = a.root;
     if(this.A.beginCollapsed) {
       for(b in c) {
         if(c.hasOwnProperty(b)) {
-          c[b].V = !0, c[b].ka = !1
+          c[b].S = !0, c[b].ia = !1
         }
       }
       c = a.children;
       var d = c.length;
       for(b = 0;b < d;b++) {
-        c[b].ka = !0
+        c[b].ia = !0
       }
-      a.V = !0
+      a.S = !0
     }else {
       for(b in c) {
         if(c.hasOwnProperty(b)) {
-          c[b].V = !1, c[b].ka = !0
+          c[b].S = !1, c[b].ia = !0
         }
       }
-      a.V = !1
+      a.S = !1
     }
     this.grid.event.trigger("onCollapserTreeChange")
   };
-  a.yb = function(a) {
-    a.push("<div id='" + this.D + "h' onmousedown='JGM.m.Collapser." + this.D + ".toggleMaster();' class='" + this.A.classCollapser + " " + this.A.classMasterCollapser);
-    this.Q.root.V ? a.push(" " + this.A.classCollapsed) : a.push(" " + this.A.classExpanded);
+  a.vb = function(a) {
+    a.push("<div id='" + this.C + "h' onmousedown='JGM.m.Collapser." + this.C + ".toggleMaster();' class='" + this.A.classCollapser + " " + this.A.classMasterCollapser);
+    this.O.root.S ? a.push(" " + this.A.classCollapsed) : a.push(" " + this.A.classExpanded);
     a.push("'></div>")
   };
-  a.Zb = function(a, b, d, g, j) {
-    a = this.Q.getNode(d);
+  a.Wb = function(a, b, d, g, j) {
+    a = this.O.getNode(d);
     if(c.isNull(a)) {
       return t
     }
-    d = this.grid.B.getId(d);
+    d = this.grid.dataMgr.getId(d);
     b = this.A;
     j.push("<div class='" + b.classIndent + "' style='width:" + b.indentSize * a.getLevel() + "px;'></div><div ");
-    a.isLeaf() ? j.push("class='" + b.classCollapser) : (j.push('onmousedown="JGM.m.Collapser.' + this.D + ".toggleById('" + d + "');\" class='" + b.classCollapser), a.V ? j.push(" " + b.classCollapsed) : j.push(" " + b.classExpanded));
+    a.isLeaf() ? j.push("class='" + b.classCollapser) : (j.push('onmousedown="JGM.m.Collapser.' + this.C + ".toggleById('" + d + "');\" class='" + b.classCollapser), a.S ? j.push(" " + b.classCollapsed) : j.push(" " + b.classExpanded));
     j.push("'></div>")
   };
   a.getLevel = function(a) {
-    a = this.Q.getNode(a);
+    a = this.O.getNode(a);
     return c.isNull(a) ? t : a.getLevel()
   };
   a.collapse = function(a, b) {
-    if(!(a.V === !0 || a.isLeaf())) {
-      a.V = !0;
+    if(!(a.S === !0 || a.isLeaf())) {
+      a.S = !0;
       a.traverseChildren({fn:function(a) {
-        this.ka = !1;
-        this.V && (a.propagate = !1)
+        this.ia = !1;
+        this.S && (a.propagate = !1)
       }});
-      var c = this.Jd(a.data);
-      c.length > 0 && this.jb(c, !0);
-      if(!b && a.parent === this.Q.root && this.Q.root.V === !1) {
-        this.jb(this.ua, this.Q.root.V = !0)
+      var c = this.Ed(a.data);
+      c.length > 0 && this.hb(c, !0);
+      if(!b && a.parent === this.O.root && this.O.root.S === !1) {
+        this.hb(this.sa, this.O.root.S = !0)
       }
     }
   };
   a.expand = function(a, b) {
-    if(!(a.V === !1 || a.isLeaf())) {
-      a.V = !1;
+    if(!(a.S === !1 || a.isLeaf())) {
+      a.S = !1;
       a.traverseChildren({fn:function(a) {
-        this.ka = !0;
-        this.V && (a.propagate = !1)
+        this.ia = !0;
+        this.S && (a.propagate = !1)
       }});
-      var c = this.Jd(a.data), d = this.Q;
-      c.length > 0 && this.jb(c, !1);
+      var c = this.Ed(a.data), d = this.O;
+      c.length > 0 && this.hb(c, !1);
       if(!b && a.parent === d.root) {
         for(var c = d.root.children, g = c.length, l = 0;l < g;l++) {
-          if(c[l].V) {
+          if(c[l].S) {
             return
           }
         }
-        this.jb(this.ua, d.root.V = !1)
+        this.hb(this.sa, d.root.S = !1)
       }
     }
   };
-  a.jb = function(a, b) {
+  a.hb = function(a, b) {
     if(!c.isNull(a)) {
       var d = this.A;
       b ? a.addClass(d.classCollapsed).removeClass(d.classExpanded) : a.addClass(d.classExpanded).removeClass(d.classCollapsed)
     }
   };
   a.toggleMaster = function() {
-    var a = this.Q.root, b = a.children, c = b.length, d = 0;
-    if(a.V) {
+    var a = this.O.root, b = a.children, c = b.length, d = 0;
+    if(a.S) {
       for(;d < c;d++) {
         this.expand(b[d], !0)
       }
-      this.jb(this.ua, a.V = !1)
+      this.hb(this.sa, a.S = !1)
     }else {
       for(;d < c;d++) {
         this.collapse(b[d], !0)
       }
-      this.jb(this.ua, a.V = !0)
+      this.hb(this.sa, a.S = !0)
     }
-    this.Ub()
+    this.Rb()
   };
   a.toggleCollapse = function(a) {
-    a = a.V ? this.expand(a) : this.collapse(a);
-    this.Ub();
+    a = a.S ? this.expand(a) : this.collapse(a);
+    this.Rb();
     return a
   };
-  a.If = function(a, b) {
-    var d = this.Q.getNode(a), h = this.hd, j = [], l;
+  a.Cf = function(a, b) {
+    var d = this.O.getNode(a), h = this.me, j = [], l;
     b ? (d.traverseChildren({fn:function(a) {
-      h.isChecked(this.data) ? a.propagate = !1 : (h.S(this.data), c.isNotNull(l = h.getCheckbox(this.data)) && j.push(l))
-    }}), d.traverseParent({td:!0, fn:function(a) {
-      c.isNull(this.data) || h.isChecked(this.data) ? a.stop = !0 : (h.S(this.data), c.isNotNull(l = h.getCheckbox(this.data)) && j.push(l))
-    }}), g.CheckManager.rb($(j)), h.ge()) : (d.traverseChildren({fn:function(a) {
-      h.isChecked(this.data) ? (h.Da(this.data), c.isNotNull(l = h.getCheckbox(this.data)) && j.push(l)) : a.propagate = !1
-    }}), d.traverseParent({td:!0, fn:function(a) {
+      h.isChecked(this.data) ? a.propagate = !1 : (h.Q(this.data), c.isNotNull(l = h.getCheckbox(this.data)) && j.push(l))
+    }}), d.traverseParent({od:!0, fn:function(a) {
+      c.isNull(this.data) || h.isChecked(this.data) ? a.stop = !0 : (h.Q(this.data), c.isNotNull(l = h.getCheckbox(this.data)) && j.push(l))
+    }}), g.CheckManager.ob($(j)), h.be()) : (d.traverseChildren({fn:function(a) {
+      h.isChecked(this.data) ? (h.Ba(this.data), c.isNotNull(l = h.getCheckbox(this.data)) && j.push(l)) : a.propagate = !1
+    }}), d.traverseParent({od:!0, fn:function(a) {
       if(c.isNull(this.data) || !h.isChecked(this.data)) {
         a.stop = !0
       }else {
@@ -5592,147 +5592,147 @@ var F = {};
             return
           }
         }
-        h.Da(this.data);
+        h.Ba(this.data);
         c.isNotNull(l = h.getCheckbox(this.data)) && j.push(l)
       }
-    }}), g.CheckManager.lb($(j)))
+    }}), g.CheckManager.jb($(j)))
   };
-  a.Ub = function() {
-    this.Qa(this.grid.B.W, this.grid.B.we);
-    this.grid.B.Gd()
+  a.Rb = function() {
+    this.Na(this.grid.dataMgr.U, this.grid.dataMgr.re);
+    this.grid.dataMgr.Bd()
   };
-  a.Jd = function(a) {
+  a.Ed = function(a) {
     if(c.isNull(a)) {
       return $([])
     }
-    a = c.findFirstByTagAndClass(this.grid.view.getCell(this.grid.B.getIdx(a), this.grid.G.getIdxByKey(this.key)), "DIV", this.A.classCollapser);
+    a = c.findFirstByTagAndClass(this.grid.view.getCell(this.grid.dataMgr.getIdx(a), this.grid.colDefMgr.getIdxByKey(this.key)), "DIV", this.A.classCollapser);
     return a === s ? $([]) : $(a)
   };
-  a.Gc = function() {
-    this.ua = $(document.getElementById(this.D + "h"))
+  a.Dc = function() {
+    this.sa = $(document.getElementById(this.C + "h"))
   }
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
+    this.C = a.C;
     this.grid = a.grid;
-    this.grid.zg = this;
-    this.A = g.da({key:s, padColKeys:[], sumColKeys:[], prefix:"합계: ", Collapser:{indentSize:0}}, a.options);
+    this.grid.colGroup = this;
+    this.A = g.ba({key:s, padColKeys:[], sumColKeys:[], prefix:"합계: ", Collapser:{indentSize:0}}, a.options);
     this.A.Collapser.key = this.A.key;
-    this.Ab = {};
-    this.P()
+    this.xb = {};
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.H("jx.grid.Collapser");
-  goog.N("jx.grid.ColumnGroup", d);
-  g.S("ColGroup", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.D("jx.grid.Collapser");
+  goog.L("jx.grid.ColumnGroup", d);
+  g.Q("ColGroup", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function() {
-    var a = this.grid, b = a.B, c = this.A;
+  b.N = function() {
+    var a = this.grid, b = a.vg, c = this.A;
     this.bindEvents();
-    a = this.Fa = g.create("Collapser", {grid:a, options:c.Collapser});
+    a = this.Wa = g.create("Collapser", {grid:a, options:c.Collapser});
     delete c.Collapser;
-    this.Vc(b.all);
-    a.P();
+    this.Sc(b.all);
+    a.N();
     b.refresh()
   };
   b.bindEvents = function() {
     var a;
-    a = {onBeforeSetDatalist:this.$f, "onAfterSetDatalist onAddDatalist":this.Vc, onAddDatarow:this.xb, onUpdateDatarow:this.ac, onUpdateDatalist:this.$b, onRemoveDatarow:this.Ta, onRemoveDatalist:this.hb, onDestroy:this.J};
+    a = {onBeforeSetDatalist:this.Tf, "onAfterSetDatalist onAddDatalist":this.Sc, onAddDatarow:this.ub, onUpdateDatarow:this.Yb, onUpdateDatalist:this.Xb, onRemoveDatarow:this.Qa, onRemoveDatalist:this.fb, onDestroy:this.H};
     if(this.A.sumColKeys.length !== 0) {
-      var b = this.D, c = this.grid.B.C.ya, d = 0, g, j = this.A.sumColKeys, l = this.A.prefix, m = j.length;
+      var b = this.C, c = this.grid.dataMgr.B.wa, d = 0, g, j = this.A.sumColKeys, l = this.A.prefix, m = j.length;
       for(g = function(a, d, g, i, h) {
         g[c] === b && h.push(l)
       };d < m;d++) {
         a["onRenderCell_" + j[d] + "_prepend"] = g
       }
-      a.aj = this.Jf
+      a.Ui = this.Df
     }
     this.grid.event.bind(a, this)
   };
-  b.J = function() {
-    g.J(this, {name:"ColGroup", path:"colGroup", Aa:"collapser", map:"parentMap _options"})
+  b.H = function() {
+    g.H(this, {name:"ColGroup", path:"colGroup", ya:"collapser", map:"parentMap _options"})
   };
-  b.Vc = function(a) {
-    for(var b = a.length, f = this.A.key, d = this.A.padColKeys, g = this.grid.B, j = g.C.ya, l = g.O, m = this.Fa, k = m.Q.A.nodeKey, o = m.Q.A.parentKey, n = [], q = 0;q < b;q++) {
-      this.Sb(a[q], f, l, j, k, o, d, n)
+  b.Sc = function(a) {
+    for(var b = a.length, f = this.A.key, d = this.A.padColKeys, g = this.grid.dataMgr, j = g.B.wa, l = g.M, m = this.Wa, k = m.O.A.nodeKey, o = m.O.A.parentKey, n = [], q = 0;q < b;q++) {
+      this.Pb(a[q], f, l, j, k, o, d, n)
     }
-    n.length !== 0 && (g.all.pushList(n), g.nd(n, !0), g.gd(n), c.isNotNull(m) && m.Wd(n));
+    n.length !== 0 && (g.all.pushList(n), g.hd(n, !0), g.dd(n), c.isNotNull(m) && m.Rd(n));
     return n
   };
-  b.Sb = function(a, b, c, d, g, j, l, m) {
-    var k = a[b], o = this.Ab;
-    o.hasOwnProperty(k) || (b = this.wf(a, b, c, k, d, g, l), m.push(b), o[k] = b);
+  b.Pb = function(a, b, c, d, g, j, l, m) {
+    var k = a[b], o = this.xb;
+    o.hasOwnProperty(k) || (b = this.qf(a, b, c, k, d, g, l), m.push(b), o[k] = b);
     a[g] = a[c];
-    a[j] = this.D + k
+    a[j] = this.C + k
   };
-  b.wf = function(a, b, c, d, g, j, l) {
+  b.qf = function(a, b, c, d, g, j, l) {
     var m = {}, k = 0, o = l.length;
-    m[g] = this.D;
-    m[j] = this.D + d;
+    m[g] = this.C;
+    m[j] = this.C + d;
     m[b] = d;
-    for(m[c] = (this.grid.G.getByKey(b).name || b) + ": " + d;k < o;k++) {
+    for(m[c] = (this.grid.colDefMgr.getByKey(b).name || b) + ": " + d;k < o;k++) {
       m[l[k]] = a[l[k]]
     }
     return m
   };
-  b.uf = function(a) {
-    return a[this.grid.B.C.ya] === this.D
+  b.of = function(a) {
+    return a[this.grid.dataMgr.B.wa] === this.C
   };
-  b.$f = function() {
-    this.Ab = {}
+  b.Tf = function() {
+    this.xb = {}
   };
-  b.xb = function(a) {
-    var b = [], c = this.A, d = this.grid.B, g = this.Fa, j = g.Q.A;
-    this.Sb(a, c.key, d.O, d.C.ya, j.nodeKey, j.parentKey, c.padColKeys, b);
-    b.length !== 0 && (a = b[0], d.all.push(a), d.lc(a, !0), d.le(a), g.xb(a))
+  b.ub = function(a) {
+    var b = [], c = this.A, d = this.grid.dataMgr, g = this.Wa, j = g.O.A;
+    this.Pb(a, c.key, d.M, d.B.wa, j.nodeKey, j.parentKey, c.padColKeys, b);
+    b.length !== 0 && (a = b[0], d.all.push(a), d.ic(a, !0), d.ge(a), g.ub(a))
   };
-  b.ac = function(a, b, c) {
+  b.Yb = function(a, b, c) {
     if(b.hasOwnProperty(this.A.key)) {
-      var d = this.A.key, b = b[d], c = c[d], g = this.D, d = this.Fa, j = d.Q, l = j.A.parentKey, m = {}, k = {}, o = this.Ab;
-      o.hasOwnProperty(b) || this.xb(a);
+      var d = this.A.key, b = b[d], c = c[d], g = this.C, d = this.Wa, j = d.O, l = j.A.parentKey, m = {}, k = {}, o = this.xb;
+      o.hasOwnProperty(b) || this.ub(a);
       m[l] = g + b;
       k[l] = g + c;
-      d.ac(a, m, k);
+      d.Yb(a, m, k);
       a = j.getNode(o[c]);
-      a.children.length === 0 && (this.grid.B.all.remove(a.data), delete o[c], d.Ta(a.data))
+      a.children.length === 0 && (this.grid.dataMgr.all.remove(a.data), delete o[c], d.Qa(a.data))
     }
   };
-  b.$b = function(a, b, c) {
-    var d = this.A.key, g = this.D, j = this.Fa, l = j.Q, m = l.A.parentKey, k, o = {};
+  b.Xb = function(a, b, c) {
+    var d = this.A.key, g = this.C, j = this.Wa, l = j.O, m = l.A.parentKey, k, o = {};
     k = {};
     for(var n = [], q = [], p = [], u = 0, w = a.length;u < w;u++) {
       k = b[u], k.hasOwnProperty(d) && (o = {}, o[m] = g + k[d], n.push(o), k = {}, k[m] = g + c[u][d], q.push(k), p.push(a[u]))
     }
     if(p.length !== 0) {
-      a = this.Ab;
+      a = this.xb;
       b = [];
-      this.Vc(p);
-      j.$b(p, n, q);
+      this.Sc(p);
+      j.Xb(p, n, q);
       u = 0;
       for(w = q.length;u < w;u++) {
         n = q[u][m], a.hasOwnProperty(n) && (p = l.getNode(a[n]), p.children.length === 0 && (delete a[n], b.push(p.data)))
       }
-      b.length !== 0 && (j.hb(b), this.grid.B.all.removeList(b))
+      b.length !== 0 && (j.fb(b), this.grid.dataMgr.all.removeList(b))
     }
   };
-  b.Ta = function(a) {
-    this.uf(a) ? delete this.Ab[a[this.A.key]] : (a = this.Fa.Q.getNode(a).parent, a.children.length === 1 && this.grid.B.remove(a.data))
+  b.Qa = function(a) {
+    this.of(a) ? delete this.xb[a[this.A.key]] : (a = this.Wa.O.getNode(a).parent, a.children.length === 1 && this.grid.dataMgr.remove(a.data))
   };
-  b.hb = function(a) {
+  b.fb = function(a) {
     for(var b = 0, c = a.length;b < c;b++) {
-      this.Ta(a[b])
+      this.Qa(a[b])
     }
   };
-  b.Jf = function() {
-    for(var a = {}, b = this.A.sumColKeys, c = b.length, d = 0, g = this.grid.B.C.ya, j = this.D, l, m, k;d < c;d++) {
+  b.Df = function() {
+    for(var a = {}, b = this.A.sumColKeys, c = b.length, d = 0, g = this.grid.dataMgr.B.wa, j = this.C, l, m, k;d < c;d++) {
       a[b[d]] = 0
     }
-    this.Fa.Q.root.traverseChildren({post:!0, fn:function() {
+    this.Wa.O.root.traverseChildren({post:!0, fn:function() {
       l = this.data;
       d = 0;
       if(l[g] === j) {
@@ -5754,47 +5754,47 @@ var F = {};
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
-    this.I = a.container;
+    this.C = a.C;
+    this.G = a.container;
     this.grid = a.grid;
     this.grid.view = this;
-    this.A = g.da({attrRowIdx:"r", appendThreshold:3, renderThreshold:10, bufferSize:6, rowsPerPage:10, rowH:21, borderThickness:1, border:"solid #D0D7E5", padding:1, evenOddRows:!1, oddRowsBackground:"#F4F4F4", style:"", canvasStyle:"", rowStyle:"", cellStyle:"", classRow:"jgrid-row", classCell:"jgrid-cell", classView:"jgrid-viewport", classCanvas:"jgrid-canvas", focusBackground:"#FFF", focusOutline:"2px solid #f1ca7f", autoHeight:!1, autoWidth:!1}, a.options);
-    this.L = {drag:!1, Rd:0, Qd:0, Oc:0};
-    this.ea = {};
-    this.ta = {};
-    this.ma = [0];
-    this.P()
+    this.A = g.ba({attrRowIdx:"r", appendThreshold:3, renderThreshold:10, bufferSize:6, rowsPerPage:10, rowH:21, borderThickness:1, border:"solid #D0D7E5", padding:1, evenOddRows:!1, oddRowsBackground:"#F4F4F4", style:"", canvasStyle:"", rowStyle:"", cellStyle:"", classRow:"jgrid-row", classCell:"jgrid-cell", classView:"jgrid-viewport", classCanvas:"jgrid-canvas", focusBackground:"#FFF", focusOutline:"2px solid #f1ca7f", autoHeight:!1, autoWidth:!1}, a.options);
+    this.J = {drag:!1, Md:0, Ld:0, Lc:0};
+    this.ca = {};
+    this.ra = {};
+    this.ka = [0];
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.ViewportManager", d);
-  g.S("ViewportManager", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.ViewportManager", d);
+  g.Q("ViewportManager", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function() {
-    this.K = $("<div class='" + this.A.classView + "' tabIndex='0' onscroll='JGM.m.ViewportManager." + this.D + "._scroll()'>").appendTo(this.I);
-    this.qa = $("<div class='" + this.A.classCanvas + "'>").appendTo(this.K);
-    this.K.bind("selectstart.ui", function(a) {
+  b.N = function() {
+    this.I = $("<div class='" + this.A.classView + "' tabIndex='0' onscroll='JGM.m.ViewportManager." + this.C + "._scroll()'>").appendTo(this.G);
+    this.oa = $("<div class='" + this.A.classCanvas + "'>").appendTo(this.I);
+    this.I.bind("selectstart.ui", function(a) {
       return $(a.target).is("input, textarea")
     });
-    this.ad();
-    this.L.Oc = this.grid.B.W.length;
-    this.grid.event.bind({canvasFind:this.Bd, onCreateCss:this.aa, onCreateDynamicCss:this.Kf, onDestroy:this.Lf, keydown:this.Kc, keyup:this.Nc, keypress:this.Mc, mousein:this.Qc, mouseout:this.Sc, mouseenter:this.Pc, mouseleave:this.Rc, mousemove:this.gb, mouseover:this.Tc, mousedown:this.wb, mouseup:this.La, click:this.sb, dblclick:this.yc, resizeWidth:this.mg, "resizeWidth onResizeCol onResizeCanvasHeight":this.hg, onAfterRefresh:this.bh, onRenderModules:this.Cb, onReorderCols:this.Rf, onResizeCanvasWidth:this.be, 
-    onUpdateDatarow:this.lh, onUpdateDatalist:this.kh, onRemoveDatarow:this.jh, onRemoveDatalist:this.ih, onIdChange:this.gh, onIdListChange:this.hh, unsetDrag:this.Ch}, this)
+    this.Yc();
+    this.J.Lc = this.grid.dataMgr.U.length;
+    this.grid.event.bind({canvasFind:this.wd, onCreateCss:this.Y, onCreateDynamicCss:this.Ef, onDestroy:this.Ff, keydown:this.Hc, keyup:this.Kc, keypress:this.Jc, mousein:this.Nc, mouseout:this.Pc, mouseenter:this.Mc, mouseleave:this.Oc, mousemove:this.eb, mouseover:this.Qc, mousedown:this.tb, mouseup:this.Ia, click:this.pb, dblclick:this.vc, resizeWidth:this.fg, "resizeWidth onResizeCol onResizeCanvasHeight":this.ag, onAfterRefresh:this.Vg, onRenderModules:this.zb, onReorderCols:this.Lf, onResizeCanvasWidth:this.Xd, 
+    onUpdateDatarow:this.eh, onUpdateDatalist:this.dh, onRemoveDatarow:this.bh, onRemoveDatalist:this.ah, onIdChange:this.Zg, onIdListChange:this.$g, unsetDrag:this.uh}, this)
   };
-  b.Ch = function() {
-    this.L.drag = !1
+  b.uh = function() {
+    this.J.drag = !1
   };
-  b.Lf = function() {
-    g.J(this, {name:"ViewportManager", path:"view", $:"canvas _mask", Aa:"ctnr", map:"vars _lockedRows _renderedRows _options"})
+  b.Ff = function() {
+    g.H(this, {name:"ViewportManager", path:"view", $:"canvas _mask", ya:"ctnr", map:"vars _lockedRows _renderedRows _options"})
   };
-  b.aa = function() {
-    var a = "#" + this.grid.D + " .", b = this.A, c = a + b.classCell, d = a + b.classRow, g = b.borderThickness + "px " + b.border, j = d + "[" + b.attrRowIdx, l = this.grid.G.get(), m = l.length, k = 0, o = [];
-    o.push(a + b.classView + "{height:" + this.Le() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + b.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + b.style + "}");
+  b.Y = function() {
+    var a = "#" + this.grid.mid + " .", b = this.A, c = a + b.classCell, d = a + b.classRow, g = b.borderThickness + "px " + b.border, j = d + "[" + b.attrRowIdx, l = this.grid.colDefMgr.get(), m = l.length, k = 0, o = [];
+    o.push(a + b.classView + "{height:" + this.Fe() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + b.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + b.style + "}");
     o.push(a + b.classView + ":focus{background:" + b.focusBackground + ";outline:" + b.focusOutline + "}");
-    o.push(a + b.classCanvas + "{height:" + this.wc() + "px;" + b.canvasStyle + ";background:#fff}");
+    o.push(a + b.classCanvas + "{height:" + this.tc() + "px;" + b.canvasStyle + ";background:#fff}");
     o.push(d + "{position:absolute;" + b.rowStyle + "}");
     o.push(c + "{height:" + b.rowH + "px;border-bottom:" + g + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + b.padding + "px;border-right:" + g + ";" + b.cellStyle + "}");
     for(b.evenOddRows && o.push(j + "$='1']," + j + "$='3']," + j + "$='5']," + j + "$='7']," + j + "$='9']{background:" + b.oddRowsBackground + "}");k < m;k++) {
@@ -5802,42 +5802,42 @@ var F = {};
     }
     return o.join("")
   };
-  b.Kf = function() {
-    for(var a = "#" + this.grid.D + " ." + this.A.classCell, b = this.nf() + "{width:" + this.zd() + "px}", c = this.grid.G.get(), d = c.length, g = 0;g < d;g++) {
+  b.Ef = function() {
+    for(var a = "#" + this.grid.mid + " ." + this.A.classCell, b = this.gf() + "{width:" + this.ud() + "px}", c = this.grid.colDefMgr.get(), d = c.length, g = 0;g < d;g++) {
       b += a + ".k_" + c[g].key + "{width:" + c[g].width + "px}"
     }
     return b
   };
-  b.lh = function(a) {
+  b.eh = function(a) {
     this.isRendered(a) && this.rerenderRow(a)
   };
-  b.kh = function(a) {
+  b.dh = function(a) {
     for(var b, c = a.length, d = 0;d < c;d++) {
       b = a[d], this.isRendered(b) && this.rerenderRow(b)
     }
   };
-  b.jh = function(a) {
+  b.bh = function(a) {
     this.destroyRow(a)
   };
-  b.ih = function(a) {
+  b.ah = function(a) {
     for(var b = a.length, c = 0;c < b;c++) {
       this.destroyRow(a[c])
     }
   };
-  b.gh = function(a, b, c) {
-    this.isRowLockedById(b) && (this.ta[c] = this.ta[b], delete this.ta[b]);
-    this.isRenderedById(b) && ((this.ea[c] = this.ea[b]).setAttribute("i", c), delete this.ea[b])
+  b.Zg = function(a, b, c) {
+    this.isRowLockedById(b) && (this.ra[c] = this.ra[b], delete this.ra[b]);
+    this.isRenderedById(b) && ((this.ca[c] = this.ca[b]).setAttribute("i", c), delete this.ca[b])
   };
-  b.hh = function(a, b, c) {
-    for(var d = a.length, g = 0, j = this.ta, l = this.ea, m, k;g < d;g++) {
+  b.$g = function(a, b, c) {
+    for(var d = a.length, g = 0, j = this.ra, l = this.ca, m, k;g < d;g++) {
       m = b[g], k = a[g][c], j.hasOwnProperty(m) && (j[k] = j[m], delete j[m]), l.hasOwnProperty(m) && ((l[k] = l[m]).setAttribute("i", k), delete l[m])
     }
   };
-  b.Ec = function() {
-    return"#" + this.grid.D + " ." + this.A.classCell
+  b.Bc = function() {
+    return"#" + this.grid.mid + " ." + this.A.classCell
   };
-  b.nf = function() {
-    return"#" + this.grid.D + " ." + this.A.classRow
+  b.gf = function() {
+    return"#" + this.grid.mid + " ." + this.A.classRow
   };
   b.scrollTo = function(a, b) {
     this.scrollToRow(a);
@@ -5845,17 +5845,17 @@ var F = {};
   };
   b.scrollToRowLazy = function(a) {
     var b = this.getScrollTop();
-    return c.isNull(a) ? b : this.kf() < a ? this.scrollToRow(this.gf(a)) : this.Nd() > a ? this.scrollToRow(a) : b
+    return c.isNull(a) ? b : this.df() < a ? this.scrollToRow(this.af(a)) : this.Id() > a ? this.scrollToRow(a) : b
   };
   b.scrollToColLazy = function(a) {
     var b = this.getScrollLeft();
     if(c.isNull(a)) {
       return b
     }
-    if(this.jf() < a) {
+    if(this.cf() < a) {
       return this.setScrollLeft(this.getScrollHForSafe(a))
     }else {
-      if(this.Md() > a) {
+      if(this.Hd() > a) {
         return this.scrollToCol(a)
       }
     }
@@ -5866,174 +5866,174 @@ var F = {};
     this.scrollToColLazy(b)
   };
   b.scrollToRow = function(a) {
-    return c.isNotNull(a) ? this.setScrollTop(this.ra() * a) : this.getScrollTop()
+    return c.isNotNull(a) ? this.setScrollTop(this.pa() * a) : this.getScrollTop()
   };
   b.scrollToCol = function(a) {
     return this.setScrollLeft(this.getColLeft(a))
   };
-  b.Qh = function(a) {
-    return this.grid.G.get(a).width
+  b.Ih = function(a) {
+    return this.grid.colDefMgr.get(a).width
   };
-  b.Rh = function(a) {
-    return this.grid.G.getByKey(a).width
+  b.Jh = function(a) {
+    return this.grid.colDefMgr.getByKey(a).width
   };
   b.getColWidth = function(a) {
-    return this.grid.G.get(a).width + this.A.padding
+    return this.grid.colDefMgr.get(a).width + this.A.padding
   };
   b.getColWidthByKey = function(a) {
-    return this.grid.G.getByKey(a).width + this.A.padding
+    return this.grid.colDefMgr.getByKey(a).width + this.A.padding
   };
-  b.ff = function(a) {
-    return this.grid.G.get(a).width + this.A.padding + this.A.borderThickness
+  b.$e = function(a) {
+    return this.grid.colDefMgr.get(a).width + this.A.padding + this.A.borderThickness
   };
-  b.Th = function(a) {
-    return this.grid.G.getByKey(a).width + this.A.padding + this.A.borderThickness
+  b.Lh = function(a) {
+    return this.grid.colDefMgr.getByKey(a).width + this.A.padding + this.A.borderThickness
   };
-  b.Hc = function() {
+  b.Ec = function() {
     return this.A.padding
   };
-  b.Fd = function() {
+  b.Ad = function() {
     return this.A.padding + this.A.borderThickness
   };
-  b.ra = function() {
+  b.pa = function() {
     return this.A.rowH + this.A.borderThickness
   };
-  b.Ic = function() {
+  b.Fc = function() {
     return this.A.rowH
   };
-  b.Le = function() {
-    return this.A.autoHeight ? this.wc() + (this.grid.width() < this.zd() ? this.grid.L.De.Hi : 0) : this.ra() * this.A.rowsPerPage
+  b.Fe = function() {
+    return this.A.autoHeight ? this.tc() + (this.grid.width() < this.ud() ? this.grid._vars.xe.Ai : 0) : this.pa() * this.A.rowsPerPage
   };
   b.getHeight = function() {
-    return this.K[0].offsetHeight
+    return this.I[0].offsetHeight
   };
   b.getInnerHeight = function() {
-    return this.K[0].clientHeight
+    return this.I[0].clientHeight
   };
-  b.Xh = function() {
-    return this.K[0].offsetWidth
+  b.Ph = function() {
+    return this.I[0].offsetWidth
   };
   b.getInnerWidth = function() {
-    return this.K[0].clientWidth
+    return this.I[0].clientWidth
   };
-  b.wc = function() {
-    return this.ra() * this.grid.B.W.length
+  b.tc = function() {
+    return this.pa() * this.grid.dataMgr.U.length
   };
   b.getCanvasHeight = function() {
-    return this.qa[0].clientHeight
+    return this.oa[0].clientHeight
   };
-  b.jg = function(a) {
+  b.cg = function(a) {
     a = parseInt(a);
     if(!(isNaN(a) || a < 1)) {
       var b = this.getCanvasHeight();
       if(a != b) {
-        this.qa[0].style.height = a + "px", this.grid.event.trigger("onResizeCanvasHeight", [a, b])
+        this.oa[0].style.height = a + "px", this.grid.event.trigger("onResizeCanvasHeight", [a, b])
       }
     }
   };
-  b.zd = function() {
-    return this.ma[this.grid.G.length()]
+  b.ud = function() {
+    return this.ka[this.grid.colDefMgr.length()]
   };
   b.getCanvasWidth = function() {
-    return this.qa[0].clientWidth
+    return this.oa[0].clientWidth
   };
-  b.kg = function(a) {
+  b.dg = function(a) {
     a = parseInt(a);
     if(!(isNaN(a) || a < 1)) {
       var b = this.getCanvasWidth();
       if(a != b) {
-        this.qa[0].style.width = a + "px", this.grid.event.trigger("onResizeCanvasWidth", [a, b])
+        this.oa[0].style.width = a + "px", this.grid.event.trigger("onResizeCanvasWidth", [a, b])
       }
     }
   };
   b.getColLeft = function(a) {
-    return this.ma[a]
+    return this.ka[a]
   };
-  b.Sh = x("ma");
-  b.ad = function(a) {
+  b.Kh = x("ka");
+  b.Yc = function(a) {
     var b;
     c.isNull(a) && (a = 0);
-    var d = this.grid.G.get(), g = this.Fd();
+    var d = this.grid.colDefMgr.get(), g = this.Ad();
     if(c.isNull(b)) {
       b = d.length
     }
     for(;a < b;a++) {
-      this.ma[a + 1] = this.ma[a] + d[a].width + g
+      this.ka[a + 1] = this.ka[a] + d[a].width + g
     }
-    return this.ma
+    return this.ka
   };
-  b.Rf = function() {
-    this.ad();
-    this.ae()
+  b.Lf = function() {
+    this.Yc();
+    this.Wd()
   };
   b.setWidthByKey = function(a, b) {
-    var d = this.grid.G.getByKey(a), b = c.bound(b, d.minW, d.maxW);
+    var d = this.grid.colDefMgr.getByKey(a), b = c.bound(b, d.minW, d.maxW);
     if(b !== d.width) {
       var g = d.width;
       d.width = b;
-      this.kg(this.ad(this.grid.G.getIdxByKey(a))[this.grid.G.length()]);
-      this.grid.Vf();
+      this.dg(this.Yc(this.grid.colDefMgr.getIdxByKey(a))[this.grid.colDefMgr.length()]);
+      this.grid._recreateDynamicCss();
       this.grid.event.trigger("onResizeCol_" + a + " onResizeCol", [a, b, g])
     }
   };
-  b.Mh = function(a) {
-    for(var b = this.Bd(".k_" + a), c = Number.MIN_VALUE, d = b.length, g = 0;g < d;g++) {
+  b.Eh = function(a) {
+    for(var b = this.wd(".k_" + a), c = Number.MIN_VALUE, d = b.length, g = 0;g < d;g++) {
       if(c < b[g].scrollWidth) {
         c = b[g].scrollWidth
       }
     }
-    c -= this.Hc();
+    c -= this.Ec();
     this.setWidthByKey(a, c)
   };
-  b.mg = function(a) {
+  b.fg = function(a) {
     a = parseInt(a);
     if(!(isNaN(a) || a < 1)) {
-      this.K[0].style.width = a + "px"
+      this.I[0].style.width = a + "px"
     }
   };
   b.getScrollTop = function() {
-    return this.K[0].scrollTop
+    return this.I[0].scrollTop
   };
   b.getScrollLeft = function() {
-    return this.K[0].scrollLeft
+    return this.I[0].scrollLeft
   };
   b.setScrollTop = function(a) {
     var b = this.getScrollTop();
-    return c.isNotNull(a) && b != a ? this.K[0].scrollTop = a : b
+    return c.isNotNull(a) && b != a ? this.I[0].scrollTop = a : b
   };
   b.setScrollLeft = function(a) {
     var b = this.getScrollLeft();
-    return c.isNotNull(a) && b != a ? this.K[0].scrollLeft = a : b
+    return c.isNotNull(a) && b != a ? this.I[0].scrollLeft = a : b
   };
-  b.Yh = function() {
-    return this.K[0].offsetHeight > this.K[0].clientHeight
+  b.Qh = function() {
+    return this.I[0].offsetHeight > this.I[0].clientHeight
   };
-  b.Zh = function() {
-    return this.K[0].offsetWidth > this.K[0].clientWidth
+  b.Rh = function() {
+    return this.I[0].offsetWidth > this.I[0].clientWidth
   };
-  b.pf = function() {
-    return this.K[0].offsetHeight - this.K[0].clientHeight
+  b.jf = function() {
+    return this.I[0].offsetHeight - this.I[0].clientHeight
   };
-  b.fd = function() {
-    return this.K[0].offsetWidth - this.K[0].clientWidth
+  b.cd = function() {
+    return this.I[0].offsetWidth - this.I[0].clientWidth
   };
-  b.hf = function() {
-    return Math.floor(this.getScrollTop() / this.ra())
+  b.bf = function() {
+    return Math.floor(this.getScrollTop() / this.pa())
   };
-  b.Nd = function() {
-    return Math.ceil(this.getScrollTop() / this.ra())
+  b.Id = function() {
+    return Math.ceil(this.getScrollTop() / this.pa())
   };
-  b.lf = function() {
-    return Math.ceil((this.getScrollTop() + this.K[0].clientHeight) / this.ra()) - 1
+  b.ef = function() {
+    return Math.ceil((this.getScrollTop() + this.I[0].clientHeight) / this.pa()) - 1
   };
-  b.kf = function() {
-    return Math.floor((this.getScrollTop() + this.K[0].clientHeight) / this.ra()) - 1
+  b.df = function() {
+    return Math.floor((this.getScrollTop() + this.I[0].clientHeight) / this.pa()) - 1
   };
-  b.gf = function(a) {
-    return a - Math.floor(this.K[0].clientHeight / this.ra()) + 1
+  b.af = function(a) {
+    return a - Math.floor(this.I[0].clientHeight / this.pa()) + 1
   };
-  b.Vh = function() {
-    for(var a = this.getScrollLeft(), b = this.ma, c = 0, d = b.length;c < d;c++) {
+  b.Nh = function() {
+    for(var a = this.getScrollLeft(), b = this.ka, c = 0, d = b.length;c < d;c++) {
       if(b[c] > a) {
         return c - 1
       }
@@ -6043,32 +6043,32 @@ var F = {};
     }
     return d - 2
   };
-  b.Md = function() {
-    for(var a = this.getScrollLeft(), b = this.ma, c = 0, d = b.length;c < d;c++) {
+  b.Hd = function() {
+    for(var a = this.getScrollLeft(), b = this.ka, c = 0, d = b.length;c < d;c++) {
       if(b[c] >= a) {
         return c
       }
     }
     return d - 2
   };
-  b.Wh = function() {
-    for(var a = this.getScrollLeft() + this.K[0].clientWidth, b = this.ma, c = 0, d = b.length;c < d;c++) {
+  b.Oh = function() {
+    for(var a = this.getScrollLeft() + this.I[0].clientWidth, b = this.ka, c = 0, d = b.length;c < d;c++) {
       if(b[c] >= a) {
         return c - 1
       }
     }
     return d - 2
   };
-  b.jf = function() {
-    for(var a = this.getScrollLeft() + this.K[0].clientWidth, b = this.ma, c = 0, d = b.length;c < d;c++) {
+  b.cf = function() {
+    for(var a = this.getScrollLeft() + this.I[0].clientWidth, b = this.ka, c = 0, d = b.length;c < d;c++) {
       if(b[c] > a) {
         return c - 2
       }
     }
     return d - 2
   };
-  b.Uh = function(a) {
-    var b = this.ma, c = b[a + 1] - this.K[0].clientWidth, d = a;
+  b.Mh = function(a) {
+    var b = this.ka, c = b[a + 1] - this.I[0].clientWidth, d = a;
     if(c <= 0) {
       return 0
     }
@@ -6083,77 +6083,77 @@ var F = {};
     return 0
   };
   b.getScrollHForSafe = function(a) {
-    var b = this.ma, c = b[a + 1] - this.K[0].clientWidth;
+    var b = this.ka, c = b[a + 1] - this.I[0].clientWidth;
     return b[a] <= c ? b[a] : c
   };
-  b.Od = function() {
+  b.Jd = function() {
     if(this.A.autoHeight) {
-      return{start:0, end:this.grid.B.W.length - 1}
+      return{start:0, end:this.grid.dataMgr.U.length - 1}
     }
-    var a, b = this.grid.B.W.length - 1;
-    return{start:(a = this.hf() - this.A.bufferSize) < 0 ? 0 : a, end:(a = this.lf() + this.A.bufferSize) > b ? b : a}
+    var a, b = this.grid.dataMgr.U.length - 1;
+    return{start:(a = this.bf() - this.A.bufferSize) < 0 ? 0 : a, end:(a = this.ef() + this.A.bufferSize) > b ? b : a}
   };
-  b.af = function() {
-    this.K[0].style.height = this.getCanvasHeight() + this.pf() + "px"
+  b.Ve = function() {
+    this.I[0].style.height = this.getCanvasHeight() + this.jf() + "px"
   };
-  b.hg = function() {
-    this.A.autoHeight && this.af()
+  b.ag = function() {
+    this.A.autoHeight && this.Ve()
   };
-  b.bh = function(a) {
-    a !== s && a.noRerender === !0 || this.ae()
+  b.Vg = function(a) {
+    a !== s && a.noRerender === !0 || this.Wd()
   };
-  b.ae = function() {
+  b.Wd = function() {
     var a = this.getScrollTop(), b = this.getScrollLeft();
     this.grid.event.trigger("onBeforeRerender");
     this.unlockAllRows();
-    this.dg();
-    var c = this.grid.B.W.length;
-    if(this.L.Oc !== c) {
-      this.L.Oc = c, this.jg(this.wc())
+    this.Xf();
+    var c = this.grid.dataMgr.U.length;
+    if(this.J.Lc !== c) {
+      this.J.Lc = c, this.cg(this.tc())
     }
-    this.Cb();
+    this.zb();
     this.setScrollTop(a);
     this.setScrollLeft(b);
     this.grid.event.trigger("onAfterRerender")
   };
-  b.Cb = function(a) {
-    this.bg(a)
+  b.zb = function(a) {
+    this.Vf(a)
   };
-  b.ci = function(a) {
-    c.isNull(a) && (a = this.Od());
-    this.eg(a);
-    this.Ie(a)
+  b.Wh = function(a) {
+    c.isNull(a) && (a = this.Jd());
+    this.Yf(a);
+    this.Ce(a)
   };
-  b.dg = function() {
-    var a = this.qa[0], b = this.ea, d = this.ta, g;
+  b.Xf = function() {
+    var a = this.oa[0], b = this.ca, d = this.ra, g;
     if(c.isNull(s)) {
-      if(this.Sd()) {
+      if(this.Nd()) {
         for(g in b) {
           b.hasOwnProperty(g) && d.hasOwnProperty(g) && (a.removeChild(b[g]), delete b[g])
         }
       }else {
-        this.ea = {}, a.innerHTML = ""
+        this.ca = {}, a.innerHTML = ""
       }
     }else {
-      for(var h = s.start, j = s.end, l = this.grid.B;h <= j;h++) {
+      for(var h = s.start, j = s.end, l = this.grid.dataMgr;h <= j;h++) {
         if(!d.hasOwnProperty(g = l.getIdByIdx(h)) && b.hasOwnProperty(g)) {
           a.removeChild(b[g]), delete b[g]
         }
       }
     }
   };
-  b.eg = function(a) {
-    var b = this.qa[0], d = this.ea, g = this.ta, h;
+  b.Yf = function(a) {
+    var b = this.oa[0], d = this.ca, g = this.ra, h;
     if(c.isNull(a)) {
-      if(this.Sd()) {
+      if(this.Nd()) {
         for(h in d) {
           d.hasOwnProperty(h) && g.hasOwnProperty(h) === !1 && (b.removeChild(d[h]), delete d[h])
         }
       }else {
-        this.ea = {}, b.innerHTML = ""
+        this.ca = {}, b.innerHTML = ""
       }
     }else {
-      var j = a.start, a = a.end, l = this.grid.B, m;
+      var j = a.start, a = a.end, l = this.grid.dataMgr, m;
       for(h in d) {
         if(d.hasOwnProperty(h) && !(g.hasOwnProperty(h) || j <= (m = l.getIdxById(h)) && m <= a)) {
           b.removeChild(d[h]), delete d[h]
@@ -6162,74 +6162,74 @@ var F = {};
     }
   };
   b.destroyRow = function(a) {
-    return this.destroyRowById(this.grid.B.getId(a))
+    return this.destroyRowById(this.grid.dataMgr.getId(a))
   };
   b.destroyRowById = function(a) {
-    c.isNotNull(a) && (this.unlockRowById(a), this.ea.hasOwnProperty(a) && (this.qa[0].removeChild(this.ea[a]), delete this.ea[a]))
+    c.isNotNull(a) && (this.unlockRowById(a), this.ca.hasOwnProperty(a) && (this.oa[0].removeChild(this.ca[a]), delete this.ca[a]))
   };
   b.destroyRowByIdx = function(a) {
-    return this.destroyRowById(this.grid.B.getIdByIdx(a))
+    return this.destroyRowById(this.grid.dataMgr.getIdByIdx(a))
   };
-  b.Sd = function() {
-    return c.isNotEmptyObj(this.ta)
+  b.Nd = function() {
+    return c.isNotEmptyObj(this.ra)
   };
   b.isRowLockedById = function(a) {
-    return c.isNotNull(a) ? this.ta.hasOwnProperty(a) : !1
+    return c.isNotNull(a) ? this.ra.hasOwnProperty(a) : !1
   };
   b.isRowLocked = function(a) {
-    return this.isRowLockedById(this.grid.B.getId(a))
+    return this.isRowLockedById(this.grid.dataMgr.getId(a))
   };
   b.isRowLockedByIdx = function(a) {
-    return this.isRowLockedById(this.grid.B.getIdByIdx(a))
+    return this.isRowLockedById(this.grid.dataMgr.getIdByIdx(a))
   };
   b.lockRowById = function(a) {
-    c.isNotNull(a) && this.grid.B.hasById(a) && (this.ta[a] = !0)
+    c.isNotNull(a) && this.grid.dataMgr.hasById(a) && (this.ra[a] = !0)
   };
   b.lockRow = function(a) {
-    return this.lockRowById(this.grid.B.getId(a))
+    return this.lockRowById(this.grid.dataMgr.getId(a))
   };
   b.lockRowByIdx = function(a) {
-    return this.lockRowById(this.grid.B.getIdByIdx(a))
+    return this.lockRowById(this.grid.dataMgr.getIdByIdx(a))
   };
   b.unlockRowById = function(a) {
-    this.isRowLockedById(a) && delete this.ta[a]
+    this.isRowLockedById(a) && delete this.ra[a]
   };
   b.unlockRow = function(a) {
-    return this.unlockRowById(this.grid.B.getId(a))
+    return this.unlockRowById(this.grid.dataMgr.getId(a))
   };
   b.unlockRowByIdx = function(a) {
-    return this.unlockRowById(this.grid.B.getIdByIdx(a))
+    return this.unlockRowById(this.grid.dataMgr.getIdByIdx(a))
   };
   b.unlockAllRows = function() {
-    this.ta = {}
+    this.ra = {}
   };
   b.rerenderRowById = function(a) {
-    if(this.grid.B.containsById(a)) {
-      var b = this.ea, d = this.qa[0], g = this.grid.B, h = g.getIdxById(a), g = g.getById(a), j = this.grid.G.get(), l = this.Fc(j), m = this.ra(), k = [];
-      b.hasOwnProperty(a) && (d.removeChild(b[a]), this.grid.event.trigger("onBeforeRenderRows", [[h]]), this.Zc(k, h, g, j, l, m), b[a] = c.appendHTML(d, k.join(""))[0], this.grid.event.trigger("onAppendRows", [[h]]))
+    if(this.grid.dataMgr.containsById(a)) {
+      var b = this.ca, d = this.oa[0], g = this.grid.dataMgr, h = g.getIdxById(a), g = g.getById(a), j = this.grid.colDefMgr.get(), l = this.Cc(j), m = this.pa(), k = [];
+      b.hasOwnProperty(a) && (d.removeChild(b[a]), this.grid.event.trigger("onBeforeRenderRows", [[h]]), this.Wc(k, h, g, j, l, m), b[a] = c.appendHTML(d, k.join(""))[0], this.grid.event.trigger("onAppendRows", [[h]]))
     }
   };
   b.rerenderRow = function(a) {
-    return this.rerenderRowById(this.grid.B.getId(a))
+    return this.rerenderRowById(this.grid.dataMgr.getId(a))
   };
   b.rerenderRowByIdx = function(a) {
-    return this.rerenderRowById(this.grid.B.getIdByIdx(a))
+    return this.rerenderRowById(this.grid.dataMgr.getIdByIdx(a))
   };
   b.rerenderCellByIdAndKey = function(a, b) {
     var c = this.getCellByIdAndKey(a, b);
     if(c !== s) {
-      var d = this.grid.B, g = this.grid.G, j = d.getById(a), l = g.getByKey(b), d = d.getIdxById(a), g = g.getIdxByKey(b);
-      c.innerHTML = this.$d([], d, g, j, l).join("")
+      var d = this.grid.dataMgr, g = this.grid.colDefMgr, j = d.getById(a), l = g.getByKey(b), d = d.getIdxById(a), g = g.getIdxByKey(b);
+      c.innerHTML = this.Vd([], d, g, j, l).join("")
     }
   };
   b.rerenderCellByIdx = function(a, b) {
-    return this.rerenderCellByIdAndKey(this.grid.B.getIdByIdx(a), this.grid.G.Ci(b))
+    return this.rerenderCellByIdAndKey(this.grid.dataMgr.getIdByIdx(a), this.grid.colDefMgr.vi(b))
   };
-  b.Ie = function(a) {
+  b.Ce = function(a) {
     this.grid.event.trigger("onBeforeRenderRows", [a]);
-    for(var b = [], d = a.start, g = a.end, h = this.grid.B.W, j = this.grid.B.O, l = this.grid.G.get(), m = this.Fc(l), k = this.ea, o = this.ra(), n = this.qa[0], q, p, u = [];d <= g;d++) {
+    for(var b = [], d = a.start, g = a.end, h = this.grid.dataMgr.U, j = this.grid.dataMgr.M, l = this.grid.colDefMgr.get(), m = this.Cc(l), k = this.ca, o = this.pa(), n = this.oa[0], q, p, u = [];d <= g;d++) {
       if(q = h[d], !k.hasOwnProperty(p = q[j])) {
-        this.Zc(b, d, q, l, m, o), u.push(p)
+        this.Wc(b, d, q, l, m, o), u.push(p)
       }
     }
     b = c.appendHTML(n, b.join(""));
@@ -6239,41 +6239,41 @@ var F = {};
     }
     this.grid.event.trigger("onAppendRows", [a])
   };
-  b.bg = function(a) {
-    c.isNull(a) && (a = this.Od());
+  b.Vf = function(a) {
+    c.isNull(a) && (a = this.Jd());
     this.grid.event.trigger("onBeforeRenderRows", [a]);
-    for(var b = [], d = a.start, g = a.end, h = this.grid.B, j = h.W, l = h.O, m = this.grid.G.get(), k = this.Fc(m), h = this.qa[0], o = this.ra(), n, q = [], p = {};d <= g;d++) {
-      n = j[d], this.Zc(b, d, n, m, k, o), q.push(n[l])
+    for(var b = [], d = a.start, g = a.end, h = this.grid.dataMgr, j = h.U, l = h.M, m = this.grid.colDefMgr.get(), k = this.Cc(m), h = this.oa[0], o = this.pa(), n, q = [], p = {};d <= g;d++) {
+      n = j[d], this.Wc(b, d, n, m, k, o), q.push(n[l])
     }
     h.innerHTML = b.join("");
     d = 0;
     for(b = q.length;d < b;d++) {
       p[q[d]] = h.childNodes[d]
     }
-    this.ea = p;
+    this.ca = p;
     this.grid.event.trigger("onAppendRows", [a])
   };
-  b.ef = function(a) {
+  b.Ze = function(a) {
     var b = this.A.classCell + " k_" + a.key;
     c.isNotNull(a.colClass) && (b += " " + a.colClass);
     b += " " + this.grid.event.trigger("onGetColCellClass", [a]).join(" ");
     return b
   };
-  b.Fc = function(a) {
+  b.Cc = function(a) {
     var b = [], d = 0, g = a.length;
-    for(c.isNull(a) && (a = this.grid.G.get());d < g;d++) {
-      b.push(this.ef(a[d]))
+    for(c.isNull(a) && (a = this.grid.colDefMgr.get());d < g;d++) {
+      b.push(this.Ze(a[d]))
     }
     return b
   };
-  b.Zc = function(a, b, c, d, g, j) {
-    a.push("<div class='" + this.A.classRow + "' i='" + c[this.grid.B.O] + "' " + this.A.attrRowIdx + "='" + b + "' style='top:" + j * b + "px'>");
+  b.Wc = function(a, b, c, d, g, j) {
+    a.push("<div class='" + this.A.classRow + "' i='" + c[this.grid.dataMgr.M] + "' " + this.A.attrRowIdx + "='" + b + "' style='top:" + j * b + "px'>");
     for(var j = 0, l = d.length;j < l;j++) {
-      a.push("<div class='" + g[j] + " " + this.grid.event.trigger("onGetCellClass", [b, j, c, d[j]]).join(" ") + "'>"), this.$d(a, b, j, c, d[j]), a.push("</div>")
+      a.push("<div class='" + g[j] + " " + this.grid.event.trigger("onGetCellClass", [b, j, c, d[j]]).join(" ") + "'>"), this.Vd(a, b, j, c, d[j]), a.push("</div>")
     }
     a.push("</div>")
   };
-  b.$d = function(a, b, c, d, h) {
+  b.Vd = function(a, b, c, d, h) {
     this.grid.event.trigger("onRenderCell_" + h.key + "_prepend", [b, c, d, h, a]);
     var j = d[h.key];
     if(typeof j !== "string" || j.substring(0, 3) !== "J@H") {
@@ -6285,50 +6285,50 @@ var F = {};
   g.Cell.prototype.scrollTo = function() {
     this.grid.view.scrollTo(this.getRowIdx(), this.getColIdx())
   };
+  b.Hc = function(a) {
+    c.contains(this.I[0], document.activeElement, this.G[0]) && this.grid.event.trigger("keydownCanvas_" + a.which + " keydownCanvas", [a])
+  };
   b.Kc = function(a) {
-    c.contains(this.K[0], document.activeElement, this.I[0]) && this.grid.event.trigger("keydownCanvas_" + a.which + " keydownCanvas", [a])
+    c.contains(this.I[0], document.activeElement, this.G[0]) && this.grid.event.trigger("keyupCanvas_" + a.which + " keyupCanvas", [a])
+  };
+  b.Jc = function(a) {
+    c.contains(this.I[0], document.activeElement, this.G[0]) && this.grid.event.trigger("keypressCanvas_" + a.which + " keypressCanvas", [a])
   };
   b.Nc = function(a) {
-    c.contains(this.K[0], document.activeElement, this.I[0]) && this.grid.event.trigger("keyupCanvas_" + a.which + " keyupCanvas", [a])
-  };
-  b.Mc = function(a) {
-    c.contains(this.K[0], document.activeElement, this.I[0]) && this.grid.event.trigger("keypressCanvas_" + a.which + " keypressCanvas", [a])
-  };
-  b.Qc = function(a) {
-    this.L.drag ? this.ha(a, {event:"draginCanvas mouseinCanvas"}) : this.ha(a, {event:"mouseinCanvas"})
-  };
-  b.Sc = function(a) {
-    this.L.drag ? this.ha(a, {event:"dragoutCanvas mouseoutCanvas"}) : this.ha(a, {event:"mouseoutCanvas"})
+    this.J.drag ? this.fa(a, {event:"draginCanvas mouseinCanvas"}) : this.fa(a, {event:"mouseinCanvas"})
   };
   b.Pc = function(a) {
-    this.L.drag ? this.ha(a, {event:"dragenterCanvas mouseenterCanvas"}) : this.ha(a, {event:"mouseenterCanvas"})
+    this.J.drag ? this.fa(a, {event:"dragoutCanvas mouseoutCanvas"}) : this.fa(a, {event:"mouseoutCanvas"})
   };
-  b.Rc = function(a) {
-    this.L.drag ? this.ha(a, {event:"dragleaveCanvas mouseleaveCanvas"}) : this.ha(a, {event:"mouseleaveCanvas"})
+  b.Mc = function(a) {
+    this.J.drag ? this.fa(a, {event:"dragenterCanvas mouseenterCanvas"}) : this.fa(a, {event:"mouseenterCanvas"})
   };
-  b.gb = function(a) {
-    this.L.drag ? this.ha(a, {event:"dragmoveCanvas mousemoveCanvas"}) : this.ha(a, {event:"mousemoveCanvas"})
+  b.Oc = function(a) {
+    this.J.drag ? this.fa(a, {event:"dragleaveCanvas mouseleaveCanvas"}) : this.fa(a, {event:"mouseleaveCanvas"})
   };
-  b.Tc = function(a) {
-    this.L.drag ? this.ha(a, {event:"dragoverCanvas mouseoverCanvas"}) : this.ha(a, {event:"mouseoverCanvas"})
+  b.eb = function(a) {
+    this.J.drag ? this.fa(a, {event:"dragmoveCanvas mousemoveCanvas"}) : this.fa(a, {event:"mousemoveCanvas"})
   };
-  b.wb = function(a) {
-    if(this.ha(a, {event:"mousedownCanvas"})) {
-      this.L.drag = !0, this.focus(a)
+  b.Qc = function(a) {
+    this.J.drag ? this.fa(a, {event:"dragoverCanvas mouseoverCanvas"}) : this.fa(a, {event:"mouseoverCanvas"})
+  };
+  b.tb = function(a) {
+    if(this.fa(a, {event:"mousedownCanvas"})) {
+      this.J.drag = !0, this.focus(a)
     }
   };
-  b.La = function(a) {
-    this.L.drag = !1;
-    this.ha(a, {event:"mouseupCanvas"}) && this.focus(a)
+  b.Ia = function(a) {
+    this.J.drag = !1;
+    this.fa(a, {event:"mouseupCanvas"}) && this.focus(a)
   };
-  b.sb = function(a) {
-    this.ha(a, {event:"clickCanvas"})
+  b.pb = function(a) {
+    this.fa(a, {event:"clickCanvas"})
   };
-  b.yc = function(a) {
-    this.ha(a, {event:"dblclickCanvas"})
+  b.vc = function(a) {
+    this.fa(a, {event:"dblclickCanvas"})
   };
-  b.ha = function(a, b) {
-    var d = this.Id(a.target), i, h, j;
+  b.fa = function(a, b) {
+    var d = this.Dd(a.target), i, h, j;
     if(d === s) {
       return!1
     }
@@ -6342,63 +6342,63 @@ var F = {};
     this.grid.event.trigger(i.join(" "), [a, b.cell]);
     return!0
   };
-  b.be = function() {
-    var a = this.getScrollTop(), b = a - this.L.Rd, c = this.getScrollLeft(), d = c - this.L.Qd;
+  b.Xd = function() {
+    var a = this.getScrollTop(), b = a - this.J.Md, c = this.getScrollLeft(), d = c - this.J.Ld;
     if(!(b === 0 && d === 0)) {
       this.grid.event.trigger("onScrollViewport");
       if(d !== 0) {
-        this.L.Qd = c, this.grid.event.trigger("onScrollViewportH", [c])
+        this.J.Ld = c, this.grid.event.trigger("onScrollViewportH", [c])
       }
-      if(!(Math.abs(b / this.ra()) < this.A.appendThreshold)) {
-        this.L.Rd = a, this.Cb(), this.grid.event.trigger("onScrollViewportV")
+      if(!(Math.abs(b / this.pa()) < this.A.appendThreshold)) {
+        this.J.Md = a, this.zb(), this.grid.event.trigger("onScrollViewportV")
       }
     }
   };
   b.focus = function(a) {
-    if((!c.isNotNull(a) || !this.grid.event.triggerInvalid("onBeforeFocusCanvas", [a])) && this.K[0] !== document.activeElement) {
-      if(c.isFunction(this.K[0].setActive)) {
+    if((!c.isNotNull(a) || !this.grid.event.triggerInvalid("onBeforeFocusCanvas", [a])) && this.I[0] !== document.activeElement) {
+      if(c.isFunction(this.I[0].setActive)) {
         try {
-          this.K[0].setActive()
+          this.I[0].setActive()
         }catch(b) {
         }
       }
-      this.K[0].focus();
-      document.activeElement !== this.K[0] && this.K.focus()
+      this.I[0].focus();
+      document.activeElement !== this.I[0] && this.I.focus()
     }
   };
   b.isRenderedById = function(a) {
-    return c.isNotNull(a) ? this.ea.hasOwnProperty(a) : !1
+    return c.isNotNull(a) ? this.ca.hasOwnProperty(a) : !1
   };
   b.isRendered = function(a) {
-    return this.isRenderedById(this.grid.B.getId(a))
+    return this.isRenderedById(this.grid.dataMgr.getId(a))
   };
   b.isRenderedByIdx = function(a) {
-    return this.isRenderedById(this.grid.B.getIdByIdx(a))
+    return this.isRenderedById(this.grid.dataMgr.getIdByIdx(a))
   };
   b.getRowById = function(a) {
     if(this.isRenderedById(a)) {
-      return this.ea[a]
+      return this.ca[a]
     }
   };
   b.getRow = function(a) {
-    return this.getRowById(this.grid.B.getId(a))
+    return this.getRowById(this.grid.dataMgr.getId(a))
   };
   b.getRowByIdx = function(a) {
-    return this.getRowById(this.grid.B.getIdByIdx(a))
+    return this.getRowById(this.grid.dataMgr.getIdByIdx(a))
   };
   b.getRenderedRowById = function(a) {
     if(this.isRenderedById(a)) {
-      return this.ea[a]
+      return this.ca[a]
     }
   };
   b.getRenderedRow = function(a) {
-    return this.getRenderedRowById(this.grid.B.getId(a))
+    return this.getRenderedRowById(this.grid.dataMgr.getId(a))
   };
   b.getRenderedRowByIdx = function(a) {
-    return this.getRenderedRowById(this.grid.B.getIdByIdx(a))
+    return this.getRenderedRowById(this.grid.dataMgr.getIdByIdx(a))
   };
   b.getRenderedRows = function() {
-    return c.toArray(this.ea)
+    return c.toArray(this.ca)
   };
   b.getCell = function(a, b) {
     var d = this.getRowByIdx(a);
@@ -6407,7 +6407,7 @@ var F = {};
     }
   };
   b.getCellByIdAndKey = function(a, b) {
-    var d = this.getRowById(a), g = this.grid.G.getIdxByKey(b);
+    var d = this.getRowById(a), g = this.grid.colDefMgr.getIdxByKey(b);
     if(c.isNotNullAnd(d, g)) {
       return d.childNodes[g]
     }
@@ -6419,55 +6419,55 @@ var F = {};
     }
   };
   b.getRenderedCellByIdAndKey = function(a, b) {
-    var d = this.getRenderedRowById(a), g = this.grid.G.getIdxByKey(b);
+    var d = this.getRenderedRowById(a), g = this.grid.colDefMgr.getIdxByKey(b);
     if(c.isNotNullAnd(d, g)) {
       return d.childNodes[g]
     }
   };
-  b.Id = function(a) {
-    return c.closestWithTag(a, "DIV", this.A.classCell, this.qa[0])
+  b.Dd = function(a) {
+    return c.closestWithTag(a, "DIV", this.A.classCell, this.oa[0])
   };
-  b.df = function(a) {
-    return c.closestWithTag(a, "DIV", this.A.classRow, this.qa[0])
+  b.Ye = function(a) {
+    return c.closestWithTag(a, "DIV", this.A.classRow, this.oa[0])
   };
-  b.Ph = function(a) {
-    return this.grid.B.getIdxByNode(this.df(a))
+  b.Hh = function(a) {
+    return this.grid.dataMgr.getIdxByNode(this.Ye(a))
   };
-  b.Bd = function(a) {
-    return this.qa.find(a)
+  b.wd = function(a) {
+    return this.oa.find(a)
   };
-  d.fg = function(a) {
+  d.Zf = function(a) {
     return c.ifNull(a, "")
   }
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
-    this.I = a.container;
+    this.C = a.C;
+    this.G = a.container;
     this.grid = a.grid;
-    this.grid.Bg = this;
-    this.A = g.da({background:"#dfdfdf", borderThickness:0, border:"solid #D6D6D6", inputBorder:"solid #A7A7A7", inputBorderThickness:1, inputHeight:18, inputMargin:8, nameMargin:2, font:"12px Arial,Helvetica,sans-serif", height:28, padding:3, classCreatorIcon:"creator-icon", creatorIconUrl:this.grid.A.imageUrl + "data-creator-icon.png", creatorIconWidth:13, creatorIconHeight:13, classCreator:"data-creator", classColName:"data-creator-name", inputBorderRadius:3}, a.options);
-    this.Yb = {};
-    this.P()
+    this.grid.creator = this;
+    this.A = g.ba({background:"#dfdfdf", borderThickness:0, border:"solid #D6D6D6", inputBorder:"solid #A7A7A7", inputBorderThickness:1, inputHeight:18, inputMargin:8, nameMargin:2, font:"12px Arial,Helvetica,sans-serif", height:28, padding:3, classCreatorIcon:"creator-icon", creatorIconUrl:this.grid._options.imageUrl + "data-creator-icon.png", creatorIconWidth:13, creatorIconHeight:13, classCreator:"data-creator", classColName:"data-creator-name", inputBorderRadius:3}, a.options);
+    this.Vb = {};
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.DataCreator", d);
-  g.S("DataCreator", d);
-  d.Z = function(a) {
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.DataCreator", d);
+  g.Q("DataCreator", d);
+  d.X = function(a) {
     return new d(a)
   };
   var b = d.prototype;
-  b.P = function() {
-    this.Qe = $("<div class='" + this.A.classCreator + "'>").appendTo(this.I);
+  b.N = function() {
+    this.Ke = $("<div class='" + this.A.classCreator + "'>").appendTo(this.G);
     this.bindEvents()
   };
   b.bindEvents = function() {
-    this.grid.event.bind({onRenderModules:this.zb, onCreateCss:this.aa, onDestroy:this.J}, this)
+    this.grid.event.bind({onRenderModules:this.wb, onCreateCss:this.Y, onDestroy:this.H}, this)
   };
-  b.aa = function() {
-    var a = "#" + this.grid.D + " .", b = this.A, c = [];
-    c.push(a + b.classCreator + "{" + g.Ba.tb + "float:left;width:100%;padding-left:8px;background:" + b.background + ";border-top:" + (b.borderThickness + "px " + b.border) + ";font:" + b.font + "}");
+  b.Y = function() {
+    var a = "#" + this.grid.mid + " .", b = this.A, c = [];
+    c.push(a + b.classCreator + "{" + g.za.qb + "float:left;width:100%;padding-left:8px;background:" + b.background + ";border-top:" + (b.borderThickness + "px " + b.border) + ";font:" + b.font + "}");
     c.push(a + b.classCreator + " button{float:left;margin:" + b.padding + "px " + b.padding + "px 0 0;height:" + (b.height - 2 * b.padding) + "px}");
     c.push(a + b.classCreator + " input{float:left;padding:0;margin-top:" + (b.height - b.inputHeight - 2 * b.inputBorderThickness) / 2 + "px;height:" + b.inputHeight + "px;border:" + b.inputBorderThickness + "px " + b.inputBorder + ";border-radius:" + b.inputBorderRadius + "px;-moz-border-radius:" + b.inputBorderRadius + "px}");
     c.push(a + b.classCol + "{float:left;overflow:hidden;white-space:nowrap;line-height:" + b.height + "px;margin-right:" + b.inputMargin + "px}");
@@ -6475,14 +6475,14 @@ var F = {};
     c.push(a + b.classCreatorIcon + "{background:url(" + b.creatorIconUrl + ") no-repeat center;width:" + b.creatorIconWidth + "px;height:" + b.creatorIconHeight + "px}");
     return c.join("")
   };
-  b.zb = function() {
+  b.wb = function() {
     function a(a) {
-      a.which === c.keyMapKeydown.jc && k.Sb()
+      a.which === c.keyMapKeydown.gc && k.Pb()
     }
-    for(var b = [], d = this.grid.G.getAll(), g = d.length, h, j = this.A, l = j.classCol, m = j.classColName, k = this, o = this.Qe, n = this.Yb, q = 0;q < g;q++) {
+    for(var b = [], d = this.grid.colDefMgr.getAll(), g = d.length, h, j = this.A, l = j.classCol, m = j.classColName, k = this, o = this.Ke, n = this.Vb, q = 0;q < g;q++) {
       h = d[q], h.inputOnCreate === !0 && b.push("<div key='" + h.key + "' class='" + l + "'><div class='" + m + "'>" + h.name + "</div><input type='text' value='" + c.ifNull(h.defaultValue, "") + "' style='width:" + h.width + "px'/></div>")
     }
-    o[0].innerHTML = b.join("") + "<button type='button' onclick='JGM.m.DataCreator." + this.D + "._addData()'>등록</button><button type='button' onclick='JGM.m.DataCreator." + this.D + "._reset()'>초기화</button>";
+    o[0].innerHTML = b.join("") + "<button type='button' onclick='JGM.m.DataCreator." + this.C + "._addData()'>등록</button><button type='button' onclick='JGM.m.DataCreator." + this.C + "._reset()'>초기화</button>";
     for(q = 0;q < g;q++) {
       h = d[q], h.inputOnCreate === !0 && (n[h.key] = o.find("div[key='" + h.key + "'] input").keyup(a))
     }
@@ -6490,8 +6490,8 @@ var F = {};
       o.toggle("fast")
     }), o.hide())
   };
-  b.Sb = function() {
-    var a, b = this.Yb, c = this.grid.G, d = {}, g = c.getAll(), j = g.length, l = 0;
+  b.Pb = function() {
+    var a, b = this.Vb, c = this.grid.colDefMgr, d = {}, g = c.getAll(), j = g.length, l = 0;
     for(a in b) {
       b.hasOwnProperty(a) && c.getByKey(a)
     }
@@ -6499,53 +6499,53 @@ var F = {};
       c = g[l], a = c.key, b.hasOwnProperty(a) ? d[a] = b[a][0].value : c.defaultValue !== s && (d[a] = c.defaultValue)
     }
     this.grid.event.trigger("onAfterDataCreate", [d]);
-    this.grid.B.add(d, {isNew:!0})
+    this.grid.dataMgr.add(d, {isNew:!0})
   };
-  b.di = function() {
-    var a, b = this.grid.G, c, d = this.Yb;
+  b.Xh = function() {
+    var a, b = this.grid.colDefMgr, c, d = this.Vb;
     for(a in d) {
       if(d.hasOwnProperty(a) && (c = b.getByKey(a), c.defaultValue !== s)) {
         d[a][0].value = c.defaultValue
       }
     }
   };
-  b.J = function() {
-    var a, b = this.Yb;
+  b.H = function() {
+    var a, b = this.Vb;
     for(a in b) {
-      b.hasOwnProperty(a) && g.ub(b, a)
+      b.hasOwnProperty(a) && g.rb(b, a)
     }
-    g.J(this, {name:"DataCreator", path:"creator", $:"creator", map:"inputMap _options"})
+    g.H(this, {name:"DataCreator", path:"creator", $:"creator", map:"inputMap _options"})
   }
 })();
 (function() {
   function d(a) {
-    this.D = a.D;
-    this.I = a.container;
+    this.C = a.C;
+    this.G = a.container;
     this.grid = a.grid;
     this.grid.search = this;
-    this.A = g.da({background:"#f0f0f0", borderThickness:1, border:"solid #d6d6d6", inputBorder:"1px solid #A7A7A7", inputPadding:0, searchbarAlign:"center", searchbarMargin:3, searchbarWidth:"99%", searchbarHeight:20, tagsHeight:26, tagsPadding:2, tagsBorderRadius:3, advButtonColor:"#123272", advButtonFont:"bold 12px Arial,Helvetica,sans-serif", advButtonPadding:5, advButtonBg:"", advButtonBgHover:"url(" + this.grid.A.imageUrl + "more-options-bg-hover.png) repeat-x scroll center", advButtonBgActive:"url(" + 
-    this.grid.A.imageUrl + "more-options-bg-active.png) repeat-x scroll center", advButtonBgOpened:"url(" + this.grid.A.imageUrl + "more-options-bg-opened.png) repeat-x scroll center", advButtonBorderThickness:1, advButtonBorder:"solid transparent", advButtonBorderHover:"solid #a4a4a4", advButtonBorderActive:"solid #c5c5c5", advButtonBorderOpened:"solid #bfbfbf", advButtonIconWidth:9, advButtonIconMargin:2, advButtonIconUrl:this.grid.A.imageUrl + "more-options.png", advButtonIconCloseUrl:this.grid.A.imageUrl + 
-    "more-options-close.png", tagPadding:2, tagBorder:"solid #93979D", tagBorderThickness:1, tagFont:"bold 13px Arial", tagColor:"#282853", tagBackground:"url(" + this.grid.A.imageUrl + "tag-background.png) repeat-x scroll center", tagRemoveIconWidth:12, tagRemoveIconUrl:this.grid.A.imageUrl + "tag-close.png", tagRemoveIconHoverUrl:this.grid.A.imageUrl + "tag-close-hover.png", advFont:"11px Arial", advInputWidth:30, classMask:"search-mask", classSearchbar:"search-bar", classAdvButtonName:"more-option-name", 
-    classAdvButton:"more-options", classAdvButtonIcon:"more-icon", classClearTags:"clear-tags", classTagbar:"search-tags", classTag:"search-tag", classTagName:"search-tag-name", classRemoveTag:"search-tag-remove", classAdvanced:"search-advanced", classOptionCol:"search-option-col", classOption:"search-option", classSearchIcon:"search-icon", searchIconUrl:this.grid.A.imageUrl + "search-icon.png", searchIconWidth:15, searchIconHeight:15, keyMap:s, tagRemoveIconActiveUrl:this.grid.A.imageUrl + "tag-close-active.png", 
-    syncMaster:!1}, a.options);
+    this.A = g.ba({background:"#f0f0f0", borderThickness:1, border:"solid #d6d6d6", inputBorder:"1px solid #A7A7A7", inputPadding:0, searchbarAlign:"center", searchbarMargin:3, searchbarWidth:"99%", searchbarHeight:20, tagsHeight:26, tagsPadding:2, tagsBorderRadius:3, advButtonColor:"#123272", advButtonFont:"bold 12px Arial,Helvetica,sans-serif", advButtonPadding:5, advButtonBg:"", advButtonBgHover:"url(" + this.grid._options.imageUrl + "more-options-bg-hover.png) repeat-x scroll center", advButtonBgActive:"url(" + 
+    this.grid._options.imageUrl + "more-options-bg-active.png) repeat-x scroll center", advButtonBgOpened:"url(" + this.grid._options.imageUrl + "more-options-bg-opened.png) repeat-x scroll center", advButtonBorderThickness:1, advButtonBorder:"solid transparent", advButtonBorderHover:"solid #a4a4a4", advButtonBorderActive:"solid #c5c5c5", advButtonBorderOpened:"solid #bfbfbf", advButtonIconWidth:9, advButtonIconMargin:2, advButtonIconUrl:this.grid._options.imageUrl + "more-options.png", advButtonIconCloseUrl:this.grid._options.imageUrl + 
+    "more-options-close.png", tagPadding:2, tagBorder:"solid #93979D", tagBorderThickness:1, tagFont:"bold 13px Arial", tagColor:"#282853", tagBackground:"url(" + this.grid._options.imageUrl + "tag-background.png) repeat-x scroll center", tagRemoveIconWidth:12, tagRemoveIconUrl:this.grid._options.imageUrl + "tag-close.png", tagRemoveIconHoverUrl:this.grid._options.imageUrl + "tag-close-hover.png", advFont:"11px Arial", advInputWidth:30, classMask:"search-mask", classSearchbar:"search-bar", classAdvButtonName:"more-option-name", 
+    classAdvButton:"more-options", classAdvButtonIcon:"more-icon", classClearTags:"clear-tags", classTagbar:"search-tags", classTag:"search-tag", classTagName:"search-tag-name", classRemoveTag:"search-tag-remove", classAdvanced:"search-advanced", classOptionCol:"search-option-col", classOption:"search-option", classSearchIcon:"search-icon", searchIconUrl:this.grid._options.imageUrl + "search-icon.png", searchIconWidth:15, searchIconHeight:15, keyMap:s, tagRemoveIconActiveUrl:this.grid._options.imageUrl + 
+    "tag-close-active.png", syncMaster:!1}, a.options);
+    this.Ga = {};
     this.Ja = {};
-    this.Ma = {};
-    this.Vd = {};
+    this.Qd = {};
+    this.Qb = {};
+    this.Pa = [];
     this.Tb = {};
-    this.Sa = [];
-    this.Wb = {};
-    this.Jc = {};
-    this.P()
+    this.Gc = {};
+    this.N()
   }
-  var g = goog.H("jx.grid"), c = goog.H("jx.util");
-  goog.H("jx.grid.BaseModule");
-  goog.N("jx.grid.SearchManager", d);
-  g.S("SearchManager", d);
+  var g = goog.D("jx.grid"), c = goog.D("jx.util");
+  goog.D("jx.grid.BaseModule");
+  goog.L("jx.grid.SearchManager", d);
+  g.Q("SearchManager", d);
   var b = d.prototype;
-  b.aa = function() {
-    var a = "#" + this.grid.D + " .", b = this.A, c = b.borderThickness + "px " + b.border, d = "border-radius:" + b.tagsBorderRadius + "px;-moz-border-radius:" + b.tagsBorderRadius + "px", e = b.advButtonBorderThickness + "px " + b.advButtonBorder, f = b.advButtonBorderThickness + "px " + b.advButtonBorderHover, h = b.advButtonBorderThickness + "px " + b.advButtonBorderActive, i = b.advButtonBorderThickness + "px " + b.advButtonBorderOpened, j = b.tagsHeight - 2 * b.tagsPadding, k = j - 2 * b.advButtonBorderThickness, 
+  b.Y = function() {
+    var a = "#" + this.grid.mid + " .", b = this.A, c = b.borderThickness + "px " + b.border, d = "border-radius:" + b.tagsBorderRadius + "px;-moz-border-radius:" + b.tagsBorderRadius + "px", e = b.advButtonBorderThickness + "px " + b.advButtonBorder, f = b.advButtonBorderThickness + "px " + b.advButtonBorderHover, h = b.advButtonBorderThickness + "px " + b.advButtonBorderActive, i = b.advButtonBorderThickness + "px " + b.advButtonBorderOpened, j = b.tagsHeight - 2 * b.tagsPadding, k = j - 2 * b.advButtonBorderThickness, 
     l = j - 2 * b.tagBorderThickness, m = a + b.classMask, n = a + b.classSearchbar, o = a + b.classAdvButton, q = a + b.classRemoveTag, p = [];
-    p.push(m + "{" + g.Ba.tb + "overflow:hidden;width:100%;background:" + b.background + "}");
+    p.push(m + "{" + g.za.qb + "overflow:hidden;width:100%;background:" + b.background + "}");
     p.push(m + " button{margin:0;padding:0 3px}");
     p.push(m + " input{border:" + b.inputBorder + ";padding:" + b.inputPadding + "}");
     p.push(n + "{text-align:" + b.searchbarAlign + ";border-bottom:" + c + "}");
@@ -6570,51 +6570,51 @@ var F = {};
     p.push(a + b.classSearchIcon + "{background:url(" + b.searchIconUrl + ") no-repeat center;width:" + b.searchIconWidth + "px;height:" + b.searchIconHeight + "px}");
     return p.join("")
   };
-  d.Z = function(a) {
+  d.X = function(a) {
     return new d(a)
   };
-  b.P = function() {
+  b.N = function() {
     var a = this.A, b = this, d, e, f;
-    d = this.K = $("<div class='" + a.classMask + "'>").prependTo(this.I);
-    this.ig = $("<div class='" + a.classSearchbar + "'><input type='text'/></div>").appendTo(d);
-    this.Ud = this.ig.children(":eq(0)").keyup(function(a) {
-      a.which === c.keyMapKeydown.jc ? b.Uf($(this)[0].value) : a.which === c.keyMapKeydown.Jg && b.ag()
+    d = this.I = $("<div class='" + a.classMask + "'>").prependTo(this.G);
+    this.bg = $("<div class='" + a.classSearchbar + "'><input type='text'/></div>").appendTo(d);
+    this.Pd = this.bg.children(":eq(0)").keyup(function(a) {
+      a.which === c.keyMapKeydown.gc ? b.Of($(this)[0].value) : a.which === c.keyMapKeydown.Cg && b.Uf()
     });
-    e = this.of = this.grid.G.get().some(function(a) {
+    e = this.hf = this.grid.colDefMgr.get().some(function(a) {
       return c.isNotNull(a.filter)
     });
-    f = this.ee = $("<div class='" + a.classTagbar + "'>" + (e ? "<div class='" + a.classAdvButton + "'><div class='" + a.classAdvButtonName + "'>추가 옵션</div><div class='" + a.classAdvButtonIcon + "'></div></div>" : "") + "<button type='button' class='" + a.classClearTags + "' onclick='JGM.m.SearchManager." + this.D + "._removeAllOptions()'>모든 필터 제거</button></div>").appendTo(d);
+    f = this.$d = $("<div class='" + a.classTagbar + "'>" + (e ? "<div class='" + a.classAdvButton + "'><div class='" + a.classAdvButtonName + "'>추가 옵션</div><div class='" + a.classAdvButtonIcon + "'></div></div>" : "") + "<button type='button' class='" + a.classClearTags + "' onclick='JGM.m.SearchManager." + this.C + "._removeAllOptions()'>모든 필터 제거</button></div>").appendTo(d);
     if(e) {
-      var g = this.xd = $("<div class='" + a.classAdvanced + "'>").appendTo(d).hide().keyup(function(a) {
-        if(a.which === c.keyMapKeydown.jc) {
+      var g = this.sd = $("<div class='" + a.classAdvanced + "'>").appendTo(d).hide().keyup(function(a) {
+        if(a.which === c.keyMapKeydown.gc) {
           var d = a.target.getAttribute("key");
-          b.Wc(d, b.Jc[d], a.target.getAttribute("tag"), a.target.value);
+          b.Tc(d, b.Gc[d], a.target.getAttribute("tag"), a.target.value);
           a.target.value = ""
         }
       });
-      this.Lh = f.children(":eq(0)").click(function() {
+      this.Dh = f.children(":eq(0)").click(function() {
         $(this).toggleClass("opened");
         g.toggle("fast")
       })
     }
-    this.grid.event.bind({onRenderModules:this.zb, onCreateCss:this.aa, onFilter:this.Mf, onDestroy:this.J, onAfterRenderModules:this.Uc}, this)
+    this.grid.event.bind({onRenderModules:this.wb, onCreateCss:this.Y, onFilter:this.Gf, onDestroy:this.H, onAfterRenderModules:this.Rc}, this)
   };
-  b.zb = function() {
-    var a = [], b = this.A, d = this.K;
-    if(this.of) {
-      for(var e = this.grid.G.get(), f = e.length, g = b.keyMap, h = this.Vd, j = this.Jc, i, k, l, m = 0;m < f;m++) {
+  b.wb = function() {
+    var a = [], b = this.A, d = this.I;
+    if(this.hf) {
+      for(var e = this.grid.colDefMgr.get(), f = e.length, g = b.keyMap, h = this.Qd, j = this.Gc, i, k, l, m = 0;m < f;m++) {
         if(i = e[m], c.isNotNull(i.filter)) {
-          l = i.key, k = c.isNull(g) || !g.hasOwnProperty(l) ? i.name || l : g[l], h[k] = l, j[l] = k, a.push("<div class='" + b.classOptionCol + "'>"), this.Wf(l, k, i.name, i.filter, a), a.push("</div>")
+          l = i.key, k = c.isNull(g) || !g.hasOwnProperty(l) ? i.name || l : g[l], h[k] = l, j[l] = k, a.push("<div class='" + b.classOptionCol + "'>"), this.Pf(l, k, i.name, i.filter, a), a.push("</div>")
         }
       }
-      this.xd[0].innerHTML = a.join("")
+      this.sd[0].innerHTML = a.join("")
     }
     c.isNotNull(this.grid.menubar) && (this.grid.menubar.addIcon(b.classSearchIcon, "데이터 검색을 합니다.", b.searchIconWidth, b.searchIconHeight, function() {
       d.toggle("fast")
     }), d.hide())
   };
-  b.Uc = function() {
-    var a = this.Ja, b, c, d, e, f = this.xd;
+  b.Rc = function() {
+    var a = this.Ga, b, c, d, e, f = this.sd;
     for(c in a) {
       if(a.hasOwnProperty(c)) {
         for(d in b = a[c], b) {
@@ -6625,18 +6625,18 @@ var F = {};
       }
     }
   };
-  b.J = function() {
-    var a, b, c, d = this.Wb, e = this.Ja, f = this.Ma;
+  b.H = function() {
+    var a, b, c, d = this.Tb, e = this.Ga, f = this.Ja;
     for(a in d) {
-      d.hasOwnProperty(a) && (g.ub(d[a], "tag"), g.Bc(d[a], "list"))
+      d.hasOwnProperty(a) && (g.rb(d[a], "tag"), g.yc(d[a], "list"))
     }
     for(a in e) {
       if(e.hasOwnProperty(a)) {
         d = e[a];
         for(b in d) {
-          d.hasOwnProperty(b) && (b !== "andor" && b !== "parser" && b !== "validator" && g.ub(d[b], "input"), g.Ca(d, b))
+          d.hasOwnProperty(b) && (b !== "andor" && b !== "parser" && b !== "validator" && g.rb(d[b], "input"), g.Aa(d, b))
         }
-        g.Ca(e, a)
+        g.Aa(e, a)
       }
     }
     for(a in f) {
@@ -6646,23 +6646,23 @@ var F = {};
           if(e.hasOwnProperty(b)) {
             d = e[b];
             for(c in d) {
-              d.hasOwnProperty(c) && (g.ub(d[c], "tag"), g.Ca(d, c))
+              d.hasOwnProperty(c) && (g.rb(d[c], "tag"), g.Aa(d, c))
             }
-            g.Ca(e, b)
+            g.Aa(e, b)
           }
         }
-        g.Ca(f, a)
+        g.Aa(f, a)
       }
     }
-    g.J(this, {name:"SearchManager", path:"search", $:"masterInput _advButton _mask _search _tag _adv", Aa:"ctnr _hasFilter", pe:"global", map:"globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"})
+    g.H(this, {name:"SearchManager", path:"search", $:"masterInput _advButton _mask _search _tag _adv", ya:"ctnr _hasFilter", ke:"global", map:"globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"})
   };
-  b.Mf = function(a, b) {
-    if(!(this.Sa.length === 0 && c.isEmptyObj(this.Tb))) {
-      var d, e = this.Ma, f, g, h = a.length, i, j = this.Ja, k = this.constructor.wd.oe, l, m = this.Sa.length > 0, n, o;
+  b.Gf = function(a, b) {
+    if(!(this.Pa.length === 0 && c.isEmptyObj(this.Qb))) {
+      var d, e = this.Ja, f, g, h = a.length, i, j = this.Ga, k = this.constructor.rd.je, l, m = this.Pa.length > 0, n, o;
       if(m) {
-        var q = this.Sa, p;
-        i = this.grid.G.get().filter(function(a) {
-          return!a.$g
+        var q = this.Pa, p;
+        i = this.grid.colDefMgr.get().filter(function(a) {
+          return!a.Tg
         });
         var u = i.length, w = [];
         for(n = 0;n < u;n++) {
@@ -6691,7 +6691,7 @@ var F = {};
         }
         for(f in e) {
           if(e.hasOwnProperty(f)) {
-            if(o = e[f], d = j[f].sg, i = h[f], d === k) {
+            if(o = e[f], d = j[f].lg, i = h[f], d === k) {
               for(g in o) {
                 if(o.hasOwnProperty(g)) {
                   for(l in d = o[g], d) {
@@ -6722,26 +6722,26 @@ var F = {};
       }
     }
   };
-  b.Wf = function(a, b, c, d, e) {
-    if(!this.Ja.hasOwnProperty(a)) {
+  b.Pf = function(a, b, c, d, e) {
+    if(!this.Ga.hasOwnProperty(a)) {
       if(d === "number") {
-        d = this.constructor.Df
+        d = this.constructor.xf
       }else {
         if(d === "string") {
-          d = this.constructor.og
+          d = this.constructor.hg
         }
       }
-      var f, g = d.length, h = 0, i = this.D, j = this.A.classOption, k, l, m, n;
-      k = this.Ja[a] = {andor:this.constructor.wd.oe};
-      l = this.Ma[a] = {};
+      var f, g = d.length, h = 0, i = this.C, j = this.A.classOption, k, l, m, n;
+      k = this.Ga[a] = {andor:this.constructor.rd.je};
+      l = this.Ja[a] = {};
       for(e.push("<table>");h < g;h++) {
-        f = d[h], n = f.name, n === "parser" ? k.Hb = f.fn : n === "validator" ? k.vd = f.fn : (m = f.tag, k[m] = {option:f}, l[m] = {}, e.push("<tr title='" + f.comment(c, "입력값") + "'><td><div class='" + j + "'>" + c + " " + m + "</td><td><input id='" + a + n + "' key='" + a + "' tag='" + m + "' type='text'><button type='button' onclick=\"JGM.m.SearchManager." + i + "._registerOption('" + a + "','" + b + "','" + m + "',this.previousSibling.value)\">등록</button></div></td></tr>"))
+        f = d[h], n = f.name, n === "parser" ? k.Eb = f.fn : n === "validator" ? k.qd = f.fn : (m = f.tag, k[m] = {option:f}, l[m] = {}, e.push("<tr title='" + f.comment(c, "입력값") + "'><td><div class='" + j + "'>" + c + " " + m + "</td><td><input id='" + a + n + "' key='" + a + "' tag='" + m + "' type='text'><button type='button' onclick=\"JGM.m.SearchManager." + i + "._registerOption('" + a + "','" + b + "','" + m + "',this.previousSibling.value)\">등록</button></div></td></tr>"))
       }
       e.push("</table>")
     }
   };
-  b.Uf = function(a) {
-    for(var b, d, e, f, g = c.split(a), h = g.length, i = 2, j = !1, k = [], l = this.Vd, m = this.Ja, n = 0;n < h;n++) {
+  b.Of = function(a) {
+    for(var b, d, e, f, g = c.split(a), h = g.length, i = 2, j = !1, k = [], l = this.Qd, m = this.Ga, n = 0;n < h;n++) {
       if(a = g[n], a !== "") {
         switch(i) {
           case 0:
@@ -6752,18 +6752,18 @@ var F = {};
             i = 2;
             break;
           case 2:
-            a.charAt(0) === "@" ? (a = a.substring(1), l.hasOwnProperty(a) ? (c.isNotNullAnd(b, d, e, f) && this.Wc(b, d, e, f, !0) && (j = !0), b = l[a], d = a, f = e = s, i = 0) : c.isNull(b) ? k.push(a) : f += " " + a) : c.isNull(b) ? k.push(a) : f += " " + a
+            a.charAt(0) === "@" ? (a = a.substring(1), l.hasOwnProperty(a) ? (c.isNotNullAnd(b, d, e, f) && this.Tc(b, d, e, f, !0) && (j = !0), b = l[a], d = a, f = e = s, i = 0) : c.isNull(b) ? k.push(a) : f += " " + a) : c.isNull(b) ? k.push(a) : f += " " + a
         }
       }
     }
-    c.isNotNullAnd(b, d, e, f) && this.Wc(b, d, e, f, !0) && (j = !0);
-    this.Xf(k) && (j = !0);
-    this.Fb();
-    j && this.grid.B.refresh()
+    c.isNotNullAnd(b, d, e, f) && this.Tc(b, d, e, f, !0) && (j = !0);
+    this.Qf(k) && (j = !0);
+    this.Cb();
+    j && this.grid.dataMgr.refresh()
   };
-  b.Fb = function() {
+  b.Cb = function() {
     if(this.A.syncMaster) {
-      var a = this.Sa.join(" "), b = this.Ma, c = this.Jc, d, e, f, g, h;
+      var a = this.Pa.join(" "), b = this.Ja, c = this.Gc, d, e, f, g, h;
       for(d in b) {
         if(b.hasOwnProperty(d)) {
           for(e in g = b[d], g) {
@@ -6775,38 +6775,38 @@ var F = {};
           }
         }
       }
-      this.Ud[0].value = $.trim(a)
+      this.Pd[0].value = $.trim(a)
     }else {
-      this.Ud[0].value = ""
+      this.Pd[0].value = ""
     }
   };
-  b.Xf = function(a) {
-    for(var b = 0, c = a.length, d = this.Sa;b < c;b++) {
+  b.Qf = function(a) {
+    for(var b = 0, c = a.length, d = this.Pa;b < c;b++) {
       d.indexOf(a[b]) !== -1 ? a.removeAt(b--) : d.push(a[b])
     }
     if(a.length === 0) {
       return!1
     }
     b = this.A;
-    this.Wb[a[0]] = {Ga:$("<div class='" + b.classTag + "' title='" + a.join(", ") + " 를 포함하는'><div class='" + b.classTagName + "'>" + a.join(" ") + "</div><div class='" + b.classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.D + "._removeGlobal('" + a[0] + "')\"></div></div>").appendTo(this.ee), list:a};
+    this.Tb[a[0]] = {Da:$("<div class='" + b.classTag + "' title='" + a.join(", ") + " 를 포함하는'><div class='" + b.classTagName + "'>" + a.join(" ") + "</div><div class='" + b.classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.C + "._removeGlobal('" + a[0] + "')\"></div></div>").appendTo(this.$d), list:a};
     return!0
   };
-  b.ai = function(a) {
-    var b = this.Wb;
+  b.Uh = function(a) {
+    var b = this.Tb;
     if(b.hasOwnProperty(a)) {
       var c = b[a];
-      c.Ga.remove();
-      delete c.Ga;
-      this.Sa.removeList(c.list);
+      c.Da.remove();
+      delete c.Da;
+      this.Pa.removeList(c.list);
       c.list.length = 0;
       delete c.list;
       delete b[a];
-      this.Fb();
-      this.grid.B.refresh()
+      this.Cb();
+      this.grid.dataMgr.refresh()
     }
   };
-  b.Wc = function(a, b, e, f, g) {
-    var h = this.Ja, i, j = this.Tb;
+  b.Tc = function(a, b, e, f, g) {
+    var h = this.Ga, i, j = this.Qb;
     if(h.hasOwnProperty(a) && (i = h[a]).hasOwnProperty(e)) {
       h = i[e];
       if(c.isNull(f)) {
@@ -6818,69 +6818,69 @@ var F = {};
       if(f.length === 0) {
         return!1
       }
-      c.isNotNull(i.Hb) && (f = i.Hb(f));
+      c.isNotNull(i.Eb) && (f = i.Eb(f));
       if(j.hasOwnProperty(a + "@T" + e + "@B" + f)) {
         return!1
       }
-      if(c.isNotNull(i.vd) && !i.vd(f)) {
+      if(c.isNotNull(i.qd) && !i.qd(f)) {
         return!1
       }
       h = h.option;
-      i = i.sg
+      i = i.lg
     }else {
       return!1
     }
-    k = this.Ma[a];
+    k = this.Ja[a];
     if(k[e].hasOwnProperty(f)) {
       return!1
     }
-    var l, m, n, o, q = this.Ja[a], p;
+    var l, m, n, o, q = this.Ga[a], p;
     for(n in k) {
       if(k.hasOwnProperty(n)) {
         for(o in l = k[n], l) {
-          l.hasOwnProperty(o) && (p = l[o], m = c.isNotNull(q.Hb) ? q.Hb(o) : o, d.Me(h.type, p.option.type, i, f, m) && (delete j[a + "@T" + p.option.tag + "@B" + m], p.Ga.remove(), delete p.Ga, delete p.option, delete p.fn, delete l[o]))
+          l.hasOwnProperty(o) && (p = l[o], m = c.isNotNull(q.Eb) ? q.Eb(o) : o, d.Ge(h.type, p.option.type, i, f, m) && (delete j[a + "@T" + p.option.tag + "@B" + m], p.Da.remove(), delete p.Da, delete p.option, delete p.fn, delete l[o]))
         }
       }
     }
     j[a + "@T" + e + "@B" + f] = !0;
-    this.Pe(a, h, f, b);
-    g || (this.Fb(), this.grid.B.refresh());
+    this.Je(a, h, f, b);
+    g || (this.Cb(), this.grid.dataMgr.refresh());
     return!0
   };
-  b.bi = function(a, b, c) {
-    var d = this.Ma, e, f;
+  b.Vh = function(a, b, c) {
+    var d = this.Ja, e, f;
     if(d.hasOwnProperty(a) && (e = d[a]).hasOwnProperty(b) && (f = e[b]).hasOwnProperty(c)) {
-      d = f[c], d.tag.remove(), delete d.tag, delete d.option, delete d.fn, delete f[c], delete this.Tb[a + "@T" + b + "@B" + c], this.Fb(), this.grid.B.refresh()
+      d = f[c], d.tag.remove(), delete d.tag, delete d.option, delete d.fn, delete f[c], delete this.Qb[a + "@T" + b + "@B" + c], this.Cb(), this.grid.dataMgr.refresh()
     }
   };
-  b.ag = function() {
-    var a, b = this.Wb, c, d = this.Ma, e, f, g;
+  b.Uf = function() {
+    var a, b = this.Tb, c, d = this.Ja, e, f, g;
     for(a in b) {
       if(b.hasOwnProperty(a)) {
-        c = b[a], c.Ga.remove(), delete c.Ga, c.list.length = 0, delete c.list, delete b[a]
+        c = b[a], c.Da.remove(), delete c.Da, c.list.length = 0, delete c.list, delete b[a]
       }
     }
-    this.Sa.length = 0;
+    this.Pa.length = 0;
     for(a in d) {
       if(d.hasOwnProperty(a)) {
         for(e in b = d[a], b) {
           if(b.hasOwnProperty(e)) {
             for(f in c = b[e], c) {
-              c.hasOwnProperty(f) && (g = c[f], g.Ga.remove(), delete g.Ga, delete g.option, delete g.fn, delete c[f])
+              c.hasOwnProperty(f) && (g = c[f], g.Da.remove(), delete g.Da, delete g.option, delete g.fn, delete c[f])
             }
           }
         }
       }
     }
-    this.Tb = {};
-    this.Fb();
-    this.grid.B.refresh()
+    this.Qb = {};
+    this.Cb();
+    this.grid.dataMgr.refresh()
   };
-  b.Pe = function(a, b, c, d) {
+  b.Je = function(a, b, c, d) {
     var e = this.A;
-    this.Ma[a][b.tag][c] = {Ga:$("<div class='" + e.classTag + "' title='" + b.comment(d, c) + "'><div class='" + e.classTagName + "'>@" + d + " " + b.tag + " " + c + "</div><div class='" + e.classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.D + "._removeOption('" + a + "','" + b.tag + "','" + c + "')\"></div></div>").appendTo(this.ee), option:b, fn:b.fn(c)}
+    this.Ja[a][b.tag][c] = {Da:$("<div class='" + e.classTag + "' title='" + b.comment(d, c) + "'><div class='" + e.classTagName + "'>@" + d + " " + b.tag + " " + c + "</div><div class='" + e.classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.C + "._removeOption('" + a + "','" + b.tag + "','" + c + "')\"></div></div>").appendTo(this.$d), option:b, fn:b.fn(c)}
   };
-  var a = d.wd = {lt:0, lte:1, eq:2, neq:3, gt:4, gte:5, and:6, or:7, T:8, F:9}, b = a.Oi, e = a.Gi, f = a.eq, i = a.Vi, h = a.oe, j = a.dj, l = a.Kh, a = a.Ih, m = d.Oh = {}, k = m[b] = function(a, b) {
+  var a = d.rd = {lt:0, lte:1, eq:2, neq:3, gt:4, gte:5, and:6, or:7, T:8, F:9}, b = a.Hi, e = a.zi, f = a.eq, i = a.Oi, h = a.je, j = a.Xi, l = a.Ch, a = a.Ah, m = d.Gh = {}, k = m[b] = function(a, b) {
     return a <= b
   }, o = m[e] = function(a, b) {
     return a >= b
@@ -6888,7 +6888,7 @@ var F = {};
     return a === b
   }, l = m[l] = function() {
     return!0
-  }, q = d.We = {}, p = q[b] = {}, u = q[e] = {}, w = q[f] = {}, q = q[i] = {};
+  }, q = d.Qe = {}, p = q[b] = {}, u = q[e] = {}, w = q[f] = {}, q = q[i] = {};
   m[a] = function() {
     return!1
   };
@@ -6940,14 +6940,14 @@ var F = {};
   q[i] = {};
   q[i][h] = n;
   q[i][j] = l;
-  d.Me = function(a, b, c, d, e) {
+  d.Ge = function(a, b, c, d, e) {
     try {
-      return this.We[a][b][c](d, e)
+      return this.Qe[a][b][c](d, e)
     }catch(f) {
       return!1
     }
   };
-  d.Df = [{name:"gt", tag:">", type:e, comment:function(a, b) {
+  d.xf = [{name:"gt", tag:">", type:e, comment:function(a, b) {
     return a + " 이(가) " + b + "보다 큰"
   }, fn:function(a) {
     c.isString(a) && (a = a.toFloat());
@@ -7001,7 +7001,7 @@ var F = {};
   }}, {name:"validator", fn:function(a) {
     return!isNaN(a)
   }}];
-  d.og = [{name:"to", tag:"<=", type:b, comment:function(a, b) {
+  d.hg = [{name:"to", tag:"<=", type:b, comment:function(a, b) {
     return a + " 이(가) " + b + "보다 사전에서 이전인"
   }, fn:function(a) {
     a = $.trim(a).toLowerCase();
