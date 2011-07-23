@@ -168,7 +168,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'urlCollapsed': this.grid._options.['imageUrl'] + "collapsed.png",
+			'urlCollapsed': this.grid._options['imageUrl'] + "collapsed.png",
 
 			/**
 			  접힌 상태위에 마우스가 오버되었을 때의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "collapsed-hover.png"</code>
@@ -180,7 +180,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'urlCollapsedHover': this.grid._options.['imageUrl'] + "collapsed-hover.png",
+			'urlCollapsedHover': this.grid._options['imageUrl'] + "collapsed-hover.png",
 
 			/**
 			  펼쳐진 상태의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "expanded.png"</code>
@@ -192,7 +192,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'urlExpanded': this.grid._options.['imageUrl'] + "expanded.png",
+			'urlExpanded': this.grid._options['imageUrl'] + "expanded.png",
 
 			/**
 			  펼쳐진 상태위에 마우스가 오버되었을 때의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "expanded-hover.png"</code>
@@ -204,7 +204,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'urlExpandedHover': this.grid._options.['imageUrl'] + "expanded-hover.png",
+			'urlExpandedHover': this.grid._options['imageUrl'] + "expanded-hover.png",
 
 			/**
 			  Collapser 토글 아이콘의 폭 픽셀입니다. <br>기본값:<code>6</code>

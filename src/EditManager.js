@@ -230,7 +230,7 @@ function EditManager(args) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'urlEditIcon': this.grid._options.['imageUrl'] + "editable-small.png",
+		'urlEditIcon': this.grid._options['imageUrl'] + "editable-small.png",
 		
 		/**
 		에디팅 아이콘 이미지에 적용될 CSS 클래스 입니다. <br>기본값:<code>"edit-icon"</code>
