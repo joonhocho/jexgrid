@@ -147,9 +147,7 @@ prototype.__init = function(args) {
 };
 
 prototype.destroy = function() {
-	delete this.grid;
-	delete this._datarow;
-	delete this._colDef;
+	this.dispose();
 };
 
 
@@ -354,24 +352,6 @@ prototype.isEmpty$ = function() {
   */
 prototype.has$ = function() {
 	return this.get$().length !== 0;
-};
-
-
-/**
-  주어진 셀의 인스턴스가 현재 셀의 인스턴스와 동일한지를 리턴합니다.
-
-  @function {boolean} equals
-  @returns {boolean} 서로 같은 데이터를 가질 경우 true, 아닐 경우 false 를
-  리턴합니다.
-
-  @author 조준호
-  @since 1.0.0
-  @version 1.0.0
-  */
-prototype.equals = function(cell) {
-	return Util.isNotNull(cell) &&
-		Util.isNotNull(this._datarow) && this._datarow === cell.getDatarow() &&
-		Util.isNotNull(this._colDef) && this._colDef === cell.getColDef();
 };
 
 }());

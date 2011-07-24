@@ -55,29 +55,145 @@ goog.provide('jx.lang.Disposable');
  var proto = Disposable.prototype,
 	 isArray = Util.isArray;
 
+ /**
+  * @param {*} a to compare against
+  * @param {*} b to compare against
+  * @param {?number=} level deep level
+  */
+ Object.equals = function(a, b, level) {
+	 if (typeof a == 'object') {
+		 return equals.call(a, b, level);
+	 }
+	 else {
+		 // checking NaN
+		 return a !== a && b !== b;
+	 }
+ }
+
+ /**
+  * @param {*} a to dispose
+  * @param {?number=} level deep level
+  * @param {?boolean=} others compare non-disposables
+  */
+ Object.dispose = function(a, level, others) {
+	 if (typeof a == 'object') {
+		 return dispose.call(a, level, others);
+	 }
+	 // checking NaN
+ }
+
+ /**
+  * @param {*} obj to compare against
+  * @param {?number=} level deep level
+  */
+ function equals(obj, level) {'use strict';
+	 if (typeof obj != 'object') {
+		 // if obj is not object return false
+		 return false;
+	 }
+	 var i,
+		 val,
+		 oval;
+	 if (level) {
+		 // deep comparison
+		 for (i in this) {
+			 if (this.hasOwnProperty(i)) {
+				 if (!obj.hasOwnProperty(i)) {
+					 return false;
+				 }
+				 val = this[i];
+				 oval = obj[i];
+				 if (val !== oval) {
+					 if (val) {
+						 // filter out null and some primitive check
+						 if (typeof val != 'object' || typeof oval != 'object') {
+							 // if either of them is not object return false
+							 return false;
+						 }
+						 if (val.equals) {
+							 // use equals if possible
+							 if (!val.equals(oval, level - 1)) {
+								 return false;
+							 }
+						 }
+						 else if (oval.equals) {
+							 // use equals if possible
+							 if (!oval.equals(val, level - 1)) {
+								 return false;
+							 }
+						 }
+						 // use equals if possible
+						 if (!equals.call(val, oval, level - 1)) {
+							 return false;
+						 }
+					 }
+					 else {
+						 // checking NaN
+						 if (!(val === val || oval === oval)) {
+							 return false;
+						 }
+					 }
+				 }
+			 }
+		 }
+		 for (i in obj) {
+			 if (obj.hasOwnProperty(i) && !this.hasOwnProperty(i)) {
+				 return false;
+			 }
+		 }
+	 }
+	 else {
+		 // shallow comparison
+		 for (i in this) {
+			 if (this.hasOwnProperty(i)) {
+				 if (obj.hasOwnProperty(i)) {
+					 val = this[i];
+					 oval = obj[i];
+					 if (val !== obj) {
+						 // checking NaN
+						 if (!(val === val || oval === oval)) {
+							 return false;
+						 }
+					 }
+				 }
+				 else {
+					 return false;
+				 }
+			 }
+		 }
+		 for (i in obj) {
+			 if (obj.hasOwnProperty(i) && !this.hasOwnProperty(i)) {
+				 return false;
+			 }
+		 }
+	 }
+	 return true;
+ }
+
+ /**
+  * @param {?number=} level deep level
+  * @param {?boolean=} others compare non-disposables
+  */
  function dispose(level, others) {'use strict';
-	 level = level || 0;
 	 var i,
 		 val;
-	 if (level !== 0) {
+	 if (level) {
 		 // deep dispose
 		 for (i in this) {
 			 if (this.hasOwnProperty(i)) {
 				 val = this[i];
-				 if (val) {
-					 // filter out null and some primitive check
+				 if (val && typeof val == 'object') {
+					 // filters null and non-objects
 					 if (val.dispose) {
 						 // use dispose if possible
 						 val.dispose(level - 1, others);
 					 }
-					 else if (others && typeof val == 'object') {
-						 // array or object
+					 else if (others) {
+						 // dispose non-disposable objects
 						 if (isArray(val)) {
 							 val.length = 0;
 						 }
-						 else {
-							 dispose.call(val, level - 1, others);
-						 }
+						 dispose.call(val, level - 1, others);
 					 }
 				 }
 				 delete this[i];
