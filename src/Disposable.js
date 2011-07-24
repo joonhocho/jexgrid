@@ -17,7 +17,7 @@ goog.provide('jx.lang.Disposable');
 
 (function() {
 
-	var Util = goog.getObjectByName('jx.util');
+	var util = goog.getObjectByName('jx.util');
  goog.exportSymbol('jx.lang.Disposable', Disposable);
  goog.exportProperty(Disposable.prototype, 'dispose', dispose);
 
@@ -53,14 +53,14 @@ goog.provide('jx.lang.Disposable');
  }
 
  var proto = Disposable.prototype,
-	 isArray = Util.isArray;
+	 isArray = util.isArray;
 
  /**
   * @param {*} a to compare against
   * @param {*} b to compare against
   * @param {?number=} level deep level
   */
- Object.equals = function(a, b, level) {
+ util.equals = Object.equals = function(a, b, level) {
 	 if (typeof a == 'object') {
 		 return equals.call(a, b, level);
 	 }
@@ -75,7 +75,7 @@ goog.provide('jx.lang.Disposable');
   * @param {?number=} level deep level
   * @param {?boolean=} others compare non-disposables
   */
- Object.dispose = function(a, level, others) {
+ util.dispose = Object.dispose = function(a, level, others) {
 	 if (typeof a == 'object') {
 		 return dispose.call(a, level, others);
 	 }
