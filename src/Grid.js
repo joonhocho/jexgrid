@@ -497,6 +497,7 @@ prototype._defaultOptions = function() {
 				map: "vars _options",
 				style: "style _dynStyle"
 			});
+			this.dispose();
 		}
 		catch (e) {
 			return e;
@@ -570,6 +571,9 @@ prototype._defaultOptions = function() {
 
 	//tested
 	prototype._createCss = function() {
+		var event = {'type':'beforeCreateCss', css:[]};
+		this.dispatchEvent(event);
+
 		/**
 		  현재 그리드에 적용할 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
 		  <br>
@@ -587,9 +591,12 @@ prototype._defaultOptions = function() {
 			"border:" + this._options['border'] + ";" :
 			"border-top:" + this._options['border'] + ";border-bottom:" + this._options['border'] + ";",
 			'style': this._options['style'],
-			'submodule': this['event'].trigger("onCreateCss").join("")
+			'submodule': event.css.join('') + ';' + this['event'].trigger("onCreateCss").join("")
 		});
 		this._style = Util.createStyle(style);
+
+		event = {'type':'beforeCreateDynamicCss', css:[]};
+		this.dispatchEvent(event);
 
 		/**
 		  현재 그리드에 적용할 다이나믹 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
@@ -602,7 +609,7 @@ prototype._defaultOptions = function() {
 		  @version 1.2.2
 		  */
 
-		this._dynStyle = Util.createStyle(this['event'].trigger("onCreateDynamicCss").join(""));
+		this._dynStyle = Util.createStyle(event.css.join('') + ';' + this['event'].trigger("onCreateDynamicCss").join(""));
 	};
 
 	prototype._recreateDynamicCss = function() {

@@ -61,7 +61,8 @@ var proto = EventDispatcher.prototype,
 	sdispose = Disposable.prototype.dispose;
 
 proto.dispose = function() {
-	sdispose.call(this, -1, true);
+	sdispose.call(this._handlers, -1, true);
+	sdispose.call(this);
 };
 
 /**

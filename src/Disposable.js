@@ -17,7 +17,7 @@ goog.provide('jx.lang.Disposable');
 
 (function() {
 
-	var util = goog.getObjectByName('jx.util');
+ var util = goog.getObjectByName('jx.util');
  goog.exportSymbol('jx.lang.Disposable', Disposable);
  goog.exportProperty(Disposable.prototype, 'dispose', dispose);
 
@@ -58,11 +58,12 @@ goog.provide('jx.lang.Disposable');
  /**
   * @param {*} a to compare against
   * @param {*} b to compare against
+  * @param {?Array.<string>=} compareOnly attribute names to compare
   * @param {?number=} level deep level
   */
- util.equals = Object.equals = function(a, b, level) {
+ util.equals = Object.equals = function(a, b, compareOnly, level) {
 	 if (typeof a == 'object') {
-		 return equals.call(a, b, level);
+		 return equals.call(a, b, compareOnly, level);
 	 }
 	 else {
 		 // checking NaN
@@ -82,11 +83,15 @@ goog.provide('jx.lang.Disposable');
 	 // checking NaN
  }
 
+ proto.equals = equals;
+ proto.dispose = dispose;
+
  /**
   * @param {*} obj to compare against
+  * @param {?Array.<string>=} compareOnly attribute names to compare
   * @param {?number=} level deep level
   */
- function equals(obj, level) {'use strict';
+ function equals(obj, compareOnly, level) {'use strict';
 	 if (typeof obj != 'object') {
 		 // if obj is not object return false
 		 return false;
@@ -94,57 +99,10 @@ goog.provide('jx.lang.Disposable');
 	 var i,
 		 val,
 		 oval;
-	 if (level) {
-		 // deep comparison
-		 for (i in this) {
-			 if (this.hasOwnProperty(i)) {
-				 if (!obj.hasOwnProperty(i)) {
-					 return false;
-				 }
-				 val = this[i];
-				 oval = obj[i];
-				 if (val !== oval) {
-					 if (val) {
-						 // filter out null and some primitive check
-						 if (typeof val != 'object' || typeof oval != 'object') {
-							 // if either of them is not object return false
-							 return false;
-						 }
-						 if (val.equals) {
-							 // use equals if possible
-							 if (!val.equals(oval, level - 1)) {
-								 return false;
-							 }
-						 }
-						 else if (oval.equals) {
-							 // use equals if possible
-							 if (!oval.equals(val, level - 1)) {
-								 return false;
-							 }
-						 }
-						 // use equals if possible
-						 if (!equals.call(val, oval, level - 1)) {
-							 return false;
-						 }
-					 }
-					 else {
-						 // checking NaN
-						 if (!(val === val || oval === oval)) {
-							 return false;
-						 }
-					 }
-				 }
-			 }
-		 }
-		 for (i in obj) {
-			 if (obj.hasOwnProperty(i) && !this.hasOwnProperty(i)) {
-				 return false;
-			 }
-		 }
-	 }
-	 else {
-		 // shallow comparison
-		 for (i in this) {
+	 if (compareOnly) {
+		 var j = 0, l = compareOnly.length;
+		 for (; j < l; j++) {
+			 i = compareOnly[j];
 			 if (this.hasOwnProperty(i)) {
 				 if (obj.hasOwnProperty(i)) {
 					 val = this[i];
@@ -160,10 +118,84 @@ goog.provide('jx.lang.Disposable');
 					 return false;
 				 }
 			 }
-		 }
-		 for (i in obj) {
-			 if (obj.hasOwnProperty(i) && !this.hasOwnProperty(i)) {
+			 else if (obj.hasOwnProperty(i)) {
 				 return false;
+			 }
+		 }
+
+	 }
+	 else {
+		 if (level) {
+			 // deep comparison
+			 for (i in this) {
+				 if (this.hasOwnProperty(i)) {
+					 if (!obj.hasOwnProperty(i)) {
+						 return false;
+					 }
+					 val = this[i];
+					 oval = obj[i];
+					 if (val !== oval) {
+						 if (val) {
+							 // filter out null and some primitive check
+							 if (typeof val != 'object' || typeof oval != 'object') {
+								 // if either of them is not object return false
+								 return false;
+							 }
+							 if (val.equals) {
+								 // use equals if possible
+								 if (!val.equals(oval, null, level - 1)) {
+									 return false;
+								 }
+							 }
+							 else if (oval.equals) {
+								 // use equals if possible
+								 if (!oval.equals(val, null, level - 1)) {
+									 return false;
+								 }
+							 }
+							 // use equals if possible
+							 if (!equals.call(val, oval, null, level - 1)) {
+								 return false;
+							 }
+						 }
+						 else {
+							 // checking NaN
+							 if (!(val === val || oval === oval)) {
+								 return false;
+							 }
+						 }
+					 }
+				 }
+			 }
+			 for (i in obj) {
+				 if (obj.hasOwnProperty(i) && !this.hasOwnProperty(i)) {
+					 return false;
+				 }
+			 }
+		 }
+		 else {
+			 // shallow comparison
+			 for (i in this) {
+				 if (this.hasOwnProperty(i)) {
+					 if (obj.hasOwnProperty(i)) {
+						 val = this[i];
+						 oval = obj[i];
+						 if (val !== obj) {
+							 // checking NaN
+							 if (!(val === val || oval === oval)) {
+								 return false;
+							 }
+						 }
+					 }
+					 else {
+						 return false;
+					 }
+				 }
+			 }
+			 for (i in obj) {
+				 if (obj.hasOwnProperty(i) && !this.hasOwnProperty(i)) {
+					 return false;
+				 }
 			 }
 		 }
 	 }

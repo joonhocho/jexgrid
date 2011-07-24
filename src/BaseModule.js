@@ -65,17 +65,19 @@ goog.provide('jx.grid.BaseModule');
 			/*
 			 * Common Grid Events
 			 */
-			['dispose', 'createcss', 'createdynamiccss', 'render', 'keydown', 'keyup', 'keypress', 'mousein', 'mouseout', 'mouseenter', 'mouseleave', 'mousemove', 'mouseover', 'mousedown', 'mouseup', 'click', 'dblclick', 'resize', 'resizewidth', 'resizeheight', 'scroll', 'scrollh', 'scrollv'].forEach(function(name) {
-				var before = '_before' + name,
-					after = '_after' + name;
-				if (that[before]) {
+			['Dispose', 'CreateCss', 'CreateDynamicCss', 'Render', 'Keydown', 'Keyup', 'Keypress', 'Mousein', 'Mouseout', 'Mouseenter', 'Mouseleave', 'Mousemove', 'Mouseover', 'Mousedown', 'Mouseup', 'Click', 'Dblclick', 'Resize', 'ResizeWidth', 'ResizeHeight', 'Scroll', 'ScrollH', 'ScrollV'].forEach(function(name) {
+				var before = 'before' + name,
+					after = 'after' + name,
+					beforefn = '_' + before,
+					afterfn = '_' + after;
+				if (that[beforefn]) {
 					grid.addEventListener(before, function(event) {
-						return that[before](event);
+						return that[beforefn](event);
 					});
 				}
-				if (that[after]) {
+				if (that[afterfn]) {
 					grid.addEventListener(after, function(event) {
-						return that[after](event);
+						return that[afterfn](event);
 					});
 				}
 			});
@@ -116,6 +118,38 @@ goog.provide('jx.grid.BaseModule');
 		this.dispatchEvent({
 			'type':'afterdispose'
 		});
+	}
+
+	proto.getDataMgr = function() {
+		return this.grid['dataMgr'];
+	}
+
+	proto.getAllData = function() {
+		return this.grid['dataMgr']['all'];
+	}
+
+	proto.getDataList = function() {
+		return this.grid['dataMgr']['datalist'];
+	}
+
+	proto.getColMgr = function() {
+		return this.grid['colDefMgr'];
+	}
+
+	proto.getIdKey = function() {
+		return this.grid['dataMgr'].idKey;
+	}
+
+	proto.getEventMgr = function() {
+		return this.grid['event'];
+	}
+
+	proto.getView = function() {
+		return this.grid['view'];
+	}
+
+	proto.getHeader = function() {
+		return this.grid['header'];
 	}
 
 }());

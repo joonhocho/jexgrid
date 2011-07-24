@@ -67,19 +67,21 @@ JGM._add("CheckManager", CheckManager);
   */
 function CheckManager(args) {
 	function afteroption(event) {
-		var options = event['options'];
-		if (options['isRadio']) {
+		var options = this._options;
+		var isRadio = this._isRadio = options['isRadio'] = !!options['isRadio'];
+		this._hasMaster = options['master'] = !!options['master'];
+		this._col = options['colDef'];
+		this._key = this._col['key'];
+
+		if (isRadio) {
 			if (Util.isNull(options['name'])) {
 				options['name'] = "radio" + this.mid;
 			}
-			options['master'] = false;
+			this._hasMaster = false;
 		}
 	}
-
 	this.addEventListener('afteroption', afteroption);
-
 	goog.base(this, args);
-
 	this.removeEventListener('afteroption', afteroption);
 }
 
@@ -93,21 +95,17 @@ var prototype = CheckManager.prototype;
 
 prototype._init = function() {
 	this._map = {};
-
 	this.disabledmap = {};
-
 	this._count = 0;
-
 	this._disabled = false;
-
 	this._master;
 
 	var opt = this._options,
 		size,
 		con = JGM._CONST;
 
-	if (this.grid['colDefMgr'].getByKey(opt['colDef'].key) === undefined) {
-		this.grid['colDefMgr'].addAt(opt['colIdx'], opt['colDef']);
+	if (this.getColMgr().getByKey(this._col.key) === undefined) {
+		this.getColMgr().addAt(opt['colIdx'], this._col);
 	}
 
 	if (Util.isNull(con._checkboxWidth)) {
@@ -121,12 +119,11 @@ prototype._init = function() {
 
 prototype._bindEvents = function() {
 	var opt = this._options,
-		key = opt['colDef'].key,
+		key = this._col.key,
 		events;
 
 	events = {
-		'onCreateCss': this._onCreateCss,
-		'onDestroy': this._destroy,
+		'onDestroy': this.dispose,
 		'onAfterSetDatalist': this.uncheckAll,
 		'onIdChange': this._onIdChange,
 		'onIdListChange': this._onIdListChange,
@@ -137,11 +134,11 @@ prototype._bindEvents = function() {
 	events["onRenderCell_" + key + "_prepend"] = this._onRenderCell;
 	events["keydownColSel_" + key + "_" + Util.keyMapKeydown.space] = this._keydownColSel;
 
-	if (opt['master']) {
+	if (this._hasMaster) {
 		events["onRenderHeader_" + key + "_prepend"] = this._onRenderHeader;
 		events.onRenderHeadersComplete = this._getMaster;
 	}
-	this.grid['event'].bind(events, this);
+	this.getEventMgr().bind(events, this);
 };
 
 prototype._defaultOptions = function() {
@@ -243,24 +240,13 @@ prototype._defaultOptions = function() {
 	};
 }
 
-
-prototype._destroy = function() {
-	JGM._destroy(this, {
-		name: "CheckManager",
-		path: "checkMgr",
-		"$": "master",
-		property: "count _disabled",
-		map: "map _options"
-	});
-};
-
-prototype._onCreateCss = function() {
+prototype._beforeCreateCss = function(event) {
 	var w,
 		h,
 		checkCommon,
-		css;
+		css = event.css;
 
-	if (this._options['isRadio']) {
+	if (this._isRadio) {
 		w = JGM._CONST._radioWidth;
 		h = JGM._CONST._radioHeight;
 	}
@@ -270,13 +256,13 @@ prototype._onCreateCss = function() {
 	}
 
 	checkCommon = "*overflow:hidden;padding:0;width:" + w + "px;height:" + h + "px;";
-	css = this.grid['view']._getCellSelector() + " ." + this._options['classCheck'] + "[mid='" + this.mid + "']{" +
+
+	css.push(this.getView()._getCellSelector() + " ." + this._options['classCheck'] + "[mid='" + this.mid + "']{" +
 		checkCommon +
-		"margin:" + ((this.grid['view']._getRowInnerHeight() - h) / 2) + "px 0 0 " + ((this._options['colDef']['width'] - this.grid['view']._getPadding() - w) / 2) + "px}" +
+		"margin:" + ((this.getView()._getRowInnerHeight() - h) / 2) + "px 0 0 " + ((this._col['width'] - this.getView()._getPadding() - w) / 2) + "px}" +
 		"#" + this.mid + "h{" +
 		checkCommon +
-		"margin:" + ((this.grid['header']._options['height'] - h) / 2) + "px 0 0 0}";
-	return css;
+		"margin:" + ((this.getHeader()._options['height'] - h) / 2) + "px 0 0 0}");
 };
 
 
@@ -297,7 +283,7 @@ prototype._onCreateCss = function() {
   */
 prototype.checkList = function(list, nomap) {
 	if (!nomap) {
-		list = this.grid['dataMgr'].mapList(list).mapped;
+		list = this.getDataMgr().mapList(list).mapped;
 	}
 
 	var i = 0,
@@ -389,15 +375,15 @@ prototype.toggleCheckAll = function() {
   @version 1.0.0
   */
 prototype.checkAll = function() {
-	if (this._options['master']) {
+	if (this._hasMaster) {
 		CheckManager._check(this._master);
 	}
 
 	CheckManager._check(this.getCheckboxes());
 
-	var list = this.grid['dataMgr'].all,
+	var list = this.getAllData(),
 		len = list.length,
-		idKey = this.grid['dataMgr'].idKey,
+		idKey = this.getIdKey(),
 		map = this._map,
 		i = 0;
 
@@ -419,7 +405,7 @@ prototype.checkAll = function() {
   @version 1.0.0
   */
 prototype.uncheckAll = function() {
-	if (this._options['master']) {
+	if (this._hasMaster) {
 		CheckManager._uncheck(this._master);
 	}
 
@@ -445,10 +431,10 @@ prototype.uncheckAll = function() {
   */
 prototype.toggleCheck = function(datarow, nomap) {
 	if (!nomap) {
-		datarow = this.grid['dataMgr'].map(datarow);
+		datarow = this.getDataMgr().map(datarow);
 	}
 
-	if (this.isChecked(datarow, true) && !this._options['isRadio']) {
+	if (this.isChecked(datarow, true) && !this._isRadio) {
 		this.uncheck(datarow, true);
 	}
 	else {
@@ -470,7 +456,7 @@ prototype.toggleCheck = function(datarow, nomap) {
   */
 prototype.toggleDisable = function(datarow, nomap) {
 	if (!nomap) {
-		datarow = this.grid['dataMgr'].map(datarow);
+		datarow = this.getDataMgr().map(datarow);
 	}
 
 	if (this.isDisabled(datarow, true)) {
@@ -499,7 +485,7 @@ prototype.toggleDisable = function(datarow, nomap) {
  * 1.3.0 - toggle -> toggleById
  */
 prototype.toggleById = function(id) {
-	this.toggleCheck(this.grid['dataMgr'].getById(id), true);
+	this.toggleCheck(this.getDataMgr().getById(id), true);
 };
 
 
@@ -517,7 +503,7 @@ prototype.toggleById = function(id) {
   */
 prototype.check = function(datarow, nomap) {
 	if (!nomap) {
-		datarow = this.grid['dataMgr'].map(datarow);
+		datarow = this.getDataMgr().map(datarow);
 	}
 
 	if (!this._add(datarow)) {
@@ -539,7 +525,7 @@ prototype.check = function(datarow, nomap) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.grid['event'].trigger("onCheckChange", [datarow, true]);
+	this.getEventMgr().trigger("onCheckChange", [datarow, true]);
 };
 
 
@@ -557,7 +543,7 @@ prototype.check = function(datarow, nomap) {
   */
 prototype.uncheck = function(datarow, nomap) {
 	if (!nomap) {
-		datarow = this.grid['dataMgr'].map(datarow);
+		datarow = this.getDataMgr().map(datarow);
 	}
 
 	if (!this._remove(datarow)) {
@@ -566,11 +552,11 @@ prototype.uncheck = function(datarow, nomap) {
 
 	CheckManager._uncheck(this.getCheckbox(datarow));
 
-	if (this._options['master']) {
+	if (this._hasMaster) {
 		CheckManager._uncheck(this._master);
 	}
 
-	this.grid['event'].trigger("onCheckChange", [datarow, false]);
+	this.getEventMgr().trigger("onCheckChange", [datarow, false]);
 };
 
 /**
@@ -586,7 +572,7 @@ prototype.uncheck = function(datarow, nomap) {
   @version 1.3.0
   */
 prototype.disable = function(datarow, nomap) {
-	var datam = this.grid['dataMgr'];
+	var datam = this.getDataMgr();
 
 	if (!nomap) {
 		datarow = datam.map(datarow);
@@ -612,7 +598,7 @@ prototype.disable = function(datarow, nomap) {
 	  @since 1.3.0
 	  @version 1.3.0
 	  */
-	this.grid['event'].trigger("onDisableCheck", [datarow]);
+	this.getEventMgr().trigger("onDisableCheck", [datarow]);
 };
 
 /**
@@ -628,10 +614,10 @@ prototype.disable = function(datarow, nomap) {
   @version 1.3.0
   */
 prototype.enable = function(datarow, nomap) {
-	var datam = this.grid['dataMgr'];
+	var datam = this.getDataMgr();
 
 	if (!nomap) {
-		datarow = this.grid['dataMgr'].map(datarow);
+		datarow = datam.map(datarow);
 	}
 
 	var id = datam.getId(datarow),
@@ -654,23 +640,23 @@ prototype.enable = function(datarow, nomap) {
 	  @since 1.3.0
 	  @version 1.3.0
 	  */
-	this.grid['event'].trigger("onEnableCheck", [datarow]);
+	this.getEventMgr().trigger("onEnableCheck", [datarow]);
 };
 
 prototype._updateMaster = function() {
-	if (this._options['master']) {
+	if (this._hasMaster) {
 		CheckManager._setCheck(this._master, this.isCheckedAll());
 	}
 };
 
 prototype._add = function(datarow) {
-	var id = datarow[this.grid['dataMgr'].idKey];
+	var id = datarow[this.getIdKey()];
 
 	if (this._map.hasOwnProperty(id)) {
 		return false;
 	}
 
-	if (this._options['isRadio'] === true) {
+	if (this._isRadio) {
 		this._map = {};
 		this._count = 0;
 	}
@@ -682,7 +668,7 @@ prototype._add = function(datarow) {
 };
 
 prototype._remove = function(datarow) {
-	var id = datarow[this.grid['dataMgr'].idKey],
+	var id = datarow[this.getIdKey()],
 		map = this._map;
 
 	if (!map.hasOwnProperty(id)) {
@@ -708,7 +694,7 @@ prototype._remove = function(datarow) {
   @version 1.1.0
   */
 prototype.isChecked = function(datarow, nomap) {
-	var datam = this.grid['dataMgr'];
+	var datam = this.getDataMgr();
 	if (!nomap) {
 		datarow = datam.map(datarow);
 	}
@@ -729,7 +715,7 @@ prototype.isChecked = function(datarow, nomap) {
   @version 1.3.0
   */
 prototype.isDisabled = function(datarow, nomap) {
-	var datam = this.grid['dataMgr'];
+	var datam = this.getDataMgr();
 	if (!nomap) {
 		datarow = datam.map(datarow);
 	}
@@ -739,14 +725,14 @@ prototype.isDisabled = function(datarow, nomap) {
 
 prototype.splitChecked = function(datalist, nomap) {
 	if (!nomap) {
-		datalist = this.grid['dataMgr'].mapList(datalist).mapped;
+		datalist = this.getDataMgr().mapList(datalist).mapped;
 	}
 
 	var checked = [],
 		unchecked = [],
 		i = 0,
 		len = datalist.length,
-		idKey = this.grid['dataMgr'].idKey,
+		idKey = this.getIdKey(),
 		data,
 		map = this._map;
 
@@ -774,7 +760,7 @@ prototype.splitChecked = function(datalist, nomap) {
   */
 prototype.isCheckedAll = function() {
 	return (this._count !== 0 &&
-			this._count === this.grid['dataMgr'].all.length ? true : false);
+			this._count === this.getAllData().length ? true : false);
 };
 
 /**
@@ -787,7 +773,7 @@ prototype.isCheckedAll = function() {
   @version 1.3.0
   */
 prototype.removeChecked = function() {
-	return this.grid['dataMgr'].removeList(this.getCheckList());
+	return this.getDataMgr().removeList(this.getCheckList());
 };
 
 prototype._getMaster = function() {
@@ -798,7 +784,7 @@ prototype._getChecks = function(rows) {
 	var len = rows.length,
 		checks = [],
 		i = 0,
-		col = this.grid['colDefMgr'].getIdxByKey(this._options['colDef']['key']);
+		col = this.getColMgr().getIdxByKey(this._key);
 	for (; i < len; i++) {
 		checks.push(rows[i].childNodes[col].childNodes[0]);
 	}
@@ -817,7 +803,7 @@ prototype._getChecks = function(rows) {
   @version 1.3.0
   */
 prototype.getCheckboxes = function() {
-	return this._getChecks(this.grid['view'].getRenderedRows());
+	return this._getChecks(this.getView().getRenderedRows());
 };
 
 /**
@@ -831,9 +817,9 @@ prototype.getCheckboxes = function() {
   @version 1.3.0
   */
 prototype.getCheckboxById = function(id) {
-	var row = this.grid['view'].getRowById(id);
+	var row = this.getView().getRowById(id);
 	if (Util.isNotNull(row)) {
-		return row.childNodes[this.grid['colDefMgr'].getIdxByKey(this._options['colDef']['key'])].childNodes[0];
+		return row.childNodes[this.getColMgr().getIdxByKey(this._key)].childNodes[0];
 	}
 };
 
@@ -848,7 +834,7 @@ prototype.getCheckboxById = function(id) {
   @version 1.3.0
   */
 prototype.getCheckbox = function(datarow) {
-	return this.getCheckboxById(this.grid['dataMgr'].getId(datarow));
+	return this.getCheckboxById(this.getDataMgr().getId(datarow));
 };
 
 /**
@@ -862,7 +848,7 @@ prototype.getCheckbox = function(datarow) {
   @version 1.3.0
   */
 prototype.getCheckboxByIdx = function(i) {
-	return this.getCheckboxById(this.grid['dataMgr'].getIdByIdx(i));
+	return this.getCheckboxById(this.getDataMgr().getIdByIdx(i));
 };
 
 prototype._onRemoveDatarow = function(datarow) {
@@ -918,8 +904,8 @@ prototype._keydownColSel = function(e, colSelections, lastSelection) {
 	if (Util.isNotNullAnd(colSelections, lastSelection)) {
 		var checked = this.isChecked(lastSelection.getDatarow(), true),
 			row,
-				list = this.grid['dataMgr'].datalist;
-		if (this._options['isRadio']) {
+				list = this.getDataList();
+		if (this._isRadio) {
 			for (row in colSelections) {
 				if (colSelections.hasOwnProperty(row)) {
 					if (row === "length") {
@@ -960,7 +946,7 @@ prototype._onRenderHeader = function(headerHtml) {
 };
 
 prototype._onRenderCell = function(rowIdx, colIdx, datarow, colDef, cellHtml) {
-	cellHtml.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + datarow[this.grid['dataMgr'].idKey] + "')\" type='" + (this._options['isRadio'] ? "radio" : "checkbox") + "' class='" + this._options['classCheck'] + "' mid='" + this.mid + "'");
+	cellHtml.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + datarow[this.getIdKey()] + "')\" type='" + (this._isRadio ? "radio" : "checkbox") + "' class='" + this._options['classCheck'] + "' mid='" + this.mid + "'");
 	if (Util.isNotNull(this._options['name'])) {
 		cellHtml.push(" name='" + this._options['name'] + "'");
 	}
@@ -994,7 +980,7 @@ prototype.disableAll = function() {
 
 	this._disabled = true;
 
-	if (this._options['master']) {
+	if (this._hasMaster) {
 		this._master.attr("disabled", "disabled");
 	}
 
@@ -1022,7 +1008,7 @@ prototype.enableAll = function() {
 
 	this._disabled = false;
 
-	if (this._options['master']) {
+	if (this._hasMaster) {
 		this._master.removeAttr("disabled");
 	}
 
