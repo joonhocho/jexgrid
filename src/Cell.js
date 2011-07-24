@@ -367,7 +367,7 @@ prototype.has$ = function() {
 @version 1.0.0
 */
 prototype.equals = function(cell) {
-	return goog.base(cell, 'equals', ['_datarow', '_colDef']);
+	return goog.base(this, 'equals', cell, ['_datarow', '_colDef']);
 };
 
 }());
