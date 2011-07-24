@@ -13,85 +13,85 @@ goog.provide('JGM');
  */
 
 /**
-JGM 모듈. {@link JGM.Grid Grid} 의 최상위 scope 이며 유일하게 Global Scope 인 window 에 등록됩니다.
-모든 {@link JGM.Grid Grid} 모듈 클래스는 이 매니저 안에 각 모듈의 이름으로 등록됩니다.
-JGM은 모든 {@link JGM.Grid Grid} 의 모듈들을 instantiate 하며, 모듈 생성시 각 모듈에 고유
-mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
-맵을 가지고 있어 서로간의 켜뮤니케이션을 도와줍니다.
+  JGM 모듈. {@link JGM.Grid Grid} 의 최상위 scope 이며 유일하게 Global Scope 인 window 에 등록됩니다.
+  모든 {@link JGM.Grid Grid} 모듈 클래스는 이 매니저 안에 각 모듈의 이름으로 등록됩니다.
+  JGM은 모든 {@link JGM.Grid Grid} 의 모듈들을 instantiate 하며, 모듈 생성시 각 모듈에 고유
+  mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
+  맵을 가지고 있어 서로간의 켜뮤니케이션을 도와줍니다.
 
-@module JGM
-*/
+  @module JGM
+  */
 
 /**
-{@link JGM} (JexGrid Manager) 오브젝트 입니다.
+  {@link JGM} (JexGrid Manager) 오브젝트 입니다.
 
-@var {Object} window.JGM
+  @var {Object} window.JGM
 
-@author 조준호
-@since 1.0.0
-@version 1.2.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.2.0
+  */
 
 (function() {
-var Util = goog.getObjectByName('jx.util'),
-	Util$ = goog.getObjectByName('jx.util$');
+	var Util = goog.getObjectByName('jx.util'),
+Util$ = goog.getObjectByName('jx.util$');
 
- goog.exportSymbol('JGM', JGM);
- goog.exportSymbol('jx.grid', JGM);
+goog.exportSymbol('JGM', JGM);
+goog.exportSymbol('jx.grid', JGM);
 
- JGM.version = "1.2.3";
+JGM.version = "2.0.0";
 
 /**
-JGM
-@scope JGM
-*/
+  JGM
+  @scope JGM
+  */
 
 JGM._map = {
 	// notloaded | loading | loaded
 	'ArrayExtIE':			{ cacheModule: false	},
-	'Cache':				{ cacheModule: true	},
-	'Cell':				{ cacheModule: false	},
-	'CheckManager':		{ cacheModule: true	},
-	'ColDefManager':		{ cacheModule: true	},
-	'ColGroup':			{ cacheModule: true	},
-	'ColHeader':			{ cacheModule: true	},
-	'Collapser':			{ cacheModule: true	},
-	'DataManager':		{ cacheModule: true	},
-	'DataCreator':		{ cacheModule: true	},
-	'EditManager':		{ cacheModule: true	},
-	'Editor':				{ cacheModule: true	},
-	'EngineExt':			{ cacheModule: false	},
-	'EventManager':		{ cacheModule: true	},
-	'Footer':				{ cacheModule: true	},
-	'HeaderTree':			{ cacheModule: true	},
-	'Grid':				{ cacheModule: true	},
-	'GridManager':		{ cacheModule: false	},
-	'MenuBar':			{ cacheModule: true	},
-	'ViewportManager':	{ cacheModule: true	},
-	'SelectionManager':	{ cacheModule: true	},
-	'SearchManager':		{ cacheModule: true	},
-	'TooltipManager':		{ cacheModule: true	},
-	'Tracer':				{ cacheModule: false	},
-	'Tree':				{ cacheModule: true	},
-	'TreeNode':			{ cacheModule: false	},
-	'Util':				{ cacheModule: false	},
-	'Util$':			{ cacheModule: false	}
+'Cache':				{ cacheModule: true	},
+'Cell':				{ cacheModule: false	},
+'CheckManager':		{ cacheModule: true	},
+'ColDefManager':		{ cacheModule: true	},
+'ColGroup':			{ cacheModule: true	},
+'ColHeader':			{ cacheModule: true	},
+'Collapser':			{ cacheModule: true	},
+'DataManager':		{ cacheModule: true	},
+'DataCreator':		{ cacheModule: true	},
+'EditManager':		{ cacheModule: true	},
+'Editor':				{ cacheModule: true	},
+'EngineExt':			{ cacheModule: false	},
+'EventManager':		{ cacheModule: true	},
+'Footer':				{ cacheModule: true	},
+'HeaderTree':			{ cacheModule: true	},
+'Grid':				{ cacheModule: true	},
+'GridManager':		{ cacheModule: false	},
+'MenuBar':			{ cacheModule: true	},
+'ViewportManager':	{ cacheModule: true	},
+'SelectionManager':	{ cacheModule: true	},
+'SearchManager':		{ cacheModule: true	},
+'TooltipManager':		{ cacheModule: true	},
+'Tracer':				{ cacheModule: false	},
+'Tree':				{ cacheModule: true	},
+'TreeNode':			{ cacheModule: false	},
+'Util':				{ cacheModule: false	},
+'Util$':			{ cacheModule: false	}
 };
 
 /**
-Grid 모듈을 instantiate 하고 생성된 오브젝트 인스턴스를 리턴합니다. JGM 에
-등록해야하는 모듈인 경우 고유의 mid를 할당하고 생성된 모듈을 {@link m} 에 모듈
-명을 key 값으로 그리고 mid 를 다시 한번 key 값으로 등록합니다.
+  Grid 모듈을 instantiate 하고 생성된 오브젝트 인스턴스를 리턴합니다. JGM 에
+  등록해야하는 모듈인 경우 고유의 mid를 할당하고 생성된 모듈을 {@link m} 에 모듈
+  명을 key 값으로 그리고 mid 를 다시 한번 key 값으로 등록합니다.
 
-@function {?} create
-@param {string} name - Grid 모듈 이름
-@param {Object} args - 해당 Grid 모듈에 넘겨줄 옵션 오브젝트
-@returns {?} Grid 모듈 인스턴스
+  @function {?} create
+  @param {string} name - Grid 모듈 이름
+  @param {Object} args - 해당 Grid 모듈에 넘겨줄 옵션 오브젝트
+  @returns {?} Grid 모듈 인스턴스
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 JGM.create = function(name, args) {
 	if (Util.isNull(args)) {
 		args = {};
@@ -149,7 +149,7 @@ JGM._destroy = function(obj, args) {
 					else {
 						Util.emptyObject(cur);
 					}
-				break;
+					break;
 				case "array":
 					cur = args[i];
 					if (Util.isString(cur)) {
@@ -162,7 +162,7 @@ JGM._destroy = function(obj, args) {
 					else {
 						cur.length = 0;
 					}
-				break;
+					break;
 				case "$":
 					cur = args[i];
 					if (Util.isString(cur)) {
@@ -181,7 +181,7 @@ JGM._destroy = function(obj, args) {
 					else {
 						Util$.unbindRemove(cur);
 					}
-				break;
+					break;
 				case "style":
 					cur = args[i];
 					if (Util.isString(cur)) {
@@ -200,7 +200,7 @@ JGM._destroy = function(obj, args) {
 					else {
 						Util.removeStyle(cur);
 					}
-				break;
+					break;
 				case "property":
 					cur = args[i];
 					if (Util.isString(cur)) {
@@ -216,7 +216,7 @@ JGM._destroy = function(obj, args) {
 							delete obj[cur[j]];
 						}
 					}
-				break;
+					break;
 				case "module":
 					cur = args[i];
 					if (Util.isString(cur)) {
@@ -235,19 +235,19 @@ JGM._destroy = function(obj, args) {
 					else {
 						cur.destroy();
 					}
-				break;
+					break;
 				case "name":
 					if (obj.hasOwnProperty("mid")) {
 						JGM._remove(args[i], obj.mid);
 						delete obj.mid;
 					}
-				break;
+					break;
 				case "path":
 					if (obj.hasOwnProperty("grid") && obj.grid.hasOwnProperty(args[i])) {
 						delete obj.grid[args[i]];
-                  delete obj.grid;
+						delete obj.grid;
 					}
-				break;
+					break;
 			}
 		}
 	}
@@ -298,16 +298,16 @@ JGM._remove = function(name, mid) {
 };
 
 /**
-Grid 를 생성하고 리턴합니다.
+  Grid 를 생성하고 리턴합니다.
 
-@function {JGM.core.Grid} grid
-@param {Object} args - Grid 모듈에 넘겨줄 옵션 오브젝트
-@returns {JGM.core.Grid} Grid 인스턴스
+  @function {JGM.core.Grid} grid
+  @param {Object} args - Grid 모듈에 넘겨줄 옵션 오브젝트
+  @returns {JGM.core.Grid} Grid 인스턴스
 
-@author 조준호
-@since 1.0.1
-@version 1.0.1
-*/
+  @author 조준호
+  @since 1.0.1
+  @version 1.0.1
+  */
 JGM.grid = function(args) {
 	return this.create("Grid", args);
 };
@@ -315,9 +315,9 @@ JGM.grid = function(args) {
 JGM.gridMap = {};
 
 JGM.getGrid = function(name) {
-   if (this.gridMap.hasOwnProperty(name)) {
-      return this.gridMap[name];
-   }
+	if (this.gridMap.hasOwnProperty(name)) {
+		return this.gridMap[name];
+	}
 };
 
 JGM._add = function(name, module) {
@@ -328,23 +328,23 @@ JGM._extend = function(defaults, options) {
 	// 옵션을 익스텐드합니다
 	var opt = Util.ifNull(options, {}),
 		i;
-	
+
 	$.extend(true, defaults, opt);
 	$.extend(true, opt, defaults);
 	return opt;
 };
 
 /**
-현재 생성된 Grid 모듈 인스턴스들이 등록되어있는 변수입니다. 예를 들어, <code>"JGM10"</code> 이란
-mid 를 가진 {@link JGM.CheckManager CheckManager} 를 가져오려면 <code>JGM.m.JGM10</code> 과
-같이 엑세스 할 수 있습니다.
+  현재 생성된 Grid 모듈 인스턴스들이 등록되어있는 변수입니다. 예를 들어, <code>"JGM10"</code> 이란
+  mid 를 가진 {@link JGM.CheckManager CheckManager} 를 가져오려면 <code>JGM.m.JGM10</code> 과
+  같이 엑세스 할 수 있습니다.
 
-@var {Object} m
+  @var {Object} m
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 JGM.m = {length:0};
 
 JGM._CONST = {
@@ -360,7 +360,7 @@ JGM._globalEventsBound = false;
 JGM._globalEvents = {
 	_mousemove:function(e) {
 		var i,
-			g = JGM.m.Grid;
+		g = JGM.m.Grid;
 		for (i in g) {
 			if (g.hasOwnProperty(i)) {
 				g[i]._mousemove(e);
@@ -369,7 +369,7 @@ JGM._globalEvents = {
 	},
 	_mouseup:function(e) {
 		var i,
-			g = JGM.m.Grid;
+		g = JGM.m.Grid;
 		for (i in g) {
 			if (g.hasOwnProperty(i)) {
 				g[i]._mouseup(e);
@@ -378,7 +378,7 @@ JGM._globalEvents = {
 	},
 	_resize:function(e) {
 		var i,
-			g = JGM.m.Grid;
+		g = JGM.m.Grid;
 		for (i in g) {
 			if (g.hasOwnProperty(i)) {
 				g[i]._resize(e);
@@ -410,10 +410,10 @@ JGM._unbindGlobalEvents = function() {
 };
 
 JGM.error = {
-   'LENGTH_NOT_EQUAL': "Lengths are not equal",
+	'LENGTH_NOT_EQUAL': "Lengths are not equal",
 	'NOT_MODIFIABLE': "Cannot modify value for '%0'.",
 	'KEY_UNDEFINED': "Column '%0' is undefined.",
-   'BAD_NULL': "Column '%0' cannot be null.",
+	'BAD_NULL': "Column '%0' cannot be null.",
 	'DUP_KEY': "Duplicate column key '%0'.",
 	'DUP_ENTRY': "Duplicate entry '%0' for '%1'.",
 	'KEY_NOT_FOUND': "'%0' for '%1' doesn't exist in table.",
@@ -422,7 +422,7 @@ JGM.error = {
 	'MULTIPLE_PRI_KEY': "Multiple primary key defined.",
 	'DATA_TOO_LONG': "Data '%0' too long for column '%1'. Maximum is %2.",
 	'DATA_TOO_SHORT': "Data '%0' too short for column '%1'. Minimum is %2.",
-   'WRONG_LENGTH': "Length of data '%0' is not '%1' characters long for column '%2'.",
+	'WRONG_LENGTH': "Length of data '%0' is not '%1' characters long for column '%2'.",
 	'BIGGER_THAN': "Data '%0' too big for column '%1'. Maximum is %2.",
 	'SMALLER_THAN': "Data '%0' too small for column '%1'. Minimum is %2.",
 	'WRONG_VALUE': "Incorrect value: '%0' for '%1'."

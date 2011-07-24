@@ -58,7 +58,7 @@ function EventDispatcher(args) {
 goog.inherits(EventDispatcher, Disposable);
 
 var proto = EventDispatcher.prototype,
-	sdispose = proto.dispose;
+	sdispose = Disposable.prototype.dispose;
 
 proto.dispose = function() {
 	sdispose.call(this, -1, true);

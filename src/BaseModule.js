@@ -42,6 +42,10 @@ goog.provide('jx.grid.BaseModule');
 				$.extend(true, defaults, opts);
 			}
 			this._options = defaults;
+			this.dispatchEvent({
+				'type':'afteroption',
+				'options':defaults
+			});
 		}
 
 		// init

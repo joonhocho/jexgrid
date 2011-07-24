@@ -17,194 +17,81 @@ goog.provide('jx.grid.CheckManager');
  */
 
 /**
-JGM
-@scope JGM
-*/
+  JGM
+  @scope JGM
+  */
 
 (function() {
 
-var JGM = goog.getObjectByName('jx.grid'),
+	var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
- goog.exportSymbol('jx.grid.CheckManager', CheckManager);
- JGM._add("CheckManager", CheckManager);
+goog.exportSymbol('jx.grid.CheckManager', CheckManager);
+JGM._add("CheckManager", CheckManager);
 
 
 /**
-CheckManager 모듈. 그리드 로우의 선택을 담당하는 모듈입니다.
-@module CheckManager
+  CheckManager 모듈. 그리드 로우의 선택을 담당하는 모듈입니다.
+  @module CheckManager
 
-@requires JGM
-@requires JGM.Grid
-@requires JGM.ColDefManager
-@requires JGM.DataManager
-@requires JGM.EventManager
-@requires JGM.ViewportManager
- */
-
-/**
-CheckManager 클래스. checkbox 와 radio 타입의 선택을 지원합니다.
-
-@class {CheckManager} JGM.CheckManager
-
-@author 조준호
-@since 1.0.0
-@version 1.1.0
-*/
+  @requires JGM
+  @requires JGM.Grid
+  @requires JGM.ColDefManager
+  @requires JGM.DataManager
+  @requires JGM.EventManager
+  @requires JGM.ViewportManager
+  */
 
 /**
-CheckManager 컨스트럭터 입니다.
+  CheckManager 클래스. checkbox 와 radio 타입의 선택을 지원합니다.
 
-@constructor {CheckManager} CheckManager
-@param {Object} args - CheckManager 모듈 파라미터 오브젝트
-@... {JGM.Grid} args.grid - CheckManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
-@... {Object} args.options - CheckManager 옵션 오브젝트
-@returns {CheckManager} CheckManager 모듈 인스턴스를 리턴합니다.
+  @class {CheckManager} JGM.CheckManager
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.1.0
+  */
+
+/**
+  CheckManager 컨스트럭터 입니다.
+
+  @constructor {CheckManager} CheckManager
+  @param {Object} args - CheckManager 모듈 파라미터 오브젝트
+  @... {JGM.Grid} args.grid - CheckManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+  @... {Object} args.options - CheckManager 옵션 오브젝트
+  @returns {CheckManager} CheckManager 모듈 인스턴스를 리턴합니다.
+
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 function CheckManager(args) {
-	/**
-	{@link JGM} 이 할당해주는 CheckManager 모듈 고유 아이디입니다. 읽기 전용.
-
-	@var {string} mid
-
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
-	this.mid = args.mid;
-
-	/**
-	CheckManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
-
-	@var {JGM.Grid} grid
-
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
-	this.grid = args.grid;
-
-	/**
-	데이터의 체크 박스 컬럼을 생성하고 관리하는 {@link JGM.CheckManager CheckManager} 인스턴스 입니다.
-
-	@var {JGM.CheckManager} JGM.Grid.checkMgr
-
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
-	// this.grid['checkMgr'] = this;
-
-	/**
-	CheckManager 모듈의 기본 옵션 값들을 정의합니다.
-
-	@type {Object} options
-	@private
-
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
-	var options = {
-		/**
-		체크 컬럼을 나타내는 컬럼 정의 오브젝트입니다. <br>기본값:<code>{key:"checkbox", width: 20, name:" "}</code>
-
-		@type {Object=} JGM.CheckManager.options.colDef
-		@private
-		@see JGM.ColDefManager.options.colDef
-
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
-		'colDef': {'key':"checkbox", 'width': 20, 'name':" ", 'noTitle':true, 'resizable':false, 'sorter':null, 'filter':null, 'noSearch':true, 'editor':null, 'inputOnCreate':false},
-
-		/**
-		{@link JGM.CheckManager.options.colDef colDef} 을 몇번째 컬럼으로 넣을지를 정합니다. <br>기본값:<code>0</code>
-
-		@type {number=} JGM.CheckManager.options.colIdx
-		@private
-
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
-		'colIdx': 0,
-
-		/**
-		체크 input 들의 name attribute 에 공통적으로 넣을 값입니다. <br>기본값:<code>undefined</code>
-
-		@type {string=} JGM.CheckManager.options.name
-		@private
-
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
-		'name': undefined,
-
-		/**
-		체크 input 들에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"checkmg"</code>
-
-		@type {string=} JGM.CheckManager.options.classCheck
-		@private
-
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
-		'classCheck': "checkmg",
-
-		/**
-		마스터 헤더 체크 input 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"checkm"</code>
-
-		@type {string=} JGM.CheckManager.options.classMasterCheck
-		@private
-
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
-		'classMasterCheck': "checkm",
-
-		/**
-		checkbox 를 위한 마스터 헤더 체크를 생성할지 여부입니다. <br>기본값:<code>true</code>
-
-		@type {boolean=} JGM.CheckManager.options.master
-		@private
-
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
-		'master': true,
-
-		/**
-		true 일 경우 radio 타입의 input, false 일 경우 checkbox 타입의 input 을 생성합니다. <br>기본값:<code>false</code>
-
-		@type {boolean=} JGM.CheckManager.options.isRadio
-		@private
-
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
-		'isRadio': false
-	};
-
-	this._options = JGM._extend(options, args['options']);
-
-	if (this._options['isRadio']) {
-		if (Util.isNull(this._options['name'])) {
-			this._options['name'] = "radio" + this.mid;
+	function afteroption(event) {
+		var options = event['options'];
+		if (options['isRadio']) {
+			if (Util.isNull(options['name'])) {
+				options['name'] = "radio" + this.mid;
+			}
+			options['master'] = false;
 		}
-		this._options['master'] = false;
 	}
 
+	this.addEventListener('afteroption', afteroption);
+
+	goog.base(this, args);
+
+	this.removeEventListener('afteroption', afteroption);
+}
+
+goog.inherits(CheckManager, BaseModule);
+
+CheckManager.getInstance = function(args) {
+	return new CheckManager(args);
+};
+
+var prototype = CheckManager.prototype;
+
+prototype._init = function() {
 	this._map = {};
 
 	this.disabledmap = {};
@@ -215,16 +102,6 @@ function CheckManager(args) {
 
 	this._master;
 
-	this.__init();
-}
-
-CheckManager.getInstance = function(args) {
-	return new CheckManager(args);
-};
-
-var prototype = CheckManager.prototype;
-
-prototype.__init = function() {
 	var opt = this._options,
 		size,
 		con = JGM._CONST;
@@ -232,7 +109,7 @@ prototype.__init = function() {
 	if (this.grid['colDefMgr'].getByKey(opt['colDef'].key) === undefined) {
 		this.grid['colDefMgr'].addAt(opt['colIdx'], opt['colDef']);
 	}
-	
+
 	if (Util.isNull(con._checkboxWidth)) {
 		size = Util.calCheckSize();
 		con._checkboxWidth = size.checkboxW;
@@ -240,11 +117,9 @@ prototype.__init = function() {
 		con._radioWidth = size.radioW;
 		con._radioHeight = size.radioH;
 	}
-	
-	this.bindEvents();
 };
 
-prototype.bindEvents = function() {
+prototype._bindEvents = function() {
 	var opt = this._options,
 		key = opt['colDef'].key,
 		events;
@@ -258,16 +133,116 @@ prototype.bindEvents = function() {
 		'onRemoveDatarow': this._onRemoveDatarow,
 		'onRemoveDatalist': this._onRemoveDatalist
 	};
-	
+
 	events["onRenderCell_" + key + "_prepend"] = this._onRenderCell;
 	events["keydownColSel_" + key + "_" + Util.keyMapKeydown.space] = this._keydownColSel;
-	
+
 	if (opt['master']) {
 		events["onRenderHeader_" + key + "_prepend"] = this._onRenderHeader;
 		events.onRenderHeadersComplete = this._getMaster;
 	}
 	this.grid['event'].bind(events, this);
 };
+
+prototype._defaultOptions = function() {
+	/**
+	  CheckManager 모듈의 기본 옵션 값들을 정의합니다.
+
+	  @type {Object} options
+	  @private
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	return {
+		/**
+		  체크 컬럼을 나타내는 컬럼 정의 오브젝트입니다. <br>기본값:<code>{key:"checkbox", width: 20, name:" "}</code>
+
+		  @type {Object=} JGM.CheckManager.options.colDef
+		  @private
+		  @see JGM.ColDefManager.options.colDef
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		'colDef': {'key':"checkbox", 'width': 20, 'name':" ", 'noTitle':true, 'resizable':false, 'sorter':null, 'filter':null, 'noSearch':true, 'editor':null, 'inputOnCreate':false},
+
+		/**
+		  {@link JGM.CheckManager.options.colDef colDef} 을 몇번째 컬럼으로 넣을지를 정합니다. <br>기본값:<code>0</code>
+
+		  @type {number=} JGM.CheckManager.options.colIdx
+		  @private
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		'colIdx': 0,
+
+		/**
+		  체크 input 들의 name attribute 에 공통적으로 넣을 값입니다. <br>기본값:<code>undefined</code>
+
+		  @type {string=} JGM.CheckManager.options.name
+		  @private
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		'name': undefined,
+
+		/**
+		  체크 input 들에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"checkmg"</code>
+
+		  @type {string=} JGM.CheckManager.options.classCheck
+		  @private
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		'classCheck': "checkmg",
+
+		/**
+		  마스터 헤더 체크 input 에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"checkm"</code>
+
+		  @type {string=} JGM.CheckManager.options.classMasterCheck
+		  @private
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		'classMasterCheck': "checkm",
+
+		/**
+		  checkbox 를 위한 마스터 헤더 체크를 생성할지 여부입니다. <br>기본값:<code>true</code>
+
+		  @type {boolean=} JGM.CheckManager.options.master
+		  @private
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		'master': true,
+
+		/**
+		  true 일 경우 radio 타입의 input, false 일 경우 checkbox 타입의 input 을 생성합니다. <br>기본값:<code>false</code>
+
+		  @type {boolean=} JGM.CheckManager.options.isRadio
+		  @private
+
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		'isRadio': false
+	};
+}
+
 
 prototype._destroy = function() {
 	JGM._destroy(this, {
@@ -293,7 +268,7 @@ prototype._onCreateCss = function() {
 		w = JGM._CONST._checkboxWidth;
 		h = JGM._CONST._checkboxHeight;
 	}
-	
+
 	checkCommon = "*overflow:hidden;padding:0;width:" + w + "px;height:" + h + "px;";
 	css = this.grid['view']._getCellSelector() + " ." + this._options['classCheck'] + "[mid='" + this.mid + "']{" +
 		checkCommon +
@@ -306,20 +281,20 @@ prototype._onCreateCss = function() {
 
 
 /**
-주어진 데이터 어레이안의 데이터들을 모두 체크합니다. 현재 그리드가 가진 데이터들과
-데이터의 내용은 같지만 메모리상 다른 주소를 가지는 데이터들일 경우 데이터 매핑을
-합니다.
+  주어진 데이터 어레이안의 데이터들을 모두 체크합니다. 현재 그리드가 가진 데이터들과
+  데이터의 내용은 같지만 메모리상 다른 주소를 가지는 데이터들일 경우 데이터 매핑을
+  합니다.
 
-@function {} checkList
-@param {Array.<Object>} list - 체크할 데이터 어레이
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
-@see JGM.DataManager.mapList 데이터 매핑을 합니다.
-@see check
+  @function {} checkList
+  @param {Array.<Object>} list - 체크할 데이터 어레이
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @see JGM.DataManager.mapList 데이터 매핑을 합니다.
+  @see check
 
-@author 조준호
-@since 1.0.0
-@version 1.0.1
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.1
+  */
 prototype.checkList = function(list, nomap) {
 	if (!nomap) {
 		list = this.grid['dataMgr'].mapList(list).mapped;
@@ -334,18 +309,18 @@ prototype.checkList = function(list, nomap) {
 
 
 /**
-{@link checkList} 와 같지만 체크하기 전에, 기존에 체크된 리스트를 모두 제거합니다.
+  {@link checkList} 와 같지만 체크하기 전에, 기존에 체크된 리스트를 모두 제거합니다.
 
-@function {} setCheckList
-@param {Array.<Object>} list - 체크할 데이터 어레이
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
-@see uncheckAll
-@see checkList
+  @function {} setCheckList
+  @param {Array.<Object>} list - 체크할 데이터 어레이
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @see uncheckAll
+  @see checkList
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.setCheckList = function(list, nomap) {
 	this.uncheckAll();
 	this.checkList(list, nomap);
@@ -353,47 +328,47 @@ prototype.setCheckList = function(list, nomap) {
 
 
 /**
-현재 체크된 데이터들의 어레이를 리턴합니다.
+  현재 체크된 데이터들의 어레이를 리턴합니다.
 
-@function {Array.<Object>} getCheckList
-@returns {Array.<Object>} 현재 체크된 데이터들의 어레이
+  @function {Array.<Object>} getCheckList
+  @returns {Array.<Object>} 현재 체크된 데이터들의 어레이
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.getCheckList = function() {
 	return Util.toArray(this._map);
 };
 
 
 /**
-현재 비활성화된 데이터들의 어레이를 리턴합니다.
+  현재 비활성화된 데이터들의 어레이를 리턴합니다.
 
-@function {Array.<Object>} getDisableds
-@returns {Array.<Object>} 현재 비활성화된 데이터들의 어레이
+  @function {Array.<Object>} getDisableds
+  @returns {Array.<Object>} 현재 비활성화된 데이터들의 어레이
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.getDisableds = function() {
 	return Util.toArray(this.disabledmap);
 };
 
 
 /**
-모든 데이터의 체크를 토글합니다. 모든 데이터가 체크되어 있을 경우, 모든 체크를
-해제하고, 하나의 데이터라도 체크되어 있지 않은 경우 모든 데이터를 체크합니다.
+  모든 데이터의 체크를 토글합니다. 모든 데이터가 체크되어 있을 경우, 모든 체크를
+  해제하고, 하나의 데이터라도 체크되어 있지 않은 경우 모든 데이터를 체크합니다.
 
-@function {} toggleCheckAll
-@see uncheckAll
-@see checkAll
+  @function {} toggleCheckAll
+  @see uncheckAll
+  @see checkAll
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.toggleCheckAll = function() {
 	if (this.isCheckedAll()) {
 		this.uncheckAll();
@@ -405,14 +380,14 @@ prototype.toggleCheckAll = function() {
 
 
 /**
-모든 데이터를 체크합니다.
+  모든 데이터를 체크합니다.
 
-@function {} checkAll
+  @function {} checkAll
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.checkAll = function() {
 	if (this._options['master']) {
 		CheckManager._check(this._master);
@@ -435,14 +410,14 @@ prototype.checkAll = function() {
 
 
 /**
-모든 데이터를 체크를 헤재합니다.
+  모든 데이터를 체크를 헤재합니다.
 
-@function {} uncheckAll
+  @function {} uncheckAll
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.uncheckAll = function() {
 	if (this._options['master']) {
 		CheckManager._uncheck(this._master);
@@ -456,18 +431,18 @@ prototype.uncheckAll = function() {
 
 
 /**
-주어진 데이터의 체크를 토글합니다.
+  주어진 데이터의 체크를 토글합니다.
 
-@function {} toggleCheck
-@param {Object} datarow - 체크 토글할 데이터
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
-@see check
-@see uncheck
+  @function {} toggleCheck
+  @param {Object} datarow - 체크 토글할 데이터
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @see check
+  @see uncheck
 
-@author 조준호
-@since 1.0.0
-@version 1.1.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.1.0
+  */
 prototype.toggleCheck = function(datarow, nomap) {
 	if (!nomap) {
 		datarow = this.grid['dataMgr'].map(datarow);
@@ -483,16 +458,16 @@ prototype.toggleCheck = function(datarow, nomap) {
 
 
 /**
-주어진 데이터의 활성화를 토글합니다.
+  주어진 데이터의 활성화를 토글합니다.
 
-@function {} toggleDisable
-@param {Object} datarow - 활성화를 토글할 데이터
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @function {} toggleDisable
+  @param {Object} datarow - 활성화를 토글할 데이터
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.toggleDisable = function(datarow, nomap) {
 	if (!nomap) {
 		datarow = this.grid['dataMgr'].map(datarow);
@@ -508,18 +483,18 @@ prototype.toggleDisable = function(datarow, nomap) {
 
 
 /**
-주어진 아이디를 가진 데이터를 체크를 토글합니다.
+  주어진 아이디를 가진 데이터를 체크를 토글합니다.
 
-@function {} toggleById
-@param {Object} id - 체크 토글할 데이터의 아이디
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
-@see check
-@see uncheck
+  @function {} toggleById
+  @param {Object} id - 체크 토글할 데이터의 아이디
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @see check
+  @see uncheck
 
-@author 조준호
-@since 1.0.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.3.0
+  */
 /*
  * 1.3.0 - toggle -> toggleById
  */
@@ -529,17 +504,17 @@ prototype.toggleById = function(id) {
 
 
 /**
-주어진 데이터를 체크합니다. 이미 체크된 데이터일 경우 아무것도 하지 않습니다.<br>
-트리거 이벤트: {@link onCheckChange}
+  주어진 데이터를 체크합니다. 이미 체크된 데이터일 경우 아무것도 하지 않습니다.<br>
+  트리거 이벤트: {@link onCheckChange}
 
-@function {} check
-@param {Object} datarow - 체크할 데이터
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @function {} check
+  @param {Object} datarow - 체크할 데이터
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
-@author 조준호
-@since 1.0.0
-@version 1.1.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.1.0
+  */
 prototype.check = function(datarow, nomap) {
 	if (!nomap) {
 		datarow = this.grid['dataMgr'].map(datarow);
@@ -554,32 +529,32 @@ prototype.check = function(datarow, nomap) {
 	this._updateMaster();
 
 	/**
-	CheckManager 에서 하나의 데이터가 체크/해제 되었을 경우에 트리거되는 이벤트입니다.<br>
-	트리거링 함수: {@link check}, {@link uncheck}
-	@event {Event} onCheckChange
-	@param {Object} datarow - 체크/해제 된 데이터 로우
-	@param {boolean} checked - 체크되었으면 true, 해제되었으면 false 의 값을 가집니다.
+	  CheckManager 에서 하나의 데이터가 체크/해제 되었을 경우에 트리거되는 이벤트입니다.<br>
+	  트리거링 함수: {@link check}, {@link uncheck}
+	  @event {Event} onCheckChange
+	  @param {Object} datarow - 체크/해제 된 데이터 로우
+	  @param {boolean} checked - 체크되었으면 true, 해제되었으면 false 의 값을 가집니다.
 
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
 	this.grid['event'].trigger("onCheckChange", [datarow, true]);
 };
 
 
 /**
-주어진 데이터의 체크를 해제합니다. 체크되어있지 않은 경우 아무것도 하지 않습니다.<br>
-트리거 이벤트: {@link onCheckChange}
+  주어진 데이터의 체크를 해제합니다. 체크되어있지 않은 경우 아무것도 하지 않습니다.<br>
+  트리거 이벤트: {@link onCheckChange}
 
-@function {} uncheck
-@param {Object} datarow - 체크 해제할 데이터
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @function {} uncheck
+  @param {Object} datarow - 체크 해제할 데이터
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
-@author 조준호
-@since 1.0.0
-@version 1.1.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.1.0
+  */
 prototype.uncheck = function(datarow, nomap) {
 	if (!nomap) {
 		datarow = this.grid['dataMgr'].map(datarow);
@@ -599,17 +574,17 @@ prototype.uncheck = function(datarow, nomap) {
 };
 
 /**
-주어진 데이터에 해당하는 체크박스를 비활성화 합니다.
-트리거 이벤트: {@link onDisableCheck}
+  주어진 데이터에 해당하는 체크박스를 비활성화 합니다.
+  트리거 이벤트: {@link onDisableCheck}
 
-@function {} disable 
-@param {Object} datarow -활성화할 데이터
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @function {} disable 
+  @param {Object} datarow -활성화할 데이터
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.disable = function(datarow, nomap) {
 	var datam = this.grid['dataMgr'];
 
@@ -619,39 +594,39 @@ prototype.disable = function(datarow, nomap) {
 
 	var id = datam.getId(datarow),
 		map = this.disabledmap;
-		
+
 	if (map.hasOwnProperty(id)) {
 		return;
 	}
-		
+
 	map[id] = datarow;
 
 	CheckManager.disableNode(this.getCheckbox(datarow));
 
 	/**
-	CheckManager 에서 하나의 데이터가 비활성화 되었을 경우에 트리거되는 이벤트입니다.<br>
-	@event {Event} onDisableCheck
-	@param {Object} datarow - 체크 박스가 비활성화 된 데이터 로우
+	  CheckManager 에서 하나의 데이터가 비활성화 되었을 경우에 트리거되는 이벤트입니다.<br>
+	  @event {Event} onDisableCheck
+	  @param {Object} datarow - 체크 박스가 비활성화 된 데이터 로우
 
-	@author 조준호
-	@since 1.3.0
-	@version 1.3.0
-	*/
+	  @author 조준호
+	  @since 1.3.0
+	  @version 1.3.0
+	  */
 	this.grid['event'].trigger("onDisableCheck", [datarow]);
 };
 
 /**
-주어진 데이터에 해당하는 체크박스를 활성화 합니다.
-트리거 이벤트: {@link onEnableCheck}
+  주어진 데이터에 해당하는 체크박스를 활성화 합니다.
+  트리거 이벤트: {@link onEnableCheck}
 
-@function {} enable 
-@param {Object} datarow -비활성화할 데이터
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @function {} enable 
+  @param {Object} datarow -비활성화할 데이터
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.enable = function(datarow, nomap) {
 	var datam = this.grid['dataMgr'];
 
@@ -661,24 +636,24 @@ prototype.enable = function(datarow, nomap) {
 
 	var id = datam.getId(datarow),
 		map = this.disabledmap;
-		
+
 	if (!map.hasOwnProperty(id)) {
 		return;
 	}
-		
+
 	delete map[id];
 
 	CheckManager.enableNode(this.getCheckbox(datarow));
 
 	/**
-	CheckManager 에서 하나의 데이터가 활성화 되었을 경우에 트리거되는 이벤트입니다.<br>
-	@event {Event} onEnableCheck
-	@param {Object} datarow - 체크 박스가 활성화 된 데이터 로우
+	  CheckManager 에서 하나의 데이터가 활성화 되었을 경우에 트리거되는 이벤트입니다.<br>
+	  @event {Event} onEnableCheck
+	  @param {Object} datarow - 체크 박스가 활성화 된 데이터 로우
 
-	@author 조준호
-	@since 1.3.0
-	@version 1.3.0
-	*/
+	  @author 조준호
+	  @since 1.3.0
+	  @version 1.3.0
+	  */
 	this.grid['event'].trigger("onEnableCheck", [datarow]);
 };
 
@@ -690,11 +665,11 @@ prototype._updateMaster = function() {
 
 prototype._add = function(datarow) {
 	var id = datarow[this.grid['dataMgr'].idKey];
-		
+
 	if (this._map.hasOwnProperty(id)) {
 		return false;
 	}
-		
+
 	if (this._options['isRadio'] === true) {
 		this._map = {};
 		this._count = 0;
@@ -709,29 +684,29 @@ prototype._add = function(datarow) {
 prototype._remove = function(datarow) {
 	var id = datarow[this.grid['dataMgr'].idKey],
 		map = this._map;
-		
+
 	if (!map.hasOwnProperty(id)) {
 		return false;
 	}
-		
+
 	delete map[id];
 	this._count--;
-	
+
 	return true;
 };
 
 /**
-주어진 데이터의 체크 여부를 리턴합니다.
+  주어진 데이터의 체크 여부를 리턴합니다.
 
-@function {boolean} isChecked
-@param {Object} datarow - 체크 여부를 확인할 데이터
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
-@returns {boolean} 체크 되었을 경우 true, 아닌 경우 false
+  @function {boolean} isChecked
+  @param {Object} datarow - 체크 여부를 확인할 데이터
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @returns {boolean} 체크 되었을 경우 true, 아닌 경우 false
 
-@author 조준호
-@since 1.0.0
-@version 1.1.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.1.0
+  */
 prototype.isChecked = function(datarow, nomap) {
 	var datam = this.grid['dataMgr'];
 	if (!nomap) {
@@ -742,17 +717,17 @@ prototype.isChecked = function(datarow, nomap) {
 };
 
 /**
-주어진 데이터의 체크 활성화 여부를 리턴합니다.
+  주어진 데이터의 체크 활성화 여부를 리턴합니다.
 
-@function {boolean} isDisabled 
-@param {Object} datarow - 체크 활성화 여부를 확인할 데이터
-@param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
-@returns {boolean} 체크 비활성화 되었을 경우 true, 아닌 경우 false
+  @function {boolean} isDisabled 
+  @param {Object} datarow - 체크 활성화 여부를 확인할 데이터
+  @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
+  @returns {boolean} 체크 비활성화 되었을 경우 true, 아닌 경우 false
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.isDisabled = function(datarow, nomap) {
 	var datam = this.grid['dataMgr'];
 	if (!nomap) {
@@ -766,7 +741,7 @@ prototype.splitChecked = function(datalist, nomap) {
 	if (!nomap) {
 		datalist = this.grid['dataMgr'].mapList(datalist).mapped;
 	}
-		
+
 	var checked = [],
 		unchecked = [],
 		i = 0,
@@ -774,7 +749,7 @@ prototype.splitChecked = function(datalist, nomap) {
 		idKey = this.grid['dataMgr'].idKey,
 		data,
 		map = this._map;
-	
+
 	for (; i < len; i++) {
 		if (map.hasOwnProperty((data = datalist[i])[idKey])) {
 			checked.push(data);
@@ -788,31 +763,31 @@ prototype.splitChecked = function(datalist, nomap) {
 };
 
 /**
-모든 데이터의 체크 여부를 리턴합니다.
+  모든 데이터의 체크 여부를 리턴합니다.
 
-@function {boolean} isCheckedAll
-@returns {boolean} 모든 데이터가 체크 되었을 경우 true, 아닌 경우 false
+  @function {boolean} isCheckedAll
+  @returns {boolean} 모든 데이터가 체크 되었을 경우 true, 아닌 경우 false
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.isCheckedAll = function() {
 	return (this._count !== 0 &&
-		this._count === this.grid['dataMgr'].all.length ? true : false);
+			this._count === this.grid['dataMgr'].all.length ? true : false);
 };
 
 /**
-체크된 모든 데이터를 그리드에서 제거합니다.
+  체크된 모든 데이터를 그리드에서 제거합니다.
 
-@function {} removeChecked
+  @function {} removeChecked
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.removeChecked = function() {
-   return this.grid['dataMgr'].removeList(this.getCheckList());
+	return this.grid['dataMgr'].removeList(this.getCheckList());
 };
 
 prototype._getMaster = function() {
@@ -827,67 +802,67 @@ prototype._getChecks = function(rows) {
 	for (; i < len; i++) {
 		checks.push(rows[i].childNodes[col].childNodes[0]);
 	}
-	
+
 	return checks;
 };
 
 /**
-현재 캐쉬된 체크 박스 DOM Element 들을 리턴합니다.
+  현재 캐쉬된 체크 박스 DOM Element 들을 리턴합니다.
 
-@function {DOMElement[]} getCheckboxes
-@returns {DOMElement[]} 캐쉬된 채크 박스들
+  @function {DOMElement[]} getCheckboxes
+  @returns {DOMElement[]} 캐쉬된 채크 박스들
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.getCheckboxes = function() {
 	return this._getChecks(this.grid['view'].getRenderedRows());
 };
 
 /**
-아이디에 해당하는 체크 박스 DOM Element 를 리턴합니다.
+  아이디에 해당하는 체크 박스 DOM Element 를 리턴합니다.
 
-@function {DOMElement} getCheckboxById
-@returns {DOMElement} 채크 박스
+  @function {DOMElement} getCheckboxById
+  @returns {DOMElement} 채크 박스
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.getCheckboxById = function(id) {
 	var row = this.grid['view'].getRowById(id);
 	if (Util.isNotNull(row)) {
-      return row.childNodes[this.grid['colDefMgr'].getIdxByKey(this._options['colDef']['key'])].childNodes[0];
-   }
+		return row.childNodes[this.grid['colDefMgr'].getIdxByKey(this._options['colDef']['key'])].childNodes[0];
+	}
 };
 
 /**
-로우 데이터에 해당하는 체크 박스 DOM Element 를 리턴합니다.
+  로우 데이터에 해당하는 체크 박스 DOM Element 를 리턴합니다.
 
-@function {DOMElement} getCheckbox
-@returns {DOMElement} 채크 박스
+  @function {DOMElement} getCheckbox
+  @returns {DOMElement} 채크 박스
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.getCheckbox = function(datarow) {
-   return this.getCheckboxById(this.grid['dataMgr'].getId(datarow));
+	return this.getCheckboxById(this.grid['dataMgr'].getId(datarow));
 };
 
 /**
-인덱스에 해당하는 체크 박스 DOM Element 를 리턴합니다.
+  인덱스에 해당하는 체크 박스 DOM Element 를 리턴합니다.
 
-@function {DOMElement} getCheckboxByIdx
-@returns {DOMElement} 채크 박스
+  @function {DOMElement} getCheckboxByIdx
+  @returns {DOMElement} 채크 박스
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.getCheckboxByIdx = function(i) {
-   return this.getCheckboxById(this.grid['dataMgr'].getIdByIdx(i));
+	return this.getCheckboxById(this.grid['dataMgr'].getIdByIdx(i));
 };
 
 prototype._onRemoveDatarow = function(datarow) {
@@ -943,7 +918,7 @@ prototype._keydownColSel = function(e, colSelections, lastSelection) {
 	if (Util.isNotNullAnd(colSelections, lastSelection)) {
 		var checked = this.isChecked(lastSelection.getDatarow(), true),
 			row,
-			list = this.grid['dataMgr'].datalist;
+				list = this.grid['dataMgr'].datalist;
 		if (this._options['isRadio']) {
 			for (row in colSelections) {
 				if (colSelections.hasOwnProperty(row)) {
@@ -1000,14 +975,14 @@ prototype._onRenderCell = function(rowIdx, colIdx, datarow, colDef, cellHtml) {
 
 
 /**
-CheckManager 를 비활성화 합니다.
+  CheckManager 를 비활성화 합니다.
 
-@function {} disableAll
+  @function {} disableAll
 
-@author 조준호
-@since 1.0.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.3.0
+  */
 /*
  * changelog
  * 1.3.0: disable -> disableAll
@@ -1016,26 +991,26 @@ prototype.disableAll = function() {
 	if (this._disabled) {
 		return;
 	}
-		
+
 	this._disabled = true;
-	
+
 	if (this._options['master']) {
 		this._master.attr("disabled", "disabled");
 	}
-		
+
 	$(this.getCheckboxes()).attr("disabled", "disabled");
 };
 
 
 /**
-CheckManager 를 활성화 합니다.
+  CheckManager 를 활성화 합니다.
 
-@function {} enableAll
+  @function {} enableAll
 
-@author 조준호
-@since 1.0.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.3.0
+  */
 /*
  * changelog
  * 1.3.0: enable -> enableAll
@@ -1044,13 +1019,13 @@ prototype.enableAll = function() {
 	if (!this._disabled) {
 		return;
 	}
-		
+
 	this._disabled = false;
-	
+
 	if (this._options['master']) {
 		this._master.removeAttr("disabled");
 	}
-		
+
 	$(this.getCheckboxes()).removeAttr("disabled");
 };
 
