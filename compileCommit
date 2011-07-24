@@ -1,0 +1,3 @@
+#!/usr/bin/php
+<?php
+system("git pull; php make; php commit");
