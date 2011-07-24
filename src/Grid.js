@@ -474,6 +474,8 @@ prototype._defaultOptions = function() {
 	  */
 	prototype.destroy = function() {	
 		try {
+			this.dispatchEvent({'type':'beforeDispose'});
+
 			if (Util.isEmptyObj(JGM.m.Grid)) {
 				JGM._unbindGlobalEvents();
 			}
@@ -497,6 +499,7 @@ prototype._defaultOptions = function() {
 				map: "vars _options",
 				style: "style _dynStyle"
 			});
+
 			this.dispose();
 		}
 		catch (e) {

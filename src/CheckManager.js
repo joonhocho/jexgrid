@@ -69,17 +69,15 @@ function CheckManager(args) {
 	function afteroption(event) {
 		var options = this._options;
 		var isRadio = this._isRadio = options['isRadio'] = !!options['isRadio'];
-		this._hasMaster = options['master'] = !!options['master'];
+		this._hasMaster = options['master'] = !isRadio && !!options['master'];
 		this._col = options['colDef'];
 		this._key = this._col['key'];
+		this._cssClass = options['classCheck'];
+		this._cssClassMaster = options['classMasterCheck'];
+		this._name = options['name'] || (isRadio && ("radio" + this.mid)) || null;
 
-		if (isRadio) {
-			if (Util.isNull(options['name'])) {
-				options['name'] = "radio" + this.mid;
-			}
-			this._hasMaster = false;
-		}
 	}
+
 	this.addEventListener('afteroption', afteroption);
 	goog.base(this, args);
 	this.removeEventListener('afteroption', afteroption);
@@ -100,12 +98,12 @@ prototype._init = function() {
 	this._disabled = false;
 	this._master;
 
-	var opt = this._options,
-		size,
-		con = JGM._CONST;
+	var size,
+		con = JGM._CONST,
+		colmgr = this.getColMgr();
 
-	if (this.getColMgr().getByKey(this._col.key) === undefined) {
-		this.getColMgr().addAt(opt['colIdx'], this._col);
+	if (!colmgr.getByKey(this._col.key)) {
+		colmgr.addAt(this._options['colIdx'], this._col);
 	}
 
 	if (Util.isNull(con._checkboxWidth)) {
@@ -118,12 +116,10 @@ prototype._init = function() {
 };
 
 prototype._bindEvents = function() {
-	var opt = this._options,
-		key = this._col.key,
+	var key = this._col.key,
 		events;
 
 	events = {
-		'onDestroy': this.dispose,
 		'onAfterSetDatalist': this.uncheckAll,
 		'onIdChange': this._onIdChange,
 		'onIdListChange': this._onIdListChange,
@@ -138,7 +134,7 @@ prototype._bindEvents = function() {
 		events["onRenderHeader_" + key + "_prepend"] = this._onRenderHeader;
 		events.onRenderHeadersComplete = this._getMaster;
 	}
-	this.getEventMgr().bind(events, this);
+	this.bindGridEvent(events, this);
 };
 
 prototype._defaultOptions = function() {
@@ -240,6 +236,10 @@ prototype._defaultOptions = function() {
 	};
 }
 
+prototype._beforeDispose = function() {
+	this.dispose();
+}
+
 prototype._beforeCreateCss = function(event) {
 	var w,
 		h,
@@ -257,7 +257,7 @@ prototype._beforeCreateCss = function(event) {
 
 	checkCommon = "*overflow:hidden;padding:0;width:" + w + "px;height:" + h + "px;";
 
-	css.push(this.getView()._getCellSelector() + " ." + this._options['classCheck'] + "[mid='" + this.mid + "']{" +
+	css.push(this.getView()._getCellSelector() + " ." + this._cssClass + "[mid='" + this.mid + "']{" +
 		checkCommon +
 		"margin:" + ((this.getView()._getRowInnerHeight() - h) / 2) + "px 0 0 " + ((this._col['width'] - this.getView()._getPadding() - w) / 2) + "px}" +
 		"#" + this.mid + "h{" +
@@ -525,7 +525,7 @@ prototype.check = function(datarow, nomap) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.getEventMgr().trigger("onCheckChange", [datarow, true]);
+	this.triggerGridEvent("onCheckChange", [datarow, true]);
 };
 
 
@@ -556,7 +556,7 @@ prototype.uncheck = function(datarow, nomap) {
 		CheckManager._uncheck(this._master);
 	}
 
-	this.getEventMgr().trigger("onCheckChange", [datarow, false]);
+	this.triggerGridEvent("onCheckChange", [datarow, false]);
 };
 
 /**
@@ -598,7 +598,7 @@ prototype.disable = function(datarow, nomap) {
 	  @since 1.3.0
 	  @version 1.3.0
 	  */
-	this.getEventMgr().trigger("onDisableCheck", [datarow]);
+	this.triggerGridEvent("onDisableCheck", [datarow]);
 };
 
 /**
@@ -640,7 +640,7 @@ prototype.enable = function(datarow, nomap) {
 	  @since 1.3.0
 	  @version 1.3.0
 	  */
-	this.getEventMgr().trigger("onEnableCheck", [datarow]);
+	this.triggerGridEvent("onEnableCheck", [datarow]);
 };
 
 prototype._updateMaster = function() {
@@ -818,7 +818,7 @@ prototype.getCheckboxes = function() {
   */
 prototype.getCheckboxById = function(id) {
 	var row = this.getView().getRowById(id);
-	if (Util.isNotNull(row)) {
+	if (row) {
 		return row.childNodes[this.getColMgr().getIdxByKey(this._key)].childNodes[0];
 	}
 };
@@ -901,7 +901,7 @@ prototype._onIdListChange = function(datalist, idBefores, idKey) {
 
 prototype._keydownColSel = function(e, colSelections, lastSelection) {
 	e.preventDefault();
-	if (Util.isNotNullAnd(colSelections, lastSelection)) {
+	if (colSelections && lastSelection) {
 		var checked = this.isChecked(lastSelection.getDatarow(), true),
 			row,
 				list = this.getDataList();
@@ -935,7 +935,7 @@ prototype._keydownColSel = function(e, colSelections, lastSelection) {
 };
 
 prototype._onRenderHeader = function(headerHtml) {
-	headerHtml.push("<input id='" + this.mid + "h' type='checkbox' tabIndex='-1' onclick='JGM.m.CheckManager." + this.mid + ".toggleCheckAll();' class='" + this._options['classCheck'] + " " + this._options['classMasterCheck'] + "' mid='" + this.mid + "'");
+	headerHtml.push("<input id='" + this.mid + "h' type='checkbox' tabIndex='-1' onclick='JGM.m.CheckManager." + this.mid + ".toggleCheckAll();' class='" + this._cssClass + " " + this._cssClassMaster + "' mid='" + this.mid + "'");
 	if (this.isCheckedAll()) {
 		headerHtml.push(" checked='checked'");
 	}
@@ -946,9 +946,9 @@ prototype._onRenderHeader = function(headerHtml) {
 };
 
 prototype._onRenderCell = function(rowIdx, colIdx, datarow, colDef, cellHtml) {
-	cellHtml.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + datarow[this.getIdKey()] + "')\" type='" + (this._isRadio ? "radio" : "checkbox") + "' class='" + this._options['classCheck'] + "' mid='" + this.mid + "'");
-	if (Util.isNotNull(this._options['name'])) {
-		cellHtml.push(" name='" + this._options['name'] + "'");
+	cellHtml.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + datarow[this.getIdKey()] + "')\" type='" + (this._isRadio ? "radio" : "checkbox") + "' class='" + this._cssClass + "' mid='" + this.mid + "'");
+	if (this._name) {
+		cellHtml.push(" name='" + this._name + "'");
 	}
 	if (this.isChecked(datarow, true)) {
 		cellHtml.push(" checked='checked'");
@@ -1016,25 +1016,25 @@ prototype.enableAll = function() {
 };
 
 CheckManager._check = function(obj) {
-	if (Util.isNotNull(obj)) {
+	if (obj) {
 		Util$.safe$(obj).attr("checked", "checked");
 	}
 };
 
 CheckManager._uncheck = function(obj) {
-	if (Util.isNotNull(obj)) {
+	if (obj) {
 		Util$.safe$(obj).removeAttr("checked");
 	}
 };
 
 CheckManager.disableNode = function(obj) {
-	if (Util.isNotNull(obj)) {
+	if (obj) {
 		Util$.safe$(obj).attr("disabled", "disabled");
 	}
 };
 
 CheckManager.enableNode = function(obj) {
-	if (Util.isNotNull(obj)) {
+	if (obj) {
 		Util$.safe$(obj).removeAttr("disabled");
 	}
 };

@@ -152,4 +152,14 @@ goog.provide('jx.grid.BaseModule');
 		return this.grid['header'];
 	}
 
+	proto.bindGridEvent = function() {
+		var event = this.grid['event'];
+		return event.bind.apply(event, arguments);
+	}
+
+	proto.triggerGridEvent = function() {
+		var event = this.grid['event'];
+		return event.trigger.apply(event, arguments);
+	}
+
 }());

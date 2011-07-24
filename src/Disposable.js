@@ -122,7 +122,6 @@ goog.provide('jx.lang.Disposable');
 				 return false;
 			 }
 		 }
-
 	 }
 	 else {
 		 if (level) {
