@@ -115,6 +115,8 @@ function ColDefManager(args) {
 		@version 1.0.0
 		*/
 		'colDef': {
+			'type': 'string',
+
 			/**
 			로우 데이터에서 해당 컬럼 데이터를 가져올 때 사용되는 키입니다. 컬럼
 			정의 오브젝트에서 필수적으로 각 컬럼마다 유니크한 키 값을 지정해줘야
@@ -640,27 +642,145 @@ prototype.addAt = function(i, colDef) {
 	return filtered.length;
 };
 
+function normalizeType(type) {
+	if (type) {
+		type = type.toLowerCase();
+		switch (type) {
+			case 'bool':
+			case 'boolean':
+				return 'boolean';
+			case 'int':
+			case 'integer':
+			case 'long':
+			case 'short':
+				return 'int';
+			case 'float':
+			case 'double':
+			case 'number':
+			case 'num':
+			case 'numeric':
+				return 'float';
+			case 'str':
+			case 'string':
+			case 'text':
+				return 'string';
+			case 'date':
+			case 'datetime':
+			case 'time':
+			case 'timestamp':
+				return 'date';
+		}
+	}
+	return null;
+}
+
 // tested
 prototype._extend = function(colDef) {
-	if (Util.isNull(colDef)) {
-		return;
-	}
-	
-	var options = {},
-		sorter;
-		
-	$.extend(true, options, this._options['colDef']);
-	$.extend(true, options, colDef);
-	$.extend(true, colDef, options);
+	if (colDef) {
+		var options = {},
+			sorter,
+			parser,
+			type,
+			key;
 
-	colDef['sorter'] = sorter = ColDefManager.sorter(colDef['sorter'], colDef['key']);
-	
-	if (Util.isNotNull(sorter)) {
-		sorter.key = colDef['key'];
+		$.extend(true, options, this._options['colDef']);
+		$.extend(true, options, colDef);
+		$.extend(true, colDef, options);
+
+		// normalize data type into boolean | int | float | string | date
+		type = colDef['type'] = normalizeType(colDef['type']);
+
+		key = colDef['key'];
+		if (!key) {
+			throw new Error('column key is not defined!');
+		}
+		// stringify
+		colDef['key'] = key = key.toString();
+
+		sorter = colDef['sorter'];
+		if (sorter) {
+			if (typeof sorter == 'string') {
+				sorter = normalizeType(sorter);
+			}
+			else if (type) {
+				sorter = type;
+			}
+			sorter = ColDefManager.sorter(sorter, key);
+			if (sorter) {
+				sorter.key = key;
+			}
+			colDef['sorter'] = sorter;
+		}
+
+		parser = colDef['parser'];
+		if (parser) {
+			if (type && typeof parser != 'function') {
+				switch (type) {
+					case 'boolean':
+						parser = parseBoolean;
+						break;
+					case 'int':
+						parser = parseInt;
+						break;
+					case 'float':
+						parser = parseFloat;
+						break;
+					case 'string':
+						parser = parseString;
+						break;
+					case 'date':
+						parser = parseDate;
+						break;
+					default:
+						parser = null;
+				}
+				colDef['parser'] = parser;
+			}
+		}
 	}
-	
 	return colDef;
 };
+
+function parseBoolean(v) {
+	if (typeof v != 'boolean') {
+		if (!v) {
+			return false;
+		}
+		switch (v.toString().toLowerCase()) {
+			case '0':
+			case 'n':
+			case 'no':
+			case 'false':
+			case 'f':
+			case 'off':
+			case 'disable':
+			case 'disabled':
+			// additional
+			case 'null':
+			case 'undefined':
+			case 'nil':
+			case 'fail':
+			case 'not':
+				return false;
+		}
+		return true;
+	}
+	return v;
+}
+
+function parseString(v) {
+	if (typeof v != 'string') {
+		if (v == null) {
+			return '';
+		}
+		return v.toString();
+	}
+	return v;
+}
+
+function parseDate(v) {
+	return new Date(Date.parse(v));
+}
 
 /*
 changelog
@@ -901,6 +1021,51 @@ prototype.getKeys = function() {
 	return this._filtered.map(function(def) { return def.key; });
 }
 
+function toNumber(a, fn) {
+	switch (typeof a) {
+		case 'undefined':
+			return Number.MAX_VALUE;
+		case 'boolean':
+			return a ? 1 : 0;
+		case 'number':
+			return a;
+		case 'string':
+			return a[fn]();
+		default:
+			if (a == null) {
+				return Number.MAX_VALUE;
+			}
+	}
+	a = a.valueOf();
+	switch (typeof a) {
+		case 'undefined':
+			return Number.MAX_VALUE;
+		case 'boolean':
+			return a ? 1 : 0;
+		case 'number':
+			return a;
+		case 'string':
+			return a[fn]();
+		default:
+			if (a == null) {
+				return Number.MAX_VALUE;
+			}
+			return a.toString()[fn]();
+	}
+}
+
+function toBoolean(a) {
+	switch (typeof a) {
+		case 'undefined':
+			return Number.MAX_VALUE;
+		case 'boolean':
+			return a ? 1 : 0;
+		case 'number':
+			return a;
+	}
+	return a == null ? Number.MAX_VALUE : (parseBoolean(a) ? 1 : 0);
+}
+
 /**
 기본적인 정렬 오브젝트를 생성하여 리턴합니다. 정렬 모드는 세가지 입니다. 사전과
 같은 정렬 방법인 "text", 정수를 비교하는 "int", 소수를 비교하는 "float" 이
@@ -917,57 +1082,33 @@ prototype.getKeys = function() {
 @version 1.0.0
 */
 ColDefManager.sorter = function(type, key, on) {
-	on = on ? true : false;
-
-	if (type === "text") {
-		return { 'lexi': key, 'on': on, 'key':key};
+	var sorter = {on:!!on, key:key};
+	var MAX = Number.MAX_VALUE;
+	switch (type) {
+		case 'boolean':
+			sorter['comparator'] = function(a, b) {
+				return toBoolean(a[key]) - toBoolean(b[key]);
+			};
+			return sorter;
+		case 'string':
+			sorter['lexi'] = key;
+			return sorter;
+		case 'int':
+			sorter['comparator'] = function(a, b) {
+				return toNumber(a[key], 'toInt') - toNumber(b[key], 'toInt');
+			};
+			return sorter;
+		case 'float':
+			sorter['comparator'] = function(a, b) {
+				return toNumber(a[key], 'toFloat') - toNumber(b[key], 'toFloat');
+			};
+			return sorter;
+		case 'date':
+			sorter['comparator'] = function(a, b) {
+				return toNumber(a[key], 'toInt') - toNumber(b[key], 'toInt');
+			};
+			return sorter;
 	}
-	if (type === "int") {
-		return {
-			'on': on,
-			'comparator': function(a, b) {
-				var aVal = a[key],
-					bVal = b[key];
-				if (Util.isNull(aVal)) {
-					aVal = Number.MAX_VALUE;
-				}
-				else if (typeof aVal === "string") {
-					aVal = aVal.toInt();
-				}
-				if (Util.isNull(bVal)) {
-					bVal = Number.MAX_VALUE;
-				}
-				else if (typeof bVal === "string") {
-					bVal = bVal.toInt();
-				}
-				
-				return aVal - bVal;
-			},
-			'key':key
-		};
-	}
-	if (type === "float 한국 tehu") {
-		return {
-			'on': on,
-			'comparator': function(a, b) {
-				var aVal = a[key],
-					bVal = b[key];
-				if (Util.isNull(aVal)) {
-					aVal = Number.MAX_VALUE;
-				}
-				else if (typeof aVal === "string") {
-					aVal = aVal.toFloat();
-				}
-				if (Util.isNull(bVal)) {
-					bVal = Number.MAX_VALUE;
-				}
-				else if (typeof bVal === "string") {
-					bVal = bVal.toFloat();
-				}
-				return aVal - bVal;
-			},
-			'key':key
-		};
-	}
+	return null;
 };
 }());

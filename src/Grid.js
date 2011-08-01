@@ -287,1031 +287,1146 @@ prototype._defaultOptions = function() {
 				  @version 1.0.0
 				  */
 	};
-	}
+}
 
-	prototype._init = function(args) {
-		this._ctnr = args['container'];
-
-		/**
-		  Grid 모듈의 기본 옵션 값들을 정의합니다.
-
-		  @type {Object} options
-		  @private
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this['name'] =  this._options['name'];
-
-		this._vars = {
-			drag: false,
-			scrollbarDim: undefined,
-			lastW: undefined,
-			lastH: undefined
-		};
-
-		this._ctnr = $("<div id='" + this.mid + "' class='" + this._options['classGrid'] + "' " + (Util.isNull(this._options['width']) ? "" : "style='width:" + this._options['width'] + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(this._ctnr));
-
-		this._vars.scrollbarDim = Util$.calScrollbarDims(this._ctnr);
-
-		this['event'] =  JGM.create("EventManager", {grid:this, 'options':this._options['EventManager']});
-		delete this._options['EventManager'];
-
-		this['colDefMgr'] =  JGM.create("ColDefManager", {grid:this, colDefs:args['colDefs'], 'options':this._options['ColDefManager']});
-		delete this._options['ColDefManager'];
-
-		this['dataMgr'] = JGM.create("DataManager", {grid:this, datalist:args['datalist'], 'options':this._options['DataManager']});
-		delete this._options['DataManager'];
-
-		if (this._options['CheckManager']) {
-			this['checkMgr'] =  JGM.create("CheckManager", {grid:this, 'options':this._options['CheckManager']});
-			delete this._options['CheckManager'];
-		}
-
-		var i = 10,
-			colDefs = this['colDefMgr'].getAll(),
-			len = colDefs.length;
-		for (; i < len; i++) {
-			colDef = colDefs[i];
-			if (colDef['CheckManager']) {
-				colDef['CheckManager'].colDef = colDef;
-				colDef['checkMgr'] = JGM.create("CheckManager", {grid:this, 'options':colDef['CheckManager']});
-			}
-		}
-
-		if (this._options['Collapser']) {
-			this['collapser'] =  JGM.create("Collapser", {grid:this, 'options':this._options['Collapser']});
-			this['collapser'].__init();
-			delete this._options['Collapser'];
-		}
-
-		if (this._options['ColGroup']) {
-			this['colGroup'] =  JGM.create("ColGroup", {grid:this, 'options':this._options['ColGroup']});
-			delete this._options['ColGroup'];
-		}
-
-		if (this._options['SelectionManager']) {
-			this['selMgr'] =  JGM.create("SelectionManager", {grid:this, 'options':this._options['SelectionManager']});
-			delete this._options['SelectionManager'];
-		}
-
-		if (this._options['EditManager']) {
-			this['editMgr'] =  JGM.create("EditManager", {grid:this, 'options':this._options['EditManager']});
-			delete this._options['EditManager'];
-		}
-
-		if (this._options['ColHeader']) {
-			this['header'] =  JGM.create("ColHeader", {grid:this, 'container':this._ctnr, 'options':this._options['ColHeader']});
-			delete this._options['ColHeader'];
-		}
-
-		if (this._options['SearchManager']) {
-			this['search'] =  JGM.create("SearchManager", {grid:this, 'container':this._ctnr, 'options':this._options['SearchManager']});
-			delete this._options['SearchManager'];
-		}
-
-		if (this._options['MenuBar']) {
-			this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':this._ctnr, 'options':this._options['MenuBar']});
-			delete this._options['MenuBar'];
-		}
-
-		this['view'] =  JGM.create("ViewportManager", {grid:this, 'container':this._ctnr, 'options':this._options['ViewportManager']});
-		delete this._options['ViewportManager'];
-
-		if (this._options['TooltipManager']) {
-			this['tooltip'] =  JGM.create("TooltipManager", {grid:this, 'container':this._ctnr, 'options':this._options['TooltipManager']});
-			delete this._options['TooltipManager'];
-		}
-
-		if (this._options['DataCreator']) {
-			this['creator'] =  JGM.create("DataCreator", {grid:this, 'container':this._ctnr, 'options':this._options['DataCreator']});
-			delete this._options['DataCreator'];
-		}
-
-		if (this._options['Footer']) {
-			this['footer'] =  JGM.create("Footer", {grid:this, 'container':this._ctnr, 'options':this._options['Footer']});
-			delete this._options['Footer'];
-		}
-
-		if (this._options['autoWidth']) {
-			this['event'].bind("onResizeCanvasWidth", this.width, this);
-		}
-
-		this._createCss();
-
-		/**
-		  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 전에 onBeforeRenderModules
-		  이벤트를 트리거합니다. 서브 모듈들은 이 이벤트를 통해서 랜더링 전 필요한
-		  작업을 합니다.<br>
-		  @event {Event} onBeforeRenderModules
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */	
-
-		/**
-		  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 위해서 onRenderModules
-		  이벤트를 트리거합니다. JGM.ColHeader 와 같이 랜더링이 필요한 서브 모듈들은 이
-		  이벤트를 통해서 모듈 랜더링을 합니다.<br>
-		  @event {Event} onRenderModules
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-
-		/**
-		  Grid 모듈 초기화 중 서브 모듈들을 랜더링한 후에 onAfterRenderModules
-		  이벤트를 트리거합니다. 서브 모듈들은 이 이벤트를 통해서 랜더링 후 설정을
-		  합니다.<br>
-		  @event {Event} onAfterRenderModules
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this['event'].trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
-
-		this['msg'] =  $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this._ctnr).hide();
-
-		this._vars.lastW = this._ctnr[0].clientWidth;
-		this._vars.lastH = this._ctnr[0].clientHeight;
-
-		this._registerLinks(this._options['links']);
-	}
-
-	prototype._bindEvents = function() {
-		JGM._bindGlobalEvents();
-
-		var thisIns = this;
-		this._ctnr.bind({
-			'keydown':function(e) { thisIns._keydown(e); },
-			'keyup':function(e) { thisIns._keyup(e); },
-			'keypress':function(e) { thisIns._keypress(e); },
-			'mousein':function(e) { thisIns._mousein(e); },
-			'mouseout':function(e) { thisIns._mouseout(e); },
-			'mouseenter':function(e) { thisIns._mouseenter(e); },
-			'mouseleave':function(e) { thisIns._mouseleave(e); },
-			'mouseover':function(e) { thisIns._mouseover(e); },
-			'mousedown':function(e) { thisIns._mousedown(e); },
-			'click':function(e) { thisIns._click(e); },
-			'dblclick':function(e) { thisIns._dblclick(e); }
-		});
-	};
+prototype._init = function(args) {
+	this._ctnr = args['container'];
 
 	/**
-	  그리드 인스턴스를 제거합니다. 이 함수에서 트리거되는 {@link onDestroy} 이벤트를
-	  통해서 모든 서브 모듈들도 함께 제거합니다.<br>
-	  트리거 이벤트: {@link onDestroy}
+	  Grid 모듈의 기본 옵션 값들을 정의합니다.
 
-	  @function {} destroy
+	  @type {Object} options
+	  @private
 
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	prototype.destroy = function() {	
-		try {
-			this.dispatchEvent({'type':'beforeDispose'});
+	this['name'] =  this._options['name'];
 
-			if (Util.isEmptyObj(JGM.m.Grid)) {
-				JGM._unbindGlobalEvents();
-			}
-
-			/**
-			  Grid 인스턴스를 제거할 경우 트리거되는 이벤트입니다. 이 이벤트를 통해서
-			  모든 서브 모듈들을 제거합니다.<br>
-			  트리거링 함수: {@link destroy}
-			  @event {Event} onDestroy
-
-			  @author 조준호
-			  @since 1.0.0
-			  @version 1.0.0
-			  */
-			this['event'].trigger("onDestroy");
-
-			JGM._destroy(this, {
-				name: "Grid",
-				module: "event",
-				"$": "ctnr",
-				map: "vars _options",
-				style: "style _dynStyle"
-			});
-
-			this.dispose();
-		}
-		catch (e) {
-			return e;
-		}
+	this._vars = {
+		drag: false,
+		scrollbarDim: undefined,
+		lastW: undefined,
+		lastH: undefined
 	};
 
-	//tested
-	prototype._registerLinks = function(links) {
-		var link,
-			arr,
-			arrlen,
-			j,
-			path,
-			pathlen,
-			current,
-			last,
-			lastPath,
-			i;
+	this._ctnr = $("<div id='" + this.mid + "' class='" + this._options['classGrid'] + "' " + (Util.isNull(this._options['width']) ? "" : "style='width:" + this._options['width'] + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(this._ctnr));
 
-		link_loop:
-			for (link in links) {
-				if (links.hasOwnProperty(link) && !(link in this)) {
-					arr = Util.split(links[link]);
-					arrlen = arr.length;
-					j = 0;
+	this._vars.scrollbarDim = Util$.calScrollbarDims(this._ctnr);
 
-					arr_loop:
-						for (; j < arrlen; j++) {
-							path = arr[j].split(".");
-							pathlen = path.length;
-							if (pathlen < 1) {
-								continue;
-							}
+	this['event'] =  JGM.create("EventManager", {grid:this, 'options':this._options['EventManager']});
+	delete this._options['EventManager'];
 
-							current = this;
-							last = this;
-							lastPath = "";
-							i = 0;
-							for (; i < pathlen; i++) {
-								if (!(path[i] in current)) {
-									continue arr_loop;
-								}
-								else {
-									last = current;
-									current = current[lastPath = path[i]];
-								}
-							}
+	this['colDefMgr'] =  JGM.create("ColDefManager", {grid:this, colDefs:args['colDefs'], 'options':this._options['ColDefManager']});
+	delete this._options['ColDefManager'];
 
-							this._registerLink(link, current, last, lastPath);
-							continue link_loop;
-						}
-				}
-			}
-	};
+	this['dataMgr'] = JGM.create("DataManager", {grid:this, datalist:args['datalist'], 'options':this._options['DataManager']});
+	delete this._options['DataManager'];
 
-	// tested
-	prototype._registerLink = function(name, fn, thisp, lastPath) {
-		if (this.hasOwnProperty(name)) {
-			return false;
+	if (this._options['CheckManager']) {
+		this['checkMgr'] =  JGM.create("CheckManager", {grid:this, 'options':this._options['CheckManager']});
+		delete this._options['CheckManager'];
+	}
+
+	var i = 10,
+		colDefs = this['colDefMgr'].getAll(),
+		len = colDefs.length;
+	for (; i < len; i++) {
+		colDef = colDefs[i];
+		if (colDef['CheckManager']) {
+			colDef['CheckManager'].colDef = colDef;
+			colDef['checkMgr'] = JGM.create("CheckManager", {grid:this, 'options':colDef['CheckManager']});
 		}
+	}
 
-		if (Util.isFunction(fn)) {
-			this[name] = function() { return fn.apply(thisp, arguments); };
+	if (this._options['Collapser']) {
+		this['collapser'] =  JGM.create("Collapser", {grid:this, 'options':this._options['Collapser']});
+		this['collapser'].__init();
+		delete this._options['Collapser'];
+	}
+
+	if (this._options['ColGroup']) {
+		this['colGroup'] =  JGM.create("ColGroup", {grid:this, 'options':this._options['ColGroup']});
+		delete this._options['ColGroup'];
+	}
+
+	if (this._options['SelectionManager']) {
+		this['selMgr'] =  JGM.create("SelectionManager", {grid:this, 'options':this._options['SelectionManager']});
+		delete this._options['SelectionManager'];
+	}
+
+	if (this._options['EditManager']) {
+		this['editMgr'] =  JGM.create("EditManager", {grid:this, 'options':this._options['EditManager']});
+		delete this._options['EditManager'];
+	}
+
+	if (this._options['ColHeader']) {
+		this['header'] =  JGM.create("ColHeader", {grid:this, 'container':this._ctnr, 'options':this._options['ColHeader']});
+		delete this._options['ColHeader'];
+	}
+
+	if (this._options['SearchManager']) {
+		this['search'] =  JGM.create("SearchManager", {grid:this, 'container':this._ctnr, 'options':this._options['SearchManager']});
+		delete this._options['SearchManager'];
+	}
+
+	if (this._options['MenuBar']) {
+		this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':this._ctnr, 'options':this._options['MenuBar']});
+		delete this._options['MenuBar'];
+	}
+
+	this['view'] =  JGM.create("ViewportManager", {grid:this, 'container':this._ctnr, 'options':this._options['ViewportManager']});
+	delete this._options['ViewportManager'];
+
+	if (this._options['TooltipManager']) {
+		this['tooltip'] =  JGM.create("TooltipManager", {grid:this, 'container':this._ctnr, 'options':this._options['TooltipManager']});
+		delete this._options['TooltipManager'];
+	}
+
+	if (this._options['DataCreator']) {
+		this['creator'] =  JGM.create("DataCreator", {grid:this, 'container':this._ctnr, 'options':this._options['DataCreator']});
+		delete this._options['DataCreator'];
+	}
+
+	if (this._options['Footer']) {
+		this['footer'] =  JGM.create("Footer", {grid:this, 'container':this._ctnr, 'options':this._options['Footer']});
+		delete this._options['Footer'];
+	}
+
+	if (this._options['autoWidth']) {
+		this['event'].bind("onResizeCanvasWidth", this.width, this);
+	}
+
+	this._createCss();
+
+	/**
+	  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 전에 onBeforeRenderModules
+	  이벤트를 트리거합니다. 서브 모듈들은 이 이벤트를 통해서 랜더링 전 필요한
+	  작업을 합니다.<br>
+	  @event {Event} onBeforeRenderModules
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */	
+
+	/**
+	  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 위해서 onRenderModules
+	  이벤트를 트리거합니다. JGM.ColHeader 와 같이 랜더링이 필요한 서브 모듈들은 이
+	  이벤트를 통해서 모듈 랜더링을 합니다.<br>
+	  @event {Event} onRenderModules
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+
+	/**
+	  Grid 모듈 초기화 중 서브 모듈들을 랜더링한 후에 onAfterRenderModules
+	  이벤트를 트리거합니다. 서브 모듈들은 이 이벤트를 통해서 랜더링 후 설정을
+	  합니다.<br>
+	  @event {Event} onAfterRenderModules
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	this['event'].trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
+
+	this['msg'] =  $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this._ctnr).hide();
+
+	this._vars.lastW = this._ctnr[0].clientWidth;
+	this._vars.lastH = this._ctnr[0].clientHeight;
+
+	this._registerLinks(this._options['links']);
+}
+
+prototype._bindEvents = function() {
+	JGM._bindGlobalEvents();
+
+	var thisIns = this;
+	this._ctnr.bind({
+		'keydown':function(e) { thisIns._keydown(e); },
+		'keyup':function(e) { thisIns._keyup(e); },
+		'keypress':function(e) { thisIns._keypress(e); },
+		'mousein':function(e) { thisIns._mousein(e); },
+		'mouseout':function(e) { thisIns._mouseout(e); },
+		'mouseenter':function(e) { thisIns._mouseenter(e); },
+		'mouseleave':function(e) { thisIns._mouseleave(e); },
+		'mouseover':function(e) { thisIns._mouseover(e); },
+		'mousedown':function(e) { thisIns._mousedown(e); },
+		'click':function(e) { thisIns._click(e); },
+		'dblclick':function(e) { thisIns._dblclick(e); }
+	});
+
+	this._charts = [];
+};
+
+/**
+  그리드 인스턴스를 제거합니다. 이 함수에서 트리거되는 {@link onDestroy} 이벤트를
+  통해서 모든 서브 모듈들도 함께 제거합니다.<br>
+  트리거 이벤트: {@link onDestroy}
+
+  @function {} destroy
+
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
+prototype.destroy = function() {	
+	try {
+		this.dispatchEvent({'type':'beforeDispose'});
+
+		if (Util.isEmptyObj(JGM.m.Grid)) {
+			JGM._unbindGlobalEvents();
 		}
-		else {
-			this[name] = function() { return thisp[lastPath]; };
-		}
-
-		return true;
-	};
-
-	//tested
-	prototype._createCss = function() {
-		var event = {'type':'beforeCreateCss', css:[]};
-		this.dispatchEvent(event);
 
 		/**
-		  현재 그리드에 적용할 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
-		  <br>
-
-		  @event {Event} onCreateCss
+		  Grid 인스턴스를 제거할 경우 트리거되는 이벤트입니다. 이 이벤트를 통해서
+		  모든 서브 모듈들을 제거합니다.<br>
+		  트리거링 함수: {@link destroy}
+		  @event {Event} onDestroy
 
 		  @author 조준호
 		  @since 1.0.0
-		  @version 1.2.2
+		  @version 1.0.0
 		  */
-		var style = Util.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {
-			'selector': "#" + this.mid,
-			'font': this._options['font'],
-			'border': this._options['borderSide'] ?
-			"border:" + this._options['border'] + ";" :
-			"border-top:" + this._options['border'] + ";border-bottom:" + this._options['border'] + ";",
-			'style': this._options['style'],
-			'submodule': event.css.join('') + ';' + this['event'].trigger("onCreateCss").join("")
+		this['event'].trigger("onDestroy");
+
+		JGM._destroy(this, {
+			name: "Grid",
+			module: "event",
+			"$": "ctnr",
+			map: "vars _options",
+			style: "style _dynStyle"
 		});
-		this._style = Util.createStyle(style);
 
-		event = {'type':'beforeCreateDynamicCss', css:[]};
-		this.dispatchEvent(event);
+		this.dispose();
+	}
+	catch (e) {
+		return e;
+	}
+};
 
-		/**
-		  현재 그리드에 적용할 다이나믹 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
-		  <br>
+//tested
+prototype._registerLinks = function(links) {
+	var link,
+		arr,
+		arrlen,
+		j,
+		path,
+		pathlen,
+		current,
+		last,
+		lastPath,
+		i;
 
-		  @event {Event} onCreateDynamicCss
+	link_loop:
+		for (link in links) {
+			if (links.hasOwnProperty(link) && !(link in this)) {
+				arr = Util.split(links[link]);
+				arrlen = arr.length;
+				j = 0;
 
-		  @author 조준호
-		  @since 1.2.2
-		  @version 1.2.2
-		  */
+				arr_loop:
+					for (; j < arrlen; j++) {
+						path = arr[j].split(".");
+						pathlen = path.length;
+						if (pathlen < 1) {
+							continue;
+						}
 
-		this._dynStyle = Util.createStyle(event.css.join('') + ';' + this['event'].trigger("onCreateDynamicCss").join(""));
-	};
+						current = this;
+						last = this;
+						lastPath = "";
+						i = 0;
+						for (; i < pathlen; i++) {
+							if (!(path[i] in current)) {
+								continue arr_loop;
+							}
+							else {
+								last = current;
+								current = current[lastPath = path[i]];
+							}
+						}
 
-	prototype._recreateDynamicCss = function() {
-		Util.setStyle(this._dynStyle, this['event'].trigger("onCreateDynamicCss").join(""));
-	};
-
-	prototype._keydown = function(e) {
-		/**
-		  그리드에 keydown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeKeydown
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeKeydown", [e])) {
-			return;
+						this._registerLink(link, current, last, lastPath);
+						continue link_loop;
+					}
+			}
 		}
+};
 
+// tested
+prototype._registerLink = function(name, fn, thisp, lastPath) {
+	if (this.hasOwnProperty(name)) {
+		return false;
+	}
+
+	if (Util.isFunction(fn)) {
+		this[name] = function() { return fn.apply(thisp, arguments); };
+	}
+	else {
+		this[name] = function() { return thisp[lastPath]; };
+	}
+
+	return true;
+};
+
+//tested
+prototype._createCss = function() {
+	var event = {'type':'beforeCreateCss', css:[]};
+	this.dispatchEvent(event);
+
+	/**
+	  현재 그리드에 적용할 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
+	  <br>
+
+	  @event {Event} onCreateCss
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.2.2
+	  */
+	var style = Util.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {
+		'selector': "#" + this.mid,
+		'font': this._options['font'],
+		'border': this._options['borderSide'] ?
+		"border:" + this._options['border'] + ";" :
+		"border-top:" + this._options['border'] + ";border-bottom:" + this._options['border'] + ";",
+		'style': this._options['style'],
+		'submodule': event.css.join('') + this['event'].trigger("onCreateCss").join("")
+	});
+	this._style = Util.createStyle(style);
+
+	event = {'type':'beforeCreateDynamicCss', css:[]};
+	this.dispatchEvent(event);
+
+	/**
+	  현재 그리드에 적용할 다이나믹 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
+	  <br>
+
+	  @event {Event} onCreateDynamicCss
+
+	  @author 조준호
+	  @since 1.2.2
+	  @version 1.2.2
+	  */
+
+	this._dynStyle = Util.createStyle(event.css.join('') + ';' + this['event'].trigger("onCreateDynamicCss").join(""));
+};
+
+prototype._recreateDynamicCss = function() {
+	Util.setStyle(this._dynStyle, this['event'].trigger("onCreateDynamicCss").join(""));
+};
+
+prototype._keydown = function(e) {
+	/**
+	  그리드에 keydown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeKeydown
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeKeydown", [e])) {
+		return;
+	}
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery keydown 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
+	  예를들면 유저가 enter 를 입력할 경우 enter 키의 키코드는 13 이므로
+	  keydown_13 의 이벤트가 트리거 됩니다.
+	  @event {Event} keydown_KEYCODE
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.1.7
+	  */	
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery keydown 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} keydown
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	this['event'].trigger("keydown_" + e.which + " keydown", [e]);
+};
+
+prototype._keyup = function(e) {
+	/**
+	  그리드에 keyup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeKeyup
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeKeyup", [e])) {
+		return;
+	}
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery keyup 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
+	  예를들면 유저가 enter 를 입력할 경우 enter 키의 키코드는 13 이므로 keyup_13
+	  의 이벤트가 트리거 됩니다.
+	  @event {Event} keyup_KEYCODE
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.1.7
+	  */
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery keyup 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} keyup
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	this['event'].trigger("keyup_" + e.which + " keyup", [e]);
+};
+
+prototype._keypress = function(e) {
+	/**
+	  그리드에 keypress 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeKeypress
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeKeypress", [e])) {
+		return;
+	}
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery keypress 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
+	  예를들면 유저가 enter 를 입력할 경우 enter 키의 키코드는 13 이므로
+	  keypress.13 의 이벤트가 트리거 됩니다.
+	  @event {Event} keypress_KEYCODE
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.1.7
+	  */
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery keypress 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} keypress
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	this['event'].trigger("keypress_" + e.which + " keypress", [e]);
+};
+
+prototype._mousein = function(e) {
+	/**
+	  그리드에 mousein 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeMousein
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeMousein", [e])) {
+		return;
+	}
+
+	/**
+	  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mousein
+	  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	  @event {Event} dragin
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery mousein 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} mousein
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	if (this._vars.drag) {
+		this['event'].trigger("dragin mousein", [e]);
+	}
+	else {
+		this['event'].trigger("mousein", [e]);
+	}
+};
+
+prototype._mouseout = function(e) {
+	/**
+	  그리드에 mouseout 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeMouseout
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeMouseout", [e])) {
+		return;
+	}
+
+	/**
+	  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mouseout
+	  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	  @event {Event} dragout
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery mouseout 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} mouseout
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	if (this._vars.drag) {
+		this['event'].trigger("dragout mouseout", [e]);
+	}
+	else {
+		this['event'].trigger("mouseout", [e]);
+	}
+};
+
+prototype._mouseenter = function(e) {
+	/**
+	  그리드에 mouseenter 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeMouseenter
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeMouseenter", [e])) {
+		return;
+	}
+
+	/**
+	  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mouseenter
+	  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	  @event {Event} dragenter
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery mouseenter 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} mouseenter
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	if (this._vars.drag) {
+		this['event'].trigger("dragenter mouseenter", [e]);
+	}
+	else {
+		this['event'].trigger("mouseenter", [e]);
+	}
+};
+
+prototype._mouseleave = function(e) {
+	/**
+	  그리드에 mouseleave 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeMouseleave
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeMouseleave", [e])) {
+		return;
+	}
+
+	/**
+	  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mouseleave
+	  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	  @event {Event} dragleave
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery mouseleave 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} mouseleave
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	if (this._vars.drag) {
+		this['event'].trigger("dragleave mouseleave", [e]);
+	}
+	else {
+		this['event'].trigger("mouseleave", [e]);
+	}
+};
+
+prototype._mousemove = function(e) {
+	/**
+	  그리드에 mousemove 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeMousemove
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeMousemove", [e])) {
+		return;
+	}
+
+
+	/**
+	  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mousemove
+	  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	  @event {Event} dragmove
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery mousemove 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} mousemove
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	if (this._vars.drag) {
+		this['event'].trigger("dragmove mousemove", [e]);
+	}
+	else {
+		this['event'].trigger("mousemove", [e]);
+	}
+};
+
+prototype._mouseover = function(e) {
+	/**
+	  그리드에 mouseover 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeMouseover
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeMouseover", [e])) {
+		return;
+	}
+
+	/**
+	  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mouseover
+	  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	  @event {Event} dragover
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery mouseover 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} mouseover
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	if (this._vars.drag) {
+		this['event'].trigger("dragover mouseover", [e]);
+	}
+	else {
+		this['event'].trigger("mouseover", [e]);
+	}
+};
+
+prototype._mousedown = function(e) {
+	this._vars.drag = true;
+
+	/**
+	  그리드에 mousedown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeMousedown
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeMousedown", [e])) {
+		return;
+	}
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery mousedown 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} mousedown
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	this['event'].trigger("mousedown", [e]);
+};
+
+prototype._mouseup = function(e) {
+	this._vars.drag = false;	
+	this['event'].trigger("unsetDrag");
+	if (!this.containsEvent(e)) {
+		return;
+	}
+
+	/**
+	  그리드에 mouseup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeMouseup
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeMouseup", [e])) {
+		return;
+	}
+
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery mouseup 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} mouseup
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	this['event'].trigger("mouseup", [e]);
+};
+
+prototype._click = function(e) {
+	/**
+	  그리드에 click 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeClick
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeClick", [e])) {
+		return;
+	}
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery click 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} click
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	this['event'].trigger("click", [e]);
+};
+
+prototype._dblclick = function(e) {
+	/**
+	  그리드에 dblclick 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
+	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
+
+	  @event {Event} onBeforeDblclick
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+	  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
+
+	  @author 조준호
+	  @since 1.2.1
+	  @version 1.2.1
+	  */
+	if (this['event'].triggerInvalid("onBeforeDblclick", [e])) {
+		return;
+	}
+
+	/**
+	  Grid 컨테이너에 바인드 된 jQuery dblclick 이벤트가 발생할 경우 트리거되는
+	  이벤트 입니다.
+	  @event {Event} dblclick
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
+	this['event'].trigger("dblclick", [e]);
+};
+
+prototype._resize = function(e) {
+	var change = false,
+		width = this._ctnr[0].clientWidth,
+		height;
+	if (width >= 1 && this._vars.lastW !== width) {
 		/**
-		  Grid 컨테이너에 바인드 된 jQuery keydown 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
-		  예를들면 유저가 enter 를 입력할 경우 enter 키의 키코드는 13 이므로
-		  keydown_13 의 이벤트가 트리거 됩니다.
-		  @event {Event} keydown_KEYCODE
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.1.7
-		  */	
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery keydown 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} keydown
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this['event'].trigger("keydown_" + e.which + " keydown", [e]);
-	};
-
-	prototype._keyup = function(e) {
-		/**
-		  그리드에 keyup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeKeyup
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeKeyup", [e])) {
-			return;
-		}
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery keyup 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
-		  예를들면 유저가 enter 를 입력할 경우 enter 키의 키코드는 13 이므로 keyup_13
-		  의 이벤트가 트리거 됩니다.
-		  @event {Event} keyup_KEYCODE
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.1.7
-		  */
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery keyup 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} keyup
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this['event'].trigger("keyup_" + e.which + " keyup", [e]);
-	};
-
-	prototype._keypress = function(e) {
-		/**
-		  그리드에 keypress 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeKeypress
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeKeypress", [e])) {
-			return;
-		}
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery keypress 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
-		  예를들면 유저가 enter 를 입력할 경우 enter 키의 키코드는 13 이므로
-		  keypress.13 의 이벤트가 트리거 됩니다.
-		  @event {Event} keypress_KEYCODE
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.1.7
-		  */
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery keypress 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} keypress
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this['event'].trigger("keypress_" + e.which + " keypress", [e]);
-	};
-
-	prototype._mousein = function(e) {
-		/**
-		  그리드에 mousein 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeMousein
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeMousein", [e])) {
-			return;
-		}
-
-		/**
-		  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mousein
-		  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
-		  @event {Event} dragin
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery mousein 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} mousein
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		if (this._vars.drag) {
-			this['event'].trigger("dragin mousein", [e]);
-		}
-		else {
-			this['event'].trigger("mousein", [e]);
-		}
-	};
-
-	prototype._mouseout = function(e) {
-		/**
-		  그리드에 mouseout 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeMouseout
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeMouseout", [e])) {
-			return;
-		}
-
-		/**
-		  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mouseout
-		  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
-		  @event {Event} dragout
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery mouseout 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} mouseout
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		if (this._vars.drag) {
-			this['event'].trigger("dragout mouseout", [e]);
-		}
-		else {
-			this['event'].trigger("mouseout", [e]);
-		}
-	};
-
-	prototype._mouseenter = function(e) {
-		/**
-		  그리드에 mouseenter 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeMouseenter
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeMouseenter", [e])) {
-			return;
-		}
-
-		/**
-		  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mouseenter
-		  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
-		  @event {Event} dragenter
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery mouseenter 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} mouseenter
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		if (this._vars.drag) {
-			this['event'].trigger("dragenter mouseenter", [e]);
-		}
-		else {
-			this['event'].trigger("mouseenter", [e]);
-		}
-	};
-
-	prototype._mouseleave = function(e) {
-		/**
-		  그리드에 mouseleave 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeMouseleave
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeMouseleave", [e])) {
-			return;
-		}
-
-		/**
-		  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mouseleave
-		  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
-		  @event {Event} dragleave
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery mouseleave 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} mouseleave
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		if (this._vars.drag) {
-			this['event'].trigger("dragleave mouseleave", [e]);
-		}
-		else {
-			this['event'].trigger("mouseleave", [e]);
-		}
-	};
-
-	prototype._mousemove = function(e) {
-		/**
-		  그리드에 mousemove 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeMousemove
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeMousemove", [e])) {
-			return;
-		}
-
-
-		/**
-		  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mousemove
-		  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
-		  @event {Event} dragmove
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery mousemove 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} mousemove
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		if (this._vars.drag) {
-			this['event'].trigger("dragmove mousemove", [e]);
-		}
-		else {
-			this['event'].trigger("mousemove", [e]);
-		}
-	};
-
-	prototype._mouseover = function(e) {
-		/**
-		  그리드에 mouseover 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeMouseover
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeMouseover", [e])) {
-			return;
-		}
-
-		/**
-		  마우스 버튼을 누른 상태에서 Grid 컨테이너에 바인드 된 jQuery mouseover
-		  이벤트가 발생할 경우 트리거되는 이벤트 입니다.
-		  @event {Event} dragover
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery mouseover 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} mouseover
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		if (this._vars.drag) {
-			this['event'].trigger("dragover mouseover", [e]);
-		}
-		else {
-			this['event'].trigger("mouseover", [e]);
-		}
-	};
-
-	prototype._mousedown = function(e) {
-		this._vars.drag = true;
-
-		/**
-		  그리드에 mousedown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeMousedown
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeMousedown", [e])) {
-			return;
-		}
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery mousedown 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} mousedown
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this['event'].trigger("mousedown", [e]);
-	};
-
-	prototype._mouseup = function(e) {
-		this._vars.drag = false;	
-		this['event'].trigger("unsetDrag");
-		if (!this.containsEvent(e)) {
-			return;
-		}
-
-		/**
-		  그리드에 mouseup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeMouseup
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeMouseup", [e])) {
-			return;
-		}
-
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery mouseup 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} mouseup
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this['event'].trigger("mouseup", [e]);
-	};
-
-	prototype._click = function(e) {
-		/**
-		  그리드에 click 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeClick
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeClick", [e])) {
-			return;
-		}
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery click 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} click
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this['event'].trigger("click", [e]);
-	};
-
-	prototype._dblclick = function(e) {
-		/**
-		  그리드에 dblclick 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
-		  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
-
-		  @event {Event} onBeforeDblclick
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-		  @returns {boolean} continueOrStop - false 를 리턴할 경우 이벤트가 취소됩니다.
-
-		  @author 조준호
-		  @since 1.2.1
-		  @version 1.2.1
-		  */
-		if (this['event'].triggerInvalid("onBeforeDblclick", [e])) {
-			return;
-		}
-
-		/**
-		  Grid 컨테이너에 바인드 된 jQuery dblclick 이벤트가 발생할 경우 트리거되는
-		  이벤트 입니다.
-		  @event {Event} dblclick
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this['event'].trigger("dblclick", [e]);
-	};
-
-	prototype._resize = function(e) {
-		var change = false,
-			width = this._ctnr[0].clientWidth,
-			height;
-		if (width >= 1 && this._vars.lastW !== width) {
-			/**
-			  Grid 컨테이너의 폭이 변경되었을 경우 발생하는 이벤트입니다.
-			  @event {Event} resizeWidth
-			  @param {number} width - 변경 후 폭
-			  @param {number} oldWidth - 변경 전 폭
-
-			  @author 조준호
-			  @since 1.1.5
-			  @version 1.1.5
-			  */
-			this['event'].trigger("resizeWidth", [width, this._vars.lastW]);
-			this._vars.lastW = width;
-			change = true;
-		}
-		height = this._ctnr[0].clientHeight;
-		if (height >= 1 && this._vars.lastH !== height) {
-			/**
-			  Grid 컨테이너의 높이가 변경되었을 경우 발생하는 이벤트입니다.
-			  @event {Event} resizeHeight
-			  @param {number} height - 변경 후 높이
-			  @param {number} oldHeight - 변경 전 높이
-
-			  @author 조준호
-			  @since 1.1.5
-			  @version 1.1.5
-			  */
-			this['event'].trigger("resizeHeight", [height, this._vars.lastH]);
-			this._vars.lastH = height;
-			change = true;
-		}
-
-		/**
-		  Grid 컨테이너의 사이즈가 변경되었을 경우 발생하는 이벤트입니다.
-		  @event {Event} resize
-		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+		  Grid 컨테이너의 폭이 변경되었을 경우 발생하는 이벤트입니다.
+		  @event {Event} resizeWidth
+		  @param {number} width - 변경 후 폭
+		  @param {number} oldWidth - 변경 전 폭
 
 		  @author 조준호
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-		if (change) {
-			this['event'].trigger("resize", [e]);
-		}
-	};
+		this['event'].trigger("resizeWidth", [width, this._vars.lastW]);
+		this._vars.lastW = width;
+		change = true;
+	}
+	height = this._ctnr[0].clientHeight;
+	if (height >= 1 && this._vars.lastH !== height) {
+		/**
+		  Grid 컨테이너의 높이가 변경되었을 경우 발생하는 이벤트입니다.
+		  @event {Event} resizeHeight
+		  @param {number} height - 변경 후 높이
+		  @param {number} oldHeight - 변경 전 높이
+
+		  @author 조준호
+		  @since 1.1.5
+		  @version 1.1.5
+		  */
+		this['event'].trigger("resizeHeight", [height, this._vars.lastH]);
+		this._vars.lastH = height;
+		change = true;
+	}
 
 	/**
-	  현재 그리드 컨테이너의 폭을 정하거나 현재 값을 리턴합니다.
-
-	  @function {number} width
-	  @params {int=} width - 새로운 그리드 폭
-	  @returns {number} 현재 그리드 컨테이너의 폭 픽셀 값
+	  Grid 컨테이너의 사이즈가 변경되었을 경우 발생하는 이벤트입니다.
+	  @event {Event} resize
+	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
 
 	  @author 조준호
 	  @since 1.1.5
-	  @version 1.1.7
+	  @version 1.1.5
 	  */
-	prototype.width = function(w) {
-		w = parseInt(w);
-		if (Util.isNull(w) || isNaN(w) || w < 1 || w === this._ctnr[0].clientWidth) {
-			return this._ctnr[0].clientWidth;
+	if (change) {
+		this['event'].trigger("resize", [e]);
+	}
+};
+
+/**
+  현재 그리드 컨테이너의 폭을 정하거나 현재 값을 리턴합니다.
+
+  @function {number} width
+  @params {int=} width - 새로운 그리드 폭
+  @returns {number} 현재 그리드 컨테이너의 폭 픽셀 값
+
+  @author 조준호
+  @since 1.1.5
+  @version 1.1.7
+  */
+prototype.width = function(w) {
+	w = parseInt(w);
+	if (Util.isNull(w) || isNaN(w) || w < 1 || w === this._ctnr[0].clientWidth) {
+		return this._ctnr[0].clientWidth;
+	}
+
+	this._ctnr[0].style.width = w + "px";
+	this['event'].trigger("resizeWidth", [w, this._vars.lastW]);
+	this._vars.lastW = w;
+
+	this['event'].trigger("resize");
+	return w;
+};
+
+/*
+   현재 그리드 컨테이너의 높이를 리턴합니다.
+
+   @function {number} height
+   @returns {number} 현재 그리드 컨테이너의 높이 픽셀 값
+
+   @author 조준호
+   @since 1.1.5
+   @version 1.1.5
+   */
+prototype.height = function(h) {
+	h = parseInt(h);
+	if (Util.isNull(h) || isNaN(h) || h < 1 || h === this._ctnr[0].clientHeight) {
+		return this._ctnr[0].clientHeight;
+	}
+
+	this._ctnr[0].style.height = h + "px";
+	this['event'].trigger("resizeHeight", [h, this._vars.lastH]);
+	this._vars.lastH = h;
+
+	this['event'].trigger("resize");
+	return h;
+};
+
+prototype.getCellByIdAndKey = function(id, key) {
+	return JGM.create("Cell", {'grid':this, 'datarow':this['dataMgr'].getById(id), 'colDef':this['colDefMgr'].getByKey(key)});
+};
+
+prototype.getCellByIdx = function(rowIdx, colIdx) {
+	return JGM.create("Cell", {'grid':this, 'row':rowIdx, 'col':colIdx});
+};
+
+/**
+  @author 조준호
+  @since 1.2.3
+  @version 1.3.0
+  */
+prototype.error = function(code) {
+	var str = JGM.error[code],
+		i = 1,
+		e,
+		len = arguments.length;
+	for (; i < len; i++) {
+		str = str.replace(new RegExp('%' + (i-1), "g"), arguments[i]);
+	}
+	e = new Error(str);
+	e.code = code;
+	this.printError(e.message);
+	this['event'].trigger("onError", [e]);
+	return e;
+};
+
+prototype.printError = function(str) {
+	if (this._options['showMessage']) {
+		var msg = this['msg'];
+		msg[0].innerHTML = str;
+		msg[0].style.width = this._ctnr[0].clientWidth + 'px';
+		msg[0].style.background = '#ffebe8';
+		msg[0].style.color = '#333';
+		msg.show();
+		clearTimeout(this.timeout);
+		this.timeout = setTimeout(function() { 
+			msg.hide(1000);
+		}, 5000);
+	}
+};
+
+prototype.printMessage = function(str) {
+	if (this._options['showMessage']) {
+		var msg = this['msg'];
+		msg[0].innerHTML = str;
+		msg[0].style.width = this._ctnr[0].clientWidth + 'px';
+		msg[0].style.background = '#dfdfdf';
+		msg[0].style.color = '#6f6f6f';
+		msg.show();
+		clearTimeout(this.timeout);
+		this.timeout = setTimeout(function() { 
+			msg.hide(1000);
+		}, 5000);
+	}
+};
+
+prototype.containsEvent = function(e) {
+	return Util.contains(this._ctnr[0], e.target);
+};
+
+prototype.getChart = function(name) {
+	return this._charts[name];
+};
+
+prototype.chart = function(chartCont, type, columns, options) {
+	var package,
+		cls;
+	type = type.toLowerCase();
+	switch (type) {
+		case 'area':
+			package = 'corechart';
+			cls = 'AreaChart';
+			break;
+		case 'bar':
+			package = 'corechart';
+			cls = 'BarChart';
+			break;
+		case 'candle':
+			package = 'corechart';
+			cls = 'CandlestickChart';
+			break;
+		case 'column':
+			package = 'corechart';
+			cls = 'ColumnChart';
+			break;
+		case 'combo':
+			package = 'corechart';
+			cls = 'ComboChart';
+			break;
+		case 'gauge':
+			package = 'gauge';
+			cls = 'Gauge';
+			break;
+		case 'geo':
+			package = 'geochart';
+			cls = 'GeoChart';
+			break;
+		case 'line':
+			package = 'corechart';
+			cls = 'LineChart';
+			break;
+		case 'pie':
+			package = 'corechart';
+			cls = 'PieChart';
+			break;
+		case 'scatter':
+			package = 'corechart';
+			cls = 'ScatterChart';
+			break;
+		case 'table':
+			package = 'table';
+			cls = 'Table';
+			break;
+		case 'treemap':
+			package = 'treemap';
+			cls = 'TreeMap';
+			break;
+		default:
+			throw new Error('unknown chart type: ' + type);
+	}
+	google.load("visualization", "1", {packages:[package]});
+	var grid = this,
+		colmgr = this.colDefMgr,
+		dataMgr = this.dataMgr,
+		coldefs = columns.map(function(k) {
+			var coldef = colmgr.getByKey(k);
+			if (coldef) {
+				return coldef;
+			}
+			throw new Error('column key not found');
+		}),
+		rows = dataMgr.exportToArray(columns);
+	google.setOnLoadCallback(function() {
+		var data = new google.visualization.DataTable(),
+			i = 0,
+			l = coldefs.length,
+			coldef,
+			datatype;
+		for (; i < l; i++) {
+			coldef = coldefs[i];
+			datatype = coldef.type;
+			switch(datatype) {
+				case 'boolean':
+					datatype = 'boolean';
+					break;
+				case 'int':
+				case 'integer':
+				case 'long':
+				case 'float':
+				case 'double':
+					datatype = 'number';
+					break;
+				case 'string':
+				case 'text':
+					datatype = 'string';
+					break;
+				case 'date':
+					break;
+			}
+			data.addColumn(datatype || (i === 0 && 'string') || 'number', coldef.name);
 		}
+		data.addRows(rows);
+		var chart = grid._charts[chartCont] = new google.visualization[cls](document.getElementById(chartCont));
+		chart.draw(data, options);
+		grid['event'].bind('onAfterRefresh', function() {
+			data.removeRows(0, data.getNumberOfRows());
+			data.addRows(dataMgr.exportToArray(columns));
+			chart.draw(data, options);
+		});
+	});
+};
 
-		this._ctnr[0].style.width = w + "px";
-		this['event'].trigger("resizeWidth", [w, this._vars.lastW]);
-		this._vars.lastW = w;
-
-		this['event'].trigger("resize");
-		return w;
-	};
-
-	/*
-	   현재 그리드 컨테이너의 높이를 리턴합니다.
-
-	   @function {number} height
-	   @returns {number} 현재 그리드 컨테이너의 높이 픽셀 값
-
-	   @author 조준호
-	   @since 1.1.5
-	   @version 1.1.5
-	   */
-	prototype.height = function(h) {
-		h = parseInt(h);
-		if (Util.isNull(h) || isNaN(h) || h < 1 || h === this._ctnr[0].clientHeight) {
-			return this._ctnr[0].clientHeight;
-		}
-
-		this._ctnr[0].style.height = h + "px";
-		this['event'].trigger("resizeHeight", [h, this._vars.lastH]);
-		this._vars.lastH = h;
-
-		this['event'].trigger("resize");
-		return h;
-	};
-
-	prototype.getCellByIdAndKey = function(id, key) {
-		return JGM.create("Cell", {'grid':this, 'datarow':this['dataMgr'].getById(id), 'colDef':this['colDefMgr'].getByKey(key)});
-	};
-
-	prototype.getCellByIdx = function(rowIdx, colIdx) {
-		return JGM.create("Cell", {'grid':this, 'row':rowIdx, 'col':colIdx});
-	};
-
-	/**
-	  @author 조준호
-	  @since 1.2.3
-	  @version 1.3.0
-	  */
-	prototype.error = function(code) {
-		var str = JGM.error[code],
-			i = 1,
-			e,
-			len = arguments.length;
-		for (; i < len; i++) {
-			str = str.replace(new RegExp('%' + (i-1), "g"), arguments[i]);
-		}
-		e = new Error(str);
-		e.code = code;
-		this.printError(e.message);
-		this['event'].trigger("onError", [e]);
-		return e;
-	};
-
-	prototype.printError = function(str) {
-		if (this._options['showMessage']) {
-			var msg = this['msg'];
-			msg[0].innerHTML = str;
-			msg[0].style.width = this._ctnr[0].clientWidth + 'px';
-			msg[0].style.background = '#ffebe8';
-			msg[0].style.color = '#333';
-			msg.show();
-			clearTimeout(this.timeout);
-			this.timeout = setTimeout(function() { 
-				msg.hide(1000);
-			}, 5000);
-		}
-	};
-
-	prototype.printMessage = function(str) {
-		if (this._options['showMessage']) {
-			var msg = this['msg'];
-			msg[0].innerHTML = str;
-			msg[0].style.width = this._ctnr[0].clientWidth + 'px';
-			msg[0].style.background = '#dfdfdf';
-			msg[0].style.color = '#6f6f6f';
-			msg.show();
-			clearTimeout(this.timeout);
-			this.timeout = setTimeout(function() { 
-				msg.hide(1000);
-			}, 5000);
-		}
-	};
-
-	prototype.containsEvent = function(e) {
-		return Util.contains(this._ctnr[0], e.target);
-	};
 }());

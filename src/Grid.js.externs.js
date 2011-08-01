@@ -13,5 +13,6 @@
  p.getCellByIdx;
  p.printError;
  p.printMessage;
+ p.chart;
 
 })();

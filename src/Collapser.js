@@ -453,6 +453,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			rules = [],
 			header = this.grid['header'];
 
+
 		rules.push(gridId + opt['classIndent'] + "{height:" + rowH + "px;float:left;}");
 		rules.push(toggleSel + "{width:" + opt['width'] + "px;float:left;padding:0 " + opt['padding'] + "px}");
 		rules.push(rowSel + opt['classCollapser'] + "{height:" + rowH + "px}");

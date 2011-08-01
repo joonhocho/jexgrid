@@ -8,6 +8,7 @@
 		<script language="JavaScript" src="../lib/js/jquery-1.5.1.min.js"></script>
 		<script language="JavaScript" src="../lib/js/jquery-ui-1.8.14.custom.min.js"></script>
 		<script language="JavaScript" src="../src/goog/base.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script> 
 		<script language="JavaScript" src="../src/deps.js"></script>		
 		<script language="JavaScript" src="deps.js"></script>		
 		
@@ -23,7 +24,11 @@
 	</head>
 	<body>
 		<div id="myGrid"></div>
+		<div id="mychart"></div>
 		<script>
+			function rand(num, start) {
+				return Math.round(Math.random() * num) + (start ? start : 0);
+			}
 			(function() {
 				data = [];
 				// prepare the data
@@ -31,13 +36,13 @@
 					var d = {};
 					d["id"] = "id_" + i;
 					d["num"] = i;
-					d["title"] = "Task " + i;
-					d["duration"] = "5 days";
-					d["per"] = Math.round(Math.random() * 100);
-					d["name"] = "01/01/2009";
-					d["finish"] = "01/05/2009";
-					d["effortDriven"] = (i % 5 == 0);
-					var parent = Math.floor(Math.random() * i);
+					d["title"] = "Task " + rand(10);
+					d["duration"] = rand(10) + " days";
+					d["per"] = rand(100);
+					d["name"] = rand(11, 1) + "-" + rand(30, 1) + "-2009";
+					d["finish"] = rand(11, 1) + "/" + rand(30, 1) + "/2009";
+					d["effortDriven"] = (i % 5 == 0 ? 't' : 'f');
+					var parent = rand(i);
 					if (parent === 0)
 						parent = i;
 					d["parent"] = parent;
@@ -80,13 +85,18 @@
 					}
 				};
 
+				// boolean, int, float, string, date
 				var colDefs = [
-					{key:"num", name:"#", width:200, sorter:"int"},
-					{key:"title", name:"Title", width:120, minW:120, tooltipEnabled: true},
-					{key:"duration", name:"Duration", sorter:"int", sumRenderer: true},
-					{key:"per", name:"% Complete", width:80, sorter:"int", resizable: true},
+				{
+					key:"num", type:'int', parser:true, sorter:true, name:"#", width:200},
+					{key:"title", type:'string', parser:true, sorter:'int', name:"Title", width:120, minW:120, tooltipEnabled: true},
+					{key:"duration", type:'string', parser:true, sorter:'int', name:"Duration", sumRenderer: true},
+					{key:"per", type:'int', parser:true, sorter:true, name:"% Complete", width:80, resizable: true},
 					{
 						key:"name",
+						type:'date', 
+						parser:true, 
+						sorter:true, 
 						name:"이름",
 						resizable: true,
 						renderer: function(value, rowIdx, colIdx, datarow, colDef, view) {
@@ -102,8 +112,8 @@
 								"/>";
 						}
 					},
-					{key:"finish", name:"Finish", minW:60, sorter:"int"},
-					{key:"effortDriven", name:"Effort Driven", width:80, minW:20, maxW:80, sorter:"int", style:"color:red"}
+					{key:"finish", type:'date', parser:true, sorter:true, name:"Finish", minW:60},
+					{key:"effortDriven", type:'boolean', parser:true, sorter:true, name:"Effort Driven", width:80, minW:20, maxW:80, style:"color:red"}
 				];
 
 				var tc = new Tracer();
@@ -135,6 +145,18 @@
 						var cell = grid.selMgr.getCell();		// 현재 셀렉트되어 있는 Cell 인스턴스를 가져옵니다.
 					if (Util.isNotNull(cell) && cell.getKey() === "name")	// 컬럼 키가 위에서 정의된 컬럼의 키와 일치할 input 을 포커스하여 에디팅을 하도록 도와줍니다.
 						cell.getNode().childNodes[0].focus();
+				}
+			});
+
+			grid.chart('mychart', 'area', ['title', 'per'], {
+				width: 400,
+				height: 240,
+				title: 'Test Chart',
+				hAxis: {
+					title: 'Title',
+					titleTextStyle: {
+						color: 'red'
+					}
 				}
 			});
 		</script>
