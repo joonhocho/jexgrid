@@ -691,6 +691,9 @@ prototype._extend = function(colDef) {
 		type = colDef['type'] = normalizeType(colDef['type']);
 
 		key = colDef['key'];
+		if (key != null && typeof key != 'string') {
+			key = key.toString();
+		}
 		if (!key) {
 			throw new Error('column key is not defined!');
 		}

@@ -32,6 +32,7 @@ else {
 }
 
  goog.exportSymbol('jx.util', Util);
+ goog.exportSymbol('Util', Util);
  goog.exportSymbol('echo', echo);
 
 // tested

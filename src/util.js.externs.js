@@ -3,7 +3,9 @@
  */
 (function(){
  goog.require('jx.util');
- var c = jx.util;
+ goog.require('Util');
+ var c = jx.util,
+	d = Util;
 c.isNull;
 c.isNotNull;
 c.isNullAnd;
