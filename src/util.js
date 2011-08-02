@@ -22,12 +22,18 @@ var undefined = (function(){})(),
 
 if (console && console.log) {
 	echo = function(var_args){
-		console.log.apply(console, arguments);
+		if (goog.DEBUG) {
+			for (var i = 0, l = arguments.length; i < l; i++) {
+				console.log(arguments[i]);
+			}
+		}
 	};
 }
 else {
 	echo = function(var_args){
-		CONSOLE_LOGS.push.apply(CONSOLE_LOGS, arguments);
+		if (goog.DEBUG) {
+			CONSOLE_LOGS.push.apply(CONSOLE_LOGS, arguments);
+		}
 	}
 }
 

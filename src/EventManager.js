@@ -68,6 +68,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 	   */
 	 this.mid = args.mid;
 
+	 this.grid = args.grid;
+
 	 /**
 	   Grid 내의 모든 이벤트 레지스터와 트리거를 담당하는 {@link JGM.EventManager EventManager} 인스턴스 입니다.
 
@@ -309,16 +311,28 @@ prototype.trigger = function(events, args, filter) {
 		j = 0;
 	for (; j < len; j++) {
 		e = arr[j];
+		if (goog.DEBUG) {
+			this.grid.log('firing event=' + e, 3);
+		}
 		if (!map.hasOwnProperty(e)) {
+			if (goog.DEBUG) {
+				this.grid.log('no handlers registered for event=' + e, 4);
+			}
 			continue;
 		}
 
 		hans = map[e];		
 		hlen = hans.length;
 		if (hlen === 0) {
+			if (goog.DEBUG) {
+				this.grid.log('no handlers registered for event=' + e, 4);
+			}
 			continue;
 		}
 
+		if (goog.DEBUG) {
+			this.grid.log(hlen + ' handlers registered for event=' + e, 4);
+		}
 		i = 0;
 		if (filon) {
 			var res;
