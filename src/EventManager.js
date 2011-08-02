@@ -311,36 +311,20 @@ prototype.trigger = function(events, args, filter) {
 		j = 0;
 	for (; j < len; j++) {
 		e = arr[j];
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.grid.log('firing event=' + e, 3);
-		}
-//END_IF_DEBUG
+		this.grid.log('firing event=' + e, 3);//IF_DEBUG
 		if (!map.hasOwnProperty(e)) {
-//IF_DEBUG
-			if (goog.DEBUG) {
-				this.grid.log('no handlers registered for event=' + e, 4);
-			}
-//END_IF_DEBUG
+			this.grid.log('no handlers registered for event=' + e, 4);//IF_DEBUG
 			continue;
 		}
 
 		hans = map[e];		
 		hlen = hans.length;
 		if (hlen === 0) {
-//IF_DEBUG
-			if (goog.DEBUG) {
-				this.grid.log('no handlers registered for event=' + e, 4);
-			}
-//END_IF_DEBUG
+			this.grid.log('no handlers registered for event=' + e, 4);//IF_DEBUG
 			continue;
 		}
 
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.grid.log(hlen + ' handlers registered for event=' + e, 4);
-		}
-//END_IF_DEBUG
+		this.grid.log(hlen + ' handlers registered for event=' + e, 4);//IF_DEBUG
 		i = 0;
 		if (filon) {
 			var res;

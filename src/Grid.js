@@ -99,11 +99,7 @@ JGM._add("Grid", Grid);
   @version 1.0.0
   */
 function Grid(args) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		echo('Grid[' + args.mid + ']: creating new Grid instance...');
-	}
-//END_IF_DEBUG
+	echo('Grid[' + args.mid + ']: creating new Grid instance...');//IF_DEBUG
 	goog.base(this, args);
 }
 /**
@@ -466,11 +462,7 @@ prototype._bindEvents = function() {
 
 	JGM._bindGlobalEvents();
 
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('binding Grid events...');
-	}
-//END_IF_DEBUG
+	this.log('binding Grid events...');//IF_DEBUG
 
 	var thisIns = this;
 	this._ctnr.bind({
@@ -502,11 +494,7 @@ prototype._bindEvents = function() {
   @version 1.0.0
   */
 prototype.destroy = function() {	
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('destroying Grid...');
-	}
-//END_IF_DEBUG
+	this.log('destroying Grid...');//IF_DEBUG
 
 	try {
 		this.dispatchEvent({'type':'beforeDispose'});
@@ -651,20 +639,12 @@ prototype._createCss = function() {
 };
 
 prototype._recreateDynamicCss = function() {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('rewriting dynamic css...');
-	}
-//END_IF_DEBUG
+	this.log('rewriting dynamic css...');//IF_DEBUG
 	Util.setStyle(this._dynStyle, this['event'].trigger("onCreateDynamicCss").join(""));
 };
 
 prototype._keydown = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:keydown detected. event=' + e.type + ', keycode=' + e.which, V_KEYDOWN);
-	}
-//END_IF_DEBUG
+	this.log('UI event:keydown detected. event=' + e.type + ', keycode=' + e.which, V_KEYDOWN);//IF_DEBUG
 
 	/**
 	  그리드에 keydown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -679,11 +659,7 @@ prototype._keydown = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeKeydown", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:keydown prevented.', V_KEYDOWN);
-		}
-//END_IF_DEBUG
+		this.log('UI event:keydown prevented.', V_KEYDOWN);//IF_DEBUG
 		return;
 	}
 
@@ -714,11 +690,7 @@ prototype._keydown = function(e) {
 };
 
 prototype._keyup = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:keyup detected. event=' + e.type + ', keycode=' + e.which, V_KEYUP);
-	}
-//END_IF_DEBUG
+	this.log('UI event:keyup detected. event=' + e.type + ', keycode=' + e.which, V_KEYUP);//IF_DEBUG
 
 	/**
 	  그리드에 keyup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -733,11 +705,7 @@ prototype._keyup = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeKeyup", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:keyup prevented.', V_KEYUP);
-		}
-//END_IF_DEBUG
+		this.log('UI event:keyup prevented.', V_KEYUP);//IF_DEBUG
 		return;
 	}
 
@@ -768,11 +736,8 @@ prototype._keyup = function(e) {
 };
 
 prototype._keypress = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:keypress detected. event=' + e.type + ', keycode=' + e.which, V_KEYPRESS);
-	}
-//END_IF_DEBUG
+	this.log('UI event:keypress detected. event=' + e.type + ', keycode=' + e.which, V_KEYPRESS);//IF_DEBUG
+
 	/**
 	  그리드에 keypress 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -786,11 +751,7 @@ prototype._keypress = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeKeypress", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:keypress prevented.', V_KEYPRESS);
-		}
-//END_IF_DEBUG
+		this.log('UI event:keypress prevented.', V_KEYPRESS);//IF_DEBUG
 		return;
 	}
 
@@ -821,11 +782,8 @@ prototype._keypress = function(e) {
 };
 
 prototype._mousein = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:mousein detected. event=' + e.type, V_MOUSEIN);
-	}
-//END_IF_DEBUG
+	this.log('UI event:mousein detected. event=' + e.type, V_MOUSEIN);//IF_DEBUG
+
 	/**
 	  그리드에 mousein 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -839,11 +797,7 @@ prototype._mousein = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeMousein", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:mousein prevented.', V_MOUSEIN);
-		}
-//END_IF_DEBUG
+		this.log('UI event:mousein prevented.', V_MOUSEIN);//IF_DEBUG
 		return;
 	}
 
@@ -877,11 +831,8 @@ prototype._mousein = function(e) {
 };
 
 prototype._mouseout = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:mouseout detected. event=' + e.type, V_MOUSEOUT);
-	}
-//END_IF_DEBUG
+	this.log('UI event:mouseout detected. event=' + e.type, V_MOUSEOUT);//IF_DEBUG
+		
 	/**
 	  그리드에 mouseout 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -895,11 +846,7 @@ prototype._mouseout = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeMouseout", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:mouseout prevented.', V_MOUSEOUT);
-		}
-//END_IF_DEBUG
+		this.log('UI event:mouseout prevented.', V_MOUSEOUT);//IF_DEBUG
 		return;
 	}
 
@@ -933,11 +880,7 @@ prototype._mouseout = function(e) {
 };
 
 prototype._mouseenter = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:mouseenter detected. event=' + e.type, V_MOUSEENTER);
-	}
-//END_IF_DEBUG
+	this.log('UI event:mouseenter detected. event=' + e.type, V_MOUSEENTER);//IF_DEBUG
 	/**
 	  그리드에 mouseenter 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -951,11 +894,7 @@ prototype._mouseenter = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeMouseenter", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:mouseenter prevented.', V_MOUSEENTER);
-		}
-//END_IF_DEBUG
+		this.log('UI event:mouseenter prevented.', V_MOUSEENTER);//IF_DEBUG
 		return;
 	}
 
@@ -989,11 +928,7 @@ prototype._mouseenter = function(e) {
 };
 
 prototype._mouseleave = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:mouseleave detected. event=' + e.type, V_MOUSELEAVE);
-	}
-//END_IF_DEBUG
+	this.log('UI event:mouseleave detected. event=' + e.type, V_MOUSELEAVE);//IF_DEBUG
 	/**
 	  그리드에 mouseleave 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -1007,11 +942,7 @@ prototype._mouseleave = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeMouseleave", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:mouseleave prevented.', V_MOUSELEAVE);
-		}
-//END_IF_DEBUG
+		this.log('UI event:mouseleave prevented.', V_MOUSELEAVE);//IF_DEBUG
 		return;
 	}
 
@@ -1045,11 +976,7 @@ prototype._mouseleave = function(e) {
 };
 
 prototype._mousemove = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:mousemove detected. event=' + e.type, V_MOUSEMOVE);
-	}
-//END_IF_DEBUG
+	this.log('UI event:mousemove detected. event=' + e.type, V_MOUSEMOVE);//IF_DEBUG
 	/**
 	  그리드에 mousemove 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -1063,11 +990,7 @@ prototype._mousemove = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeMousemove", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:mousemove prevented.', V_MOUSEMOVE);
-		}
-//END_IF_DEBUG
+		this.log('UI event:mousemove prevented.', V_MOUSEMOVE);//IF_DEBUG
 		return;
 	}
 
@@ -1102,11 +1025,7 @@ prototype._mousemove = function(e) {
 };
 
 prototype._mouseover = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:mouseover detected. event=' + e.type, V_MOUSEOVER);
-	}
-//END_IF_DEBUG
+	this.log('UI event:mouseover detected. event=' + e.type, V_MOUSEOVER);//IF_DEBUG
 	/**
 	  그리드에 mouseover 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -1120,11 +1039,7 @@ prototype._mouseover = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeMouseover", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:mouseover prevented.', V_MOUSEOVER);
-		}
-//END_IF_DEBUG
+		this.log('UI event:mouseover prevented.', V_MOUSEOVER);//IF_DEBUG
 		return;
 	}
 
@@ -1158,11 +1073,7 @@ prototype._mouseover = function(e) {
 };
 
 prototype._mousedown = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:mousedown detected. event=' + e.type, V_MOUSEDOWN);
-	}
-//END_IF_DEBUG
+	this.log('UI event:mousedown detected. event=' + e.type, V_MOUSEDOWN);//IF_DEBUG
 	this._vars.drag = true;
 
 	/**
@@ -1178,11 +1089,7 @@ prototype._mousedown = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeMousedown", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:mousedown prevented.', V_MOUSEDOWN);
-		}
-//END_IF_DEBUG
+		this.log('UI event:mousedown prevented.', V_MOUSEDOWN);//IF_DEBUG
 		return;
 	}
 
@@ -1200,11 +1107,7 @@ prototype._mousedown = function(e) {
 };
 
 prototype._mouseup = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:mouseup detected. event=' + e.type, V_MOUSEUP);
-	}
-//END_IF_DEBUG
+	this.log('UI event:mouseup detected. event=' + e.type, V_MOUSEUP);//IF_DEBUG
 	this._vars.drag = false;	
 	this['event'].trigger("unsetDrag");
 	if (!this.containsEvent(e)) {
@@ -1224,11 +1127,7 @@ prototype._mouseup = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeMouseup", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:mouseup prevented.', V_MOUSEUP);
-		}
-//END_IF_DEBUG
+		this.log('UI event:mouseup prevented.', V_MOUSEUP);//IF_DEBUG
 		return;
 	}
 
@@ -1247,11 +1146,8 @@ prototype._mouseup = function(e) {
 };
 
 prototype._click = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:click detected. event=' + e.type, V_CLICK);
-	}
-//END_IF_DEBUG
+	this.log('UI event:click detected. event=' + e.type, V_CLICK);//IF_DEBUG
+	
 	/**
 	  그리드에 click 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -1265,11 +1161,7 @@ prototype._click = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeClick", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:click prevented.', V_CLICK);
-		}
-//END_IF_DEBUG
+		this.log('UI event:click prevented.', V_CLICK);//IF_DEBUG
 		return;
 	}
 
@@ -1287,11 +1179,7 @@ prototype._click = function(e) {
 };
 
 prototype._dblclick = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('UI event:dblclick detected. event=' + e.type, V_DBLCLICK);
-	}
-//END_IF_DEBUG
+	this.log('UI event:dblclick detected. event=' + e.type, V_DBLCLICK);//IF_DEBUG
 	/**
 	  그리드에 dblclick 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -1305,11 +1193,7 @@ prototype._dblclick = function(e) {
 	  @version 1.2.1
 	  */
 	if (this['event'].triggerInvalid("onBeforeDblclick", [e])) {
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('UI event:dblclick prevented.', V_DBLCLICK);
-		}
-//END_IF_DEBUG
+		this.log('UI event:dblclick prevented.', V_DBLCLICK);//IF_DEBUG
 		return;
 	}
 
@@ -1327,11 +1211,7 @@ prototype._dblclick = function(e) {
 };
 
 prototype._resize = function(e) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('event:resize detected. event=' + e.type, V_RESIZE);
-	}
-//END_IF_DEBUG
+	this.log('event:resize detected. event=' + e.type, V_RESIZE);//IF_DEBUG
 
 	var change = false,
 		width = this._ctnr[0].clientWidth,
@@ -1347,11 +1227,7 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('event:resizeWidth detected. ' + this._vars.lastW + '->' + width, V_RESIZE);
-		}
-//END_IF_DEBUG
+		this.log('event:resizeWidth detected. ' + this._vars.lastW + '->' + width, V_RESIZE);//IF_DEBUG
 		this['event'].trigger("resizeWidth", [width, this._vars.lastW]);
 		this._vars.lastW = width;
 		change = true;
@@ -1368,11 +1244,7 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-//IF_DEBUG
-		if (goog.DEBUG) {
-			this.log('event:resizeHeight detected. ' + this._vars.lastH + '->' + height, V_RESIZE);
-		}
-//END_IF_DEBUG
+		this.log('event:resizeHeight detected. ' + this._vars.lastH + '->' + height, V_RESIZE);//IF_DEBUG
 		this['event'].trigger("resizeHeight", [height, this._vars.lastH]);
 		this._vars.lastH = height;
 		change = true;
@@ -1410,11 +1282,7 @@ prototype.width = function(w) {
 	}
 
 	this._ctnr[0].style.width = w + "px";
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('event:resizeWidth detected. ' + this._vars.lastW + '->' + w, V_RESIZE);
-	}
-//END_IF_DEBUG
+	this.log('event:resizeWidth detected. ' + this._vars.lastW + '->' + w, V_RESIZE);//IF_DEBUG
 	this['event'].trigger("resizeWidth", [w, this._vars.lastW]);
 	this._vars.lastW = w;
 
@@ -1439,11 +1307,7 @@ prototype.height = function(h) {
 	}
 
 	this._ctnr[0].style.height = h + "px";
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('event:resizeHeight detected. ' + this._vars.lastH + '->' + h, V_RESIZE);
-	}
-//END_IF_DEBUG
+	this.log('event:resizeHeight detected. ' + this._vars.lastH + '->' + h, V_RESIZE);//IF_DEBUG
 	this['event'].trigger("resizeHeight", [h, this._vars.lastH]);
 	this._vars.lastH = h;
 
@@ -1475,21 +1339,13 @@ prototype.error = function(code) {
 	e = new Error(str);
 	e.code = code;
 	this.printError(e.message);
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('error occurred... code=' + code + ', msg=' + e.message || e.msg);
-	}
-//END_IF_DEBUG
+	this.log('error occurred... code=' + code + ', msg=' + e.message || e.msg);//IF_DEBUG
 	this['event'].trigger("onError", [e]);
 	return e;
 };
 
 prototype.printError = function(str) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('error message... msg=' + str);
-	}
-//END_IF_DEBUG
+	this.log('error message... msg=' + str);//IF_DEBUG
 	if (this._options['showMessage']) {
 		var msg = this['msg'];
 		msg[0].innerHTML = str;
@@ -1505,11 +1361,7 @@ prototype.printError = function(str) {
 };
 
 prototype.printMessage = function(str) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('message... msg=' + str);
-	}
-//END_IF_DEBUG
+	this.log('message... msg=' + str);//IF_DEBUG
 	if (this._options['showMessage']) {
 		var msg = this['msg'];
 		msg[0].innerHTML = str;
@@ -1533,21 +1385,15 @@ prototype.getChart = function(name) {
 };
 
 prototype.log = function(msg, vlevel) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		if (VERBOSE >= (vlevel || 0)) {
-			echo('Grid[' + this.mid + ']: ' + msg);
-		}
+	//IF_DEBUG
+	if (VERBOSE >= (vlevel || 0)) {
+		echo('Grid[' + this.mid + ']: ' + msg);
 	}
-//END_IF_DEBUG
+	//END_IF_DEBUG
 }
 
 prototype.chart = function(chartCont, type, columns, options) {
-//IF_DEBUG
-	if (goog.DEBUG) {
-		this.log('creating chart... type=' + type + ', columns=[' + columns.join(',') + ']');
-	}
-//END_IF_DEBUG
+	this.log('creating chart... type=' + type + ', columns=[' + columns.join(',') + ']');//IF_DEBUG
 
 	var pack,
 		cls;
@@ -1649,11 +1495,7 @@ prototype.chart = function(chartCont, type, columns, options) {
 		var chart = grid._charts[chartCont] = new google.visualization[cls](document.getElementById(chartCont));
 		chart.draw(data, options);
 		grid['event'].bind('onAfterRefresh', function() {
-//IF_DEBUG
-			if (goog.DEBUG) {
-				this.log('redrawing chart... type=' + type + ', columns=[' + columns.join(',') + ']');
-			}
-//END_IF_DEBUG
+			this.log('redrawing chart... type=' + type + ', columns=[' + columns.join(',') + ']');//IF_DEBUG
 			data.removeRows(0, data.getNumberOfRows());
 			data.addRows(dataMgr.exportToArray(columns));
 			chart.draw(data, options);
