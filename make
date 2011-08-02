@@ -7,7 +7,6 @@ $pathlen = strlen($gridPath);
  * Build Path Settings
  */
 $encoding = 'euc-kr';
-system('php removedebugcode');
 $srcPath = "$gridPath/production";
 $libPath = "$gridPath/externs";
 $srcExtPath = "$gridPath/srcexterns";
@@ -39,6 +38,7 @@ if (!$license) {
 $license = trim($license);
 //echo "\n$license\n";
 
+system('php removedebugcode');
 
 // read in source files from src path using src pattern
 echo "[ reading source files... ]\n\n";
