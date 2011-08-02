@@ -1,6 +1,12 @@
 #!/usr/bin/php
 <?php
+/**
+ * Beginning of Flags
+ */
 $debug = false;
+/**
+ * End of Flags
+ */
 
 $vars = get_defined_vars();
 
@@ -74,7 +80,7 @@ foreach ($regexIterator as $file) {
 						}
 						echo "$linetag //IF_$thismatch...";
 						$matched = strtolower($thismatch);
-						if (isset($vars[$thismatch]) && !$vars[$thismatch]) {
+						if (isset($vars[$matched]) && !$vars[$matched]) {
 							$remove = true;
 							echo " removing lines from $num to ";
 						}

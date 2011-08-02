@@ -1114,9 +1114,6 @@ prototype.getChart = function(name) {
 	return this._charts[name];
 };
 prototype.log = function(msg, vlevel) {
-	if (VERBOSE >= (vlevel || 0)) {
-		echo('Grid[' + this.mid + ']: ' + msg);
-	}
 }
 prototype.chart = function(chartCont, type, columns, options) {
 	var pack,
