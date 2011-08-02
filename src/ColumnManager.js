@@ -692,13 +692,12 @@ prototype._extend = function(colDef) {
 
 		key = colDef['key'];
 		if (key != null && typeof key != 'string') {
-			key = key.toString();
+			// stringify
+			colDef['key'] = key = key.toString();
 		}
 		if (!key) {
 			throw new Error('column key is not defined!');
 		}
-		// stringify
-		colDef['key'] = key = key.toString();
 
 		sorter = colDef['sorter'];
 		if (sorter) {

@@ -210,27 +210,6 @@
 
 		<script>
 			run('resetcode');
-			var yu = YUI().use('event', 'cssbase', 'cssfonts', 'cssreset', 'autocomplete', 'autocomplete-filters', 'autocomplete-highlighters', 'stylesheet', function(Y) {
-				Y.one('body').addClass('yui3-skin-sam');
-				Y.all('.autocom').each(function(node) {
-					node.plug(Y.Plugin.AutoComplete, {
-						circular: false,
-						activateFirstItem: true,
-						minQueryLength: 0,
-						queryDelay:0,
-						resultFilters: ['phraseMatch'],
-						resultHighlighter: 'phraseMatch',
-						resultTextLocator: function(result) {
-							if (result.hasOwnProperty('name') && typeof result.name === "string") {
-								return result.name;
-							}
-							return '';
-						},
-						source: autodata
-					});
-				});
-			});
-			var ss = [];
 		</script>
 
 	</body>
