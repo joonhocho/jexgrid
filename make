@@ -62,13 +62,12 @@ $dirIterator = new RecursiveDirectoryIterator($srcExtPath);
 $iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
 $regexIterator = new RegexIterator($iterator, $srcPattern);
 $size = 0;
-$libfilenames = array();
 foreach ($regexIterator as $file) {
 	if ($file->isFile()) {
 		$filename = substr($file->getPathname(), $pathlen + 1);
 		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
 		$size += $file->getSize();
-		$libfilenames[$filename] = $filename;
+		$filenames[$filename] = $filename;
 	}
 }
 echo "\n\n";
@@ -79,6 +78,7 @@ $dirIterator = new RecursiveDirectoryIterator($libPath);
 $iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
 $regexIterator = new RegexIterator($iterator, $srcPattern);
 $size = 0;
+$libfilenames = array();
 foreach ($regexIterator as $file) {
 	if ($file->isFile()) {
 		$filename = substr($file->getPathname(), $pathlen + 1);
