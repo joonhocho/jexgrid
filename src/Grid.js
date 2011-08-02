@@ -1322,62 +1322,62 @@ prototype.getChart = function(name) {
 };
 
 prototype.chart = function(chartCont, type, columns, options) {
-	var package,
+	var pack,
 		cls;
 	type = type.toLowerCase();
 	switch (type) {
 		case 'area':
-			package = 'corechart';
+			pack = 'corechart';
 			cls = 'AreaChart';
 			break;
 		case 'bar':
-			package = 'corechart';
+			pack = 'corechart';
 			cls = 'BarChart';
 			break;
 		case 'candle':
-			package = 'corechart';
+			pack = 'corechart';
 			cls = 'CandlestickChart';
 			break;
 		case 'column':
-			package = 'corechart';
+			pack = 'corechart';
 			cls = 'ColumnChart';
 			break;
 		case 'combo':
-			package = 'corechart';
+			pack = 'corechart';
 			cls = 'ComboChart';
 			break;
 		case 'gauge':
-			package = 'gauge';
+			pack = 'gauge';
 			cls = 'Gauge';
 			break;
 		case 'geo':
-			package = 'geochart';
+			pack = 'geochart';
 			cls = 'GeoChart';
 			break;
 		case 'line':
-			package = 'corechart';
+			pack = 'corechart';
 			cls = 'LineChart';
 			break;
 		case 'pie':
-			package = 'corechart';
+			pack = 'corechart';
 			cls = 'PieChart';
 			break;
 		case 'scatter':
-			package = 'corechart';
+			pack = 'corechart';
 			cls = 'ScatterChart';
 			break;
 		case 'table':
-			package = 'table';
+			pack = 'table';
 			cls = 'Table';
 			break;
 		case 'treemap':
-			package = 'treemap';
+			pack = 'treemap';
 			cls = 'TreeMap';
 			break;
 		default:
 			throw new Error('unknown chart type: ' + type);
 	}
-	google.load("visualization", "1", {packages:[package]});
+	google.load("visualization", "1", {packages:[pack]});
 	var grid = this,
 		colmgr = this.colDefMgr,
 		dataMgr = this.dataMgr,
