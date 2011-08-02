@@ -668,6 +668,7 @@ prototype._mousein = function(e) {
 	}
 };
 prototype._mouseout = function(e) {
+		
 	/**
 	  그리드에 mouseout 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -919,6 +920,7 @@ prototype._mouseup = function(e) {
 	this['event'].trigger("mouseup", [e]);
 };
 prototype._click = function(e) {
+	
 	/**
 	  그리드에 click 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -1112,6 +1114,9 @@ prototype.getChart = function(name) {
 	return this._charts[name];
 };
 prototype.log = function(msg, vlevel) {
+	if (VERBOSE >= (vlevel || 0)) {
+		echo('Grid[' + this.mid + ']: ' + msg);
+	}
 }
 prototype.chart = function(chartCont, type, columns, options) {
 	var pack,

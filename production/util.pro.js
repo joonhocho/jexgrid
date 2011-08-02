@@ -19,10 +19,14 @@ var undefined = (function(){})(),
 	echo;
 if (console && console.log) {
 	echo = function(var_args){
+		for (var i = 0, l = arguments.length; i < l; i++) {
+			console.log(arguments[i]);
+		}
 	};
 }
 else {
 	echo = function(var_args){
+		CONSOLE_LOGS.push.apply(CONSOLE_LOGS, arguments);
 	}
 }
  goog.exportSymbol('jx.util', Util);

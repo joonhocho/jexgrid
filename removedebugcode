@@ -45,7 +45,7 @@ foreach ($regexIterator as $file) {
 				if ($inline) {
 					echo "$linetag //INLINE IF_$thismatch...";
 					$thismatch = strtolower($thismatch);
-					if (!isset($vars[$thismatch]) || !$vars[$thismatch]) {
+					if (isset($vars[$thismatch]) && !$vars[$thismatch]) {
 						echo " removing line $num.\n";
 					}
 					else {
@@ -74,7 +74,7 @@ foreach ($regexIterator as $file) {
 						}
 						echo "$linetag //IF_$thismatch...";
 						$matched = strtolower($thismatch);
-						if (!isset($vars[$matched]) || !$vars[$matched]) {
+						if (isset($vars[$thismatch]) && !$vars[$thismatch]) {
 							$remove = true;
 							echo " removing lines from $num to ";
 						}
