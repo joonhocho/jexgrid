@@ -40,16 +40,16 @@ foreach ($regexIterator as $file) {
 	if ($file->isFile()) {
 		$filename = substr($file->getPathname(), $pathlen + 1);
 		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
-		$filetag = "  in \"$filename\" on line ";
+		$filetag = " ";
 
 		$contents = array();
 		foreach (preg_split($linebreak, file_get_contents($filename)) as $num=>$line) {
 			if (preg_match($if_reg, $line, $matches)) {
-				$linetag = "$filetag$num:";
+				$linetag = "$filetag on line $num:";
 				$inline = !!trim($matches[1]);
 				$thismatch = $matches[3];
 				if ($inline) {
-					echo "$linetag //INLINE IF_$thismatch...";
+					echo "$linetag inline IF_$thismatch...";
 					$thismatch = strtolower($thismatch);
 					if (isset($vars[$thismatch]) && !$vars[$thismatch]) {
 						echo " removing line $num.\n";
@@ -78,7 +78,7 @@ foreach ($regexIterator as $file) {
 						if ($matched) {
 							die("$linetag Error: IF_$thismatch encountered while expecting END_IF_$matched\n");
 						}
-						echo "$linetag //IF_$thismatch...";
+						echo "$linetag block  IF_$thismatch...";
 						$matched = strtolower($thismatch);
 						if (isset($vars[$matched]) && !$vars[$matched]) {
 							$remove = true;
