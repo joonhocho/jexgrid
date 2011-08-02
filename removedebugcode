@@ -1,0 +1,86 @@
+#!/usr/bin/php
+<?php
+$debug = false;
+
+$vars = get_defined_vars();
+
+$gridPath = __DIR__;
+$pathlen = strlen($gridPath);
+
+/**
+ * Build Path Settings
+ */
+$encoding = 'euc-kr';
+$srcPath = "$gridPath/src";
+$outPath = "$gridPath/production";
+$srcPattern = '/.*\.js$/';
+
+echo "\nRemoving debugging codes...\n\n";
+
+// read in source files from src path using src pattern
+echo "[ reading source files... ]\n\n";
+$dirIterator = new RecursiveDirectoryIterator($srcPath);
+$iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
+$regexIterator = new RegexIterator($iterator, $srcPattern);
+
+
+$linebreak = '/[\r\n]+/';
+// end_if_debug
+$if_reg = '/\s*\/\/\s*(end_)?if_(\w[\w_]*)\s*$/i';
+
+$matched = null;
+$remove = false;
+foreach ($regexIterator as $file) {
+	if ($file->isFile()) {
+		$filename = substr($file->getPathname(), $pathlen + 1);
+		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
+		$filetag = "  in \"$filename\" on line ";
+
+		$contents = array();
+		foreach (preg_split($linebreak, file_get_contents($filename)) as $num=>$line) {
+			if (preg_match($if_reg, $line, $matches)) {
+				$linetag = "$filetag$num:";
+				$thismatch = $matches[2];
+				if ($matches[1]) {
+					// end_if_
+					if (!$matched) {
+						throw new Exception("$linetag Error: END_IF_$thismatch encountered before IF_$thismatch\n");
+					}
+					if ($matched != strtolower($thismatch)) {
+						throw new Exception("$linetag Error: END_IF_$thismatch encountered while expecting END_IF_$matched\n");
+					}
+					$matched = null;
+					if ($remove) {
+						echo "$num\n";
+					}
+					$remove = false;
+				}
+				else {
+					// if_
+					if ($matched) {
+						throw new Exception("$linetag Error: IF_$thismatch encountered while expecting END_IF_$matched\n");
+					}
+					echo "$linetag //IF_$thismatch...";
+					$matched = strtolower($thismatch);
+					if (!isset($vars[$matched]) || !$vars[$matched]) {
+						$remove = true;
+						echo " removing lines from $num to ";
+					}
+					else {
+						echo " the flag is set. ignoring the flag.\n";
+					}
+				}
+			}
+			else if (!$remove) {
+				$contents[] = $line;
+			}
+		}
+
+		$pathinfo = pathinfo($filename);
+		$outfile = $outPath . '/' . $pathinfo['filename'] . '.pro.' . $pathinfo['extension'];
+		echo "saving into $outfile...\n\n";
+		file_put_contents($outfile, implode("\n", $contents));
+
+	}
+}
+echo "\n\n[ finished removing debugging code... ]\n\n";

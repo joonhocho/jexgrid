@@ -7,8 +7,10 @@ $pathlen = strlen($gridPath);
  * Build Path Settings
  */
 $encoding = 'euc-kr';
-$srcPath = "$gridPath/src";
+system('php removedebugcode');
+$srcPath = "$gridPath/production";
 $libPath = "$gridPath/externs";
+$srcExtPath = "$gridPath/srcexterns";
 $distPath = "$gridPath/dist";
 $buildPath = "$gridPath/build";
 $buildResultPath = "$gridPath/results";
@@ -55,13 +57,28 @@ foreach ($regexIterator as $file) {
 }
 echo "\n\n";
 
+echo "[ reading source externs files... ]\n\n";
+$dirIterator = new RecursiveDirectoryIterator($srcExtPath);
+$iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
+$regexIterator = new RegexIterator($iterator, $srcPattern);
+$size = 0;
+$libfilenames = array();
+foreach ($regexIterator as $file) {
+	if ($file->isFile()) {
+		$filename = substr($file->getPathname(), $pathlen + 1);
+		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
+		$size += $file->getSize();
+		$libfilenames[$filename] = $filename;
+	}
+}
+echo "\n\n";
+
 echo "[ reading external library files... ]\n\n";
 // read in library files from lib path using src pattern
 $dirIterator = new RecursiveDirectoryIterator($libPath);
 $iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
 $regexIterator = new RegexIterator($iterator, $srcPattern);
 $size = 0;
-$libfilenames = array();
 foreach ($regexIterator as $file) {
 	if ($file->isFile()) {
 		$filename = substr($file->getPathname(), $pathlen + 1);
@@ -94,6 +111,7 @@ foreach ($compilerSettings as $k=>$v) {
 		}
 	}
 }
+
 array_walk($libfilenames, function($n) { echo "--externs $n\n"; });
 array_walk($filenames, function($n) { echo "--js $n\n"; });
 $libFiles = implode(' ', array_map(function($n) { return "--externs $n"; }, $libfilenames));
