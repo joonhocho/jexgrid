@@ -22,18 +22,22 @@ var undefined = (function(){})(),
 
 if (console && console.log) {
 	echo = function(var_args){
+//IF_DEBUG
 		if (goog.DEBUG) {
 			for (var i = 0, l = arguments.length; i < l; i++) {
 				console.log(arguments[i]);
 			}
 		}
+//END_IF_DEBUG
 	};
 }
 else {
 	echo = function(var_args){
+//IF_DEBUG
 		if (goog.DEBUG) {
 			CONSOLE_LOGS.push.apply(CONSOLE_LOGS, arguments);
 		}
+//END_IF_DEBUG
 	}
 }
 
