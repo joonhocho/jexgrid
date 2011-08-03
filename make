@@ -134,6 +134,6 @@ system($compilerCommand);
 
 $compiled = $license . "\n" . file_get_contents($fulloutpath);
 file_put_contents($fulloutpath, $compiled);
-file_put_contents($fulloutpathUTF8, utf8_encode($compiled));
+file_put_contents($fulloutpathUTF8, mb_convert_encoding($compiled, 'UTF-8', 'EUC-KR'));
 
 echo "\n\n[ finished compiling... ]\n\n";
