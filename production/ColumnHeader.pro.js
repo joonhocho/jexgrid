@@ -19,7 +19,8 @@ JGM
 (function() {
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
-	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid');
  goog.exportSymbol('jx.grid.ColumnHeader', ColHeader);
  JGM._add("ColHeader", ColHeader);
 /**
@@ -52,26 +53,14 @@ ColHeader 컨스트럭터 입니다.
 @version 1.0.0
 */
 function ColHeader(args) {
-	/**
-	{@link JGM} 이 할당해주는 ColHeader 모듈 고유 아이디입니다. 읽기 전용.
-	@var {string} mid
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
-	this.mid = args.mid;
-	this._ctnr = args['container'];
-	this._mask;
-	this._head;
-	/**
-	ColHeader 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
-	@var {JGM.Grid} grid
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
-	this.grid = args.grid;
-	
+	goog.base(this, args);
+}
+goog.inherits(ColHeader, BaseModule);
+ColHeader.getInstance = function(args) {
+	return new ColHeader(args);
+};
+var prototype = ColHeader.prototype;
+prototype._init = function(args) {
 	/**
 	그리드 컬럼 헤더를 관리하는 {@link JGM.ColHeader ColHeader} 인스턴스 입니다.
 	@var {JGM.ColHeader} JGM.Grid.header
@@ -80,6 +69,52 @@ function ColHeader(args) {
 	@version 1.0.0
 	*/
 	this.grid['header'] = this;
+	this._ctnr = args['container'];
+	this._map = {};
+	
+	this._resizeKey;
+	this._resizeInitX;
+	this._resizeHandleInitX;
+	this._resizeInitWidth;
+	this._resizeMap = {};
+	this._resizeInitColWidth;
+	this._resizeGuide;
+	this._resizeHandleOffset;
+	var opt = this._options;
+	this._mask =
+		$("<div class='" + opt['classHeaderMask'] + "'>")
+		.prependTo(this._ctnr);
+	this._head =
+		$("<div class='" + opt['classHeader'] + "'>")
+		.appendTo(this._mask);
+	ColHeader._disableSel(this._head);
+};
+prototype._bindEvents = function() {
+	var events,
+		colDefs = this.getColumns(),
+		len = colDefs.length,
+		i = 0;
+	events = {
+		'onRenderModules': this._onRenderModules,
+		'onAfterRenderModules': this._onAfterRenderModules,
+		'mousedown': this._mousedown,
+		'mouseup': this._mouseup,
+		'dragmove': this._dragmove,
+		'onScrollViewportH': this._onScrollViewportH,
+		'onScrollViewportV': this._onScrollViewportV,
+		'onChangeSorter': this._onChangeSorter,
+		'click': this._click,
+		'onResizeCol': this._setWidthByKey
+	};
+	for (; i < len; i++) {
+		if (colDefs[i].sorter) {
+			events["clickHeader_" + colDefs[i].key] = this._sort;
+		}
+	}
+	this.bindGridEvent(events, this);
+};
+prototype._defaultOptions = function(grid) {
+	var imgurl = grid._options['imageUrl'];
 	/**
 	ColHeader 모듈의 기본 옵션 값들을 정의합니다.
 	@type {Object} options
@@ -88,7 +123,7 @@ function ColHeader(args) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	var options = {
+	return {
 		/**
 		컬럼 순서 변경 가능 여부를 정합니다. <br>기본값:<code>false</code>
 		@type {boolean=} JGM.ColHeader.options.reorderEnabled
@@ -116,7 +151,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'background': "url(" + this.grid._options['imageUrl'] + "column-headers-bg.png) repeat-x scroll center",
+		'background': "url(" + imgurl + "column-headers-bg.png) repeat-x scroll center",
 		/**
 		컬럼 헤더에 마우스가 오버되었을 때의 배경을 설정합니다. <br>기본값:<code>"url(" + imageUrl + "column-headers-over-bg.png) repeat-x scroll center"</code>
 		@type {string=} JGM.ColHeader.options.backgroundHover
@@ -125,7 +160,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'backgroundHover': "url(" + this.grid._options['imageUrl'] + "column-headers-over-bg.png) repeat-x scroll center",
+		'backgroundHover': "url(" + imgurl + "column-headers-over-bg.png) repeat-x scroll center",
 		/**
 		컬럼 순서 변경 시에 컬럼 헤더의 빈 자리의 배경을 설정합니다. <br>기본값:<code>"#646464"</code>
 		@type {string=} JGM.ColHeader.options.backgroundPlaceholder
@@ -143,7 +178,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'sortBackground': this.grid._options['imageUrl'] + "sort.png",
+		'sortBackground': imgurl + "sort.png",
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘의 오른쪽 마진 픽셀입니다. <br>기본값:<code>4</code>
 		@type {number=} JGM.ColHeader.options.sortRight
@@ -170,7 +205,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'sortBackgroundAsc': this.grid._options['imageUrl'] + "sort-asc.png",
+		'sortBackgroundAsc': imgurl + "sort-asc.png",
 		/**
 		컬럼 로우 정렬 내림차순 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort-desc.png"</code>
 		@type {string=} JGM.ColHeader.options.sortBackgroundDesc
@@ -179,7 +214,7 @@ function ColHeader(args) {
 		@since 1.0.0
 		@version 1.0.0
 		*/
-		'sortBackgroundDesc': this.grid._options['imageUrl'] + "sort-desc.png",
+		'sortBackgroundDesc': imgurl + "sort-desc.png",
 		/**
 		컬럼 헤더의 폰트 스타일입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
 		@type {string=} JGM.ColHeader.options.font
@@ -425,66 +460,12 @@ function ColHeader(args) {
 		*/
 		'resizeHandleBackground': "black;filter:alpha(opacity=5);opacity:0.05"
 	};
-	this._options = JGM._extend(options, args['options']);
-	this._map = {};
-	
-	this._resizeKey;
-	this._resizeInitX;
-	this._resizeHandleInitX;
-	this._resizeInitWidth;
-	this._resizeMap = {};
-	this._resizeInitColWidth;
-	this._resizeGuide;
-	this._resizeHandleOffset;
-	this.__init();
 }
-ColHeader.getInstance = function(args) {
-	return new ColHeader(args);
-};
-var prototype = ColHeader.prototype;
-prototype.__init = function() {
-	this._mask =
-		$("<div class='" + this._options['classHeaderMask'] + "'>")
-		.prependTo(this._ctnr);
-	this._head =
-		$("<div class='" + this._options['classHeader'] + "'>")
-		.appendTo(this._mask);
-	ColHeader._disableSel(this._head);
-	this.bindEvents();
-};
-prototype.bindEvents = function() {
-	var events,
-		colDefs = this.grid['colDefMgr'].get(),
-		len = colDefs.length,
-		i = 0;
-	events = {
-		'onRenderModules': this._onRenderModules,
-		'onAfterRenderModules': this._onAfterRenderModules,
-		'onCreateCss': this._onCreateCss,
-		'onDestroy': this._destroy,
-		'mousedown': this._mousedown,
-		'mouseup': this._mouseup,
-		'dragmove': this._dragmove,
-		'onScrollViewportH': this._onScrollViewportH,
-		'onScrollViewportV': this._onScrollViewportV,
-		'onChangeSorter': this._onChangeSorter,
-		'click': this._click,
-		'onResizeCol': this._setWidthByKey
-	};
-	for (; i < len; i++) {
-		if (Util.isNotNull(colDefs[i].sorter)) {
-			events["clickHeader_" + colDefs[i].key] = this._sort;
-		}
-	}
-	this.grid['event'].bind(events, this);
-};
-prototype._destroy = function() {	
+prototype._beforeDispose = function() {	
 	if (this._head.sortable) {
 		this._head.sortable("destroy");
 	}
-		
 	this._destroyResizeHandles();
-	
 	JGM._destroy(this, {
 		name: "ColHeader",
 		path: "header",
@@ -492,32 +473,112 @@ prototype._destroy = function() {
 		property: "ctnr _resizeMap",
 		map: "map _options"
 	});
+	this.dispose();
 };
-prototype._onCreateCss = function() {
-	var gridId = "#" + this.grid['mid'] + " .",
-		opt = this._options,
-		border = opt['borderThickness'] + "px " + opt['border'],
-		rules = [],
-		colDefs = this.grid['colDefMgr'].get(),
-		len = colDefs.length,
-		i = 0;
-	rules.push(gridId + opt['classHeaderMask'] + "{position:relative;overflow:hidden;width:100%;font:" + opt['font'] + ";background:" + opt['background'] + ";border-bottom:" + border + ";" + opt['style'] + "}");
-	rules.push(gridId + opt['classHeader'] + "{position:relative;overflow:hidden;white-space:nowrap;cursor:default;left:" + (-opt['scrollerLeft']) + "px;width:" + opt['scrollerWidth'] + "px;line-height:" + opt['height'] + "px}");
-	rules.push(gridId + opt['classColHeader'] + "{position:relative;overflow:hidden;float:left;text-overflow:ellipsis;text-align:center;height:" + opt['height'] + "px;left:" + (opt['scrollerLeft'] - this.grid['view'].getScrollLeft()) + "px;border-right:" + border + ";" + opt['headerStyle'] + "}");
-	rules.push(gridId + opt['classColHeader'] + "." + opt['classInteractive'] + ":hover, " + gridId + opt['classColHeaderActive'] + "{background:" + opt['backgroundHover'] + "}");
-	rules.push(gridId + opt['classColHeaderActive'] + "{border-left:" + border + "}");
-	rules.push(gridId + opt['classColHeader'] + "." + opt['classColHeaderPlaceholder'] + "{background:" + opt['backgroundPlaceholder'] + "!important}");
-	rules.push(gridId + opt['classSort'] + "{position:absolute;height:" + opt['height'] + "px;right:" + opt['sortRight'] + "px;width:" + opt['sortWidth'] + "px;background:url(" + opt['sortBackground'] + ") no-repeat center transparent}");
-	rules.push(gridId + opt['classSortAsc'] + "{background:url(" + opt['sortBackgroundAsc'] + ") no-repeat center transparent}");
-	rules.push(gridId + opt['classSortDesc'] + "{background:url(" + opt['sortBackgroundDesc'] + ") no-repeat center transparent}");
-	rules.push(gridId + opt['classResizeHandle'] + "{z-index:10;background:" + opt['resizeHandleBackground'] + ";cursor:e-resize;position:absolute;height:" + opt['height'] + "px;width:" + opt['resizeHandleWidth'] + "px}");
-	rules.push(gridId + opt['classResizeGuide'] + "{z-index:10;position:absolute;background:" + opt['resizeBackground'] + ";width:" + opt['resizeGuideWidth'] + "px}");
-	
-	for (; i < len; i++) {
-		rules.push(gridId + opt['classColHeader'] + "#" + this.mid + "h" + colDefs[i].key + "{" + colDefs[i].headerStyle + "}");
+prototype._destroyResizeHandles = function() {
+	var rmap = this._resizeMap,
+		key;
+	for (key in rmap) {
+		if (rmap.hasOwnProperty(key)) {
+			rmap[key].remove();
+			delete rmap[key];
+		}
 	}
 	
-	return rules.join("");
+	delete this._resizeKey;
+	delete this._resizeInitX;
+	delete this._resizeHandleInitX;
+	delete this._resizeInitWidth;
+	delete this._resizeInitColWidth;
+};
+prototype._beforeCreateCss = function(e) {
+	var grid = this.grid,
+		gridId = "#" + grid['mid'] + " .",
+		opt = this._options,
+		border = opt['borderThickness'] + "px " + opt['border'],
+		colDefs = this.getColumns(),
+		len = colDefs.length,
+		i = 0,
+		classHeaderMask = '.' + opt['classHeaderMask'],
+		classColHeader = '.' + opt['classColHeader'],
+		scrollerLeft = opt['scrollerLeft'],
+		scrollerLeft = opt['scrollerLeft'],
+		height = opt['height'] + 'px',
+		classColHeaderActive = opt['classColHeaderActive'],
+		styles = {};
+	styles[classHeaderMask] = {
+		position: 'relative',
+		overflow: 'hidden',
+		width: '100%',
+		font: opt['font'],
+		background: opt['background'],
+		'border-bottom': border,
+		_append: opt['style']
+	};
+	styles['.' + opt['classHeader']] = {
+		position: 'relative',
+		overflow: 'hidden',
+		'white-space': 'nowrap',
+		cursor: 'default',
+		left: (-scrollerLeft) + 'px',
+		width: opt['scrollerWidth'] + 'px',
+		'line-height': height
+	};
+	styles[classColHeader] = {
+		position: 'relative',
+		overflow: 'hidden',
+		float: 'left',
+		'text-overflow':'ellipsis',
+		'text-align':'center',
+		height: height,
+		left: (scrollerLeft - this.getView().getScrollLeft()) + "px",
+		'border-right': border,
+		_append: opt['headerStyle']
+	};
+	styles[classColHeader + "." + opt['classInteractive'] + ":hover, " + gridId + classColHeaderActive] = {
+		background: opt['backgroundHover']
+	};
+	styles['.' + classColHeaderActive] = {
+		'border-left': border
+	};
+	styles[classColHeader + "." + opt['classColHeaderPlaceholder']] = {
+		background: opt['backgroundPlaceholder'] + "!important"
+	};
+	styles['.' + opt['classSort']] = {
+		position: 'absolute',
+		height: height,
+		right: opt['sortRight'] + "px",
+		width: opt['sortWidth'] + "px",
+		background: "url(" + opt['sortBackground'] + ") no-repeat center transparent"
+	};
+	styles['.' + opt['classSortAsc']] = {
+		background: "url(" + opt['sortBackgroundAsc'] + ") no-repeat center transparent"
+	};
+	styles['.' + opt['classSortDesc']] = {
+		background: "url(" + opt['sortBackgroundDesc'] + ") no-repeat center transparent"
+	};
+	styles['.' + opt['classResizeHandle']] = {
+		'z-index':10,
+		background: opt['resizeHandleBackground'],
+		cursor:'e-resize',
+		position:'absolute',
+		height: height,
+		width: opt['resizeHandleWidth'] + "px"
+	};
+	styles['.' + opt['classResizeGuide']] = {
+		'z-index':10,
+		position:'absolute',
+		background: opt['resizeBackground'],
+		width: opt['resizeGuideWidth'] + "px"
+	};
+	for (; i < len; i++) {
+		if (colDefs[i].headerStyle) {
+			styles[classColHeader + "#" + this.mid + "h" + colDefs[i].key] = {
+				_append: colDefs[i].headerStyle
+			};
+		}
+	}
+	this.toCssStyles(e.css, styles);
 };
 prototype._widthPlus = function() {
 	return this._options['borderThickness'];
@@ -526,7 +587,7 @@ prototype._onScrollViewportH = function(scrollLeft) {
 	this._head[0].style.left = (-this._options['scrollerLeft'] - scrollLeft) + "px";
 };
 prototype._onRenderModules = function() {
-	var colDefs = this.grid['colDefMgr'].get(),
+	var colDefs = this.getColumns(),
 		len = colDefs.length,
 		i = 0,
 		colDef,
@@ -544,28 +605,28 @@ prototype._onRenderModules = function() {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid['event'].trigger("onRenderHeadersComplete");
+	this.triggerGridEvent("onRenderHeadersComplete");
 };
 prototype._onAfterRenderModules = function() {
-	if (this._options['reorderEnabled']) {
+	var opt = this._options;
+	if (opt['reorderEnabled']) {
 		this._initReorder();
 	}
 	
 	this._initResizeHandles();
 	
-	this._resizeGuide = $("<div class='" + this._options['classResizeGuide'] + "'>")
-		.appendTo(this.grid['view']._mask);
+	this._resizeGuide = $("<div class='" + opt['classResizeGuide'] + "'>")
+		.appendTo(this.getView()._mask);
 	this._resizeGuide[0].style.top = "0px";
 	this._resizeGuide[0].style.height = "0px";
 };
 prototype._render = function(header, colDef, i) {
-	if (Util.isNull(colDef)) {
-		return;
-	}
-	var name = (colDef['noName'] ? "" : colDef['name'] || colDef['key']),
+	var opt = this._options,
+		key = colDef['key'],
+		name = (colDef['noName'] ? "" : colDef['name'] || key),
 		widthPlus = this._widthPlus();
-	header.push("<div id='" + this.mid + "h" + colDef['key'] + "' class='" + this._options['classColHeader'] + " " + (this._options['reorderEnabled'] || Util.isNotNull(colDef['sorter']) ? " " + this._options['classInteractive'] : "") +
-		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.grid['view']._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + colDef['key'] + "'>");
+	header.push("<div id='" + this.mid + "h" + key + "' class='" + opt['classColHeader'] + " " + (opt['reorderEnabled'] || colDef['sorter'] ? " " + opt['classInteractive'] : "") +
+		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + key + "'>");
 	/**
 	ColHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 앞에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
 	@event {Event} onRenderHeader_COLKEY_prepend
@@ -574,7 +635,7 @@ prototype._render = function(header, colDef, i) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.grid['event'].trigger("onRenderHeader_" + colDef['key'] + "_prepend", [header]);
+	this.triggerGridEvent("onRenderHeader_" + key + "_prepend", [header]);
 	header.push(name);
 	/**
 	ColHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 뒤에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
@@ -584,9 +645,9 @@ prototype._render = function(header, colDef, i) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.grid['event'].trigger("onRenderHeader_" + colDef['key'] + "_append", [header]);
-	if (Util.isNotNull(colDef['sorter'])) {
-		header.push("<span class='" + this._options['classSort'] + "'></span>");
+	this.triggerGridEvent("onRenderHeader_" + key + "_append", [header]);
+	if (colDef['sorter']) {
+		header.push("<span class='" + opt['classSort'] + "'></span>");
 	}
 	header.push("</div>");
 };
@@ -610,30 +671,30 @@ prototype.get = function(key) {
 		return this._map[key];
 	}
 	var node = document.getElementById(this.mid + "h" + key);
-	if (Util.isNull(node)) {
+	if (!node) {
 		return $([]);
 	}
 	return (this._map[key] = $(node));
 };
 // 0 --> remove all, 1 --> asc, 2 --> desc
 prototype._updateIndicator = function(key, status) {
-	var colHeader = this.get(key);
-	if (colHeader.length === 0) {
-		return;
-	}
-	var opt = this._options,
-		indicator = colHeader.find("." + opt['classSort']);
+	var colHeader = this.get(key),
+		opt = this._options,
+		indicator = colHeader.find("." + opt['classSort']),
+		classColHeaderSorted = opt['classColHeaderSorted'],
+		classSortAsc = opt['classSortAsc'],
+		classSortDesc = opt['classSortDesc'];
 	if (status === 0) {
-		colHeader.removeClass(opt['classColHeaderSorted']);
-		indicator.removeClass(opt['classSortAsc'] + " " + opt['classSortDesc']);
+		colHeader.removeClass(classColHeaderSorted);
+		indicator.removeClass(classSortAsc + " " + classSortDesc);
 	}
 	else {
-		colHeader.addClass(opt['classColHeaderSorted']);
+		colHeader.addClass(classColHeaderSorted);
 		if (status === 1) {
-			indicator.addClass(opt['classSortAsc']).removeClass(opt['classSortDesc']);
+			indicator.addClass(classSortAsc).removeClass(classSortDesc);
 		}
 		else if (status === 2) {
-			indicator.addClass(opt['classSortDesc']).removeClass(opt['classSortAsc']);
+			indicator.addClass(classSortDesc).removeClass(classSortAsc);
 		}
 	}
 };
@@ -641,13 +702,10 @@ prototype._closest = function(obj) {
 	return Util$.safe$(obj).closest("div." + this._options['classColHeader'], this._head);
 };
 prototype._getDef = function(header) {
-	return this.grid['colDefMgr'].getByKey(header.attr("colKey"));
+	return this.getColMgr().getByKey(header.attr("colKey"));
 };
 prototype._sort = function(e, colHeader, colDef) {
 	var sorter = colDef['sorter'];
-	if (Util.isNull(sorter)) {
-		return;
-	}
 	/**
 	컬럼 정렬 전에 트리거되는 이벤트 입니다.
 	@event {Event} onBeforeColSort_COLKEY
@@ -663,31 +721,31 @@ prototype._sort = function(e, colHeader, colDef) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.grid['event'].trigger("onBeforeColSort_" + colDef['key'] + " onBeforeColSort");
+	this.triggerGridEvent("onBeforeColSort_" + colDef['key'] + " onBeforeColSort");
 	sorter.desc = (sorter.desc === false) ? true : false;
 	//this._setSortClass();
-	this.grid['dataMgr'].refresh({'sorter':sorter});
+	this.getDataMgr().refresh({'sorter':sorter});
 	// manually call this because IE cannot detect the scroll event
-	this.grid['view']._scroll();
+	this.getView()._scroll();
 };
 prototype._onChangeSorter = function(oldSorter, newSorter) {
 	if (oldSorter === newSorter) {
-		if (Util.isNotNull(newSorter)) {
+		if (newSorter) {
 			this._updateIndicator(newSorter.key, (newSorter.desc ? 2 : 1));
 		}
 		return;
 	}
-	if (Util.isNotNull(oldSorter)) {
+	if (oldSorter) {
 		this._updateIndicator(oldSorter.key, 0);
 	}
-	if (Util.isNotNull(newSorter)) {
+	if (newSorter) {
 		this._updateIndicator(newSorter.key, (newSorter.desc ? 2 : 1));
 	}
 };
 prototype._initReorder = function() {
 	var thisIns = this,
 		opt = this._options,
-		colDefMgr = this.grid['colDefMgr'],
+		colMgr = this.getColMgr(),
 		container = this._head,
 		idSubLen = this.mid.length + 1,
 		updatefn = function(e, ui) {
@@ -704,7 +762,7 @@ prototype._initReorder = function() {
 					keys[i] = key.substring(idSubLen);
 				}
 			}
-			colDefMgr.sortByKey(keys);
+			colMgr.sortByKey(keys);
 		};
 	container.sortable({
 		'items': "." + opt['classColHeader'],
@@ -743,7 +801,8 @@ prototype._click = function(e) {
 	if (colHeader.length === 0) {
 		return;
 	}
-	var colDef = this._getDef(colHeader);
+	var colDef = this._getDef(colHeader),
+		key = colDef['key'];
 	/**
 	ColHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다. 발생된 click 이벤트가
 	valid 한지를 체크합니다.
@@ -756,7 +815,7 @@ prototype._click = function(e) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	if (this.grid['event'].triggerInvalid("clickHeaderValid_" + colDef['key'], [e, colHeader, colDef])) {
+	if (this.getEventMgr().triggerInvalid("clickHeaderValid_" + key, [e, colHeader, colDef])) {
 		return;
 	}
 	/**
@@ -780,77 +839,79 @@ prototype._click = function(e) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.grid['event'].trigger("clickHeader_" + colDef['key'] + " clickHeader", [e, colHeader, colDef]);
+	this.triggerGridEvent("clickHeader_" + key + " clickHeader", [e, colHeader, colDef]);
 };
 prototype._mousedown = function(e) {
-	if (Util.hasTagAndClass(e.target, "DIV", this._options['classResizeHandle'])) {
-		this._resizeKey = e.target.getAttribute("key");
-		this._resizeInitWidth = this.get(this._resizeKey)[0].clientWidth;
-		this._resizeInitColWidth = this.grid['colDefMgr'].getByKey(this._resizeKey).width;
+	var opt = this._options;
+	if (Util.hasTagAndClass(e.target, "DIV", opt['classResizeHandle'])) {
+		var key = this._resizeKey = e.target.getAttribute("key");
+		this._resizeInitWidth = this.get(key)[0].clientWidth;
+		this._resizeInitColWidth = this.getColMgr().getByKey(key).width;
 		this._resizeInitX = e.clientX;
-		this._resizeHandleInitX = this._resizeMap[this._resizeKey][0].offsetLeft;
-		this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (this._options['resizeHandleWidth'] - this._options['resizeGuideWidth']) / 2 - this._options['scrollerLeft']) + "px";
-		this._resizeGuide[0].style.height = this.grid['view'].getInnerHeight() + "px";
+		this._resizeHandleInitX = this._resizeMap[key][0].offsetLeft;
+		this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (opt['resizeHandleWidth'] - opt['resizeGuideWidth']) / 2 - opt['scrollerLeft']) + "px";
+		this._resizeGuide[0].style.height = this.getView().getInnerHeight() + "px";
 		return;
 	}
 	
 	var colHeader = this._closest(e.target);
-	if (colHeader.length === 0) {
-		return;
+	if (colHeader.length) {
+		var colDef = this._getDef(colHeader),
+			key = colDef['key'];
+		/**
+		  ColHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+		  @event {Event} mousedownHeader
+		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+		  @param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
+		this.triggerGridEvent("mousedownHeader", [e, colHeader]);
+		/**
+		  ColHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+		  @event {Event} mousedownHeader_COLKEY
+		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
+		  @param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
+		  @param {Object} colDef - 컬럼 정의 오브젝트
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.1.7
+		  */
+		this.triggerGridEvent("mousedownHeader_" + key, [e, colHeader, colDef]);
 	}
-	/**
-	ColHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
-	@event {Event} mousedownHeader
-	@param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	@param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
-	this.grid['event'].trigger("mousedownHeader", [e, colHeader]);
-	var colDef = this._getDef(colHeader);
-	/**
-	ColHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
-	@event {Event} mousedownHeader_COLKEY
-	@param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	@param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
-	@param {Object} colDef - 컬럼 정의 오브젝트
-	@author 조준호
-	@since 1.0.0
-	@version 1.1.7
-	*/
-	this.grid['event'].trigger("mousedownHeader_" + colDef['key'], [e, colHeader, colDef]);
 };
 prototype._dragmove = function(e) {
-	if (Util.isNull(this._resizeKey)) {
+	var key = this._resizeKey;
+	if (key == null) {
 		return;
 	}
 		
-	var dx = this._getDx(e, this.grid['colDefMgr'].getByKey(this._resizeKey));
-	
+	var dx = this._getDx(e, this.getColMgr().getByKey(key));
 	if (Math.abs(dx) < 1) {
 		return;
 	}
 	
-	this.get(this._resizeKey)[0].style.width = this._resizeInitWidth + dx + "px";
-	this._moveResizeHandles(this._resizeHandleInitX + dx - this._resizeMap[this._resizeKey][0].offsetLeft, this.grid['colDefMgr'].getIdxByKey(this._resizeKey));
-	this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + dx + (this._options['resizeHandleWidth'] - this._options['resizeGuideWidth']) / 2 - this._options['scrollerLeft']) + "px";
+	var opt = this._options;
+	this.get(key)[0].style.width = this._resizeInitWidth + dx + "px";
+	this._moveResizeHandles(this._resizeHandleInitX + dx - this._resizeMap[key][0].offsetLeft, this.getColMgr().getIdxByKey(key));
+	this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + dx + (opt['resizeHandleWidth'] - opt['resizeGuideWidth']) / 2 - opt['scrollerLeft']) + "px";
 	
-	if (this._options['syncResize']) {
-		this.grid['view'].setWidthByKey(this._resizeKey, this._resizeInitColWidth + dx);
+	if (opt['syncResize']) {
+		this.getView().setWidthByKey(key, this._resizeInitColWidth + dx);
 	}
 };
 prototype._mouseup = function(e) {
-	if (Util.isNull(this._resizeKey)) {
+	var key = this._resizeKey;
+	if (key == null) {
 		return;
 	}
 	
 	this._resizeGuide[0].style.height = "0px";
 		
-	var dx = this._getDx(e, this.grid['colDefMgr'].getByKey(this._resizeKey));	
-	
+	var dx = this._getDx(e, this.getColMgr().getByKey(key));	
 	if (Math.abs(dx) >= 1) {
-		this.grid['view'].setWidthByKey(this._resizeKey, this._resizeInitColWidth + dx);
+		this.getView().setWidthByKey(key, this._resizeInitColWidth + dx);
 	}
 	
 	delete this._resizeKey;
@@ -860,17 +921,17 @@ prototype._mouseup = function(e) {
 	delete this._resizeInitColWidth;
 };
 prototype._setWidthByKey = function(key, w, o) {
-	this.get(key)[0].style.width = w + this.grid['view']._colWidthPlus() - this._widthPlus() + "px";
+	this.get(key)[0].style.width = w + this.getView()._colWidthPlus() - this._widthPlus() + "px";
 	
-	this._syncResizeHandles(this.grid['colDefMgr'].getIdxByKey(key));
+	this._syncResizeHandles(this.getColMgr().getIdxByKey(key));
+	// IE needs this hack to sync scrollLeft of canvas and that of headers
+	this.getView()._scroll();
 };
 prototype._syncResizeHandles = function(i) {
-	if (Util.isNull(i)) {
-		i = 0;
-	}
+	i = i || 0;
 		
-	var lefts = this.grid['view']._getColLefts(),
-		colDefs = this.grid['colDefMgr'].get(),
+	var lefts = this.getView()._getColLefts(),
+		colDefs = this.getColumns(),
 		len = colDefs.length,
 		rmap = this._resizeMap,
 		key;
@@ -883,11 +944,9 @@ prototype._syncResizeHandles = function(i) {
 	}
 };
 prototype._moveResizeHandles = function(dx, i) {
-	if (Util.isNull(i)) {
-		i = 0;
-	}
+	i = i || 0;
 		
-	var colDefs = this.grid['colDefMgr'].get(),
+	var colDefs = this.getColumns(),
 		len = colDefs.length,
 		rmap = this._resizeMap,
 		key,
@@ -902,35 +961,20 @@ prototype._moveResizeHandles = function(dx, i) {
 	}
 };
 prototype._onScrollViewportV = function() {
-	this._resizeGuide[0].style.top = this.grid['view'].getScrollTop() + "px";
-};
-prototype._destroyResizeHandles = function() {
-	var rmap = this._resizeMap,
-		key;
-	for (key in rmap) {
-		if (rmap.hasOwnProperty(key)) {
-			rmap[key].remove();
-			delete rmap[key];
-		}
-	}
-	
-	delete this._resizeKey;
-	delete this._resizeInitX;
-	delete this._resizeHandleInitX;
-	delete this._resizeInitWidth;
-	delete this._resizeInitColWidth;
+	this._resizeGuide[0].style.top = this.getView().getScrollTop() + "px";
 };
 prototype._initResizeHandles = function() {
-	var colDefs = this.grid['colDefMgr'].get(),
+	var colDefs = this.getColumns(),
 		len = colDefs.length,
-		lefts = this.grid['view']._getColLefts(),
+		view = this.getView(),
+		vmid = view.mid,
+		lefts = view._getColLefts(),
 		opt = this._options,
 		rmap = this._resizeMap,
 		colDef,
 		key,
 		i = 0,
 		offset = this._resizeHandleOffset = Math.floor(opt['scrollerLeft'] - opt['resizeHandleWidth'] / 2),
-		vmid = this.grid['view'].mid,
 		handle = opt['classResizeHandle'],
 		head = this._head;
 	for (; i < len; i++) {

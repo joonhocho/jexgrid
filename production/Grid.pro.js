@@ -32,7 +32,7 @@ goog.provide('jx.grid.Grid');
 	var JGM = goog.getObjectByName('jx.grid'),
 		Util = goog.getObjectByName('jx.util'),
 		BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
-		VERBOSE = 1,
+		VERBOSE = 2,
 		V_KEYDOWN = 3,
 		V_KEYPRESS = 3,
 		V_KEYUP = 3,
@@ -44,11 +44,29 @@ goog.provide('jx.grid.Grid');
 		V_MOUSEUP = 3,
 		V_MOUSEENTER = 3,
 		V_MOUSELEAVE = 3,
+		V_SCROLL = 3,
+		V_FOCUS = 3,
 		V_CLICK = 2,
 		V_DBLCLICK = 2,
-		V_RESIZE = 1;
+		V_RESIZE = 2,
+		V_INIT = 1;
 goog.exportSymbol('jx.grid.Grid', Grid);
 JGM._add("Grid", Grid);
+Grid.V_KEYDOWN = V_KEYDOWN;
+Grid.V_KEYPRESS = V_KEYPRESS;
+Grid.V_KEYUP = V_KEYUP;
+Grid.V_MOUSEMOVE = V_MOUSEMOVE;
+Grid.V_MOUSEOVER = V_MOUSEOVER;
+Grid.V_MOUSEOUT = V_MOUSEOUT;
+Grid.V_MOUSEIN = V_MOUSEIN;
+Grid.V_MOUSEDOWN = V_MOUSEDOWN;
+Grid.V_MOUSEUP = V_MOUSEUP;
+Grid.V_MOUSEENTER = V_MOUSEENTER;
+Grid.V_MOUSELEAVE = V_MOUSELEAVE;
+Grid.V_CLICK = V_CLICK;
+Grid.V_DBLCLICK = V_DBLCLICK;
+Grid.V_RESIZE = V_RESIZE;
+Grid.V_INIT = V_INIT;
 /**
   Grid 코어 모듈. 모든 Grid 모듈이 연결되는 모듈입니다.
   @module Grid
@@ -83,6 +101,7 @@ JGM._add("Grid", Grid);
   @version 1.0.0
   */
 function Grid(args) {
+	this.mid = args.mid;
 	goog.base(this, args);
 }
 /**
@@ -252,7 +271,9 @@ prototype._defaultOptions = function() {
 	};
 }
 prototype._init = function(args) {
-	this._ctnr = args['container'];
+	var ctnr = this._ctnr = args['container'],
+		opt = this._options,
+		em;
 	/**
 	  Grid 모듈의 기본 옵션 값들을 정의합니다.
 	  @type {Object} options
@@ -261,25 +282,23 @@ prototype._init = function(args) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['name'] =  this._options['name'];
+	this['name'] = opt['name'];
+	this._drag = false;
+	this._lastW = null;
+	this._lastH = null;
 	this._vars = {
-		drag: false,
-		scrollbarDim: undefined,
-		lastW: undefined,
-		lastH: undefined
+		scrollbarDim: undefined
 	};
-	this._ctnr = $("<div id='" + this.mid + "' class='" + this._options['classGrid'] + "' " + (Util.isNull(this._options['width']) ? "" : "style='width:" + this._options['width'] + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(this._ctnr));
-	this._vars.scrollbarDim = Util$.calScrollbarDims(this._ctnr);
-	this['event'] =  JGM.create("EventManager", {grid:this, 'options':this._options['EventManager']});
-	delete this._options['EventManager'];
-	this['colDefMgr'] =  JGM.create("ColDefManager", {grid:this, colDefs:args['colDefs'], 'options':this._options['ColDefManager']});
-	delete this._options['ColDefManager'];
-	this['dataMgr'] = JGM.create("DataManager", {grid:this, datalist:args['datalist'], 'options':this._options['DataManager']});
-	delete this._options['DataManager'];
-	if (this._options['CheckManager']) {
-		this['checkMgr'] =  JGM.create("CheckManager", {grid:this, 'options':this._options['CheckManager']});
-		delete this._options['CheckManager'];
+	ctnr = this._ctnr = $("<div id='" + this.mid + "' class='" + opt['classGrid'] + "' " + (Util.isNull(opt['width']) ? "" : "style='width:" + opt['width'] + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(ctnr));
+	this._vars.scrollbarDim = Util$.calScrollbarDims(ctnr);
+	em = this['event'] =  JGM.create("EventManager", {grid:this, 'options':opt['EventManager']});
+	this['colDefMgr'] =  JGM.create("ColDefManager", {grid:this, colDefs:args['colDefs'], 'options':opt['ColDefManager']});
+	this['dataMgr'] = JGM.create("DataManager", {grid:this, datalist:args['datalist'], 'options':opt['DataManager']});
+	if (opt['CheckManager']) {
+		this['checkMgr'] =  JGM.create("CheckManager", {grid:this, 'options':opt['CheckManager']});
 	}
+	/**
+	 * dunno what this is doing
 	var i = 10,
 		colDefs = this['colDefMgr'].getAll(),
 		len = colDefs.length;
@@ -290,51 +309,41 @@ prototype._init = function(args) {
 			colDef['checkMgr'] = JGM.create("CheckManager", {grid:this, 'options':colDef['CheckManager']});
 		}
 	}
-	if (this._options['Collapser']) {
-		this['collapser'] =  JGM.create("Collapser", {grid:this, 'options':this._options['Collapser']});
+	*/
+	if (opt['Collapser']) {
+		this['collapser'] =  JGM.create("Collapser", {grid:this, 'options':opt['Collapser']});
 		this['collapser'].__init();
-		delete this._options['Collapser'];
 	}
-	if (this._options['ColGroup']) {
-		this['colGroup'] =  JGM.create("ColGroup", {grid:this, 'options':this._options['ColGroup']});
-		delete this._options['ColGroup'];
+	if (opt['ColGroup']) {
+		this['colGroup'] =  JGM.create("ColGroup", {grid:this, 'options':opt['ColGroup']});
 	}
-	if (this._options['SelectionManager']) {
-		this['selMgr'] =  JGM.create("SelectionManager", {grid:this, 'options':this._options['SelectionManager']});
-		delete this._options['SelectionManager'];
+	if (opt['SelectionManager']) {
+		this['selMgr'] =  JGM.create("SelectionManager", {grid:this, 'options':opt['SelectionManager']});
 	}
-	if (this._options['EditManager']) {
-		this['editMgr'] =  JGM.create("EditManager", {grid:this, 'options':this._options['EditManager']});
-		delete this._options['EditManager'];
+	if (opt['EditManager']) {
+		this['editMgr'] =  JGM.create("EditManager", {grid:this, 'options':opt['EditManager']});
 	}
-	if (this._options['ColHeader']) {
-		this['header'] =  JGM.create("ColHeader", {grid:this, 'container':this._ctnr, 'options':this._options['ColHeader']});
-		delete this._options['ColHeader'];
+	if (opt['ColHeader']) {
+		this['header'] =  JGM.create("ColHeader", {grid:this, 'container':ctnr, 'options':opt['ColHeader']});
 	}
-	if (this._options['SearchManager']) {
-		this['search'] =  JGM.create("SearchManager", {grid:this, 'container':this._ctnr, 'options':this._options['SearchManager']});
-		delete this._options['SearchManager'];
+	if (opt['SearchManager']) {
+		this['search'] =  JGM.create("SearchManager", {grid:this, 'container':ctnr, 'options':opt['SearchManager']});
 	}
-	if (this._options['MenuBar']) {
-		this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':this._ctnr, 'options':this._options['MenuBar']});
-		delete this._options['MenuBar'];
+	if (opt['MenuBar']) {
+		this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':ctnr, 'options':opt['MenuBar']});
 	}
-	this['view'] =  JGM.create("ViewportManager", {grid:this, 'container':this._ctnr, 'options':this._options['ViewportManager']});
-	delete this._options['ViewportManager'];
-	if (this._options['TooltipManager']) {
-		this['tooltip'] =  JGM.create("TooltipManager", {grid:this, 'container':this._ctnr, 'options':this._options['TooltipManager']});
-		delete this._options['TooltipManager'];
+	this['view'] =  JGM.create("ViewportManager", {grid:this, 'container':ctnr, 'options':opt['ViewportManager']});
+	if (opt['TooltipManager']) {
+		this['tooltip'] =  JGM.create("TooltipManager", {grid:this, 'container':ctnr, 'options':opt['TooltipManager']});
 	}
-	if (this._options['DataCreator']) {
-		this['creator'] =  JGM.create("DataCreator", {grid:this, 'container':this._ctnr, 'options':this._options['DataCreator']});
-		delete this._options['DataCreator'];
+	if (opt['DataCreator']) {
+		this['creator'] =  JGM.create("DataCreator", {grid:this, 'container':ctnr, 'options':opt['DataCreator']});
 	}
-	if (this._options['Footer']) {
-		this['footer'] =  JGM.create("Footer", {grid:this, 'container':this._ctnr, 'options':this._options['Footer']});
-		delete this._options['Footer'];
+	if (opt['Footer']) {
+		this['footer'] =  JGM.create("Footer", {grid:this, 'container':ctnr, 'options':opt['Footer']});
 	}
-	if (this._options['autoWidth']) {
-		this['event'].bind("onResizeCanvasWidth", this.width, this);
+	if (opt['autoWidth']) {
+		em.bind("onResizeCanvasWidth", this.width, this);
 	}
 	this._createCss();
 	/**
@@ -364,11 +373,12 @@ prototype._init = function(args) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['event'].trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
-	this['msg'] =  $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(this._ctnr).hide();
-	this._vars.lastW = this._ctnr[0].clientWidth;
-	this._vars.lastH = this._ctnr[0].clientHeight;
-	this._registerLinks(this._options['links']);
+	em.trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
+	this['msg'] =  $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(ctnr).hide();
+	ctnr = ctnr[0];
+	this._lastW = ctnr.clientWidth;
+	this._lastH = ctnr.clientHeight;
+	this._registerLinks(opt['links']);
 }
 prototype._bindEvents = function() {
 	JGM._bindGlobalEvents();
@@ -485,7 +495,9 @@ prototype._registerLink = function(name, fn, thisp, lastPath) {
 };
 //tested
 prototype._createCss = function() {
-	var event = {'type':'beforeCreateCss', css:[]};
+	var event = {'type':'beforeCreateCss', css:[]},
+		opt = this._options,
+		em = this['event'];
 	this.dispatchEvent(event);
 	/**
 	  현재 그리드에 적용할 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
@@ -497,12 +509,12 @@ prototype._createCss = function() {
 	  */
 	var style = Util.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {
 		'selector': "#" + this.mid,
-		'font': this._options['font'],
-		'border': this._options['borderSide'] ?
-		"border:" + this._options['border'] + ";" :
-		"border-top:" + this._options['border'] + ";border-bottom:" + this._options['border'] + ";",
-		'style': this._options['style'],
-		'submodule': event.css.join('') + this['event'].trigger("onCreateCss").join("")
+		'font': opt['font'],
+		'border': opt['borderSide'] ?
+		"border:" + opt['border'] + ";" :
+		"border-top:" + opt['border'] + ";border-bottom:" + opt['border'] + ";",
+		'style': opt['style'],
+		'submodule': event.css.join('') + em.trigger("onCreateCss").join("")
 	});
 	this._style = Util.createStyle(style);
 	event = {'type':'beforeCreateDynamicCss', css:[]};
@@ -515,12 +527,13 @@ prototype._createCss = function() {
 	  @since 1.2.2
 	  @version 1.2.2
 	  */
-	this._dynStyle = Util.createStyle(event.css.join('') + ';' + this['event'].trigger("onCreateDynamicCss").join(""));
+	this._dynStyle = Util.createStyle(event.css.join('') + ';' + em.trigger("onCreateDynamicCss").join(""));
 };
 prototype._recreateDynamicCss = function() {
 	Util.setStyle(this._dynStyle, this['event'].trigger("onCreateDynamicCss").join(""));
 };
 prototype._keydown = function(e) {
+	var em = this['event'];
 	/**
 	  그리드에 keydown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -531,7 +544,7 @@ prototype._keydown = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeKeydown", [e])) {
+	if (em.triggerInvalid("onBeforeKeydown", [e])) {
 		return;
 	}
 	/**
@@ -554,9 +567,10 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['event'].trigger("keydown_" + e.which + " keydown", [e]);
+	em.trigger("keydown_" + e.which + " keydown", [e]);
 };
 prototype._keyup = function(e) {
+	var em = this['event'];
 	/**
 	  그리드에 keyup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -567,7 +581,7 @@ prototype._keyup = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeKeyup", [e])) {
+	if (em.triggerInvalid("onBeforeKeyup", [e])) {
 		return;
 	}
 	/**
@@ -590,9 +604,10 @@ prototype._keyup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['event'].trigger("keyup_" + e.which + " keyup", [e]);
+	em.trigger("keyup_" + e.which + " keyup", [e]);
 };
 prototype._keypress = function(e) {
+	var em = this['event'];
 	/**
 	  그리드에 keypress 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -603,7 +618,7 @@ prototype._keypress = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeKeypress", [e])) {
+	if (em.triggerInvalid("onBeforeKeypress", [e])) {
 		return;
 	}
 	/**
@@ -626,9 +641,10 @@ prototype._keypress = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['event'].trigger("keypress_" + e.which + " keypress", [e]);
+	em.trigger("keypress_" + e.which + " keypress", [e]);
 };
 prototype._mousein = function(e) {
+	var em = this['event'];
 	/**
 	  그리드에 mousein 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -639,7 +655,7 @@ prototype._mousein = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeMousein", [e])) {
+	if (em.triggerInvalid("onBeforeMousein", [e])) {
 		return;
 	}
 	/**
@@ -660,14 +676,15 @@ prototype._mousein = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._vars.drag) {
-		this['event'].trigger("dragin mousein", [e]);
+	if (this._drag) {
+		em.trigger("dragin mousein", [e]);
 	}
 	else {
-		this['event'].trigger("mousein", [e]);
+		em.trigger("mousein", [e]);
 	}
 };
 prototype._mouseout = function(e) {
+	var em = this['event'];
 		
 	/**
 	  그리드에 mouseout 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -679,7 +696,7 @@ prototype._mouseout = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeMouseout", [e])) {
+	if (em.triggerInvalid("onBeforeMouseout", [e])) {
 		return;
 	}
 	/**
@@ -700,14 +717,15 @@ prototype._mouseout = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._vars.drag) {
-		this['event'].trigger("dragout mouseout", [e]);
+	if (this._drag) {
+		em.trigger("dragout mouseout", [e]);
 	}
 	else {
-		this['event'].trigger("mouseout", [e]);
+		em.trigger("mouseout", [e]);
 	}
 };
 prototype._mouseenter = function(e) {
+	var em = this['event'];
 	/**
 	  그리드에 mouseenter 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -718,7 +736,7 @@ prototype._mouseenter = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeMouseenter", [e])) {
+	if (em.triggerInvalid("onBeforeMouseenter", [e])) {
 		return;
 	}
 	/**
@@ -739,14 +757,15 @@ prototype._mouseenter = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._vars.drag) {
-		this['event'].trigger("dragenter mouseenter", [e]);
+	if (this._drag) {
+		em.trigger("dragenter mouseenter", [e]);
 	}
 	else {
-		this['event'].trigger("mouseenter", [e]);
+		em.trigger("mouseenter", [e]);
 	}
 };
 prototype._mouseleave = function(e) {
+	var em = this['event'];
 	/**
 	  그리드에 mouseleave 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -757,7 +776,7 @@ prototype._mouseleave = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeMouseleave", [e])) {
+	if (em.triggerInvalid("onBeforeMouseleave", [e])) {
 		return;
 	}
 	/**
@@ -778,14 +797,15 @@ prototype._mouseleave = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._vars.drag) {
-		this['event'].trigger("dragleave mouseleave", [e]);
+	if (this._drag) {
+		em.trigger("dragleave mouseleave", [e]);
 	}
 	else {
-		this['event'].trigger("mouseleave", [e]);
+		em.trigger("mouseleave", [e]);
 	}
 };
 prototype._mousemove = function(e) {
+	var em = this['event'];
 	/**
 	  그리드에 mousemove 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -796,7 +816,7 @@ prototype._mousemove = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeMousemove", [e])) {
+	if (em.triggerInvalid("onBeforeMousemove", [e])) {
 		return;
 	}
 	/**
@@ -817,14 +837,15 @@ prototype._mousemove = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._vars.drag) {
-		this['event'].trigger("dragmove mousemove", [e]);
+	if (this._drag) {
+		em.trigger("dragmove mousemove", [e]);
 	}
 	else {
-		this['event'].trigger("mousemove", [e]);
+		em.trigger("mousemove", [e]);
 	}
 };
 prototype._mouseover = function(e) {
+	var em = this['event'];
 	/**
 	  그리드에 mouseover 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -835,7 +856,7 @@ prototype._mouseover = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeMouseover", [e])) {
+	if (em.triggerInvalid("onBeforeMouseover", [e])) {
 		return;
 	}
 	/**
@@ -856,15 +877,16 @@ prototype._mouseover = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._vars.drag) {
-		this['event'].trigger("dragover mouseover", [e]);
+	if (this._drag) {
+		em.trigger("dragover mouseover", [e]);
 	}
 	else {
-		this['event'].trigger("mouseover", [e]);
+		em.trigger("mouseover", [e]);
 	}
 };
 prototype._mousedown = function(e) {
-	this._vars.drag = true;
+	var em = this['event'];
+	this._drag = true;
 	/**
 	  그리드에 mousedown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -875,7 +897,7 @@ prototype._mousedown = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeMousedown", [e])) {
+	if (em.triggerInvalid("onBeforeMousedown", [e])) {
 		return;
 	}
 	/**
@@ -887,11 +909,12 @@ prototype._mousedown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['event'].trigger("mousedown", [e]);
+	em.trigger("mousedown", [e]);
 };
 prototype._mouseup = function(e) {
-	this._vars.drag = false;	
-	this['event'].trigger("unsetDrag");
+	var em = this['event'];
+	this._drag = false;	
+	em.trigger("unsetDrag");
 	if (!this.containsEvent(e)) {
 		return;
 	}
@@ -905,7 +928,7 @@ prototype._mouseup = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeMouseup", [e])) {
+	if (em.triggerInvalid("onBeforeMouseup", [e])) {
 		return;
 	}
 	/**
@@ -917,9 +940,10 @@ prototype._mouseup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['event'].trigger("mouseup", [e]);
+	em.trigger("mouseup", [e]);
 };
 prototype._click = function(e) {
+	var em = this['event'];
 	
 	/**
 	  그리드에 click 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -931,7 +955,7 @@ prototype._click = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeClick", [e])) {
+	if (em.triggerInvalid("onBeforeClick", [e])) {
 		return;
 	}
 	/**
@@ -943,9 +967,10 @@ prototype._click = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['event'].trigger("click", [e]);
+	em.trigger("click", [e]);
 };
 prototype._dblclick = function(e) {
+	var em = this['event'];
 	/**
 	  그리드에 dblclick 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -956,7 +981,7 @@ prototype._dblclick = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (this['event'].triggerInvalid("onBeforeDblclick", [e])) {
+	if (em.triggerInvalid("onBeforeDblclick", [e])) {
 		return;
 	}
 	/**
@@ -968,13 +993,17 @@ prototype._dblclick = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this['event'].trigger("dblclick", [e]);
+	em.trigger("dblclick", [e]);
 };
 prototype._resize = function(e) {
+	var em = this['event'];
 	var change = false,
-		width = this._ctnr[0].clientWidth,
-		height;
-	if (width >= 1 && this._vars.lastW !== width) {
+		ctnr = this._ctnr[0],
+		cw = this._lastW,
+		ch = this._lastH,
+		width = ctnr.clientWidth,
+		height = ctnr.clientHeight;
+	if (width >= 1 && cw !== width) {
 		/**
 		  Grid 컨테이너의 폭이 변경되었을 경우 발생하는 이벤트입니다.
 		  @event {Event} resizeWidth
@@ -984,12 +1013,11 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-		this['event'].trigger("resizeWidth", [width, this._vars.lastW]);
-		this._vars.lastW = width;
+		em.trigger("resizeWidth", [width, cw]);
+		this._lastW = width;
 		change = true;
 	}
-	height = this._ctnr[0].clientHeight;
-	if (height >= 1 && this._vars.lastH !== height) {
+	if (height >= 1 && ch !== height) {
 		/**
 		  Grid 컨테이너의 높이가 변경되었을 경우 발생하는 이벤트입니다.
 		  @event {Event} resizeHeight
@@ -999,8 +1027,8 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-		this['event'].trigger("resizeHeight", [height, this._vars.lastH]);
-		this._vars.lastH = height;
+		em.trigger("resizeHeight", [height, ch]);
+		this._lastH = height;
 		change = true;
 	}
 	/**
@@ -1012,7 +1040,7 @@ prototype._resize = function(e) {
 	  @version 1.1.5
 	  */
 	if (change) {
-		this['event'].trigger("resize", [e]);
+		em.trigger("resize", [e]);
 	}
 };
 /**
@@ -1025,14 +1053,22 @@ prototype._resize = function(e) {
   @version 1.1.7
   */
 prototype.width = function(w) {
-	w = parseInt(w);
-	if (Util.isNull(w) || isNaN(w) || w < 1 || w === this._ctnr[0].clientWidth) {
-		return this._ctnr[0].clientWidth;
+	var ctnr = this._ctnr[0],
+		cw = ctnr.clientWidth,
+		em = this['event'];
+	if (!w) {
+		return cw;
 	}
-	this._ctnr[0].style.width = w + "px";
-	this['event'].trigger("resizeWidth", [w, this._vars.lastW]);
-	this._vars.lastW = w;
-	this['event'].trigger("resize");
+	if (typeof w != 'number') {
+		w = parseInt(w);
+	}
+	if (w < 1 || w === cw || !isFinite(w)) {
+		return cw;
+	}
+	ctnr.style.width = w + "px";
+	em.trigger("resizeWidth", [w, this._lastW]);
+	this._lastW = w;
+	em.trigger("resize");
 	return w;
 };
 /*
@@ -1044,14 +1080,22 @@ prototype.width = function(w) {
    @version 1.1.5
    */
 prototype.height = function(h) {
-	h = parseInt(h);
-	if (Util.isNull(h) || isNaN(h) || h < 1 || h === this._ctnr[0].clientHeight) {
-		return this._ctnr[0].clientHeight;
+	var ctnr = this._ctnr[0],
+		ch = ctnr.clientHeight,
+		em = this['event'];
+	if (!h) {
+		return ch;
 	}
-	this._ctnr[0].style.height = h + "px";
-	this['event'].trigger("resizeHeight", [h, this._vars.lastH]);
-	this._vars.lastH = h;
-	this['event'].trigger("resize");
+	if (typeof h != 'number') {
+		h = parseInt(h);
+	}
+	if (h < 1 || h === ch || !isFinite(h)) {
+		return ch;
+	}
+	ctnr.style.height = h + "px";
+	em.trigger("resizeHeight", [h, this._lastH]);
+	this._lastH = h;
+	em.trigger("resize");
 	return h;
 };
 prototype.getCellByIdAndKey = function(id, key) {
@@ -1081,11 +1125,13 @@ prototype.error = function(code) {
 };
 prototype.printError = function(str) {
 	if (this._options['showMessage']) {
-		var msg = this['msg'];
-		msg[0].innerHTML = str;
-		msg[0].style.width = this._ctnr[0].clientWidth + 'px';
-		msg[0].style.background = '#ffebe8';
-		msg[0].style.color = '#333';
+		var msg = this['msg'],
+			msgel = msg[0],
+			style = msgel.style;
+		msgel.innerHTML = str;
+		style.width = this._ctnr[0].clientWidth + 'px';
+		style.background = '#ffebe8';
+		style.color = '#333';
 		msg.show();
 		clearTimeout(this.timeout);
 		this.timeout = setTimeout(function() { 
@@ -1095,11 +1141,13 @@ prototype.printError = function(str) {
 };
 prototype.printMessage = function(str) {
 	if (this._options['showMessage']) {
-		var msg = this['msg'];
-		msg[0].innerHTML = str;
-		msg[0].style.width = this._ctnr[0].clientWidth + 'px';
-		msg[0].style.background = '#dfdfdf';
-		msg[0].style.color = '#6f6f6f';
+		var msg = this['msg'],
+			msgel = msg[0],
+			style = msgel.style;
+		msgel.innerHTML = str;
+		style.width = this._ctnr[0].clientWidth + 'px';
+		style.background = '#dfdfdf';
+		style.color = '#6f6f6f';
 		msg.show();
 		clearTimeout(this.timeout);
 		this.timeout = setTimeout(function() { 
