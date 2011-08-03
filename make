@@ -29,6 +29,7 @@ $version = trim($version);
 $outputFileKr = "jgrid-$version-min.js";
 $fulloutpath = "$distPath/$outputFileKr";
 $outputFileUTF8 = "jgrid-$version-min-utf8.js";
+$fulloutpathUTF8 = "$distPath/$outputFileUTF8";
 
 echo "\nJexGrid v$version build...\n\n";
 
@@ -131,5 +132,8 @@ echo $compilerCommand."\n\n\n";
 // compile js sources
 system($compilerCommand);
 
-file_put_contents($fulloutpath, $license . "\n" . file_get_contents($fulloutpath));
+$compiled = $license . "\n" . file_get_contents($fulloutpath);
+file_put_contents($fulloutpath, $compiled);
+file_put_contents($fulloutpathUTF8, utf8_encode($compiled));
+
 echo "\n\n[ finished compiling... ]\n\n";
