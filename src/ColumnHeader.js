@@ -672,7 +672,7 @@ prototype._beforeCreateCss = function(e) {
 	styles[classColHeader] = {
 		position: 'relative',
 		overflow: 'hidden',
-		float: 'left',
+		'float': 'left',
 		'text-overflow':'ellipsis',
 		'text-align':'center',
 		height: height,
