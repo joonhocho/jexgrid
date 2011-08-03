@@ -13,9 +13,9 @@ goog.provide('JGM');
  */
 
 /**
-  JGM 모듈. {@link JGM.Grid Grid} 의 최상위 scope 이며 유일하게 Global Scope 인 window 에 등록됩니다.
-  모든 {@link JGM.Grid Grid} 모듈 클래스는 이 매니저 안에 각 모듈의 이름으로 등록됩니다.
-  JGM은 모든 {@link JGM.Grid Grid} 의 모듈들을 instantiate 하며, 모듈 생성시 각 모듈에 고유
+  JGM 모듈. {@link jx.grid.Grid Grid} 의 최상위 scope 이며 유일하게 Global Scope 인 window 에 등록됩니다.
+  모든 {@link jx.grid.Grid Grid} 모듈 클래스는 이 매니저 안에 각 모듈의 이름으로 등록됩니다.
+  JGM은 모든 {@link jx.grid.Grid Grid} 의 모듈들을 instantiate 하며, 모듈 생성시 각 모듈에 고유
   mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
   맵을 가지고 있어 서로간의 켜뮤니케이션을 도와줍니다.
 
@@ -308,11 +308,11 @@ JGM._remove = function(name, mid) {
   @since 1.0.1
   @version 1.0.1
   */
-JGM.grid = function(args) {
+jx.grid.Grid = function(args) {
 	return this.create("Grid", args);
 };
 
-JGM.gridMap = {};
+jx.grid.GridMap = {};
 
 JGM.getGrid = function(name) {
 	if (this.gridMap.hasOwnProperty(name)) {

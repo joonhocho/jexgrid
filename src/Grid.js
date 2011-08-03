@@ -78,15 +78,10 @@ Grid.V_INIT = V_INIT;
 
 /**
   Grid 코어 모듈. 모든 Grid 모듈이 연결되는 모듈입니다.
-  @module Grid
-  @requires JGM
-  */
-
-/**
   Grid 코어 클래스. Grid 의 모든 서브 모듈들은 이 클래스에 연결되어 서로
   커뮤니케이트 합니다.
 
-  @class {Grid} JGM.Grid
+  @class {Grid} jx.grid.Grid
 
   @author 조준호
   @since 1.0.0
@@ -144,7 +139,7 @@ prototype._defaultOptions = function() {
 		/**
 		  그리드 컨테이너에 적용되는 CSS 클래스 입니다.<br>기본값:<code>"jgrid"</code>
 
-		  @type {string=} JGM.Grid.options.classGrid
+		  @type {string=} jx.grid.Grid.options.classGrid
 		  @private
 
 		  @author 조준호
@@ -156,7 +151,7 @@ prototype._defaultOptions = function() {
 			/**
 			  컨테이너에 적용되는 CSS border 스타일 입니다. <br>기본값:<code>"1px solid #868686"</code>
 
-			  @type {string=} JGM.Grid.options.border
+			  @type {string=} jx.grid.Grid.options.border
 			  @private
 
 			  @author 조준호
@@ -168,7 +163,7 @@ prototype._defaultOptions = function() {
 			/**
 			  컨테이너에 적용되는 CSS width 픽셀값 입니다. 이 옵션 값이 입력되지 않을 경우 <code>width:100%</code> 로 설정하는 것과 같은 효과를 가집니다.<br>기본값:<code>undefined</code>
 
-			  @type {number=} JGM.Grid.options.width
+			  @type {number=} jx.grid.Grid.options.width
 			  @private
 
 			  @author 조준호
@@ -180,7 +175,7 @@ prototype._defaultOptions = function() {
 			/**
 			  컨테이너에 적용되는 CSS font 스타일 입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
 
-			  @type {string=} JGM.Grid.options.font
+			  @type {string=} jx.grid.Grid.options.font
 			  @private
 
 			  @author 조준호
@@ -195,7 +190,7 @@ prototype._defaultOptions = function() {
 			  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 			  <br>기본값:<code>""</code>
 
-			  @type {string=} JGM.Grid.options.style
+			  @type {string=} jx.grid.Grid.options.style
 			  @private
 
 			  @author 조준호
@@ -207,7 +202,7 @@ prototype._defaultOptions = function() {
 			/**
 			  컨테이너에 적용되는 border 가 사이드에도 적용될지 여부입니다. <br>기본값:<code>true</code>
 
-			  @type {boolean=} JGM.Grid.options.borderSide
+			  @type {boolean=} jx.grid.Grid.options.borderSide
 			  @private
 
 			  @author 조준호
@@ -219,7 +214,7 @@ prototype._defaultOptions = function() {
 			/**
 			  그리드에서 사용되는 이미지들이 있는 폴더의 url 입니다.<br>기본값:<code>"../images/"</code>
 
-			  @type {string=} JGM.Grid.options.imageUrl
+			  @type {string=} jx.grid.Grid.options.imageUrl
 			  @private
 
 			  @author 조준호
@@ -257,7 +252,7 @@ prototype._defaultOptions = function() {
 			  collen: "colDefMgr.length"
 			  }</code>
 
-			  @type {Object=} JGM.Grid.options.links
+			  @type {Object=} jx.grid.Grid.options.links
 			  @private
 
 			  @author 조준호
@@ -295,7 +290,7 @@ prototype._defaultOptions = function() {
 			/**
 			  true 일 경우, 그리드 컨테이너의 사이즈가 모든 컬럼이 보이도록 자동 조절됩니다. <br>기본값:<code>false</code>
 
-			  @type {boolean=} JGM.Grid.options.autoWidth
+			  @type {boolean=} jx.grid.Grid.options.autoWidth
 			  @private
 
 			  @author 조준호
@@ -308,12 +303,12 @@ prototype._defaultOptions = function() {
 
 				/**
 				  서브 모듈 들에게 전달할 옵션을 정의합니다. 예를 들어
-				  {@link JGM.ViewportManager ViewportManager} 의 옵션을 변경하고자 할 경우
+				  {@link jx.grid.ViewportManager ViewportManager} 의 옵션을 변경하고자 할 경우
 				  다음과 같이 정의하면 됩니다.
 				  <code>ViewportManager:{classCell:"jgrid-new-cell-class"</code>
 				  <br>기본값:<code>undefined</code><br>
 
-				  @type {string=} JGM.Grid.options.MODULE_CLASS_NAME
+				  @type {string=} jx.grid.Grid.options.MODULE_CLASS_NAME
 				  @private
 
 				  @author 조준호
@@ -438,7 +433,7 @@ prototype._init = function(args) {
 
 	/**
 	  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 위해서 onRenderModules
-	  이벤트를 트리거합니다. JGM.ColHeader 와 같이 랜더링이 필요한 서브 모듈들은 이
+	  이벤트를 트리거합니다. jx.grid.ColumnHeader 와 같이 랜더링이 필요한 서브 모듈들은 이
 	  이벤트를 통해서 모듈 랜더링을 합니다.<br>
 	  @event {Event} onRenderModules
 

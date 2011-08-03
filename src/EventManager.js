@@ -38,7 +38,7 @@ var JGM = goog.getObjectByName('jx.grid'),
    호출하는 방법도 있지만 이벤트를 통하면 다른 모듈 인스턴스의 존재 유무 또는
    이름을 알지 못 하여도 상호 커뮤니케이트 할 수 있는 장점이 있습니다.
 
-   @class {EventManager} JGM.EventManager
+   @class {EventManager} jx.grid.EventManager
 
    @author 조준호
    @since 1.0.0
@@ -71,9 +71,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 	 this.grid = args.grid;
 
 	 /**
-	   Grid 내의 모든 이벤트 레지스터와 트리거를 담당하는 {@link JGM.EventManager EventManager} 인스턴스 입니다.
+	   Grid 내의 모든 이벤트 레지스터와 트리거를 담당하는 {@link jx.grid.EventManager EventManager} 인스턴스 입니다.
 
-	   @var {JGM.EventManager} JGM.Grid.event
+	   @var {jx.grid.EventManager} jx.grid.Grid.event
 
 	   @author 조준호
 	   @since 1.0.0

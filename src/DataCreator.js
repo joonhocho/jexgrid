@@ -28,16 +28,6 @@ JGM._add("DataCreator", DataCreator);
 
  /**
    DataCreator 모듈. 새로운 데이터의 생성과 추가를 담당하는 모듈입니다.
-   @module DataCreator
-
-   @requires JGM
-   @requires JGM.Grid
-   @requires JGM.ColDefManager
-   @requires JGM.EventManager
-   @requires JGM.ViewportManager
-   */
-
- /**
    DataCreator 클래스. 새로운 데이터의 생성과 추가를 담당합니다.
 
    @class {DataCreator} JGM.DataCreator
@@ -53,7 +43,7 @@ JGM._add("DataCreator", DataCreator);
 	  @constructor {DataCreator} DataCreator
 	  @param {Object} args - DataCreator 모듈 파라미터 오브젝트
 	  @... {jQuery} args.container - DataCreator 를 넣을 컨테이너 오브젝트
-	  @... {JGM.Grid} args.grid - DataCreator 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+	  @... {jx.grid.Grid} args.grid - DataCreator 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
 	  @... {Object} args.options - DataCreator 옵션 오브젝트
 	  @returns {DataCreator} DataCreator 모듈 인스턴스를 리턴합니다.
 
@@ -78,9 +68,9 @@ JGM._add("DataCreator", DataCreator);
 		this._creator;
 
 		/**
-		  DataCreator 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
+		  DataCreator 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
 
-		  @var {JGM.Grid} grid
+		  @var {jx.grid.Grid} grid
 
 		  @author 조준호
 		  @since 1.1.1
@@ -91,7 +81,7 @@ JGM._add("DataCreator", DataCreator);
 		/**
 		  새로운 데이터 생성을 관리하는 {@link JGM.DataCreator DataCreator} 인스턴스 입니다.
 
-		  @var {JGM.DataCreator} JGM.Grid.creator
+		  @var {JGM.DataCreator} jx.grid.Grid.creator
 
 		  @author 조준호
 		  @since 1.1.6

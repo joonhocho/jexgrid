@@ -24,7 +24,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 /**
 메뉴 바를 생성하고 관리하는 {@link JGM.MenuBar MenuBar} 인스턴스 입니다.
 
-@var {JGM.MenuBar} JGM.Grid.menubar
+@var {JGM.MenuBar} jx.grid.Grid.menubar
 
 @author 조준호
 @since 1.1.6

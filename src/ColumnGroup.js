@@ -36,25 +36,10 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 /**
 ColGroup 모듈. 트리 구조의 데이터를 담당하는 모듈입니다.
-@module ColGroup
-
-@requires JGM
-@requires JGM.Grid
-@requires JGM.ColDefManager
-@requires JGM.ColHeader
-@requires JGM.DataManager
-@requires JGM.EventManager
-@requires JGM.ViewportManager
-@requires JGM.Tree
-@requires JGM.TreeNode
-@requires JGM.Collapser
- */
-
-/**
 ColGroup 클래스. 트리 구조의 데이터를 담당하는 모듈 클래스 입니다. 구조에 맞게
 데이터를 재정렬해주고 자식들이 있는 노드의 펼치기/접기의 기능을 지원합니다.
 
-@class {ColGroup} JGM.ColGroup
+@class {ColGroup} jx.grid.ColumnGroup
 
 @author 조준호
 @since 1.1.0
@@ -66,7 +51,7 @@ ColGroup 컨스트럭터 입니다.
 
 @constructor {ColGroup} ColGroup
 @param {Object} args - ColGroup 모듈 파라미터 오브젝트
-@... {JGM.Grid} args.grid - ColGroup 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+@... {jx.grid.Grid} args.grid - ColGroup 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
 @... {Object} args.options - ColGroup 옵션 오브젝트
 @returns {ColGroup} ColGroup 모듈 인스턴스를 리턴합니다.
 
@@ -87,9 +72,9 @@ function ColGroup(args) {
 	this.mid = args.mid;
 
 	/**
-	ColGroup 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
+	ColGroup 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
 
-	@var {JGM.Grid} grid
+	@var {jx.grid.Grid} grid
 
 	@author 조준호
 	@since 1.1.0
@@ -98,9 +83,9 @@ function ColGroup(args) {
 	this.grid = args.grid;
 
 	/**
-	그룹 형식의 데이터를 관리하는 {@link JGM.ColGroup ColGroup} 인스턴스 입니다.
+	그룹 형식의 데이터를 관리하는 {@link jx.grid.ColumnGroup ColGroup} 인스턴스 입니다.
 
-	@var {JGM.ColGroup} JGM.Grid.colGroup
+	@var {jx.grid.ColumnGroup} jx.grid.Grid.colGroup
 
 	@author 조준호
 	@since 1.1.0
@@ -123,7 +108,7 @@ function ColGroup(args) {
 		grouping 을 할 컬럼의 key 입니다. 반드시 입력해야합니다.
 		<br>기본값:<code>undefined</code>
 
-		@type {string} JGM.ColGroup.options.key
+		@type {string} jx.grid.ColumnGroup.options.key
 		@private
 		@author 조준호
 		@since 1.1.0
@@ -136,7 +121,7 @@ function ColGroup(args) {
 		지정되는 컬럼들의 값이 모두 같을 때 사용합니다.
 		<br>기본값:<code>[]</code>
 
-		@type {Array.<string>=} JGM.ColGroup.options.padColKeys
+		@type {Array.<string>=} jx.grid.ColumnGroup.options.padColKeys
 		@private
 		@author 조준호
 		@since 1.1.0
@@ -149,7 +134,7 @@ function ColGroup(args) {
 		소계 값이 표시됩니다.
 		<br>기본값:<code>[]</code>
 
-		@type {Array.<string>=} JGM.ColGroup.options.sumColKeys
+		@type {Array.<string>=} jx.grid.ColumnGroup.options.sumColKeys
 		@private
 		@author 조준호
 		@since 1.1.0
@@ -161,7 +146,7 @@ function ColGroup(args) {
 		소계 부분의 prefix 를 정합니다.
 		<br>기본값:<code>"합계: "</code>
 
-		@type {string=} JGM.ColGroup.options.prefix
+		@type {string=} jx.grid.ColumnGroup.options.prefix
 		@private
 		@author 조준호
 		@since 1.1.0
@@ -170,12 +155,12 @@ function ColGroup(args) {
 		'prefix': "합계: ",
 
 		/**
-		데이터 관리에 사용할 {@link JGM.Collapser Collapser} 에 넘겨줄 옵션 오브젝트입니다.
+		데이터 관리에 사용할 {@link jx.grid.Collapser Collapser} 에 넘겨줄 옵션 오브젝트입니다.
 		<br>기본값:<code>{ indentSize:0 }</code>
 
-		@type {Object=} JGM.ColGroup.options.Collapser
+		@type {Object=} jx.grid.ColumnGroup.options.Collapser
 		@private
-		@see JGM.Collapser.options
+		@see jx.grid.Collapser.options
 		@author 조준호
 		@since 1.1.0
 		@version 1.1.0
@@ -189,9 +174,9 @@ function ColGroup(args) {
 	this._options['Collapser']['key'] = this._options['key'];
 
 	/**
-	ColGroup 과 연동된 {@link JGM.Collapser Collapser} 입니다.
+	ColGroup 과 연동된 {@link jx.grid.Collapser Collapser} 입니다.
 
-	@var {JGM.Collapser} collapser
+	@var {jx.grid.Collapser} collapser
 
 	@author 조준호
 	@since 1.1.0
@@ -216,9 +201,9 @@ prototype.__init = function() {
 	this.bindEvents();
 
 	/**
-	ColGroup 와 연동된 {@link JGM.Collapser Collapser} 입니다.
+	ColGroup 와 연동된 {@link jx.grid.Collapser Collapser} 입니다.
 
-	@var {JGM.Collapser} collapser
+	@var {jx.grid.Collapser} collapser
 
 	@author 조준호
 	@since 1.1.0

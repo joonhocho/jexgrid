@@ -40,7 +40,7 @@ function SearchManager(args) {
 	/**
 	필터링을 하여 데이터 검색을 관리하는 {@link JGM.SeachManager SeachManager} 인스턴스 입니다.
 
-	@var {JGM.SeachManager} JGM.Grid.search
+	@var {JGM.SeachManager} jx.grid.Grid.search
 
 	@author 조준호
 	@since 1.2.0

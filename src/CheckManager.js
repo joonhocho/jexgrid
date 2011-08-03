@@ -32,17 +32,6 @@ JGM._add("CheckManager", CheckManager);
 
 /**
   CheckManager 모듈. 그리드 로우의 선택을 담당하는 모듈입니다.
-  @module CheckManager
-
-  @requires JGM
-  @requires JGM.Grid
-  @requires JGM.ColDefManager
-  @requires JGM.DataManager
-  @requires JGM.EventManager
-  @requires JGM.ViewportManager
-  */
-
-/**
   CheckManager 클래스. checkbox 와 radio 타입의 선택을 지원합니다.
 
   @class {CheckManager} JGM.CheckManager
@@ -57,7 +46,7 @@ JGM._add("CheckManager", CheckManager);
 
   @constructor {CheckManager} CheckManager
   @param {Object} args - CheckManager 모듈 파라미터 오브젝트
-  @... {JGM.Grid} args.grid - CheckManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+  @... {jx.grid.Grid} args.grid - CheckManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
   @... {Object} args.options - CheckManager 옵션 오브젝트
   @returns {CheckManager} CheckManager 모듈 인스턴스를 리턴합니다.
 
@@ -154,7 +143,7 @@ prototype._defaultOptions = function() {
 
 		  @type {Object=} JGM.CheckManager.options.colDef
 		  @private
-		  @see JGM.ColDefManager.options.colDef
+		  @see jx.grid.ColumnManager.options.colDef
 
 		  @author 조준호
 		  @since 1.0.0
@@ -274,7 +263,7 @@ prototype._beforeCreateCss = function(event) {
   @function {} checkList
   @param {Array.<Object>} list - 체크할 데이터 어레이
   @param {boolean=} nomap - true 일 경우 데이터 매핑을 하지 않습니다.
-  @see JGM.DataManager.mapList 데이터 매핑을 합니다.
+  @see jx.data.DataManager.mapList 데이터 매핑을 합니다.
   @see check
 
   @author 조준호

@@ -24,28 +24,18 @@ JGM
 (function() {
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
-	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Cell = goog.getObjectByName('jx.grid.Cell');
 
  goog.exportSymbol('jx.grid.SelectionManager', SelectionManager);
  JGM._add("SelectionManager", SelectionManager);
 
 /**
 SelectionManager 모듈. 셀의 (범위) 선택을 담당하는 모듈입니다.
-@module SelectionManager
-
-@requires JGM
-@requires JGM.Grid
-@requires JGM.ColDefManager
-@requires JGM.EventManager
-@requires JGM.ViewportManager
-@requires JGM.Cell
- */
-
-/**
 SelectionManager 클래스. 셀들을 선택하고 선택된 셀들에 대한 이벤트를 트리거링하는
 클래스입니다.
 
-@class {SelectionManager} JGM.SelectionManager
+@class {SelectionManager} jx.grid.SelectionManager
 
 @author 조준호
 @since 1.0.0
@@ -57,7 +47,7 @@ SelectionManager 컨스트럭터 입니다.
 
 @constructor {SelectionManager} SelectionManager
 @param {Object} args - SelectionManager 모듈 파라미터 오브젝트
-@... {JGM.Grid} args.grid - SelectionManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+@... {jx.grid.Grid} args.grid - SelectionManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
 @... {Object} args.options - SelectionManager 옵션 오브젝트
 @returns {SelectionManager} SelectionManager 모듈 인스턴스를 리턴합니다.
 
@@ -78,9 +68,9 @@ function SelectionManager(args) {
 	this.mid = args.mid;
 
 	/**
-	SelectionManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
+	SelectionManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
 
-	@var {JGM.Grid} grid
+	@var {jx.grid.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -89,9 +79,9 @@ function SelectionManager(args) {
 	this.grid = args.grid;
 	
 	/**
-	그리드 셀의 선택을 관리하는 {@link JGM.SelectionManager SelectionManager} 인스턴스 입니다.
+	그리드 셀의 선택을 관리하는 {@link jx.grid.SelectionManager SelectionManager} 인스턴스 입니다.
 
-	@var {JGM.SelectionManager} JGM.Grid.selMgr
+	@var {jx.grid.SelectionManager} jx.grid.Grid.selMgr
 
 	@author 조준호
 	@since 1.0.0
@@ -114,7 +104,7 @@ function SelectionManager(args) {
 		로우 전체를 선택하는데 사용되는 컬럼 key 값입니다. 이 값을 키로 가진
 		컬럼을 선택시 로우 전체가 선택됩니다. <br>기본값:<code>DataManager.idKey</code>
 
-		@type {string=} JGM.SelectionManager.options.rowSelKey
+		@type {string=} jx.grid.SelectionManager.options.rowSelKey
 		@private
 
 		@author 조준호
@@ -126,7 +116,7 @@ function SelectionManager(args) {
 		/**
 		현재 선택된 모든 셀들에 적용되는 배경색입니다. <br>기본값:<code>"#DCEBFE"</code>
 
-		@type {string=} JGM.SelectionManager.options.bgColorSelection
+		@type {string=} jx.grid.SelectionManager.options.bgColorSelection
 		@private
 
 		@author 조준호
@@ -138,7 +128,7 @@ function SelectionManager(args) {
 		/**
 		마지막으로 선택된 셀에 적용되는 배경색입니다. <br>기본값:<code>"#C1DBFC"</code>
 
-		@type {string=} JGM.SelectionManager.options.bgColorLast
+		@type {string=} jx.grid.SelectionManager.options.bgColorLast
 		@private
 
 		@author 조준호
@@ -151,7 +141,7 @@ function SelectionManager(args) {
 		/**
 		범위 선택시 범위 끝의 셀에 적용되는 배경색입니다. <br>기본값:<code>"#D9D9D9"</code>
 
-		@type {string=} JGM.SelectionManager.options.bgColorRange
+		@type {string=} jx.grid.SelectionManager.options.bgColorRange
 		@private
 
 		@author 조준호
@@ -163,7 +153,7 @@ function SelectionManager(args) {
 		/**
 		현재 선택된 모든 셀들에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-selection"</code>
 
-		@type {string=} JGM.SelectionManager.options.classSelection
+		@type {string=} jx.grid.SelectionManager.options.classSelection
 		@private
 
 		@author 조준호
@@ -175,7 +165,7 @@ function SelectionManager(args) {
 		/**
 		마지막으로 선택된 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"selection-last"</code>
 
-		@type {string=} JGM.SelectionManager.options.classLast
+		@type {string=} jx.grid.SelectionManager.options.classLast
 		@private
 
 		@author 조준호
@@ -187,7 +177,7 @@ function SelectionManager(args) {
 		/**
 		범위 선택시에 범위 끝의 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"selection-range"</code>
 
-		@type {string=} JGM.SelectionManager.options.classRange
+		@type {string=} jx.grid.SelectionManager.options.classRange
 		@private
 
 		@author 조준호
@@ -199,7 +189,7 @@ function SelectionManager(args) {
 		/**
 		범위 선택 가능 여부입니다. <br>기본값:<code>false</code>
 
-		@type {boolean=} JGM.SelectionManager.options.multiSelectEnabled
+		@type {boolean=} jx.grid.SelectionManager.options.multiSelectEnabled
 		@private
 
 		@author 조준호
@@ -331,7 +321,7 @@ prototype._mousedownCanvas = function(e, cell) {
 	
 	@event {Event} onBeforeSelect
 	@param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	@param {JGM.Cell} cell - 선택될 셀
+	@param {jx.grid.Cell} cell - 선택될 셀
 
 	@author 조준호
 	@since 1.1.7
@@ -512,7 +502,7 @@ prototype._keydownCanvas = function(e) {
 		셀 선택 후 키보드로 셀 네비게이션을 한 후에 발생되는 이벤트 입니다.
 		
 		@event {Event} onAfterNavigate
-		@param {JGM.Cell} nextCell - 새롭게 이동된 셀 인스턴스
+		@param {jx.grid.Cell} nextCell - 새롭게 이동된 셀 인스턴스
 
 		@author 조준호
 		@since 1.3.0
@@ -535,7 +525,7 @@ prototype._keydownCanvas = function(e) {
                  @event {Event} keydownColSel_COLKEY_KEYCODE
                  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
                  @param {Object} colsMap - 컬럼 선택 맵
-                 @param {JGM.Cell} cell - 마지막 선택 셀
+                 @param {jx.grid.Cell} cell - 마지막 선택 셀
 
                  @author 조준호
                  @since 1.1.7
@@ -548,7 +538,7 @@ prototype._keydownCanvas = function(e) {
                  @event {Event} keydownColSel_COLKEY
                  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
                  @param {Object} colsMap - 컬럼 선택 맵
-                 @param {JGM.Cell} cell - 마지막 선택 셀
+                 @param {jx.grid.Cell} cell - 마지막 선택 셀
 
                  @author 조준호
                  @since 1.1.7
@@ -565,7 +555,7 @@ prototype._keydownCanvas = function(e) {
 		@event {Event} keydownRowSel_KEYCODE
 		@param {jQuery.Event} e - jQuery 이벤트 오브젝트
 		@param {Object} rowsMap - 로우 선택 맵
-		@param {JGM.Cell} cell - 마지막 선택 셀
+		@param {jx.grid.Cell} cell - 마지막 선택 셀
 
 		@author 조준호
 		@since 1.1.7
@@ -578,7 +568,7 @@ prototype._keydownCanvas = function(e) {
 		@event {Event} keydownRowSel
 		@param {jQuery.Event} e - jQuery 이벤트 오브젝트
 		@param {Object} rowsMap - 로우 선택 맵
-		@param {JGM.Cell} cell - 마지막 선택 셀
+		@param {jx.grid.Cell} cell - 마지막 선택 셀
 
 		@author 조준호
 		@since 1.1.7
@@ -626,10 +616,10 @@ prototype._keydownCanvas = function(e) {
 
 
 /**
-현재 선택된 셀이 있을경우 선택된 {@link JGM.Cell Cell} 의 인스턴스를 리턴합니다. 없을 경우에는 <code>undefined</code> 를 리턴합니다.
+현재 선택된 셀이 있을경우 선택된 {@link jx.grid.Cell Cell} 의 인스턴스를 리턴합니다. 없을 경우에는 <code>undefined</code> 를 리턴합니다.
 
-@function {JGM.Cell} getCell
-@returns {JGM.Cell} 현재 선택된 셀의 인스턴스
+@function {jx.grid.Cell} getCell
+@returns {jx.grid.Cell} 현재 선택된 셀의 인스턴스
 
 @author 조준호
 @since 1.0.0
@@ -648,11 +638,11 @@ prototype._isSelected = function(cell) {
 };
 
 /**
-셀이 {@link JGM.SelectionManager SelectionManager} 에 의해 선택되어 있는 경우 true,
+셀이 {@link jx.grid.SelectionManager SelectionManager} 에 의해 선택되어 있는 경우 true,
 아닌 경우 false 를 리턴합니다.
 
-@function {boolean} JGM.Cell.isSelected
-@returns {boolean} 셀이 {@link JGM.SelectionManager SelectionManager} 에 의해 선택되어 있는 경우 true,
+@function {boolean} jx.grid.Cell.isSelected
+@returns {boolean} 셀이 {@link jx.grid.SelectionManager SelectionManager} 에 의해 선택되어 있는 경우 true,
 아닌 경우 false 를 리턴합니다.
 
 @author 조준호
@@ -660,7 +650,7 @@ prototype._isSelected = function(cell) {
 @version 1.0.0
 */
 //tested
-JGM.Cell.prototype.isSelected = function() {
+Cell.prototype.isSelected = function() {
 	return this.grid['selMgr']._isSelected(this);
 };
 
@@ -715,10 +705,10 @@ prototype._idxToCell = function(dir, idx) {
 
 
 /**
-주어진 {@link JGM.Cell Cell} 을 포함하는 로우 전체를 선택합니다.
+주어진 {@link jx.grid.Cell Cell} 을 포함하는 로우 전체를 선택합니다.
 
 @function {} selectRow
-@param {JGM.Cell} cell - 선택할 로우가 포함하는 {@link JGM.Cell Cell}
+@param {jx.grid.Cell} cell - 선택할 로우가 포함하는 {@link jx.grid.Cell Cell}
 
 @author 조준호
 @since 1.0.0
@@ -734,10 +724,10 @@ prototype.selectRow = function(cell) {
 };
 
 /**
-주어진 {@link JGM.Cell Cell} 을 선택합니다.
+주어진 {@link jx.grid.Cell Cell} 을 선택합니다.
 
 @function {} selectCell
-@param {JGM.Cell} cell - 선택할 {@link JGM.Cell Cell}
+@param {jx.grid.Cell} cell - 선택할 {@link jx.grid.Cell Cell}
 
 @author 조준호
 @since 1.0.0
@@ -749,7 +739,7 @@ prototype.selectCell = function(cell, noScroll) {
 	셀 선택 전에 발생되는 이벤트 입니다.
 	
 	@event {Event} onBeforeSelectCell
-	@param {JGM.Cell} selectedCell - 새롭게 이동된 셀 인스턴스
+	@param {jx.grid.Cell} selectedCell - 새롭게 이동된 셀 인스턴스
 
 	@author 조준호
 	@since 1.3.0
@@ -773,7 +763,7 @@ prototype.selectCell = function(cell, noScroll) {
 	셀 선택 후에 발생되는 이벤트 입니다.
 	
 	@event {Event} onAfterSelectCell
-	@param {JGM.Cell} selectedCell - 새롭게 이동된 셀 인스턴스
+	@param {jx.grid.Cell} selectedCell - 새롭게 이동된 셀 인스턴스
 
 	@author 조준호
 	@since 1.3.0
@@ -800,10 +790,10 @@ prototype.onAfterRerender = function() {
 };
 
 /**
-주어진 {@link JGM.Cell Cell} 을 포함하는 로우 전체를 선택에 추가합니다.
+주어진 {@link jx.grid.Cell Cell} 을 포함하는 로우 전체를 선택에 추가합니다.
 
 @function {} addRow
-@param {JGM.Cell} cell - 추가 선택할 로우가 포함하는 {@link JGM.Cell Cell}
+@param {jx.grid.Cell} cell - 추가 선택할 로우가 포함하는 {@link jx.grid.Cell Cell}
 
 @author 조준호
 @since 1.0.0
@@ -820,10 +810,10 @@ prototype.addRow = function(cell) {
 
 
 /**
-주어진 {@link JGM.Cell Cell} 을 선택에 추가합니다.
+주어진 {@link jx.grid.Cell Cell} 을 선택에 추가합니다.
 
 @function {} addCell
-@param {JGM.Cell} cell - 추가 선택할 {@link JGM.Cell Cell}
+@param {jx.grid.Cell} cell - 추가 선택할 {@link jx.grid.Cell Cell}
 
 @author 조준호
 @since 1.0.0
@@ -840,10 +830,10 @@ prototype.addCell = function(cell) {
 
 
 /**
-주어진 {@link JGM.Cell Cell} 을 범위의 모서리로 범위 선택을 합니다.
+주어진 {@link jx.grid.Cell Cell} 을 범위의 모서리로 범위 선택을 합니다.
 
 @function {} selectRange
-@param {JGM.Cell} cell - 범위 선택의 모서리 {@link JGM.Cell Cell}
+@param {jx.grid.Cell} cell - 범위 선택의 모서리 {@link jx.grid.Cell Cell}
 
 @author 조준호
 @since 1.0.0
@@ -957,7 +947,7 @@ prototype._addSelMap = function(map) {
 				for (c in addrow) {
 					if (addrow.hasOwnProperty(c)) {
 						if (rowmap.hasOwnProperty(c)) {
-							if (addrow[c] instanceof JGM.Cell) {
+							if (addrow[c] instanceof Cell) {
 								rowmap[c] = addrow[c];
 							}
 							delete addrow[c];
@@ -994,7 +984,7 @@ prototype._setSelMap = function(map) {
 				for (c in rowmap) {
 					if (rowmap.hasOwnProperty(c) && c !== "length") {
 						if (addrow.hasOwnProperty(c)) {
-							if (addrow[c] instanceof JGM.Cell) {
+							if (addrow[c] instanceof Cell) {
 								rowmap[c] = addrow[c];
 							}
 							delete addrow[c];
@@ -1036,7 +1026,7 @@ prototype.addOrRemoveCss = function(map, add) {
          row = map[r];
          for (c in row) {
             if (row.hasOwnProperty(c)) {
-               if (row[c] instanceof JGM.Cell) {
+               if (row[c] instanceof Cell) {
                   list.push(row[c].getNode());
                }
                else {

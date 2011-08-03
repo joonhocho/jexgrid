@@ -31,16 +31,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 /**
 Footer 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
-@module Footer
-
-@requires JGM
-@requires JGM.Grid
-@requires JGM.ColDefManager
-@requires JGM.DataManager
-@requires JGM.EventManager
- */
-
-/**
 Footer 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 관련 기능들을 지원합니다.
 
@@ -57,7 +47,7 @@ Footer 컨스트럭터 입니다.
 @constructor {Footer} Footer
 @param {Object} args - Footer 모듈 파라미터 오브젝트
 @... {jQuery} args.container - Footer 를 넣을 컨테이너 오브젝트
-@... {JGM.Grid} args.grid - Footer 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+@... {jx.grid.Grid} args.grid - Footer 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
 @... {Object} args.options - Footer 옵션 오브젝트
 @returns {Footer} Footer 모듈 인스턴스를 리턴합니다.
 
@@ -82,9 +72,9 @@ function Footer(args) {
 	this._foot;
 
 	/**
-	Footer 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
+	Footer 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
 
-	@var {JGM.Grid} grid
+	@var {jx.grid.Grid} grid
 
 	@author 조준호
 	@since 1.0.0
@@ -95,7 +85,7 @@ function Footer(args) {
 	/**
 	그리드 푸터를 관리하는 {@link JGM.Footer Footer} 인스턴스 입니다.
 
-	@var {JGM.Footer} JGM.Grid.footer
+	@var {JGM.Footer} jx.grid.Grid.footer
 
 	@author 조준호
 	@since 1.0.0
