@@ -159,7 +159,7 @@ goog.provide('jx.grid.BaseModule');
 		}
 
 		// options
-		var defaults = this._defaultOptions && this._defaultOptions(),
+		var defaults = this._defaultOptions && this._defaultOptions(args.grid),
 			opts = args && args['options'];
 		if (opts || defaults) {
 			if (!defaults) {
@@ -363,6 +363,23 @@ goog.provide('jx.grid.BaseModule');
 	}
 
 	/**
+	 * 이 모듈이 소속된 그리드의 컬럼 정의 오브젝트 어레이를 리턴합니다.
+	 *
+	 * @public
+	 * @lends jx.grid.BaseModule#
+	 *
+	 * @returns {object[]} 이 모듈이 소속된 그리드의 컬럼 정의 오브젝트 어레이
+	 *
+	 * @see jx.grid.ColumnManager#get
+	 *
+	 * @since 2.0.0
+	 * @version 2.0.0
+	 */
+	proto.getColumns = function() {
+		return this.grid['colDefMgr'].get();
+	}
+
+	/**
 	 * 이 모듈이 소속된 그리드의 이벤트 매니저를 리턴합니다.
 	 *
 	 * @public
@@ -449,6 +466,52 @@ goog.provide('jx.grid.BaseModule');
 	proto.triggerGridEvent = function() {
 		var event = this.grid['event'];
 		return event.trigger.apply(event, arguments);
+	}
+
+	proto.toCssStyle = function(selector, styles, noGridId) {
+		var css = [];
+
+		if (!noGridId) {
+			selector = '#' + this.grid['mid'] + ' ' + selector;
+		}
+
+		if (typeof styles != 'string') {
+			var i,
+				append = '';
+
+			if (styles.hasOwnProperty('_prepend')) {
+				if (styles._prepend) {
+					css.push(styles._prepend);
+				}
+				delete styles._prepend;
+			}
+
+			if (styles.hasOwnProperty('_append')) {
+				if (styles._append) {
+					append = ';' + styles._append;
+				}
+				delete styles._append;
+			}
+
+			for (i in styles) {
+				css.push(i + ':' + styles[i]);
+			}
+
+			css = css.join(';') + append;
+		}
+
+		return selector + '{' + css + '}';
+	}
+
+	proto.toCssStyles = function(css, styles, noGridId) {
+		var css = css || [],
+			i;
+
+		for (i in styles) {
+			css.push(this.toCssStyle(i, styles[i], noGridId));
+		}
+
+		return css;
 	}
 
 }());

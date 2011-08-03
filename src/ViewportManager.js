@@ -17,64 +17,65 @@ goog.provide('jx.grid.ViewportManager');
  */
 
 /**
-JGM
-@scope JGM
-*/
+  JGM
+  @scope JGM
+  */
 
 (function() {
-var JGM = goog.getObjectByName('jx.grid'),
+	var JGM = goog.getObjectByName('jx.grid'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
- goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
+goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
 JGM._add("ViewportManager", ViewportManager);
 
 /**
-ViewportManager 모듈. 그리드 로우와 셀을 가진 테이블을 담당하는 모듈입니다.
-@module ViewportManager
+  ViewportManager 모듈. 그리드 로우와 셀을 가진 테이블을 담당하는 모듈입니다.
+  @module ViewportManager
 
-@requires JGM
-@requires JGM.Grid
-@requires JGM.ColDefManager
-@requires JGM.DataManager
-@requires JGM.EventManager
-@requires JGM.Cell
- */
-
-/**
-ViewportManager 클래스. 빠른 로우/셀 렌더링과 로우의 캐싱을 지원합니다.
-
-@class {ViewportManager} JGM.ViewportManager
-
-@author 조준호
-@since 1.0.0
-@version 1.3.1
-*/
+  @requires JGM
+  @requires JGM.Grid
+  @requires JGM.ColDefManager
+  @requires JGM.DataManager
+  @requires JGM.EventManager
+  @requires JGM.Cell
+  */
 
 /**
-ViewportManager 컨스트럭터 입니다.
+  ViewportManager 클래스. 빠른 로우/셀 렌더링과 로우의 캐싱을 지원합니다.
 
-@constructor {ViewportManager} ViewportManager
-@param {Object} args - ViewportManager 모듈 파라미터 오브젝트
-@... {jQuery} args.container - ViewportManager 를 넣을 컨테이너 오브젝트
-@... {JGM.Grid} args.grid - ViewportManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
-@... {Object} args.options - ViewportManager 옵션 오브젝트
-@returns {ViewportManager} ViewportManager 모듈 인스턴스를 리턴합니다.
+  @class {ViewportManager} JGM.ViewportManager
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.3.1
+  */
+
+/**
+  ViewportManager 컨스트럭터 입니다.
+
+  @constructor {ViewportManager} ViewportManager
+  @param {Object} args - ViewportManager 모듈 파라미터 오브젝트
+  @... {jQuery} args.container - ViewportManager 를 넣을 컨테이너 오브젝트
+  @... {JGM.Grid} args.grid - ViewportManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+  @... {Object} args.options - ViewportManager 옵션 오브젝트
+  @returns {ViewportManager} ViewportManager 모듈 인스턴스를 리턴합니다.
+
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 function ViewportManager(args) {
 	/**
-	{@link JGM} 이 할당해주는 ViewportManager 모듈 고유 아이디입니다. 읽기 전용.
+	  {@link JGM} 이 할당해주는 ViewportManager 모듈 고유 아이디입니다. 읽기 전용.
 
-	@var {string} mid
+	  @var {string} mid
 
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
 	this.mid = args.mid;
 
 	this._ctnr = args['container'];
@@ -82,317 +83,317 @@ function ViewportManager(args) {
 	this._canvas;
 
 	/**
-	ViewportManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
+	  ViewportManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
 
-	@var {JGM.Grid} grid
+	  @var {JGM.Grid} grid
 
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
 	this.grid = args.grid;
 
 	/**
-	그리드의 로우와 셀의 랜더링 및 뷰포트 관련 이벤트를 관리하는 {@link JGM.ViewportManager ViewportManager} 인스턴스 입니다.
+	  그리드의 로우와 셀의 랜더링 및 뷰포트 관련 이벤트를 관리하는 {@link JGM.ViewportManager ViewportManager} 인스턴스 입니다.
 
-	@var {JGM.ViewportManager} JGM.Grid.view
+	  @var {JGM.ViewportManager} JGM.Grid.view
 
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
 	this.grid['view'] = this;
 
 	/**
-	ViewportManager 모듈의 기본 옵션 값들을 정의합니다.
+	  ViewportManager 모듈의 기본 옵션 값들을 정의합니다.
 
-	@type {Object} options
-	@private
+	  @type {Object} options
+	  @private
 
-	@author 조준호
-	@since 1.0.0
-	@version 1.0.0
-	*/
+	  @author 조준호
+	  @since 1.0.0
+	  @version 1.0.0
+	  */
 	var options = {
 		/**
-		그리드 로우의 인덱스 값을 넣을 인덱스 노드 Attribute 이름. <br>기본값:<code>"r"</code>
+		  그리드 로우의 인덱스 값을 넣을 인덱스 노드 Attribute 이름. <br>기본값:<code>"r"</code>
 
-		@type {string=} JGM.ViewportManager.options.attrRowIdx
-		@private
+		  @type {string=} JGM.ViewportManager.options.attrRowIdx
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'attrRowIdx':					"r",
 
 		/**
-		뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 미만일 경우
-		추가하지 않습니다. <br>기본값:<code>3</code>
+		  뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 미만일 경우
+		  추가하지 않습니다. <br>기본값:<code>3</code>
 
-		@type {number=} JGM.ViewportManager.options.appendThreshold
-		@private
+		  @type {number=} JGM.ViewportManager.options.appendThreshold
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'appendThreshold':			3,
 
 		/**
-		뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 이상일 경우
-		새로운 로우들을 붙여넣지 않고 전체 페이지를 다시 렌더링 합니다. <br>기본값:<code>10</code>
+		  뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 이상일 경우
+		  새로운 로우들을 붙여넣지 않고 전체 페이지를 다시 렌더링 합니다. <br>기본값:<code>10</code>
 
-		@type {number=} JGM.ViewportManager.options.renderThreshold
-		@private
+		  @type {number=} JGM.ViewportManager.options.renderThreshold
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'renderThreshold':			10,
 
 		/**
-		캔버스를 렌더링 할 경우, 스크롤의 자연스러움을 위해 화면에 보이는 로우들 이외에
-		전 후로 이 값의 수 많큼 로우들을 추가적으로 렌더링합니다. <br>기본값:<code>6</code>
+		  캔버스를 렌더링 할 경우, 스크롤의 자연스러움을 위해 화면에 보이는 로우들 이외에
+		  전 후로 이 값의 수 많큼 로우들을 추가적으로 렌더링합니다. <br>기본값:<code>6</code>
 
-		@type {number=} JGM.ViewportManager.options.bufferSize
-		@private
+		  @type {number=} JGM.ViewportManager.options.bufferSize
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'bufferSize':					6,
 
 		/**
-		뷰포트가 한 스크롤 페이지에 보여줄 데이터 로우들의 수를 정합니다. 뷰포트의
-		높이를 계산할 때 사용됩니다. <br>기본값:<code>10</code>
+		  뷰포트가 한 스크롤 페이지에 보여줄 데이터 로우들의 수를 정합니다. 뷰포트의
+		  높이를 계산할 때 사용됩니다. <br>기본값:<code>10</code>
 
-		@type {number=} JGM.ViewportManager.options.rowsPerPage
-		@private
+		  @type {number=} JGM.ViewportManager.options.rowsPerPage
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'rowsPerPage':			10,
 
 		/**
-		로우의 높이의 픽셀값 입니다. padding 과 border 를 제외한 그 안의 높이입니다. <br>기본값:<code>20</code>
+		  로우의 높이의 픽셀값 입니다. padding 과 border 를 제외한 그 안의 높이입니다. <br>기본값:<code>20</code>
 
-		@type {number=} JGM.ViewportManager.options.rowH
-		@private
+		  @type {number=} JGM.ViewportManager.options.rowH
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'rowH':						21,
 
 		/**
-		셀 border 의 두께의 픽셀값 입니다. <br>기본값:<code>1</code>
+		  셀 border 의 두께의 픽셀값 입니다. <br>기본값:<code>1</code>
 
-		@type {number=} JGM.ViewportManager.options.borderThickness
-		@private
+		  @type {number=} JGM.ViewportManager.options.borderThickness
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'borderThickness': 1,
 
 		/**
-		셀 border 의 스타일을 정합니다. <br>기본값:<code>"solid #D0D7E5"</code>
+		  셀 border 의 스타일을 정합니다. <br>기본값:<code>"solid #D0D7E5"</code>
 
-		@type {string=} JGM.ViewportManager.options.border
-		@private
+		  @type {string=} JGM.ViewportManager.options.border
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'border':						"solid #D0D7E5",
 
 		/**
-		셀 padding 의 픽셀값 입니다. <br>기본값:<code>1</code>
+		  셀 padding 의 픽셀값 입니다. <br>기본값:<code>1</code>
 
-		@type {number=} JGM.ViewportManager.options.padding
-		@private
+		  @type {number=} JGM.ViewportManager.options.padding
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'padding':					1,
 
 		/**
-		홀수번째 로우와 짝수번째 로우의 바탕색을 다르게 할 지 정합니다. <br>기본값:<code>false</code>
+		  홀수번째 로우와 짝수번째 로우의 바탕색을 다르게 할 지 정합니다. <br>기본값:<code>false</code>
 
-		@type {boolean=} JGM.ViewportManager.options.evenOddRows
-		@private
+		  @type {boolean=} JGM.ViewportManager.options.evenOddRows
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'evenOddRows':				false,
 
 		/**
-		{@link JGM.ViewportManager.options.evenOddRows evenOddRows} 가 true 일 경우,
-		홀수번째 로우들에 적용될 바탕색입니다. <br>기본값:<code>"#F4F4F4"</code>
+		  {@link JGM.ViewportManager.options.evenOddRows evenOddRows} 가 true 일 경우,
+		  홀수번째 로우들에 적용될 바탕색입니다. <br>기본값:<code>"#F4F4F4"</code>
 
-		@type {string=} JGM.ViewportManager.options.oddRowsBackground
-		@private
+		  @type {string=} JGM.ViewportManager.options.oddRowsBackground
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'oddRowsBackground':			"#F4F4F4",
 
 		/**
-		ViewportManager 컨테이너에 적용되는 CSS style 입니다.<br>
-		주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
-		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
-		<br>기본값:<code>""</code>
+		  ViewportManager 컨테이너에 적용되는 CSS style 입니다.<br>
+		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
+		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
+		  <br>기본값:<code>""</code>
 
-		@type {string=} JGM.ViewportManager.options.style
-		@private
+		  @type {string=} JGM.ViewportManager.options.style
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'style': "",
 
 		/**
-		그리드 캔바스에 적용되는 CSS style 입니다.<br>
-		주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
-		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
-		<br>기본값:<code>""</code>
+		  그리드 캔바스에 적용되는 CSS style 입니다.<br>
+		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
+		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
+		  <br>기본값:<code>""</code>
 
-		@type {string=} JGM.ViewportManager.options.canvasStyle
-		@private
+		  @type {string=} JGM.ViewportManager.options.canvasStyle
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'canvasStyle': "",
 
 		/**
-		모든 그리드 로우에 공통적으로 적용되는 CSS style 입니다.<br>
-		주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
-		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
-		<br>기본값:<code>""</code>
+		  모든 그리드 로우에 공통적으로 적용되는 CSS style 입니다.<br>
+		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
+		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
+		  <br>기본값:<code>""</code>
 
-		@type {string=} JGM.ViewportManager.options.rowStyle
-		@private
+		  @type {string=} JGM.ViewportManager.options.rowStyle
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'rowStyle': "",
 
 		/**
-		모든 그리드 셀에 공통적으로 적용되는 CSS style 입니다.<br>
-		주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
-		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
-		<br>기본값:<code>""</code>
+		  모든 그리드 셀에 공통적으로 적용되는 CSS style 입니다.<br>
+		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
+		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
+		  <br>기본값:<code>""</code>
 
-		@type {string=} JGM.ViewportManager.options.cellStyle
-		@private
+		  @type {string=} JGM.ViewportManager.options.cellStyle
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'cellStyle': "",
 
 		/**
-		모든 그리드 로우에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-row"</code>
+		  모든 그리드 로우에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-row"</code>
 
-		@type {string=} JGM.ViewportManager.options.classRow
-		@private
+		  @type {string=} JGM.ViewportManager.options.classRow
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'classRow':						"jgrid-row",
 
 		/**
-		모든 그리드 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-cell"</code>
+		  모든 그리드 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-cell"</code>
 
-		@type {string=} JGM.ViewportManager.options.classCell
-		@private
+		  @type {string=} JGM.ViewportManager.options.classCell
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'classCell':					"jgrid-cell",
 
 		/**
-		그리드 뷰포트에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-viewport"</code>
+		  그리드 뷰포트에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-viewport"</code>
 
-		@type {string=} JGM.ViewportManager.options.classView
-		@private
+		  @type {string=} JGM.ViewportManager.options.classView
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'classView':				"jgrid-viewport",
 
 		/**
-		그리드 캔버스에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-canvas"</code>
+		  그리드 캔버스에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-canvas"</code>
 
-		@type {string=} JGM.ViewportManager.options.classCanvas
-		@private
+		  @type {string=} JGM.ViewportManager.options.classCanvas
+		  @private
 
-		@author 조준호
-		@since 1.0.0
-		@version 1.0.0
-		*/
+		  @author 조준호
+		  @since 1.0.0
+		  @version 1.0.0
+		  */
 		'classCanvas':				"jgrid-canvas",
 
 		/**
-		그리드 뷰가 포커스 되었을 경우 보여지는 뷰의 배경 스타일입니다. <br>기본값:<code>"#FFF"</code>
+		  그리드 뷰가 포커스 되었을 경우 보여지는 뷰의 배경 스타일입니다. <br>기본값:<code>"#FFF"</code>
 
-		@type {Object=} JGM.ViewportManager.options.focusBackground
-		@private
+		  @type {Object=} JGM.ViewportManager.options.focusBackground
+		  @private
 
-		@author 조준호
-		@since 1.1.5
-		@version 1.1.5
-		*/
+		  @author 조준호
+		  @since 1.1.5
+		  @version 1.1.5
+		  */
 		'focusBackground':			"#FFF",
 
 		/**
-		그리드 뷰가 포커스 되었을 경우 보여지는 아웃라인 스타일입니다. <br>기본값:<code>"2px solid #f1ca7f"</code>
+		  그리드 뷰가 포커스 되었을 경우 보여지는 아웃라인 스타일입니다. <br>기본값:<code>"2px solid #f1ca7f"</code>
 
-		@type {Object=} JGM.ViewportManager.options.focusOutline
-		@private
+		  @type {Object=} JGM.ViewportManager.options.focusOutline
+		  @private
 
-		@author 조준호
-		@since 1.1.5
-		@version 1.1.5
-		*/
+		  @author 조준호
+		  @since 1.1.5
+		  @version 1.1.5
+		  */
 		'focusOutline': "2px solid #f1ca7f",
 
 		/**
-		true 로 설정되있을 경우 view 의 높이가 모든 로우를 포함하도록 자동 변경됩니다. <br>기본값:<code>false</code>
+		  true 로 설정되있을 경우 view 의 높이가 모든 로우를 포함하도록 자동 변경됩니다. <br>기본값:<code>false</code>
 
-		@type {boolean=} JGM.ViewportManager.options.autoHeight
-		@private
+		  @type {boolean=} JGM.ViewportManager.options.autoHeight
+		  @private
 
-		@author 조준호
-		@since 1.1.7
-		@version 1.1.7
-		*/
+		  @author 조준호
+		  @since 1.1.7
+		  @version 1.1.7
+		  */
 		'autoHeight': false,
 
 		'autoWidth': false
@@ -400,12 +401,8 @@ function ViewportManager(args) {
 
 	this._options = JGM._extend(options, args['options']);
 
-	this._vars = {
-		drag:			false,
-		_lastScrollTop:		0,
-		_lastScrollLeft:		0,
-		_lastRowLen:			0
-	};
+	this._drag = false;
+	this._lastRowLen = this._lastScrollLeft = this._lastScrollTop = 0;
 
 	this._renderedRows = {};
 	this._lockedRows = {};
@@ -440,7 +437,7 @@ prototype.__init = function() {
 
 	this._setColLefts();
 
-	this._vars._lastRowLen = this.grid['dataMgr'].datalist.length;
+	this._lastRowLen = this.grid['dataMgr'].datalist.length;
 
 	this.grid['event'].bind({
 		'canvasFind': this._canvasFind,
@@ -478,7 +475,7 @@ prototype.__init = function() {
 };
 
 prototype.unsetDrag = function() {
-	this._vars.drag = false;
+	this._drag = false;
 };
 
 prototype._onDestroy = function() {
@@ -499,8 +496,8 @@ prototype._onCreateCss = function() {
 		border = opt['borderThickness'] + "px " + opt['border'],
 		attrRowIdx = rowSel + "[" + opt['attrRowIdx'],
 		colDefs = this.grid['colDefMgr'].get(),
-      clen = colDefs.length,
-      i = 0,
+		clen = colDefs.length,
+		i = 0,
 		rules = [];
 
 	rules.push(gridId + opt['classView'] + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + opt['rowH'] + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + opt['style'] + "}");
@@ -508,32 +505,32 @@ prototype._onCreateCss = function() {
 	rules.push(gridId + opt['classCanvas'] + "{height:" + this._calCanvasHeight() + "px;" + opt['canvasStyle'] + ";background:#fff}");
 	rules.push(rowSel + "{position:absolute;" + opt['rowStyle'] + "}");
 	rules.push(cellSel + "{height:" + opt['rowH'] + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + opt['padding'] + "px;border-right:" + border + ";" + opt['cellStyle'] + "}");
-	
+
 	if (opt['evenOddRows']) {
 		rules.push(
-			attrRowIdx + "$='1']," +
-			attrRowIdx + "$='3']," +
-			attrRowIdx + "$='5']," +
-			attrRowIdx + "$='7']," +
-			attrRowIdx + "$='9']{background:" + opt['oddRowsBackground'] + "}");
-   }
+				attrRowIdx + "$='1']," +
+				attrRowIdx + "$='3']," +
+				attrRowIdx + "$='5']," +
+				attrRowIdx + "$='7']," +
+				attrRowIdx + "$='9']{background:" + opt['oddRowsBackground'] + "}");
+	}
 
 	for (; i < clen; i++) {
 		rules.push(cellSel + ".k_" + colDefs[i].key + "{" + colDefs[i].style + "}");
-   }
+	}
 
 	return rules.join("");
 };
 
 prototype._onCreateDynamicCss = function() {
 	var cellSel = "#" + this.grid['mid'] + " ." + this._options['classCell'],
-      str = this._getRowSelector() + "{width:" + this._calCanvasWidth() + "px}",
-      colDefs = this.grid['colDefMgr'].get(),
-      clen = colDefs.length,
-      i = 0;
+		str = this._getRowSelector() + "{width:" + this._calCanvasWidth() + "px}",
+		colDefs = this.grid['colDefMgr'].get(),
+		clen = colDefs.length,
+		i = 0;
 	for (; i < clen; i++) {
 		str += cellSel + ".k_" + colDefs[i].key + "{width:" + colDefs[i].width + "px}";
-   }
+	}
 
 	return str;
 };
@@ -547,8 +544,8 @@ prototype.onUpdateDatarow = function(datarow, change, before) {
 
 prototype.onUpdateDatalist = function(datalist, changes, befores) {
 	var datarow,
-		 len = datalist.length,
-		 i = 0;
+		len = datalist.length,
+		i = 0;
 	for (; i < len; i++) {
 		datarow = datalist[i];
 		if (this.isRendered(datarow)) {
@@ -571,43 +568,43 @@ prototype.onRemoveDatalist = function(datalist) {
 
 //tested
 prototype.onIdChange = function(datarow, before, after) {
-   var attrChanged = false,
-       node;
-   if (this.isRowLockedById(before)) {
+	var attrChanged = false,
+		node;
+	if (this.isRowLockedById(before)) {
 		this._lockedRows[after] = this._lockedRows[before];
 		delete this._lockedRows[before];
-   }
+	}
 	if (this.isRenderedById(before)) {
 		(this._renderedRows[after] = this._renderedRows[before]).setAttribute('i', after);
-      attrChanged = true;
+		attrChanged = true;
 		delete this._renderedRows[before];
 	}
 };
 
 //tested
 prototype.onIdListChange = function(datalist, befores, idKey) {
-   var len = datalist.length,
-      i = 0,
-      locked = this._lockedRows,
-      rendered = this._renderedRows,
-      before,
-      after,
-      attrChanged,
-      node;
-   for (; i < len; i++) {
-      before = befores[i];
-      after = datalist[i][idKey];
-      attrChanged = false;
-      if (locked.hasOwnProperty(before)) {
-         locked[after] = locked[before];
-         delete locked[before];
-      }
-      if (rendered.hasOwnProperty(before)) {
-         (rendered[after] = rendered[before]).setAttribute('i', after);
-         attrChanged = true;
-         delete rendered[before];
-      }
-   }
+	var len = datalist.length,
+		i = 0,
+		locked = this._lockedRows,
+		rendered = this._renderedRows,
+		before,
+		after,
+		attrChanged,
+		node;
+	for (; i < len; i++) {
+		before = befores[i];
+		after = datalist[i][idKey];
+		attrChanged = false;
+		if (locked.hasOwnProperty(before)) {
+			locked[after] = locked[before];
+			delete locked[before];
+		}
+		if (rendered.hasOwnProperty(before)) {
+			(rendered[after] = rendered[before]).setAttribute('i', after);
+			attrChanged = true;
+			delete rendered[before];
+		}
+	}
 };
 
 prototype._getCellSelector = function() {
@@ -619,119 +616,119 @@ prototype._getRowSelector = function() {
 };
 
 /**
-주어진 인덱스를 가진 셀로 스크롤합니다.
+  주어진 인덱스를 가진 셀로 스크롤합니다.
 
-@function {} scrollTo
-@param {number} row - 셀의 로우 인덱스
-@param {number} col - 셀의 컬럼 인덱스
+  @function {} scrollTo
+  @param {number} row - 셀의 로우 인덱스
+  @param {number} col - 셀의 컬럼 인덱스
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.scrollTo = function(row, col) {
 	this.scrollToRow(row);
-   this.scrollToCol(col);
+	this.scrollToCol(col);
 };
 
 //tested
 /**
-주어진 로우 인덱스로 lazy 하게 스크롤합니다.
-이미 화면 내에 있을 경우, 스크롤 하지 않습니다.
+  주어진 로우 인덱스로 lazy 하게 스크롤합니다.
+  이미 화면 내에 있을 경우, 스크롤 하지 않습니다.
 
-@function {number} scrollToRowLazy
-@param {number} row - 스크롤 할 로우 인덱스
-@return {number} scrollTop - 새로운 scrolltop 값
+  @function {number} scrollToRowLazy
+  @param {number} row - 스크롤 할 로우 인덱스
+  @return {number} scrollTop - 새로운 scrolltop 값
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.scrollToRowLazy = function(row) {
-   var scrollTop = this.getScrollTop();
-   if (Util.isNull(row)) {
-      return scrollTop;
-   }
+	var scrollTop = this.getScrollTop();
+	if (Util.isNull(row)) {
+		return scrollTop;
+	}
 	if (this._getLastSafeVisibleRow() < row) {
 		return this.scrollToRow(this._getFirstRowForSafe(row));
-   }
+	}
 	if (this._getFirstSafeVisibleRow() > row) {
 		return this.scrollToRow(row);
-   }
-   return scrollTop;
+	}
+	return scrollTop;
 };
 
 /**
-주어진 컬럼 인덱스로 lazy 하게 스크롤합니다.
-이미 화면 내에 있을 경우, 스크롤 하지 않습니다.
+  주어진 컬럼 인덱스로 lazy 하게 스크롤합니다.
+  이미 화면 내에 있을 경우, 스크롤 하지 않습니다.
 
-@function {number} scrollToColLazy
-@param {number} col - 스크롤 할 컬럼 인덱스
-@return {number} scrollLeft - 새로운 scrollLeft 값
+  @function {number} scrollToColLazy
+  @param {number} col - 스크롤 할 컬럼 인덱스
+  @return {number} scrollLeft - 새로운 scrollLeft 값
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.scrollToColLazy = function(col) {
-   var scrollLeft = this.getScrollLeft();
-   if (Util.isNull(col)) {
-      return scrollLeft;
-   }
+	var scrollLeft = this.getScrollLeft();
+	if (Util.isNull(col)) {
+		return scrollLeft;
+	}
 	if (this._getLastSafeVisibleCol() < col) {
 		return this.setScrollLeft(this.getScrollHForSafe(col));
-   }
+	}
 	else if (this._getFirstSafeVisibleCol() > col) {
 		return this.scrollToCol(col);
-   }
-   return scrollLeft;
+	}
+	return scrollLeft;
 };
 
 /**
-주어진 인덱스를 가진 셀로 lazy 하게 스크롤합니다.
-이미 화면 내에 있을 경우, 스크롤 하지 않습니다.
+  주어진 인덱스를 가진 셀로 lazy 하게 스크롤합니다.
+  이미 화면 내에 있을 경우, 스크롤 하지 않습니다.
 
-@function {} scrollToLazy
-@param {number} row - 셀의 로우 인덱스
-@param {number} col - 셀의 컬럼 인덱스
+  @function {} scrollToLazy
+  @param {number} row - 셀의 로우 인덱스
+  @param {number} col - 셀의 컬럼 인덱스
 
-@author 조준호
-@since 1.3.0
-@version 1.3.0
-*/
+  @author 조준호
+  @since 1.3.0
+  @version 1.3.0
+  */
 prototype.scrollToLazy = function(row, col) {
-   this.scrollToRowLazy(row);
-   this.scrollToColLazy(col);
+	this.scrollToRowLazy(row);
+	this.scrollToColLazy(col);
 };
 
 /**
-주어진 인덱스의 로우로 스크롤합니다.
+  주어진 인덱스의 로우로 스크롤합니다.
 
-@function {} scrollToRow
-@param {number} row - 로우 인덱스
+  @function {} scrollToRow
+  @param {number} row - 로우 인덱스
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 //tested
 prototype.scrollToRow = function(i) {
-   if (Util.isNotNull(i)) {
-      return this.setScrollTop(this._getRowOuterHeight() * i);
-   }
-   return this.getScrollTop();
+	if (Util.isNotNull(i)) {
+		return this.setScrollTop(this._getRowOuterHeight() * i);
+	}
+	return this.getScrollTop();
 };
 
 /**
-주어진 인덱스의 컬럼으로 스크롤합니다.
+  주어진 인덱스의 컬럼으로 스크롤합니다.
 
-@function {} scrollToCol
-@param {number} col - 컬럼 인덱스
+  @function {} scrollToCol
+  @param {number} col - 컬럼 인덱스
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.scrollToCol = function(i) {
 	return this.setScrollLeft(this.getColLeft(i));
 };
@@ -745,31 +742,31 @@ prototype._getColInnerWidthByKey = function(i) {
 };
 
 /**
-주어진 인덱스의 컬럼의 폭 픽셀을 리턴합니다.
+  주어진 인덱스의 컬럼의 폭 픽셀을 리턴합니다.
 
-@function {number} getColWidth
-@param {number} col - 컬럼 인덱스
-@returns {number} 주어진 인덱스의 컬럼의 폭
+  @function {number} getColWidth
+  @param {number} col - 컬럼 인덱스
+  @returns {number} 주어진 인덱스의 컬럼의 폭
 
-@author 조준호
-@since 1.1.7
-@version 1.1.7
-*/
+  @author 조준호
+  @since 1.1.7
+  @version 1.1.7
+  */
 prototype.getColWidth = function(i) {
 	return this.grid['colDefMgr'].get(i).width + this._options['padding'];
 };
 
 /**
-주어진 키를 가진 컬럼의 폭 픽셀을 리턴합니다.
+  주어진 키를 가진 컬럼의 폭 픽셀을 리턴합니다.
 
-@function {number} getColWidthByKey
-@param {string} key - 컬럼 키
-@returns {number} 주어진 키를 가진 컬럼의 폭
+  @function {number} getColWidthByKey
+  @param {string} key - 컬럼 키
+  @returns {number} 주어진 키를 가진 컬럼의 폭
 
-@author 조준호
-@since 1.1.7
-@version 1.1.7
-*/
+  @author 조준호
+  @since 1.1.7
+  @version 1.1.7
+  */
 prototype.getColWidthByKey = function(i) {
 	return this.grid['colDefMgr'].getByKey(i).width + this._options['padding'];
 };
@@ -801,34 +798,34 @@ prototype._getRowInnerHeight = function() {
 prototype._calHeight = function() {
 	if (this._options['autoHeight']) {
 		return this._calCanvasHeight() + (this.grid['width']() < this._calCanvasWidth() ? this.grid._vars.scrollbarDim.h: 0);
-   }
+	}
 	return this._getRowOuterHeight() * this._options['rowsPerPage'];
 };
 
 /**
-가로 스크롤바가 있을 경우 스크롤바의 높이를 포함한 뷰의 높이 픽셀을 리턴합니다.
+  가로 스크롤바가 있을 경우 스크롤바의 높이를 포함한 뷰의 높이 픽셀을 리턴합니다.
 
-@function {number} getHeight
-@returns {number} 뷰의 높이 픽셀
+  @function {number} getHeight
+  @returns {number} 뷰의 높이 픽셀
 
-@author 조준호
-@since 1.0.0
-@version 1.1.7
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.1.7
+  */
 prototype.getHeight = function() {
 	return this._mask[0].offsetHeight;
 };
 
 /**
-가로 스크롤바가 있을 경우 스크롤바의 높이를 뺀 뷰의 안쪽 높이 픽셀을 리턴합니다.
+  가로 스크롤바가 있을 경우 스크롤바의 높이를 뺀 뷰의 안쪽 높이 픽셀을 리턴합니다.
 
-@function {number} getInnerHeight
-@returns {number} 뷰의 안쪽 높이 픽셀
+  @function {number} getInnerHeight
+  @returns {number} 뷰의 안쪽 높이 픽셀
 
-@author 조준호
-@since 1.0.0
-@version 1.1.7
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.1.7
+  */
 prototype.getInnerHeight = function() {
 	return this._mask[0].clientHeight;
 };
@@ -838,15 +835,15 @@ prototype._getWidth = function() {
 };
 
 /**
-세로 스크롤바가 있을 경우 스크롤바의 폭을 뺀 뷰의 안쪽 폭 픽셀을 리턴합니다.
+  세로 스크롤바가 있을 경우 스크롤바의 폭을 뺀 뷰의 안쪽 폭 픽셀을 리턴합니다.
 
-@function {number} getInnerWidth
-@returns {number} 뷰의 안쪽 폭 픽셀
+  @function {number} getInnerWidth
+  @returns {number} 뷰의 안쪽 폭 픽셀
 
-@author 조준호
-@since 1.0.0
-@version 1.1.7
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.1.7
+  */
 prototype.getInnerWidth = function() {
 	return this._mask[0].clientWidth;
 };
@@ -856,15 +853,15 @@ prototype._calCanvasHeight = function() {
 };
 
 /**
-모든 그리드 로우를 포함하고 있는 캔버스의 가상 높이 픽셀을 리턴합니다.
+  모든 그리드 로우를 포함하고 있는 캔버스의 가상 높이 픽셀을 리턴합니다.
 
-@function {number} getCanvasHeight
-@returns {number} 캔버스의 높이 픽셀
+  @function {number} getCanvasHeight
+  @returns {number} 캔버스의 높이 픽셀
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.getCanvasHeight = function() {
 	return this._canvas[0].clientHeight;
 };
@@ -878,16 +875,16 @@ prototype._setCanvasHeight = function(h) {
 	if (h != old) {
 		this._canvas[0].style.height = h + "px";
 		/**
-		캔바스의 높이가 변했을 경우 트리거되는 이벤트 입니다.
+		  캔바스의 높이가 변했을 경우 트리거되는 이벤트 입니다.
 
-		@event {Event} onResizeCanvasHeight
-		@param {number} new - 캔바스의 새로운 높이 픽셀
-		@param {number} old - 캔바스의 이전 높이 픽셀
+		  @event {Event} onResizeCanvasHeight
+		  @param {number} new - 캔바스의 새로운 높이 픽셀
+		  @param {number} old - 캔바스의 이전 높이 픽셀
 
-		@author 조준호
-		@since 1.1.7
-		@version 1.1.7
-		*/
+		  @author 조준호
+		  @since 1.1.7
+		  @version 1.1.7
+		  */
 		this.grid['event'].trigger("onResizeCanvasHeight", [h, old]);
 	}
 };
@@ -897,55 +894,59 @@ prototype._calCanvasWidth = function() {
 };
 
 /**
-모든 그리드 컬럼을 포함하고 있는 캔버스의 가상 폭 픽셀을 리턴합니다.
+  모든 그리드 컬럼을 포함하고 있는 캔버스의 가상 폭 픽셀을 리턴합니다.
 
-@function {number} getCanvasWidth
-@returns {number} 캔버스의 폭 픽셀
+  @function {number} getCanvasWidth
+  @returns {number} 캔버스의 폭 픽셀
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.getCanvasWidth = function() {
 	return this._canvas[0].clientWidth;
 };
 
 prototype._setCanvasWidth = function(w) {
-	w = parseInt(w);
-	if (isNaN(w) || w < 1) {
+	if (typeof w != 'number') {
+		w = parseInt(w);
+	}
+	if (!isFinite(w) || w < 1) {
 		return;
 	}
+
 	var old = this.getCanvasWidth();
 	if (w != old) {
+		this.grid.log('set canvas width. ' + old + '->' + w, Grid.V_RESIZE);//IF_DEBUG
 		this._canvas[0].style.width = w + "px";
 
 		/**
-		캔바스의 폭이 변했을 경우 트리거되는 이벤트 입니다.
+		  캔바스의 폭이 변했을 경우 트리거되는 이벤트 입니다.
 
-		@event {Event} onResizeCanvasWidth
-		@param {number} new - 캔바스의 새로운 폭 픽셀
-		@param {number} old - 캔바스의 이전 폭 픽셀
+		  @event {Event} onResizeCanvasWidth
+		  @param {number} new - 캔바스의 새로운 폭 픽셀
+		  @param {number} old - 캔바스의 이전 폭 픽셀
 
-		@author 조준호
-		@since 1.1.7
-		@version 1.1.7
-		*/
+		  @author 조준호
+		  @since 1.1.7
+		  @version 1.1.7
+		  */
 		this.grid['event'].trigger("onResizeCanvasWidth", [w, old]);
 	}
 };
 
 
 /**
-주어진 인덱스의 컬럼의 <code>left</code> 픽셀 값을 리턴합니다.
+  주어진 인덱스의 컬럼의 <code>left</code> 픽셀 값을 리턴합니다.
 
-@function {number} getColLeft
-@param {number} col - 컬럼 인덱스
-@returns {number} 주어진 인덱스의 컬럼의 <code>left</code> 픽셀 값을 리턴합니다.
+  @function {number} getColLeft
+  @param {number} col - 컬럼 인덱스
+  @returns {number} 주어진 인덱스의 컬럼의 <code>left</code> 픽셀 값을 리턴합니다.
 
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.getColLeft = function(i) {
 	return this._colLefts[i];
 };
@@ -957,16 +958,16 @@ prototype._getColLefts = function() {
 prototype._setColLefts = function(from, to) {
 	if (Util.isNull(from)) {
 		from = 0;
-   }
+	}
 
 	var colDefs = this.grid['colDefMgr'].get(), widthPlus = this._colWidthPlus();
 	if (Util.isNull(to)) {
 		to = colDefs.length;
-   }
+	}
 
 	for (; from < to; from++)  {
 		this._colLefts[from + 1] = this._colLefts[from] + colDefs[from].width + widthPlus;
-   }
+	}
 	return this._colLefts;
 };
 
@@ -977,23 +978,25 @@ prototype._onReorderCols = function() {
 
 
 /**
-주어진 컬럼 키를 가진 컬럼의 폭을 변경합니다.
+  주어진 컬럼 키를 가진 컬럼의 폭을 변경합니다.
 
-@function {} setWidthByKey
-@param {string} key - 컬럼 키
-@param {number} width - 폭 픽셀
+  @function {} setWidthByKey
+  @param {string} key - 컬럼 키
+  @param {number} width - 폭 픽셀
 
-@author 조준호
-@since 1.1.7
-@version 1.1.7
-*/
+  @author 조준호
+  @since 1.1.7
+  @version 1.1.7
+  */
 prototype.setWidthByKey = function(key, w) {
 	var colDef = this.grid['colDefMgr'].getByKey(key);
 	w = Util.bound(w, colDef['minW'], colDef['maxW']);
 
 	if (w === colDef['width']) {
 		return;
-   }
+	}
+
+	this.grid.log('set column width. key=' + key + ', w=' + w, Grid.V_RESIZE);//IF_DEBUG
 
 	var old = colDef['width'];
 	colDef['width'] = w;
@@ -1003,43 +1006,43 @@ prototype.setWidthByKey = function(key, w) {
 	this.grid._recreateDynamicCss();
 
 	/**
-	컬럼의 폭이 변했을 경우 트리거되는 이벤트 입니다.
+	  컬럼의 폭이 변했을 경우 트리거되는 이벤트 입니다.
 
-	@event {Event} onResizeCol_COLKEY
-	@param {string} key - 컬럼 키
-	@param {number} new - 컬럼의 새로운 폭 픽셀
-	@param {number} old - 컬럼의 이전 폭 픽셀
+	  @event {Event} onResizeCol_COLKEY
+	  @param {string} key - 컬럼 키
+	  @param {number} new - 컬럼의 새로운 폭 픽셀
+	  @param {number} old - 컬럼의 이전 폭 픽셀
 
-	@author 조준호
-	@since 1.1.7
-	@version 1.1.7
-	*/
+	  @author 조준호
+	  @since 1.1.7
+	  @version 1.1.7
+	  */
 
 	/**
-	컬럼의 폭이 변했을 경우 트리거되는 이벤트 입니다.
+	  컬럼의 폭이 변했을 경우 트리거되는 이벤트 입니다.
 
-	@event {Event} onResizeCol
-	@param {string} key - 컬럼 키
-	@param {number} new - 컬럼의 새로운 폭 픽셀
-	@param {number} old - 컬럼의 이전 폭 픽셀
+	  @event {Event} onResizeCol
+	  @param {string} key - 컬럼 키
+	  @param {number} new - 컬럼의 새로운 폭 픽셀
+	  @param {number} old - 컬럼의 이전 폭 픽셀
 
-	@author 조준호
-	@since 1.1.7
-	@version 1.1.7
-	*/
+	  @author 조준호
+	  @since 1.1.7
+	  @version 1.1.7
+	  */
 	this.grid['event'].trigger("onResizeCol_" + key + " onResizeCol", [key, w, old]);
 };
 
 prototype._autoColWidth = function(key) {
 	var res = this._canvasFind(".k_" + key),
-      max = Number.MIN_VALUE,
-      len = res.length,
-      i = 0;
+		max = Number.MIN_VALUE,
+		len = res.length,
+		i = 0;
 	for (; i < len; i++) {
 		if (max < res[i].scrollWidth) {
 			max = res[i].scrollWidth;
-      }
-   }
+		}
+	}
 
 	max -= this._getPadding();
 	this.setWidthByKey(key, max);
@@ -1064,19 +1067,19 @@ prototype.getScrollLeft = function() {
 
 //tested
 prototype.setScrollTop = function(t) {
-   var scrollTop = this.getScrollTop();
-   if (Util.isNotNull(t) && scrollTop != t) {
-      return (this._mask[0].scrollTop = t);
-   }
-   return scrollTop;
+	var scrollTop = this.getScrollTop();
+	if (Util.isNotNull(t) && scrollTop != t) {
+		return (this._mask[0].scrollTop = t);
+	}
+	return scrollTop;
 };
 
 prototype.setScrollLeft = function(left) {
-   var scrollLeft = this.getScrollLeft();
-   if (Util.isNotNull(left) && scrollLeft != left) {
-      return (this._mask[0].scrollLeft = left);
-   }
-   return scrollLeft;
+	var scrollLeft = this.getScrollLeft();
+	if (Util.isNotNull(left) && scrollLeft != left) {
+		return (this._mask[0].scrollLeft = left);
+	}
+	return scrollLeft;
 };
 
 prototype._hasHScrollbar = function() {
@@ -1127,10 +1130,10 @@ prototype._getFirstVisibleCol = function() {
 	for (; i < len; i++) {
 		if (colLefts[i] > scrollLeft) {
 			return i - 1;
-      }
+		}
 		if (colLefts[i] === scrollLeft) {
 			return i;
-      }
+		}
 	}
 	return len - 2;
 };
@@ -1144,7 +1147,7 @@ prototype._getFirstSafeVisibleCol = function() {
 	for (; i < len; i++) {
 		if (colLefts[i] >= scrollLeft) {
 			return i;
-      }
+		}
 	}
 	return len - 2;
 };
@@ -1158,8 +1161,8 @@ prototype._getLastVisibleCol = function() {
 	for (; i < len; i++) {
 		if (colLefts[i] >= scrollLeft) {
 			return i - 1;
-      }
-   }
+		}
+	}
 	return len - 2;
 };
 
@@ -1172,8 +1175,8 @@ prototype._getLastSafeVisibleCol = function() {
 	for (; i < len; i++) {
 		if (colLefts[i] > scrollLeft) {
 			return i - 2;
-      }
-   }
+		}
+	}
 	return len - 2;
 };
 
@@ -1184,15 +1187,15 @@ prototype._getFirstColForSafe = function(col) {
 
 	if (left <= 0) {
 		return 0;
-   }
+	}
 
 	for (; i >= 0; i--) {
 		if ((i === col && colLefts[i] <= left) || colLefts[i] === left) {
 			return i;
-      }
+		}
 		if (colLefts[i] < left) {
 			return i + 1;
-      }
+		}
 	}
 
 	return 0;
@@ -1204,7 +1207,7 @@ prototype.getScrollHForSafe = function(col) {
 
 	if (colLefts[col] <= left) {
 		return colLefts[col];
-   }
+	}
 
 	return left;
 };
@@ -1213,14 +1216,14 @@ prototype.getScrollHForSafe = function(col) {
 prototype._getRenderRange = function() {
 	if (this._options['autoHeight']) {
 		return {start:0, end:this.grid['dataMgr'].datalist.length - 1};
-   }
+	}
 
 	var tmp,
 		max = this.grid['dataMgr'].datalist.length - 1;
 
 	return {
 		start: (((tmp = (this._getFirstVisibleRow() - this._options['bufferSize'])) < 0) ? 0 : tmp),
-		end: (((tmp = (this._getLastVisibleRow() + this._options['bufferSize'])) > max) ? max : tmp)
+			end: (((tmp = (this._getLastVisibleRow() + this._options['bufferSize'])) > max) ? max : tmp)
 	};
 };
 
@@ -1231,26 +1234,26 @@ prototype._fitHeight = function() {
 prototype._resizeWidth = function(e) {
 	if (this._options['autoHeight']) {
 		this._fitHeight();
-   }
+	}
 };
 
 prototype.onAfterRefresh = function(args) {
-   if (args !== undefined && args['noRerender'] === true) {
-      return;
-   }
-   this._rerender();
+	if (args !== undefined && args['noRerender'] === true) {
+		return;
+	}
+	this._rerender();
 };
 
 prototype._rerender = function() {
 	/**
-	그리드 뷰가 다시 렌더링 되기 전에 발생하는 이벤트 입니다.
+	  그리드 뷰가 다시 렌더링 되기 전에 발생하는 이벤트 입니다.
 
-	@event {Event} onBeforeRerender
+	  @event {Event} onBeforeRerender
 
-	@author 조준호
-	@since 1.1.7
-	@version 1.1.7
-	*/
+	  @author 조준호
+	  @since 1.1.7
+	  @version 1.1.7
+	  */
 
 	// saving scroll states
 	var st = this.getScrollTop(),
@@ -1260,8 +1263,8 @@ prototype._rerender = function() {
 	this.unlockAllRows();
 	this._removeRows();
 	var rowLen = this.grid['dataMgr'].datalist.length;
-	if (this._vars._lastRowLen !== rowLen) {
-		this._vars._lastRowLen = rowLen;
+	if (this._lastRowLen !== rowLen) {
+		this._lastRowLen = rowLen;
 		this._setCanvasHeight(this._calCanvasHeight());
 	}
 	this._render();
@@ -1275,12 +1278,12 @@ prototype._rerender = function() {
 
 prototype._render = function(range) {
 	/*
-	if (this._lockExist()) {
-		this._renderShift(range);
-	}
-	else {
-	*/
-		this._removeAndRenderRows(range);
+	   if (this._lockExist()) {
+	   this._renderShift(range);
+	   }
+	   else {
+	   */
+	this._removeAndRenderRows(range);
 	//}
 };
 
@@ -1318,7 +1321,7 @@ prototype._removeRows = function(range) {
 	else {
 		var i = range.start,
 			end = range.end,
-			dataMgr = this.grid['dataMgr'];
+				dataMgr = this.grid['dataMgr'];
 
 		for (; i <= end; i++) {
 			if (!locked.hasOwnProperty(id = dataMgr.getIdByIdx(i)) && rendered.hasOwnProperty(id)) {
@@ -1352,8 +1355,8 @@ prototype._removeRowsExcept = function(range) {
 	else {
 		var start = range.start,
 			end = range.end,
-			dataMgr = this.grid['dataMgr'],
-			i;
+				dataMgr = this.grid['dataMgr'],
+				i;
 
 		for (id in rendered) {
 			if (rendered.hasOwnProperty(id)) {
@@ -1648,10 +1651,10 @@ prototype.rerenderCellByIdAndKey = function(id, key) {
 	if (cellnode !== undefined) {
 		var datam = this.grid['dataMgr'],
 			colm = this.grid['colDefMgr'],
-			datarow = datam.getById(id),
-			colDef = colm.getByKey(key),
-			row = datam.getIdxById(id),
-			col = colm.getIdxByKey(key);
+				 datarow = datam.getById(id),
+				 colDef = colm.getByKey(key),
+				 row = datam.getIdxById(id),
+				 col = colm.getIdxByKey(key);
 
 		cellnode.innerHTML = this._renderCell([], row, col, datarow, colDef).join("");
 	}
@@ -1906,6 +1909,8 @@ prototype._keydown = function(e) {
 		return;
 	}
 
+	this.grid.log('UI event:keydown on Viewport. event=' + e.type + ', keycode=' + e.which, Grid.V_KEYDOWN);//IF_DEBUG
+
 	/**
 	  ViewportManager 의 view 가 활성화된 상태에서 keydown 이벤트가 발생할 경우 트리거되는
 	  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
@@ -1936,6 +1941,7 @@ prototype._keyup = function(e) {
 	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
 		return;
 	}
+	this.grid.log('UI event:keyup on Viewport. event=' + e.type + ', keycode=' + e.which, Grid.V_KEYUP);//IF_DEBUG
 
 	/**
 	  ViewportManager 의 view 가 활성화된 상태에서 keyup 이벤트가 발생할 경우 트리거되는
@@ -1967,6 +1973,7 @@ prototype._keypress = function(e) {
 	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
 		return;
 	}
+	this.grid.log('UI event:keypress on Viewport. event=' + e.type + ', keycode=' + e.which, Grid.V_KEYPRESS);//IF_DEBUG
 
 	/**
 	  ViewportManager 의 view 가 활성화된 상태에서 keypress 이벤트가 발생할 경우 트리거되는
@@ -1995,6 +2002,7 @@ prototype._keypress = function(e) {
 };
 
 prototype._mousein = function(e) {
+
 	/**
 	  ViewportManager 에서 마우스 버튼을 누른 상태에서 ViewportManager 에 mousein 이벤트가 발생할 경우 트리거되는
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 draginCanvas_id 의 이벤트가 발생합니다.
@@ -2042,11 +2050,11 @@ prototype._mousein = function(e) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	if (this._vars.drag) {
-		this._triggerMouseEvent(e, {'event':"draginCanvas mouseinCanvas"});
+	if (this._drag) {
+		this._triggerMouseEvent(e, {'event':"draginCanvas mouseinCanvas"}, Grid.V_MOUSEIN);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseinCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseinCanvas"}, Grid.V_MOUSEIN);
 	}
 };
 
@@ -2098,11 +2106,11 @@ prototype._mouseout = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._vars.drag) {
-		this._triggerMouseEvent(e, {'event':"dragoutCanvas mouseoutCanvas"});
+	if (this._drag) {
+		this._triggerMouseEvent(e, {'event':"dragoutCanvas mouseoutCanvas"}, Grid.V_MOUSEOUT);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseoutCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseoutCanvas"}, Grid.V_MOUSEOUT);
 	}
 };
 
@@ -2154,11 +2162,11 @@ prototype._mouseenter = function(e) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	if (this._vars.drag) {
-		this._triggerMouseEvent(e, {'event':"dragenterCanvas mouseenterCanvas"});
+	if (this._drag) {
+		this._triggerMouseEvent(e, {'event':"dragenterCanvas mouseenterCanvas"}, Grid.V_MOUSEENTER);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseenterCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseenterCanvas"}, Grid.V_MOUSEENTER);
 	}
 };
 
@@ -2210,11 +2218,11 @@ prototype._mouseleave = function(e) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	if (this._vars.drag) {
-		this._triggerMouseEvent(e, {'event':"dragleaveCanvas mouseleaveCanvas"});
+	if (this._drag) {
+		this._triggerMouseEvent(e, {'event':"dragleaveCanvas mouseleaveCanvas"}, Grid.V_MOUSELEAVE);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseleaveCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseleaveCanvas"}, Grid.V_MOUSELEAVE);
 	}
 };
 
@@ -2266,11 +2274,11 @@ prototype._mousemove = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._vars.drag) {
-		this._triggerMouseEvent(e, {'event':"dragmoveCanvas mousemoveCanvas"});
+	if (this._drag) {
+		this._triggerMouseEvent(e, {'event':"dragmoveCanvas mousemoveCanvas"}, Grid.V_MOUSEMOVE);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mousemoveCanvas"});
+		this._triggerMouseEvent(e, {'event':"mousemoveCanvas"}, Grid.V_MOUSEMOVE);
 	}
 };
 
@@ -2322,11 +2330,11 @@ prototype._mouseover = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._vars.drag) {
-		this._triggerMouseEvent(e, {'event':"dragoverCanvas mouseoverCanvas"});
+	if (this._drag) {
+		this._triggerMouseEvent(e, {'event':"dragoverCanvas mouseoverCanvas"}, Grid.V_MOUSEOVER);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseoverCanvas"});
+		this._triggerMouseEvent(e, {'event':"mouseoverCanvas"}, Grid.V_MOUSEOVER);
 	}
 };
 
@@ -2354,9 +2362,9 @@ prototype._mousedown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._triggerMouseEvent(e, {'event':"mousedownCanvas"})) {
-		this._vars.drag = true;
-		this.focus(e);
+	if (this._triggerMouseEvent(e, {'event':"mousedownCanvas"}, Grid.V_MOUSEDOWN)) {
+		this._drag = true;
+		//this.focus(e);
 	}
 };
 
@@ -2384,9 +2392,9 @@ prototype._mouseup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this._vars.drag = false;
-	if (this._triggerMouseEvent(e, {'event':"mouseupCanvas"})) {
-		this.focus(e);
+	this._drag = false;
+	if (this._triggerMouseEvent(e, {'event':"mouseupCanvas"}, Grid.V_MOUSEUP)) {
+		//this.focus(e);
 	}
 };
 
@@ -2414,7 +2422,9 @@ prototype._click = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this._triggerMouseEvent(e, {'event':"clickCanvas"});
+	if (this._triggerMouseEvent(e, {'event':"clickCanvas"}, Grid.V_CLICK)) {
+		this.focus(e);
+	}
 };
 
 prototype._dblclick = function(e) {
@@ -2441,7 +2451,7 @@ prototype._dblclick = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this._triggerMouseEvent(e, {'event':"dblclickCanvas"});
+	this._triggerMouseEvent(e, {'event':"dblclickCanvas"}, Grid.V_DBLCLICK);
 };
 
 prototype._triggerMouseEvent = function(e, args) {
@@ -2454,6 +2464,8 @@ prototype._triggerMouseEvent = function(e, args) {
 	if (node === undefined) {
 		return false;
 	}
+
+	this.grid.log('UI event:' + args['event'] + ' on Viewport. event=' + e.type, arguments[2]);//IF_DEBUG
 
 	args['cell'] = JGM.create("Cell", {'grid':this.grid, 'node':node});
 
@@ -2472,13 +2484,15 @@ prototype._triggerMouseEvent = function(e, args) {
 
 prototype._scroll = function() {
 	var scrollTop = this.getScrollTop(),
-		scrollVDist = scrollTop - this._vars._lastScrollTop,
+		scrollVDist = scrollTop - this._lastScrollTop,
 		scrollLeft = this.getScrollLeft(),
-		scrollHDist = scrollLeft - this._vars._lastScrollLeft;
+		scrollHDist = scrollLeft - this._lastScrollLeft;
 
 	if (scrollVDist === 0 && scrollHDist === 0) {
 		return;
 	}
+
+	this.grid.log('Viewport scrolled... h=' + scrollHDist + ', v=' + scrollVDist, Grid.V_SCROLL);//IF_DEBUG
 
 	/**
 	  그리드 뷰가 스크롤 되었을 때 발생하는 이벤트 입니다.
@@ -2491,8 +2505,8 @@ prototype._scroll = function() {
 	  */
 	this.grid['event'].trigger("onScrollViewport");
 
-	if (scrollHDist !== 0) {
-		this._vars._lastScrollLeft = scrollLeft;
+	if (scrollHDist) {
+		this._lastScrollLeft = scrollLeft;
 
 		/**
 		  그리드 뷰가 가로 스크롤 되었을 때 발생하는 이벤트 입니다.
@@ -2512,8 +2526,7 @@ prototype._scroll = function() {
 		return;
 	}
 
-	this._vars._lastScrollTop = scrollTop;
-	//if (numDiff >= this._options['renderThreshold']) {
+	this._lastScrollTop = scrollTop;
 	this._render();
 	/*
 	   }
@@ -2532,7 +2545,7 @@ prototype._scroll = function() {
 	  @version 1.1.7
 	  */
 	this.grid['event'].trigger("onScrollViewportV");
-};
+	};
 
 prototype.focus = function(e) {
 	/**
@@ -2552,15 +2565,17 @@ prototype.focus = function(e) {
 
 	//var scr = Util.getBodyScroll();
 
-	if (this._mask[0] !== document.activeElement) {
-		if (Util.isFunction(this._mask[0].setActive)) {
+	var maskEl = this._mask[0];
+	if (document.activeElement !== maskEl) {
+		this.grid.log('focusing canvas...', Grid.V_FOCUS);//IF_DEBUG
+		if (Util.isFunction(maskEl.setActive)) {
 			try {
-				this._mask[0].setActive();
+				maskEl.setActive();
 			}
 			catch (exp) {}
 		}
-		this._mask[0].focus();
-		if (document.activeElement !== this._mask[0]) {
+		maskEl.focus();
+		if (document.activeElement !== maskEl) {
 			this._mask.focus();
 		}
 	}
