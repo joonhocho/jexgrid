@@ -27,6 +27,7 @@ if (!$version) {
 $version = trim($version);
 
 $outputFileKr = "jgrid-$version-min.js";
+$fulloutpath = "$distPath/$outputFileKr";
 $outputFileUTF8 = "jgrid-$version-min-utf8.js";
 
 echo "\nJexGrid v$version build...\n\n";
@@ -35,7 +36,7 @@ $license = file_get_contents($licenseFile);
 if (!$license) {
 	die("Could not open the version file: $licenseFile\n");
 }
-$license = trim($license);
+$license = "/*\n" . trim($license) . "\n*/\n";
 //echo "\n$license\n";
 
 system('php removedebugcode');
@@ -116,7 +117,7 @@ array_walk($libfilenames, function($n) { echo "--externs $n\n"; });
 array_walk($filenames, function($n) { echo "--js $n\n"; });
 $libFiles = implode(' ', array_map(function($n) { return "--externs $n"; }, $libfilenames));
 $sourceFiles = implode(' ', array_map(function($n) { return "--js $n"; }, $filenames));
-$outfile = "--js_output_file $distPath/$outputFileKr";
+$outfile = "--js_output_file $fulloutpath";
 echo "$outfile\n";
 $compilerFlags .= " $libFiles $sourceFiles $outfile";
 echo "\n\n";
@@ -129,4 +130,6 @@ echo $compilerCommand."\n\n\n";
 
 // compile js sources
 system($compilerCommand);
+
+file_put_contents($fulloutpath, $license . "\n" . file_get_contents($fulloutpath));
 echo "\n\n[ finished compiling... ]\n\n";
