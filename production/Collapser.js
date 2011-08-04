@@ -394,7 +394,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onCollapserTreeChange");
+		this.grid['event'].trigger("onCollapserTreeChange", false, true);
 	};
 	prototype._onAddDatalist = function(datalist) {
 		var i = 0,
@@ -434,7 +434,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 				}});
 			}
 		}});
-		this.grid['event'].trigger("onCollapserTreeChange");
+		this.grid['event'].trigger("onCollapserTreeChange", false, true);
 	};
 	prototype._onUpdateDatarow = function(datarow, change, before) {
 		var tree = this._tree,
@@ -444,14 +444,14 @@ var JGM = goog.getObjectByName('jx.grid'),
 		if (change.hasOwnProperty(nodeKey)) {
 			node = tree.getNodeByNodeId(before[nodeKey]);
 			tree.changeNodeId(node, before[nodeKey], change[nodeKey]);
-			this.grid['event'].trigger("onCollapserTreeChange");
+			this.grid['event'].trigger("onCollapserTreeChange", false, true);
 		}
 		if (change.hasOwnProperty(parentKey)) {
 			if (Util.isNull(node)) {
 				node = tree.getNode(datarow);
 			}
 			tree.changeParentId(node, before[parentKey], change[parentKey]);
-			this.grid['event'].trigger("onCollapserTreeChange");
+			this.grid['event'].trigger("onCollapserTreeChange", false, true);
 		}
 	};
 	prototype._onUpdateDatalist = function(datalist, changes, befores) {
@@ -503,11 +503,11 @@ var JGM = goog.getObjectByName('jx.grid'),
 				tree.changeParentId(temp.node, temp.before, temp.newId);
 			}
 		}
-		this.grid['event'].trigger("onCollapserTreeChange");
+		this.grid['event'].trigger("onCollapserTreeChange", false, true);
 	};
 	prototype._onRemoveDatarow = function(datarow) {
 		this._tree.destroyNodeByData(datarow);
-		this.grid['event'].trigger("onCollapserTreeChange");
+		this.grid['event'].trigger("onCollapserTreeChange", false, true);
 	};
 	prototype._onRemoveDatalist = function(datalist) {
 		var i = 0,
@@ -516,7 +516,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		for (; i < len; i++) {
 			tree.destroyNodeByData(datalist[i]);
 		}
-		this.grid['event'].trigger("onCollapserTreeChange");
+		this.grid['event'].trigger("onCollapserTreeChange", false, true);
 	};
 	prototype._onAfterFilter = function(filteredList, failedList) {
 		var tree = this._tree;
@@ -547,11 +547,11 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}
 			tree.reattach(filteredList);
 			tree.sortList(filteredList);
-			this.grid['event'].trigger("onCollapserTreeChange");
+			this.grid['event'].trigger("onCollapserTreeChange", false, true);
 		}
 		else {
 			tree.reattach(filteredList);
-			this.grid['event'].trigger("onCollapserTreeChange");
+			this.grid['event'].trigger("onCollapserTreeChange", false, true);
 			this._filter(filteredList, failedList);
 		}
 	};
@@ -644,7 +644,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}
 			root._collapsed = false;
 		}
-		this.grid['event'].trigger("onCollapserTreeChange");
+		this.grid['event'].trigger("onCollapserTreeChange", false, true);
 	};
 	prototype._onRenderHeader = function(headerHtml) {
 		headerHtml.push("<div id='" + this.mid + "h' onmousedown='JGM.m.Collapser." + this.mid + ".toggleMaster();' class='" + this._options['classCollapser'] + " " + this._options['classMasterCollapser']);

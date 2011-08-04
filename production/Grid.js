@@ -34,6 +34,7 @@ goog.provide('jx.grid.Grid');
 		Util = goog.getObjectByName('jx.util'),
 		echo = goog.getObjectByName('echo'),
 		BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+		TimeWatch = goog.getObjectByName('TimeWatch'),
 		VERBOSE = 2,
 		V_KEYDOWN = 3,
 		V_KEYPRESS = 3,
@@ -352,6 +353,7 @@ prototype._init = function(args) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */	
+	em.trigger("onBeforeRenderModules", false, true);
 	/**
 	  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 위해서 onRenderModules
 	  이벤트를 트리거합니다. jx.grid.ColumnHeader 와 같이 랜더링이 필요한 서브 모듈들은 이
@@ -361,6 +363,7 @@ prototype._init = function(args) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
+	em.trigger("onRenderModules", false, true);
 	/**
 	  Grid 모듈 초기화 중 서브 모듈들을 랜더링한 후에 onAfterRenderModules
 	  이벤트를 트리거합니다. 서브 모듈들은 이 이벤트를 통해서 랜더링 후 설정을
@@ -370,7 +373,7 @@ prototype._init = function(args) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
+	em.trigger("onAfterRenderModules", false, true);
 	this['msg'] =  $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(ctnr).hide();
 	ctnr = ctnr[0];
 	this._lastW = ctnr.clientWidth;
@@ -419,7 +422,7 @@ prototype.destroy = function() {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this['event'].trigger("onDestroy");
+		this['event'].trigger("onDestroy", false, true);
 		JGM._destroy(this, {
 			name: "Grid",
 			module: "event",
@@ -530,7 +533,8 @@ prototype._recreateDynamicCss = function() {
 	Util.setStyle(this._dynStyle, this['event'].trigger("onCreateDynamicCss").join(""));
 };
 prototype._keydown = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	/**
 	  그리드에 keydown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -541,7 +545,7 @@ prototype._keydown = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeKeydown", [e])) {
+	if (em.triggerInvalid("onBeforeKeydown", args)) {
 		return;
 	}
 	/**
@@ -564,10 +568,11 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("keydown_" + e.which + " keydown", [e]);
+	em.trigger("keydown_" + e.which + " keydown", args, true);
 };
 prototype._keyup = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	/**
 	  그리드에 keyup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -578,7 +583,7 @@ prototype._keyup = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeKeyup", [e])) {
+	if (em.triggerInvalid("onBeforeKeyup", args)) {
 		return;
 	}
 	/**
@@ -601,10 +606,11 @@ prototype._keyup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("keyup_" + e.which + " keyup", [e]);
+	em.trigger("keyup_" + e.which + " keyup", args, true);
 };
 prototype._keypress = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	/**
 	  그리드에 keypress 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -615,7 +621,7 @@ prototype._keypress = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeKeypress", [e])) {
+	if (em.triggerInvalid("onBeforeKeypress", args)) {
 		return;
 	}
 	/**
@@ -638,10 +644,11 @@ prototype._keypress = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("keypress_" + e.which + " keypress", [e]);
+	em.trigger("keypress_" + e.which + " keypress", args, true);
 };
 prototype._mousein = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	/**
 	  그리드에 mousein 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -652,7 +659,7 @@ prototype._mousein = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMousein", [e])) {
+	if (em.triggerInvalid("onBeforeMousein", args)) {
 		return;
 	}
 	/**
@@ -674,14 +681,13 @@ prototype._mousein = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragin mousein", [e]);
+		em.trigger("dragin", args, true);
 	}
-	else {
-		em.trigger("mousein", [e]);
-	}
+	em.trigger("mousein", args, true);
 };
 prototype._mouseout = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 		
 	/**
 	  그리드에 mouseout 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -693,7 +699,7 @@ prototype._mouseout = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseout", [e])) {
+	if (em.triggerInvalid("onBeforeMouseout", args)) {
 		return;
 	}
 	/**
@@ -715,14 +721,13 @@ prototype._mouseout = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragout mouseout", [e]);
+		em.trigger("dragout", args, true);
 	}
-	else {
-		em.trigger("mouseout", [e]);
-	}
+	em.trigger("mouseout", args, true);
 };
 prototype._mouseenter = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	/**
 	  그리드에 mouseenter 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -733,7 +738,7 @@ prototype._mouseenter = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseenter", [e])) {
+	if (em.triggerInvalid("onBeforeMouseenter", args)) {
 		return;
 	}
 	/**
@@ -755,14 +760,13 @@ prototype._mouseenter = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragenter mouseenter", [e]);
+		em.trigger("dragenter", args, true);
 	}
-	else {
-		em.trigger("mouseenter", [e]);
-	}
+	em.trigger("mouseenter", args, true);
 };
 prototype._mouseleave = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	/**
 	  그리드에 mouseleave 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -773,7 +777,7 @@ prototype._mouseleave = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseleave", [e])) {
+	if (em.triggerInvalid("onBeforeMouseleave", args)) {
 		return;
 	}
 	/**
@@ -795,14 +799,13 @@ prototype._mouseleave = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragleave mouseleave", [e]);
+		em.trigger("dragleave", args, true);
 	}
-	else {
-		em.trigger("mouseleave", [e]);
-	}
+	em.trigger("mouseleave", args, true);
 };
 prototype._mousemove = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	/**
 	  그리드에 mousemove 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -813,7 +816,7 @@ prototype._mousemove = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMousemove", [e])) {
+	if (em.triggerInvalid("onBeforeMousemove", args)) {
 		return;
 	}
 	/**
@@ -835,14 +838,13 @@ prototype._mousemove = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragmove mousemove", [e]);
+		em.trigger("dragmove", args, true);
 	}
-	else {
-		em.trigger("mousemove", [e]);
-	}
+	em.trigger("mousemove", args, true);
 };
 prototype._mouseover = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	/**
 	  그리드에 mouseover 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -853,7 +855,7 @@ prototype._mouseover = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseover", [e])) {
+	if (em.triggerInvalid("onBeforeMouseover", args)) {
 		return;
 	}
 	/**
@@ -875,14 +877,13 @@ prototype._mouseover = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragover mouseover", [e]);
+		em.trigger("dragover", args, true);
 	}
-	else {
-		em.trigger("mouseover", [e]);
-	}
+	em.trigger("mouseover", args, true);
 };
 prototype._mousedown = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this._drag = true;
 	/**
 	  그리드에 mousedown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -894,7 +895,7 @@ prototype._mousedown = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMousedown", [e])) {
+	if (em.triggerInvalid("onBeforeMousedown", args)) {
 		return;
 	}
 	/**
@@ -906,12 +907,13 @@ prototype._mousedown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("mousedown", [e]);
+	em.trigger("mousedown", args, true);
 };
 prototype._mouseup = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this._drag = false;	
-	em.trigger("unsetDrag");
+	em.trigger("unsetDrag", false, true);
 	if (!this.containsEvent(e)) {
 		return;
 	}
@@ -925,7 +927,7 @@ prototype._mouseup = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseup", [e])) {
+	if (em.triggerInvalid("onBeforeMouseup", args)) {
 		return;
 	}
 	/**
@@ -937,10 +939,11 @@ prototype._mouseup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("mouseup", [e]);
+	em.trigger("mouseup", args, true);
 };
 prototype._click = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	
 	/**
 	  그리드에 click 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -952,7 +955,7 @@ prototype._click = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeClick", [e])) {
+	if (em.triggerInvalid("onBeforeClick", args)) {
 		return;
 	}
 	/**
@@ -964,10 +967,11 @@ prototype._click = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("click", [e]);
+	em.trigger("click", args, true);
 };
 prototype._dblclick = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	/**
 	  그리드에 dblclick 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -978,7 +982,7 @@ prototype._dblclick = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeDblclick", [e])) {
+	if (em.triggerInvalid("onBeforeDblclick", args)) {
 		return;
 	}
 	/**
@@ -990,7 +994,7 @@ prototype._dblclick = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("dblclick", [e]);
+	em.trigger("dblclick", args, true);
 };
 prototype._resize = function(e) {
 	var em = this['event'];
@@ -1010,7 +1014,7 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-		em.trigger("resizeWidth", [width, cw]);
+		em.trigger("resizeWidth", [width, cw], true);
 		this._lastW = width;
 		change = true;
 	}
@@ -1024,7 +1028,7 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-		em.trigger("resizeHeight", [height, ch]);
+		em.trigger("resizeHeight", [height, ch], true);
 		this._lastH = height;
 		change = true;
 	}
@@ -1037,7 +1041,7 @@ prototype._resize = function(e) {
 	  @version 1.1.5
 	  */
 	if (change) {
-		em.trigger("resize", [e]);
+		em.trigger("resize", [e], true);
 	}
 };
 /**
@@ -1063,9 +1067,9 @@ prototype.width = function(w) {
 		return cw;
 	}
 	ctnr.style.width = w + "px";
-	em.trigger("resizeWidth", [w, this._lastW]);
+	em.trigger("resizeWidth", [w, this._lastW], true);
 	this._lastW = w;
-	em.trigger("resize");
+	em.trigger("resize", false, true);
 	return w;
 };
 /*
@@ -1090,9 +1094,9 @@ prototype.height = function(h) {
 		return ch;
 	}
 	ctnr.style.height = h + "px";
-	em.trigger("resizeHeight", [h, this._lastH]);
+	em.trigger("resizeHeight", [h, this._lastH], true);
 	this._lastH = h;
-	em.trigger("resize");
+	em.trigger("resize", false, true);
 	return h;
 };
 prototype.getCellByIdAndKey = function(id, key) {
@@ -1117,7 +1121,7 @@ prototype.error = function(code) {
 	e = new Error(str);
 	e.code = code;
 	this.printError(e.message);
-	this['event'].trigger("onError", [e]);
+	this['event'].trigger("onError", [e], true);
 	return e;
 };
 prototype.printError = function(str) {

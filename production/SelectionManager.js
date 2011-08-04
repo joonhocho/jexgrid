@@ -267,7 +267,7 @@ prototype._mousedownCanvas = function(e, cell) {
 	@since 1.1.7
 	@version 1.1.7
 	*/
-	this.grid['event'].trigger("onBeforeSelect", [e, cell]);
+	this.grid['event'].trigger("onBeforeSelect", [e, cell], true);
 	if (this._options['multiSelectEnabled'] === false) {
 		this.selectCell(cell);
    }
@@ -441,7 +441,7 @@ prototype._keydownCanvas = function(e) {
 		@since 1.3.0
 		@version 1.3.0
 		*/
-		this.grid['event'].trigger("onAfterNavigate", [nextCell]);
+		this.grid['event'].trigger("onAfterNavigate", [nextCell], true);
 	}
 	else {
 		if (this._cols.length === 1) {
@@ -472,7 +472,7 @@ prototype._keydownCanvas = function(e) {
                  @since 1.1.7
                  @version 1.1.7
                  */
-               this.grid['event'].trigger("keydownColSel_" + key + "_" + e.which + " keydownColSel_" + key, [e, cols[col], this._last]);
+               this.grid['event'].trigger("keydownColSel_" + key + "_" + e.which + " keydownColSel_" + key, [e, cols[col], this._last], true);
             }
          }
 		}
@@ -505,7 +505,7 @@ prototype._keydownCanvas = function(e) {
             rows = this._rows;
 			for (row in rows) {
             if (rows.hasOwnProperty(row) && row !== "length") {
-               this.grid['event'].trigger("keydownRowSel_" + e.which + " keydownRowSel", [e, rows[row], this._last]);
+               this.grid['event'].trigger("keydownRowSel_" + e.which + " keydownRowSel", [e, rows[row], this._last], true);
             }
          }
       }
@@ -534,7 +534,7 @@ prototype._keydownCanvas = function(e) {
 		@since 1.1.7
 		@version 1.2.3
 		*/
-		this.grid['event'].trigger("keydownSel_" + e.which + " keydownSel", [e, this._rows, this._cols]);
+		this.grid['event'].trigger("keydownSel_" + e.which + " keydownSel", [e, this._rows, this._cols], true);
 	}
 };
 /**
@@ -651,7 +651,7 @@ prototype.selectCell = function(cell, noScroll) {
 	@since 1.3.0
 	@version 1.3.0
 	*/
-	this.grid['event'].trigger("onBeforeSelectCell", [cell]);
+	this.grid['event'].trigger("onBeforeSelectCell", [cell], true);
 	if (this._options['multiSelectEnabled'] && cell.getKey() === this._options['rowSelKey']) {
 		this.selectRow(cell);
    }
@@ -673,7 +673,7 @@ prototype.selectCell = function(cell, noScroll) {
 	@since 1.3.0
 	@version 1.3.0
 	*/
-	this.grid['event'].trigger("onAfterSelectCell", [cell]);
+	this.grid['event'].trigger("onAfterSelectCell", [cell], true);
 };
 prototype.onBeforeDataChange = function() {
 };

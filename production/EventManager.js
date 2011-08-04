@@ -246,65 +246,72 @@ prototype.unregister = function(event, fn) {
   @since 1.0.0
   @version 1.1.7
   */
-prototype.trigger = function(events, args, filter) {
-	var	hans,
-		hlen,
-		map = this._map,
-		rarr = [],
-		arr = Util.split(events),
-		len = arr.length,
-		noarg = Util.isEmptyArray(args),
-		filon = Util.isFunction(filter),
-		e,
-		i,
-		j = 0;
-	for (; j < len; j++) {
-		e = arr[j];
-		if (!map.hasOwnProperty(e)) {
-			continue;
-		}
-		hans = map[e];		
-		hlen = hans.length;
-		if (hlen === 0) {
-			continue;
-		}
-		i = 0;
-		if (filon) {
-			var res;
-			if (noarg) {
-				for (; i < hlen; i++) {
-					res = hans[i].fn.call(hans[i].target);
-					if (filter(res)) {
-						rarr.push(res);
+prototype.trigger = function(e, args, noRes) {
+	// firing single event
+	var map = this._map;
+	if (map.hasOwnProperty(e)) {
+		var hans = map[e],
+			hlen = hans.length;
+		if (hlen) {
+			var i = 0,
+				handler;
+			if (noRes) {
+				if (args && args.length) {
+					for (; i < hlen; i++) {
+						handler = hans[i];
+						handler.fn.apply(handler.target, args);
+					}
+				}
+				else {
+					for (; i < hlen; i++) {
+						handler = hans[i];
+						handler.fn.call(handler.target);
 					}
 				}
 			}
 			else {
-				for (; i < hlen; i++) {
-					res = hans[i].fn.apply(hans[i].target, args);
-					if (filter(res)) {
-						rarr.push(res);
+				var rarr = arguments[3] || [];
+				if (args && args.length) {
+					for (; i < hlen; i++) {
+						handler = hans[i];
+						rarr.push(handler.fn.apply(handler.target, args));
 					}
 				}
+				else {
+					for (; i < hlen; i++) {
+						handler = hans[i];
+						rarr.push(handler.fn.call(handler.target));
+					}
+				}
+				return rarr;
 			}
 		}
 		else {
-			if (noarg) {
-				for (; i < hlen; i++) {
-					rarr.push(hans[i].fn.call(hans[i].target));
-				}
-			}
-			else {
-				for (; i < hlen; i++) {
-					rarr.push(hans[i].fn.apply(hans[i].target, args));
-				}
-			}
 		}
 	}
-	return rarr;
+	else {
+	}
 };
-prototype.triggerInvalid = function(events, args) {
-	return this.trigger(events, args, function(a) { return a === false; }).length !== 0;
+prototype.triggerMultiple = function(e, args, noRes) {
+	var arr = e.split(','),
+		i = 0,
+		len = arr.length;
+	if (noRes) {
+		var res = [];
+		for (; i < len; i++) {
+			this.trigger(arr[i], args, false, res);
+		}
+		return res;
+	}
+	else {
+		for (; i < len; i++) {
+			this.trigger(arr[i], args, true);
+		}
+	}
+};
+prototype.triggerInvalid = function(e, args) {
+	var res = this.trigger(e, args);
+	return res && res.some(function(a) { return a === false; });
 };
 /**
   이벤트 이름의 이벤트 큐에서 함수를 맨 마지막으로 보냅니다. 이벤트 트리거 시 가장
