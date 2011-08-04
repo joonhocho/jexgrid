@@ -1,3 +1,4 @@
+goog.require('jx.util');
 goog.provide('TimeWatch');
 /*!
  * AUTHOR

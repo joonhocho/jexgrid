@@ -17,7 +17,7 @@ goog.addDependency("Cell.js", ['jx.grid.Cell'], ['jx.util', 'jx.lang.Disposable'
 goog.addDependency("PrintManager.js", ['jx.grid.PrintManager'], ['jx.util', 'jx.util$', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid']);
 goog.addDependency("ColumnHeader.js", ['jx.grid.ColumnHeader'], ['engine_extension', 'jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid', 'jx.grid.ColumnManager']);
 goog.addDependency("CheckManager.js", ['jx.grid.CheckManager'], ['engine_extension', 'jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid', 'jx.grid.ColumnManager', 'jx.data.DataManager']);
-goog.addDependency("TimeWatch.js", ['TimeWatch'], []);
+goog.addDependency("TimeWatch.js", ['TimeWatch'], ['jx.util']);
 goog.addDependency("renderer.js", ['jx.grid.renderer'], ['jx.util', 'jx.util$', 'jx.grid']);
 goog.addDependency("Column.js", ['jx.grid.Column'], ['jx.grid', 'jx.events.EventDispatcher']);
 goog.addDependency("array_extension.js", ['array_extension'], []);

@@ -1,5 +1,7 @@
 console && console.log && console.log('reading javascript source "TimeWatch.js"...');//IF_DEBUG
 
+goog.require('jx.util');
+
 goog.provide('TimeWatch');
 
 /*!

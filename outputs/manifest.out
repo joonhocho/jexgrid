@@ -1,10 +1,10 @@
 /var/www/jexgrid/production/deps.js
-/var/www/jexgrid/production/TimeWatch.js
 /var/www/jexgrid/production/array_extension.js
 /var/www/jexgrid/production/engine_extension.js
 /var/www/jexgrid/production/base.js
 /var/www/jexgrid/production/util.js
 /var/www/jexgrid/production/Tracer.js
+/var/www/jexgrid/production/TimeWatch.js
 /var/www/jexgrid/production/utiljquery.js
 /var/www/jexgrid/production/bootstrap.js
 /var/www/jexgrid/production/renderer.js
