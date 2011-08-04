@@ -5650,7 +5650,7 @@ jx.grid.ViewportManager = {};
     if(d) {
       var f = new a({grid:this.grid, node:d}), d = f.getKey(), f = [c, f], h = this._evtmgr;
       if(b.indexOf(",") > -1) {
-        for(var g = event.split(","), k = 0, n = g.length, m;k < n;k++) {
+        for(var g = b.split(","), k = 0, n = g.length, m;k < n;k++) {
           m = g[k], h.trigger(m + "_" + d, f, !0), h.trigger(m, f, !0)
         }
       }else {

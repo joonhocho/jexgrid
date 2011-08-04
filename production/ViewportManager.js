@@ -2105,7 +2105,7 @@ prototype._triggerMouseEvent = function(e, events) {
 			args = [e, cell],
 			evtmgr = this._evtmgr;
 		if (events.indexOf(',') > -1) {
-			var arr = event.split(','),
+			var arr = events.split(','),
 				i = 0,
 				len = arr.length,
 				evt;
