@@ -1834,30 +1834,30 @@ jx.lang.Disposable = {};
     return!0
   }
   function d(e, a) {
-    console.log("dispose" + e + a);
-    console.log(this);
-    var b, i;
-    if(e) {
-      for(b in this) {
-        if(this.hasOwnProperty(b)) {
-          if((i = this[b]) && typeof i == "object") {
-            if(i.dispose) {
-              i.dispose(e - 1, a)
-            }else {
-              if(a) {
-                if(c(i)) {
-                  i.length = 0
+    if(this != window) {
+      var b, i;
+      if(e) {
+        for(b in this) {
+          if(this.hasOwnProperty(b)) {
+            if((i = this[b]) && typeof i == "object") {
+              if(i.dispose) {
+                i.dispose(e - 1, a)
+              }else {
+                if(a) {
+                  if(c(i)) {
+                    i.length = 0
+                  }
+                  d.call(i, e - 1, a)
                 }
-                d.call(i, e - 1, a)
               }
             }
+            delete this[b]
           }
-          delete this[b]
         }
-      }
-    }else {
-      for(b in this) {
-        this.hasOwnProperty(b) && delete this[b]
+      }else {
+        for(b in this) {
+          this.hasOwnProperty(b) && delete this[b]
+        }
       }
     }
   }
@@ -6304,7 +6304,7 @@ jx.grid.ColumnHeader = {};
     this._head.sortable && this._head.sortable("destroy");
     this._destroyResizeHandles();
     g._destroy(this, {name:"ColumnHeader", path:"header", $:"_resizeGuide _mask _head", property:"_ctnr _resizeMap", map:"_map _options"});
-    Object.dispose(this)
+    echo(this)
   };
   c._destroyResizeHandles = function() {
     var a = this._resizeMap, c;
