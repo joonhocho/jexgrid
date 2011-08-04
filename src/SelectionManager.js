@@ -272,7 +272,7 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "SelectionManager",
 		path: "selMgr",
-		map: "rows _cols _range _last _consts _options"
+		map: "_rows _cols _range _last _consts _options"
 	});
 };
 

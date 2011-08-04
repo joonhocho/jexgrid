@@ -430,9 +430,9 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "Footer",
 		path: "footer",
-		"$": "foot",
-		property: "ctnr",
-		map: "sumMap _options"
+		"$": "_foot",
+		property: "_ctnr",
+		map: "_sumMap _options"
 	});
 };
 

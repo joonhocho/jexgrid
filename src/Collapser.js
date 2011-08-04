@@ -422,10 +422,10 @@ var JGM = goog.getObjectByName('jx.grid'),
 		JGM._destroy(this, {
 			name: "Collapser",
 			path: "collapser",
-			module: "tree",
-			"$": "master",
+			module: "_tree",
+			"$": "_master",
 			property: "checkMgr",
-			map: "options"
+			map: "_options"
 		});
 	};
 

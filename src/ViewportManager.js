@@ -473,9 +473,9 @@ prototype._onDestroy = function() {
 	JGM._destroy(this, {
 		name: "ViewportManager",
 		path: "view",
-		"$": "canvas _mask",
-		property: "ctnr",
-		map: "vars _lockedRows _renderedRows _options"
+		"$": "_canvas _mask",
+		property: "_ctnr",
+		map: "_vars _lockedRows _renderedRows _options"
 	});
 };
 

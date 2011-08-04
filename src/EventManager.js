@@ -103,7 +103,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	 JGM._destroy(this, {
 name: "EventManager",
 path: "event",
-map: "map"
+map: "_map"
 });
 };
 

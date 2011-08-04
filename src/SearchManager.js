@@ -367,10 +367,10 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "SearchManager",
 		path: "search",
-		"$": "masterInput _advButton _mask _search _tag _adv",
-		property: "ctnr _hasFilter",
-		array: "global",
-		map: "globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"
+		"$": "_masterInput _advButton _mask _search _tag _adv",
+		property: "_ctnr _hasFilter",
+		array: "_global",
+		map: "_globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"
 	});
 };
 

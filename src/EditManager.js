@@ -354,7 +354,7 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "EditManager",
 		path: "editMgr",
-		map: "beginEditKeys _options"
+		map: "_beginEditKeys _options"
 	});
 };
 

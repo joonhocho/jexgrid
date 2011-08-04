@@ -504,12 +504,15 @@ prototype.destroy = function() {
 	this.log('destroying Grid...', V_INIT);//IF_DEBUG
 
 	try {
+		this.log('event:beforeDispose.', V_INIT);//IF_DEBUG
 		this.dispatchEvent({'type':'beforeDispose'});
 
 		if (Util.isEmptyObj(JGM.m.Grid)) {
+			this.log('unbinding global event handlers.', V_INIT);//IF_DEBUG
 			JGM._unbindGlobalEvents();
 		}
 
+		this.log('event:onDestroy.', V_INIT);//IF_DEBUG
 		/**
 		  Grid 인스턴스를 제거할 경우 트리거되는 이벤트입니다. 이 이벤트를 통해서
 		  모든 서브 모듈들을 제거합니다.<br>
@@ -522,14 +525,16 @@ prototype.destroy = function() {
 		  */
 		this['event'].trigger("onDestroy");
 
+		this.log('destroying grid vars...', V_INIT);//IF_DEBUG
 		JGM._destroy(this, {
 			name: "Grid",
 			module: "event",
-			"$": "ctnr",
-			map: "vars _options",
-			style: "style _dynStyle"
+			"$": "_ctnr",
+			map: "_options",
+			style: "_style _dynStyle"
 		});
 
+		this.log('disposing grid...', V_INIT);//IF_DEBUG
 		this.dispose();
 	}
 	catch (e) {

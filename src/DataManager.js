@@ -300,7 +300,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			name: "DataManager",
 			path: "dataMgr",
 			property: "all _idMode _increment idKey _sorter",
-			map: "consts _idToIdx _idToData _options",
+			map: "_consts _idToIdx _idToData _options",
 			array: "datalist failed _history _redoHistory _filters"
 		});
 	};

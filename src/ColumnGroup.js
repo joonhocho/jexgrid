@@ -262,7 +262,7 @@ prototype._destroy = function() {
 		name: "ColumnGroup",
 		path: "colGroup",
 		property: "collapser",
-		map: "parentMap _options"
+		map: "_parentMap _options"
 	});
 };
 

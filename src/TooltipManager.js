@@ -238,9 +238,9 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "TooltipManager",
 		path: "tooltip",
-		"$": "tooltip",
-		property: "ctnr",
-		map: "options"
+		"$": "_tooltip",
+		property: "_ctnr",
+		map: "_options"
 	});
 };
 
