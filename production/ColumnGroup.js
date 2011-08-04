@@ -1,4 +1,3 @@
-console && console.log && console.log('reading javascript source "ColumnGroup.js"...');//IF_DEBUG
 goog.require('engine_extension');
 goog.require('jx.util');
 goog.require('jx.grid');

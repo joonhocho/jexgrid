@@ -1,4 +1,3 @@
-console && console.log && console.log('reading javascript source "array_extention.js"...');//IF_DEBUG
 goog.provide('array_extension');
 /*!
  * AUTHOR

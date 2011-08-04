@@ -534,7 +534,7 @@ prototype.destroy = function() {
 			map: "_options",
 			style: "_style _dynStyle"
 		});
-		Object.dispose(this);
+		this.dispose();
 	}
 	catch (e) {
 		return e;

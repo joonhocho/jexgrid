@@ -226,10 +226,6 @@ prototype._defaultOptions = function() {
 	};
 }
 
-prototype._beforeDispose = function() {
-	Object.dispose(this);
-}
-
 prototype._beforeCreateCss = function(event) {
 	var w,
 		h,

@@ -603,7 +603,7 @@ prototype._beforeDispose = function() {
 		property: "_ctnr _resizeMap",
 		map: "_map _options"
 	});
-	echo(this);
+	this.dispose();
 };
 
 prototype._destroyResizeHandles = function() {

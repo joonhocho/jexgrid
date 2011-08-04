@@ -1,4 +1,3 @@
-console && console.log && console.log('reading javascript source "Grid.js"...');//IF_DEBUG
 goog.require('jx.util');
 goog.require('jx.util$');
 goog.require('jx.lang.Disposable');
@@ -99,7 +98,6 @@ Grid.V_INIT = V_INIT;
   */
 function Grid(args) {
 	this.mid = args.mid;
-	this.log('creating new Grid instance...', V_INIT);//IF_DEBUG
 	goog.base(this, args);
 }
 /**
@@ -380,7 +378,6 @@ prototype._init = function(args) {
 }
 prototype._bindEvents = function() {
 	JGM._bindGlobalEvents();
-	this.log('binding Grid events...', V_INIT);//IF_DEBUG
 	var thisIns = this;
 	this._ctnr.bind({
 		'keydown':function(e) { thisIns._keydown(e); },
@@ -407,15 +404,11 @@ prototype._bindEvents = function() {
   @version 1.0.0
   */
 prototype.destroy = function() {	
-	this.log('destroying Grid...', V_INIT);//IF_DEBUG
 	try {
-		this.log('event:beforeDispose.', V_INIT);//IF_DEBUG
 		this.dispatchEvent({'type':'beforeDispose'});
 		if (Util.isEmptyObj(JGM.m.Grid)) {
-			this.log('unbinding global event handlers.', V_INIT);//IF_DEBUG
 			JGM._unbindGlobalEvents();
 		}
-		this.log('event:onDestroy.', V_INIT);//IF_DEBUG
 		/**
 		  Grid 인스턴스를 제거할 경우 트리거되는 이벤트입니다. 이 이벤트를 통해서
 		  모든 서브 모듈들을 제거합니다.<br>
@@ -426,7 +419,6 @@ prototype.destroy = function() {
 		  @version 1.0.0
 		  */
 		this['event'].trigger("onDestroy");
-		this.log('destroying grid vars...', V_INIT);//IF_DEBUG
 		JGM._destroy(this, {
 			name: "Grid",
 			module: "event",
@@ -434,7 +426,7 @@ prototype.destroy = function() {
 			map: "_options",
 			style: "_style _dynStyle"
 		});
-		Object.dispose(this);
+		this.dispose();
 	}
 	catch (e) {
 		return e;
@@ -499,12 +491,10 @@ prototype._registerLink = function(name, fn, thisp, lastPath) {
 };
 //tested
 prototype._createCss = function() {
-	this.log('creating CSS...', V_INIT);//IF_DEBUG
 	var event = {'type':'beforeCreateCss', css:[]},
 		opt = this._options,
 		em = this['event'];
 	this.dispatchEvent(event);
-	this.log('creating CSS for Grid...', V_INIT);//IF_DEBUG
 	/**
 	  현재 그리드에 적용할 CSS stylesheet 를 생성 할 경우 트리거되는 이벤트입니다.
 	  <br>
@@ -536,12 +526,10 @@ prototype._createCss = function() {
 	this._dynStyle = Util.createStyle(event.css.join('') + ';' + em.trigger("onCreateDynamicCss").join(""));
 };
 prototype._recreateDynamicCss = function() {
-	this.log('rewriting dynamic css...', V_RESIZE);//IF_DEBUG
 	Util.setStyle(this._dynStyle, this['event'].trigger("onCreateDynamicCss").join(""));
 };
 prototype._keydown = function(e) {
 	var em = this['event'];
-	this.log('UI event:keydown detected. event=' + e.type + ', keycode=' + e.which, V_KEYDOWN);//IF_DEBUG
 	/**
 	  그리드에 keydown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -553,7 +541,6 @@ prototype._keydown = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeKeydown", [e])) {
-		this.log('UI event:keydown prevented.', V_KEYDOWN);//IF_DEBUG
 		return;
 	}
 	/**
@@ -580,7 +567,6 @@ prototype._keydown = function(e) {
 };
 prototype._keyup = function(e) {
 	var em = this['event'];
-	this.log('UI event:keyup detected. event=' + e.type + ', keycode=' + e.which, V_KEYUP);//IF_DEBUG
 	/**
 	  그리드에 keyup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -592,7 +578,6 @@ prototype._keyup = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeKeyup", [e])) {
-		this.log('UI event:keyup prevented.', V_KEYUP);//IF_DEBUG
 		return;
 	}
 	/**
@@ -619,7 +604,6 @@ prototype._keyup = function(e) {
 };
 prototype._keypress = function(e) {
 	var em = this['event'];
-	this.log('UI event:keypress detected. event=' + e.type + ', keycode=' + e.which, V_KEYPRESS);//IF_DEBUG
 	/**
 	  그리드에 keypress 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -631,7 +615,6 @@ prototype._keypress = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeKeypress", [e])) {
-		this.log('UI event:keypress prevented.', V_KEYPRESS);//IF_DEBUG
 		return;
 	}
 	/**
@@ -658,7 +641,6 @@ prototype._keypress = function(e) {
 };
 prototype._mousein = function(e) {
 	var em = this['event'];
-	this.log('UI event:mousein detected. event=' + e.type, V_MOUSEIN);//IF_DEBUG
 	/**
 	  그리드에 mousein 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -670,7 +652,6 @@ prototype._mousein = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeMousein", [e])) {
-		this.log('UI event:mousein prevented.', V_MOUSEIN);//IF_DEBUG
 		return;
 	}
 	/**
@@ -700,7 +681,6 @@ prototype._mousein = function(e) {
 };
 prototype._mouseout = function(e) {
 	var em = this['event'];
-	this.log('UI event:mouseout detected. event=' + e.type, V_MOUSEOUT);//IF_DEBUG
 		
 	/**
 	  그리드에 mouseout 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -713,7 +693,6 @@ prototype._mouseout = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeMouseout", [e])) {
-		this.log('UI event:mouseout prevented.', V_MOUSEOUT);//IF_DEBUG
 		return;
 	}
 	/**
@@ -743,7 +722,6 @@ prototype._mouseout = function(e) {
 };
 prototype._mouseenter = function(e) {
 	var em = this['event'];
-	this.log('UI event:mouseenter detected. event=' + e.type, V_MOUSEENTER);//IF_DEBUG
 	/**
 	  그리드에 mouseenter 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -755,7 +733,6 @@ prototype._mouseenter = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeMouseenter", [e])) {
-		this.log('UI event:mouseenter prevented.', V_MOUSEENTER);//IF_DEBUG
 		return;
 	}
 	/**
@@ -785,7 +762,6 @@ prototype._mouseenter = function(e) {
 };
 prototype._mouseleave = function(e) {
 	var em = this['event'];
-	this.log('UI event:mouseleave detected. event=' + e.type, V_MOUSELEAVE);//IF_DEBUG
 	/**
 	  그리드에 mouseleave 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -797,7 +773,6 @@ prototype._mouseleave = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeMouseleave", [e])) {
-		this.log('UI event:mouseleave prevented.', V_MOUSELEAVE);//IF_DEBUG
 		return;
 	}
 	/**
@@ -827,7 +802,6 @@ prototype._mouseleave = function(e) {
 };
 prototype._mousemove = function(e) {
 	var em = this['event'];
-	this.log('UI event:mousemove detected. event=' + e.type, V_MOUSEMOVE);//IF_DEBUG
 	/**
 	  그리드에 mousemove 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -839,7 +813,6 @@ prototype._mousemove = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeMousemove", [e])) {
-		this.log('UI event:mousemove prevented.', V_MOUSEMOVE);//IF_DEBUG
 		return;
 	}
 	/**
@@ -869,7 +842,6 @@ prototype._mousemove = function(e) {
 };
 prototype._mouseover = function(e) {
 	var em = this['event'];
-	this.log('UI event:mouseover detected. event=' + e.type, V_MOUSEOVER);//IF_DEBUG
 	/**
 	  그리드에 mouseover 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -881,7 +853,6 @@ prototype._mouseover = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeMouseover", [e])) {
-		this.log('UI event:mouseover prevented.', V_MOUSEOVER);//IF_DEBUG
 		return;
 	}
 	/**
@@ -911,7 +882,6 @@ prototype._mouseover = function(e) {
 };
 prototype._mousedown = function(e) {
 	var em = this['event'];
-	this.log('UI event:mousedown detected. event=' + e.type, V_MOUSEDOWN);//IF_DEBUG
 	this._drag = true;
 	/**
 	  그리드에 mousedown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -924,7 +894,6 @@ prototype._mousedown = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeMousedown", [e])) {
-		this.log('UI event:mousedown prevented.', V_MOUSEDOWN);//IF_DEBUG
 		return;
 	}
 	/**
@@ -940,7 +909,6 @@ prototype._mousedown = function(e) {
 };
 prototype._mouseup = function(e) {
 	var em = this['event'];
-	this.log('UI event:mouseup detected. event=' + e.type, V_MOUSEUP);//IF_DEBUG
 	this._drag = false;	
 	em.trigger("unsetDrag");
 	if (!this.containsEvent(e)) {
@@ -957,7 +925,6 @@ prototype._mouseup = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeMouseup", [e])) {
-		this.log('UI event:mouseup prevented.', V_MOUSEUP);//IF_DEBUG
 		return;
 	}
 	/**
@@ -973,7 +940,6 @@ prototype._mouseup = function(e) {
 };
 prototype._click = function(e) {
 	var em = this['event'];
-	this.log('UI event:click detected. event=' + e.type, V_CLICK);//IF_DEBUG
 	
 	/**
 	  그리드에 click 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -986,7 +952,6 @@ prototype._click = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeClick", [e])) {
-		this.log('UI event:click prevented.', V_CLICK);//IF_DEBUG
 		return;
 	}
 	/**
@@ -1002,7 +967,6 @@ prototype._click = function(e) {
 };
 prototype._dblclick = function(e) {
 	var em = this['event'];
-	this.log('UI event:dblclick detected. event=' + e.type, V_DBLCLICK);//IF_DEBUG
 	/**
 	  그리드에 dblclick 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
 	  이벤트 핸들러가 false 를 리턴하면 발생한 이벤트가 취소되며 그리드는 이벤트 핸들링 작업을 하지 않습니다.
@@ -1014,7 +978,6 @@ prototype._dblclick = function(e) {
 	  @version 1.2.1
 	  */
 	if (em.triggerInvalid("onBeforeDblclick", [e])) {
-		this.log('UI event:dblclick prevented.', V_DBLCLICK);//IF_DEBUG
 		return;
 	}
 	/**
@@ -1030,7 +993,6 @@ prototype._dblclick = function(e) {
 };
 prototype._resize = function(e) {
 	var em = this['event'];
-	this.log('event:resize detected. event=' + e.type, V_RESIZE);//IF_DEBUG
 	var change = false,
 		ctnr = this._ctnr[0],
 		cw = this._lastW,
@@ -1047,7 +1009,6 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-		this.log('event:resizeWidth detected. ' + cw + '->' + width, V_RESIZE);//IF_DEBUG
 		em.trigger("resizeWidth", [width, cw]);
 		this._lastW = width;
 		change = true;
@@ -1062,7 +1023,6 @@ prototype._resize = function(e) {
 		  @since 1.1.5
 		  @version 1.1.5
 		  */
-		this.log('event:resizeHeight detected. ' + ch + '->' + height, V_RESIZE);//IF_DEBUG
 		em.trigger("resizeHeight", [height, ch]);
 		this._lastH = height;
 		change = true;
@@ -1101,7 +1061,6 @@ prototype.width = function(w) {
 	if (w < 1 || w === cw || !isFinite(w)) {
 		return cw;
 	}
-	this.log('set width. ' + this._lastW + '->' + w, V_RESIZE);//IF_DEBUG
 	ctnr.style.width = w + "px";
 	em.trigger("resizeWidth", [w, this._lastW]);
 	this._lastW = w;
@@ -1129,7 +1088,6 @@ prototype.height = function(h) {
 	if (h < 1 || h === ch || !isFinite(h)) {
 		return ch;
 	}
-	this.log('set height. ' + this._lastH + '->' + h, V_RESIZE);//IF_DEBUG
 	ctnr.style.height = h + "px";
 	em.trigger("resizeHeight", [h, this._lastH]);
 	this._lastH = h;
@@ -1158,12 +1116,10 @@ prototype.error = function(code) {
 	e = new Error(str);
 	e.code = code;
 	this.printError(e.message);
-	this.log('error occurred... code=' + code + ', msg=' + e.message || e.msg);//IF_DEBUG
 	this['event'].trigger("onError", [e]);
 	return e;
 };
 prototype.printError = function(str) {
-	this.log('error message... msg=' + str);//IF_DEBUG
 	if (this._options['showMessage']) {
 		var msg = this['msg'],
 			msgel = msg[0],
@@ -1180,7 +1136,6 @@ prototype.printError = function(str) {
 	}
 };
 prototype.printMessage = function(str) {
-	this.log('message... msg=' + str);//IF_DEBUG
 	if (this._options['showMessage']) {
 		var msg = this['msg'],
 			msgel = msg[0],
@@ -1203,12 +1158,8 @@ prototype.getChart = function(name) {
 	return this._charts[name];
 };
 prototype.log = function(msg, vlevel) {
-	if (VERBOSE >= (vlevel || 0)) {
-		echo('Grid[' + this.mid + ']: ' + msg);
-	}
 }
 prototype.chart = function(chartCont, type, columns, options) {
-	this.log('creating chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_INIT);//IF_DEBUG
 	var pack,
 		cls;
 	type = type.toLowerCase();
@@ -1309,7 +1260,6 @@ prototype.chart = function(chartCont, type, columns, options) {
 		var chart = grid._charts[chartCont] = new google.visualization[cls](document.getElementById(chartCont));
 		chart.draw(data, options);
 		grid['event'].bind('onAfterRefresh', function() {
-			this.log('redrawing chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_RESIZE);//IF_DEBUG
 			data.removeRows(0, data.getNumberOfRows());
 			data.addRows(dataMgr.exportToArray(columns));
 			chart.draw(data, options);

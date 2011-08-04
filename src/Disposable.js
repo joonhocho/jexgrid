@@ -208,9 +208,10 @@ goog.provide('jx.lang.Disposable');
   * @param {?boolean=} others compare non-disposables
   */
  function dispose(level, others) {'use strict';
-	 if (this == window) {
+	 if (this == goog.global) {
 		 return;
 	 }
+
 	 var i,
 		 val;
 	 if (level) {

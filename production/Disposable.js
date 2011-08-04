@@ -1,4 +1,3 @@
-console && console.log && console.log('reading javascript source "Disposable.js"...');//IF_DEBUG
 goog.require('jx.util');
 goog.provide('jx.lang.Disposable');
 /*!
@@ -189,7 +188,7 @@ goog.provide('jx.lang.Disposable');
   * @param {?boolean=} others compare non-disposables
   */
  function dispose(level, others) {'use strict';
-	 if (this == window) {
+	 if (this == goog.global) {
 		 return;
 	 }
 	 var i,

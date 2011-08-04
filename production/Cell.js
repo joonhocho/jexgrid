@@ -1,4 +1,3 @@
-console && console.log && console.log('reading javascript source "Cell.js"...');//IF_DEBUG
 goog.require('jx.util');
 goog.require('jx.lang.Disposable');
 goog.require('jx.grid');

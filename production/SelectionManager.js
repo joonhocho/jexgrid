@@ -1,4 +1,3 @@
-console && console.log && console.log('reading javascript source "SelectionManager.js"...');//IF_DEBUG
 goog.require('array_extension');
 goog.require('jx.util');
 goog.require('jx.grid');

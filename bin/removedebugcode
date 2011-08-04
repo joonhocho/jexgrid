@@ -3,7 +3,7 @@
 /**
  * Beginning of Flags
  */
-$debug = true;
+$debug = false;
 /**
  * End of Flags
  */
