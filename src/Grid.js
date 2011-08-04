@@ -43,6 +43,7 @@ goog.provide('jx.grid.Grid');
 		Util = goog.getObjectByName('jx.util'),
 		echo = goog.getObjectByName('echo'),
 		BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+		TimeWatch = goog.getObjectByName('TimeWatch'),
 		VERBOSE = 2,
 		V_KEYDOWN = 3,
 		V_KEYPRESS = 3,
@@ -1470,8 +1471,8 @@ prototype.twstop = function(msg) {
 	this._tw.stop(msg);
 };
 
-prototype.twprint = function(msg) {
-	this.log(this._tw.stack());
+prototype.twprint = function() {
+	this.log(this._tw);
 };
 //END_IF_DEBUG
 
