@@ -8,6 +8,7 @@ $pathlen = strlen($gridPath);
  */
 $encoding = 'euc-kr';
 $binPath = "$gridPath/bin";
+$rawsrcPath = "$gridPath/src";
 $srcPath = "$gridPath/production";
 $libPath = "$gridPath/externs";
 $srcExtPath = "$gridPath/srcexterns";
@@ -100,6 +101,7 @@ $depsCommand = "$calcdepsFile -c $compilerJar -p $srcPath -o deps --output_file=
 echo $depsCommand . "\n\n\n";
 system($depsCommand);
 
+system("cp $srcPath/deps.js $rawsrcPath/deps.js");
 system("php $generaterequires");
 
 // read in closure compiler settings from ini file
