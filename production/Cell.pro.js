@@ -1,9 +1,6 @@
 goog.require('jx.util');
 goog.require('jx.lang.Disposable');
 goog.require('jx.grid');
-goog.require('jx.grid.Grid');
-goog.require('jx.grid.ColumnManager');
-goog.require('jx.data.DataManager');
 goog.provide('jx.grid.Cell');
 /*!
  * AUTHOR
