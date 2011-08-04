@@ -1,3 +1,5 @@
+console && console.log && console.log('reading javascript source "EventDispatcher.js"...');//IF_DEBUG
+
 goog.require('jx.lang.Disposable');
 
 goog.provide('jx.events.EventDispatcher');

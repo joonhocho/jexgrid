@@ -1,3 +1,5 @@
+console && console.log && console.log('reading javascript source "Column.js"...');//IF_DEBUG
+
 goog.require('jx.grid');
 goog.require('jx.events.EventDispatcher');
 

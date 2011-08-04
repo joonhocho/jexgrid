@@ -1,3 +1,5 @@
+console && console.log && console.log('reading javascript source "BaseModule.js"...');//IF_DEBUG
+
 goog.require('array_extension');
 goog.require('jx.lang.Disposable');
 goog.require('jx.events.EventDispatcher');
