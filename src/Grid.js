@@ -7,6 +7,7 @@ goog.require('jx.events.EventDispatcher');
 goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.EventManager');
+goog.require('TimeWatch');
 
 goog.provide('jx.grid.Grid');
 
@@ -1450,13 +1451,29 @@ prototype.getChart = function(name) {
 	return this._charts[name];
 };
 
+//IF_DEBUG
 prototype.log = function(msg, vlevel) {
-	//IF_DEBUG
 	if (VERBOSE >= (vlevel || 0)) {
 		echo('Grid[' + this.mid + ']: ' + msg);
 	}
-	//END_IF_DEBUG
 }
+
+prototype.twstart = function(msg) {
+	this._tw = new TimeWatch(msg);
+};
+
+prototype.twlap = function(msg) {
+	this._tw.lap(msg);
+};
+
+prototype.twstop = function(msg) {
+	this._tw.stop(msg);
+};
+
+prototype.twprint = function(msg) {
+	this.log(this._tw.stack());
+};
+//END_IF_DEBUG
 
 prototype.chart = function(chartCont, type, columns, options) {
 	this.log('creating chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_INIT);//IF_DEBUG
