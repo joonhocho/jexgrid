@@ -1,0 +1,22 @@
+#!/usr/bin/php
+<?php
+$gridPath = __DIR__ . '/..';
+$depspath = "$gridPath/src/deps.js";
+$outpath = "$gridPath/demo/deps.js";
+$linebreak = '/[\r\n]+/';
+$matchModule = '/^goog\.addDependency\(".*", \[(.*?)\]/';
+$matchOneModule = '/\'.*?\'/';
+$contents = array();
+foreach (preg_split($linebreak, file_get_contents($depspath)) as $num=>$line) {
+	if (preg_match($matchModule, $line, $matches)) {
+		$modules = trim($matches[1]);
+		if ($modules) {
+			if (preg_match($matchOneModule, $modules, $matches)) {
+				$contents[] = "goog.require({$matches[0]});";
+			}
+		}
+	}
+}
+
+file_put_contents($outpath, implode("\n", $contents));
+echo "\n\n[ finished generating requires code... ]\n\n";

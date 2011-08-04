@@ -7,6 +7,7 @@ $pathlen = strlen($gridPath);
  * Build Path Settings
  */
 $encoding = 'euc-kr';
+$binPath = "$gridPath/bin";
 $srcPath = "$gridPath/production";
 $libPath = "$gridPath/externs";
 $srcExtPath = "$gridPath/srcexterns";
@@ -15,7 +16,9 @@ $buildPath = "$gridPath/build";
 $buildResultPath = "$gridPath/results";
 $versionFile = "$gridPath/VERSION";
 $licenseFile = "$gridPath/LICENSE";
-$calcdepsFile = "$gridPath/bin/calcdeps.py";
+$calcdepsFile = "$binPath/calcdeps.py";
+$generaterequires= "$binPath/generaterequires";
+$removedebugcode = "$binPath/removedebugcode";
 $compilerJar = "$gridPath/lib/closure-compiler/compiler.jar";
 $compilerIniFile = "$gridPath/closure-compiler.ini";
 $srcPattern = '/.*\.js$/';
@@ -40,7 +43,7 @@ if (!$license) {
 $license = "/*\n" . trim($license) . "\n*/\n";
 //echo "\n$license\n";
 
-system('php removedebugcode');
+system("php $removedebugcode");
 
 // read in source files from src path using src pattern
 echo "[ reading source files... ]\n\n";
@@ -96,6 +99,8 @@ echo "[ calculating dependencies... ]\n\n";
 $depsCommand = "$calcdepsFile -p $srcPath -o deps -c $compilerJar --output_file $srcPath/deps.js";
 echo $depsCommand . "\n\n\n";
 system($depsCommand);
+
+system("php $generaterequires");
 
 // read in closure compiler settings from ini file
 echo "[ reading compiler settings... ]\n\n";
