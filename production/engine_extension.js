@@ -1,3 +1,4 @@
+console && console.log && console.log('reading javascript source "engine_extension.js"...');//IF_DEBUG
 goog.require('array_extension');
 goog.provide('engine_extension');
 /*!

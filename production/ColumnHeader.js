@@ -1,3 +1,4 @@
+console && console.log && console.log('reading javascript source "ColumnHeader.js"...');//IF_DEBUG
 goog.require('engine_extension');
 goog.require('jx.util');
 goog.require('jx.grid');
@@ -44,6 +45,7 @@ ColumnHeader 컨스트럭터 입니다.
 @version 1.0.0
 */
 function ColumnHeader(args) {
+	args.grid.log('creating new ColumnHeader instance...', Grid.V_INIT);//IF_DEBUG
 	goog.base(this, args);
 }
 goog.inherits(ColumnHeader, BaseModule);
@@ -52,6 +54,7 @@ ColumnHeader.getInstance = function(args) {
 };
 var prototype = ColumnHeader.prototype;
 prototype._init = function(args) {
+	this.grid.log('initializing ColumnHeader instance...', Grid.V_INIT);//IF_DEBUG
 	/**
 	그리드 컬럼 헤더를 관리하는 {@link jx.grid.ColumnHeader ColumnHeader} 인스턴스 입니다.
 	@var {jx.grid.ColumnHeader} jx.grid.Grid.header
@@ -81,6 +84,7 @@ prototype._init = function(args) {
 	ColumnHeader._disableSel(this._head);
 };
 prototype._bindEvents = function() {
+	this.grid.log('binding ColumnHeader events...', Grid.V_INIT);//IF_DEBUG
 	var events,
 		colDefs = this.getColumns(),
 		len = colDefs.length,
@@ -105,6 +109,7 @@ prototype._bindEvents = function() {
 	this.bindGridEvent(events, this);
 };
 prototype._defaultOptions = function(grid) {
+	this.grid.log('extending ColumnHeader options...', Grid.V_INIT);//IF_DEBUG
 	var imgurl = grid._options['imageUrl'];
 	/**
 	ColumnHeader 모듈의 기본 옵션 값들을 정의합니다.
@@ -453,6 +458,7 @@ prototype._defaultOptions = function(grid) {
 	};
 }
 prototype._beforeDispose = function() {	
+	this.grid.log('disposing ColumnHeader instance...', Grid.V_INIT);//IF_DEBUG
 	if (this._head.sortable) {
 		this._head.sortable("destroy");
 	}
@@ -483,6 +489,7 @@ prototype._destroyResizeHandles = function() {
 	delete this._resizeInitColWidth;
 };
 prototype._beforeCreateCss = function(e) {
+	this.grid.log('creating CSS for ColumnHeader...', Grid.V_INIT);//IF_DEBUG
 	var grid = this.grid,
 		gridId = "#" + grid['mid'] + " .",
 		opt = this._options,
@@ -575,9 +582,11 @@ prototype._widthPlus = function() {
 	return this._options['borderThickness'];
 };
 prototype._onScrollViewportH = function(scrollLeft) {
+	this.grid.log('adjusting Colheader style.left according to viewport scrollLeft...', Grid.V_RESIZE);//IF_DEBUG
 	this._head[0].style.left = (-this._options['scrollerLeft'] - scrollLeft) + "px";
 };
 prototype._onRenderModules = function() {
+	this.grid.log('rendering Colheader...', Grid.V_INIT);//IF_DEBUG
 	var colDefs = this.getColumns(),
 		len = colDefs.length,
 		i = 0,
@@ -696,6 +705,7 @@ prototype._getDef = function(header) {
 	return this.getColMgr().getByKey(header.attr("colKey"));
 };
 prototype._sort = function(e, colHeader, colDef) {
+	this.grid.log('Colheader clicked to sort. key=' + colDef.key, Grid.V_CLICK);//IF_DEBUG
 	var sorter = colDef['sorter'];
 	/**
 	컬럼 정렬 전에 트리거되는 이벤트 입니다.
@@ -734,6 +744,7 @@ prototype._onChangeSorter = function(oldSorter, newSorter) {
 	}
 };
 prototype._initReorder = function() {
+	this.grid.log('initializing Colheader reorder functionality...', Grid.V_INIT);//IF_DEBUG
 	var thisIns = this,
 		opt = this._options,
 		colMgr = this.getColMgr(),
@@ -794,6 +805,7 @@ prototype._click = function(e) {
 	}
 	var colDef = this._getDef(colHeader),
 		key = colDef['key'];
+	this.grid.log('Colheader clicked. key=' + key, Grid.V_CLICK);//IF_DEBUG
 	/**
 	ColumnHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다. 발생된 click 이벤트가
 	valid 한지를 체크합니다.
@@ -836,6 +848,7 @@ prototype._mousedown = function(e) {
 	var opt = this._options;
 	if (Util.hasTagAndClass(e.target, "DIV", opt['classResizeHandle'])) {
 		var key = this._resizeKey = e.target.getAttribute("key");
+		this.grid.log('mousedown on ColumnHeader Resize Handle. key=' + key, Grid.V_MOUSEDOWN);//IF_DEBUG
 		this._resizeInitWidth = this.get(key)[0].clientWidth;
 		this._resizeInitColWidth = this.getColMgr().getByKey(key).width;
 		this._resizeInitX = e.clientX;
@@ -849,6 +862,7 @@ prototype._mousedown = function(e) {
 	if (colHeader.length) {
 		var colDef = this._getDef(colHeader),
 			key = colDef['key'];
+		this.grid.log('mousedown on ColumnHeader. key=' + key, Grid.V_MOUSEDOWN);//IF_DEBUG
 		/**
 		  ColumnHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 		  @event {Event} mousedownHeader
@@ -882,6 +896,7 @@ prototype._dragmove = function(e) {
 	if (Math.abs(dx) < 1) {
 		return;
 	}
+	this.grid.log('drag on ColumnHeader Resize Handle. key=' + key, Grid.V_MOUSEMOVE);//IF_DEBUG
 	
 	var opt = this._options;
 	this.get(key)[0].style.width = this._resizeInitWidth + dx + "px";
@@ -897,6 +912,7 @@ prototype._mouseup = function(e) {
 	if (key == null) {
 		return;
 	}
+	this.grid.log('mouseup on ColumnHeader Resize Handle. key=' + key, Grid.V_MOUSEUP);//IF_DEBUG
 	
 	this._resizeGuide[0].style.height = "0px";
 		
@@ -912,6 +928,7 @@ prototype._mouseup = function(e) {
 	delete this._resizeInitColWidth;
 };
 prototype._setWidthByKey = function(key, w, o) {
+	this.grid.log('setting ColumnHeader width=' + w + '. key=' + key, Grid.V_RESIZE);//IF_DEBUG
 	this.get(key)[0].style.width = w + this.getView()._colWidthPlus() - this._widthPlus() + "px";
 	
 	this._syncResizeHandles(this.getColMgr().getIdxByKey(key));
@@ -955,6 +972,7 @@ prototype._onScrollViewportV = function() {
 	this._resizeGuide[0].style.top = this.getView().getScrollTop() + "px";
 };
 prototype._initResizeHandles = function() {
+	this.grid.log('initializing Colheader resize functionality...', Grid.V_INIT);//IF_DEBUG
 	var colDefs = this.getColumns(),
 		len = colDefs.length,
 		view = this.getView(),

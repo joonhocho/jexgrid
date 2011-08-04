@@ -1,3 +1,4 @@
+console && console.log && console.log('reading javascript source "ViewportManager.js"...');//IF_DEBUG
 goog.require('jx.util');
 goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
@@ -729,6 +730,7 @@ prototype._setCanvasWidth = function(w) {
 	}
 	var old = this.getCanvasWidth();
 	if (w != old) {
+		this.grid.log('set canvas width. ' + old + '->' + w, Grid.V_RESIZE);//IF_DEBUG
 		this._canvas[0].style.width = w + "px";
 		/**
 		  캔바스의 폭이 변했을 경우 트리거되는 이벤트 입니다.
@@ -789,6 +791,7 @@ prototype.setWidthByKey = function(key, w) {
 	if (w === colDef['width']) {
 		return;
 	}
+	this.grid.log('set column width. key=' + key + ', w=' + w, Grid.V_RESIZE);//IF_DEBUG
 	var old = colDef['width'];
 	colDef['width'] = w;
 	this._setCanvasWidth(this._setColLefts(this.grid['colDefMgr'].getIdxByKey(key))[this.grid['colDefMgr'].length()]);
@@ -1540,6 +1543,7 @@ prototype._keydown = function(e) {
 	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
 		return;
 	}
+	this.grid.log('UI event:keydown on Viewport. event=' + e.type + ', keycode=' + e.which, Grid.V_KEYDOWN);//IF_DEBUG
 	/**
 	  ViewportManager 의 view 가 활성화된 상태에서 keydown 이벤트가 발생할 경우 트리거되는
 	  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
@@ -1566,6 +1570,7 @@ prototype._keyup = function(e) {
 	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
 		return;
 	}
+	this.grid.log('UI event:keyup on Viewport. event=' + e.type + ', keycode=' + e.which, Grid.V_KEYUP);//IF_DEBUG
 	/**
 	  ViewportManager 의 view 가 활성화된 상태에서 keyup 이벤트가 발생할 경우 트리거되는
 	  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
@@ -1592,6 +1597,7 @@ prototype._keypress = function(e) {
 	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
 		return;
 	}
+	this.grid.log('UI event:keypress on Viewport. event=' + e.type + ', keycode=' + e.which, Grid.V_KEYPRESS);//IF_DEBUG
 	/**
 	  ViewportManager 의 view 가 활성화된 상태에서 keypress 이벤트가 발생할 경우 트리거되는
 	  이벤트 입니다. 입력된 키보드의 키 코드를 붙여서 이벤트가 발생됩니다.
@@ -2011,6 +2017,7 @@ prototype._triggerMouseEvent = function(e, args) {
 	if (node === undefined) {
 		return false;
 	}
+	this.grid.log('UI event:' + args['event'] + ' on Viewport. event=' + e.type, arguments[2]);//IF_DEBUG
 	args['cell'] = JGM.create("Cell", {'grid':this.grid, 'node':node});
 	arr = Util.split(args['event']);
 	len = arr.length;
@@ -2030,6 +2037,7 @@ prototype._scroll = function() {
 	if (scrollVDist === 0 && scrollHDist === 0) {
 		return;
 	}
+	this.grid.log('Viewport scrolled... h=' + scrollHDist + ', v=' + scrollVDist, Grid.V_SCROLL);//IF_DEBUG
 	/**
 	  그리드 뷰가 스크롤 되었을 때 발생하는 이벤트 입니다.
 	  @event {Event} onScrollViewport
@@ -2086,6 +2094,7 @@ prototype.focus = function(e) {
 	//var scr = Util.getBodyScroll();
 	var maskEl = this._mask[0];
 	if (document.activeElement !== maskEl) {
+		this.grid.log('focusing canvas...', Grid.V_FOCUS);//IF_DEBUG
 		if (Util.isFunction(maskEl.setActive)) {
 			try {
 				maskEl.setActive();

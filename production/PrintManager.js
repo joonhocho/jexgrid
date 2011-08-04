@@ -1,3 +1,4 @@
+console && console.log && console.log('reading javascript source "PrintManager.js"...');//IF_DEBUG
 goog.require('jx.util');
 goog.require('jx.util$');
 goog.require('jx.grid');

@@ -3,7 +3,7 @@
 /**
  * Beginning of Flags
  */
-$debug = false;
+$debug = true;
 /**
  * End of Flags
  */
@@ -55,7 +55,10 @@ foreach ($regexIterator as $file) {
 						echo " removing line $num.\n";
 					}
 					else {
-						echo " the flag is set. ignoring the flag.\n";
+						if (!$remove) {
+							echo " the flag is set. ignoring the flag.\n";
+							$contents[] = $line;
+						}
 					}
 				}
 				else {

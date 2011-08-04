@@ -1,3 +1,4 @@
+console && console.log && console.log('reading javascript source "utiljquery.js"...');//IF_DEBUG
 goog.require('jx.util');
 goog.provide('jx.util$');
 goog.provide('Util$');

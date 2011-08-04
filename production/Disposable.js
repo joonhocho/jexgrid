@@ -1,3 +1,4 @@
+console && console.log && console.log('reading javascript source "Disposable.js"...');//IF_DEBUG
 goog.require('jx.util');
 goog.provide('jx.lang.Disposable');
 /*!

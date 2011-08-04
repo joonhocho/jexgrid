@@ -1,3 +1,4 @@
+console && console.log && console.log('reading javascript source "TooltipManager.js"...');//IF_DEBUG
 goog.require('jx.util');
 goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
