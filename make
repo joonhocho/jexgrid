@@ -54,7 +54,7 @@ $size = 0;
 $filenames = array();
 foreach ($regexIterator as $file) {
 	if ($file->isFile()) {
-		$filename = substr($file->getPathname(), $pathlen + 1);
+		$filename = $file->getPathname();
 		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
 		$size += $file->getSize();
 		$filenames[$filename] = $filename;
@@ -69,7 +69,7 @@ $regexIterator = new RegexIterator($iterator, $srcPattern);
 $size = 0;
 foreach ($regexIterator as $file) {
 	if ($file->isFile()) {
-		$filename = substr($file->getPathname(), $pathlen + 1);
+		$filename = $file->getPathname();
 		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
 		$size += $file->getSize();
 		$filenames[$filename] = $filename;
@@ -86,7 +86,7 @@ $size = 0;
 $libfilenames = array();
 foreach ($regexIterator as $file) {
 	if ($file->isFile()) {
-		$filename = substr($file->getPathname(), $pathlen + 1);
+		$filename = $file->getPathname();
 		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
 		$size += $file->getSize();
 		$libfilenames[$filename] = $filename;
@@ -96,7 +96,7 @@ echo "\n\n";
 
 // read in dependencies
 echo "[ calculating dependencies... ]\n\n";
-$depsCommand = "$calcdepsFile -p $srcPath -o deps -c $compilerJar --output_file $srcPath/deps.js";
+$depsCommand = "$calcdepsFile -c $compilerJar -p $srcPath -o deps --output_file=$srcPath/deps.js";
 echo $depsCommand . "\n\n\n";
 system($depsCommand);
 

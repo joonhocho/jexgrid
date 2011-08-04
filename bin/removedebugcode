@@ -38,7 +38,7 @@ $matched = null;
 $remove = false;
 foreach ($regexIterator as $file) {
 	if ($file->isFile()) {
-		$filename = substr($file->getPathname(), $pathlen + 1);
+		$filename = $file->getPathname();
 		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
 		$filetag = " ";
 
@@ -96,7 +96,7 @@ foreach ($regexIterator as $file) {
 		}
 
 		$pathinfo = pathinfo($filename);
-		$outfile = $outPath . '/' . $pathinfo['filename'] . '.pro.' . $pathinfo['extension'];
+		$outfile = $outPath . '/' . $pathinfo['basename'];
 		echo "saving into $outfile...\n\n";
 		file_put_contents($outfile, implode("\n", $contents));
 
