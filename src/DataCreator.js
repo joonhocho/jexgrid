@@ -443,7 +443,7 @@ prototype._addData = function() {
 	  @since 1.1.1
 	  @version 1.1.1
 	  */
-	this.grid['event'].trigger("onAfterDataCreate", [newData]);
+	this.grid['event'].trigger("onAfterDataCreate", [newData], true);
 	this.grid['dataMgr'].add(newData, {'isNew':true});
 };
 
