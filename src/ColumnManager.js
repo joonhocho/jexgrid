@@ -4,6 +4,7 @@ goog.require('jx.util');
 goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.Column');
+goog.require('jx.grid.ViewportManager');
 
 goog.provide('jx.grid.ColumnManager');
 
@@ -24,7 +25,8 @@ JGM
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
-	Column = goog.getObjectByName('jx.grid.Column');
+	Column = goog.getObjectByName('jx.grid.Column'),
+	ViewportManager = goog.getObjectByName('jx.grid.ViewportManager');
 
  goog.exportSymbol('jx.grid.ColumnManager', ColumnManager);
 
@@ -337,7 +339,7 @@ function ColumnManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			'renderer':		jx.grid.ViewportManager._renderer,
+			'renderer':		ViewportManager._renderer,
 
 			/**
 			컬럼 셀 {@link jx.grid.ColumnManager.options.colDef.renderer renderer} 함수에 보낼 파라미터 타입을 정하는 옵션. true 일 경우에는

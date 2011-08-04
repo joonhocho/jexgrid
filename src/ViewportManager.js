@@ -3,7 +3,6 @@ goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.Grid');
 goog.require('jx.grid.Cell');
-goog.require('jx.grid.ColumnManager');
 goog.require('jx.data.DataManager');
 
 goog.provide('jx.grid.ViewportManager');
@@ -422,7 +421,6 @@ prototype.__init = function() {
 	this._mask.bind("selectstart.ui", function (event) {
 		return $(event.target).is("input, textarea");
 	});
-	//jx.grid.ColumnHeader._disableSel(this._mask);
 
 	this._setColLefts();
 
