@@ -401,11 +401,17 @@ prototype._onCreateCss = function() {
 	return rules.join("");
 };
 prototype._onCreateDynamicCss = function() {
-	var cellSel = "#" + this.grid['mid'] + " ." + this._options['classCell'],
-		str = this._getRowSelector() + "{width:" + this._calCanvasWidth() + "px}",
+	var gridId = "#" + this.grid['mid'] + " .",
+		opt = this._options,
+		cellSel = gridId + opt['classCell'],
+		rowSel = gridId + opt['classRow'],
+		canSel = gridId + opt['classCanvas'],
+		canw = this._calCanvasWidth(),
 		colDefs = this.grid['colDefMgr'].get(),
+		str = '',
 		clen = colDefs.length,
 		i = 0;
+	str += canSel + "{width:" + canw + "px}" + rowSel + "{width:" + canw + "px}";
 	for (; i < clen; i++) {
 		str += cellSel + ".k_" + colDefs[i].key + "{width:" + colDefs[i].width + "px}";
 	}
