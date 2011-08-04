@@ -22,7 +22,7 @@ goog.provide('jx.grid.ViewportManager');
   @scope JGM
   */
 
-(function() {
+(function() {'use strict';
 	var JGM = goog.getObjectByName('jx.grid'),
 	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Util = goog.getObjectByName('jx.util'),

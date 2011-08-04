@@ -34,7 +34,7 @@ goog.provide('JGM');
   @version 1.2.0
   */
 
-(function() {
+(function() {'use strict';
 	var Util = goog.getObjectByName('jx.util'),
 Util$ = goog.getObjectByName('jx.util$');
 
@@ -351,7 +351,6 @@ JGM.m = {length:0};
 
 JGM._CONST = {
 	_cssUnselectable: "-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-o-user-select:none;user-select:none;",
-	_cssUnselectable: "-webkit-user-drag:none;-moz-user-drag:none;user-drag:none;",
 	_checkboxWidth: undefined,
 	_checkboxHeight: undefined,
 	_radioWidth: undefined,
