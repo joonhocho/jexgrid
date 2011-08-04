@@ -95,7 +95,7 @@ JGM._map = {
   @version 1.0.0
   */
 JGM.create = function(name, args) {
-	if (Util.isNull(args)) {
+	if (args == null) {
 		args = {};
 	}
 	if (!this.hasOwnProperty(name)) {
