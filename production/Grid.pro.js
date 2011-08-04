@@ -5,7 +5,6 @@ goog.require('jx.events.EventDispatcher');
 goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.EventManager');
-echo(jx.grid.Grid);
 goog.provide('jx.grid.Grid');
 /*!
  * AUTHOR
