@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<!--
+Copyright 2007 The Closure Library Authors. All Rights Reserved.
+
+Use of this source code is governed by the Apache License, Version 2.0.
+See the COPYING file for details.
+-->
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<title>Closure Unit Tests - goog.async.Delay</title>
+<script src="../lib/closure-library/closure/goog/base.js"></script>
+<script>
+  goog.require('goog.testing.MockClock');
+  goog.require('goog.testing.jsunit');
+</script>
+</head>
+<body>
+<script>
+
+function setUp() {
+  clock = new goog.testing.MockClock(true);
+  invoked = false;
+  delay = new goog.async.Delay(callback, 200);
+}
+
+function tearDown() {
+  clock.dispose();
+  delay.dispose();
+}
+
+function testFireIfActive() {
+}
+
+</script>
+</body>
+</html>
