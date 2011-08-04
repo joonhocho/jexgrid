@@ -801,9 +801,12 @@ prototype.setWidthByKey = function(key, w) {
 	if (w === colDef['width']) {
 		return;
 	}
-	var old = colDef['width'];
+	var old = colDef['width'],
+		evtmgr = this._evtmgr,
+		colmgr = this._colmgr,
+		args = [key, w, old];
 	colDef['width'] = w;
-	this._setCanvasWidth(this._setColLefts(this._colmgr.getIdxByKey(key))[this._colmgr.length()]);
+	this._setCanvasWidth(this._setColLefts(colmgr.getIdxByKey(key))[colmgr.length()]);
 	this.grid._recreateDynamicCss();
 	/**
 	  컬럼의 폭이 변했을 경우 트리거되는 이벤트 입니다.
@@ -825,7 +828,8 @@ prototype.setWidthByKey = function(key, w) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this._evtmgr.trigger("onResizeCol_" + key + " onResizeCol", [key, w, old], true);
+	evtmgr.trigger("onResizeCol_"+key, args, true);
+	evtmgr.trigger("onResizeCol", args, true);
 };
 prototype._autoColWidth = function(key) {
 	var res = this._canvasFind(".k_" + key),
@@ -1491,7 +1495,10 @@ prototype._getColCellClass = function(colDef) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	cssClass += " " + this._evtmgr.trigger("onGetColCellClass", [colDef]).join(" ");
+	var css = this._evtmgr.trigger("onGetColCellClass", [colDef]);
+	if (css) {
+		cssClass += " " + css.join(' ');
+	}
 	return cssClass;
 };
 prototype._getColCellClasses = function(colDefs) {
@@ -1508,7 +1515,9 @@ prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rende
 	var i = 0,
 		collen = colDefs.length,
 		colDef,
-		args = [rowIdx, null, datarow, null];
+		args = [rowIdx, null, datarow, null],
+		evtmgr = this._evtmgr,
+		cellclass;
 	for (; i < collen; i++) {
 		colDef = colDefs[i];
 		args[1] = i;
@@ -1526,7 +1535,9 @@ prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rende
 		  @since 1.1.7
 		  @version 1.1.7
 		  */
-		html[html.length] = colCommon[i] + this._evtmgr.trigger("onGetCellClass", args).join(" ") + "'>";
+		cellclass = evtmgr.trigger("onGetCellClass", args);
+		cellclass = cellclass ? cellclass.join(" ") : '';
+		html[html.length] = colCommon[i] + cellclass + "'>";
 		if (renderers[i]) {
 			if (cellInputs[i]) {
 				this._renderCell(html, rowIdx, i, datarow, colDef, renderers[i], true);
@@ -1545,7 +1556,9 @@ prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rende
 };
 prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef/*, renderer, cellInput */) {
 	var key = colDef['key'],
-		args = [rowIdx, colIdx, datarow, colDef, html];
+		args = [rowIdx, colIdx, datarow, colDef, html],
+		evtmgr = this._evtmgr,
+		event = "onRenderCell_"+key;
 	/**
 	  그리드 셀 안에 prepend 할 html 을 생성할 때 발생하는 이벤트입니다. prepend 할 내용이 있으면 html 에 push 해주면 됩니다.
 	  예) html.push("prepend 할 내용");
@@ -1559,7 +1572,7 @@ prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef/*, render
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this._evtmgr.trigger("onRenderCell_" + key + "_prepend", args, true);
+	evtmgr.trigger(event+"_prepend", args, true);
 	var val = datarow[key];
 	if (typeof val != "string" || val.substring(0, 3) !== "J@H") {
 		if (arguments.length > 5) {
@@ -1593,7 +1606,7 @@ prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef/*, render
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this._evtmgr.trigger("onRenderCell_" + key + "_append", args, true);
+	evtmgr.trigger(event+"_append", args, true);
 };
 /**
   셀 노드를 다시 렌더링 합니다.
@@ -1639,7 +1652,8 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this._evtmgr.trigger("keydownCanvas_" + e.which + " keydownCanvas", [e], true);
+	this._evtmgr.trigger("keydownCanvas_"+e.which, [e], true);
+	this._evtmgr.trigger("keydownCanvas", [e], true);
 };
 prototype._keyup = function(e) {
 	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
@@ -1665,7 +1679,8 @@ prototype._keyup = function(e) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this._evtmgr.trigger("keyupCanvas_" + e.which + " keyupCanvas", [e], true);
+	this._evtmgr.trigger("keyupCanvas_"+e.which, [e], true);
+	this._evtmgr.trigger("keyupCanvas", [e], true);
 };
 prototype._keypress = function(e) {
 	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
@@ -1691,7 +1706,8 @@ prototype._keypress = function(e) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this._evtmgr.trigger("keypressCanvas_" + e.which + " keypressCanvas", [e], true);
+	this._evtmgr.trigger("keypressCanvas_"+e.which, [e], true);
+	this._evtmgr.trigger("keypressCanvas", [e], true);
 };
 prototype._mousein = function(e) {
 	/**
@@ -2095,12 +2111,12 @@ prototype._triggerMouseEvent = function(e, events) {
 				evt;
 			for (; i < len; i++) {
 				evt = arr[i];
-				evtmgr.trigger(evt + '_' + key, args, true);
+				evtmgr.trigger(evt+'_'+key, args, true);
 				evtmgr.trigger(evt, args, true);
 			}
 		}
 		else {
-			evtmgr.trigger(events + '_' + key, args, true);
+			evtmgr.trigger(events+'_'+key, args, true);
 			evtmgr.trigger(events, args, true);
 		}
 		return true;

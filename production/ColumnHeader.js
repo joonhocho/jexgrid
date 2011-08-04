@@ -596,7 +596,7 @@ prototype._onRenderModules = function() {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.triggerGridEvent("onRenderHeadersComplete");
+	this.triggerGridEvent("onRenderHeadersComplete", false, true);
 };
 prototype._onAfterRenderModules = function() {
 	var opt = this._options;
@@ -615,7 +615,9 @@ prototype._render = function(header, colDef, i) {
 	var opt = this._options,
 		key = colDef['key'],
 		name = (colDef['noName'] ? "" : colDef['name'] || key),
-		widthPlus = this._widthPlus();
+		widthPlus = this._widthPlus(),
+		event = "onRenderHeader_" + key,
+		args = [header];
 	header.push("<div id='" + this.mid + "h" + key + "' class='" + opt['classColHeader'] + " " + (opt['reorderEnabled'] || colDef['sorter'] ? " " + opt['classInteractive'] : "") +
 		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + key + "'>");
 	/**
@@ -626,7 +628,7 @@ prototype._render = function(header, colDef, i) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.triggerGridEvent("onRenderHeader_" + key + "_prepend", [header]);
+	this.triggerGridEvent(event+"_prepend", args, true);
 	header.push(name);
 	/**
 	ColumnHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 뒤에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
@@ -636,7 +638,7 @@ prototype._render = function(header, colDef, i) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.triggerGridEvent("onRenderHeader_" + key + "_append", [header]);
+	this.triggerGridEvent(event+"_append", args, true);
 	if (colDef['sorter']) {
 		header.push("<span class='" + opt['classSort'] + "'></span>");
 	}
@@ -696,7 +698,8 @@ prototype._getDef = function(header) {
 	return this.getColMgr().getByKey(header.attr("colKey"));
 };
 prototype._sort = function(e, colHeader, colDef) {
-	var sorter = colDef['sorter'];
+	var key = colDef['key'],
+		sorter = colDef['sorter'];
 	/**
 	컬럼 정렬 전에 트리거되는 이벤트 입니다.
 	@event {Event} onBeforeColSort_COLKEY
@@ -712,7 +715,8 @@ prototype._sort = function(e, colHeader, colDef) {
 	@since 1.0.0
 	@version 1.0.0
 	*/
-	this.triggerGridEvent("onBeforeColSort_" + colDef['key'] + " onBeforeColSort");
+	this.triggerGridEvent("onBeforeColSort_"+key, false, true);
+	this.triggerGridEvent("onBeforeColSort", false, true);
 	sorter.desc = (sorter.desc === false) ? true : false;
 	//this._setSortClass();
 	this.getDataMgr().refresh({'sorter':sorter});
@@ -793,7 +797,8 @@ prototype._click = function(e) {
 		return;
 	}
 	var colDef = this._getDef(colHeader),
-		key = colDef['key'];
+		key = colDef['key'],
+		args = [e, colHeader, colDef];
 	/**
 	ColumnHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다. 발생된 click 이벤트가
 	valid 한지를 체크합니다.
@@ -806,7 +811,7 @@ prototype._click = function(e) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	if (this.getEventMgr().triggerInvalid("clickHeaderValid_" + key, [e, colHeader, colDef])) {
+	if (this.getEventMgr().triggerInvalid("clickHeaderValid_"+key, args)) {
 		return;
 	}
 	/**
@@ -830,7 +835,8 @@ prototype._click = function(e) {
 	@since 1.0.0
 	@version 1.1.7
 	*/
-	this.triggerGridEvent("clickHeader_" + key + " clickHeader", [e, colHeader, colDef]);
+	this.triggerGridEvent("clickHeader_"+key, args, true);
+	this.triggerGridEvent("clickHeader", args, true);
 };
 prototype._mousedown = function(e) {
 	var opt = this._options;
@@ -848,7 +854,8 @@ prototype._mousedown = function(e) {
 	var colHeader = this._closest(e.target);
 	if (colHeader.length) {
 		var colDef = this._getDef(colHeader),
-			key = colDef['key'];
+			key = colDef['key'],
+			args = [e, colHeader, colDef];
 		/**
 		  ColumnHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 		  @event {Event} mousedownHeader
@@ -858,7 +865,7 @@ prototype._mousedown = function(e) {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.triggerGridEvent("mousedownHeader", [e, colHeader]);
+		this.triggerGridEvent("mousedownHeader", args, true);
 		/**
 		  ColumnHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 		  @event {Event} mousedownHeader_COLKEY
@@ -869,7 +876,7 @@ prototype._mousedown = function(e) {
 		  @since 1.0.0
 		  @version 1.1.7
 		  */
-		this.triggerGridEvent("mousedownHeader_" + key, [e, colHeader, colDef]);
+		this.triggerGridEvent("mousedownHeader_"+key, args, true);
 	}
 };
 prototype._dragmove = function(e) {

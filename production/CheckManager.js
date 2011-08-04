@@ -399,7 +399,7 @@ prototype.check = function(datarow, nomap) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.triggerGridEvent("onCheckChange", [datarow, true]);
+	this.triggerGridEvent("onCheckChange", [datarow, true], true);
 };
 /**
   주어진 데이터의 체크를 해제합니다. 체크되어있지 않은 경우 아무것도 하지 않습니다.<br>
@@ -422,7 +422,7 @@ prototype.uncheck = function(datarow, nomap) {
 	if (this._hasMaster) {
 		CheckManager._uncheck(this._master);
 	}
-	this.triggerGridEvent("onCheckChange", [datarow, false]);
+	this.triggerGridEvent("onCheckChange", [datarow, false], true);
 };
 /**
   주어진 데이터에 해당하는 체크박스를 비활성화 합니다.
@@ -454,7 +454,7 @@ prototype.disable = function(datarow, nomap) {
 	  @since 1.3.0
 	  @version 1.3.0
 	  */
-	this.triggerGridEvent("onDisableCheck", [datarow]);
+	this.triggerGridEvent("onDisableCheck", [datarow], true);
 };
 /**
   주어진 데이터에 해당하는 체크박스를 활성화 합니다.
@@ -486,7 +486,7 @@ prototype.enable = function(datarow, nomap) {
 	  @since 1.3.0
 	  @version 1.3.0
 	  */
-	this.triggerGridEvent("onEnableCheck", [datarow]);
+	this.triggerGridEvent("onEnableCheck", [datarow], true);
 };
 prototype._updateMaster = function() {
 	if (this._hasMaster) {
