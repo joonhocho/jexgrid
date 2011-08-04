@@ -19,7 +19,8 @@ JGM
 (function() {
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
-	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Cell = goog.getObjectByName('jx.grid.Cell');
  goog.exportSymbol('jx.grid.EditManager', EditManager);
  goog.exportSymbol('jx.grid.Editor', Editor);
 /**
@@ -405,7 +406,7 @@ prototype._onGetColCellClass = function(colDef) {
 @since 1.0.0
 @version 1.0.0
 */
-jx.grid.Cell.prototype.isEdited = function() {
+Cell.prototype.isEdited = function() {
 	return this.grid['editMgr']._isEdited(this);
 };
 /**
@@ -416,7 +417,7 @@ jx.grid.Cell.prototype.isEdited = function() {
 @since 1.0.0
 @version 1.0.0
 */
-jx.grid.Cell.prototype.setValue = function(value) {
+Cell.prototype.setValue = function(value) {
 	var datarow = this.getDatarow(),
 		key = this.getKey(),
 		res;

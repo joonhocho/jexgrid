@@ -4,6 +4,7 @@ goog.require('jx.util');
 goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.Column');
+goog.require('jx.grid.ViewportManager');
 goog.provide('jx.grid.ColumnManager');
 /*!
  * AUTHOR
@@ -20,7 +21,8 @@ JGM
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
-	Column = goog.getObjectByName('jx.grid.Column');
+	Column = goog.getObjectByName('jx.grid.Column'),
+	ViewportManager = goog.getObjectByName('jx.grid.ViewportManager');
  goog.exportSymbol('jx.grid.ColumnManager', ColumnManager);
 /**
 ColumnManager 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
@@ -261,7 +263,7 @@ function ColumnManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			'renderer':		jx.grid.ViewportManager._renderer,
+			'renderer':		ViewportManager._renderer,
 			/**
 			컬럼 셀 {@link jx.grid.ColumnManager.options.colDef.renderer renderer} 함수에 보낼 파라미터 타입을 정하는 옵션. true 일 경우에는
 			{@link jx.grid.Cell Cell} 인스턴스를 보내고, false 일 경우에는 다음의 파라미터들을 순서대로 보냅니다. <br>
