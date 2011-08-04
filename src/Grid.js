@@ -632,6 +632,8 @@ prototype._createCss = function() {
 	  @since 1.0.0
 	  @version 1.2.2
 	  */
+	var subcss = em.trigger("onCreateCss");
+	subcss = subcss ? subcss.join('') : '';
 	var style = Util.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {
 		'selector': "#" + this.mid,
 		'font': opt['font'],
@@ -639,7 +641,7 @@ prototype._createCss = function() {
 		"border:" + opt['border'] + ";" :
 		"border-top:" + opt['border'] + ";border-bottom:" + opt['border'] + ";",
 		'style': opt['style'],
-		'submodule': event.css.join('') + em.trigger("onCreateCss").join("")
+		'submodule': event.css.join('') + subcss
 	});
 	this._style = Util.createStyle(style);
 
@@ -657,19 +659,26 @@ prototype._createCss = function() {
 	  @version 1.2.2
 	  */
 
-	this._dynStyle = Util.createStyle(event.css.join('') + ';' + em.trigger("onCreateDynamicCss").join(""));
+	subcss = em.trigger("onCreateDynamicCss");
+	subcss = subcss ? subcss.join('') : '';
+	this._dynStyle = Util.createStyle(event.css.join('') + ';' + subcss);
 };
 
 prototype._recreateDynamicCss = function() {
 	this.log('rewriting dynamic css...', V_RESIZE);//IF_DEBUG
-	Util.setStyle(this._dynStyle, this['event'].trigger("onCreateDynamicCss").join(""));
+	var subcss = this['event'].trigger("onCreateDynamicCss");
+	subcss = subcss ? subcss.join('') : '';
+	if (subcss) {
+		Util.setStyle(this._dynStyle, subcss);
+	}
 };
 
 prototype._keydown = function(e) {
 	var em = this['event'],
-		args = [e];
+		args = [e],
+		keycode = e.which;
 
-	this.log('UI event:keydown detected. event=' + e.type + ', keycode=' + e.which, V_KEYDOWN);//IF_DEBUG
+	this.log('UI event:keydown detected. event=' + e.type + ', keycode=' + keycode, V_KEYDOWN);//IF_DEBUG
 
 	/**
 	  그리드에 keydown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -700,6 +709,7 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.1.7
 	  */	
+	em.trigger("keydown_"+keycode, args, true);
 
 	/**
 	  Grid 컨테이너에 바인드 된 jQuery keydown 이벤트가 발생할 경우 트리거되는
@@ -711,13 +721,14 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("keydown_" + e.which + " keydown", args, true);
+	em.trigger("keydown", args, true);
 };
 
 prototype._keyup = function(e) {
 	var em = this['event'],
-		args = [e];
-	this.log('UI event:keyup detected. event=' + e.type + ', keycode=' + e.which, V_KEYUP);//IF_DEBUG
+		args = [e],
+		keycode = e.which;
+	this.log('UI event:keyup detected. event=' + e.type + ', keycode=' + keycode, V_KEYUP);//IF_DEBUG
 
 	/**
 	  그리드에 keyup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -748,6 +759,7 @@ prototype._keyup = function(e) {
 	  @since 1.0.0
 	  @version 1.1.7
 	  */
+	em.trigger("keyup_"+keycode, args, true);
 
 	/**
 	  Grid 컨테이너에 바인드 된 jQuery keyup 이벤트가 발생할 경우 트리거되는
@@ -759,13 +771,14 @@ prototype._keyup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("keyup_" + e.which + " keyup", args, true);
+	em.trigger("keyup", args, true);
 };
 
 prototype._keypress = function(e) {
 	var em = this['event'],
-		args = [e];
-	this.log('UI event:keypress detected. event=' + e.type + ', keycode=' + e.which, V_KEYPRESS);//IF_DEBUG
+		args = [e],
+		keycode = e.which;
+	this.log('UI event:keypress detected. event=' + e.type + ', keycode=' + keycode, V_KEYPRESS);//IF_DEBUG
 
 	/**
 	  그리드에 keypress 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -796,6 +809,7 @@ prototype._keypress = function(e) {
 	  @since 1.0.0
 	  @version 1.1.7
 	  */
+	em.trigger("keypress_"+keycode, args, true);
 
 	/**
 	  Grid 컨테이너에 바인드 된 jQuery keypress 이벤트가 발생할 경우 트리거되는
@@ -807,7 +821,7 @@ prototype._keypress = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("keypress_" + e.which + " keypress", args, true);
+	em.trigger("keypress", args, true);
 };
 
 prototype._mousein = function(e) {
@@ -1587,7 +1601,7 @@ prototype.chart = function(chartCont, type, columns, options) {
 		var chart = grid._charts[chartCont] = new google.visualization[cls](document.getElementById(chartCont));
 		chart.draw(data, options);
 		grid['event'].bind('onAfterRefresh', function() {
-			this.log('redrawing chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_RESIZE);//IF_DEBUG
+			grid.log('redrawing chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_RESIZE);//IF_DEBUG
 			data.removeRows(0, data.getNumberOfRows());
 			data.addRows(dataMgr.exportToArray(columns));
 			chart.draw(data, options);

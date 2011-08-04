@@ -511,7 +511,7 @@ prototype.check = function(datarow, nomap) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.triggerGridEvent("onCheckChange", [datarow, true]);
+	this.triggerGridEvent("onCheckChange", [datarow, true], true);
 };
 
 
@@ -542,7 +542,7 @@ prototype.uncheck = function(datarow, nomap) {
 		CheckManager._uncheck(this._master);
 	}
 
-	this.triggerGridEvent("onCheckChange", [datarow, false]);
+	this.triggerGridEvent("onCheckChange", [datarow, false], true);
 };
 
 /**
@@ -584,7 +584,7 @@ prototype.disable = function(datarow, nomap) {
 	  @since 1.3.0
 	  @version 1.3.0
 	  */
-	this.triggerGridEvent("onDisableCheck", [datarow]);
+	this.triggerGridEvent("onDisableCheck", [datarow], true);
 };
 
 /**
@@ -626,7 +626,7 @@ prototype.enable = function(datarow, nomap) {
 	  @since 1.3.0
 	  @version 1.3.0
 	  */
-	this.triggerGridEvent("onEnableCheck", [datarow]);
+	this.triggerGridEvent("onEnableCheck", [datarow], true);
 };
 
 prototype._updateMaster = function() {
