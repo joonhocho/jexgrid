@@ -372,8 +372,8 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 name: "DataCreator",
 path: "creator",
-"$": "creator",
-map: "inputMap _options"
+"$": "_creator",
+map: "_inputMap _options"
 });
 };
 }());

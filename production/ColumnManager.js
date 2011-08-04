@@ -364,9 +364,9 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "ColumnManager",
 		path: "colDefMgr",
-		property: "colDefs",
-		map: "keyToIdx _keyToDef _options",
-		array: "filtered"
+		property: "_colDefs",
+		map: "_keyToIdx _keyToDef _options",
+		array: "_filtered"
 	});
 };
 /**

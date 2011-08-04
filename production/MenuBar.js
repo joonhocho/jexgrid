@@ -70,9 +70,9 @@ proto._destroy = function() {
 	JGM._destroy(this, {
 		name: "MenuBar",
 		path: "menubar",
-		"$": "menubar",
-		property: "ctnr",
-		map: "options"
+		"$": "_menubar",
+		property: "_ctnr",
+		map: "_options"
 	});
 };
 proto._onCreateCss = function() {

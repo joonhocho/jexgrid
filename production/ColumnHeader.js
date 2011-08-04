@@ -460,9 +460,9 @@ prototype._beforeDispose = function() {
 	JGM._destroy(this, {
 		name: "ColumnHeader",
 		path: "header",
-		"$": "resizeGuide _mask _head",
-		property: "ctnr _resizeMap",
-		map: "map _options"
+		"$": "_resizeGuide _mask _head",
+		property: "_ctnr _resizeMap",
+		map: "_map _options"
 	});
 	this.dispose();
 };

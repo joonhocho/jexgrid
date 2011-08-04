@@ -2287,7 +2287,7 @@ jx.data.DataManager = {};
   };
   b._destroy = function() {
     this.cleanList(this.all);
-    g._destroy(this, {name:"DataManager", path:"dataMgr", property:"all _idMode _increment idKey _sorter", map:"consts _idToIdx _idToData _options", array:"datalist failed _history _redoHistory _filters"})
+    g._destroy(this, {name:"DataManager", path:"dataMgr", property:"all _idMode _increment idKey _sorter", map:"_consts _idToIdx _idToData _options", array:"datalist failed _history _redoHistory _filters"})
   };
   b.addUniqueIndex = function(a, c, e, h) {
     if(h !== !0 && (d.isNull(a) || d.isEmptyString(c) || d.isNull(e))) {
@@ -3441,7 +3441,7 @@ jx.grid.EventManager = {};
     for(a in c) {
       c.hasOwnProperty(a) && g._deleteArray(c, a)
     }
-    g._destroy(this, {name:"EventManager", path:"event", map:"map"})
+    g._destroy(this, {name:"EventManager", path:"event", map:"_map"})
   };
   b.register = function(a, c, e) {
     if(d.isString(a)) {
@@ -4000,7 +4000,7 @@ jx.grid.Grid = {};
   };
   a.destroy = function() {
     try {
-      this.dispatchEvent({type:"beforeDispose"}), d.isEmptyObj(g.m.Grid) && g._unbindGlobalEvents(), this.event.trigger("onDestroy"), g._destroy(this, {name:"Grid", module:"event", $:"ctnr", map:"vars _options", style:"style _dynStyle"}), this.dispose()
+      this.dispatchEvent({type:"beforeDispose"}), d.isEmptyObj(g.m.Grid) && g._unbindGlobalEvents(), this.event.trigger("onDestroy"), g._destroy(this, {name:"Grid", module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"}), this.dispose()
     }catch(c) {
       return c
     }
@@ -4335,7 +4335,7 @@ jx.grid.SelectionManager = {};
     for(c in a) {
       a.hasOwnProperty(c) && c !== "length" && g._deleteMap(a, c)
     }
-    g._destroy(this, {name:"SelectionManager", path:"selMgr", map:"rows _cols _range _last _consts _options"})
+    g._destroy(this, {name:"SelectionManager", path:"selMgr", map:"_rows _cols _range _last _consts _options"})
   };
   a._onCreateCss = function() {
     var c = this.grid.event.trigger("onBeforeCreateSelCss"), e = "#" + this.grid.mid + " .", a = this._options;
@@ -4681,7 +4681,7 @@ jx.grid.Editor = {};
   };
   c._destroy = function() {
     this._deleteEditor();
-    d._destroy(this, {name:"EditManager", path:"editMgr", map:"beginEditKeys _options"})
+    d._destroy(this, {name:"EditManager", path:"editMgr", map:"_beginEditKeys _options"})
   };
   c._onBeforeCreateSelCss = function() {
     var e = "#" + this.grid.mid + " .", a = this._options, c = [], b = this.grid.view._getRowInnerHeight();
@@ -4881,7 +4881,7 @@ jx.grid.TooltipManager = {};
     this.grid.event.bind({onCreateCss:this._onCreateCss, onDestroy:this._destroy, mouseoutCanvas:this._mouseoutCanvas, mousemoveCanvas:this._mousemoveCanvas, mouseoverCanvas:this._mouseoverCanvas}, this)
   };
   b._destroy = function() {
-    g._destroy(this, {name:"TooltipManager", path:"tooltip", $:"tooltip", property:"ctnr", map:"options"})
+    g._destroy(this, {name:"TooltipManager", path:"tooltip", $:"_tooltip", property:"_ctnr", map:"_options"})
   };
   b._onCreateCss = function() {
     var a = this._options, c = [];
@@ -5007,7 +5007,7 @@ jx.grid.ViewportManager = {};
     this._drag = !1
   };
   c._onDestroy = function() {
-    g._destroy(this, {name:"ViewportManager", path:"view", $:"canvas _mask", property:"ctnr", map:"vars _lockedRows _renderedRows _options"})
+    g._destroy(this, {name:"ViewportManager", path:"view", $:"_canvas _mask", property:"_ctnr", map:"_vars _lockedRows _renderedRows _options"})
   };
   c._onCreateCss = function() {
     var a = "#" + this.grid.mid + " .", c = this._options, b = a + c.classCell, d = a + c.classRow, f = c.borderThickness + "px " + c.border, g = d + "[" + c.attrRowIdx, j = this.grid.colDefMgr.get(), o = j.length, n = 0, p = [];
@@ -5819,7 +5819,7 @@ jx.grid.ColumnManager = {};
     this.set(a.colDefs)
   };
   m._destroy = function() {
-    h._destroy(this, {name:"ColumnManager", path:"colDefMgr", property:"colDefs", map:"keyToIdx _keyToDef _options", array:"filtered"})
+    h._destroy(this, {name:"ColumnManager", path:"colDefMgr", property:"_colDefs", map:"_keyToIdx _keyToDef _options", array:"_filtered"})
   };
   m.getAll = function() {
     return this._colDefs
@@ -6060,7 +6060,7 @@ jx.grid.MenuBar = {};
     this.grid.event.bind({onCreateCss:this._onCreateCss, onDestroy:this._destroy}, this)
   };
   a._destroy = function() {
-    g._destroy(this, {name:"MenuBar", path:"menubar", $:"menubar", property:"ctnr", map:"options"})
+    g._destroy(this, {name:"MenuBar", path:"menubar", $:"_menubar", property:"_ctnr", map:"_options"})
   };
   a._onCreateCss = function() {
     var a = "#" + this.grid.mid + " .", b = this._options, d = [];
@@ -6118,7 +6118,7 @@ jx.grid.Footer = {};
     for(a in c) {
       c.hasOwnProperty(a) && c[a].remove()
     }
-    g._destroy(this, {name:"Footer", path:"footer", $:"foot", property:"ctnr", map:"sumMap _options"})
+    g._destroy(this, {name:"Footer", path:"footer", $:"_foot", property:"_ctnr", map:"_sumMap _options"})
   };
   b._onCreateCss = function() {
     var a = this._options, c = "#" + this.grid.mid + " ." + a.classFooter, b = [];
@@ -6234,7 +6234,7 @@ jx.grid.ColumnHeader = {};
   a._beforeDispose = function() {
     this._head.sortable && this._head.sortable("destroy");
     this._destroyResizeHandles();
-    g._destroy(this, {name:"ColumnHeader", path:"header", $:"resizeGuide _mask _head", property:"ctnr _resizeMap", map:"map _options"});
+    g._destroy(this, {name:"ColumnHeader", path:"header", $:"_resizeGuide _mask _head", property:"_ctnr _resizeMap", map:"_map _options"});
     this.dispose()
   };
   a._destroyResizeHandles = function() {
@@ -6733,7 +6733,7 @@ jx.grid.Collapser = {};
     this.grid.event.bind(b, this)
   };
   a._destroy = function() {
-    g._destroy(this, {name:"Collapser", path:"collapser", module:"tree", $:"master", property:"checkMgr", map:"options"})
+    g._destroy(this, {name:"Collapser", path:"collapser", module:"_tree", $:"_master", property:"checkMgr", map:"_options"})
   };
   a._onCreateCss = function() {
     var a = "#" + this.grid.mid + " .", b = this._options, f = a + this.grid.view._options.classRow + " .", g = a + b.classCollapser, i = g + "." + b.classExpanded, m = g + "." + b.classCollapsed, k = this.grid.view._getRowInnerHeight(), j = [], o = this.grid.header;
@@ -7058,7 +7058,7 @@ jx.grid.ColumnGroup = {};
     this.grid.event.bind(a, this)
   };
   b._destroy = function() {
-    g._destroy(this, {name:"ColumnGroup", path:"colGroup", property:"collapser", map:"parentMap _options"})
+    g._destroy(this, {name:"ColumnGroup", path:"colGroup", property:"collapser", map:"_parentMap _options"})
   };
   b._processData = function(a) {
     for(var b = a.length, e = this._options.key, f = this._options.padColKeys, g = this.grid.dataMgr, i = g._consts._notReal, m = g.idKey, k = this.collapser, j = k._tree._options.nodeKey, o = k._tree._options.parentKey, n = [], p = 0;p < b;p++) {
@@ -7228,7 +7228,7 @@ jx.grid.DataCreator = {};
     for(a in b) {
       b.hasOwnProperty(a) && g._delete$(b, a)
     }
-    g._destroy(this, {name:"DataCreator", path:"creator", $:"creator", map:"inputMap _options"})
+    g._destroy(this, {name:"DataCreator", path:"creator", $:"_creator", map:"_inputMap _options"})
   }
 })();
 jx.grid.SearchManager = {};
@@ -7368,7 +7368,7 @@ jx.grid.SearchManager = {};
         g._deleteMap(f, a)
       }
     }
-    g._destroy(this, {name:"SearchManager", path:"search", $:"masterInput _advButton _mask _search _tag _adv", property:"ctnr _hasFilter", array:"global", map:"globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"})
+    g._destroy(this, {name:"SearchManager", path:"search", $:"_masterInput _advButton _mask _search _tag _adv", property:"_ctnr _hasFilter", array:"_global", map:"_globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"})
   };
   b._onFilter = function(a, b) {
     if(!(this._global.length === 0 && d.isEmptyObj(this._codeMap))) {
