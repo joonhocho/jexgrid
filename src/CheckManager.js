@@ -27,7 +27,6 @@ goog.provide('jx.grid.CheckManager');
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 goog.exportSymbol('jx.grid.CheckManager', CheckManager);
-JGM._add("CheckManager", CheckManager);
 
 
 /**
@@ -46,7 +45,7 @@ JGM._add("CheckManager", CheckManager);
 
   @constructor {CheckManager} CheckManager
   @param {Object} args - CheckManager 모듈 파라미터 오브젝트
-  @... {jx.grid.Grid} args.grid - CheckManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+  @... {jx.grid.Grid} args.grid - CheckManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
   @... {Object} args.options - CheckManager 옵션 오브젝트
   @returns {CheckManager} CheckManager 모듈 인스턴스를 리턴합니다.
 

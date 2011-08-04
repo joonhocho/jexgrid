@@ -28,9 +28,6 @@ var JGM = goog.getObjectByName('jx.grid'),
  goog.exportSymbol('jx.grid.EditManager', EditManager);
  goog.exportSymbol('jx.grid.Editor', Editor);
 
- JGM._add("EditManager", EditManager);
- JGM._add("Editor", Editor);
-
 /**
 EditManager 모듈. 데이터 에디팅을 담당하는 모듈입니다.
 EditManager 클래스. 컬럼 별 커스텀 에디터를 지원합니다.
@@ -47,7 +44,7 @@ EditManager 컨스트럭터 입니다.
 
 @constructor {EditManager} EditManager
 @param {Object} args - EditManager 모듈 파라미터 오브젝트
-@... {jx.grid.Grid} args.grid - EditManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+@... {jx.grid.Grid} args.grid - EditManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
 @... {Object} args.options - EditManager 옵션 오브젝트
 @returns {EditManager} EditManager 모듈 인스턴스를 리턴합니다.
 
@@ -68,7 +65,7 @@ function EditManager(args) {
 	this.mid = args.mid;
 
 	/**
-	EditManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+	EditManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 	@var {jx.grid.Grid} grid
 
@@ -787,7 +784,7 @@ function Editor(args) {
 	*/
 
 	/**
-	Editor 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+	Editor 를 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 	@var {jx.grid.Grid} grid
 

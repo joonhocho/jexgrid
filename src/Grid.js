@@ -6,6 +6,7 @@ goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.EventManager');
 
+echo(jx.grid.Grid);
 goog.provide('jx.grid.Grid');
 
 /*!
@@ -59,7 +60,7 @@ goog.provide('jx.grid.Grid');
 		V_INIT = 1;
 
 goog.exportSymbol('jx.grid.Grid', Grid);
-JGM._add("Grid", Grid);
+
 Grid.V_KEYDOWN = V_KEYDOWN;
 Grid.V_KEYPRESS = V_KEYPRESS;
 Grid.V_KEYUP = V_KEYUP;
@@ -349,7 +350,7 @@ prototype._init = function(args) {
 
 	em = this['event'] =  JGM.create("EventManager", {grid:this, 'options':opt['EventManager']});
 
-	this['colDefMgr'] =  JGM.create("ColDefManager", {grid:this, colDefs:args['colDefs'], 'options':opt['ColDefManager']});
+	this['colDefMgr'] =  JGM.create("ColumnManager", {grid:this, colDefs:args['colDefs'], 'options':opt['ColDefManager']});
 
 	this['dataMgr'] = JGM.create("DataManager", {grid:this, datalist:args['datalist'], 'options':opt['DataManager']});
 
@@ -377,7 +378,7 @@ prototype._init = function(args) {
 	}
 
 	if (opt['ColGroup']) {
-		this['colGroup'] =  JGM.create("ColGroup", {grid:this, 'options':opt['ColGroup']});
+		this['colGroup'] =  JGM.create("ColumnGroup", {grid:this, 'options':opt['ColGroup']});
 	}
 
 	if (opt['SelectionManager']) {
@@ -389,7 +390,7 @@ prototype._init = function(args) {
 	}
 
 	if (opt['ColHeader']) {
-		this['header'] =  JGM.create("ColHeader", {grid:this, 'container':ctnr, 'options':opt['ColHeader']});
+		this['header'] =  JGM.create("ColumnHeader", {grid:this, 'container':ctnr, 'options':opt['ColHeader']});
 	}
 
 	if (opt['SearchManager']) {

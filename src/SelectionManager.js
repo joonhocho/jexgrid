@@ -28,7 +28,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 	Cell = goog.getObjectByName('jx.grid.Cell');
 
  goog.exportSymbol('jx.grid.SelectionManager', SelectionManager);
- JGM._add("SelectionManager", SelectionManager);
 
 /**
 SelectionManager 모듈. 셀의 (범위) 선택을 담당하는 모듈입니다.
@@ -47,7 +46,7 @@ SelectionManager 컨스트럭터 입니다.
 
 @constructor {SelectionManager} SelectionManager
 @param {Object} args - SelectionManager 모듈 파라미터 오브젝트
-@... {jx.grid.Grid} args.grid - SelectionManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+@... {jx.grid.Grid} args.grid - SelectionManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
 @... {Object} args.options - SelectionManager 옵션 오브젝트
 @returns {SelectionManager} SelectionManager 모듈 인스턴스를 리턴합니다.
 
@@ -68,7 +67,7 @@ function SelectionManager(args) {
 	this.mid = args.mid;
 
 	/**
-	SelectionManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+	SelectionManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 	@var {jx.grid.Grid} grid
 

@@ -30,8 +30,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
 	Tree = goog.getObjectByName('jx.struct.Tree');
 
- goog.exportSymbol('JGM.module.Collapser', Collapser);
- JGM._add("Collapser", Collapser);
+ goog.exportSymbol('jx.grid.Collapser', Collapser);
 
 	/**
 	  Collapser 모듈. 트리 구조의 데이터를 담당하는 모듈입니다.
@@ -50,7 +49,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	  @constructor {Collapser} Collapser
 	  @param {Object} args - Collapser 모듈 파라미터 오브젝트
-	  @... {jx.grid.Grid} args.grid - Collapser 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+	  @... {jx.grid.Grid} args.grid - Collapser 를 포함하는 {@link jx.grid.Grid} 인스턴스
 	  @... {Object} args.options - Collapser 옵션 오브젝트
 	  @returns {Collapser} Collapser 모듈 인스턴스를 리턴합니다.
 
@@ -71,7 +70,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.mid = args.mid;
 
 		/**
-		  Collapser 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+		  Collapser 를 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 		  @var {jx.grid.Grid} grid
 

@@ -45,7 +45,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @constructor {DataManager} DataManager
 	  @param {Object} args - DataManager 모듈 파라미터 오브젝트
 	  @... {Array.<Object>} args.datalist - 데이터 어레이
-	  @... {jx.grid.Grid} args.grid - DataManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+	  @... {jx.grid.Grid} args.grid - DataManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
 	  @... {Object} args.options - DataManager 옵션 오브젝트
 	  @returns {DataManager} DataManager 모듈 인스턴스를 리턴합니다.
 
@@ -67,7 +67,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.mid = args.mid;
 
 		/**
-		  DataManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+		  DataManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 		  @var {jx.grid.Grid} grid
 

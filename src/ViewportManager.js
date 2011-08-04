@@ -29,7 +29,6 @@ goog.provide('jx.grid.ViewportManager');
 	Cell = goog.getObjectByName('jx.grid.Cell');
 
 goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
-JGM._add("ViewportManager", ViewportManager);
 
 /**
   ViewportManager 모듈. 그리드 로우와 셀을 가진 테이블을 담당하는 모듈입니다.
@@ -48,7 +47,7 @@ JGM._add("ViewportManager", ViewportManager);
   @constructor {ViewportManager} ViewportManager
   @param {Object} args - ViewportManager 모듈 파라미터 오브젝트
   @... {jQuery} args.container - ViewportManager 를 넣을 컨테이너 오브젝트
-  @... {jx.grid.Grid} args.grid - ViewportManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+  @... {jx.grid.Grid} args.grid - ViewportManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
   @... {Object} args.options - ViewportManager 옵션 오브젝트
   @returns {ViewportManager} ViewportManager 모듈 인스턴스를 리턴합니다.
 
@@ -73,7 +72,7 @@ function ViewportManager(args) {
 	this._canvas;
 
 	/**
-	  ViewportManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+	  ViewportManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 	  @var {jx.grid.Grid} grid
 
@@ -426,6 +425,8 @@ prototype.__init = function() {
 	//jx.grid.ColumnHeader._disableSel(this._mask);
 
 	this._setColLefts();
+
+	this._setCanvasWidth(this._calCanvasWidth());
 
 	this._lastRowLen = this.grid['dataMgr'].datalist.length;
 

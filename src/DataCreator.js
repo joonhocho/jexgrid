@@ -24,7 +24,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.DataCreator', DataCreator);
-JGM._add("DataCreator", DataCreator);
 
  /**
    DataCreator 모듈. 새로운 데이터의 생성과 추가를 담당하는 모듈입니다.
@@ -43,7 +42,7 @@ JGM._add("DataCreator", DataCreator);
 	  @constructor {DataCreator} DataCreator
 	  @param {Object} args - DataCreator 모듈 파라미터 오브젝트
 	  @... {jQuery} args.container - DataCreator 를 넣을 컨테이너 오브젝트
-	  @... {jx.grid.Grid} args.grid - DataCreator 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+	  @... {jx.grid.Grid} args.grid - DataCreator 를 포함하는 {@link jx.grid.Grid} 인스턴스
 	  @... {Object} args.options - DataCreator 옵션 오브젝트
 	  @returns {DataCreator} DataCreator 모듈 인스턴스를 리턴합니다.
 
@@ -68,7 +67,7 @@ JGM._add("DataCreator", DataCreator);
 		this._creator;
 
 		/**
-		  DataCreator 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+		  DataCreator 를 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 		  @var {jx.grid.Grid} grid
 

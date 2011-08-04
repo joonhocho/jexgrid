@@ -19,7 +19,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.MenuBar', MenuBar);
- JGM._add("MenuBar", MenuBar);
 
 /**
 메뉴 바를 생성하고 관리하는 {@link JGM.MenuBar MenuBar} 인스턴스 입니다.

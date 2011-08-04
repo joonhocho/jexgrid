@@ -26,18 +26,17 @@ var JGM = goog.getObjectByName('jx.grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
 	Column = goog.getObjectByName('jx.grid.Column');
 
- goog.exportSymbol('jx.grid.ColumnManager', ColDefManager);
- JGM._add("ColDefManager", ColDefManager);
+ goog.exportSymbol('jx.grid.ColumnManager', ColumnManager);
 
 /**
-ColDefManager 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
-@module ColDefManager
+ColumnManager 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
+@module ColumnManager
  */
 
 /**
-ColDefManager 클래스. 그리드 컬럼 정의 오브젝트를 관리하는 모듈입니다.
+ColumnManager 클래스. 그리드 컬럼 정의 오브젝트를 관리하는 모듈입니다.
 
-@class {ColDefManager} jx.grid.ColumnManager
+@class {ColumnManager} jx.grid.ColumnManager
 
 @author 조준호
 @since 1.0.0
@@ -45,22 +44,22 @@ ColDefManager 클래스. 그리드 컬럼 정의 오브젝트를 관리하는 모듈입니다.
 */
 
 /**
-ColDefManager 컨스트럭터 입니다.
+ColumnManager 컨스트럭터 입니다.
 
-@constructor {ColDefManager} ColDefManager
-@param {Object} args - ColDefManager 모듈 파라미터 오브젝트
+@constructor {ColumnManager} ColumnManager
+@param {Object} args - ColumnManager 모듈 파라미터 오브젝트
 @... {Array.<Object>} args.colDefs - 컬럼 정의 오브젝트 어레이
-@... {jx.grid.Grid} args.grid - ColDefManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
-@... {Object} args.options - ColDefManager 옵션 오브젝트
-@returns {ColDefManager} ColDefManager 모듈 인스턴스를 리턴합니다.
+@... {jx.grid.Grid} args.grid - ColumnManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
+@... {Object} args.options - ColumnManager 옵션 오브젝트
+@returns {ColumnManager} ColumnManager 모듈 인스턴스를 리턴합니다.
 
 @author 조준호
 @since 1.0.0
 @version 1.0.0
 */
-function ColDefManager(args) {
+function ColumnManager(args) {
 	/**
-	{@link JGM} 이 할당해주는 ColDefManager 모듈 고유 아이디입니다. 읽기 전용.
+	{@link JGM} 이 할당해주는 ColumnManager 모듈 고유 아이디입니다. 읽기 전용.
 
 	@var {string} mid
 
@@ -71,7 +70,7 @@ function ColDefManager(args) {
 	this.mid = args.mid;
 
 	/**
-	ColDefManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+	ColumnManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 	@var {jx.grid.Grid} grid
 
@@ -82,7 +81,7 @@ function ColDefManager(args) {
 	this.grid = args.grid;
 
 	/**
-	그리드 컬럼 정의를 관리하는 {@link jx.grid.ColumnManager ColDefManager} 인스턴스 입니다.
+	그리드 컬럼 정의를 관리하는 {@link jx.grid.ColumnManager ColumnManager} 인스턴스 입니다.
 
 	@var {jx.grid.ColumnManager} jx.grid.Grid.colDefMgr
 
@@ -93,7 +92,7 @@ function ColDefManager(args) {
 	this.grid['colDefMgr'] = this;
 
 	/**
-	ColDefManager 모듈의 기본 옵션 값들을 정의합니다.
+	ColumnManager 모듈의 기본 옵션 값들을 정의합니다.
 
 	@type {Object} options
 	@private
@@ -457,11 +456,11 @@ function ColDefManager(args) {
 	this.__init(args);
 }
 
-ColDefManager.getInstance = function(args) {
-	return new ColDefManager(args);
+ColumnManager.getInstance = function(args) {
+	return new ColumnManager(args);
 };
 
-var prototype = ColDefManager.prototype;
+var prototype = ColumnManager.prototype;
 
 prototype.__init = function(args) {
 	this.grid['event'].bind("onDestroy", this._destroy, this);
@@ -470,7 +469,7 @@ prototype.__init = function(args) {
 
 prototype._destroy = function() {
 	JGM._destroy(this, {
-		name: "ColDefManager",
+		name: "ColumnManager",
 		path: "colDefMgr",
 		property: "colDefs",
 		map: "keyToIdx _keyToDef _options",
@@ -707,7 +706,7 @@ prototype._extend = function(colDef) {
 			else if (type) {
 				sorter = type;
 			}
-			sorter = ColDefManager.sorter(sorter, key);
+			sorter = ColumnManager.sorter(sorter, key);
 			if (sorter) {
 				sorter.key = key;
 			}
@@ -1083,7 +1082,7 @@ function toBoolean(a) {
 @since 1.0.0
 @version 1.0.0
 */
-ColDefManager.sorter = function(type, key, on) {
+ColumnManager.sorter = function(type, key, on) {
 	var sorter = {on:!!on, key:key};
 	var MAX = Number.MAX_VALUE;
 	switch (type) {

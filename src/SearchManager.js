@@ -21,7 +21,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.SearchManager', SearchManager);
- JGM._add("SearchManager", SearchManager);
 
 function SearchManager(args) {
 	this.mid = args.mid;

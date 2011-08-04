@@ -21,7 +21,6 @@ goog.provide('jx.grid.Cell');
 	Disposable = goog.getObjectByName('jx.lang.Disposable');
 
 goog.exportSymbol('jx.grid.Cell', Cell);
-JGM._add("Cell", Cell);
 
 /**
  * Cell 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
@@ -30,25 +29,25 @@ JGM._add("Cell", Cell);
  * @class jx.grid.Cell
  * @constructor
  *
- * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
  * @param {number} args.row - 셀의 로우 인덱스
  * @param {number} args.col - 셀의 컬럼 인덱스
  *
  * @param {Object} args - Cell 모듈 파라미터 오브젝트
- * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
  * @param {DOMElement} args.node - 셀의 DOM 노드
  *
  * @param {Object} args - Cell 모듈 파라미터 오브젝트
- * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
  * @param {jQuery} args.$ - 셀의 DOM 노드를 가진 jQuery 인스턴스
  *
  * @param {Object} args - Cell 모듈 파라미터 오브젝트
- * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
  * @param {Object} args.datarow - 셀의 로우 데이터 오브젝트
  * @param {Object} args.colDef - 셀의 컬럼 정의 오브젝트
  *
  * @param {Object} args - Cell 모듈 파라미터 오브젝트
- * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
  * @param {jQuery.Event} args.event - 셀 DOM 노드에 속하는 DOM 노드를 target 으로
  * 가진 jQuery Event 오브젝트
  *
@@ -58,7 +57,7 @@ JGM._add("Cell", Cell);
  */
 function Cell(args) {
 	/**
-	  셀을 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+	  셀을 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 	  @var {jx.grid.Grid} grid
 

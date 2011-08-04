@@ -25,7 +25,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.TooltipManager', TooltipManager);
- JGM._add("TooltipManager", TooltipManager);
 
 /**
 TooltipManager 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
@@ -45,7 +44,7 @@ TooltipManager 컨스트럭터 입니다.
 @constructor {TooltipManager} TooltipManager
 @param {Object} args - TooltipManager 모듈 파라미터 오브젝트
 @... {jQuery} args.container - TooltipManager 를 넣을 컨테이너 오브젝트
-@... {jx.grid.Grid} args.grid - TooltipManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
+@... {jx.grid.Grid} args.grid - TooltipManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
 @... {Object} args.options - TooltipManager 옵션 오브젝트
 @returns {TooltipManager} TooltipManager 모듈 인스턴스를 리턴합니다.
 
@@ -66,7 +65,7 @@ function TooltipManager(args) {
 	this.mid = args.mid;
 
 	/**
-	TooltipManager 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스.
+	TooltipManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
 
 	@var {jx.grid.Grid} grid
 

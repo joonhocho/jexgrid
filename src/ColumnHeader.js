@@ -26,15 +26,14 @@ var JGM = goog.getObjectByName('jx.grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
 	Grid = goog.getObjectByName('jx.grid.Grid');
 
- goog.exportSymbol('jx.grid.ColumnHeader', ColHeader);
- JGM._add("ColHeader", ColHeader);
+ goog.exportSymbol('jx.grid.ColumnHeader', ColumnHeader);
 
 /**
-ColHeader 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
-ColHeader 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
+ColumnHeader 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
+ColumnHeader 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 관련 기능들을 지원합니다.
 
-@class {ColHeader} jx.grid.ColumnHeader
+@class {ColumnHeader} jx.grid.ColumnHeader
 
 @author 조준호
 @since 1.0.0
@@ -42,36 +41,36 @@ ColHeader 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 */
 
 /**
-ColHeader 컨스트럭터 입니다.
+ColumnHeader 컨스트럭터 입니다.
 
-@constructor {ColHeader} ColHeader
-@param {Object} args - ColHeader 모듈 파라미터 오브젝트
-@... {jQuery} args.container - ColHeader 를 넣을 컨테이너 오브젝트
-@... {jx.grid.Grid} args.grid - ColHeader 를 포함하는 {@link jx.grid.Grid Grid} 인스턴스
-@... {Object} args.options - ColHeader 옵션 오브젝트
-@returns {ColHeader} ColHeader 모듈 인스턴스를 리턴합니다.
+@constructor {ColumnHeader} ColumnHeader
+@param {Object} args - ColumnHeader 모듈 파라미터 오브젝트
+@... {jQuery} args.container - ColumnHeader 를 넣을 컨테이너 오브젝트
+@... {jx.grid.Grid} args.grid - ColumnHeader 를 포함하는 {@link jx.grid.Grid} 인스턴스
+@... {Object} args.options - ColumnHeader 옵션 오브젝트
+@returns {ColumnHeader} ColumnHeader 모듈 인스턴스를 리턴합니다.
 
 @author 조준호
 @since 1.0.0
 @version 1.0.0
 */
-function ColHeader(args) {
-	args.grid.log('creating new ColHeader instance...', Grid.V_INIT);//IF_DEBUG
+function ColumnHeader(args) {
+	args.grid.log('creating new ColumnHeader instance...', Grid.V_INIT);//IF_DEBUG
 	goog.base(this, args);
 }
 
-goog.inherits(ColHeader, BaseModule);
+goog.inherits(ColumnHeader, BaseModule);
 
-ColHeader.getInstance = function(args) {
-	return new ColHeader(args);
+ColumnHeader.getInstance = function(args) {
+	return new ColumnHeader(args);
 };
 
-var prototype = ColHeader.prototype;
+var prototype = ColumnHeader.prototype;
 
 prototype._init = function(args) {
-	this.grid.log('initializing ColHeader instance...', Grid.V_INIT);//IF_DEBUG
+	this.grid.log('initializing ColumnHeader instance...', Grid.V_INIT);//IF_DEBUG
 	/**
-	그리드 컬럼 헤더를 관리하는 {@link jx.grid.ColumnHeader ColHeader} 인스턴스 입니다.
+	그리드 컬럼 헤더를 관리하는 {@link jx.grid.ColumnHeader ColumnHeader} 인스턴스 입니다.
 
 	@var {jx.grid.ColumnHeader} jx.grid.Grid.header
 
@@ -103,12 +102,12 @@ prototype._init = function(args) {
 		$("<div class='" + opt['classHeader'] + "'>")
 		.appendTo(this._mask);
 
-	ColHeader._disableSel(this._head);
+	ColumnHeader._disableSel(this._head);
 
 };
 
 prototype._bindEvents = function() {
-	this.grid.log('binding ColHeader events...', Grid.V_INIT);//IF_DEBUG
+	this.grid.log('binding ColumnHeader events...', Grid.V_INIT);//IF_DEBUG
 	var events,
 		colDefs = this.getColumns(),
 		len = colDefs.length,
@@ -137,12 +136,12 @@ prototype._bindEvents = function() {
 };
 
 prototype._defaultOptions = function(grid) {
-	this.grid.log('extending ColHeader options...', Grid.V_INIT);//IF_DEBUG
+	this.grid.log('extending ColumnHeader options...', Grid.V_INIT);//IF_DEBUG
 
 	var imgurl = grid._options['imageUrl'];
 
 	/**
-	ColHeader 모듈의 기본 옵션 값들을 정의합니다.
+	ColumnHeader 모듈의 기본 옵션 값들을 정의합니다.
 
 	@type {Object} options
 	@private
@@ -589,14 +588,14 @@ prototype._defaultOptions = function(grid) {
 }
 
 prototype._beforeDispose = function() {	
-	this.grid.log('disposing ColHeader instance...', Grid.V_INIT);//IF_DEBUG
+	this.grid.log('disposing ColumnHeader instance...', Grid.V_INIT);//IF_DEBUG
 
 	if (this._head.sortable) {
 		this._head.sortable("destroy");
 	}
 	this._destroyResizeHandles();
 	JGM._destroy(this, {
-		name: "ColHeader",
+		name: "ColumnHeader",
 		path: "header",
 		"$": "resizeGuide _mask _head",
 		property: "ctnr _resizeMap",
@@ -624,7 +623,7 @@ prototype._destroyResizeHandles = function() {
 };
 
 prototype._beforeCreateCss = function(e) {
-	this.grid.log('creating CSS for ColHeader...', Grid.V_INIT);//IF_DEBUG
+	this.grid.log('creating CSS for ColumnHeader...', Grid.V_INIT);//IF_DEBUG
 
 	var grid = this.grid,
 		gridId = "#" + grid['mid'] + " .",
@@ -744,7 +743,7 @@ prototype._onRenderModules = function() {
 	this._head[0].innerHTML = headers.join("");
 
 	/**
-	ColHeader 의 렌더링이 완료되었을 때 트리거되는 이벤트 입니다.
+	ColumnHeader 의 렌더링이 완료되었을 때 트리거되는 이벤트 입니다.
 	@event {Event} onRenderHeadersComplete
 
 	@author 조준호
@@ -779,7 +778,7 @@ prototype._render = function(header, colDef, i) {
 		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + key + "'>");
 
 	/**
-	ColHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 앞에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
+	ColumnHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 앞에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
 	@event {Event} onRenderHeader_COLKEY_prepend
 	@param {Array.<string>} html - 컬럼 헤더 렌더링 스트링들을 가진 어레이
 
@@ -792,7 +791,7 @@ prototype._render = function(header, colDef, i) {
 	header.push(name);
 
 	/**
-	ColHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 뒤에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
+	ColumnHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 뒤에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
 	@event {Event} onRenderHeader_COLKEY_append
 	@param {Array.<string>} html - 컬럼 헤더 렌더링 스트링들을 가진 어레이
 
@@ -809,7 +808,7 @@ prototype._render = function(header, colDef, i) {
 	header.push("</div>");
 };
 
-ColHeader._disableSel = function(target) {
+ColumnHeader._disableSel = function(target) {
 	Util$.safe$(target)
 		.attr("unselectable", 'on')
 		.css('MozUserSelect', 'none')
@@ -993,7 +992,7 @@ prototype._click = function(e) {
 	this.grid.log('Colheader clicked. key=' + key, Grid.V_CLICK);//IF_DEBUG
 
 	/**
-	ColHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다. 발생된 click 이벤트가
+	ColumnHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다. 발생된 click 이벤트가
 	valid 한지를 체크합니다.
 
 	@event {Event} clickHeaderValid_COLKEY
@@ -1011,7 +1010,7 @@ prototype._click = function(e) {
 	}
 
 	/**
-	ColHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	ColumnHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 	@event {Event} clickHeader_COLKEY
 	@param {jQuery.Event} e - jQuery 이벤트 오브젝트
 	@param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
@@ -1023,7 +1022,7 @@ prototype._click = function(e) {
 	*/
 	
 	/**
-	ColHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	ColumnHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 	@event {Event} clickHeader
 	@param {jQuery.Event} e - jQuery 이벤트 오브젝트
 	@param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
@@ -1041,7 +1040,7 @@ prototype._mousedown = function(e) {
 	if (Util.hasTagAndClass(e.target, "DIV", opt['classResizeHandle'])) {
 		var key = this._resizeKey = e.target.getAttribute("key");
 
-		this.grid.log('mousedown on ColHeader Resize Handle. key=' + key, Grid.V_MOUSEDOWN);//IF_DEBUG
+		this.grid.log('mousedown on ColumnHeader Resize Handle. key=' + key, Grid.V_MOUSEDOWN);//IF_DEBUG
 
 		this._resizeInitWidth = this.get(key)[0].clientWidth;
 		this._resizeInitColWidth = this.getColMgr().getByKey(key).width;
@@ -1057,10 +1056,10 @@ prototype._mousedown = function(e) {
 		var colDef = this._getDef(colHeader),
 			key = colDef['key'];
 
-		this.grid.log('mousedown on ColHeader. key=' + key, Grid.V_MOUSEDOWN);//IF_DEBUG
+		this.grid.log('mousedown on ColumnHeader. key=' + key, Grid.V_MOUSEDOWN);//IF_DEBUG
 
 		/**
-		  ColHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+		  ColumnHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 		  @event {Event} mousedownHeader
 		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
 		  @param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
@@ -1072,7 +1071,7 @@ prototype._mousedown = function(e) {
 		this.triggerGridEvent("mousedownHeader", [e, colHeader]);
 
 		/**
-		  ColHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+		  ColumnHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 		  @event {Event} mousedownHeader_COLKEY
 		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
 		  @param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
@@ -1097,7 +1096,7 @@ prototype._dragmove = function(e) {
 		return;
 	}
 
-	this.grid.log('drag on ColHeader Resize Handle. key=' + key, Grid.V_MOUSEMOVE);//IF_DEBUG
+	this.grid.log('drag on ColumnHeader Resize Handle. key=' + key, Grid.V_MOUSEMOVE);//IF_DEBUG
 	
 	var opt = this._options;
 	this.get(key)[0].style.width = this._resizeInitWidth + dx + "px";
@@ -1115,7 +1114,7 @@ prototype._mouseup = function(e) {
 		return;
 	}
 
-	this.grid.log('mouseup on ColHeader Resize Handle. key=' + key, Grid.V_MOUSEUP);//IF_DEBUG
+	this.grid.log('mouseup on ColumnHeader Resize Handle. key=' + key, Grid.V_MOUSEUP);//IF_DEBUG
 	
 	this._resizeGuide[0].style.height = "0px";
 		
@@ -1132,7 +1131,7 @@ prototype._mouseup = function(e) {
 };
 
 prototype._setWidthByKey = function(key, w, o) {
-	this.grid.log('setting ColHeader width=' + w + '. key=' + key, Grid.V_RESIZE);//IF_DEBUG
+	this.grid.log('setting ColumnHeader width=' + w + '. key=' + key, Grid.V_RESIZE);//IF_DEBUG
 
 	this.get(key)[0].style.width = w + this.getView()._colWidthPlus() - this._widthPlus() + "px";
 	
