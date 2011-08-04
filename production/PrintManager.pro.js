@@ -16,7 +16,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
  goog.exportSymbol('jx.grid.PrintManager', PrintManager);
- JGM._add("PrintManager", PrintManager);
 function PrintManager(args) {
 	this.mid = args.mid;
 	this._ctnr = Util$.safe$(args['container']);

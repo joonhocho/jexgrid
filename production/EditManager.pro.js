@@ -22,22 +22,10 @@ var JGM = goog.getObjectByName('jx.grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
  goog.exportSymbol('jx.grid.EditManager', EditManager);
  goog.exportSymbol('jx.grid.Editor', Editor);
- JGM._add("EditManager", EditManager);
- JGM._add("Editor", Editor);
 /**
 EditManager 모듈. 데이터 에디팅을 담당하는 모듈입니다.
-@module EditManager
-@requires JGM
-@requires JGM.Grid
-@requires JGM.ColDefManager
-@requires JGM.DataManager
-@requires JGM.EventManager
-@requires JGM.SelectionManager
-@requires JGM.Cell
- */
-/**
 EditManager 클래스. 컬럼 별 커스텀 에디터를 지원합니다.
-@class {EditManager} JGM.EditManager
+@class {EditManager} jx.grid.EditManager
 @author 조준호
 @since 1.0.0
 @version 1.2.1
@@ -46,7 +34,7 @@ EditManager 클래스. 컬럼 별 커스텀 에디터를 지원합니다.
 EditManager 컨스트럭터 입니다.
 @constructor {EditManager} EditManager
 @param {Object} args - EditManager 모듈 파라미터 오브젝트
-@... {JGM.Grid} args.grid - EditManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+@... {jx.grid.Grid} args.grid - EditManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
 @... {Object} args.options - EditManager 옵션 오브젝트
 @returns {EditManager} EditManager 모듈 인스턴스를 리턴합니다.
 @author 조준호
@@ -63,16 +51,16 @@ function EditManager(args) {
 	*/
 	this.mid = args.mid;
 	/**
-	EditManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
-	@var {JGM.Grid} grid
+	EditManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
+	@var {jx.grid.Grid} grid
 	@author 조준호
 	@since 1.0.0
 	@version 1.0.0
 	*/
 	this.grid = args.grid;
 	/**
-	그리드 데이터 편집을 관리하는 {@link JGM.EditManager EditManager} 인스턴스 입니다.
-	@var {JGM.EditManager} JGM.Grid.editMgr
+	그리드 데이터 편집을 관리하는 {@link jx.grid.EditManager EditManager} 인스턴스 입니다.
+	@var {jx.grid.EditManager} jx.grid.Grid.editMgr
 	@author 조준호
 	@since 1.0.0
 	@version 1.0.0
@@ -89,7 +77,7 @@ function EditManager(args) {
 	var options = {
 		/**
 		현재 에디팅 중인 그리드 셀에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-edit"</code>
-		@type {string=} JGM.EditManager.options.classEdit
+		@type {string=} jx.grid.EditManager.options.classEdit
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -97,8 +85,8 @@ function EditManager(args) {
 		*/
 		'classEdit': "jgrid-edit",
 		/**
-		{@link JGM.EditManager.options.editableBgEnabled editableBgEnabled} 이 true 일 경우, 에디팅이 가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-editable"</code>
-		@type {string=} JGM.EditManager.options.classCellEditable
+		{@link jx.grid.EditManager.options.editableBgEnabled editableBgEnabled} 이 true 일 경우, 에디팅이 가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-editable"</code>
+		@type {string=} jx.grid.EditManager.options.classCellEditable
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -106,8 +94,8 @@ function EditManager(args) {
 		*/
 		'classCellEditable': "jgrid-editable",
 		/**
-		{@link JGM.EditManager.options.notEditableBgEnabled notEditableBgEnabled} 이 true 일 경우, 에디팅이 불가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-notEditable"</code>
-		@type {string=} JGM.EditManager.options.classCellNotEditable
+		{@link jx.grid.EditManager.options.notEditableBgEnabled notEditableBgEnabled} 이 true 일 경우, 에디팅이 불가능한 컬럼 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-notEditable"</code>
+		@type {string=} jx.grid.EditManager.options.classCellNotEditable
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -115,8 +103,8 @@ function EditManager(args) {
 		*/
 		'classCellNotEditable': "jgrid-notEditable",
 		/**
-		true 일 경우, {@link JGM.EditManager.options.classCellEditable classCellEditable} 를 적용합니다. <br>기본값:<code>false</code>
-		@type {boolean=} JGM.EditManager.options.editableBgEnabled
+		true 일 경우, {@link jx.grid.EditManager.options.classCellEditable classCellEditable} 를 적용합니다. <br>기본값:<code>false</code>
+		@type {boolean=} jx.grid.EditManager.options.editableBgEnabled
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -124,8 +112,8 @@ function EditManager(args) {
 		*/
 		'editableBgEnabled': false,
 		/**
-		true 일 경우, {@link JGM.EditManager.options.classCellNotEditable classCellNotEditable} 를 적용합니다. <br>기본값:<code>false</code>
-		@type {boolean=} JGM.EditManager.options.notEditableBgEnabled
+		true 일 경우, {@link jx.grid.EditManager.options.classCellNotEditable classCellNotEditable} 를 적용합니다. <br>기본값:<code>false</code>
+		@type {boolean=} jx.grid.EditManager.options.notEditableBgEnabled
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -133,8 +121,8 @@ function EditManager(args) {
 		*/
 		'notEditableBgEnabled': false,
 		/**
-		{@link JGM.EditManager.options.classCellEditable classCellEditable} 에 적용될 배경입니다. <br>기본값:<code>"#FFF"</code>
-		@type {string=} JGM.EditManager.options.editableBg
+		{@link jx.grid.EditManager.options.classCellEditable classCellEditable} 에 적용될 배경입니다. <br>기본값:<code>"#FFF"</code>
+		@type {string=} jx.grid.EditManager.options.editableBg
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -142,8 +130,8 @@ function EditManager(args) {
 		*/
 		'editableBg': "#FFF",
 		/**
-		{@link JGM.EditManager.options.classCellNotEditable classCellNotEditable} 에 적용될 배경입니다. <br>기본값:<code>"#F6F6F6"</code>
-		@type {string=} JGM.EditManager.options.notEditableBg
+		{@link jx.grid.EditManager.options.classCellNotEditable classCellNotEditable} 에 적용될 배경입니다. <br>기본값:<code>"#F6F6F6"</code>
+		@type {string=} jx.grid.EditManager.options.notEditableBg
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -152,7 +140,7 @@ function EditManager(args) {
 		'notEditableBg': "#F6F6F6",
 		/**
 		delete 키를 이용한 셀 내용 삭제 가능 여부입니다. <br>기본값:<code>false</code>
-		@type {boolean=} JGM.EditManager.options.deleteEnabled
+		@type {boolean=} jx.grid.EditManager.options.deleteEnabled
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -162,7 +150,7 @@ function EditManager(args) {
 		
 		/**
 		에디팅 가능한 셀에 에디팅 아이콘을 보여줄지 여부입니다. <br>기본값:<code>true</code>
-		@type {boolean=} JGM.EditManager.options.editIconEnabled
+		@type {boolean=} jx.grid.EditManager.options.editIconEnabled
 		@private
 		@author 조준호
 		@since 1.2.1
@@ -172,7 +160,7 @@ function EditManager(args) {
 		
 		/**
 		에디팅 가능한 셀에 보여줄 아이콘 이미지 url 입니다. <br>기본값:<code>imageUrl + "editable-small.png"</code>
-		@type {string=} JGM.EditManager.options.urlEditIcon
+		@type {string=} jx.grid.EditManager.options.urlEditIcon
 		@private
 		@author 조준호
 		@since 1.2.1
@@ -182,7 +170,7 @@ function EditManager(args) {
 		
 		/**
 		에디팅 아이콘 이미지에 적용될 CSS 클래스 입니다. <br>기본값:<code>"edit-icon"</code>
-		@type {string=} JGM.EditManager.options.classEditIcon
+		@type {string=} jx.grid.EditManager.options.classEditIcon
 		@private
 		@author 조준호
 		@since 1.2.1
@@ -192,7 +180,7 @@ function EditManager(args) {
 		
 		/**
 		에디팅 아이콘 이미지의 폭 픽셀 값입니다. <br>기본값:<code>11</code>
-		@type {number=} JGM.EditManager.options.editIconWidth
+		@type {number=} jx.grid.EditManager.options.editIconWidth
 		@private
 		@author 조준호
 		@since 1.2.1
@@ -202,7 +190,7 @@ function EditManager(args) {
 		
 		/**
 		에디팅 아이콘 이미지의 padding 픽셀 값입니다. <br>기본값:<code>3</code>
-		@type {number=} JGM.EditManager.options.editIconPadding
+		@type {number=} jx.grid.EditManager.options.editIconPadding
 		@private
 		@author 조준호
 		@since 1.2.1
@@ -212,7 +200,7 @@ function EditManager(args) {
 		
 		/**
 		기본 텍스트 에디터의 배경 스타일입니다. <br>기본값:<code>"#FFF9D7"</code>
-		@type {string=} JGM.EditManager.options.basicBackground
+		@type {string=} jx.grid.EditManager.options.basicBackground
 		@private
 		@author 조준호
 		@since 1.2.2
@@ -226,10 +214,10 @@ function EditManager(args) {
 	};
 	this._options = JGM._extend(options, args['options']);
 	/**
-	현재 EditManager 에서 사용되고 있는 {@link JGM.Editor} 인스턴스 입니다. 현재
+	현재 EditManager 에서 사용되고 있는 {@link jx.grid.Editor} 인스턴스 입니다. 현재
 	에디팅 되고 있는 셀이 없을 경우에는 undefined 의 값을 가집니다. 활성화 중일
-	때에는 <code>this.cell</code> 로 에디팅 되고 있는 {@link JGM.Cell} 인스턴스를 엑세스 할 수 있습니다.
-	@var {JGM.Editor} editor
+	때에는 <code>this.cell</code> 로 에디팅 되고 있는 {@link jx.grid.Cell} 인스턴스를 엑세스 할 수 있습니다.
+	@var {jx.grid.Editor} editor
 	@author 조준호
 	@since 1.0.0
 	@version 1.0.0
@@ -411,24 +399,24 @@ prototype._onGetColCellClass = function(colDef) {
 };
 /**
 셀이 현재 에디팅 되고 있는지를 리턴합니다.
-@function {boolean} JGM.Cell.isEdited
+@function {boolean} jx.grid.Cell.isEdited
 @returns {boolean} 셀의 에디팅 여부
 @author 조준호
 @since 1.0.0
 @version 1.0.0
 */
-JGM.Cell.prototype.isEdited = function() {
+jx.grid.Cell.prototype.isEdited = function() {
 	return this.grid['editMgr']._isEdited(this);
 };
 /**
 셀 데이터 값을 변경합니다.
-@function {boolean} JGM.Cell.setValue
+@function {boolean} jx.grid.Cell.setValue
 @param {string} value - 셀 데이터에 새로 넣을 값
 @author 조준호
 @since 1.0.0
 @version 1.0.0
 */
-JGM.Cell.prototype.setValue = function(value) {
+jx.grid.Cell.prototype.setValue = function(value) {
 	var datarow = this.getDatarow(),
 		key = this.getKey(),
 		res;
@@ -443,7 +431,7 @@ JGM.Cell.prototype.setValue = function(value) {
 /**
 주어진 셀이 에디트 가능한지를 체크합니다.
 @function {} isEditable 
-@param {JGM.Cell} cell - 에디트가 가능한지 체크할 셀
+@param {jx.grid.Cell} cell - 에디트가 가능한지 체크할 셀
 @returns {boolean} 에디트가 가능하면 true 아니면 false 를 리턴합니다.
 @author 조준호
 @since 1.1.0
@@ -455,7 +443,7 @@ prototype.isEditable = function(cell) {
 /**
 주어진 셀의 에디팅을 시작합니다.
 @function {} begin
-@param {JGM.Cell} cell - 에디팅을 시작할 셀 인스턴스
+@param {jx.grid.Cell} cell - 에디팅을 시작할 셀 인스턴스
 @author 조준호
 @since 1.0.0
 @version 1.0.0
@@ -624,16 +612,9 @@ prototype._deleteContents = function(e, selectionRows, selectionCols) {
 };
 /**
 Editor 모듈. 컬럼 에디팅을 공통적으로 담당하는 모듈입니다.
-@module Editor
-@requires JGM
-@requires JGM.Grid
-@requires JGM.EditManager
-@requires JGM.Cell
- */
-/**
 Editor 클래스. 컬럼 공통 에디터입니다. 컬럼 셀의 에디팅 모드로의 변경시 렌더링,
 내용 변경시 값의 validity check 등을 담당합니다.
-@class {Editor} JGM.Editor
+@class {Editor} jx.grid.Editor
 @author 조준호
 @since 1.0.0
 @version 1.0.0
@@ -660,15 +641,15 @@ function Editor(args) {
 	@version 1.0.0
 	*/
 	/**
-	Editor 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
-	@var {JGM.Grid} grid
+	Editor 를 포함하는 {@link jx.grid.Grid} 인스턴스.
+	@var {jx.grid.Grid} grid
 	@author 조준호
 	@since 1.0.0
 	@version 1.0.0
 	*/
 	/**
-	Editor 가 현재 에디팅 중인 {@link JGM.Cell Cell} 인스턴스.
-	@var {JGM.Cell} cell
+	Editor 가 현재 에디팅 중인 {@link jx.grid.Cell Cell} 인스턴스.
+	@var {jx.grid.Cell} cell
 	@author 조준호
 	@since 1.0.0
 	@version 1.0.0
@@ -760,7 +741,7 @@ Editor.isNumberKey = function(keyCode) {
 };
 Editor.numberEdit = function(cell) {
 	var value = cell.getValue();
-	return "<input type='text' class='basic-editor' onkeydown='if (!JGM.Editor.isNumberKey(event.which)) return false;' value='" + Util.ifNull(value, "") + "'/>";
+	return "<input type='text' class='basic-editor' onkeydown='if (!jx.grid.Editor.isNumberKey(event.which)) return false;' value='" + Util.ifNull(value, "") + "'/>";
 };
 Editor.floatKeys = Util.which(["number", ".", "del", "backspace"]);
 Editor.isFloatKey = function(keyCode) {
@@ -768,7 +749,7 @@ Editor.isFloatKey = function(keyCode) {
 };
 Editor.floatEdit = function(cell) {
 	var value = cell.getValue();
-	return "<input type='text' class='basic-editor' onkeydown='if (!JGM.Editor.isFloatKey(event.which)) return false;' value='" + Util.ifNull(value, "") + "'/>";
+	return "<input type='text' class='basic-editor' onkeydown='if (!jx.grid.Editor.isFloatKey(event.which)) return false;' value='" + Util.ifNull(value, "") + "'/>";
 };
 Editor.alphabetKeys = Util.which(["alphabet", "del", "backspace", "space"]);
 Editor.isAlphabet = function(keyCode) {
@@ -776,6 +757,6 @@ Editor.isAlphabet = function(keyCode) {
 };
 Editor.alphabetEdit = function(cell) {
 	var value = cell.getValue();
-	return "<input type='text' class='basic-editor' onkeydown='if (!JGM.Editor.isAlphabet(event.which)) return false;' value='" + Util.ifNull(value, "") + "'/>";
+	return "<input type='text' class='basic-editor' onkeydown='if (!jx.grid.Editor.isAlphabet(event.which)) return false;' value='" + Util.ifNull(value, "") + "'/>";
 };
 }());

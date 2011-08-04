@@ -19,7 +19,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
  goog.exportSymbol('jx.grid.EventManager', EventManager);
- JGM._add("EventManager", EventManager);
  /**
    Grid 의 이벤트를 담당하는 모듈. 모듈들 간의 원활한 커뮤니케이트를 가능하게
    합니다.
@@ -30,7 +29,7 @@ var JGM = goog.getObjectByName('jx.grid'),
    통해 이벤트를 레지스터/트리거 함으로써 이루어집니다. 직접 다른 모듈의 함수를
    호출하는 방법도 있지만 이벤트를 통하면 다른 모듈 인스턴스의 존재 유무 또는
    이름을 알지 못 하여도 상호 커뮤니케이트 할 수 있는 장점이 있습니다.
-   @class {EventManager} JGM.EventManager
+   @class {EventManager} jx.grid.EventManager
    @author 조준호
    @since 1.0.0
    @version 1.1.7
@@ -55,8 +54,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 	 this.mid = args.mid;
 	 this.grid = args.grid;
 	 /**
-	   Grid 내의 모든 이벤트 레지스터와 트리거를 담당하는 {@link JGM.EventManager EventManager} 인스턴스 입니다.
-	   @var {JGM.EventManager} JGM.Grid.event
+	   Grid 내의 모든 이벤트 레지스터와 트리거를 담당하는 {@link jx.grid.EventManager EventManager} 인스턴스 입니다.
+	   @var {jx.grid.EventManager} jx.grid.Grid.event
 	   @author 조준호
 	   @since 1.0.0
 	   @version 1.0.0

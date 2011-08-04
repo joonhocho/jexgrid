@@ -21,22 +21,13 @@ goog.provide('jx.grid.ViewportManager');
 	var JGM = goog.getObjectByName('jx.grid'),
 	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Util = goog.getObjectByName('jx.util'),
-	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
+	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Cell = goog.getObjectByName('jx.grid.Cell');
 goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
-JGM._add("ViewportManager", ViewportManager);
 /**
   ViewportManager 모듈. 그리드 로우와 셀을 가진 테이블을 담당하는 모듈입니다.
-  @module ViewportManager
-  @requires JGM
-  @requires JGM.Grid
-  @requires JGM.ColDefManager
-  @requires JGM.DataManager
-  @requires JGM.EventManager
-  @requires JGM.Cell
-  */
-/**
   ViewportManager 클래스. 빠른 로우/셀 렌더링과 로우의 캐싱을 지원합니다.
-  @class {ViewportManager} JGM.ViewportManager
+  @class {ViewportManager} jx.grid.ViewportManager
   @author 조준호
   @since 1.0.0
   @version 1.3.1
@@ -46,7 +37,7 @@ JGM._add("ViewportManager", ViewportManager);
   @constructor {ViewportManager} ViewportManager
   @param {Object} args - ViewportManager 모듈 파라미터 오브젝트
   @... {jQuery} args.container - ViewportManager 를 넣을 컨테이너 오브젝트
-  @... {JGM.Grid} args.grid - ViewportManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+  @... {jx.grid.Grid} args.grid - ViewportManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
   @... {Object} args.options - ViewportManager 옵션 오브젝트
   @returns {ViewportManager} ViewportManager 모듈 인스턴스를 리턴합니다.
   @author 조준호
@@ -66,16 +57,16 @@ function ViewportManager(args) {
 	this._mask;
 	this._canvas;
 	/**
-	  ViewportManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
-	  @var {JGM.Grid} grid
+	  ViewportManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
+	  @var {jx.grid.Grid} grid
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
 	this.grid = args.grid;
 	/**
-	  그리드의 로우와 셀의 랜더링 및 뷰포트 관련 이벤트를 관리하는 {@link JGM.ViewportManager ViewportManager} 인스턴스 입니다.
-	  @var {JGM.ViewportManager} JGM.Grid.view
+	  그리드의 로우와 셀의 랜더링 및 뷰포트 관련 이벤트를 관리하는 {@link jx.grid.ViewportManager ViewportManager} 인스턴스 입니다.
+	  @var {jx.grid.ViewportManager} jx.grid.Grid.view
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
@@ -92,7 +83,7 @@ function ViewportManager(args) {
 	var options = {
 		/**
 		  그리드 로우의 인덱스 값을 넣을 인덱스 노드 Attribute 이름. <br>기본값:<code>"r"</code>
-		  @type {string=} JGM.ViewportManager.options.attrRowIdx
+		  @type {string=} jx.grid.ViewportManager.options.attrRowIdx
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -102,7 +93,7 @@ function ViewportManager(args) {
 		/**
 		  뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 미만일 경우
 		  추가하지 않습니다. <br>기본값:<code>3</code>
-		  @type {number=} JGM.ViewportManager.options.appendThreshold
+		  @type {number=} jx.grid.ViewportManager.options.appendThreshold
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -112,7 +103,7 @@ function ViewportManager(args) {
 		/**
 		  뷰포트를 스크롤 할 경우 새로 추가해야 되는 로우의 수가 이 값 이상일 경우
 		  새로운 로우들을 붙여넣지 않고 전체 페이지를 다시 렌더링 합니다. <br>기본값:<code>10</code>
-		  @type {number=} JGM.ViewportManager.options.renderThreshold
+		  @type {number=} jx.grid.ViewportManager.options.renderThreshold
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -122,7 +113,7 @@ function ViewportManager(args) {
 		/**
 		  캔버스를 렌더링 할 경우, 스크롤의 자연스러움을 위해 화면에 보이는 로우들 이외에
 		  전 후로 이 값의 수 많큼 로우들을 추가적으로 렌더링합니다. <br>기본값:<code>6</code>
-		  @type {number=} JGM.ViewportManager.options.bufferSize
+		  @type {number=} jx.grid.ViewportManager.options.bufferSize
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -132,7 +123,7 @@ function ViewportManager(args) {
 		/**
 		  뷰포트가 한 스크롤 페이지에 보여줄 데이터 로우들의 수를 정합니다. 뷰포트의
 		  높이를 계산할 때 사용됩니다. <br>기본값:<code>10</code>
-		  @type {number=} JGM.ViewportManager.options.rowsPerPage
+		  @type {number=} jx.grid.ViewportManager.options.rowsPerPage
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -141,7 +132,7 @@ function ViewportManager(args) {
 		'rowsPerPage':			10,
 		/**
 		  로우의 높이의 픽셀값 입니다. padding 과 border 를 제외한 그 안의 높이입니다. <br>기본값:<code>20</code>
-		  @type {number=} JGM.ViewportManager.options.rowH
+		  @type {number=} jx.grid.ViewportManager.options.rowH
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -150,7 +141,7 @@ function ViewportManager(args) {
 		'rowH':						21,
 		/**
 		  셀 border 의 두께의 픽셀값 입니다. <br>기본값:<code>1</code>
-		  @type {number=} JGM.ViewportManager.options.borderThickness
+		  @type {number=} jx.grid.ViewportManager.options.borderThickness
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -159,7 +150,7 @@ function ViewportManager(args) {
 		'borderThickness': 1,
 		/**
 		  셀 border 의 스타일을 정합니다. <br>기본값:<code>"solid #D0D7E5"</code>
-		  @type {string=} JGM.ViewportManager.options.border
+		  @type {string=} jx.grid.ViewportManager.options.border
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -168,7 +159,7 @@ function ViewportManager(args) {
 		'border':						"solid #D0D7E5",
 		/**
 		  셀 padding 의 픽셀값 입니다. <br>기본값:<code>1</code>
-		  @type {number=} JGM.ViewportManager.options.padding
+		  @type {number=} jx.grid.ViewportManager.options.padding
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -177,7 +168,7 @@ function ViewportManager(args) {
 		'padding':					1,
 		/**
 		  홀수번째 로우와 짝수번째 로우의 바탕색을 다르게 할 지 정합니다. <br>기본값:<code>false</code>
-		  @type {boolean=} JGM.ViewportManager.options.evenOddRows
+		  @type {boolean=} jx.grid.ViewportManager.options.evenOddRows
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -185,9 +176,9 @@ function ViewportManager(args) {
 		  */
 		'evenOddRows':				false,
 		/**
-		  {@link JGM.ViewportManager.options.evenOddRows evenOddRows} 가 true 일 경우,
+		  {@link jx.grid.ViewportManager.options.evenOddRows evenOddRows} 가 true 일 경우,
 		  홀수번째 로우들에 적용될 바탕색입니다. <br>기본값:<code>"#F4F4F4"</code>
-		  @type {string=} JGM.ViewportManager.options.oddRowsBackground
+		  @type {string=} jx.grid.ViewportManager.options.oddRowsBackground
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -199,7 +190,7 @@ function ViewportManager(args) {
 		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
 		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		  <br>기본값:<code>""</code>
-		  @type {string=} JGM.ViewportManager.options.style
+		  @type {string=} jx.grid.ViewportManager.options.style
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -211,7 +202,7 @@ function ViewportManager(args) {
 		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
 		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		  <br>기본값:<code>""</code>
-		  @type {string=} JGM.ViewportManager.options.canvasStyle
+		  @type {string=} jx.grid.ViewportManager.options.canvasStyle
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -223,7 +214,7 @@ function ViewportManager(args) {
 		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
 		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		  <br>기본값:<code>""</code>
-		  @type {string=} JGM.ViewportManager.options.rowStyle
+		  @type {string=} jx.grid.ViewportManager.options.rowStyle
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -235,7 +226,7 @@ function ViewportManager(args) {
 		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
 		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		  <br>기본값:<code>""</code>
-		  @type {string=} JGM.ViewportManager.options.cellStyle
+		  @type {string=} jx.grid.ViewportManager.options.cellStyle
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -244,7 +235,7 @@ function ViewportManager(args) {
 		'cellStyle': "",
 		/**
 		  모든 그리드 로우에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-row"</code>
-		  @type {string=} JGM.ViewportManager.options.classRow
+		  @type {string=} jx.grid.ViewportManager.options.classRow
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -253,7 +244,7 @@ function ViewportManager(args) {
 		'classRow':						"jgrid-row",
 		/**
 		  모든 그리드 셀에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-cell"</code>
-		  @type {string=} JGM.ViewportManager.options.classCell
+		  @type {string=} jx.grid.ViewportManager.options.classCell
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -262,7 +253,7 @@ function ViewportManager(args) {
 		'classCell':					"jgrid-cell",
 		/**
 		  그리드 뷰포트에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-viewport"</code>
-		  @type {string=} JGM.ViewportManager.options.classView
+		  @type {string=} jx.grid.ViewportManager.options.classView
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -271,7 +262,7 @@ function ViewportManager(args) {
 		'classView':				"jgrid-viewport",
 		/**
 		  그리드 캔버스에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-canvas"</code>
-		  @type {string=} JGM.ViewportManager.options.classCanvas
+		  @type {string=} jx.grid.ViewportManager.options.classCanvas
 		  @private
 		  @author 조준호
 		  @since 1.0.0
@@ -280,7 +271,7 @@ function ViewportManager(args) {
 		'classCanvas':				"jgrid-canvas",
 		/**
 		  그리드 뷰가 포커스 되었을 경우 보여지는 뷰의 배경 스타일입니다. <br>기본값:<code>"#FFF"</code>
-		  @type {Object=} JGM.ViewportManager.options.focusBackground
+		  @type {Object=} jx.grid.ViewportManager.options.focusBackground
 		  @private
 		  @author 조준호
 		  @since 1.1.5
@@ -289,7 +280,7 @@ function ViewportManager(args) {
 		'focusBackground':			"#FFF",
 		/**
 		  그리드 뷰가 포커스 되었을 경우 보여지는 아웃라인 스타일입니다. <br>기본값:<code>"2px solid #f1ca7f"</code>
-		  @type {Object=} JGM.ViewportManager.options.focusOutline
+		  @type {Object=} jx.grid.ViewportManager.options.focusOutline
 		  @private
 		  @author 조준호
 		  @since 1.1.5
@@ -298,7 +289,7 @@ function ViewportManager(args) {
 		'focusOutline': "2px solid #f1ca7f",
 		/**
 		  true 로 설정되있을 경우 view 의 높이가 모든 로우를 포함하도록 자동 변경됩니다. <br>기본값:<code>false</code>
-		  @type {boolean=} JGM.ViewportManager.options.autoHeight
+		  @type {boolean=} jx.grid.ViewportManager.options.autoHeight
 		  @private
 		  @author 조준호
 		  @since 1.1.7
@@ -332,8 +323,9 @@ prototype.__init = function() {
 	this._mask.bind("selectstart.ui", function (event) {
 		return $(event.target).is("input, textarea");
 	});
-	//JGM.ColHeader._disableSel(this._mask);
+	//jx.grid.ColumnHeader._disableSel(this._mask);
 	this._setColLefts();
+	this._setCanvasWidth(this._calCanvasWidth());
 	this._lastRowLen = this.grid['dataMgr'].datalist.length;
 	this.grid['event'].bind({
 		'canvasFind': this._canvasFind,
@@ -1533,7 +1525,7 @@ prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef) {
   @since 1.0.0
   @version 1.3.0
   */
-JGM.Cell.prototype.rerender = function() {
+Cell.prototype.rerender = function() {
 	return this.grid['view'].rerenderCellByIdAndKey(this.getId(), this.getKey());
 };
 /**
@@ -1543,7 +1535,7 @@ JGM.Cell.prototype.rerender = function() {
   @since 1.0.0
   @version 1.0.0
   */
-JGM.Cell.prototype.scrollTo = function() {
+Cell.prototype.scrollTo = function() {
 	this.grid['view'].scrollTo(this.getRowIdx(), this.getColIdx());
 };
 prototype._keydown = function(e) {
@@ -1630,7 +1622,7 @@ prototype._mousein = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 draginCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} draginCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1640,7 +1632,7 @@ prototype._mousein = function(e) {
 	  이벤트 입니다.
 	  @event {Event} draginCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1650,7 +1642,7 @@ prototype._mousein = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 mouseinCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} mouseinCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1660,7 +1652,7 @@ prototype._mousein = function(e) {
 	  이벤트 입니다.
 	  @event {Event} mouseinCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1678,7 +1670,7 @@ prototype._mouseout = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 dragoutCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} dragoutCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1688,7 +1680,7 @@ prototype._mouseout = function(e) {
 	  이벤트 입니다.
 	  @event {Event} dragoutCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1698,7 +1690,7 @@ prototype._mouseout = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 mouseoutCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} mouseoutCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.1.7
@@ -1708,7 +1700,7 @@ prototype._mouseout = function(e) {
 	  이벤트 입니다.
 	  @event {Event} mouseoutCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
@@ -1726,7 +1718,7 @@ prototype._mouseenter = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 dragenterCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} dragenterCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1736,7 +1728,7 @@ prototype._mouseenter = function(e) {
 	  이벤트 입니다.
 	  @event {Event} dragenterCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1746,7 +1738,7 @@ prototype._mouseenter = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 mouseenterCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} mouseenterCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1756,7 +1748,7 @@ prototype._mouseenter = function(e) {
 	  이벤트 입니다.
 	  @event {Event} mouseenterCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1774,7 +1766,7 @@ prototype._mouseleave = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 dragleaveCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} dragleaveCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1784,7 +1776,7 @@ prototype._mouseleave = function(e) {
 	  이벤트 입니다.
 	  @event {Event} dragleaveCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1794,7 +1786,7 @@ prototype._mouseleave = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 mouseleaveCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} mouseleaveCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1804,7 +1796,7 @@ prototype._mouseleave = function(e) {
 	  이벤트 입니다.
 	  @event {Event} mouseleaveCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1822,7 +1814,7 @@ prototype._mousemove = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 dragmoveCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} dragmoveCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1832,7 +1824,7 @@ prototype._mousemove = function(e) {
 	  이벤트 입니다.
 	  @event {Event} dragmoveCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1842,7 +1834,7 @@ prototype._mousemove = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 mousemoveCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} mousemoveCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.1.7
@@ -1852,7 +1844,7 @@ prototype._mousemove = function(e) {
 	  이벤트 입니다.
 	  @event {Event} mousemoveCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
@@ -1870,7 +1862,7 @@ prototype._mouseover = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 dragoverCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} dragoverCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1880,7 +1872,7 @@ prototype._mouseover = function(e) {
 	  이벤트 입니다.
 	  @event {Event} dragoverCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.1.7
 	  @version 1.1.7
@@ -1890,7 +1882,7 @@ prototype._mouseover = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 mouseoverCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} mouseoverCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.1.7
@@ -1900,7 +1892,7 @@ prototype._mouseover = function(e) {
 	  이벤트 입니다.
 	  @event {Event} mouseoverCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
@@ -1918,7 +1910,7 @@ prototype._mousedown = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 mousedownCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} mousedownCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.1.7
@@ -1928,7 +1920,7 @@ prototype._mousedown = function(e) {
 	  이벤트 입니다.
 	  @event {Event} mousedownCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
@@ -1944,7 +1936,7 @@ prototype._mouseup = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 mouseupCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} mouseupCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.1.7
@@ -1954,7 +1946,7 @@ prototype._mouseup = function(e) {
 	  이벤트 입니다.
 	  @event {Event} mouseupCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
@@ -1970,7 +1962,7 @@ prototype._click = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 clickCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} clickCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.1.7
@@ -1980,7 +1972,7 @@ prototype._click = function(e) {
 	  이벤트 입니다.
 	  @event {Event} clickCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
@@ -1995,7 +1987,7 @@ prototype._dblclick = function(e) {
 	  이벤트 입니다. 예를 들면, 컬럼 키가 id 일 경우 dblclickCanvas_id 의 이벤트가 발생합니다.
 	  @event {Event} dblclickCanvas_COLKEY
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.1.7
@@ -2005,7 +1997,7 @@ prototype._dblclick = function(e) {
 	  이벤트 입니다.
 	  @event {Event} dblclickCanvas
 	  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
-	  @param {JGM.Cell} cell - 마우스 이벤트에 관련된 {@link JGM.Cell Cell} 오브젝트
+	  @param {jx.grid.Cell} cell - 마우스 이벤트에 관련된 {@link jx.grid.Cell Cell} 오브젝트
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0

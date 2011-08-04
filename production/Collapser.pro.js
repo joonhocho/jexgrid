@@ -25,25 +25,12 @@ var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
 	Tree = goog.getObjectByName('jx.struct.Tree');
- goog.exportSymbol('JGM.module.Collapser', Collapser);
- JGM._add("Collapser", Collapser);
+ goog.exportSymbol('jx.grid.Collapser', Collapser);
 	/**
 	  Collapser 모듈. 트리 구조의 데이터를 담당하는 모듈입니다.
-	  @module Collapser
-	  @requires JGM
-	  @requires JGM.Grid
-	  @requires JGM.ColDefManager
-	  @requires JGM.ColHeader
-	  @requires JGM.DataManager
-	  @requires JGM.EventManager
-	  @requires JGM.ViewportManager
-	  @requires JGM.Tree
-	  @requires JGM.TreeNode
-	  */
-	/**
 	  Collapser 클래스. 트리 구조의 데이터를 담당하는 모듈 클래스 입니다. 구조에 맞게
 	  데이터를 재정렬해주고 자식들이 있는 노드의 펼치기/접기의 기능을 지원합니다.
-	  @class {Collapser} JGM.Collapser
+	  @class {Collapser} jx.grid.Collapser
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
@@ -52,7 +39,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  Collapser 컨스트럭터 입니다.
 	  @constructor {Collapser} Collapser
 	  @param {Object} args - Collapser 모듈 파라미터 오브젝트
-	  @... {JGM.Grid} args.grid - Collapser 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+	  @... {jx.grid.Grid} args.grid - Collapser 를 포함하는 {@link jx.grid.Grid} 인스턴스
 	  @... {Object} args.options - Collapser 옵션 오브젝트
 	  @returns {Collapser} Collapser 모듈 인스턴스를 리턴합니다.
 	  @author 조준호
@@ -69,16 +56,16 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  */
 		this.mid = args.mid;
 		/**
-		  Collapser 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
-		  @var {JGM.Grid} grid
+		  Collapser 를 포함하는 {@link jx.grid.Grid} 인스턴스.
+		  @var {jx.grid.Grid} grid
 		  @author 조준호
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
 		this.grid = args.grid;
 		/**
-		  트리 형식의 데이터를 관리하는 {@link JGM.Collapser Collapser} 인스턴스 입니다.
-		  @var {JGM.Collapser} JGM.Grid.collapser
+		  트리 형식의 데이터를 관리하는 {@link jx.grid.Collapser Collapser} 인스턴스 입니다.
+		  @var {jx.grid.Collapser} jx.grid.Grid.collapser
 		  @author 조준호
 		  @since 1.0.0
 		  @version 1.0.0
@@ -95,9 +82,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var options = {
 			/**
 			  Collapser 의 펼치기/접기 버튼이 표시될 컬럼의 키를 정합니다. 이 값이
-			  정해지지 않았을시에는 {@link JGM.Collapser.options.colDef colDef}
+			  정해지지 않았을시에는 {@link jx.grid.Collapser.options.colDef colDef}
 			  를 사용하여 새로운 컬럼을 생성합니다.<br>기본값:<code>undefined</code>
-			  @type {string=} JGM.Collapser.options.key
+			  @type {string=} jx.grid.Collapser.options.key
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -105,20 +92,20 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  */
 			'key': undefined,
 			/**
-			  {@link JGM.Collapser.options.key key} 가 지정되지 않아서, Collapser 컬럼을 새로 생성해야할 경우 사용될 컬럼 정의 오브젝트입니다.
+			  {@link jx.grid.Collapser.options.key key} 가 지정되지 않아서, Collapser 컬럼을 새로 생성해야할 경우 사용될 컬럼 정의 오브젝트입니다.
 			  <br>기본값:<code>{key:"collapser", width: 120, name:" "}</code>
-			  @type {Object=} JGM.Collapser.options.colDef
+			  @type {Object=} jx.grid.Collapser.options.colDef
 			  @private
-			  @see JGM.ColDefManager.options.colDef
+			  @see jx.grid.ColumnManager.options.colDef
 			  @author 조준호
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
 			'colDef': {'key':"collapser", 'width': 120, 'name':" ", 'noSearch':true},
 			/**
-			  {@link JGM.Collapser.options.colDef colDef} 를 몇번째 컬럼으로 넣을지를 정합니다.
+			  {@link jx.grid.Collapser.options.colDef colDef} 를 몇번째 컬럼으로 넣을지를 정합니다.
 			  <br>기본값:<code>0</code>
-			  @type {number=} JGM.Collapser.options.colIdx
+			  @type {number=} jx.grid.Collapser.options.colIdx
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -127,7 +114,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'colIdx': 0,
 			/**
 			  접힌 상태의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "collapsed.png"</code>
-			  @type {string=} JGM.Collapser.options.urlCollapsed
+			  @type {string=} jx.grid.Collapser.options.urlCollapsed
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -136,7 +123,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'urlCollapsed': this.grid._options['imageUrl'] + "collapsed.png",
 			/**
 			  접힌 상태위에 마우스가 오버되었을 때의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "collapsed-hover.png"</code>
-			  @type {string=} JGM.Collapser.options.urlCollapsedHover
+			  @type {string=} jx.grid.Collapser.options.urlCollapsedHover
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -145,7 +132,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'urlCollapsedHover': this.grid._options['imageUrl'] + "collapsed-hover.png",
 			/**
 			  펼쳐진 상태의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "expanded.png"</code>
-			  @type {string=} JGM.Collapser.options.urlExpanded
+			  @type {string=} jx.grid.Collapser.options.urlExpanded
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -154,7 +141,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'urlExpanded': this.grid._options['imageUrl'] + "expanded.png",
 			/**
 			  펼쳐진 상태위에 마우스가 오버되었을 때의 아이콘으로 사용될 이미지 경로입니다. <br>기본값:<code>imageUrl + "expanded-hover.png"</code>
-			  @type {string=} JGM.Collapser.options.urlExpandedHover
+			  @type {string=} jx.grid.Collapser.options.urlExpandedHover
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -163,7 +150,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'urlExpandedHover': this.grid._options['imageUrl'] + "expanded-hover.png",
 			/**
 			  Collapser 토글 아이콘의 폭 픽셀입니다. <br>기본값:<code>6</code>
-			  @type {number=} JGM.Collapser.options.width
+			  @type {number=} jx.grid.Collapser.options.width
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -172,7 +159,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'width': 6,
 			/**
 			  Collapser 토글 아이콘의 좌우 padding 픽셀입니다. <br>기본값:<code>5</code>
-			  @type {number=} JGM.Collapser.options.padding
+			  @type {number=} jx.grid.Collapser.options.padding
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -181,7 +168,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'padding': 5,
 			/**
 			  Collapser 토글 아이콘에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-collapser"</code>
-			  @type {string=} JGM.Collapser.options.classCollapser
+			  @type {string=} jx.grid.Collapser.options.classCollapser
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -190,7 +177,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'classCollapser': "jgrid-collapser",
 			/**
 			  접혀진 상태 아이콘에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"collapsed"</code>
-			  @type {string=} JGM.Collapser.options.classCollapsed
+			  @type {string=} jx.grid.Collapser.options.classCollapsed
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -199,7 +186,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'classCollapsed': "collapsed",
 			/**
 			  펼쳐진 상태 아이콘에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"expanded"</code>
-			  @type {string=} JGM.Collapser.options.classExpanded
+			  @type {string=} jx.grid.Collapser.options.classExpanded
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -208,7 +195,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'classExpanded': "expanded",
 			/**
 			  Collapser 토글 아이콘을 indent 하는 div 에 공통적으로 적용되는 CSS 클래스 입니다. <br>기본값:<code>"indent"</code>
-			  @type {string=} JGM.Collapser.options.classIndent
+			  @type {string=} jx.grid.Collapser.options.classIndent
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -217,7 +204,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'classIndent': "indent",
 			/**
 			  마스터 헤더 Collapser 토글에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"master"</code>
-			  @type {string=} JGM.Collapser.options.classMasterCollapser
+			  @type {string=} jx.grid.Collapser.options.classMasterCollapser
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -226,7 +213,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'classMasterCollapser': "master",
 			/*
 			   마스터 헤더 Collapser 토글을 생성할지 여부입니다. <br>기본값:<code>true</code>
-			   @type {boolean=} JGM.Collapser.options.master
+			   @type {boolean=} jx.grid.Collapser.options.master
 			   @private
 			   @author 조준호
 			   @since 1.0.0
@@ -235,7 +222,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			//'master': true,
 			/**
 			  트리 레벨당 우측으로 밀려지는 indent 폭 픽셀입니다. <br>기본값:<code>12</code>
-			  @type {number=} JGM.Collapser.options.indentSize
+			  @type {number=} jx.grid.Collapser.options.indentSize
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -244,7 +231,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'indentSize': 12,
 			/**
 			  true 일 경우 모든 노드가 접힌 상태로, false 일 경우 펼쳐진 상태로 시작합니다. <br>기본값:<code>false</code>
-			  @type {boolean=} JGM.Collapser.options.beginCollapsed
+			  @type {boolean=} jx.grid.Collapser.options.beginCollapsed
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -255,7 +242,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  연동시킬 {@link JGM.CheckManager CheckManager} 에 넘겨줄 옵션 오브젝트입니다.
 			  이 옵션을 설정하지 않을 경우, {@link JGM.CheckManager CheckManager} 인스턴스를
 			  생성하지 않습니다. <br>기본값:<code>undefined</code>
-			  @type {Object=} JGM.Collapser.options.CheckManager
+			  @type {Object=} jx.grid.Collapser.options.CheckManager
 			  @private
 			  @see JGM.CheckManager.options
 			  @author 조준호
@@ -264,11 +251,11 @@ var JGM = goog.getObjectByName('jx.grid'),
 			  */
 			'CheckManager': undefined,
 			/**
-			  트리 구조 데이터 관리에 사용할 {@link JGM.Tree Tree} 에 넘겨줄 옵션 오브젝트입니다.
+			  트리 구조 데이터 관리에 사용할 {@link jx.struct.Tree Tree} 에 넘겨줄 옵션 오브젝트입니다.
 			  <br>기본값:<code>undefined</code>
-			  @type {Object=} JGM.Collapser.options.Tree
+			  @type {Object=} jx.grid.Collapser.options.Tree
 			  @private
-			  @see JGM.Tree.options
+			  @see jx.struct.Tree.options
 			  @author 조준호
 			  @since 1.0.0
 			  @version 1.0.0
@@ -699,9 +686,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 		return node.getLevel();
 	};
 	/**
-	  주어진 {@link JGM.TreeNode} 를 접습니다. 이미 접혀 있는경우 아무것도 하지 않습니다.
+	  주어진 {@link jx.struct.TreeNode} 를 접습니다. 이미 접혀 있는경우 아무것도 하지 않습니다.
 	  @function {} collapse
-	  @param {JGM.TreeNode} node - 접을 {@link JGM.TreeNode}
+	  @param {jx.struct.TreeNode} node - 접을 {@link jx.struct.TreeNode}
 	  @param {boolean=} nocheck - true 일 경우, 마스터 Collapser 의 접기 여부를 체크하지 않습니다.
 	  @author 조준호
 	  @since 1.0.0
@@ -727,9 +714,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 	};
 	/**
-	  주어진 {@link JGM.TreeNode} 를 펼칩니다. 이미 펼쳐져 있는경우 아무것도 하지 않습니다.
+	  주어진 {@link jx.struct.TreeNode} 를 펼칩니다. 이미 펼쳐져 있는경우 아무것도 하지 않습니다.
 	  @function {} expand
-	  @param {JGM.TreeNode} node - 접을 {@link JGM.TreeNode}
+	  @param {jx.struct.TreeNode} node - 접을 {@link jx.struct.TreeNode}
 	  @param {boolean=} nocheck - true 일 경우, 마스터 Collapser 의 펼치기 여부를 체크하지 않습니다.
 	  @author 조준호
 	  @since 1.0.0
@@ -803,9 +790,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this._filterRefresh();
 	};
 	/**
-	  주어진 {@link JGM.TreeNode} 를 토글합니다.
+	  주어진 {@link jx.struct.TreeNode} 를 토글합니다.
 	  @function {} toggleCollapse
-	  @param {JGM.TreeNode} node - 토글할 {@link JGM.TreeNode}
+	  @param {jx.struct.TreeNode} node - 토글할 {@link jx.struct.TreeNode}
 	  @see expand
 	  @see collapse
 	  @author 조준호

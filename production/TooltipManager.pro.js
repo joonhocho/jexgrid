@@ -20,16 +20,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
  goog.exportSymbol('jx.grid.TooltipManager', TooltipManager);
- JGM._add("TooltipManager", TooltipManager);
 /**
 TooltipManager 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
-@module TooltipManager
-@requires JGM
-@requires JGM.Grid
-@requires JGM.EventManager
-@requires JGM.Cell
- */
-/**
 TooltipManager 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 관련 기능들을 지원합니다.
 @class {TooltipManager} JGM.TooltipManager
@@ -42,7 +34,7 @@ TooltipManager 컨스트럭터 입니다.
 @constructor {TooltipManager} TooltipManager
 @param {Object} args - TooltipManager 모듈 파라미터 오브젝트
 @... {jQuery} args.container - TooltipManager 를 넣을 컨테이너 오브젝트
-@... {JGM.Grid} args.grid - TooltipManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+@... {jx.grid.Grid} args.grid - TooltipManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
 @... {Object} args.options - TooltipManager 옵션 오브젝트
 @returns {TooltipManager} TooltipManager 모듈 인스턴스를 리턴합니다.
 @author 조준호
@@ -59,8 +51,8 @@ function TooltipManager(args) {
 	*/
 	this.mid = args.mid;
 	/**
-	TooltipManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
-	@var {JGM.Grid} grid
+	TooltipManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
+	@var {jx.grid.Grid} grid
 	@author 조준호
 	@since 1.0.0
 	@version 1.0.0
@@ -69,7 +61,7 @@ function TooltipManager(args) {
 	
 	/**
 	그리드 툴팁을 관리하는 {@link JGM.TooltipManager TooltipManager} 인스턴스 입니다.
-	@var {JGM.TooltipManager} JGM.Grid.tooltip
+	@var {JGM.TooltipManager} jx.grid.Grid.tooltip
 	@author 조준호
 	@since 1.0.0
 	@version 1.0.0

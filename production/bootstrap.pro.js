@@ -10,9 +10,9 @@ goog.provide('JGM');
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
 /**
-  JGM 모듈. {@link JGM.Grid Grid} 의 최상위 scope 이며 유일하게 Global Scope 인 window 에 등록됩니다.
-  모든 {@link JGM.Grid Grid} 모듈 클래스는 이 매니저 안에 각 모듈의 이름으로 등록됩니다.
-  JGM은 모든 {@link JGM.Grid Grid} 의 모듈들을 instantiate 하며, 모듈 생성시 각 모듈에 고유
+  JGM 모듈. {@link jx.grid.Grid} 의 최상위 scope 이며 유일하게 Global Scope 인 window 에 등록됩니다.
+  모든 {@link jx.grid.Grid} 모듈 클래스는 이 매니저 안에 각 모듈의 이름으로 등록됩니다.
+  JGM은 모든 {@link jx.grid.Grid} 의 모듈들을 instantiate 하며, 모듈 생성시 각 모듈에 고유
   mid 를 할당함으로써 각 모듈의 확실한 유니크함을 보장하고 현존하는 모듈들의
   맵을 가지고 있어 서로간의 켜뮤니케이션을 도와줍니다.
   @module JGM
@@ -40,9 +40,9 @@ JGM._map = {
 'Cache':				{ cacheModule: true	},
 'Cell':				{ cacheModule: false	},
 'CheckManager':		{ cacheModule: true	},
-'ColDefManager':		{ cacheModule: true	},
-'ColGroup':			{ cacheModule: true	},
-'ColHeader':			{ cacheModule: true	},
+'ColumnManager':		{ cacheModule: true	},
+'ColumnGroup':			{ cacheModule: true	},
+'ColumnHeader':			{ cacheModule: true	},
 'Collapser':			{ cacheModule: true	},
 'DataManager':		{ cacheModule: true	},
 'DataCreator':		{ cacheModule: true	},

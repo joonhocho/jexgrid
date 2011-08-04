@@ -23,16 +23,9 @@ var JGM = goog.getObjectByName('jx.grid'),
 	JGM._add("DataManager", DataManager);
 	/**
 	  DataManager 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
-	  @module DataManager
-	  @requires JGM
-	  @requires JGM.Grid
-	  @requires JGM.DataManager
-	  @requires JGM.EventManager
-	  */
-	/**
 	  DataManager 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 	  관련 기능들을 지원합니다.
-	  @class {DataManager} JGM.DataManager
+	  @class {DataManager} jx.data.DataManager
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.1.5
@@ -42,7 +35,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @constructor {DataManager} DataManager
 	  @param {Object} args - DataManager 모듈 파라미터 오브젝트
 	  @... {Array.<Object>} args.datalist - 데이터 어레이
-	  @... {JGM.Grid} args.grid - DataManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스
+	  @... {jx.grid.Grid} args.grid - DataManager 를 포함하는 {@link jx.grid.Grid} 인스턴스
 	  @... {Object} args.options - DataManager 옵션 오브젝트
 	  @returns {DataManager} DataManager 모듈 인스턴스를 리턴합니다.
 	  @author 조준호
@@ -59,16 +52,16 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  */
 		this.mid = args.mid;
 		/**
-		  DataManager 를 포함하는 {@link JGM.Grid Grid} 인스턴스.
-		  @var {JGM.Grid} grid
+		  DataManager 를 포함하는 {@link jx.grid.Grid} 인스턴스.
+		  @var {jx.grid.Grid} grid
 		  @author 조준호
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
 		this.grid = args.grid;
 		/**
-		  그리드 데이터를 관리하는 {@link JGM.DataManager DataManager} 인스턴스 입니다.
-		  @var {JGM.DataManager} JGM.Grid.dataMgr
+		  그리드 데이터를 관리하는 {@link jx.data.DataManager DataManager} 인스턴스 입니다.
+		  @var {jx.data.DataManager} jx.grid.Grid.dataMgr
 		  @author 조준호
 		  @since 1.0.0
 		  @version 1.0.0
@@ -109,7 +102,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var options = {
 			/**
 			  각 로우 데이터들이 갖는 고유 데이터 아이디를 가리키는 key 입니다.<br>기본값:<code>undefined</code>
-			  @type {string=} JGM.DataManager.options.idKey
+			  @type {string=} jx.data.DataManager.options.idKey
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -118,7 +111,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			'idKey': undefined,
 			/**
 			  데이터 로우의 primary key 가 하나 이상일 경우에 이 어레이에 키 값들을 넣어줍니다.<br>기본값:<code>[]</code>
-			  @type {Array.<string>=} JGM.DataManager.options.idColKeys
+			  @type {Array.<string>=} jx.data.DataManager.options.idColKeys
 			  @private
 			  @author 조준호
 			  @since 1.0.0
@@ -2416,7 +2409,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	prototype._finish = function(args) {
 		this._reidx();
 		/**
-		  모든 {@link JGM.DataManager DataManager} 의 {@link refresh} 과정이 끝났음을 알리는
+		  모든 {@link jx.data.DataManager DataManager} 의 {@link refresh} 과정이 끝났음을 알리는
 		  이벤트입니다.
 		  @event {Event} onAfterRefresh
 		  @see refresh
@@ -2436,7 +2429,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  */
 	prototype.refresh = function(args) {
 		/**
-		  {@link JGM.DataManager DataManager} 의 {@link refresh} 과정이 시작함을 알리는
+		  {@link jx.data.DataManager DataManager} 의 {@link refresh} 과정이 시작함을 알리는
 		  어레이 입니다.
 		  @event {Event} onBeforeRefresh
 		  @see refresh

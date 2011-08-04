@@ -12,67 +12,48 @@ goog.provide('jx.grid.Cell');
  * COPYRIGHT
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
-/**
-  JGM
-  @scope JGM
-  */
 (function() {
 	var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	Disposable = goog.getObjectByName('jx.lang.Disposable');
 goog.exportSymbol('jx.grid.Cell', Cell);
-JGM._add("Cell", Cell);
 /**
-  Cell 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
-  @module jx.grid.Cell
-  @requires jx.grid
-  @requires jx.grid.Grid
-  @requires jx.grid.ColDefManager
-  @requires jx.grid.DataManager
-  @requires jx.grid.ViewportManager
-  */
-/**
-  Cell 클래스. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
-  @class {Cell} JGM.Cell
-  @author 조준호
-  @since 1.0.0
-  @version 1.0.0
-  */
-/**
-  Cell 컨스트럭터 입니다.
-  @constructor {Cell} Cell
-  @paramset 셀 인덱스를 사용할 경우
-  @param {Object} args - Cell 모듈 파라미터 오브젝트
-  @... {JGM.Grid} args.grid - 셀을 포함하는 {@link JGM.Grid Grid} 인스턴스
-  @... {number} args.row - 셀의 로우 인덱스
-  @... {number} args.col - 셀의 컬럼 인덱스
-  @paramset 셀 DOM 노드를 사용할 경우
-  @param {Object} args - Cell 모듈 파라미터 오브젝트
-  @... {JGM.Grid} args.grid - 셀을 포함하는 {@link JGM.Grid Grid} 인스턴스
-  @... {DOMElement} args.node - 셀의 DOM 노드
-  @paramset 셀 DOM 노드를 가진 jQuery 오브젝트를 사용할 경우
-  @param {Object} args - Cell 모듈 파라미터 오브젝트
-  @... {JGM.Grid} args.grid - 셀을 포함하는 {@link JGM.Grid Grid} 인스턴스
-  @... {jQuery} args.$ - 셀의 DOM 노드를 가진 jQuery 인스턴스
-  @paramset 셀 로우 데이터와 컬럼 정의를 사용할 경우
-  @param {Object} args - Cell 모듈 파라미터 오브젝트
-  @... {JGM.Grid} args.grid - 셀을 포함하는 {@link JGM.Grid Grid} 인스턴스
-  @... {Object} args.datarow - 셀의 로우 데이터 오브젝트
-  @... {Object} args.colDef - 셀의 컬럼 정의 오브젝트
-  @paramset jQuery Event를 사용할 경우
-  @param {Object} args - Cell 모듈 파라미터 오브젝트
-  @... {JGM.Grid} args.grid - 셀을 포함하는 {@link JGM.Grid Grid} 인스턴스
-  @... {jQuery.Event} args.event - 셀 DOM 노드에 속하는 DOM 노드를 target 으로
-  가진 jQuery Event 오브젝트
-  @returns {Cell} Cell 모듈 인스턴스를 리턴합니다.
-  @author 조준호
-  @since 1.0.0
-  @version 1.0.0
-  */
+ * Cell 모듈. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
+ * Cell 클래스. 그리드 셀 관련 정보들과 편리한 함수들을 가진 모듈입니다.
+ *
+ * @class jx.grid.Cell
+ * @constructor
+ *
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
+ * @param {number} args.row - 셀의 로우 인덱스
+ * @param {number} args.col - 셀의 컬럼 인덱스
+ *
+ * @param {Object} args - Cell 모듈 파라미터 오브젝트
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
+ * @param {DOMElement} args.node - 셀의 DOM 노드
+ *
+ * @param {Object} args - Cell 모듈 파라미터 오브젝트
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
+ * @param {jQuery} args.$ - 셀의 DOM 노드를 가진 jQuery 인스턴스
+ *
+ * @param {Object} args - Cell 모듈 파라미터 오브젝트
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
+ * @param {Object} args.datarow - 셀의 로우 데이터 오브젝트
+ * @param {Object} args.colDef - 셀의 컬럼 정의 오브젝트
+ *
+ * @param {Object} args - Cell 모듈 파라미터 오브젝트
+ * @param {jx.grid.Grid} args.grid - 셀을 포함하는 {@link jx.grid.Grid} 인스턴스
+ * @param {jQuery.Event} args.event - 셀 DOM 노드에 속하는 DOM 노드를 target 으로
+ * 가진 jQuery Event 오브젝트
+ *
+ * @author 조준호
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 function Cell(args) {
 	/**
-	  셀을 포함하는 {@link JGM.Grid Grid} 인스턴스.
-	  @var {JGM.Grid} grid
+	  셀을 포함하는 {@link jx.grid.Grid} 인스턴스.
+	  @var {jx.grid.Grid} grid
 	  @author 조준호
 	  @since 1.0.0
 	  @version 1.0.0
@@ -280,14 +261,14 @@ prototype.has$ = function() {
 	return this.get$().length !== 0;
 };
 /**
-주어진 셀의 인스턴스가 현재 셀의 인스턴스와 동일한지를 리턴합니다.
-@function {public Boolean} equals
-@returns {Boolean} 서로 같은 데이터를 가질 경우 true, 아닐 경우 false 를
-리턴합니다.
-@author 조준호
-@since 1.0.0
-@version 1.0.0
-*/
+  주어진 셀의 인스턴스가 현재 셀의 인스턴스와 동일한지를 리턴합니다.
+  @function {public Boolean} equals
+  @returns {Boolean} 서로 같은 데이터를 가질 경우 true, 아닐 경우 false 를
+  리턴합니다.
+  @author 조준호
+  @since 1.0.0
+  @version 1.0.0
+  */
 prototype.equals = function(cell) {
 	return cell && this._datarow && this._datarow === cell._datarow && this._colDef && this._colDef === cell.__colDef;
 };

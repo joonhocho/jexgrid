@@ -18,7 +18,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
  goog.exportSymbol('jx.grid.SearchManager', SearchManager);
- JGM._add("SearchManager", SearchManager);
 function SearchManager(args) {
 	this.mid = args.mid;
 	this._ctnr = args['container'];
@@ -32,7 +31,7 @@ function SearchManager(args) {
 	
 	/**
 	필터링을 하여 데이터 검색을 관리하는 {@link JGM.SeachManager SeachManager} 인스턴스 입니다.
-	@var {JGM.SeachManager} JGM.Grid.search
+	@var {JGM.SeachManager} jx.grid.Grid.search
 	@author 조준호
 	@since 1.2.0
 	@version 1.2.1

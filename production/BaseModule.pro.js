@@ -441,6 +441,23 @@ goog.provide('jx.grid.BaseModule');
 		var event = this.grid['event'];
 		return event.trigger.apply(event, arguments);
 	}
+	/**
+	 * 이 모듈을 위한 CSS 스타일 스트링을 생성하여 리턴합니다. 한 가지의 셀렉터에 하나 이상의 스타일을 적용할 때 사용합니다.
+	 *
+	 * @public
+	 * @lends jx.grid.BaseModule#
+	 *
+	 * @param {string} selector - CSS 셀렉터
+	 * @param {string|object<string>} styles - string 일 경우 그대로 CSS 스타일에 추가되고, object 일 경우 key 값은 CSS 스타일 명, value 값은 CSS 스타일 값으로 추가됩니다.
+	 * @param {boolean} noGridId - true 일 경우, 셀렉터에 그리드 아이디를 붙이지 않습니다. false 일 경우, 그리드 아이디가 셀렉터에 포함되어 그리드 컨테이너 내부의 DOM 엘레멘트에만 스타일이 적용됩니다.
+	 *
+	 * @returns {string} CSS 스타일 스트링
+	 *
+	 * @see #toCssStyles
+	 *
+	 * @since 2.0.0
+	 * @version 2.0.0
+	 */
 	proto.toCssStyle = function(selector, styles, noGridId) {
 		var css = [];
 		if (!noGridId) {
@@ -468,6 +485,23 @@ goog.provide('jx.grid.BaseModule');
 		}
 		return selector + '{' + css + '}';
 	}
+	/**
+	 * 이 모듈을 위한 CSS 스타일 스트링을 생성하여 리턴합니다. 하나 이상의 셀렉터에 하나 이상의 스타일을 적용할 때 사용합니다.
+	 *
+	 * @public
+	 * @lends jx.grid.BaseModule#
+	 *
+	 * @param {string[]} [selector] - CSS 스타일 스트링을 포함할 어레이. 주어지지 않을 경우 새 어레이를 만들어서 리턴합니다.
+	 * @param {object<string|object<string>>} styles - key 값은 CSS 셀렉터 명, value 값은 {@link #toCssStyle} 의 styles 값으로 보내집니다.
+	 * @param {boolean} noGridId - true 일 경우, 모든 셀렉터에 그리드 아이디를 붙이지 않습니다. false 일 경우, 그리드 아이디가 모든 셀렉터에 포함되어 그리드 컨테이너 내부의 DOM 엘레멘트에만 스타일이 적용됩니다.
+	 *
+	 * @returns {string[]} CSS 스타일 스트링들을 포함한 어레이
+	 *
+	 * @see #toCssStyle
+	 *
+	 * @since 2.0.0
+	 * @version 2.0.0
+	 */
 	proto.toCssStyles = function(css, styles, noGridId) {
 		var css = css || [],
 			i;

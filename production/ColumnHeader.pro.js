@@ -21,49 +21,40 @@ var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
 	Grid = goog.getObjectByName('jx.grid.Grid');
- goog.exportSymbol('jx.grid.ColumnHeader', ColHeader);
- JGM._add("ColHeader", ColHeader);
+ goog.exportSymbol('jx.grid.ColumnHeader', ColumnHeader);
 /**
-ColHeader 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
-@module ColHeader
-@requires JGM
-@requires JGM.Grid
-@requires JGM.ColDefManager
-@requires JGM.EventManager
-@requires JGM.ViewportManager
- */
-/**
-ColHeader 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
+ColumnHeader 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
+ColumnHeader 클래스. 컬럼 값에 따른 데이터 로우 정렬과 컬럼 좌우 위치 변경 등 컬럼
 관련 기능들을 지원합니다.
-@class {ColHeader} JGM.ColHeader
+@class {ColumnHeader} jx.grid.ColumnHeader
 @author 조준호
 @since 1.0.0
 @version 1.2.1
 */
 /**
-ColHeader 컨스트럭터 입니다.
-@constructor {ColHeader} ColHeader
-@param {Object} args - ColHeader 모듈 파라미터 오브젝트
-@... {jQuery} args.container - ColHeader 를 넣을 컨테이너 오브젝트
-@... {JGM.Grid} args.grid - ColHeader 를 포함하는 {@link JGM.Grid Grid} 인스턴스
-@... {Object} args.options - ColHeader 옵션 오브젝트
-@returns {ColHeader} ColHeader 모듈 인스턴스를 리턴합니다.
+ColumnHeader 컨스트럭터 입니다.
+@constructor {ColumnHeader} ColumnHeader
+@param {Object} args - ColumnHeader 모듈 파라미터 오브젝트
+@... {jQuery} args.container - ColumnHeader 를 넣을 컨테이너 오브젝트
+@... {jx.grid.Grid} args.grid - ColumnHeader 를 포함하는 {@link jx.grid.Grid} 인스턴스
+@... {Object} args.options - ColumnHeader 옵션 오브젝트
+@returns {ColumnHeader} ColumnHeader 모듈 인스턴스를 리턴합니다.
 @author 조준호
 @since 1.0.0
 @version 1.0.0
 */
-function ColHeader(args) {
+function ColumnHeader(args) {
 	goog.base(this, args);
 }
-goog.inherits(ColHeader, BaseModule);
-ColHeader.getInstance = function(args) {
-	return new ColHeader(args);
+goog.inherits(ColumnHeader, BaseModule);
+ColumnHeader.getInstance = function(args) {
+	return new ColumnHeader(args);
 };
-var prototype = ColHeader.prototype;
+var prototype = ColumnHeader.prototype;
 prototype._init = function(args) {
 	/**
-	그리드 컬럼 헤더를 관리하는 {@link JGM.ColHeader ColHeader} 인스턴스 입니다.
-	@var {JGM.ColHeader} JGM.Grid.header
+	그리드 컬럼 헤더를 관리하는 {@link jx.grid.ColumnHeader ColumnHeader} 인스턴스 입니다.
+	@var {jx.grid.ColumnHeader} jx.grid.Grid.header
 	@author 조준호
 	@since 1.0.0
 	@version 1.0.0
@@ -87,7 +78,7 @@ prototype._init = function(args) {
 	this._head =
 		$("<div class='" + opt['classHeader'] + "'>")
 		.appendTo(this._mask);
-	ColHeader._disableSel(this._head);
+	ColumnHeader._disableSel(this._head);
 };
 prototype._bindEvents = function() {
 	var events,
@@ -116,7 +107,7 @@ prototype._bindEvents = function() {
 prototype._defaultOptions = function(grid) {
 	var imgurl = grid._options['imageUrl'];
 	/**
-	ColHeader 모듈의 기본 옵션 값들을 정의합니다.
+	ColumnHeader 모듈의 기본 옵션 값들을 정의합니다.
 	@type {Object} options
 	@private
 	@author 조준호
@@ -126,7 +117,7 @@ prototype._defaultOptions = function(grid) {
 	return {
 		/**
 		컬럼 순서 변경 가능 여부를 정합니다. <br>기본값:<code>false</code>
-		@type {boolean=} JGM.ColHeader.options.reorderEnabled
+		@type {boolean=} jx.grid.ColumnHeader.options.reorderEnabled
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -136,7 +127,7 @@ prototype._defaultOptions = function(grid) {
 		/**
 		컬럼 순서 변경을 할 경우, 컬럼 셀들이 컬럼 헤더와 함께
 		위치가 변경될지를 정합니다. <br>기본값:<code>true</code>
-		@type {boolean=} JGM.ColHeader.options.reorderSyncEnabled
+		@type {boolean=} jx.grid.ColumnHeader.options.reorderSyncEnabled
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -145,7 +136,7 @@ prototype._defaultOptions = function(grid) {
 		'reorderSyncEnabled': true,
 		/**
 		컬럼 헤더의 기본 배경을 설정합니다. <br>기본값:<code>"url(" + imageUrl + "column-headers-bg.png) repeat-x scroll center"</code>
-		@type {string=} JGM.ColHeader.options.background
+		@type {string=} jx.grid.ColumnHeader.options.background
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -154,7 +145,7 @@ prototype._defaultOptions = function(grid) {
 		'background': "url(" + imgurl + "column-headers-bg.png) repeat-x scroll center",
 		/**
 		컬럼 헤더에 마우스가 오버되었을 때의 배경을 설정합니다. <br>기본값:<code>"url(" + imageUrl + "column-headers-over-bg.png) repeat-x scroll center"</code>
-		@type {string=} JGM.ColHeader.options.backgroundHover
+		@type {string=} jx.grid.ColumnHeader.options.backgroundHover
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -163,7 +154,7 @@ prototype._defaultOptions = function(grid) {
 		'backgroundHover': "url(" + imgurl + "column-headers-over-bg.png) repeat-x scroll center",
 		/**
 		컬럼 순서 변경 시에 컬럼 헤더의 빈 자리의 배경을 설정합니다. <br>기본값:<code>"#646464"</code>
-		@type {string=} JGM.ColHeader.options.backgroundPlaceholder
+		@type {string=} jx.grid.ColumnHeader.options.backgroundPlaceholder
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -172,7 +163,7 @@ prototype._defaultOptions = function(grid) {
 		'backgroundPlaceholder': "#646464",
 		/**
 		컬럼 로우 정렬 기본 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort.png"</code>
-		@type {string=} JGM.ColHeader.options.sortBackground
+		@type {string=} jx.grid.ColumnHeader.options.sortBackground
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -181,7 +172,7 @@ prototype._defaultOptions = function(grid) {
 		'sortBackground': imgurl + "sort.png",
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘의 오른쪽 마진 픽셀입니다. <br>기본값:<code>4</code>
-		@type {number=} JGM.ColHeader.options.sortRight
+		@type {number=} jx.grid.ColumnHeader.options.sortRight
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -190,7 +181,7 @@ prototype._defaultOptions = function(grid) {
 		'sortRight': 4,
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘의 폭 픽셀입니다. <br>기본값:<code>7</code>
-		@type {number=} JGM.ColHeader.options.sortWidth
+		@type {number=} jx.grid.ColumnHeader.options.sortWidth
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -199,7 +190,7 @@ prototype._defaultOptions = function(grid) {
 		'sortWidth': 7,
 		/**
 		컬럼 로우 정렬 오름차순 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort-asc.png"</code>
-		@type {string=} JGM.ColHeader.options.sortBackgroundAsc
+		@type {string=} jx.grid.ColumnHeader.options.sortBackgroundAsc
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -208,7 +199,7 @@ prototype._defaultOptions = function(grid) {
 		'sortBackgroundAsc': imgurl + "sort-asc.png",
 		/**
 		컬럼 로우 정렬 내림차순 상태 표시 아이콘 배경입니다. <br>기본값:<code>imageUrl + "sort-desc.png"</code>
-		@type {string=} JGM.ColHeader.options.sortBackgroundDesc
+		@type {string=} jx.grid.ColumnHeader.options.sortBackgroundDesc
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -217,7 +208,7 @@ prototype._defaultOptions = function(grid) {
 		'sortBackgroundDesc': imgurl + "sort-desc.png",
 		/**
 		컬럼 헤더의 폰트 스타일입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
-		@type {string=} JGM.ColHeader.options.font
+		@type {string=} jx.grid.ColumnHeader.options.font
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -226,7 +217,7 @@ prototype._defaultOptions = function(grid) {
 		'font': "15px Arial,Helvetica,sans-serif",
 		/**
 		컬럼 헤더의 높이 픽셀 입니다. <br>기본값:<code>21</code>
-		@type {number=} JGM.ColHeader.options.height
+		@type {number=} jx.grid.ColumnHeader.options.height
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -235,7 +226,7 @@ prototype._defaultOptions = function(grid) {
 		'height': 21,
 		/**
 		컬럼 헤더 border 의 두께 입니다. <br>기본값:<code>1</code>
-		@type {number=} JGM.ColHeader.options.borderThickness
+		@type {number=} jx.grid.ColumnHeader.options.borderThickness
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -244,7 +235,7 @@ prototype._defaultOptions = function(grid) {
 		'borderThickness': 1,
 		/**
 		컬럼 헤더 border 의 스타일 입니다. <br>기본값:<code>"solid #909192"</code>
-		@type {string=} JGM.ColHeader.options.border
+		@type {string=} jx.grid.ColumnHeader.options.border
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -253,7 +244,7 @@ prototype._defaultOptions = function(grid) {
 		'border': "solid #909192",
 		/**
 		컬럼 헤더 컨테이너 마스크에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-header-mask"</code>
-		@type {string=} JGM.ColHeader.options.classHeaderMask
+		@type {string=} jx.grid.ColumnHeader.options.classHeaderMask
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -262,7 +253,7 @@ prototype._defaultOptions = function(grid) {
 		'classHeaderMask': "jgrid-header-mask",
 		/**
 		컬럼 헤더 컨테이너에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-header"</code>
-		@type {string=} JGM.ColHeader.options.classHeader
+		@type {string=} jx.grid.ColumnHeader.options.classHeader
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -271,7 +262,7 @@ prototype._defaultOptions = function(grid) {
 		'classHeader': "jgrid-header",
 		/**
 		각 컬럼 헤더에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader"</code>
-		@type {string=} JGM.ColHeader.options.classColHeader
+		@type {string=} jx.grid.ColumnHeader.options.classColHeader
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -280,7 +271,7 @@ prototype._defaultOptions = function(grid) {
 		'classColHeader': "jgrid-colheader",
 		/**
 		컬럼 헤더 순서 변경시 변경되는 컬럼에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader-active"</code>
-		@type {string=} JGM.ColHeader.options.classColHeaderActive
+		@type {string=} jx.grid.ColumnHeader.options.classColHeaderActive
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -289,7 +280,7 @@ prototype._defaultOptions = function(grid) {
 		'classColHeaderActive': "jgrid-colheader-active",
 		/**
 		컬럼 헤더 순서 변경시 변경되는 컬럼의 빈자리에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader-placeholder"</code>
-		@type {string=} JGM.ColHeader.options.classColHeaderPlaceholder
+		@type {string=} jx.grid.ColumnHeader.options.classColHeaderPlaceholder
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -298,7 +289,7 @@ prototype._defaultOptions = function(grid) {
 		'classColHeaderPlaceholder': "jgrid-colheader-placeholder",
 		/**
 		interactive 한 컬럼 헤더들에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"interactive"</code>
-		@type {string=} JGM.ColHeader.options.classInteractive
+		@type {string=} jx.grid.ColumnHeader.options.classInteractive
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -307,7 +298,7 @@ prototype._defaultOptions = function(grid) {
 		'classInteractive': "interactive",
 		/**
 		현재 로우 정렬 중인 컬럼 헤더에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-colheader-sorted"</code>
-		@type {string=} JGM.ColHeader.options.classColHeaderSorted
+		@type {string=} jx.grid.ColumnHeader.options.classColHeaderSorted
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -316,7 +307,7 @@ prototype._defaultOptions = function(grid) {
 		'classColHeaderSorted': "jgrid-colheader-sorted",
 		/**
 		컬럼 로우 정렬 상태 표시 아이콘에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-sort"</code>
-		@type {string=} JGM.ColHeader.options.classSort
+		@type {string=} jx.grid.ColumnHeader.options.classSort
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -325,7 +316,7 @@ prototype._defaultOptions = function(grid) {
 		'classSort': "jgrid-sort",
 		/**
 		컬럼 로우 정렬 오름차순 상태 표시 아이콘에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-sort-asc"</code>
-		@type {string=} JGM.ColHeader.options.classSortAsc
+		@type {string=} jx.grid.ColumnHeader.options.classSortAsc
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -334,7 +325,7 @@ prototype._defaultOptions = function(grid) {
 		'classSortAsc': "jgrid-sort-asc",
 		/**
 		컬럼 로우 정렬 내림차순 상태 표시 아이콘에 적용되는 CSS 클래스 입니다. <br>기본값:<code>"jgrid-sort-desc"</code>
-		@type {string=} JGM.ColHeader.options.classSortDesc
+		@type {string=} jx.grid.ColumnHeader.options.classSortDesc
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -343,7 +334,7 @@ prototype._defaultOptions = function(grid) {
 		'classSortDesc': "jgrid-sort-desc",
 		/**
 		컬럼 폭 조절 핸들의 CSS 클래스 입니다.<br>기본값:<code>"jgrid-resize-handle"</code>
-		@type {string=} JGM.ColHeader.options.classResizeHandle
+		@type {string=} jx.grid.ColumnHeader.options.classResizeHandle
 		@private
 		@author 조준호
 		@since 1.1.2
@@ -352,7 +343,7 @@ prototype._defaultOptions = function(grid) {
 		'classResizeHandle': "jgrid-resize-handle",
 		/**
 		컬럼 폭 조절 핸들의 폭입니다. <br>기본값:<code>11</code>
-		@type {number=} JGM.ColHeader.options.resizeHandleWidth
+		@type {number=} jx.grid.ColumnHeader.options.resizeHandleWidth
 		@private
 		@author 조준호
 		@since 1.1.2
@@ -364,7 +355,7 @@ prototype._defaultOptions = function(grid) {
 		주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
-		@type {string=} JGM.ColHeader.options.style
+		@type {string=} jx.grid.ColumnHeader.options.style
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -376,7 +367,7 @@ prototype._defaultOptions = function(grid) {
 		주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
 		꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
 		<br>기본값:<code>""</code>
-		@type {string=} JGM.ColHeader.options.headerStyle
+		@type {string=} jx.grid.ColumnHeader.options.headerStyle
 		@private
 		@author 조준호
 		@since 1.0.0
@@ -386,7 +377,7 @@ prototype._defaultOptions = function(grid) {
 		/**
 		스크롤러의 시작 style.left
 		<br>기본값:<code>10000</code>
-		@type {number=} JGM.ColHeader.options.scrollerLeft
+		@type {number=} jx.grid.ColumnHeader.options.scrollerLeft
 		@private
 		@author 조준호
 		@since 1.1.7
@@ -397,7 +388,7 @@ prototype._defaultOptions = function(grid) {
 		/**
 		스크롤러의 width
 		<br>기본값:<code>100000</code>
-		@type {number=} JGM.ColHeader.options.scrollerWidth
+		@type {number=} jx.grid.ColumnHeader.options.scrollerWidth
 		@private
 		@author 조준호
 		@since 1.1.7
@@ -408,7 +399,7 @@ prototype._defaultOptions = function(grid) {
 		/**
 		컬럼 리사이즈를 할 때 생기는 가이드에 적용되는 CSS 클래스 입니다.
 		<br>기본값:<code>"resize-guide"</code>
-		@type {string=} JGM.ColHeader.options.classResizeGuide
+		@type {string=} jx.grid.ColumnHeader.options.classResizeGuide
 		@private
 		@author 조준호
 		@since 1.1.7
@@ -419,7 +410,7 @@ prototype._defaultOptions = function(grid) {
 		/**
 		컬럼 리사이즈를 할 때 생기는 가이드의 폭 픽셀입니다.
 		<br>기본값:<code>1</code>
-		@type {number=} JGM.ColHeader.options.resizeGuideWidth
+		@type {number=} jx.grid.ColumnHeader.options.resizeGuideWidth
 		@private
 		@author 조준호
 		@since 1.1.7
@@ -430,7 +421,7 @@ prototype._defaultOptions = function(grid) {
 		/**
 		컬럼 리사이즈를 할 때 생기는 가이드의 배경 style 입니다.
 		<br>기본값:<code>"black;filter:alpha(opacity=40);opacity:0.4"</code>
-		@type {string=} JGM.ColHeader.options.resizeBackground
+		@type {string=} jx.grid.ColumnHeader.options.resizeBackground
 		@private
 		@author 조준호
 		@since 1.1.7
@@ -441,7 +432,7 @@ prototype._defaultOptions = function(grid) {
 		/**
 		컬럼 리사이즈를 할 때 컬럼 셀들을 동시에 사이즈 변경할지 여부입니다.
 		<br>기본값:<code>false</code>
-		@type {boolean=} JGM.ColHeader.options.syncResize
+		@type {boolean=} jx.grid.ColumnHeader.options.syncResize
 		@private
 		@author 조준호
 		@since 1.1.7
@@ -452,7 +443,7 @@ prototype._defaultOptions = function(grid) {
 		/**
 		컬럼 리사이즈 핸들의 배경 style 입니다.
 		<br>기본값:<code>"black;filter:alpha(opacity=5);opacity:0.05"</code>
-		@type {string=} JGM.ColHeader.options.resizeHandleBackground
+		@type {string=} jx.grid.ColumnHeader.options.resizeHandleBackground
 		@private
 		@author 조준호
 		@since 1.2.1
@@ -467,7 +458,7 @@ prototype._beforeDispose = function() {
 	}
 	this._destroyResizeHandles();
 	JGM._destroy(this, {
-		name: "ColHeader",
+		name: "ColumnHeader",
 		path: "header",
 		"$": "resizeGuide _mask _head",
 		property: "ctnr _resizeMap",
@@ -599,7 +590,7 @@ prototype._onRenderModules = function() {
 	}
 	this._head[0].innerHTML = headers.join("");
 	/**
-	ColHeader 의 렌더링이 완료되었을 때 트리거되는 이벤트 입니다.
+	ColumnHeader 의 렌더링이 완료되었을 때 트리거되는 이벤트 입니다.
 	@event {Event} onRenderHeadersComplete
 	@author 조준호
 	@since 1.0.0
@@ -628,7 +619,7 @@ prototype._render = function(header, colDef, i) {
 	header.push("<div id='" + this.mid + "h" + key + "' class='" + opt['classColHeader'] + " " + (opt['reorderEnabled'] || colDef['sorter'] ? " " + opt['classInteractive'] : "") +
 		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + key + "'>");
 	/**
-	ColHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 앞에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
+	ColumnHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 앞에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
 	@event {Event} onRenderHeader_COLKEY_prepend
 	@param {Array.<string>} html - 컬럼 헤더 렌더링 스트링들을 가진 어레이
 	@author 조준호
@@ -638,7 +629,7 @@ prototype._render = function(header, colDef, i) {
 	this.triggerGridEvent("onRenderHeader_" + key + "_prepend", [header]);
 	header.push(name);
 	/**
-	ColHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 뒤에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
+	ColumnHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 뒤에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
 	@event {Event} onRenderHeader_COLKEY_append
 	@param {Array.<string>} html - 컬럼 헤더 렌더링 스트링들을 가진 어레이
 	@author 조준호
@@ -651,7 +642,7 @@ prototype._render = function(header, colDef, i) {
 	}
 	header.push("</div>");
 };
-ColHeader._disableSel = function(target) {
+ColumnHeader._disableSel = function(target) {
 	Util$.safe$(target)
 		.attr("unselectable", 'on')
 		.css('MozUserSelect', 'none')
@@ -804,7 +795,7 @@ prototype._click = function(e) {
 	var colDef = this._getDef(colHeader),
 		key = colDef['key'];
 	/**
-	ColHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다. 발생된 click 이벤트가
+	ColumnHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다. 발생된 click 이벤트가
 	valid 한지를 체크합니다.
 	@event {Event} clickHeaderValid_COLKEY
 	@param {jQuery.Event} e - jQuery 이벤트 오브젝트
@@ -819,7 +810,7 @@ prototype._click = function(e) {
 		return;
 	}
 	/**
-	ColHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	ColumnHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 	@event {Event} clickHeader_COLKEY
 	@param {jQuery.Event} e - jQuery 이벤트 오브젝트
 	@param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
@@ -830,7 +821,7 @@ prototype._click = function(e) {
 	*/
 	
 	/**
-	ColHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+	ColumnHeader 에 click 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 	@event {Event} clickHeader
 	@param {jQuery.Event} e - jQuery 이벤트 오브젝트
 	@param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
@@ -859,7 +850,7 @@ prototype._mousedown = function(e) {
 		var colDef = this._getDef(colHeader),
 			key = colDef['key'];
 		/**
-		  ColHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+		  ColumnHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 		  @event {Event} mousedownHeader
 		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
 		  @param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
@@ -869,7 +860,7 @@ prototype._mousedown = function(e) {
 		  */
 		this.triggerGridEvent("mousedownHeader", [e, colHeader]);
 		/**
-		  ColHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
+		  ColumnHeader 에 mousedown 이벤트가 발생할 경우 트리거되는 이벤트 입니다.
 		  @event {Event} mousedownHeader_COLKEY
 		  @param {jQuery.Event} e - jQuery 이벤트 오브젝트
 		  @param {jQuery} colHeader - 컬럼 헤더를 가진 jQuery 오브젝트
