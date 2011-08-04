@@ -32,6 +32,7 @@ goog.provide('jx.grid.Grid');
 (function() {
 	var JGM = goog.getObjectByName('jx.grid'),
 		Util = goog.getObjectByName('jx.util'),
+		echo = goog.getObjectByName('echo'),
 		BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
 		VERBOSE = 2,
 		V_KEYDOWN = 3,
