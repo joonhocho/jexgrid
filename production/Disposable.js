@@ -189,6 +189,8 @@ goog.provide('jx.lang.Disposable');
   * @param {?boolean=} others compare non-disposables
   */
  function dispose(level, others) {'use strict';
+	 console.log('dispose' + level + others);
+	 console.log(this);
 	 var i,
 		 val;
 	 if (level) {

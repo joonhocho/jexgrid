@@ -1834,6 +1834,8 @@ jx.lang.Disposable = {};
     return!0
   }
   function d(e, a) {
+    console.log("dispose" + e + a);
+    console.log(this);
     var b, i;
     if(e) {
       for(b in this) {
