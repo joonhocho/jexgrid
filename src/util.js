@@ -1,3 +1,5 @@
+console && console.log && console.log('reading javascript source "util.js"...');//IF_DEBUG
+
 goog.require('array_extension');
 goog.provide('jx.util');
 goog.provide('Util');

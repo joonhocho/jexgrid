@@ -1,3 +1,5 @@
+console && console.log && console.log('reading javascript source "ColumnManager.js"...');//IF_DEBUG
+
 goog.require('array_extension');
 goog.require('engine_extension');
 goog.require('jx.util');
