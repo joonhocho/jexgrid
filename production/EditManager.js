@@ -513,7 +513,7 @@ prototype.commit = function() {
 	var cell = this.editor.cell,
 		value = this.editor.value(cell.getNode()),
 		$cell;
-	if (value == cell.getValue()) {
+	if (value == null || value == cell.getValue()) {
 		this.cancel();
 	}
 	else {
@@ -723,7 +723,13 @@ prototype.focus = function() {
 @version 1.1.1
 */
 prototype.value = function(wrapperNode) {
-	return wrapperNode.childNodes[0].value;
+	if (wrapperNode) {
+		var child = wrapperNode.childNodes[0];
+		if (child) {
+			return child.value;
+		}
+	}
+	return null;
 };
 /**
 현재 데이터의 path 스트링입니다. 이 값을 eval() 하면 이 에디터가 리턴됩니다.
