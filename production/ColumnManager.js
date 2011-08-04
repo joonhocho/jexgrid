@@ -263,7 +263,7 @@ function ColumnManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			'renderer':		ViewportManager._renderer,
+			'renderer':		undefined,
 			/**
 			컬럼 셀 {@link jx.grid.ColumnManager.options.colDef.renderer renderer} 함수에 보낼 파라미터 타입을 정하는 옵션. true 일 경우에는
 			{@link jx.grid.Cell Cell} 인스턴스를 보내고, false 일 경우에는 다음의 파라미터들을 순서대로 보냅니다. <br>

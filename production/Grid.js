@@ -5,6 +5,7 @@ goog.require('jx.events.EventDispatcher');
 goog.require('jx.grid');
 goog.require('jx.grid.BaseModule');
 goog.require('jx.grid.EventManager');
+goog.require('TimeWatch');
 goog.provide('jx.grid.Grid');
 /*!
  * AUTHOR
@@ -1157,8 +1158,6 @@ prototype.containsEvent = function(e) {
 prototype.getChart = function(name) {
 	return this._charts[name];
 };
-prototype.log = function(msg, vlevel) {
-}
 prototype.chart = function(chartCont, type, columns, options) {
 	var pack,
 		cls;
