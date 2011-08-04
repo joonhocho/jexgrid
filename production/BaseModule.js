@@ -258,9 +258,6 @@ goog.provide('jx.grid.BaseModule');
 			'type':'beforedispose'
 		});
 		superdispose.call(this);
-		this.dispatchEvent({
-			'type':'afterdispose'
-		});
 	}
 	/**
 	 * 이 모듈이 소속된 그리드의 데이터 매니저 인스턴스를 리턴합니다.

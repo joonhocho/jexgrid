@@ -470,7 +470,7 @@ prototype._beforeDispose = function() {
 		property: "_ctnr _resizeMap",
 		map: "_map _options"
 	});
-	this.dispose();
+	Object.dispose(this);
 };
 prototype._destroyResizeHandles = function() {
 	var rmap = this._resizeMap,

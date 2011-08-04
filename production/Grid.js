@@ -434,8 +434,7 @@ prototype.destroy = function() {
 			map: "_options",
 			style: "_style _dynStyle"
 		});
-		this.log('disposing grid...', V_INIT);//IF_DEBUG
-		this.dispose();
+		Object.dispose(this);
 	}
 	catch (e) {
 		return e;

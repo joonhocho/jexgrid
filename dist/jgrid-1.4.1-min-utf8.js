@@ -2174,8 +2174,7 @@ jx.grid.BaseModule = {};
   g.dispose = function() {
     delete this.grid;
     this.dispatchEvent({type:"beforedispose"});
-    d.call(this);
-    this.dispatchEvent({type:"afterdispose"})
+    d.call(this)
   };
   g.getDataMgr = function() {
     return this.grid.dataMgr
@@ -4025,7 +4024,7 @@ jx.grid.Grid = {};
   e.destroy = function() {
     this.log("destroying Grid...", c);
     try {
-      this.log("event:beforeDispose.", c), this.dispatchEvent({type:"beforeDispose"}), d.isEmptyObj(g.m.Grid) && (this.log("unbinding global event handlers.", c), g._unbindGlobalEvents()), this.log("event:onDestroy.", c), this.event.trigger("onDestroy"), this.log("destroying grid vars...", c), g._destroy(this, {name:"Grid", module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"}), this.log("disposing grid...", c), this.dispose()
+      this.log("event:beforeDispose.", c), this.dispatchEvent({type:"beforeDispose"}), d.isEmptyObj(g.m.Grid) && (this.log("unbinding global event handlers.", c), g._unbindGlobalEvents()), this.log("event:onDestroy.", c), this.event.trigger("onDestroy"), this.log("destroying grid vars...", c), g._destroy(this, {name:"Grid", module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"}), Object.dispose(this)
     }catch(e) {
       return e
     }
@@ -6303,7 +6302,7 @@ jx.grid.ColumnHeader = {};
     this._head.sortable && this._head.sortable("destroy");
     this._destroyResizeHandles();
     g._destroy(this, {name:"ColumnHeader", path:"header", $:"_resizeGuide _mask _head", property:"_ctnr _resizeMap", map:"_map _options"});
-    this.dispose()
+    Object.dispose(this)
   };
   c._destroyResizeHandles = function() {
     var a = this._resizeMap, c;
@@ -6549,7 +6548,7 @@ jx.grid.CheckManager = {};
     return{colDef:{key:"checkbox", width:20, name:" ", noTitle:!0, resizable:!1, sorter:null, filter:null, noSearch:!0, editor:null, inputOnCreate:!1}, colIdx:0, name:void 0, classCheck:"checkmg", classMasterCheck:"checkm", master:!0, isRadio:!1}
   };
   a._beforeDispose = function() {
-    this.dispose()
+    Object.dispose(this)
   };
   a._beforeCreateCss = function(a) {
     var b, d, f = a.css;

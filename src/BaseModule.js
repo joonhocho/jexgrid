@@ -274,9 +274,6 @@ goog.provide('jx.grid.BaseModule');
 			'type':'beforedispose'
 		});
 		superdispose.call(this);
-		this.dispatchEvent({
-			'type':'afterdispose'
-		});
 	}
 
 	/**

@@ -227,7 +227,7 @@ prototype._defaultOptions = function() {
 }
 
 prototype._beforeDispose = function() {
-	this.dispose();
+	Object.dispose(this);
 }
 
 prototype._beforeCreateCss = function(event) {
