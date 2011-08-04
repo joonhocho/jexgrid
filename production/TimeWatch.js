@@ -10,7 +10,7 @@ goog.provide('TimeWatch');
 /**
 * Time Watch for Debugging
 */
-(function(){
+(function(){'use strict';
 goog.exportSymbol('TimeWatch', TimeWatch);
 function TimeWatch(msg) {
 	var laps = this.laps = [];
@@ -42,6 +42,7 @@ prototype.toString = function() {
 		msg = laps[0], // start msg
 		time = laps[1],
 		lastTime = time,
+		laptime,
 		times = len > 2 ? [] : null,
 		sum = 0,
 		str = 'TimeWatch\n'; // start time

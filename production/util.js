@@ -9,7 +9,7 @@ goog.provide('echo');
  * COPYRIGHT
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
-(function(){
+(function(){'use strict';
 var undefined = (function(){})(),
 	console = window.console,
 	CONSOLE_LOGS = [],
