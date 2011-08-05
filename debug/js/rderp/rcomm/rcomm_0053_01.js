@@ -139,7 +139,9 @@ function fnMakeGrid() {
             var rtnHTML = "";
             var option  = $("#ext1 option");
             
-            rtnHTML += "<option class='generated' value=''></option>";
+            rtnHTML += "<option class='generated' value='1'>one</option>";
+            rtnHTML += "<option class='generated' value='2'>two</option>";
+            rtnHTML += "<option class='generated' value='0'>three</option>";
 
             for(var i=0 ; i < option.length ; i++){
                 if(option[i].value == voidChk(value,"10")){

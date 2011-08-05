@@ -27,7 +27,18 @@ goog.provide('jx.grid.ViewportManager');
 	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
-	Cell = goog.getObjectByName('jx.grid.Cell');
+	Cell = goog.getObjectByName('jx.grid.Cell'),
+	inputTags = {
+		INPUT: true,
+		TEXTAREA: true,
+		LABEL: true,
+		FIELDSET: true,
+		LEGEND: true,
+		SELECT: true,
+		OPTGROUP: true,
+		OPTION: true,
+		BUTTON: true
+	};
 
 goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
 
@@ -1380,6 +1391,7 @@ prototype.destroyRow = function(datarow) {
 };
 
 prototype.destroyRowById = function(id) {
+	// valid id still can evaluate to false
 	if (id != null) {
 		this.unlockRowById(id);
 		if (this._renderedRows.hasOwnProperty(id)) {
@@ -2726,36 +2738,40 @@ prototype._dblclick = function(e) {
 };
 
 prototype._triggerMouseEvent = function(e, events) {
-	var node = this._getClosestCell(e.target);
+	var target = e.target;
+	if (target) {
+		var tag = target.tagName;
+		if (!inputTags[tag]) {
+			var node = this._getClosestCell(e.target);
 
-	if (node) {
-		this.grid.log('UI event:' + events + ' on Viewport. event=' + e.type, arguments[2]);//IF_DEBUG
+			if (node) {
+				this.grid.log('UI event:' + events + ' on Viewport. event=' + e.type, arguments[2]);//IF_DEBUG
 
-		var cell = new Cell({'grid':this.grid, 'node':node}),
-			key = cell.getKey(),
-			args = [e, cell],
-			evtmgr = this._evtmgr;
+				var cell = new Cell({'grid':this.grid, 'node':node}),
+					key = cell.getKey(),
+					args = [e, cell],
+					evtmgr = this._evtmgr;
 
-		if (events.indexOf(',') > -1) {
-			var arr = events.split(','),
-				i = 0,
-				  len = arr.length,
-				  evt;
-			for (; i < len; i++) {
-				evt = arr[i];
-				evtmgr.trigger(evt+'_'+key, args, true);
-				evtmgr.trigger(evt, args, true);
+				if (events.indexOf(',') > -1) {
+					var arr = events.split(','),
+						i = 0,
+						  len = arr.length,
+						  evt;
+					for (; i < len; i++) {
+						evt = arr[i];
+						evtmgr.trigger(evt+'_'+key, args, true);
+						evtmgr.trigger(evt, args, true);
+					}
+				}
+				else {
+					evtmgr.trigger(events+'_'+key, args, true);
+					evtmgr.trigger(events, args, true);
+				}
+				return true;
 			}
 		}
-		else {
-			evtmgr.trigger(events+'_'+key, args, true);
-			evtmgr.trigger(events, args, true);
-		}
-		return true;
 	}
-	else {
-		return false;
-	}
+	return false;
 };
 
 prototype._scroll = function() {
