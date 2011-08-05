@@ -1,0 +1,2 @@
+//document.write('<img src="../../img/00/menu/img_footer.gif" alt="COPYRIGHT(C) 2010 webcash. All RIGHTS RESERVED." />');
+document.write('<span style="font-size:8pt; color:#666666;">COPYRIGHT(C) 2011 WEBCASH. ALL RIGHTS RESERVED.</span>');

@@ -1,0 +1,532 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0043)http://172.20.20.222:8080/rmain_0001_01.act -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-949">
+	<title>R&amp;D ERP</title>
+	
+	<meta http-equiv="Cache-Control" content="No-Cache">
+	<meta http-equiv="Pragma" content="No-Cache">
+	<link rel="stylesheet" type="text/css" href="rd-style.css">
+	<script type="text/javascript" src="rderp.grid.js"></script><script language="JavaScript" src="jquery-1.4.4.min.js"></script><script language="JavaScript" src="jquery-ui-1.8.7.custom.min.js"></script><script language="JavaScript" src="jgrid-1.4.0-min.js"></script><script type="text/javascript" src="rderp_common.js"></script><script type="text/javascript" src="gw.ui.js"></script><script type="text/javascript" src="gw.common.js"></script><script type="text/javascript" src="gw.common.js"></script><script type="text/javascript" src="gw.number.js"></script><script type="text/javascript" src="number-functions.js"></script><script type="text/javascript" src="gw.date.js"></script><script type="text/javascript" src="date-ko-KR.js"></script><script type="text/javascript" src="config.js"></script><script type="text/javascript" src="rderp_common_pop.js"></script>
+	<script type="text/javascript" src="protocomm.js"></script>   
+	<script type="text/javascript" src="json2.js"></script>
+	<script type="text/javascript" src="jex_web.js"></script>
+	<script type="text/javascript" src="JexCommon.js"></script><script type="text/javascript" src="jex.tree.js"></script><script type="text/javascript" src="jquery-ui.nonWidgets.min.js"></script>
+	<script type="text/javascript" src="jex.table.js"></script>
+	<script type="text/javascript" src="jex.calendar.js"></script>
+	<script type="text/javascript" src="jex.div.js"></script>
+	<script type="text/javascript" src="common.js"></script>
+	<script type="text/javascript" src="rderp_common.js"></script><script type="text/javascript" src="config.js"></script><script type="text/javascript" src="rderp_common_pop.js"></script>
+	<script type="text/javascript" src="gw.ui.js"></script>
+	<script type="text/javascript" src="gw.date.js"></script>
+	<script type="text/javascript" src="gw.number.js"></script><script type="text/javascript" src="number-functions.js"></script>
+	<script type="text/javascript" src="jquery.livequery.js"></script>
+
+	<script type="text/javascript">
+	//요일 함수
+	$(function() {
+		var week = new Array('일', '월', '화', '수', '목', '금', '토');
+		var d = new Date();
+		var dates = "2011-08-05";
+		var theday = d.getDay();
+		var w = dates + "(" + week[theday]+")";
+	
+		$("div#my_box").find(".date").text(w);
+
+		/***************************************************
+		* 이전버튼
+		***************************************************/
+	    $("#prevBtn").click(function(){
+	    	prjInfoListPaging("B");
+	    });
+
+	    /***************************************************
+		* 다음버튼
+		***************************************************/
+	    $("#nextBtn").click(function(){
+	    	prjInfoListPaging("N");
+	    });
+
+		setApptCnt();
+		setPrjInfoCnt();
+		setPrjInfoList();
+		setNoticeList();
+	});
+
+
+	/******************************
+	* 공지사항 웹서비스 호출
+	******************************/
+	setNoticeList = function() {
+		var tr = "";
+
+		tr += "<tr>";
+		tr += "	<td id='DIV_GRP_NM'></td>";
+		tr += "	<td id='ARTICLE_SUBJ' class='tb_td_03'></td>";
+		tr += "	<td id='REG_USER_DEPT_NM'></td>";
+		tr += "	<td id='REG_USER_NM'></td>";
+//		tr += "	<td id='NCNT'></td>";   
+		tr += "	<td id='REG_DATE'></td>";
+		tr += "	<td id='ATTFILE'></td>";
+		tr += "</tr>";
+
+		$("#noticeList").jexTbl('make', {
+			tr_tpl      :tr,            	// TR을 구성하는 HTML
+			cnt         :10,            	// 기본 페이지당 건수
+			maxCnt      :100         		// db처리에서 받아오는 총건수
+		});
+
+		var jsonValue = {}; 
+		jsonValue["USEFAC_SEQ_NO"] = "10";
+        jsonValue["USER_ID"] = "master";
+
+		jex.web.Ajax("board0036_02", jsonValue, function(data) {
+	    	$("#noticeList").jexTbl('setAll', generateNoticeRec(data)); 
+		}, "jct", "2");
+	};
+
+	/***************************************
+	* 공지사항 목록조회 후처리
+	***************************************/
+	generateNoticeRec = function(data){
+		var jsonRECS =[];
+   		var jsonREC = null;
+   		$.each(data.REC, function(i) {  
+
+   			for(var key in data.REC[i]) {
+   	   			eval("var "+key+" = data.REC[i]."+key+";");
+   			}
+
+   			var ATTFILE = "";						// 첨부파일 이미지
+   			
+   	   		if(ATTFILE_CNT > 0) { 
+   	   			ATTFILE = "<a href=\"javascript:\" onclick=\"gw.ui.fileDownloadLayer('10', 'GW_ARTICLE', '" + BOARD_SEQ_NO + "', '" + ARTICLE_SEQ_NO + "');\"><img src='/proto/web/img/comm/etc/ico_file.gif' alt=''></a>";
+   	   		}
+   	   		else { 
+   	   			ATTFILE = "";
+   	   		}
+
+   	   		var IS_NEW = "";
+
+	   	   	if( NEW_YN == "Y") {
+	   	   		IS_NEW = " <img src='../../img/groupware/ico_new.gif' alt='' />";
+	   		}
+
+   			jsonREC = {};
+   			jsonREC["DIV_GRP_NM"]           = DIV_GRP_NM;
+			jsonREC["ARTICLE_SUBJ"]         = "<a href='javascript:' onclick=\"parent.openTab('menu_id_"+MENU_SEQ+"', '"+MENU_HAN_NAME+"', '/board0016_01.act?BOARD_SEQ_NO="+BOARD_SEQ_NO+"');\">"+ARTICLE_SUBJ+IS_NEW+"</a>";
+			jsonREC["REG_USER_DEPT_NM"]     = jex.web.null2void(data.REC[i].REG_USER_DEPT_NM);
+			jsonREC["REG_USER_NM"]   		= jex.web.null2void(data.REC[i].REG_USER_NM);
+			jsonREC["NCNT"] 				= jex.web.null2void(data.REC[i].NCNT);
+			jsonREC["REG_DATE"] 			= gw.date.format(REG_DATE, 'yyyyMMdd', 'yyyy-MM-dd');
+			//jsonREC["ATTFILE"] 				= jex.web.null2void(data.REC[i].ATTFILE);
+			jsonREC["ATTFILE"] 				= ATTFILE;
+
+            jsonRECS[i] = jsonREC;
+   		});
+
+		return jsonRECS;
+	}
+
+	/******************************
+	* 결재대기 수    웹서비스 호출
+	******************************/
+	setApptCnt = function() {
+		var jsonValue = {}; 
+		jsonValue["USEFAC_SEQ_NO"] = "10";
+        jsonValue["USER_ID"] = "master";
+        jsonValue["DEPT_CD"] = "604800";
+        
+		jex.web.Ajax("rmain_0002_01_r001", jsonValue, function(data) {
+			$("#userApprCnt").text("("+jex.web.null2void(data.USER_APPR_CNT,"0")+")");
+			$("#deptApprCnt").text("("+jex.web.null2void(data.DEPT_APPR_CNT,"0")+")");
+		}, "jct", "2");
+	};
+
+
+	/******************************
+	* 진행과제 총건수 조회 웹서비스 호출
+	******************************/
+	setPrjInfoCnt = function() {
+		var jsonValue = {}; 
+		jsonValue["USEFAC_SEQ_NO"] = "10";
+	
+		jex.web.Ajax("rmain_0003_01_r001", jsonValue, function(data) {
+	    	$("#prjInfoCnt").text(data.INQ_TOTL_NCNT+"건");
+		}, "jct", "2");
+	};
+
+	/******************************
+	* 진행과제    웹서비스 호출
+	******************************/
+	setPrjInfoList = function() {
+		var tr = "";
+
+		tr += "<tr>";
+//		tr += "	<td id='PRJ_NO'></td>";														// 프로젝트번호
+		tr += "	<td id='PRJ_RSPR_EMP_NM' ></td>";											// 과제책임자
+		tr += "	<td id='SUP_ORG_NM' class='tb_td_03' style='text-align: left;'></td>";													// 지원기관명
+		tr += "	<td id='PRJ_NM' class='tb_td_03' style='text-align: left;'></td>";									// 과제명
+		tr += "	<td id='RCH_TERM'></td>";													// 과제기간
+		tr += "	<td id='TOT_CASH_AMT' style='text-align: right;'></td>";					// 사업비
+		tr += "	<td id='PRJ_CHRG_GRP_NM'></td>";											// 과제담당자
+		tr += "	<td id='DEPT_CHRG_NM'></td>";												// 수행담당자
+		tr += "	<td id='TERM_CNT'  style='text-align: right;'></td>";													// 잔여기간
+		tr += "	<td id='LINK'></td>";																			
+		tr += "</tr>";	
+		
+		$("#prjInfoList").jexTbl('make', {
+			tr_tpl		:tr,			// TR을 구성하는 HTML
+			cnt			:5,			// 기본 페이지당 건수
+			maxCnt		:50,			// db처리에서 받아오는 총건수 
+			//footer		:"prjInfoListFooter",	//
+			//page		:"prjInfoListPage",
+			//changeList	:"prjInfoListChangeList",
+			//totCntView	:"prjInfoListTotCntView",
+			footer		:"tblFooter",
+			page		:"page",
+			changeList	:"changeList",
+			totCntView	:"totCntView",
+			next		:function() {},
+			prev		:function() {},
+			onclick		:prjInfoOnClick
+		});
+		
+		// 최초 빈테이블을 그려준다.	 
+		$("#prjInfoList").jexTbl('setAll', []);
+		prjInfoListPaging();
+	};
+
+	/******************************
+	* 진행과제   클릭 이벤트
+	******************************/
+	prjInfoOnClick = function() {
+	};
+
+	/******************************
+	* 진행과제    페이징
+	******************************/
+	prjInfoListPaging = function(cmd) {
+		var pageNo = 0;
+
+		if(cmd == "B")
+			pageNo = $("#prjInfoList").jexTbl('getBeforeCpage')+"";
+		else if(cmd == "N")
+			pageNo = $("#prjInfoList").jexTbl('getNextCpage')+"";
+		else
+			pageNo = "1";
+		var jsonValue = {}; 
+		
+		jsonValue["USEFAC_SEQ_NO"] = "10";
+        jsonValue["PRS_PGNO"]      = pageNo;
+        jsonValue["PG_REQ_CNT"]    = "50";
+
+        jex.web.Ajax("rmain_0003_01_l001", jsonValue, function(data) {
+    		if(cmd == 'N'){
+        		$("#prjInfoList").jexTbl('setPageNo',1);
+        		$("#prjInfoList").jexTbl('next', generatePrjInfoRec(data));
+    		}
+    		else if (cmd == 'B'){	
+        		$("#prjInfoList").jexTbl('setPageNo',1);
+        		$("#prjInfoList").jexTbl('before', generatePrjInfoRec(data));
+        	}
+    		else{
+        		$("#prjInfoList").jexTbl('init');
+        		$("#prjInfoList").jexTbl('setAll', generatePrjInfoRec(data));
+    		}
+        },"jct", "2");
+   	}
+
+	/***************************************
+	* 진행과제 목록조회 후처리
+	***************************************/
+	generatePrjInfoRec = function(data){
+		var jsonRECS =[];
+   		var jsonREC = null;
+
+   		$.each(data.REC, function(i) {  
+
+   			for(var key in data.REC[i]) {
+   	   			eval("var "+key+" = jex.web.null2void(data.REC[i]."+key+")");
+   			}
+
+   			var LINK = "";
+   			LINK += "<a href='#' onclick=fnPage('02','" + PRJ_NO + "') class='btn_lnk'>[예산]</a>";
+   			LINK += "<a href='#' onclick=fnPage('03','" + PRJ_NO + "') class='btn_lnk'>[참여인력]</a>";
+   			LINK += "<a href='#' onclick=fnPage('04','" + PRJ_NO + "') class='btn_lnk'>[청구]</a>";
+
+   			jsonREC = {};
+   		//	jsonREC["PRJ_NO"]             	= PRJ_NO;
+   			jsonREC["SUP_ORG_NM"]         	= jex.web.null2void(data.REC[i].SUP_ORG_NM);
+			jsonREC["PRJ_NM"]              	= "<a href='javascript:' onclick=fnPage('01','" + PRJ_NO + "')>"+jex.web.null2void(data.REC[i].PRJ_NM)+"</a>";
+			jsonREC["RCH_TERM"]      		= gw.date.format(jex.web.null2void(data.REC[i].RCH_ST_DT), 'yyyyMMdd', 'yyyy-MM-dd') + "~" + gw.date.format(jex.web.null2void(data.REC[i].RCH_END_DT), 'yyyyMMdd', 'yyyy-MM-dd');
+			jsonREC["TOT_CASH_AMT"]   		= Format_comma(TOT_CASH_AMT);
+			jsonREC["PRJ_RSPR_EMP_NM"] 		= jex.web.null2void(data.REC[i].PRJ_RSPR_EMP_NM);
+			jsonREC["PRJ_CHRG_GRP_NM"] 		= jex.web.null2void(data.REC[i].PRJ_CHRG_GRP_NM);
+			jsonREC["DEPT_CHRG_NM"] 		= jex.web.null2void(data.REC[i].DEPT_CHRG_NM);
+			// 데이터 안나옴...
+			if ( TERM_CNT == "-1" ) {
+				jsonREC["TERM_CNT"] 		= "일";
+			}	
+			else {
+				jsonREC["TERM_CNT"] 		= TERM_CNT + "일";
+			}		
+			jsonREC["LINK"] 				= LINK;
+            jsonRECS[i] = jsonREC;
+   		});
+
+		return jsonRECS;
+	}
+
+	/***************************************
+	* 페이지 이동  
+	***************************************/
+	function fnPage(tabPage,prjNo){
+		parent.openTab("menu_id_80", "과제정보", "/rtask_0008_t00_01.act?PRJ_NO="+prjNo+"&TAB_ID="+tabPage);
+	}	
+	
+	</script>
+
+</head>
+<body marginwidth="0" marginheight="0">
+<div id="wrap">
+
+	<!-- container -->
+	<div id="container" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-left: 10px; background-image: url(http://172.20.20.222:8080/img/00/menu/img_leftmenubg_hsplitter.gif); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: auto; z-index: 650; background-position: 0% 0%; background-repeat: no-repeat no-repeat; ">
+		<!-- content -->
+		<div id="content" style="overflow-y:hidden;">
+			<div class="content_box" style="margin:0 0 0 5px;">
+
+				<!-- dashboard -->
+				<div class="dashboard2">
+					<div class="dashleft">
+						<div class="my_box" id="my_box">
+							
+								<img src="img_sample.gif" class="pic" alt="나의사진" style="width: 97px; height: 97px;" onerror="this.src=&#39;/img/00/menu/img_sample.gif&#39;;">
+							
+							
+							<ul>
+								<li class="today"><span class="date">2011-08-05(금)</span></li>
+								<li class="username">관리자님<br>반갑습니다.</li>
+								<li class="btn"><a href="javascript:" onclick="parent.openTab(&#39;menu_id_63&#39;, &#39;개인정보설정&#39;, &#39;/conf0001_01.act&#39;);"><img src="btn_perinfomodify.gif" alt="MY설정"></a></li>
+							</ul>
+						</div>
+						<div class="checklist">
+							<ul>
+								<li><a href="javascript:" onclick="parent.openTab(&#39;menu_id_10&#39;, &#39;결재대기함&#39;, &#39;/rappr_0002_01.act&#39;);"><strong>결재대기함 <em class="txt_r" id="userApprCnt">(4)</em></strong></a></li>
+							</ul>
+							<ul>
+								<li><a href="javascript:" onclick="parent.openTab(&#39;menu_id_11&#39;, &#39;부서대기함&#39;, &#39;/rappr_0003_01.act&#39;);"><strong>부서대기함 <em class="txt_r" id="deptApprCnt">(0)</em></strong></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="dashright">
+						<div class="fixbox">
+							<div class="contentsbox"><img src="img_dashboard2_r.jpg" alt=""></div>
+						</div>
+					</div>
+				</div>
+				<!--// dashboard -->
+
+				<!-- 나의일정 -->
+				<div class="boardlist">
+					<div style="margin-right:15px;">
+						<table class="tbl mgb10" summary="공지사항">
+							<colgroup>
+								<col width="10">
+								<col width="100%">
+								<col width="10">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td><img src="bg_boardlist_l.gif" alt=""></td>
+									<td style="background:url(&#39;../../img/groupware/bg_boardlist_m.gif&#39;) repeat-x;">
+										<div class="boardlist_title">
+											<div class="left"><span>공지사항</span></div>
+										</div>
+										<table summary="공지사항" class="tbl_in" id="noticeList">
+											<colgroup>
+											<col width="11%">
+											<col width="*">
+											<col width="11%">
+											<col width="12%">
+											<col width="11%">
+											<col width="12%">
+											</colgroup>
+											<thead>
+												<tr>
+													<th>구분</th>
+													<th>제목</th>
+													<th>부서</th>
+													<th>게시자</th>
+													<th>등록일</th>
+													<th>첨부</th>
+												</tr>
+											</thead>
+											<tbody>
+											<!-- 
+												<tr>
+													<td>일반</td>
+													<td class="tb_td_03"><a href="#" onclick="">부산과학기술로드맵 공청회 개최 <img src="../../img/groupware/ico_new.gif" alt="" /></a></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>10-07-27 08:53</td>
+													<td><img src="../../img/comm/etc/ico_file.gif" alt="" /></td>
+												</tr>
+												<tr>
+													<td>일반</td>
+													<td class="tb_td_03"><a href="#" onclick="">부산과학기술로드맵 공청회 개최 <img src="../../img/groupware/ico_new.gif" alt="" /></a></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>10-07-27 08:53</td>
+													<td><img src="../../img/comm/etc/ico_file.gif" alt="" /></td>
+												</tr>
+												<tr>
+													<td>일반</td>
+													<td class="tb_td_03"><a href="#" onclick="">부산과학기술로드맵 공청회 개최 <img src="../../img/groupware/ico_new.gif" alt="" /></a></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>10-07-27 08:53</td>
+													<td><img src="../../img/comm/etc/ico_file.gif" alt="" /></td>
+												</tr>
+												<tr>
+													<td>일반</td>
+													<td class="tb_td_03"><a href="#" onclick="">부산과학기술로드맵 공청회 개최 <img src="../../img/groupware/ico_new.gif" alt="" /></a></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>10-07-27 08:53</td>
+													<td><img src="../../img/comm/etc/ico_file.gif" alt="" /></td>
+												</tr>
+												<tr>
+													<td>일반</td>
+													<td class="tb_td_03"><a href="#" onclick="">부산과학기술로드맵 공청회 개최 <img src="../../img/groupware/ico_new.gif" alt="" /></a></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>10-07-27 08:53</td>
+													<td><img src="../../img/comm/etc/ico_file.gif" alt="" /></td>
+												</tr>
+											-->
+											<tr id="0">	<td id="DIV_GRP_NM">공지</td>	<td id="ARTICLE_SUBJ" class="tb_td_03"><a href="javascript:" onclick="parent.openTab(&#39;menu_id_58&#39;, &#39;공지사항&#39;, &#39;/board0016_01.act?BOARD_SEQ_NO=1&#39;);">''''54545454545454'''''</a></td>	<td id="REG_USER_DEPT_NM">산학협력단</td>	<td id="REG_USER_NM">관리자</td>	<td id="REG_DATE">2011-08-01</td>	<td id="ATTFILE"></td></tr><tr id="1">	<td id="DIV_GRP_NM">공지</td>	<td id="ARTICLE_SUBJ" class="tb_td_03"><a href="javascript:" onclick="parent.openTab(&#39;menu_id_58&#39;, &#39;공지사항&#39;, &#39;/board0016_01.act?BOARD_SEQ_NO=1&#39;);">3333</a></td>	<td id="REG_USER_DEPT_NM">산학협력단</td>	<td id="REG_USER_NM">관리자</td>	<td id="REG_DATE">2011-08-01</td>	<td id="ATTFILE"></td></tr><tr id="2">	<td id="DIV_GRP_NM">공지</td>	<td id="ARTICLE_SUBJ" class="tb_td_03"><a href="javascript:" onclick="parent.openTab(&#39;menu_id_58&#39;, &#39;공지사항&#39;, &#39;/board0016_01.act?BOARD_SEQ_NO=1&#39;);">123</a></td>	<td id="REG_USER_DEPT_NM">산학협력단</td>	<td id="REG_USER_NM">관리자</td>	<td id="REG_DATE">2011-08-01</td>	<td id="ATTFILE"></td></tr><tr id="3">	<td id="DIV_GRP_NM">공지</td>	<td id="ARTICLE_SUBJ" class="tb_td_03"><a href="javascript:" onclick="parent.openTab(&#39;menu_id_58&#39;, &#39;공지사항&#39;, &#39;/board0016_01.act?BOARD_SEQ_NO=1&#39;);">다시 테스트</a></td>	<td id="REG_USER_DEPT_NM">산학협력단</td>	<td id="REG_USER_NM">관리자</td>	<td id="REG_DATE">2011-08-01</td>	<td id="ATTFILE"></td></tr><tr id="4">	<td id="DIV_GRP_NM">공지</td>	<td id="ARTICLE_SUBJ" class="tb_td_03"><a href="javascript:" onclick="parent.openTab(&#39;menu_id_58&#39;, &#39;공지사항&#39;, &#39;/board0016_01.act?BOARD_SEQ_NO=1&#39;);">테스트중</a></td>	<td id="REG_USER_DEPT_NM">산학협력단</td>	<td id="REG_USER_NM">관리자</td>	<td id="REG_DATE">2011-08-01</td>	<td id="ATTFILE"></td></tr></tbody>
+										</table>
+									</td>
+									<td><img src="bg_boardlist_r.gif" alt=""></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<table class="tbl" summary="진행과제">
+							<colgroup>
+								<col width="10">
+								<col width="100%">
+								<col width="10">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td><img src="bg_boardlist_l.gif" alt=""></td>
+									<td style="background:url(&#39;../../img/groupware/bg_boardlist_m.gif&#39;) repeat-x;">
+										<div class="boardlist_title">
+											<div class="left"><span>진행과제 (<em class="txt_r" id="prjInfoCnt">1491건</em>)</span></div>
+											<!-- <div class="right">
+												<ul>
+													<li>접수대기 <a href="#"><em class="txt_r">2건</em></a></li>
+													<li>부서대기 <a href="#"><em class="txt_r">2건</em></a></li>
+													<li class="first">결재대기 <a href="#"><em class="txt_r">2건</em></a></li>
+												</ul>
+											</div> -->
+										</div>
+										<table summary="진행과제" class="tbl_in" id="prjInfoList">
+											<colgroup>
+											<col width="10%">
+											<col width="8%">
+											<col width="*">
+											<col width="13%">
+											<col width="8%">
+											<col width="9%">
+											<col width="9%">
+											<col width="6%">
+											<col width="15%">
+											</colgroup>
+											<thead>
+												<tr>
+													<th>과제책임자</th>
+													<th>지원기관</th>
+													<th>과제명</th>
+													<th>과제기간</th>
+													<th>사업비</th>
+													<th>과제담당자</th>
+													<th>수행기관담당자</th>
+													<th>잔여기간</th>
+													<th>&nbsp;</th>
+												</tr>
+											</thead>
+											<tbody>
+											<tr id="0">	<td id="PRJ_RSPR_EMP_NM">강남현</td>	<td id="SUP_ORG_NM" class="tb_td_03" style="text-align: left;">기업</td>	<td id="PRJ_NM" class="tb_td_03" style="text-align: left;"><a href="javascript:" onclick="fnPage(&#39;01&#39;,&#39;201100010610001&#39;)">마이크로볼 범핑 패키징 기술의 수율 항상방안연구</a></td>	<td id="RCH_TERM">2010-10-15~2011-08-14</td>	<td id="TOT_CASH_AMT" style="text-align: right;">50,000,000</td>	<td id="PRJ_CHRG_GRP_NM">진은아</td>	<td id="DEPT_CHRG_NM"></td>	<td id="TERM_CNT" style="text-align: right;">9일</td>	<td id="LINK"><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;02&#39;,&#39;201100010610001&#39;)" class="btn_lnk">[예산]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;03&#39;,&#39;201100010610001&#39;)" class="btn_lnk">[참여인력]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;04&#39;,&#39;201100010610001&#39;)" class="btn_lnk">[청구]</a></td></tr><tr id="1">	<td id="PRJ_RSPR_EMP_NM">정일효</td>	<td id="SUP_ORG_NM" class="tb_td_03" style="text-align: left;">질병관리본부</td>	<td id="PRJ_NM" class="tb_td_03" style="text-align: left;"><a href="javascript:" onclick="fnPage(&#39;01&#39;,&#39;201100010800001&#39;)">기후변화에 따른 실험실 기반 설사질환 예측모델 연구</a></td>	<td id="RCH_TERM">2011-02-16~2011-08-15</td>	<td id="TOT_CASH_AMT" style="text-align: right;">50,000,000</td>	<td id="PRJ_CHRG_GRP_NM">진은아</td>	<td id="DEPT_CHRG_NM"></td>	<td id="TERM_CNT" style="text-align: right;">10일</td>	<td id="LINK"><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;02&#39;,&#39;201100010800001&#39;)" class="btn_lnk">[예산]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;03&#39;,&#39;201100010800001&#39;)" class="btn_lnk">[참여인력]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;04&#39;,&#39;201100010800001&#39;)" class="btn_lnk">[청구]</a></td></tr><tr id="2">	<td id="PRJ_RSPR_EMP_NM">황인성</td>	<td id="SUP_ORG_NM" class="tb_td_03" style="text-align: left;">한국건설교통기술평가원</td>	<td id="PRJ_NM" class="tb_td_03" style="text-align: left;"><a href="javascript:" onclick="fnPage(&#39;01&#39;,&#39;200804000000003&#39;)">하상퇴적토 오염도 조사 및 준설토 재활용기술개발</a></td>	<td id="RCH_TERM">2010-04-20~2011-08-19</td>	<td id="TOT_CASH_AMT" style="text-align: right;">58,000,000</td>	<td id="PRJ_CHRG_GRP_NM">이나영</td>	<td id="DEPT_CHRG_NM"></td>	<td id="TERM_CNT" style="text-align: right;">14일</td>	<td id="LINK"><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;02&#39;,&#39;200804000000003&#39;)" class="btn_lnk">[예산]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;03&#39;,&#39;200804000000003&#39;)" class="btn_lnk">[참여인력]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;04&#39;,&#39;200804000000003&#39;)" class="btn_lnk">[청구]</a></td></tr><tr id="3">	<td id="PRJ_RSPR_EMP_NM">조대승</td>	<td id="SUP_ORG_NM" class="tb_td_03" style="text-align: left;">기업</td>	<td id="PRJ_NM" class="tb_td_03" style="text-align: left;"><a href="javascript:" onclick="fnPage(&#39;01&#39;,&#39;201100010750001&#39;)">82,000 DWT Bulk Carrier의 전선 진동해석</a></td>	<td id="RCH_TERM">2011-02-21~2011-08-20</td>	<td id="TOT_CASH_AMT" style="text-align: right;">52,000,000</td>	<td id="PRJ_CHRG_GRP_NM">진은아</td>	<td id="DEPT_CHRG_NM"></td>	<td id="TERM_CNT" style="text-align: right;">15일</td>	<td id="LINK"><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;02&#39;,&#39;201100010750001&#39;)" class="btn_lnk">[예산]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;03&#39;,&#39;201100010750001&#39;)" class="btn_lnk">[참여인력]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;04&#39;,&#39;201100010750001&#39;)" class="btn_lnk">[청구]</a></td></tr><tr id="4">	<td id="PRJ_RSPR_EMP_NM">조대승</td>	<td id="SUP_ORG_NM" class="tb_td_03" style="text-align: left;">기업</td>	<td id="PRJ_NM" class="tb_td_03" style="text-align: left;"><a href="javascript:" onclick="fnPage(&#39;01&#39;,&#39;201100010760001&#39;)">180,000 DWT Bulk Carrier의 전선 진동해석</a></td>	<td id="RCH_TERM">2011-02-21~2011-08-20</td>	<td id="TOT_CASH_AMT" style="text-align: right;">59,000,000</td>	<td id="PRJ_CHRG_GRP_NM">진은아</td>	<td id="DEPT_CHRG_NM"></td>	<td id="TERM_CNT" style="text-align: right;">15일</td>	<td id="LINK"><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;02&#39;,&#39;201100010760001&#39;)" class="btn_lnk">[예산]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;03&#39;,&#39;201100010760001&#39;)" class="btn_lnk">[참여인력]</a><a href="http://172.20.20.222:8080/rmain_0001_01.act#" onclick="fnPage(&#39;04&#39;,&#39;201100010760001&#39;)" class="btn_lnk">[청구]</a></td></tr></tbody>
+										</table>
+									</td>
+									<td><img src="bg_boardlist_r.gif" alt=""></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div class="paging mgb10" id="tblFooter">
+											<span class="pagingList" style="display: none;">
+												<select style="width:85px;" class="select" id="changeList">
+													<option value="5"></option>
+												</select>
+											</span>
+											<!-- <a href="javascript:" class="pre_end"><img src="../../img/comm/button/btn_first.gif" alt="처음" /></a> -->
+											<a href="javascript:" class="pre" id="prevBtn"><img src="btn_prev.gif" alt="이전"></a><span id="page"><strong>1</strong><a id="2" style="cursor: pointer; ">2</a><a id="3" style="cursor: pointer; ">3</a><a id="4" style="cursor: pointer; ">4</a><a id="5" style="cursor: pointer; ">5</a><a id="6" style="cursor: pointer; ">6</a><a id="7" style="cursor: pointer; ">7</a><a id="8" style="cursor: pointer; ">8</a><a id="9" style="cursor: pointer; ">9</a><a id="10" style="cursor: pointer; ">10</a></span>
+											<a href="javascript:" class="next" id="nextBtn"><img src="btn_next.gif" alt="다음"></a>
+											<!-- <a href="javascript:" class="next_end"><img src="../../img/comm/button/btn_last.gif" alt="끝" /></a>&nbsp;&nbsp; -->
+											<span class="mgl10" id="totCntView">1/10</span>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<!-- <div id='prjInfoListFooter' class="paging2 mgb10" style="text-align: center;">
+							<input type="hidden" id="prjInfoListChangeList" value="5" />
+							<a href="javascript:" class="pre" id="prevBtn"><img src="img/comm/button/btn_prev.gif" alt="이전" /></a>
+							<span id='prjInfoListPage'></span>
+							<a href="javascript:" class="next" id="nextBtn"><img src="img/comm/button/btn_next.gif" alt="다음" /></a>
+							&nbsp;&nbsp;<span class="mgl10" id='prjInfoListTotCntView'></span>
+						</div>
+						 -->
+						
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		<!-- //content -->
+
+		<!-- EVENT Zone -->
+		<div class="aside">
+			<script type="text/javascript" src="aside.js"></script>
+		</div>
+		<!-- //EVENT Zone -->
+
+	</div>
+	<!-- //container -->
+	<!-- footer-->
+	<div id="footer" style="background-image: url(http://172.20.20.222:8080/proto/web/img/00/menu/img_footerbg_splitter.gif); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; background-position: 0% 0%; background-repeat: no-repeat no-repeat; ">
+		<script type="text/javascript" src="footer.js"></script><span style="font-size:8pt; color:#666666;">COPYRIGHT(C) 2011 WEBCASH. ALL RIGHTS RESERVED.</span>
+	</div>
+</div>
+
+<script type="text/javascript">
+document.getElementById('footer').style.cssText = "background:url('/proto/web/img/00/menu/img_footerbg_splitter.gif') no-repeat left top";
+document.getElementById('container').style.cssText = "margin:0px 0 0 0px;padding-left:10px;background:url('../../img/00/menu/img_leftmenubg_hsplitter.gif') no-repeat left top;height:auto;z-index:650;";
+</script>
+
+<!-- <iframe id="ifrmFileDown" name='ifrmFileDown' style="position:absolute; top:300; left:380; width:260; height:0; z-index:1; visibility:hidden;" border='0' frameborder='0' width="260"></iframe>-->
+<iframe id="ifrmFileDown" name="ifrmFileDown" style="position:absolute; top:300; left:380; width:260px; height:0px; z-index:10000; visibility:hidden;" border="0" frameborder="0" scrolling="no"></iframe>
+
+
+
+<div style="position: absolute; top: 30%; left: 30%; display: none; " id="_Jex_loadingbar"><img src="loading.gif" alt="잠시만 기다려주세요."></div></body></html>

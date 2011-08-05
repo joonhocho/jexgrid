@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0046)http://172.20.20.222:8080/rderp_layoutMain.act -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><style>form#goog-htsa-search-box {  background-image:  url(chrome-extension://floipahigmmkfhkoapmnijnlnboniglg/contentscript/background.png);}fieldset#goog-htsa-button-set {  background-image:  url(chrome-extension://floipahigmmkfhkoapmnijnlnboniglg/contentscript/background.png);}fieldset#goog-htsa-button-set fieldset:hover {  background-image:  url(chrome-extension://floipahigmmkfhkoapmnijnlnboniglg/contentscript/background-hover.png);}fieldset#goog-htsa-button-set fieldset:active {  background-image:  url(chrome-extension://floipahigmmkfhkoapmnijnlnboniglg/contentscript/background-active.png);}input#goog-htsa-input-box {  background-image:  url(chrome-extension://floipahigmmkfhkoapmnijnlnboniglg/contentscript/google-icon.png);}input#goog-htsa-search-button {  background-image:  url(chrome-extension://floipahigmmkfhkoapmnijnlnboniglg/contentscript/magnify.png);}input#goog-htsa-option-button {  background-image:  url(chrome-extension://floipahigmmkfhkoapmnijnlnboniglg/contentscript/dropdown.png);}</style><head><meta http-equiv="Content-Type" content="text/html; charset=windows-949">
+	<title>지원기관관리</title>
+	
+	<meta http-equiv="Cache-Control" content="No-Cache">
+	<meta http-equiv="Pragma" content="No-Cache">
+	<link rel="stylesheet" type="text/css" href="./지원기관관리_files/rd-style.css">
+	<link rel="stylesheet" type="text/css" href="./지원기관관리_files/layout.css">
+	
+	<script type="text/javascript" src="./지원기관관리_files/protocomm.js"></script>
+	<script type="text/javascript" src="./지원기관관리_files/jquery-1.4.2.js"></script> 
+	<script type="text/javascript" src="./지원기관관리_files/jquery.ui.sortable.js"></script>
+	<script type="text/javascript" src="./지원기관관리_files/jex.tabs.js"></script>
+	<script type="text/javascript" src="./지원기관관리_files/jex_web.js"></script>
+	<script type="text/javascript" src="./지원기관관리_files/json2.js"></script>	
+	<script type="text/javascript" src="./지원기관관리_files/gw.ui.js"></script><script type="text/javascript" src="./지원기관관리_files/gw.common.js"></script>
+	
+	<script type="text/javascript" src="./지원기관관리_files/layoutMain.js"></script>
+	<script language="JavaScript">
+		var gUsefacSeqNo = "10";
+        var gUserId = "master";
+
+    	/*
+    	* 사용자정보 팝업호출 함수
+    	*/
+    	function uf_userInfo(){
+    		gw.ui.searchUser(null, null, "10");    
+    	}
+    </script>		
+</head>
+<body>
+<form name="frm01" id="frm01" method="post">
+<div id="mainwrap">
+	<!-- TOP Menu -->
+	<div id="header">
+	
+	<h1><a id="logo" style="cursor:hand"><img src="./지원기관관리_files/logo.png" alt="" onclick="openTab(&#39;rmain_0001_01&#39;, &#39;메인화면&#39;, &#39;/rmain_0001_01.act&#39;);" class="quimby_search_image"></a></h1>
+	<div class="top_right"> 
+		<a style="vertical-align:3px;cursor:hand;" id="user_info" onclick="uf_userInfo();">사용자검색</a>
+		&nbsp;<img src="./지원기관관리_files/bu_02.gif" alt="" style="vertical-align:3px;margin-right:5px;cursor:hand;" class="quimby_search_image">
+		&nbsp;<a style="vertical-align:3px;cursor:hand;" id="mand_change">위임자전환</a>
+		&nbsp;<a style="cursor:hand" id="layoutMain_btn_logout"> <img src="./지원기관관리_files/btn_logout.gif" alt="로그아웃" class="quimby_search_image"></a> 
+	</div> 
+	<div class="topmenubar" id="topmenubar"> 
+		<span class="first"><img src="./지원기관관리_files/topmenubar_first.gif" alt="" class="quimby_search_image"></span> 
+		<ul class="menu"><li style="cursor:pointer"><a id="menu_id_1" f_sub_id="menu_id_80" f_sub_nm="과제정보" f_sub_url="rtask_0008_t00_01.act?MENU_SEQ=80">과제관리</a></li><li style="cursor:pointer"><a id="menu_id_2" f_sub_id="menu_id_93" f_sub_nm="일반청구" f_sub_url="rexpe_0001_01.act?MENU_SEQ=93">지출관리</a></li><li style="cursor:pointer"><a id="menu_id_3" f_sub_id="menu_id_165" f_sub_nm="매출증빙발행" f_sub_url="revid_0001_01.act?MENU_SEQ=165">증빙관리</a></li><li style="cursor:pointer"><a id="menu_id_4" f_sub_id="menu_id_117" f_sub_nm="월별소득자조회" f_sub_url="rinsu_0001_01.act?MENU_SEQ=117">보험세무</a></li><li style="cursor:pointer"><a id="menu_id_5" f_sub_id="menu_id_155" f_sub_nm="학술지원사업관리" f_sub_url="rscin_0001_01.act?MENU_SEQ=155">일반업무</a></li><li style="cursor:pointer"><a id="menu_id_7" f_sub_id="menu_id_10" f_sub_nm="개인결재함" f_sub_url="rappr_0002_01.act?MENU_SEQ=10">전자결재</a></li><li style="cursor:pointer"><a id="menu_id_6" f_sub_id="menu_id_205" f_sub_nm="연구비수주현황조회" f_sub_url="rstat_0001_01.act?MENU_SEQ=205">통계</a></li><li style="cursor:pointer"><a id="menu_id_16" f_sub_id="menu_id_40" f_sub_nm="이용기관정보관리" f_sub_url="rbase_0005_01.act?MENU_SEQ=40">환경설정</a></li><li style="cursor:pointer"><a id="menu_id_56" f_sub_id="menu_id_58" f_sub_nm="공지사항" f_sub_url="board0016_01.act?BOARD_SEQ_NO=1&amp;MENU_SEQ=58">게시판</a></li></ul>  
+		<span class="end"><img src="./지원기관관리_files/topmenubar_end.gif" alt="" class="quimby_search_image"></span> 
+	</div> 
+
+	</div>
+	<!-- //TOP Menu -->
+	<!-- 멀티탭 -->
+	<div id="tabs">
+		<div id="multitab">
+			<ul class="ui-sortable" unselectable="on"><li id="rmain_0001_01" class="mul_tab" style="cursor:pointer" target="tar_rmain_0001_01"><a class="mul_txt">메인화면</a></li><li id="menu_id_80" class="mul_tab" style="cursor:pointer" target="tar_menu_id_80"><a class="mul_txt">과제정보</a><a class="mul_btn"><img id="close" src="./지원기관관리_files/btn_multitabx.gif" class="quimby_search_image"></a></li><li id="menu_id_71" class="mul_tab_on" style="cursor:pointer" target="tar_menu_id_71"><a class="mul_txt">지원기관관리</a><a class="mul_btn"><img id="close" src="./지원기관관리_files/btn_multitabx_on.gif" class="quimby_search_image"></a></li></ul>
+    		<div class="btn_scroll">
+    			<a id="scrollLeft" style="cursor:pointer"><img src="./지원기관관리_files/btn_multi_left.gif" alt="" class="quimby_search_image"></a>
+    			<a id="scrollRight" style="cursor:pointer"><img src="./지원기관관리_files/btn_multi_right.gif" alt="" class="quimby_search_image"></a>
+				<a id="tabAllClose" style="margin-left:5px;"><img src="./지원기관관리_files/btn_allclose.gif" alt="전체닫기" class="quimby_search_image"></a>
+    		</div>
+		</div>
+		<!-- CONTENT start -->
+		<div id="tab_body">
+		<div id="tar_rmain_0001_01" name="메인화면" style="display: none; ">
+
+
+
+
+
+
+
+<iframe src="./지원기관관리_files/rmain_0001_01.htm" style="width: 100%; min-width: 980px; height: 682px; " scrolling="auto" frameborder="0" marginheight="0" marginwidth="0" id="ifr" name="about">
+</iframe>
+
+</div><div id="tar_menu_id_80" name="과제정보" style="display: none; ">
+
+
+
+
+
+
+
+<iframe src="./지원기관관리_files/rtask_0008_t00_01.htm" style="width: 100%; min-width: 980px; height: 712px; " scrolling="auto" frameborder="0" marginheight="0" marginwidth="0" id="ifr" name="about">
+</iframe>
+
+</div><div id="tar_menu_id_71" name="지원기관관리" style="display: block; ">
+
+
+
+
+
+
+
+<iframe src="./지원기관관리_files/rtask_0001_01.htm" style="width: 100%; min-width: 980px; height: 722px; " scrolling="auto" frameborder="0" marginheight="0" marginwidth="0" id="ifr" name="about">
+</iframe>
+
+</div></div>
+		<!-- //CONTENT end  -->
+	</div>
+	<!-- //멀티탭 -->
+</div>
+</form>
+
+<div style="position: absolute; top: 30%; left: 30%; display: none; " id="_Jex_loadingbar"><img src="./지원기관관리_files/loading.gif" alt="잠시만 기다려주세요." class="quimby_search_image"></div><div id="directions_extension" style="position: absolute !important; background-image: initial !important; background-attachment: initial !important; background-origin: initial !important; background-clip: initial !important; background-color: rgb(238, 238, 255) !important; border-top-width: 1px !important; border-right-width: 1px !important; border-bottom-width: 1px !important; border-left-width: 1px !important; border-top-style: solid !important; border-right-style: solid !important; border-bottom-style: solid !important; border-left-style: solid !important; border-top-color: rgb(170, 170, 255) !important; border-right-color: rgb(170, 170, 255) !important; border-bottom-color: rgb(170, 170, 255) !important; border-left-color: rgb(170, 170, 255) !important; padding-top: 3px !important; padding-right: 3px !important; padding-bottom: 3px !important; padding-left: 3px !important; border-top-left-radius: 5px 5px !important; border-top-right-radius: 5px 5px !important; border-bottom-right-radius: 5px 5px !important; border-bottom-left-radius: 5px 5px !important; display: none; background-position: initial initial !important; background-repeat: initial initial !important; "></div></body></html>

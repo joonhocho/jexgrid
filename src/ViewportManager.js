@@ -1380,7 +1380,7 @@ prototype.destroyRow = function(datarow) {
 };
 
 prototype.destroyRowById = function(id) {
-	if (id) {
+	if (id != null) {
 		this.unlockRowById(id);
 		if (this._renderedRows.hasOwnProperty(id)) {
 			this._canvasEl.removeChild(this._renderedRows[id]);
@@ -1414,7 +1414,7 @@ prototype._lockExist = function() {
   @version 1.3.0
   */
 prototype.isRowLockedById = function(id) {
-	if (id) {
+	if (id != null) {
 		return this._lockedRows.hasOwnProperty(id);
 	}
 	return false;
@@ -1468,7 +1468,7 @@ prototype.isRowLockedByIdx = function(i) {
   @version 1.3.0
   */
 prototype.lockRowById = function(id) {
-	if (id && this._datamgr.hasById(id)) {
+	if (id != null && this._datamgr.hasById(id)) {
 		this._lockedRows[id] = true;
 	}
 };
@@ -2871,7 +2871,7 @@ prototype.focus = function(e) {
   @version 1.3.0
   */
 prototype.isRenderedById = function(id) {
-	if (id) {
+	if (id != null) {
 		return this._renderedRows.hasOwnProperty(id);
 	}
 	return false;

@@ -1,0 +1,167 @@
+@charset "euc-kr";
+
+/* 세금계산서 */
+	.taxbill_line_r		{border:1px solid #EC4141;	border-collapse: collapse; }
+	.taxbill_line_r	td	{padding:2px 3px 2px 3px;	border:1px solid #EC4141; }
+	.taxbill_r		{color:#EC4141;}
+
+	.taxbill_bg_r	{background:#FFE9E9;}
+	.taxbill_sum_b	{background:#F0F7FF;}
+	.taxbill_sum_r	{background:#FFEFEF;}
+
+	.checkWrap{
+		border:0 solid #ccc;
+		padding:0;
+		text-align:left;
+	}
+/* 세금계산서_공급자용2009-07-02추가 */
+	.etaxbillWrap{position:relative;z-index:10;}
+	.etaxbillWrap div.stamp{
+		position:absolute;
+		top:80px;
+		left:265px;
+		}
+	table.etaxbill{
+		width:100%;
+		margin:1px 1px 2px 1px;
+		padding:1px;
+		font-size:12px;
+		border-spacing:1px; 
+		border-collapse: collapse;
+		empty-cells:show;
+	}
+	table.etaxbill caption{
+		color:#EC4141;
+		text-align:left;
+	}
+	table.etaxbill th{
+		color:#EC4141;
+		font-weight:normal;
+		text-align:center;
+		padding:4px 2px 3px 2px;
+		border:1px solid #EC4141; 
+	}
+	table.etaxbill td{
+		color:#000;
+		text-align:center;
+		padding:4px 2px 3px 2px;
+		border:1px solid #EC4141; 
+	}
+	table.etaxbill td.sumb{background:#eef6ff;}
+	table.etaxbill td.sumr{background:#FFEFEF;}
+	table.etaxbill .bline_tl{border-top:2px solid #EC4141 !important;border-left:2px solid #EC4141 !important;}
+	table.etaxbill .bline_rb{border-bottom:2px solid #EC4141 !important;border-right:2px solid #EC4141 !important;}
+	table.etaxbill .bline_tr{border-top:2px solid #EC4141 !important;border-right:2px solid #EC4141 !important;}
+	table.etaxbill .bline_trb{border-top:2px solid #EC4141 !important;border-right:2px solid #EC4141 !important;border-bottom:2px solid #EC4141 !important;}
+	table.etaxbill .bline_br{border-bottom:2px solid #EC4141 !important;border-right:2px solid #EC4141 !important;}
+	table.etaxbill .bline_lb{border-left:2px solid #EC4141 !important;border-bottom:2px solid #EC4141 !important;}
+	table.etaxbill .bline_tlb{border-top:2px solid #EC4141 !important;border-left:2px solid #EC4141 !important;border-bottom:2px solid #EC4141 !important;}
+	table.etaxbill .bline_b{border-bottom:2px solid #EC4141 !important;}
+	table.etaxbill .bline_r{border-right:2px solid #EC4141 !important;}
+	table.etaxbill .bline_l{border-left:2px solid #EC4141 !important;}
+	table.etaxbill .bline_t{border-top:2px solid #EC4141 !important;}
+
+	.etaxTitle{font-size:16px; font-weight:bold;}
+	.t_left{text-align:left !important;}
+	.t_right{text-align:right !important;}
+	.t_black{color:#000;}
+	.t_red{color:#EC4141;}
+	.t_blue{color:#2b59ab; }
+	.t_orange{color:#fb8200!important;}
+	.t_11{font-size:11px;letter-spacing:-0.1em;}
+	.vt{vertical-align:top!important;}
+
+/* 세금계산서_공급받는자용2009-07-02추가 */
+
+	table.etaxbillSend{
+		width:100%;
+		margin:1px 1px 2px 1px;
+		padding:1px;
+		font-size:12px;
+		border-spacing:1px; 
+		border-collapse: collapse;
+		empty-cells:show;
+		float:left;
+	}
+	table.etaxbillSend caption{
+		color:#2b59ab;
+		text-align:left;
+	}
+	table.etaxbillSend th{
+		color:#2b59ab;
+		font-weight:normal;
+		text-align:center;
+		padding:4px 2px 3px 2px;
+		border:1px solid #2b59ab; 
+	}
+	table.etaxbillSend td{
+		color:#000;
+		text-align:center;
+		padding:4px 2px 3px 2px;
+		border:1px solid #2b59ab; 
+	}
+	table.etaxbillSend td.sumb{background:#eef6ff;}
+	table.etaxbillSend td.sumr{background:#FFEFEF;}
+	table.etaxbillSend .bline_tl{border-top:2px solid #2b59ab !important; border-left:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_tr{border-top:2px solid #2b59ab !important; border-right:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_rb{border-bottom:2px solid #2b59ab !important;border-right:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_trb{border-top:2px solid #2b59ab !important; border-right:2px solid #2b59ab !important;border-bottom:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_br{border-bottom:2px solid #2b59ab !important; border-right:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_lb{border-left:2px solid #2b59ab !important; border-bottom:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_tlb{border-top:2px solid #2b59ab !important; border-left:2px solid #2b59ab !important;border-bottom:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_b{border-bottom:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_r{border-right:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_l{border-left:2px solid #2b59ab !important;}
+	table.etaxbillSend .bline_t{border-top:2px solid #2b59ab !important;}
+
+/* 카드매출전표테이블 */
+	.card_billWrap{
+		padding:0px 0  0 30px;
+		margin-bottom:10px;
+		height:auto;
+		background:#dde8fe url('../img/dti/ccms_bill_02.gif') repeat-y left top; 
+	}
+	.card_billWrap div.rightbg{
+		padding:0px 25px 30px 0;
+		height:auto;
+		background:#dde8fe url('../img/dti/ccms_bill_02.gif') repeat-y right top; 
+	}
+		.card_billWrap div.rightbg div{padding-top:30px;padding-right:5px;_padding-right:0px;_width:96%;width:98%;}
+
+	table.card_bill	{
+		width:100%;
+		padding:1px;
+		line-height:14px;
+		background:#fff ; 
+		margin-top:-1px;
+	}
+		table.card_bill th	{
+			padding:3px 10px 3px 10px;
+			font-size:11px;
+			font-weight:normal;
+			text-align:left;
+			color:#34436e;
+			border:1px solid #5b6bb6;
+			border-bottom:none;
+			background:#e9effb;
+		}
+		.card_tit{font-size:14px;
+			font-weight:bold;
+			color: #1F3BA9;
+			text-decoration:underline;
+			text-align:center; 
+			height:30px;
+		}
+		table.card_bill td	{padding:3px 10px;border:1px solid #5b6bb6;border-top:none;}
+
+
+
+/* 세금계산서 배경이미지 투명 */
+	.img_cancel {
+		background:url('../img/comm/etc/print_cancel.png') no-repeat; 
+		_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/comm/etc/print_cancel.png', sizingMethod='crop');
+	}
+	.img_stamp		{
+		background:url('../img/comm/etc/sign_sample.png') no-repeat;
+		_background:none; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/comm/etc/sign_sample.png', sizingMethod='crop');
+	}
