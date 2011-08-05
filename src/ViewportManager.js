@@ -1741,6 +1741,7 @@ prototype.rerenderCellByIdx = function(row, col) {
 };
 
 prototype._appendRows = function(range) {
+	this.grid.busy();
 	var evtmgr = this._evtmgr,
 		args = [range],
 		html = [],
@@ -1791,9 +1792,11 @@ prototype._appendRows = function(range) {
 	}
 
 	evtmgr.trigger("onAppendRows", args, true);
+	this.grid.idle();
 };
 
 prototype._removeAndRenderRows = function(range) {
+	this.grid.busy();
 	range = range || this._getRenderRange();
 
 	var evtmgr = this._evtmgr,
@@ -1890,6 +1893,7 @@ prototype._removeAndRenderRows = function(range) {
 	  @version 1.2.3
 	  */
 	evtmgr.trigger("onAppendRows", args, true);
+	this.grid.idle();
 };
 
 prototype._renderColumn = function(i, colDef, rows, datalist, colCommon, renderer, cellInput) {

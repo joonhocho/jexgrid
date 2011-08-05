@@ -329,6 +329,9 @@ prototype._defaultOptions = function() {
 prototype._init = function(args) {
 	var ctnr = this._ctnr = args['container'],
 		opt = this._options,
+		shader,
+		color = 'black',
+		alpha = 0.3,
 		em;
 
 	/**
@@ -465,6 +468,8 @@ prototype._init = function(args) {
 	em.trigger("onAfterRenderModules", false, true);
 
 	this['msg'] =  $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(ctnr).hide();
+
+	this._busyShader = $('<div style="position:absolute;background:' + color + ';opacity:' + alpha + ';filter:alpha(opacity=' + (alpha * 100) + ')"></div>').appendTo(ctnr).hide();
 
 	ctnr = ctnr[0];
 	this._lastW = ctnr.clientWidth;
@@ -1406,6 +1411,33 @@ prototype.getCellByIdAndKey = function(id, key) {
 prototype.getCellByIdx = function(rowIdx, colIdx) {
 	return JGM.create("Cell", {'grid':this, 'row':rowIdx, 'col':colIdx});
 };
+
+prototype.busy = function() {
+	if (this._busyShader && !this._busy) {
+		var ctnr = this._ctnr,
+			offset = ctnr.offset(),
+			top = offset.top,
+			left = offset.left,
+			node = ctnr[0],
+			w = node.clientWidth + 1,
+			h = node.clientHeight + 1,
+			shader = this._busyShader,
+			shaderStyle = shader[0].style;
+		shaderStyle.top = offset.top + 'px';
+		shaderStyle.left = offset.left + 'px';
+		shaderStyle.width = w + 'px';
+		shaderStyle.height = h + 'px';
+		shader.show();
+	}
+	this._busy = true;
+}
+
+prototype.idle = function() {
+	if (this._busyShader && this._busy) {
+		this._busyShader.hide();
+	}
+	this._busy = false;
+}
 
 /**
   @author ¡∂¡ÿ»£
