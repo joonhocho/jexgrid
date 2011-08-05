@@ -242,6 +242,9 @@ prototype._defaultOptions = function() {
 				'bind': "event.bind",
 				'unregister': "event.unregister",
 				'unbind': "event.unregister",
+				'commit': "editMgr.commit",
+				'cancelEdit': "editMgr.cancel",
+				'beginEdit': "editMgr.begin",
 				'collen': "colDefMgr.length"
 			},
 			/**

@@ -211,7 +211,7 @@ function EditManager(args) {
 		'classSuccess': "edit-success",
 		'successBackground': "#cdf7b6",
 		'classFailure': "edit-failure",
-		'failureBackground': "#ffcec5"
+		'failureBackground': "#ff0000"
 	};
 	this._options = JGM._extend(options, args['options']);
 	/**
@@ -226,7 +226,7 @@ function EditManager(args) {
 	this.editor;
 	this._beginEditKeys = Util.which(["number", "alphabet", "del", "backspace"]);
 	
-	this.beingCommitted;
+	this._beingCommitted;
 	this.__init();
 }
 EditManager.getInstance = function(args) {
@@ -382,13 +382,13 @@ prototype._keydownCanvas = function(e) {
 @version 1.0.0
 */
 prototype.active = function() {
-	return Util.isNotNull(this.editor);
+	return !!this.editor;
 };
 prototype.notActive = function() {
 	return Util.isNull(this.editor);
 };
 prototype._isEdited = function(cell) {
-	return this.active() && this.editor.cell.equals(cell);
+	return this.active() && this.editor.cell && this.editor.cell.equals(cell);
 };
 prototype._onGetColCellClass = function(colDef) {
 	if (Util.isNotNull(colDef['editor'])) {
@@ -439,7 +439,14 @@ Cell.prototype.setValue = function(value) {
 @version 1.1.0
 */
 prototype.isEditable = function(cell) {
-	return Util.isNotNull(cell) && Util.isNotNull(cell.getColDef().editor) && this.grid['dataMgr'].isReal(cell.getDatarow());
+	if (cell) {
+		var colDef = cell.getColDef();
+		if (colDef && colDef.editor) {
+			var datarow = cell.getDatarow();
+			return datarow && this.grid['dataMgr'].isReal(datarow);
+		}
+	}
+	return false;
 };
 /**
 주어진 셀의 에디팅을 시작합니다.
@@ -454,17 +461,18 @@ prototype.begin = function(cell) {
 		this.commit();
 	}
 		
-	if (!this.isEditable(cell)) {
-		return;
+	if (this.isEditable(cell)) {
+		var node = cell.getNode();
+		if (node) {
+			var editor = this.editor = cell.getColDef().editor;
+			editor.cell = cell;
+			editor.grid = this.grid;
+			editor.before = node.innerHTML;
+			node.innerHTML = editor.edit(cell.getValue());
+			cell.get$().addClass(this._options['classEdit']);
+			editor.focus();
+		}
 	}
-	this.editor = cell.getColDef().editor;
-	this.editor.cell = cell;
-	this.editor.grid = this.grid;
-	var node = cell.getNode();
-	this.editor.before = node.innerHTML;
-	node.innerHTML = this.editor.edit(cell.getValue());
-	cell.get$().addClass(this._options['classEdit']);
-	this.editor.focus();
 };
 /**
 현재 진행중인 에디팅을 취소합니다. 셀 데이터는 변경되지 않습니다.
@@ -474,15 +482,18 @@ prototype.begin = function(cell) {
 @version 1.0.0
 */
 prototype.cancel = function() {
-	if (!this.active()) {
-		return;
+	if (this.active()) {
+		var cell = this.editor.cell;
+		if (cell) {
+			var node = cell.getNode();
+			if (node) {
+				node.innerHTML = this.editor.before;
+				cell.get$().removeClass(this._options['classEdit']);
+			}
+		}
+		this._deleteEditor();
+		this.grid['view'].focus();
 	}
-		
-	var cell = this.editor.cell;
-	cell.getNode().innerHTML = this.editor.before;
-	this._deleteEditor();
-	cell.get$().removeClass(this._options['classEdit']);
-	this.grid['view'].focus();
 };
 prototype._deleteEditor = function() {
 	if (Util.isNotNull(this.editor)) {
@@ -504,50 +515,48 @@ valid 한 경우에는 변경을 진행하고 그렇지 않은 경우에는 변경 내용을 취소합니다.
  * 1.3.0 editor.valid -> coldef.validator & datamanager.validate
  */
 prototype.commit = function() {
-	if (this.beingCommitted || !this.active()) {
-		return;
+	if (!this._beingCommitted && this.active()) {
+		this._beingCommitted = true;
+		var cell = this.editor.cell;
+		if (cell) {
+			var node = cell.getNode();
+			if (node) {
+				var value = this.editor.value(node);
+				if (value == null || value == cell.getValue()) {
+					this.cancel();
+				}
+				else {
+					var res = cell.setValue(value),
+						classRes,
+						$cell = cell.get$();
+					if (res instanceof Error) {
+						this.cancel();
+						classRes = this._options['classFailure'];
+						$cell.addClass(classRes);
+						setTimeout(function() {$cell.removeClass(classRes);}, 1000);
+					}
+					else {
+						this._deleteEditor();
+						this.grid['view'].focus();
+						this.grid['printMessage']("Successfully Updated.");
+						classRes = this._options['classSuccess'];
+						$cell.addClass(classRes);
+						setTimeout(function() {$cell.removeClass(classRes);}, 1000);
+					}
+				}
+				//$cell.removeClass(this._options['classEdit']);
+			}
+		}
+		this._beingCommitted = false;
 	}
-		
-	this.beingCommitted = true;
-	
-	var cell = this.editor.cell,
-		value = this.editor.value(cell.getNode()),
-		$cell;
-	if (value == null || value == cell.getValue()) {
-		this.cancel();
-	}
-	else {
-      var res = cell.setValue(value),
-			classRes;
-		$cell = cell.get$();
-      if (res instanceof Error) {
-         this.cancel();
-			classRes = this._options['classFailure'];
-         $cell.addClass(classRes);
-			setTimeout(function() {$cell.removeClass(classRes);}, 1000);
-      }
-      else {
-         this._deleteEditor();
-         this.grid['view'].focus();
-			classRes = this._options['classSuccess'];
-			this.grid['printMessage']("Successfully Updated.");
-         $cell.addClass(classRes);
-			setTimeout(function() {$cell.removeClass(classRes);}, 1000);
-      }
-	}
-	cell.get$().removeClass(this._options['classEdit']);
-		
-	this.beingCommitted = false;
 };
 prototype._deleteContent = function(cell) {
-	if (this.active() || !this.isEditable(cell)) {
-		return;
+	if (!this.active() && this.isEditable(cell)) {
+		var colDef = cell.getColDef();
+		if (cell.getValue() !== colDef['defaultValue']) {
+			cell.setValue(colDef['defaultValue']);
+		}
 	}
-	var colDef = cell.getColDef();
-	if (cell.getValue() === colDef['defaultValue']) {
-		return;
-	}
-	cell.setValue(colDef['defaultValue']);
 };
 prototype._deleteContents = function(e, selectionRows, selectionCols) {
 	if (this.active()) {
@@ -677,7 +686,7 @@ prototype = Editor.prototype;
 */
 prototype.edit = function(value) {
 	// added a style so that the edit box does not go out of the cell when right-aligned in IE 7/8
-	return "<input type='text' class='basic-editor' value='" + Util.ifNull(value, "") + "' style='position:relative'/>";
+	return "<input type='text' class='basic-editor' value='" + (value == null ? '' : value) + "' style='position:relative'/>";
 };
 /**
 셀 에디팅 활성화 시, 생성된 에디터 HTML 노드를 focus 해줍니다.
@@ -687,13 +696,21 @@ prototype.edit = function(value) {
 @version 1.0.0
 */
 prototype.focus = function() {
-	var node = this.cell.getNode().childNodes[0];
-	if (Util.isFunction(node.setActive)) {
-		try {node.setActive();} catch(e){}
-	}
-	node.focus();
-	if (document.activeElement !== node) {
-		this.cell.get$().children(":eq(0)").focus();
+	var cell = this.cell;
+	if (cell) {
+		var node = cell.getNode();
+		if (node) {
+			node = node.childNodes[0];
+			if (node) {
+				if (node.setActive) {
+					try {node.setActive();} catch(e){}
+				}
+				node.focus();
+				if (document.activeElement !== node) {
+					cell.get$().children(":eq(0)").focus();
+				}
+			}
+		}
 	}
 };
 /**
