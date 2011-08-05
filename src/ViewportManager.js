@@ -1689,13 +1689,13 @@ prototype.rerenderCellByIdAndKey = function(id, key) {
 	if (cellnode) {
 		var datam = this._datamgr,
 			colm = this._colmgr,
-			datarow = datam.getById(id),
-			colDef = colm.getByKey(key),
-			rowIdx = datam.getIdxById(id),
-			i = colm.getIdxByKey(key),
-			renderer = colDef['renderer'],
-			cellInput = renderer ? colDef['rendererInput'] : false,
-			html = [];
+				 datarow = datam.getById(id),
+				 colDef = colm.getByKey(key),
+				 rowIdx = datam.getIdxById(id),
+				 i = colm.getIdxByKey(key),
+				 renderer = colDef['renderer'],
+				 cellInput = renderer ? colDef['rendererInput'] : false,
+				 html = [];
 
 		if (renderer) {
 			if (cellInput) {
@@ -1821,6 +1821,42 @@ prototype._removeAndRenderRows = function(range) {
 	this.grid.twprint();//IF_DEBUG
 	this.grid.twstop();//IF_DEBUG
 
+	/*
+	//Column-wise Rendering: ended up being slower than row-wise
+	var rows = [],
+		rl,
+		rowhead = [],
+		cols = [],
+		j = 0,
+		rowIdx,
+		clen = colDefs.length;
+	for (; i <= len; i++) {
+		// get row indices
+		rows.push(i);
+	}
+
+	for (; j < clen; j++) {
+		cols.push(this._renderColumn(j, colDefs[j], rows, datalist, colCommon[j], renderers[j], cellInputs[j]));
+	}
+
+	i = 0;
+	rl = rows.length;
+	for (; i < rl; i++) {
+		rowIdx = rows[i];
+		datarow = datalist[rowIdx];
+		id = datarow[idKey];
+		html[html.length] = rowCommon + id + rowCommon2 + rowIdx + "' style='top:" + (rowH * rowIdx) + "px'>";
+		j = 0;
+		for (; j < clen; j++) {
+			html[html.length] = cols[j][i];
+		}
+		html[html.length] = "</div>\n\n\n";
+		added.push(id);
+	}
+	this.grid.twstop();//IF_DEBUG
+	this.grid.twprint();//IF_DEBUG
+	*/
+
 	canvas.innerHTML = html.join("");
 
 	i = 0;
@@ -1843,6 +1879,115 @@ prototype._removeAndRenderRows = function(range) {
 	  */
 	evtmgr.trigger("onAppendRows", args, true);
 };
+
+prototype._renderColumn = function(i, colDef, rows, datalist, colCommon, renderer, cellInput) {
+	var html = [],
+		rhtml,
+		ri = 0,
+		rl = rows.length,
+		rowIdx,
+		datarow,
+		val,
+		key = colDef.key,
+		cellclass,
+		grid = this.grid,
+		evtmgr = this._evtmgr,
+		event = "onRenderCell_"+key,
+		args = [null, i, datarow, colDef],
+		args2 = [null, i, null, colDef, null];
+
+	for (; ri < rl; ri++) {
+		rowIdx = rows[ri];
+		datarow = datalist[rowIdx];
+		val = datarow[key];
+		rhtml = [];
+		args2[0] = args[0] = rowIdx;
+		args2[2] = datarow;
+		args2[4] = rhtml;
+
+		/**
+		  그리드 셀의 css 클래스를 생성할 때 발생하는 이벤트입니다. 특정 셀에 css 클래스를 추가하려면 css 클래스 명을 리턴하면 됩니다.
+		  예) return "이_셀에만_주어질_css_클래스_명";
+
+		  @event {Event} onGetCellClass
+		  @param {number} rowIdx - 셀의 로우 인덱스
+		  @param {number} colIdx - 셀의 컬럼 인덱스
+		  @param {Object} datarow - 셀의 로우 데이터
+		  @param {Object} colDef - 셀의 컬럼 정의 오브젝트
+		  @returns {string} 셀에 추가할 css 클래스 명
+
+		  @author 조준호
+		  @since 1.1.7
+		  @version 1.1.7
+		  */
+		cellclass = evtmgr.trigger("onGetCellClass", args);
+		if (cellclass) {
+			rhtml[rhtml.length] = colCommon + cellclass.join(" ") + "'>";
+		}
+		else {
+			rhtml[rhtml.length] = colCommon + "'>";
+		}
+
+
+		/**
+		  그리드 셀 안에 prepend 할 html 을 생성할 때 발생하는 이벤트입니다. prepend 할 내용이 있으면 html 에 push 해주면 됩니다.
+		  예) html.push("prepend 할 내용");
+
+		  @event {Event} onRenderCell_COLKEY_prepend
+		  @param {number} rowIdx - 셀의 로우 인덱스
+		  @param {number} colIdx - 셀의 컬럼 인덱스
+		  @param {Object} datarow - 셀의 로우 데이터
+		  @param {Object} colDef - 셀의 컬럼 정의 오브젝트
+		  @param {Array.<string>} html - 셀에 append 할 html 을 넣을 어레이
+
+		  @author 조준호
+		  @since 1.1.7
+		  @version 1.1.7
+		  */
+		evtmgr.trigger(event+"_prepend", args2, true);
+
+		if (typeof val != "string" || val.substring(0, 3) !== "J@H") {
+			if (renderer) {
+				// has renderer
+				if (cellInput) {
+					// renderer with cell input
+					rhtml[rhtml.length] = renderer(new Cell({'grid':grid, 'row':rowIdx, 'col':i, 'datarow':datarow, 'colDef':colDef}));
+				}
+				else {
+					// renderer with serialized inputs
+					rhtml[rhtml.length] = renderer(val, rowIdx, i, datarow, colDef);
+				}
+			}
+			else {
+				// no renderer
+				if (val != null) {
+					rhtml[rhtml.length] = val;
+				}
+			}
+		}
+
+		/**
+		  그리드 셀 안에 append 할 html 을 생성할 때 발생하는 이벤트입니다. append 할 내용이 있으면 html 에 push 해주면 됩니다.
+		  예) html.push("append 할 내용");
+
+		  @event {Event} onRenderCell_COLKEY_append
+		  @param {number} rowIdx - 셀의 로우 인덱스
+		  @param {number} colIdx - 셀의 컬럼 인덱스
+		  @param {Object} datarow - 셀의 로우 데이터
+		  @param {Object} colDef - 셀의 컬럼 정의 오브젝트
+		  @param {Array.<string>} html - 셀에 append 할 html 을 넣을 어레이
+
+		  @author 조준호
+		  @since 1.1.7
+		  @version 1.1.7
+		  */
+		evtmgr.trigger(event+"_append", args2, true);
+		rhtml[rhtml.length] = "</div>";
+		html[html.length] = rhtml.join('');
+	}
+
+	return html;
+}
 
 prototype._getColCellClass = function(colDef) {
 	var cssClass = this._cellClass + " k_" + colDef['key'];
@@ -1931,6 +2076,7 @@ prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rende
 
 		html[html.length] = "</div>";
 	}
+
 	html[html.length] = "</div>";
 
 	return html;
@@ -2593,8 +2739,8 @@ prototype._triggerMouseEvent = function(e, events) {
 		if (events.indexOf(',') > -1) {
 			var arr = events.split(','),
 				i = 0,
-				len = arr.length,
-				evt;
+				  len = arr.length,
+				  evt;
 			for (; i < len; i++) {
 				evt = arr[i];
 				evtmgr.trigger(evt+'_'+key, args, true);
@@ -2618,64 +2764,61 @@ prototype._scroll = function() {
 		scrollLeft = this.getScrollLeft(),
 		scrollHDist = scrollLeft - this._lastScrollLeft;
 
-	if (scrollVDist === 0 && scrollHDist === 0) {
-		return;
-	}
+	if (scrollVDist !== 0 || scrollHDist !== 0) {
+		this.grid.log('Viewport scrolled... h=' + scrollHDist + ', v=' + scrollVDist, Grid.V_SCROLL);//IF_DEBUG
 
-	this.grid.log('Viewport scrolled... h=' + scrollHDist + ', v=' + scrollVDist, Grid.V_SCROLL);//IF_DEBUG
-
-	/**
-	  그리드 뷰가 스크롤 되었을 때 발생하는 이벤트 입니다.
-
-	  @event {Event} onScrollViewport
-
-	  @author 조준호
-	  @since 1.1.7
-	  @version 1.1.7
-	  */
-	this._evtmgr.trigger("onScrollViewport", false, true);
-
-	if (scrollHDist) {
-		this._lastScrollLeft = scrollLeft;
+		var evtmgr = this._evtmgr,
+			numDiff = Math.abs(scrollVDist / this._getRowOuterHeight());
 
 		/**
-		  그리드 뷰가 가로 스크롤 되었을 때 발생하는 이벤트 입니다.
+		  그리드 뷰가 스크롤 되었을 때 발생하는 이벤트 입니다.
 
-		  @event {Event} onScrollViewportH
+		  @event {Event} onScrollViewport
 
 		  @author 조준호
 		  @since 1.1.7
 		  @version 1.1.7
 		  */
-		this._evtmgr.trigger("onScrollViewportH", [scrollLeft], true);
+		evtmgr.trigger("onScrollViewport", false, true);
+
+		if (scrollHDist) {
+			this._lastScrollLeft = scrollLeft;
+
+			/**
+			  그리드 뷰가 가로 스크롤 되었을 때 발생하는 이벤트 입니다.
+
+			  @event {Event} onScrollViewportH
+
+			  @author 조준호
+			  @since 1.1.7
+			  @version 1.1.7
+			  */
+			evtmgr.trigger("onScrollViewportH", [scrollLeft], true);
+		}
+
+
+		if (numDiff >= this._options['appendThreshold']) {
+
+			this._lastScrollTop = scrollTop;
+			//this._render();
+			this._removeAndRenderRows();
+			/*
+			   this._renderShift();
+			   */
+
+			/**
+			  그리드 뷰가 세로 스크롤 되었을 때 발생하는 이벤트 입니다.
+
+			  @event {Event} onScrollViewportV
+
+			  @author 조준호
+			  @since 1.1.7
+			  @version 1.1.7
+			  */
+			evtmgr.trigger("onScrollViewportV", false, true);
+		}
 	}
-
-	var numDiff = Math.abs(scrollVDist / this._getRowOuterHeight());
-
-	if (numDiff < this._options['appendThreshold']) {
-		return;
-	}
-
-	this._lastScrollTop = scrollTop;
-	this._render();
-	/*
-	   }
-	   else {
-	   this._renderShift();
-	   }
-	   */
-
-	/**
-	  그리드 뷰가 세로 스크롤 되었을 때 발생하는 이벤트 입니다.
-
-	  @event {Event} onScrollViewportV
-
-	  @author 조준호
-	  @since 1.1.7
-	  @version 1.1.7
-	  */
-	this._evtmgr.trigger("onScrollViewportV", false, true);
-	};
+};
 
 prototype.focus = function(e) {
 	/**
