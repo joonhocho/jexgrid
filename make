@@ -16,6 +16,7 @@ $distPath = "$gridPath/dist";
 $buildPath = "$gridPath/build";
 $buildResultPath = "$gridPath/results";
 $versionFile = "$gridPath/VERSION";
+$buildFile = "$gridPath/BUILD";
 $licenseFile = "$gridPath/LICENSE";
 $calcdepsFile = "$binPath/calcdeps.py";
 $generaterequires= "$binPath/generaterequires";
@@ -30,12 +31,23 @@ if (!$version) {
 }
 $version = trim($version);
 
+$build = file_get_contents($buildFile);
+if (!$build) {
+	die("Could not open the version file: $buildFile\n");
+}
+$build = ((int)trim($build)) + 1;
+file_put_contents($buildFile, $build);
+$buildtime = date("D M j G:i:s T Y");
+
+$buildinfo = "/**\n * JexGrid Build $build\n * Date: $buildtime\n */\n";
+echo "\n$buildinfo\n";
+
 $outputFileKr = "jgrid-$version-min.js";
 $fulloutpath = "$distPath/$outputFileKr";
 $outputFileUTF8 = "jgrid-$version-min-utf8.js";
 $fulloutpathUTF8 = "$distPath/$outputFileUTF8";
 
-echo "\nJexGrid v$version build...\n\n";
+echo "\nJexGrid v$version build $build...\n\n";
 
 $license = file_get_contents($licenseFile);
 if (!$license) {
@@ -139,7 +151,7 @@ echo $compilerCommand."\n\n\n";
 // compile js sources
 system($compilerCommand);
 
-$compiled = $license . "\n" . file_get_contents($fulloutpath);
+$compiled = $buildinfo . $license . "\n" . file_get_contents($fulloutpath);
 file_put_contents($fulloutpath, $compiled);
 file_put_contents($fulloutpathUTF8, mb_convert_encoding($compiled, 'UTF-8', 'EUC-KR'));
 

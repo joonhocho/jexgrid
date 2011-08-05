@@ -1,3 +1,7 @@
+/**
+ * JexGrid Build 11
+ * Date: Fri Aug 5 11:44:20 KST 2011
+ */
 /*
 AUTHOR
 
