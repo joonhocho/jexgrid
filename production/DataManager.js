@@ -2428,6 +2428,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.0.0
 	  */
 	prototype.refresh = function(args) {
+		this.grid.busy();
 		/**
 		  {@link jx.data.DataManager DataManager} 의 {@link refresh} 과정이 시작함을 알리는
 		  어레이 입니다.
@@ -2448,6 +2449,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			this._filter();
 		}
 		this._finish(args);
+		this.grid.idle();
 	};
 	prototype.exportRowToArray = function(index, keys) {'use strict';
 		if (!(index in this.datalist)) {
