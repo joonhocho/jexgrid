@@ -21,7 +21,18 @@ goog.provide('jx.grid.ViewportManager');
 	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
-	Cell = goog.getObjectByName('jx.grid.Cell');
+	Cell = goog.getObjectByName('jx.grid.Cell'),
+	inputTags = {
+		INPUT: true,
+		TEXTAREA: true,
+		LABEL: true,
+		FIELDSET: true,
+		LEGEND: true,
+		SELECT: true,
+		OPTGROUP: true,
+		OPTION: true,
+		BUTTON: true
+	};
 goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
 /**
   ViewportManager 모듈. 그리드 로우와 셀을 가진 테이블을 담당하는 모듈입니다.
@@ -1113,7 +1124,8 @@ prototype.destroyRow = function(datarow) {
 	return this.destroyRowById(this._datamgr.getId(datarow));
 };
 prototype.destroyRowById = function(id) {
-	if (id) {
+	// valid id still can evaluate to false
+	if (id != null) {
 		this.unlockRowById(id);
 		if (this._renderedRows.hasOwnProperty(id)) {
 			this._canvasEl.removeChild(this._renderedRows[id]);
@@ -1141,7 +1153,7 @@ prototype._lockExist = function() {
   @version 1.3.0
   */
 prototype.isRowLockedById = function(id) {
-	if (id) {
+	if (id != null) {
 		return this._lockedRows.hasOwnProperty(id);
 	}
 	return false;
@@ -1186,7 +1198,7 @@ prototype.isRowLockedByIdx = function(i) {
   @version 1.3.0
   */
 prototype.lockRowById = function(id) {
-	if (id && this._datamgr.hasById(id)) {
+	if (id != null && this._datamgr.hasById(id)) {
 		this._lockedRows[id] = true;
 	}
 };
@@ -2239,32 +2251,36 @@ prototype._dblclick = function(e) {
 	this._triggerMouseEvent(e, "dblclickCanvas", Grid.V_DBLCLICK);
 };
 prototype._triggerMouseEvent = function(e, events) {
-	var node = this._getClosestCell(e.target);
-	if (node) {
-		var cell = new Cell({'grid':this.grid, 'node':node}),
-			key = cell.getKey(),
-			args = [e, cell],
-			evtmgr = this._evtmgr;
-		if (events.indexOf(',') > -1) {
-			var arr = events.split(','),
-				i = 0,
-				  len = arr.length,
-				  evt;
-			for (; i < len; i++) {
-				evt = arr[i];
-				evtmgr.trigger(evt+'_'+key, args, true);
-				evtmgr.trigger(evt, args, true);
+	var target = e.target;
+	if (target) {
+		var tag = target.tagName;
+		if (!inputTags[tag]) {
+			var node = this._getClosestCell(e.target);
+			if (node) {
+				var cell = new Cell({'grid':this.grid, 'node':node}),
+					key = cell.getKey(),
+					args = [e, cell],
+					evtmgr = this._evtmgr;
+				if (events.indexOf(',') > -1) {
+					var arr = events.split(','),
+						i = 0,
+						  len = arr.length,
+						  evt;
+					for (; i < len; i++) {
+						evt = arr[i];
+						evtmgr.trigger(evt+'_'+key, args, true);
+						evtmgr.trigger(evt, args, true);
+					}
+				}
+				else {
+					evtmgr.trigger(events+'_'+key, args, true);
+					evtmgr.trigger(events, args, true);
+				}
+				return true;
 			}
 		}
-		else {
-			evtmgr.trigger(events+'_'+key, args, true);
-			evtmgr.trigger(events, args, true);
-		}
-		return true;
 	}
-	else {
-		return false;
-	}
+	return false;
 };
 prototype._scroll = function() {
 	var scrollTop = this.getScrollTop(),
@@ -2353,7 +2369,7 @@ prototype.focus = function(e) {
   @version 1.3.0
   */
 prototype.isRenderedById = function(id) {
-	if (id) {
+	if (id != null) {
 		return this._renderedRows.hasOwnProperty(id);
 	}
 	return false;

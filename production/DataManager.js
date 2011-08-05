@@ -159,7 +159,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			this._idMode = this._consts._auto;
 			this.idKey = "J@I" + this.mid + "@" + Util.random(10000);
 		}
-		this._increment = 0;
+		this._increment = 1;
 		this.keyToType = {};
 		this._idToIdx = {};
 		this._idToData = {};
