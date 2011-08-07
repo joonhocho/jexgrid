@@ -1405,11 +1405,33 @@ prototype.height = function(h) {
 };
 
 prototype.getCellByIdAndKey = function(id, key) {
-	return JGM.create("Cell", {'grid':this, 'datarow':this['dataMgr'].getById(id), 'colDef':this['colDefMgr'].getByKey(key)});
+	if (id == null || key == null) {
+		return null;
+	}
+	var datarow = this['dataMgr'].getById(id);
+	if (!datarow) {
+		return null;
+	}
+	var colDef = this['colDefMgr'].getByKey(key);
+	if (!colDef) {
+		return null;
+	}
+	return JGM.create("Cell", {'grid':this, 'datarow':datarow, 'colDef':colDef});
 };
 
 prototype.getCellByIdx = function(rowIdx, colIdx) {
-	return JGM.create("Cell", {'grid':this, 'row':rowIdx, 'col':colIdx});
+	if (rowIdx == null || colIdx == null) {
+		return null;
+	}
+	var datarow = this['dataMgr'].getByIdx(rowIdx);
+	if (!datarow) {
+		return null;
+	}
+	var colDef = this['colDefMgr'].get(colIdx);
+	if (!colDef) {
+		return null;
+	}
+	return JGM.create("Cell", {'grid':this, 'datarow':datarow, 'colDef':colDef});
 };
 
 prototype.busy = function() {
