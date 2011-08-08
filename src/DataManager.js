@@ -2862,14 +2862,14 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  */
 		this.grid['event'].trigger("onBeforeRefresh", false, true);
 
-		if (args === undefined) {
+		if (!args) {
 			this._sort();
 		}
-		else if (args['noSort'] !== true) {
+		else if (!args['noSort']) {
 			this._sort(args['sorter']);
 		}
 
-		if (args === undefined || args['noFilter'] !== true) {
+		if (!args || !args['noFilter']) {
 			this._filter();
 		}
 

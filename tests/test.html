@@ -220,72 +220,175 @@
 			}
 
 			function testViewport() {
-				var gridel = document.getElementById('grid1').childNodes[0];
+			}
+			
+			function testSort() {
+				// boolean sort: false: true
+				var column = columns1[0];
+				var sorter = column.sorter;
+				sorter.desc = false;
+				var sorterWrapper = {sorter: sorter};
+				grid1.dataMgr.refresh(sorterWrapper);
+				var key = column.key,
+				i = 0,
+				l = data1.length,
+				changed = false;
+				for (; i < l; i++) {
+					if (changed) {
+						if (data1[i][key] === false) {
+							throw Error('true expected after sort');
+						}
+					}
+					else {
+						if (data1[i][key] === false) {
+						}
+						else if (data1[i][key] === true) {
+							changed = true;
+						}
+						else {
+							throw Error('wrong data');
+						}
+					}
+				}
 
-				// width
-				assertEquals(gridel.clientWidth, grid1.width());
-				assertEquals(500, grid1.width(500));
-				assertEquals(500, grid1.width());
-				assertEquals(500, gridel.clientWidth);
-				assertEquals(600, grid1.width(600));
-				assertEquals(600, grid1.width());
-				assertEquals(600, gridel.clientWidth);
+				// reverse boolean: true -> false
+				sorter.desc = true;
+				grid1.dataMgr.refresh(sorterWrapper);
+				i = 0;
+				changed = false;
+				for (; i < l; i++) {
+					if (changed) {
+						if (data1[i][key] === true) {
+							throw Error('false expected after sort');
+						}
+					}
+					else {
+						if (data1[i][key] === true) {
+						}
+						else if (data1[i][key] === false) {
+							changed = false;
+						}
+						else {
+							throw Error('wrong data');
+						}
+					}
+				}
 
-				// height
-				assertEquals(gridel.clientHeight, grid1.height());
-				assertEquals(500, grid1.height(500));
-				assertEquals(500, grid1.height());
-				assertEquals(500, gridel.clientHeight);
-				assertEquals(600, grid1.height(600));
-				assertEquals(600, grid1.height());
-				assertEquals(600, gridel.clientHeight);
+				// int sort
+				var column = columns1[1];
+				var sorter = column.sorter;
+				sorter.desc = false;
+				var sorterWrapper = {sorter: sorter};
+				grid1.dataMgr.refresh(sorterWrapper);
+				var key = column.key,
+				i = 0,
+				l = data1.length,
+				cur = Math.MIN_VALUE;
+				for (; i < l; i++) {
+					if (data1[i][key] < cur) {
+						throw Error('expected greater or equal value than ' + cur + ', but: ' + data1[i][key]);
+					}
+					cur = data1[i][key];
+				}
 
-				// getCellByIdAndKey
-				var datam = grid1.dataMgr;
-				var colm = grid1.colDefMgr;
+				// reverse int sort
+				sorter.desc = true;
+				grid1.dataMgr.refresh(sorterWrapper);
+				i = 0,
+				cur = Math.MAX_VALUE;
+				for (; i < l; i++) {
+					if (data1[i][key] > cur) {
+						throw Error('expected smaller or equal value than ' + cur + ', but: ' + data1[i][key]);
+					}
+					cur = data1[i][key];
+				}
 
-				var datarow = data1[0];
-				var col = columns1[0];
-				var id = datam.getId(datarow);
-				var cell = grid1.getCellByIdAndKey(id, col.key);
+				// float sort
+				var column = columns1[2];
+				var sorter = column.sorter;
+				sorter.desc = false;
+				var sorterWrapper = {sorter: sorter};
+				grid1.dataMgr.refresh(sorterWrapper);
+				var key = column.key,
+				i = 0,
+				l = data1.length,
+				cur = Math.MIN_VALUE;
+				for (; i < l; i++) {
+					if (data1[i][key] < cur) {
+						throw Error('expected greater or equal value than ' + cur + ', but: ' + data1[i][key]);
+					}
+					cur = data1[i][key];
+				}
 
-				assertEquals(datarow, cell.getDatarow());
-				assertEquals(col, cell.getColDef());
+				// reverse float sort
+				sorter.desc = true;
+				grid1.dataMgr.refresh(sorterWrapper);
+				i = 0,
+				cur = Math.MAX_VALUE;
+				for (; i < l; i++) {
+					if (data1[i][key] > cur) {
+						throw Error('expected smaller or equal value than ' + cur + ', but: ' + data1[i][key]);
+					}
+					cur = data1[i][key];
+				}
 
-				var datarow = data1[data1.length - 1];
-				var col = columns1[columns1.length - 1];
-				var id = datam.getId(datarow);
-				var cell = grid1.getCellByIdAndKey(id, col.key);
+				// string sort
+				var column = columns1[3];
+				var sorter = column.sorter;
+				sorter.desc = false;
+				var sorterWrapper = {sorter: sorter};
+				grid1.dataMgr.refresh(sorterWrapper);
+				var key = column.key,
+				i = 0,
+				l = data1.length,
+				cur = Math.MIN_VALUE;
+				for (; i < l; i++) {
+					if (data1[i][key] < cur) {
+						throw Error('expected greater or equal value than ' + cur + ', but: ' + data1[i][key]);
+					}
+					cur = data1[i][key];
+				}
 
-				assertEquals(datarow, cell.getDatarow());
-				assertEquals(col, cell.getColDef());
+				// reverse string sort
+				sorter.desc = true;
+				grid1.dataMgr.refresh(sorterWrapper);
+				i = 0,
+				cur = Math.MAX_VALUE;
+				for (; i < l; i++) {
+					if (data1[i][key] > cur) {
+						throw Error('expected smaller or equal value than ' + cur + ', but: ' + data1[i][key]);
+					}
+					cur = data1[i][key];
+				}
 
-				var cell = grid1.getCellByIdAndKey('wrongid', col.key);
-				assertEquals(null, cell);
+				// date sort
+				var column = columns1[4];
+				var sorter = column.sorter;
+				sorter.desc = false;
+				var sorterWrapper = {sorter: sorter};
+				grid1.dataMgr.refresh(sorterWrapper);
+				var key = column.key,
+				i = 0,
+				l = data1.length,
+				cur = Math.MIN_VALUE;
+				for (; i < l; i++) {
+					if (data1[i][key].valueOf() < cur) {
+						throw Error('expected greater or equal value than ' + cur + ', but: ' + data1[i][key]);
+					}
+					cur = data1[i][key].valueOf();
+				}
 
-				var cell = grid1.getCellByIdAndKey(id, 'wrongkey');
-				assertEquals(null, cell);
-
-				// getCellByIdx
-				var cell = grid1.getCellByIdx(0, 0);
-				assertEquals(data1[0], cell.getDatarow());
-				assertEquals(columns1[0], cell.getColDef());
-
-				var cell = grid1.getCellByIdx(data1.length - 1, columns1.length - 1);
-				assertEquals(data1[data1.length - 1], cell.getDatarow());
-				assertEquals(columns1[columns1.length - 1], cell.getColDef());
-
-				var cell = grid1.getCellByIdx(-1, 0);
-				assertEquals(null, cell);
-
-				var cell = grid1.getCellByIdx(data1.length, 0);
-				assertEquals(null, cell);
-
-				var cell = grid1.getCellByIdx(0, -1);
-				assertEquals(null, cell);
-
-				var cell = grid1.getCellByIdx(0, columns1.length);
-				assertEquals(null, cell);
+				// reverse string sort
+				sorter.desc = true;
+				grid1.dataMgr.refresh(sorterWrapper);
+				i = 0,
+				cur = Math.MAX_VALUE;
+				for (; i < l; i++) {
+					if (data1[i][key].valueOf() > cur) {
+						throw Error('expected smaller or equal value than ' + cur + ', but: ' + data1[i][key]);
+					}
+					cur = data1[i][key].valueOf();
+				}
 			}
 
 			/*
