@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 18
- * Date: Fri Aug 5 18:05:47 KST 2011
+ * JexGrid Build 19
+ * Date: Mon Aug 8 10:33:38 KST 2011
  */
 /*
 AUTHOR
@@ -2318,12 +2318,12 @@ jx.data.DataManager = {};
   };
   var b = f.prototype;
   b.__init = function(a) {
-    for(var d = 0, c = this._options.uniqueKeys, g, j = this.uniqueMap, b = c.length, i = this.keyToType, f = this.grid.colDefMgr.getAll();d < b;d++) {
+    for(var d = 0, c = this._options.uniqueKeys, g, j = this.uniqueMap, b = c.length, i = this.keyToType, p = this.grid.colDefMgr.getAll();d < b;d++) {
       g = c[d], typeof g === "string" && (j[g] = {})
     }
-    b = f.length;
+    b = p.length;
     for(d = 0;d < b;d++) {
-      c = f[d], g = c.key, c.hasOwnProperty("unique") && c.unique === !0 && !j.hasOwnProperty(g) && (j[g] = {}), i[g] = this.mapDatatype(c.type)
+      c = p[d], g = c.key, c.hasOwnProperty("unique") && c.unique === !0 && !j.hasOwnProperty(g) && (j[g] = {}), i[g] = this.mapDatatype(c.type)
     }
     e.ifNull(a.datalist, []);
     this.bindEvents();
@@ -2373,22 +2373,22 @@ jx.data.DataManager = {};
     if(g !== !0 && (e.isNull(a) || e.isEmptyString(d) || e.isEmptyArray(c))) {
       return!1
     }
-    for(var j = c.length, b = [], i, f, g = 0;g < j;g++) {
-      if(!e.isNull(f = c[g])) {
-        if(f.hasOwnProperty(d) === !1) {
+    for(var j = c.length, b = [], i, p, g = 0;g < j;g++) {
+      if(!e.isNull(p = c[g])) {
+        if(p.hasOwnProperty(d) === !1) {
           return this.removeUniqueIndices(a, d, b), this.grid.error("KEY_UNDEFINED", d)
         }
-        if(e.isEmptyString(i = f[d])) {
+        if(e.isEmptyString(i = p[d])) {
           return this.removeUniqueIndices(a, d, b), this.grid.error("BAD_NULL", d)
         }
         if(a.hasOwnProperty(i)) {
-          if(a[i] === f) {
+          if(a[i] === p) {
             continue
           }
           this.removeUniqueIndices(a, d, b);
           return this.grid.error("DUP_ENTRY", i, d)
         }
-        b.push(a[i] = f)
+        b.push(a[i] = p)
       }
     }
     return b.length > 0
@@ -2425,31 +2425,31 @@ jx.data.DataManager = {};
         return this.grid.error("LENGTH_NOT_EQUAL")
       }
     }
-    for(var b = 0, i = c.length, f, k, h, l = [], o = [], n = [], s, r;b < i;b++) {
-      if(!e.isNull(f = c[b])) {
+    for(var b = 0, i = c.length, p, f, h, l = [], o = [], n = [], s, r;b < i;b++) {
+      if(!e.isNull(p = c[b])) {
         if((h = g[b]).hasOwnProperty(d) !== !1) {
-          k = j[b];
-          if(k.hasOwnProperty(d) === !1 || f.hasOwnProperty(d) === !1) {
+          f = j[b];
+          if(f.hasOwnProperty(d) === !1 || p.hasOwnProperty(d) === !1) {
             return this.updateUniqueIndices(a, d, l, n, o), this.grid.error("KEY_UNDEFINED", d)
           }
-          if(a.hasOwnProperty(r = k[d]) === !1) {
+          if(a.hasOwnProperty(r = f[d]) === !1) {
             return this.updateUniqueIndices(a, d, l, n, o), this.grid.error("KEY_NOT_FOUND", r, d)
           }
           if(e.isEmptyString(s = h[d])) {
             return this.updateUniqueIndices(a, d, l, n, o), this.grid.error("BAD_NULL", d)
           }
           if(a.hasOwnProperty(s)) {
-            if(a[s] === f) {
+            if(a[s] === p) {
               continue
             }
             this.updateUniqueIndices(a, d, l, n, o);
             return this.grid.error("DUP_ENTRY", s, d)
           }
-          a[s] = f;
+          a[s] = p;
           delete a[r];
-          l.push(f);
+          l.push(p);
           o.push(h);
-          n.push(k)
+          n.push(f)
         }
       }
     }
@@ -2522,7 +2522,7 @@ jx.data.DataManager = {};
         i = this.updateUniqueIndex(j[g], g, a, d, c);
         if(i instanceof Error) {
           g = 0;
-          for(var f = b.length;g < f;g++) {
+          for(var p = b.length;g < p;g++) {
             this.updateUniqueIndex(j[b[g]], b[g], a, c, d)
           }
           return i
@@ -2545,7 +2545,7 @@ jx.data.DataManager = {};
         i = this.updateUniqueIndices(j[g], g, a, d, c);
         if(i instanceof Error) {
           g = 0;
-          for(var f = b.length;g < f;g++) {
+          for(var p = b.length;g < p;g++) {
             this.updateUniqueIndices(j[b[g]], b[g], a, c, d)
           }
           return i
@@ -2625,14 +2625,14 @@ jx.data.DataManager = {};
         }
         for(var c = this._options.idColKeys, j = c.length, b = 0;b < j;b++) {
           if(d.hasOwnProperty(c[b])) {
-            for(var i = "", f = 0, k, h, l = {}, o = {}, b = o[g] = a[g];f < j;f++) {
-              if(k = c[f], d.hasOwnProperty(k)) {
-                if(e.isEmptyString(h = d[k])) {
-                  return this.grid.error("BAD_NULL", k)
+            for(var i = "", p = 0, f, h, l = {}, o = {}, b = o[g] = a[g];p < j;p++) {
+              if(f = c[p], d.hasOwnProperty(f)) {
+                if(e.isEmptyString(h = d[f])) {
+                  return this.grid.error("BAD_NULL", f)
                 }
                 i += "&" + h
               }else {
-                i += "&" + a[k]
+                i += "&" + a[f]
               }
             }
             a[g] = l[g] = i;
@@ -3448,12 +3448,10 @@ jx.data.DataManager = {};
     this.grid.event.trigger("onAfterRefresh", [a], !0)
   };
   b.refresh = function(a) {
-    this.grid.busy();
     this.grid.event.trigger("onBeforeRefresh", !1, !0);
-    a === void 0 ? this._sort() : a.noSort !== !0 && this._sort(a.sorter);
-    (a === void 0 || a.noFilter !== !0) && this._filter();
-    this._finish(a);
-    this.grid.idle()
+    a ? a.noSort || this._sort(a.sorter) : this._sort();
+    (!a || !a.noFilter) && this._filter();
+    this._finish(a)
   };
   b.exportRowToArray = function(a, d) {
     if(!(a in this.datalist)) {
@@ -4269,10 +4267,26 @@ jx.grid.Grid = {};
     return a
   };
   g.getCellByIdAndKey = function(a, c) {
-    return h.create("Cell", {grid:this, datarow:this.dataMgr.getById(a), colDef:this.colDefMgr.getByKey(c)})
+    if(a == null || c == null) {
+      return null
+    }
+    var d = this.dataMgr.getById(a);
+    if(!d) {
+      return null
+    }
+    var g = this.colDefMgr.getByKey(c);
+    return!g ? null : h.create("Cell", {grid:this, datarow:d, colDef:g})
   };
   g.getCellByIdx = function(a, c) {
-    return h.create("Cell", {grid:this, row:a, col:c})
+    if(a == null || c == null) {
+      return null
+    }
+    var d = this.dataMgr.getByIdx(a);
+    if(!d) {
+      return null
+    }
+    var g = this.colDefMgr.get(c);
+    return!g ? null : h.create("Cell", {grid:this, datarow:d, colDef:g})
   };
   g.busy = function() {
     if(this._busyShader && !this._busy) {
@@ -5650,7 +5664,6 @@ jx.grid.ViewportManager = {};
     return this.rerenderCellByIdAndKey(this._datamgr.getIdByIdx(a), this._colmgr.getKeyByIdx(c))
   };
   c._appendRows = function(a) {
-    this.grid.busy();
     var c = this._evtmgr, d = [a], e = [], f = a.start, a = a.end, h = this._datamgr, q = h.datalist, l = h.idKey, o = this._colmgr.get(), n = this._getColCellClasses(o).map(function(a) {
       return"<div class='" + a + " "
     }), h = this._renderedRows, s = this._getRowOuterHeight(), r = this._canvasEl, t = "<div class='" + this._rowClass + "' i='", u = "' " + this._rowIdxAttr + "='", v = this._getRendererSettings(o), y = v[0], w = v[1], x, z, v = [];
@@ -5665,11 +5678,9 @@ jx.grid.ViewportManager = {};
     for(a = v.length;f < a;f++) {
       h[v[f]] = e[f]
     }
-    c.trigger("onAppendRows", d, !0);
-    this.grid.idle()
+    c.trigger("onAppendRows", d, !0)
   };
   c._removeAndRenderRows = function(a) {
-    this.grid.busy();
     var a = a || this._getRenderRange(), c = this._evtmgr, d = [a], b = [], e = a.start, a = a.end, f = this._datamgr, h = f.datalist, f = f.idKey, l = this._colmgr.get(), o = this._getColCellClasses(l).map(function(a) {
       return"<div class='" + a + " "
     }), n = this._getRowOuterHeight(), s = this._canvasEl, r = "<div class='" + this._rowClass + "' i='", t = "' " + this._rowIdxAttr + "='", u = this._getRendererSettings(l), v = u[0], u = u[1], y, w, x = [], z = {};
@@ -5685,8 +5696,7 @@ jx.grid.ViewportManager = {};
       z[x[e]] = s.childNodes[e]
     }
     this._renderedRows = z;
-    c.trigger("onAppendRows", d, !0);
-    this.grid.idle()
+    c.trigger("onAppendRows", d, !0)
   };
   c._renderColumn = function(c, d, b, e, f, h, q) {
     for(var l = [], o, n = 0, s = b.length, r, t, u, v = d.key, y, w = this.grid, x = this._evtmgr, z = "onRenderCell_" + v, B = [null, c, t, d], A = [null, c, null, d, null];n < s;n++) {
@@ -7222,8 +7232,8 @@ jx.grid.Collapser = {};
   };
   a._setClass = function(a, b) {
     if(!e.isNull(a)) {
-      var f = this._options;
-      b ? a.addClass(f.classCollapsed).removeClass(f.classExpanded) : a.addClass(f.classExpanded).removeClass(f.classCollapsed)
+      var g = this._options;
+      b ? a.addClass(g.classCollapsed).removeClass(g.classExpanded) : a.addClass(g.classExpanded).removeClass(g.classCollapsed)
     }
   };
   a.toggleMaster = function() {
@@ -7247,25 +7257,25 @@ jx.grid.Collapser = {};
     return a
   };
   a._onCheckChange = function(a, b) {
-    var f = this._tree.getNode(a), j = this.checkMgr, m = [], i;
-    b ? (f.traverseChildren({fn:function(a) {
-      j.isChecked(this.data) ? a.propagate = !1 : (j._add(this.data), e.isNotNull(i = j.getCheckbox(this.data)) && m.push(i))
-    }}), f.traverseParent({up:!0, fn:function(a) {
-      e.isNull(this.data) || j.isChecked(this.data) ? a.stop = !0 : (j._add(this.data), e.isNotNull(i = j.getCheckbox(this.data)) && m.push(i))
-    }}), h.CheckManager._check($(m)), j._updateMaster()) : (f.traverseChildren({fn:function(a) {
-      j.isChecked(this.data) ? (j._remove(this.data), e.isNotNull(i = j.getCheckbox(this.data)) && m.push(i)) : a.propagate = !1
-    }}), f.traverseParent({up:!0, fn:function(a) {
-      if(e.isNull(this.data) || !j.isChecked(this.data)) {
+    var g = this._tree.getNode(a), f = this.checkMgr, m = [], i;
+    b ? (g.traverseChildren({fn:function(a) {
+      f.isChecked(this.data) ? a.propagate = !1 : (f._add(this.data), e.isNotNull(i = f.getCheckbox(this.data)) && m.push(i))
+    }}), g.traverseParent({up:!0, fn:function(a) {
+      e.isNull(this.data) || f.isChecked(this.data) ? a.stop = !0 : (f._add(this.data), e.isNotNull(i = f.getCheckbox(this.data)) && m.push(i))
+    }}), h.CheckManager._check($(m)), f._updateMaster()) : (g.traverseChildren({fn:function(a) {
+      f.isChecked(this.data) ? (f._remove(this.data), e.isNotNull(i = f.getCheckbox(this.data)) && m.push(i)) : a.propagate = !1
+    }}), g.traverseParent({up:!0, fn:function(a) {
+      if(e.isNull(this.data) || !f.isChecked(this.data)) {
         a.stop = !0
       }else {
         for(var b = 0, c = this.children, d = c.length;b < d;b++) {
-          if(j.isChecked(c[b].data)) {
+          if(f.isChecked(c[b].data)) {
             a.stop = !0;
             return
           }
         }
-        j._remove(this.data);
-        e.isNotNull(i = j.getCheckbox(this.data)) && m.push(i)
+        f._remove(this.data);
+        e.isNotNull(i = f.getCheckbox(this.data)) && m.push(i)
       }
     }}), h.CheckManager._uncheck($(m)))
   };
@@ -7646,7 +7656,7 @@ jx.grid.SearchManager = {};
     if(!(this._global.length === 0 && e.isEmptyObj(this._codeMap))) {
       var c, d = this._tagMap, f, g, h = a.length, i, j = this._filterMap, k = this.constructor.CONST.and, l, m = this._global.length > 0, o, n;
       if(m) {
-        var q = this._global, p;
+        var p = this._global, q;
         i = this.grid.colDefMgr.get().filter(function(a) {
           return!a.noSearch
         });
@@ -7659,13 +7669,13 @@ jx.grid.SearchManager = {};
       a:for(;o >= 0;o--) {
         h = a[o];
         if(m) {
-          i = q.slice();
+          i = p.slice();
           c = 0;
           for(;i.length !== 0 && c < r;c++) {
-            if(!e.isNull(p = h[s[c]])) {
-              e.isString(p) || (p = p.toString());
+            if(!e.isNull(q = h[s[c]])) {
+              e.isString(q) || (q = q.toString());
               for(n = i.length - 1;n >= 0;n--) {
-                p.indexOf(i[n]) !== -1 && i.removeAt(n)
+                q.indexOf(i[n]) !== -1 && i.removeAt(n)
               }
             }
           }
@@ -7820,11 +7830,11 @@ jx.grid.SearchManager = {};
     if(k[c].hasOwnProperty(d)) {
       return!1
     }
-    var l, m, n, o, q = this._filterMap[a], p;
+    var l, m, n, o, p = this._filterMap[a], q;
     for(n in k) {
       if(k.hasOwnProperty(n)) {
         for(o in l = k[n], l) {
-          l.hasOwnProperty(o) && (p = l[o], m = e.isNotNull(q.parser) ? q.parser(o) : o, f._checkDisable(h.type, p.option.type, i, d, m) && (delete j[a + "@T" + p.option.tag + "@B" + m], p.tag.remove(), delete p.tag, delete p.option, delete p.fn, delete l[o]))
+          l.hasOwnProperty(o) && (q = l[o], m = e.isNotNull(p.parser) ? p.parser(o) : o, f._checkDisable(h.type, q.option.type, i, d, m) && (delete j[a + "@T" + q.option.tag + "@B" + m], q.tag.remove(), delete q.tag, delete q.option, delete q.fn, delete l[o]))
         }
       }
     }

@@ -1414,7 +1414,6 @@ prototype.rerenderCellByIdx = function(row, col) {
 	return this.rerenderCellByIdAndKey(this._datamgr.getIdByIdx(row), this._colmgr.getKeyByIdx(col));
 };
 prototype._appendRows = function(range) {
-	this.grid.busy();
 	var evtmgr = this._evtmgr,
 		args = [range],
 		html = [],
@@ -1454,10 +1453,8 @@ prototype._appendRows = function(range) {
 		rendered[added[i]] = newNodes[i];
 	}
 	evtmgr.trigger("onAppendRows", args, true);
-	this.grid.idle();
 };
 prototype._removeAndRenderRows = function(range) {
-	this.grid.busy();
 	range = range || this._getRenderRange();
 	var evtmgr = this._evtmgr,
 		args = [range],
@@ -1535,7 +1532,6 @@ prototype._removeAndRenderRows = function(range) {
 	  @version 1.2.3
 	  */
 	evtmgr.trigger("onAppendRows", args, true);
-	this.grid.idle();
 };
 prototype._renderColumn = function(i, colDef, rows, datalist, colCommon, renderer, cellInput) {
 	var html = [],
