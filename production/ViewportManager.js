@@ -697,7 +697,7 @@ prototype.getInnerWidth = function() {
 	return this._mask[0].clientWidth;
 };
 prototype._calCanvasHeight = function() {
-	return this._getRowOuterHeight() * this._datamgr.datalist.length;
+	return this._getRowOuterHeight() * this._datamgr.datalist.length || 1;
 };
 /**
   모든 그리드 로우를 포함하고 있는 캔버스의 가상 높이 픽셀을 리턴합니다.
@@ -711,9 +711,9 @@ prototype.getCanvasHeight = function() {
 	return this._canvasEl.clientHeight;
 };
 prototype._setCanvasHeight = function(h) {
-	h = parseInt(h);
+	h = parseInt(h, 10);
 	if (isNaN(h) || h < 1) {
-		return;
+		h = 1;
 	}
 	var old = this.getCanvasHeight();
 	if (h != old) {
@@ -746,7 +746,7 @@ prototype.getCanvasWidth = function() {
 };
 prototype._setCanvasWidth = function(w) {
 	if (typeof w != 'number') {
-		w = parseInt(w);
+		w = parseInt(w, 10);
 	}
 	if (!isFinite(w) || w < 1) {
 		return;
@@ -854,7 +854,7 @@ prototype._autoColWidth = function(key) {
 	this.setWidthByKey(key, max);
 };
 prototype._setWidth = function(w) {
-	w = parseInt(w);
+	w = parseInt(w, 10);
 	if (isNaN(w) || w < 1) {
 		return;
 	}

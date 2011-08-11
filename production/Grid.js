@@ -1082,7 +1082,7 @@ prototype.width = function(w) {
 		return cw;
 	}
 	if (typeof w != 'number') {
-		w = parseInt(w);
+		w = parseInt(w, 10);
 	}
 	if (w < 1 || w === cw || !isFinite(w)) {
 		return cw;
@@ -1109,7 +1109,7 @@ prototype.height = function(h) {
 		return ch;
 	}
 	if (typeof h != 'number') {
-		h = parseInt(h);
+		h = parseInt(h, 10);
 	}
 	if (h < 1 || h === ch || !isFinite(h)) {
 		return ch;
