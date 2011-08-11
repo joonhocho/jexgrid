@@ -403,18 +403,19 @@
 							setUp();
 							window[i]();
 							tearDown();
-							echo(i + ' passed! Time elapsed: ' + (new Date().getTime() - start) + 'ms');
+							document.write('<p>' + i + ' passed! Time elapsed: ' + (new Date().getTime() - start) + 'ms' + '</p>');
 						}
 						catch (e) {
 							if (e.isJsUnitFailure) {
-								echo(i + ' failed: ' + (e.comment || '') + '\n' + e.jsUnitMessage + '\n' + e.stackTrace);
+								document.write('<p>' + i + ' failed: ' + (e.comment || '') + '\n' + e.jsUnitMessage + '\n' + e.stackTrace + '</p>');
 							}
 							else {
-								echo(i + ' failed: ' + e.message + '\n' + e.stack);
+								document.write('<p>' + i + ' failed: ' + e.message + '\n' + e.stack + '</p>');
 							}
 						}
 					}
 				}
+							setUp();
 			})()
 
 		</script>

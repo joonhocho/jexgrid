@@ -725,7 +725,7 @@ prototype._extend = function(colDef) {
 						parser = parseBoolean;
 						break;
 					case 'int':
-						parser = parseInt;
+						parser = function (v) { return parseInt(v, 10); };
 						break;
 					case 'float':
 						parser = parseFloat;

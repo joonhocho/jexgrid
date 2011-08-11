@@ -865,7 +865,7 @@ prototype.getInnerWidth = function() {
 };
 
 prototype._calCanvasHeight = function() {
-	return this._getRowOuterHeight() * this._datamgr.datalist.length;
+	return this._getRowOuterHeight() * this._datamgr.datalist.length || 1;
 };
 
 /**
@@ -883,9 +883,9 @@ prototype.getCanvasHeight = function() {
 };
 
 prototype._setCanvasHeight = function(h) {
-	h = parseInt(h);
+	h = parseInt(h, 10);
 	if (isNaN(h) || h < 1) {
-		return;
+		h = 1;
 	}
 	var old = this.getCanvasHeight();
 	if (h != old) {
@@ -925,7 +925,7 @@ prototype.getCanvasWidth = function() {
 
 prototype._setCanvasWidth = function(w) {
 	if (typeof w != 'number') {
-		w = parseInt(w);
+		w = parseInt(w, 10);
 	}
 	if (!isFinite(w) || w < 1) {
 		return;
@@ -1067,7 +1067,7 @@ prototype._autoColWidth = function(key) {
 };
 
 prototype._setWidth = function(w) {
-	w = parseInt(w);
+	w = parseInt(w, 10);
 	if (isNaN(w) || w < 1) {
 		return;
 	}
