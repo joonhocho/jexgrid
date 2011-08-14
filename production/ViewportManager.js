@@ -16,12 +16,23 @@ goog.provide('jx.grid.ViewportManager');
   JGM
   @scope JGM
   */
-(function() {
+(function() {'use strict';
 	var JGM = goog.getObjectByName('jx.grid'),
 	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
-	Cell = goog.getObjectByName('jx.grid.Cell');
+	Cell = goog.getObjectByName('jx.grid.Cell'),
+	inputTags = {
+		INPUT: true,
+		TEXTAREA: true,
+		LABEL: true,
+		FIELDSET: true,
+		LEGEND: true,
+		SELECT: true,
+		OPTGROUP: true,
+		OPTION: true,
+		BUTTON: true
+	};
 goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
 /**
   ViewportManager 모듈. 그리드 로우와 셀을 가진 테이블을 담당하는 모듈입니다.
@@ -303,6 +314,12 @@ function ViewportManager(args) {
 	this._renderedRows = {};
 	this._lockedRows = {};
 	this._colLefts = [0];
+	this._evtmgr = this.grid['event'];
+	this._datamgr = this.grid['dataMgr'];
+	this._colmgr = this.grid['colDefMgr'];
+	this._rowClass = this._options['classRow'];
+	this._cellClass = this._options['classCell'];
+	this._rowIdxAttr = this._options['attrRowIdx'];
 	this.__init();
 }
 ViewportManager.getInstance = function(args) {
@@ -316,6 +333,7 @@ prototype.__init = function() {
 	this._canvas =
 		$("<div class='" + this._options['classCanvas'] + "'>")
 		.appendTo(this._mask);
+	this._canvasEl = this._canvas[0];
 	// disable text selection in grid cells except in input and textarea
 	// elements (this is IE-specific, because selectstart event will
 	// only fire in IE)
@@ -324,8 +342,8 @@ prototype.__init = function() {
 	});
 	this._setColLefts();
 	this._setCanvasWidth(this._calCanvasWidth());
-	this._lastRowLen = this.grid['dataMgr'].datalist.length;
-	this.grid['event'].bind({
+	this._lastRowLen = this._datamgr.datalist.length;
+	this._evtmgr.bind({
 		'canvasFind': this._canvasFind,
 		'onCreateCss': this._onCreateCss,
 		'onCreateDynamicCss': this._onCreateDynamicCss,
@@ -374,11 +392,11 @@ prototype._onDestroy = function() {
 prototype._onCreateCss = function() {
 	var gridId = "#" + this.grid['mid'] + " .",
 		opt = this._options,
-		cellSel = gridId + opt['classCell'],
-		rowSel = gridId + opt['classRow'],
+		cellSel = gridId + this._cellClass,
+		rowSel = gridId + this._rowClass,
 		border = opt['borderThickness'] + "px " + opt['border'],
-		attrRowIdx = rowSel + "[" + opt['attrRowIdx'],
-		colDefs = this.grid['colDefMgr'].get(),
+		attrRowIdx = rowSel + "[" + this._rowIdxAttr,
+		colDefs = this._colmgr.get(),
 		clen = colDefs.length,
 		i = 0,
 		rules = [];
@@ -403,11 +421,11 @@ prototype._onCreateCss = function() {
 prototype._onCreateDynamicCss = function() {
 	var gridId = "#" + this.grid['mid'] + " .",
 		opt = this._options,
-		cellSel = gridId + opt['classCell'],
-		rowSel = gridId + opt['classRow'],
+		cellSel = gridId + this._cellClass,
+		rowSel = gridId + this._rowClass,
 		canSel = gridId + opt['classCanvas'],
 		canw = this._calCanvasWidth(),
-		colDefs = this.grid['colDefMgr'].get(),
+		colDefs = this._colmgr.get(),
 		str = '',
 		clen = colDefs.length,
 		i = 0;
@@ -483,10 +501,10 @@ prototype.onIdListChange = function(datalist, befores, idKey) {
 	}
 };
 prototype._getCellSelector = function() {
-	return "#" + this.grid['mid'] + " ." + this._options['classCell'];
+	return "#" + this.grid['mid'] + " ." + this._cellClass;
 };
 prototype._getRowSelector = function() {
-	return "#" + this.grid['mid'] + " ." + this._options['classRow'];
+	return "#" + this.grid['mid'] + " ." + this._rowClass;
 };
 /**
   주어진 인덱스를 가진 셀로 스크롤합니다.
@@ -514,7 +532,7 @@ prototype.scrollTo = function(row, col) {
   */
 prototype.scrollToRowLazy = function(row) {
 	var scrollTop = this.getScrollTop();
-	if (Util.isNull(row)) {
+	if (row == null) {
 		return scrollTop;
 	}
 	if (this._getLastSafeVisibleRow() < row) {
@@ -537,7 +555,7 @@ prototype.scrollToRowLazy = function(row) {
   */
 prototype.scrollToColLazy = function(col) {
 	var scrollLeft = this.getScrollLeft();
-	if (Util.isNull(col)) {
+	if (col == null) {
 		return scrollLeft;
 	}
 	if (this._getLastSafeVisibleCol() < col) {
@@ -572,7 +590,7 @@ prototype.scrollToLazy = function(row, col) {
   */
 //tested
 prototype.scrollToRow = function(i) {
-	if (Util.isNotNull(i)) {
+	if (i != null) {
 		return this.setScrollTop(this._getRowOuterHeight() * i);
 	}
 	return this.getScrollTop();
@@ -589,10 +607,10 @@ prototype.scrollToCol = function(i) {
 	return this.setScrollLeft(this.getColLeft(i));
 };
 prototype._getColInnerWidth = function(i) {
-	return this.grid['colDefMgr'].get(i).width;
+	return this._colmgr.get(i).width;
 };
 prototype._getColInnerWidthByKey = function(i) {
-	return this.grid['colDefMgr'].getByKey(i).width;
+	return this._colmgr.getByKey(i).width;
 };
 /**
   주어진 인덱스의 컬럼의 폭 픽셀을 리턴합니다.
@@ -604,7 +622,7 @@ prototype._getColInnerWidthByKey = function(i) {
   @version 1.1.7
   */
 prototype.getColWidth = function(i) {
-	return this.grid['colDefMgr'].get(i).width + this._options['padding'];
+	return this._colmgr.get(i).width + this._options['padding'];
 };
 /**
   주어진 키를 가진 컬럼의 폭 픽셀을 리턴합니다.
@@ -616,13 +634,13 @@ prototype.getColWidth = function(i) {
   @version 1.1.7
   */
 prototype.getColWidthByKey = function(i) {
-	return this.grid['colDefMgr'].getByKey(i).width + this._options['padding'];
+	return this._colmgr.getByKey(i).width + this._options['padding'];
 };
 prototype._getColOuterWidth = function(i) {
-	return this.grid['colDefMgr'].get(i).width + this._options['padding'] + this._options['borderThickness'];
+	return this._colmgr.get(i).width + this._options['padding'] + this._options['borderThickness'];
 };
 prototype._getColOuterWidthByKey = function(i) {
-	return this.grid['colDefMgr'].getByKey(i).width + this._options['padding'] + this._options['borderThickness'];
+	return this._colmgr.getByKey(i).width + this._options['padding'] + this._options['borderThickness'];
 };
 prototype._getPadding = function() {
 	return this._options['padding'];
@@ -679,7 +697,7 @@ prototype.getInnerWidth = function() {
 	return this._mask[0].clientWidth;
 };
 prototype._calCanvasHeight = function() {
-	return this._getRowOuterHeight() * this.grid['dataMgr'].datalist.length;
+	return this._getRowOuterHeight() * this._datamgr.datalist.length || 1;
 };
 /**
   모든 그리드 로우를 포함하고 있는 캔버스의 가상 높이 픽셀을 리턴합니다.
@@ -690,16 +708,16 @@ prototype._calCanvasHeight = function() {
   @version 1.0.0
   */
 prototype.getCanvasHeight = function() {
-	return this._canvas[0].clientHeight;
+	return this._canvasEl.clientHeight;
 };
 prototype._setCanvasHeight = function(h) {
-	h = parseInt(h);
+	h = parseInt(h, 10);
 	if (isNaN(h) || h < 1) {
-		return;
+		h = 1;
 	}
 	var old = this.getCanvasHeight();
 	if (h != old) {
-		this._canvas[0].style.height = h + "px";
+		this._canvasEl.style.height = h + "px";
 		/**
 		  캔바스의 높이가 변했을 경우 트리거되는 이벤트 입니다.
 		  @event {Event} onResizeCanvasHeight
@@ -709,11 +727,11 @@ prototype._setCanvasHeight = function(h) {
 		  @since 1.1.7
 		  @version 1.1.7
 		  */
-		this.grid['event'].trigger("onResizeCanvasHeight", [h, old]);
+		this._evtmgr.trigger("onResizeCanvasHeight", [h, old], true);
 	}
 };
 prototype._calCanvasWidth = function() {
-	return this._colLefts[this.grid['colDefMgr'].length()];
+	return this._colLefts[this._colmgr.length()];
 };
 /**
   모든 그리드 컬럼을 포함하고 있는 캔버스의 가상 폭 픽셀을 리턴합니다.
@@ -724,18 +742,18 @@ prototype._calCanvasWidth = function() {
   @version 1.0.0
   */
 prototype.getCanvasWidth = function() {
-	return this._canvas[0].clientWidth;
+	return this._canvasEl.clientWidth;
 };
 prototype._setCanvasWidth = function(w) {
 	if (typeof w != 'number') {
-		w = parseInt(w);
+		w = parseInt(w, 10);
 	}
 	if (!isFinite(w) || w < 1) {
 		return;
 	}
 	var old = this.getCanvasWidth();
 	if (w != old) {
-		this._canvas[0].style.width = w + "px";
+		this._canvasEl.style.width = w + "px";
 		/**
 		  캔바스의 폭이 변했을 경우 트리거되는 이벤트 입니다.
 		  @event {Event} onResizeCanvasWidth
@@ -745,7 +763,7 @@ prototype._setCanvasWidth = function(w) {
 		  @since 1.1.7
 		  @version 1.1.7
 		  */
-		this.grid['event'].trigger("onResizeCanvasWidth", [w, old]);
+		this._evtmgr.trigger("onResizeCanvasWidth", [w, old], true);
 	}
 };
 /**
@@ -764,13 +782,10 @@ prototype._getColLefts = function() {
 	return this._colLefts;
 };
 prototype._setColLefts = function(from, to) {
-	if (Util.isNull(from)) {
-		from = 0;
-	}
-	var colDefs = this.grid['colDefMgr'].get(), widthPlus = this._colWidthPlus();
-	if (Util.isNull(to)) {
-		to = colDefs.length;
-	}
+	from = from || 0;
+	var colDefs = this._colmgr.get(),
+		widthPlus = this._colWidthPlus();
+	to = to || colDefs.length;
 	for (; from < to; from++)  {
 		this._colLefts[from + 1] = this._colLefts[from] + colDefs[from].width + widthPlus;
 	}
@@ -790,14 +805,17 @@ prototype._onReorderCols = function() {
   @version 1.1.7
   */
 prototype.setWidthByKey = function(key, w) {
-	var colDef = this.grid['colDefMgr'].getByKey(key);
+	var colDef = this._colmgr.getByKey(key);
 	w = Util.bound(w, colDef['minW'], colDef['maxW']);
 	if (w === colDef['width']) {
 		return;
 	}
-	var old = colDef['width'];
+	var old = colDef['width'],
+		evtmgr = this._evtmgr,
+		colmgr = this._colmgr,
+		args = [key, w, old];
 	colDef['width'] = w;
-	this._setCanvasWidth(this._setColLefts(this.grid['colDefMgr'].getIdxByKey(key))[this.grid['colDefMgr'].length()]);
+	this._setCanvasWidth(this._setColLefts(colmgr.getIdxByKey(key))[colmgr.length()]);
 	this.grid._recreateDynamicCss();
 	/**
 	  컬럼의 폭이 변했을 경우 트리거되는 이벤트 입니다.
@@ -819,7 +837,8 @@ prototype.setWidthByKey = function(key, w) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this.grid['event'].trigger("onResizeCol_" + key + " onResizeCol", [key, w, old]);
+	evtmgr.trigger("onResizeCol_"+key, args, true);
+	evtmgr.trigger("onResizeCol", args, true);
 };
 prototype._autoColWidth = function(key) {
 	var res = this._canvasFind(".k_" + key),
@@ -835,7 +854,7 @@ prototype._autoColWidth = function(key) {
 	this.setWidthByKey(key, max);
 };
 prototype._setWidth = function(w) {
-	w = parseInt(w);
+	w = parseInt(w, 10);
 	if (isNaN(w) || w < 1) {
 		return;
 	}
@@ -851,14 +870,14 @@ prototype.getScrollLeft = function() {
 //tested
 prototype.setScrollTop = function(t) {
 	var scrollTop = this.getScrollTop();
-	if (Util.isNotNull(t) && scrollTop != t) {
+	if (t != null && scrollTop != t) {
 		return (this._mask[0].scrollTop = t);
 	}
 	return scrollTop;
 };
 prototype.setScrollLeft = function(left) {
 	var scrollLeft = this.getScrollLeft();
-	if (Util.isNotNull(left) && scrollLeft != left) {
+	if (left != null && scrollLeft != left) {
 		return (this._mask[0].scrollLeft = left);
 	}
 	return scrollLeft;
@@ -970,10 +989,10 @@ prototype.getScrollHForSafe = function(col) {
 };
 prototype._getRenderRange = function() {
 	if (this._options['autoHeight']) {
-		return {start:0, end:this.grid['dataMgr'].datalist.length - 1};
+		return {start:0, end:this._datamgr.datalist.length - 1};
 	}
 	var tmp,
-		max = this.grid['dataMgr'].datalist.length - 1;
+		max = this._datamgr.datalist.length - 1;
 	return {
 		start: (((tmp = (this._getFirstVisibleRow() - this._options['bufferSize'])) < 0) ? 0 : tmp),
 			end: (((tmp = (this._getLastVisibleRow() + this._options['bufferSize'])) > max) ? max : tmp)
@@ -1004,10 +1023,10 @@ prototype._rerender = function() {
 	// saving scroll states
 	var st = this.getScrollTop(),
 		sl = this.getScrollLeft();
-	this.grid['event'].trigger("onBeforeRerender");
+	this._evtmgr.trigger("onBeforeRerender", false, true);
 	this.unlockAllRows();
 	this._removeRows();
-	var rowLen = this.grid['dataMgr'].datalist.length;
+	var rowLen = this._datamgr.datalist.length;
 	if (this._lastRowLen !== rowLen) {
 		this._lastRowLen = rowLen;
 		this._setCanvasHeight(this._calCanvasHeight());
@@ -1016,7 +1035,7 @@ prototype._rerender = function() {
 	// resetting scrolls
 	this.setScrollTop(st);
 	this.setScrollLeft(sl);
-	this.grid['event'].trigger("onAfterRerender");
+	this._evtmgr.trigger("onAfterRerender", false, true);
 };
 prototype._render = function(range) {
 	/*
@@ -1029,18 +1048,16 @@ prototype._render = function(range) {
 	//}
 };
 prototype._renderShift = function(range) {
-	if (Util.isNull(range)) {
-		range = this._getRenderRange();
-	}
+	range = range || this._getRenderRange();
 	this._removeRowsExcept(range);
 	this._appendRows(range);
 };
 prototype._removeRows = function(range) {
-	var canvas = this._canvas[0],
+	var canvas = this._canvasEl,
 		rendered = this._renderedRows,
 		locked = this._lockedRows,
 		id;
-	if (Util.isNull(range)) {
+	if (!range) {
 		if (this._lockExist()) {
 			for (id in rendered) {
 				if (rendered.hasOwnProperty(id)) {
@@ -1059,7 +1076,7 @@ prototype._removeRows = function(range) {
 	else {
 		var i = range.start,
 			end = range.end,
-				dataMgr = this.grid['dataMgr'];
+				dataMgr = this._datamgr;
 		for (; i <= end; i++) {
 			if (!locked.hasOwnProperty(id = dataMgr.getIdByIdx(i)) && rendered.hasOwnProperty(id)) {
 				canvas.removeChild(rendered[id]);
@@ -1069,11 +1086,11 @@ prototype._removeRows = function(range) {
 	}
 };
 prototype._removeRowsExcept = function(range) {
-	var canvas = this._canvas[0],
+	var canvas = this._canvasEl,
 		rendered = this._renderedRows,
 		locked = this._lockedRows,
 		id;
-	if (Util.isNull(range)) {
+	if (!range) {
 		if (this._lockExist()) {
 			for (id in rendered) {
 				if (rendered.hasOwnProperty(id) && locked.hasOwnProperty(id) === false) {
@@ -1090,7 +1107,7 @@ prototype._removeRowsExcept = function(range) {
 	else {
 		var start = range.start,
 			end = range.end,
-				dataMgr = this.grid['dataMgr'],
+				dataMgr = this._datamgr,
 				i;
 		for (id in rendered) {
 			if (rendered.hasOwnProperty(id)) {
@@ -1104,19 +1121,20 @@ prototype._removeRowsExcept = function(range) {
 	}
 };
 prototype.destroyRow = function(datarow) {
-	return this.destroyRowById(this.grid['dataMgr'].getId(datarow));
+	return this.destroyRowById(this._datamgr.getId(datarow));
 };
 prototype.destroyRowById = function(id) {
-	if (Util.isNotNull(id)) {
+	// valid id still can evaluate to false
+	if (id != null) {
 		this.unlockRowById(id);
 		if (this._renderedRows.hasOwnProperty(id)) {
-			this._canvas[0].removeChild(this._renderedRows[id]);
+			this._canvasEl.removeChild(this._renderedRows[id]);
 			delete this._renderedRows[id];
 		}
 	}
 };
 prototype.destroyRowByIdx = function(i) {
-	return this.destroyRowById(this.grid['dataMgr'].getIdByIdx(i));
+	return this.destroyRowById(this._datamgr.getIdByIdx(i));
 };
 prototype._lockExist = function() {
 	return Util.isNotEmptyObj(this._lockedRows);
@@ -1135,7 +1153,7 @@ prototype._lockExist = function() {
   @version 1.3.0
   */
 prototype.isRowLockedById = function(id) {
-	if (Util.isNotNull(id)) {
+	if (id != null) {
 		return this._lockedRows.hasOwnProperty(id);
 	}
 	return false;
@@ -1152,7 +1170,7 @@ prototype.isRowLockedById = function(id) {
   @version 1.3.0
   */
 prototype.isRowLocked = function(datarow) {
-	return this.isRowLockedById(this.grid['dataMgr'].getId(datarow));
+	return this.isRowLockedById(this._datamgr.getId(datarow));
 };
 /**
   주어진 로우 인덱스의 DOMElement 가
@@ -1166,7 +1184,7 @@ prototype.isRowLocked = function(datarow) {
   @version 1.3.0
   */
 prototype.isRowLockedByIdx = function(i) {
-	return this.isRowLockedById(this.grid['dataMgr'].getIdByIdx(i));
+	return this.isRowLockedById(this._datamgr.getIdByIdx(i));
 };
 // lockRow
 // tested
@@ -1180,7 +1198,7 @@ prototype.isRowLockedByIdx = function(i) {
   @version 1.3.0
   */
 prototype.lockRowById = function(id) {
-	if (Util.isNotNull(id) && this.grid['dataMgr'].hasById(id)) {
+	if (id != null && this._datamgr.hasById(id)) {
 		this._lockedRows[id] = true;
 	}
 };
@@ -1194,7 +1212,7 @@ prototype.lockRowById = function(id) {
   @version 1.3.0
   */
 prototype.lockRow = function(datarow) {
-	return this.lockRowById(this.grid['dataMgr'].getId(datarow));
+	return this.lockRowById(this._datamgr.getId(datarow));
 };
 /**
   주어진 로우 인덱스의 DOMElement 를 lock 합니다.
@@ -1206,7 +1224,7 @@ prototype.lockRow = function(datarow) {
   @version 1.3.0
   */
 prototype.lockRowByIdx = function(i) {
-	return this.lockRowById(this.grid['dataMgr'].getIdByIdx(i));
+	return this.lockRowById(this._datamgr.getIdByIdx(i));
 };
 //unlockRow
 //tested
@@ -1234,7 +1252,7 @@ prototype.unlockRowById = function(id) {
   @version 1.3.0
   */
 prototype.unlockRow = function(datarow) {
-	return this.unlockRowById(this.grid['dataMgr'].getId(datarow));
+	return this.unlockRowById(this._datamgr.getId(datarow));
 };
 /**
   주어진 로우 인덱스의 DOMElement 를 unlock 합니다.
@@ -1246,7 +1264,7 @@ prototype.unlockRow = function(datarow) {
   @version 1.3.0
   */
 prototype.unlockRowByIdx = function(i) {
-	return this.unlockRowById(this.grid['dataMgr'].getIdByIdx(i));
+	return this.unlockRowById(this._datamgr.getIdByIdx(i));
 };
 //unlockAllRows
 /**
@@ -1269,31 +1287,62 @@ prototype.unlockAllRows = function() {
   */
 prototype.rerenderRowById = function(id) {
 	// check if valid id
-	if (!this.grid['dataMgr'].containsById(id)) {
+	if (!this._datamgr.containsById(id)) {
 		return;
 	}
 	var rmap = this._renderedRows,
-		canvas = this._canvas[0],
-		datam = this.grid['dataMgr'],
+		canvas = this._canvasEl,
+		datam = this._datamgr,
+		idKey = datam['idKey'],
 		i = datam.getIdxById(id),
 		datarow = datam.getById(id),
-		colDefs = this.grid['colDefMgr'].get(),
-		colCommon = this._getColCellClasses(colDefs),
+		colDefs = this._colmgr.get(),
+		colCommonClasses = this._getColCellClasses(colDefs),
+		colCommon = colCommonClasses.map(function(cls) { return "<div class='" + cls + " "; }),
+		renSettings = this._getRendererSettings(colDefs),
+		renderers = renSettings[0],
+		cellInputs = renSettings[1],
 		rowH = this._getRowOuterHeight(),
+		rowCommon = "<div class='" + this._rowClass + "' i='",
+		rowCommon2 = "' " + this._rowIdxAttr + "='",
 		html = [],
 		newNodes;
 	// remove from map
 	if (rmap.hasOwnProperty(id)) {
 		canvas.removeChild(rmap[id]);
 		// fire event to notify onBeforeRenderRows
-		this.grid['event'].trigger("onBeforeRenderRows", [[i]]);
+		this._evtmgr.trigger("onBeforeRenderRows", [[i]], true);
 		// render and append to canvas
-		this._renderRow(html, i, datarow, colDefs, colCommon, rowH);
+		html.push(rowCommon + datarow[idKey] + rowCommon2 + i + "' style='top:" + (rowH * i) + "px'>");
+		this._renderRow(html, i, datarow, colDefs, colCommon, renderers, cellInputs);
 		rmap[id] = Util.appendHTML(canvas, html.join(""))[0];
 		// fire event to notify rendere completion
-		this.grid['event'].trigger("onAppendRows", [[i]]);
+		this._evtmgr.trigger("onAppendRows", [[i]], true);
 	}
 };
+prototype._getRendererSettings = function(colDefs) {
+	colDefs = colDefs || this._colmgr.get();
+	var i = 0,
+		l = colDefs.length,
+		colDef,
+		settings = [],
+		renderers = [],
+		renderer;
+	for (; i < l; i++) {
+		// 0 = norenderer, 1 = renderer, 2 = renderer + cell
+		colDef = colDefs[i];
+		renderer = colDef['renderer'];
+		if (renderer) {
+			settings.push(!!colDef['rendererInput']);
+			renderers.push(renderer);
+		}
+		else {
+			settings.push(false);
+			renderers.push(false);
+		}
+	}
+	return [renderers, settings];
+}
 /**
   주어진 데이터 로우의 DOMElement 다시 랜더링 합니다.
   @function {} rerenderRow
@@ -1303,7 +1352,7 @@ prototype.rerenderRowById = function(id) {
   @version 1.3.0
   */
 prototype.rerenderRow = function(datarow) {
-	return this.rerenderRowById(this.grid['dataMgr'].getId(datarow));
+	return this.rerenderRowById(this._datamgr.getId(datarow));
 };
 /**
   주어진 로우 인덱스의 DOMElement 다시 랜더링 합니다.
@@ -1314,7 +1363,7 @@ prototype.rerenderRow = function(datarow) {
   @version 1.3.0
   */
 prototype.rerenderRowByIdx = function(i) {
-	return this.rerenderRowById(this.grid['dataMgr'].getIdByIdx(i));
+	return this.rerenderRowById(this._datamgr.getIdByIdx(i));
 };
 /**
   주어진 데이터 로우 아이디에 해당하는 데이터 로우와
@@ -1328,14 +1377,28 @@ prototype.rerenderRowByIdx = function(i) {
   */
 prototype.rerenderCellByIdAndKey = function(id, key) {
 	var cellnode = this.getCellByIdAndKey(id, key);
-	if (cellnode !== undefined) {
-		var datam = this.grid['dataMgr'],
-			colm = this.grid['colDefMgr'],
+	if (cellnode) {
+		var datam = this._datamgr,
+			colm = this._colmgr,
 				 datarow = datam.getById(id),
 				 colDef = colm.getByKey(key),
-				 row = datam.getIdxById(id),
-				 col = colm.getIdxByKey(key);
-		cellnode.innerHTML = this._renderCell([], row, col, datarow, colDef).join("");
+				 rowIdx = datam.getIdxById(id),
+				 i = colm.getIdxByKey(key),
+				 renderer = colDef['renderer'],
+				 cellInput = renderer ? colDef['rendererInput'] : false,
+				 html = [];
+		if (renderer) {
+			if (cellInput) {
+				this._renderCell(html, rowIdx, i, datarow, colDef, renderer, true);
+			}
+			else {
+				this._renderCell(html, rowIdx, i, datarow, colDef, renderer);
+			}
+		}
+		else {
+			this._renderCell(html, rowIdx, i, datarow, colDef);
+		}
+		cellnode.innerHTML = html.join('');
 	}
 };
 /**
@@ -1348,71 +1411,118 @@ prototype.rerenderCellByIdAndKey = function(id, key) {
   @version 1.3.0
   */
 prototype.rerenderCellByIdx = function(row, col) {
-	return this.rerenderCellByIdAndKey(this.grid['dataMgr'].getIdByIdx(row), this.grid['colDefMgr'].getKeyByIdx(col));
+	return this.rerenderCellByIdAndKey(this._datamgr.getIdByIdx(row), this._colmgr.getKeyByIdx(col));
 };
 prototype._appendRows = function(range) {
-	this.grid['event'].trigger("onBeforeRenderRows", [range]);
-	var html = [],
+	var evtmgr = this._evtmgr,
+		args = [range],
+		html = [],
 		i = range.start,
-		end = range.end,
-		datalist = this.grid['dataMgr'].datalist,
-		idKey = this.grid['dataMgr'].idKey,
-		colDefs = this.grid['colDefMgr'].get(),
-		collen = colDefs.length,
-		colCommon = this._getColCellClasses(colDefs),
+		len = range.end,
+		datam = this._datamgr,
+		datalist = datam['datalist'],
+		idKey = datam['idKey'],
+		colDefs = this._colmgr.get(),
+		colCommon = this._getColCellClasses(colDefs).map(function(cls) { return "<div class='" + cls + " "; }),
 		rendered = this._renderedRows,
 		rowH = this._getRowOuterHeight(),
-		canvas = this._canvas[0],
+		canvas = this._canvasEl,
+		rowCommon = "<div class='" + this._rowClass + "' i='",
+		rowCommon2 = "' " + this._rowIdxAttr + "='",
+		renSettings = this._getRendererSettings(colDefs),
+		renderers = renSettings[0],
+		cellInputs = renSettings[1],
 		datarow,
 		id,
 		added = [],
-		node,
-		newNodes,
-		len;
-	for (; i <= end; i++) {
+		newNodes;
+	evtmgr.trigger("onBeforeRenderRows", args, true);
+	for (; i <= len; i++) {
 		datarow = datalist[i];
-		if (rendered.hasOwnProperty(id = datarow[idKey])) {
-			continue;
+		id = datarow[idKey];
+		if (!rendered.hasOwnProperty(id)) {
+			html[html.length] = rowCommon + id + rowCommon2 + i + "' style='top:" + (rowH * i) + "px'>";
+			this._renderRow(html, i, datarow, colDefs, colCommon, renderers, cellInputs);
+			added.push(id);
 		}
-		this._renderRow(html, i, datarow, colDefs, colCommon, rowH);
-		added.push(id);
 	}	
 	newNodes = Util.appendHTML(canvas, html.join(""));
-	for (i = 0, len = added.length; i < len; i++) {
+	i = 0;
+	len = added.length;
+	for (; i < len; i++) {
 		rendered[added[i]] = newNodes[i];
 	}
-	this.grid['event'].trigger("onAppendRows", [range]);
+	evtmgr.trigger("onAppendRows", args, true);
 };
 prototype._removeAndRenderRows = function(range) {
-	if (Util.isNull(range)) {
-		range = this._getRenderRange();
-	}
-	this.grid['event'].trigger("onBeforeRenderRows", [range]);
-	var html = [],
+	range = range || this._getRenderRange();
+	var evtmgr = this._evtmgr,
+		args = [range],
+		html = [],
 		i = range.start,
-		end = range.end,
-		dataMgr = this.grid['dataMgr'],
-		datalist = dataMgr.datalist,
-		idKey = dataMgr.idKey,
-		colDefs = this.grid['colDefMgr'].get(),
-		collen = colDefs.length,
-		colCommon = this._getColCellClasses(colDefs),
-		canvas = this._canvas[0],
+		len = range.end,
+		datam = this._datamgr,
+		datalist = datam['datalist'],
+		idKey = datam['idKey'],
+		colDefs = this._colmgr.get(),
+		colCommon = this._getColCellClasses(colDefs).map(function(cls) { return "<div class='" + cls + " "; }),
 		rowH = this._getRowOuterHeight(),
+		canvas = this._canvasEl,
+		rowCommon = "<div class='" + this._rowClass + "' i='",
+		rowCommon2 = "' " + this._rowIdxAttr + "='",
+		renSettings = this._getRendererSettings(colDefs),
+		renderers = renSettings[0],
+		cellInputs = renSettings[1],
 		datarow,
+		id,
 		added = [],
-		newRendered = {},
-		len;
-	for (; i <= end; i++) {
+		rendered = {};
+	evtmgr.trigger("onBeforeRenderRows", args, true);
+	for (; i <= len; i++) {
 		datarow = datalist[i];
-		this._renderRow(html, i, datarow, colDefs, colCommon, rowH);
-		added.push(datarow[idKey]);
+		id = datarow[idKey];
+		html[html.length] = rowCommon + id + rowCommon2 + i + "' style='top:" + (rowH * i) + "px'>";
+		this._renderRow(html, i, datarow, colDefs, colCommon, renderers, cellInputs);
+		added.push(id);
 	}
+	/*
+	//Column-wise Rendering: ended up being slower than row-wise
+	var rows = [],
+		rl,
+		rowhead = [],
+		cols = [],
+		j = 0,
+		rowIdx,
+		clen = colDefs.length;
+	for (; i <= len; i++) {
+		// get row indices
+		rows.push(i);
+	}
+	for (; j < clen; j++) {
+		cols.push(this._renderColumn(j, colDefs[j], rows, datalist, colCommon[j], renderers[j], cellInputs[j]));
+	}
+	i = 0;
+	rl = rows.length;
+	for (; i < rl; i++) {
+		rowIdx = rows[i];
+		datarow = datalist[rowIdx];
+		id = datarow[idKey];
+		html[html.length] = rowCommon + id + rowCommon2 + rowIdx + "' style='top:" + (rowH * rowIdx) + "px'>";
+		j = 0;
+		for (; j < clen; j++) {
+			html[html.length] = cols[j][i];
+		}
+		html[html.length] = "</div>\n\n\n";
+		added.push(id);
+	}
+	*/
 	canvas.innerHTML = html.join("");
-	for (i = 0, len = added.length; i < len; i++) {
-		newRendered[added[i]] = canvas.childNodes[i];
+	i = 0;
+	len = added.length;
+	for (; i < len; i++) {
+		rendered[added[i]] = canvas.childNodes[i];
 	}
-	this._renderedRows = newRendered;
+	this._renderedRows = rendered;
 	/**
 	  그리드가 로우가 새로 렌더링 되었을 때 (로우가 추가되거나, 다시 렌더링 되거나) 발생하는 이벤트 입니다.
 	  @event {Event} onAppendRows
@@ -1421,46 +1531,31 @@ prototype._removeAndRenderRows = function(range) {
 	  @since 1.2.0
 	  @version 1.2.3
 	  */
-	this.grid['event'].trigger("onAppendRows", [range]);
+	evtmgr.trigger("onAppendRows", args, true);
 };
-prototype._getColCellClass = function(colDef) {
-	var cssClass = this._options['classCell'] + " " + "k_" + colDef['key'];
-	if (Util.isNotNull(colDef['colClass'])) {
-		cssClass += " " + colDef['colClass'];
-	}
-	/**
-	  그리드 컬럼 공통 css 클래스를 생성할 때 발생하는 이벤트입니다. 특정 컬럼 셀에 공통적인 css 클래스를 추가하려면 css 클래스 명을 리턴하면 됩니다.
-	  예) return "이_컬럼에만_주어질_css_클래스_명";
-	  @event {Event} onGetColCellClass
-	  @param {Object} colDef - 컬럼 정의 오브젝트
-	  @returns {string} 컬럼 셀들에 공통적으로 추가할 css 클래스 명
-	  @author 조준호
-	  @since 1.1.7
-	  @version 1.1.7
-	  */
-	cssClass += " " + this.grid['event'].trigger("onGetColCellClass", [colDef]).join(" ");
-	return cssClass;
-};
-prototype._getColCellClasses = function(colDefs) {
-	var cssClasses = [],
-		i = 0,
-		len = colDefs.length;
-	if (Util.isNull(colDefs)) {
-		colDefs = this.grid['colDefMgr'].get();
-	}
-	for (; i < len; i++) {
-		cssClasses.push(this._getColCellClass(colDefs[i]));
-	}
-	return cssClasses;
-};
-prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rowH) {
-	html.push("<div class='" + this._options['classRow'] +
-			"' i='" + datarow[this.grid['dataMgr'].idKey] +
-			"' " + this._options['attrRowIdx'] + "='" + rowIdx +
-			"' style='top:" + (rowH * rowIdx) + "px'>");
-	var i = 0,
-		collen = colDefs.length;
-	for (; i < collen; i++) {
+prototype._renderColumn = function(i, colDef, rows, datalist, colCommon, renderer, cellInput) {
+	var html = [],
+		rhtml,
+		ri = 0,
+		rl = rows.length,
+		rowIdx,
+		datarow,
+		val,
+		key = colDef.key,
+		cellclass,
+		grid = this.grid,
+		evtmgr = this._evtmgr,
+		event = "onRenderCell_"+key,
+		args = [null, i, datarow, colDef],
+		args2 = [null, i, null, colDef, null];
+	for (; ri < rl; ri++) {
+		rowIdx = rows[ri];
+		datarow = datalist[rowIdx];
+		val = datarow[key];
+		rhtml = [];
+		args2[0] = args[0] = rowIdx;
+		args2[2] = datarow;
+		args2[4] = rhtml;
 		/**
 		  그리드 셀의 css 클래스를 생성할 때 발생하는 이벤트입니다. 특정 셀에 css 클래스를 추가하려면 css 클래스 명을 리턴하면 됩니다.
 		  예) return "이_셀에만_주어질_css_클래스_명";
@@ -1474,15 +1569,150 @@ prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rowH)
 		  @since 1.1.7
 		  @version 1.1.7
 		  */
-		html.push("<div class='" + colCommon[i] + " " +
-				this.grid['event'].trigger("onGetCellClass", [rowIdx, i, datarow, colDefs[i]]).join(" ") + "'>");
-		this._renderCell(html, rowIdx, i, datarow, colDefs[i]);
-		html.push("</div>");
+		cellclass = evtmgr.trigger("onGetCellClass", args);
+		if (cellclass) {
+			rhtml[rhtml.length] = colCommon + cellclass.join(" ") + "'>";
+		}
+		else {
+			rhtml[rhtml.length] = colCommon + "'>";
+		}
+		/**
+		  그리드 셀 안에 prepend 할 html 을 생성할 때 발생하는 이벤트입니다. prepend 할 내용이 있으면 html 에 push 해주면 됩니다.
+		  예) html.push("prepend 할 내용");
+		  @event {Event} onRenderCell_COLKEY_prepend
+		  @param {number} rowIdx - 셀의 로우 인덱스
+		  @param {number} colIdx - 셀의 컬럼 인덱스
+		  @param {Object} datarow - 셀의 로우 데이터
+		  @param {Object} colDef - 셀의 컬럼 정의 오브젝트
+		  @param {Array.<string>} html - 셀에 append 할 html 을 넣을 어레이
+		  @author 조준호
+		  @since 1.1.7
+		  @version 1.1.7
+		  */
+		evtmgr.trigger(event+"_prepend", args2, true);
+		if (typeof val != "string" || val.substring(0, 3) !== "J@H") {
+			if (renderer) {
+				// has renderer
+				if (cellInput) {
+					// renderer with cell input
+					rhtml[rhtml.length] = renderer(new Cell({'grid':grid, 'row':rowIdx, 'col':i, 'datarow':datarow, 'colDef':colDef}));
+				}
+				else {
+					// renderer with serialized inputs
+					rhtml[rhtml.length] = renderer(val, rowIdx, i, datarow, colDef);
+				}
+			}
+			else {
+				// no renderer
+				if (val != null) {
+					rhtml[rhtml.length] = val;
+				}
+			}
+		}
+		/**
+		  그리드 셀 안에 append 할 html 을 생성할 때 발생하는 이벤트입니다. append 할 내용이 있으면 html 에 push 해주면 됩니다.
+		  예) html.push("append 할 내용");
+		  @event {Event} onRenderCell_COLKEY_append
+		  @param {number} rowIdx - 셀의 로우 인덱스
+		  @param {number} colIdx - 셀의 컬럼 인덱스
+		  @param {Object} datarow - 셀의 로우 데이터
+		  @param {Object} colDef - 셀의 컬럼 정의 오브젝트
+		  @param {Array.<string>} html - 셀에 append 할 html 을 넣을 어레이
+		  @author 조준호
+		  @since 1.1.7
+		  @version 1.1.7
+		  */
+		evtmgr.trigger(event+"_append", args2, true);
+		rhtml[rhtml.length] = "</div>";
+		html[html.length] = rhtml.join('');
 	}
-	html.push("</div>");
+	return html;
+}
+prototype._getColCellClass = function(colDef) {
+	var cssClass = this._cellClass + " k_" + colDef['key'];
+	if (colDef['colClass']) {
+		cssClass += " " + colDef['colClass'];
+	}
+	/**
+	  그리드 컬럼 공통 css 클래스를 생성할 때 발생하는 이벤트입니다. 특정 컬럼 셀에 공통적인 css 클래스를 추가하려면 css 클래스 명을 리턴하면 됩니다.
+	  예) return "이_컬럼에만_주어질_css_클래스_명";
+	  @event {Event} onGetColCellClass
+	  @param {Object} colDef - 컬럼 정의 오브젝트
+	  @returns {string} 컬럼 셀들에 공통적으로 추가할 css 클래스 명
+	  @author 조준호
+	  @since 1.1.7
+	  @version 1.1.7
+	  */
+	var css = this._evtmgr.trigger("onGetColCellClass", [colDef]);
+	if (css) {
+		cssClass += " " + css.join(' ');
+	}
+	return cssClass;
+};
+prototype._getColCellClasses = function(colDefs) {
+	colDefs = colDefs || this._colmgr.get();
+	var cssClasses = [],
+		i = 0,
+		len = colDefs.length;
+	for (; i < len; i++) {
+		cssClasses.push(this._getColCellClass(colDefs[i]));
+	}
+	return cssClasses;
+};
+prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, renderers, cellInputs) {
+	var i = 0,
+		collen = colDefs.length,
+		colDef,
+		args = [rowIdx, null, datarow, null],
+		evtmgr = this._evtmgr,
+		cellclass,
+		renderer;
+	for (; i < collen; i++) {
+		colDef = colDefs[i];
+		args[1] = i;
+		args[3] = colDef;
+		/**
+		  그리드 셀의 css 클래스를 생성할 때 발생하는 이벤트입니다. 특정 셀에 css 클래스를 추가하려면 css 클래스 명을 리턴하면 됩니다.
+		  예) return "이_셀에만_주어질_css_클래스_명";
+		  @event {Event} onGetCellClass
+		  @param {number} rowIdx - 셀의 로우 인덱스
+		  @param {number} colIdx - 셀의 컬럼 인덱스
+		  @param {Object} datarow - 셀의 로우 데이터
+		  @param {Object} colDef - 셀의 컬럼 정의 오브젝트
+		  @returns {string} 셀에 추가할 css 클래스 명
+		  @author 조준호
+		  @since 1.1.7
+		  @version 1.1.7
+		  */
+		cellclass = evtmgr.trigger("onGetCellClass", args);
+		if (cellclass) {
+			html[html.length] = colCommon[i] + cellclass.join(" ") + "'>";
+		}
+		else {
+			html[html.length] = colCommon[i] + "'>";
+		}
+		if (renderer = renderers[i]) {
+			if (cellInputs[i]) {
+				this._renderCell(html, rowIdx, i, datarow, colDef, renderer, true);
+			}
+			else {
+				this._renderCell(html, rowIdx, i, datarow, colDef, renderer);
+			}
+		}
+		else {
+			this._renderCell(html, rowIdx, i, datarow, colDef);
+		}
+		html[html.length] = "</div>";
+	}
+	html[html.length] = "</div>";
 	return html;
 };
-prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef) {
+prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef/*, renderer, cellInput */) {
+	var key = colDef['key'],
+		val = datarow[key],
+		args = [rowIdx, colIdx, datarow, colDef, html],
+		evtmgr = this._evtmgr,
+		event = "onRenderCell_"+key;
 	/**
 	  그리드 셀 안에 prepend 할 html 을 생성할 때 발생하는 이벤트입니다. prepend 할 내용이 있으면 html 에 push 해주면 됩니다.
 	  예) html.push("prepend 할 내용");
@@ -1496,14 +1726,24 @@ prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this.grid['event'].trigger("onRenderCell_" + colDef['key'] + "_prepend", [rowIdx, colIdx, datarow, colDef, html]);
-	var val = datarow[colDef['key']];
-	if (typeof val !== "string" || val.substring(0, 3) !== "J@H") {
-		if (colDef['rendererInput']) {
-			html.push(colDef['renderer'](JGM.create("Cell", {'grid':this.grid, 'row':rowIdx, 'col':colIdx, 'datarow':datarow, 'colDef':colDef})));
+	evtmgr.trigger(event+"_prepend", args, true);
+	if (typeof val != "string" || val.substring(0, 3) !== "J@H") {
+		if (arguments.length > 5) {
+			// has renderer
+			if (arguments[6]) {
+				// renderer with cell input
+				html[html.length] = arguments[5](new Cell({'grid':this.grid, 'row':rowIdx, 'col':colIdx, 'datarow':datarow, 'colDef':colDef}));
+			}
+			else {
+				// renderer with serialized inputs
+				html[html.length] = arguments[5](val, rowIdx, colIdx, datarow, colDef);
+			}
 		}
 		else {
-			html.push(colDef['renderer'](val, rowIdx, colIdx, datarow, colDef, this));
+			// no renderer
+			if (val != null) {
+				html[html.length] = val;
+			}
 		}
 	}
 	/**
@@ -1519,8 +1759,7 @@ prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this.grid['event'].trigger("onRenderCell_" + colDef['key'] + "_append", [rowIdx, colIdx, datarow, colDef, html]);
-	return html;
+	evtmgr.trigger(event+"_append", args, true);
 };
 /**
   셀 노드를 다시 렌더링 합니다.
@@ -1566,7 +1805,8 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this.grid['event'].trigger("keydownCanvas_" + e.which + " keydownCanvas", [e]);
+	this._evtmgr.trigger("keydownCanvas_"+e.which, [e], true);
+	this._evtmgr.trigger("keydownCanvas", [e], true);
 };
 prototype._keyup = function(e) {
 	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
@@ -1592,7 +1832,8 @@ prototype._keyup = function(e) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this.grid['event'].trigger("keyupCanvas_" + e.which + " keyupCanvas", [e]);
+	this._evtmgr.trigger("keyupCanvas_"+e.which, [e], true);
+	this._evtmgr.trigger("keyupCanvas", [e], true);
 };
 prototype._keypress = function(e) {
 	if (!Util.contains(this._mask[0], document.activeElement, this._ctnr[0])) {
@@ -1618,7 +1859,8 @@ prototype._keypress = function(e) {
 	  @since 1.1.7
 	  @version 1.1.7
 	  */
-	this.grid['event'].trigger("keypressCanvas_" + e.which + " keypressCanvas", [e]);
+	this._evtmgr.trigger("keypressCanvas_"+e.which, [e], true);
+	this._evtmgr.trigger("keypressCanvas", [e], true);
 };
 prototype._mousein = function(e) {
 	/**
@@ -1662,10 +1904,10 @@ prototype._mousein = function(e) {
 	  @version 1.1.7
 	  */
 	if (this._drag) {
-		this._triggerMouseEvent(e, {'event':"draginCanvas mouseinCanvas"}, Grid.V_MOUSEIN);
+		this._triggerMouseEvent(e, "draginCanvas,mouseinCanvas", Grid.V_MOUSEIN);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseinCanvas"}, Grid.V_MOUSEIN);
+		this._triggerMouseEvent(e, "mouseinCanvas", Grid.V_MOUSEIN);
 	}
 };
 prototype._mouseout = function(e) {
@@ -1710,10 +1952,10 @@ prototype._mouseout = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		this._triggerMouseEvent(e, {'event':"dragoutCanvas mouseoutCanvas"}, Grid.V_MOUSEOUT);
+		this._triggerMouseEvent(e, "dragoutCanvas,mouseoutCanvas", Grid.V_MOUSEOUT);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseoutCanvas"}, Grid.V_MOUSEOUT);
+		this._triggerMouseEvent(e, "mouseoutCanvas", Grid.V_MOUSEOUT);
 	}
 };
 prototype._mouseenter = function(e) {
@@ -1758,10 +2000,10 @@ prototype._mouseenter = function(e) {
 	  @version 1.1.7
 	  */
 	if (this._drag) {
-		this._triggerMouseEvent(e, {'event':"dragenterCanvas mouseenterCanvas"}, Grid.V_MOUSEENTER);
+		this._triggerMouseEvent(e, "dragenterCanvas,mouseenterCanvas", Grid.V_MOUSEENTER);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseenterCanvas"}, Grid.V_MOUSEENTER);
+		this._triggerMouseEvent(e, "mouseenterCanvas", Grid.V_MOUSEENTER);
 	}
 };
 prototype._mouseleave = function(e) {
@@ -1806,10 +2048,10 @@ prototype._mouseleave = function(e) {
 	  @version 1.1.7
 	  */
 	if (this._drag) {
-		this._triggerMouseEvent(e, {'event':"dragleaveCanvas mouseleaveCanvas"}, Grid.V_MOUSELEAVE);
+		this._triggerMouseEvent(e, "dragleaveCanvas,mouseleaveCanvas", Grid.V_MOUSELEAVE);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseleaveCanvas"}, Grid.V_MOUSELEAVE);
+		this._triggerMouseEvent(e, "mouseleaveCanvas", Grid.V_MOUSELEAVE);
 	}
 };
 prototype._mousemove = function(e) {
@@ -1854,10 +2096,10 @@ prototype._mousemove = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		this._triggerMouseEvent(e, {'event':"dragmoveCanvas mousemoveCanvas"}, Grid.V_MOUSEMOVE);
+		this._triggerMouseEvent(e, "dragmoveCanvas,mousemoveCanvas", Grid.V_MOUSEMOVE);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mousemoveCanvas"}, Grid.V_MOUSEMOVE);
+		this._triggerMouseEvent(e, "mousemoveCanvas", Grid.V_MOUSEMOVE);
 	}
 };
 prototype._mouseover = function(e) {
@@ -1902,10 +2144,10 @@ prototype._mouseover = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		this._triggerMouseEvent(e, {'event':"dragoverCanvas mouseoverCanvas"}, Grid.V_MOUSEOVER);
+		this._triggerMouseEvent(e, "dragoverCanvas,mouseoverCanvas", Grid.V_MOUSEOVER);
 	}
 	else {
-		this._triggerMouseEvent(e, {'event':"mouseoverCanvas"}, Grid.V_MOUSEOVER);
+		this._triggerMouseEvent(e, "mouseoverCanvas", Grid.V_MOUSEOVER);
 	}
 };
 prototype._mousedown = function(e) {
@@ -1929,7 +2171,7 @@ prototype._mousedown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._triggerMouseEvent(e, {'event':"mousedownCanvas"}, Grid.V_MOUSEDOWN)) {
+	if (this._triggerMouseEvent(e, "mousedownCanvas", Grid.V_MOUSEDOWN)) {
 		this._drag = true;
 		//this.focus(e);
 	}
@@ -1956,7 +2198,7 @@ prototype._mouseup = function(e) {
 	  @version 1.0.0
 	  */
 	this._drag = false;
-	if (this._triggerMouseEvent(e, {'event':"mouseupCanvas"}, Grid.V_MOUSEUP)) {
+	if (this._triggerMouseEvent(e, "mouseupCanvas", Grid.V_MOUSEUP)) {
 		//this.focus(e);
 	}
 };
@@ -1981,7 +2223,7 @@ prototype._click = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	if (this._triggerMouseEvent(e, {'event':"clickCanvas"}, Grid.V_CLICK)) {
+	if (this._triggerMouseEvent(e, "clickCanvas", Grid.V_CLICK)) {
 		this.focus(e);
 	}
 };
@@ -2006,76 +2248,85 @@ prototype._dblclick = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	this._triggerMouseEvent(e, {'event':"dblclickCanvas"}, Grid.V_DBLCLICK);
+	this._triggerMouseEvent(e, "dblclickCanvas", Grid.V_DBLCLICK);
 };
-prototype._triggerMouseEvent = function(e, args) {
-	var node = this._getClosestCell(e.target),
-		arr,
-		earr,
-		i,
-		len;
-	if (node === undefined) {
-		return false;
+prototype._triggerMouseEvent = function(e, events) {
+	var target = e.target;
+	if (target) {
+		var tag = target.tagName;
+		if (!inputTags[tag]) {
+			var node = this._getClosestCell(e.target);
+			if (node) {
+				var cell = new Cell({'grid':this.grid, 'node':node}),
+					key = cell.getKey(),
+					args = [e, cell],
+					evtmgr = this._evtmgr;
+				if (events.indexOf(',') > -1) {
+					var arr = events.split(','),
+						i = 0,
+						  len = arr.length,
+						  evt;
+					for (; i < len; i++) {
+						evt = arr[i];
+						evtmgr.trigger(evt+'_'+key, args, true);
+						evtmgr.trigger(evt, args, true);
+					}
+				}
+				else {
+					evtmgr.trigger(events+'_'+key, args, true);
+					evtmgr.trigger(events, args, true);
+				}
+				return true;
+			}
+		}
 	}
-	args['cell'] = JGM.create("Cell", {'grid':this.grid, 'node':node});
-	arr = Util.split(args['event']);
-	len = arr.length;
-	earr = [];
-	for (i = 0; i < len; i++) {
-		earr.push(arr[i] + "_" + args['cell'].getKey());
-		earr.push(arr[i]);
-	}
-	this.grid['event'].trigger(earr.join(" "), [e, args['cell']]);
-	return true;
+	return false;
 };
 prototype._scroll = function() {
 	var scrollTop = this.getScrollTop(),
 		scrollVDist = scrollTop - this._lastScrollTop,
 		scrollLeft = this.getScrollLeft(),
 		scrollHDist = scrollLeft - this._lastScrollLeft;
-	if (scrollVDist === 0 && scrollHDist === 0) {
-		return;
-	}
-	/**
-	  그리드 뷰가 스크롤 되었을 때 발생하는 이벤트 입니다.
-	  @event {Event} onScrollViewport
-	  @author 조준호
-	  @since 1.1.7
-	  @version 1.1.7
-	  */
-	this.grid['event'].trigger("onScrollViewport");
-	if (scrollHDist) {
-		this._lastScrollLeft = scrollLeft;
+	if (scrollVDist !== 0 || scrollHDist !== 0) {
+		var evtmgr = this._evtmgr,
+			numDiff = Math.abs(scrollVDist / this._getRowOuterHeight());
 		/**
-		  그리드 뷰가 가로 스크롤 되었을 때 발생하는 이벤트 입니다.
-		  @event {Event} onScrollViewportH
+		  그리드 뷰가 스크롤 되었을 때 발생하는 이벤트 입니다.
+		  @event {Event} onScrollViewport
 		  @author 조준호
 		  @since 1.1.7
 		  @version 1.1.7
 		  */
-		this.grid['event'].trigger("onScrollViewportH", [scrollLeft]);
+		evtmgr.trigger("onScrollViewport", false, true);
+		if (scrollHDist) {
+			this._lastScrollLeft = scrollLeft;
+			/**
+			  그리드 뷰가 가로 스크롤 되었을 때 발생하는 이벤트 입니다.
+			  @event {Event} onScrollViewportH
+			  @author 조준호
+			  @since 1.1.7
+			  @version 1.1.7
+			  */
+			evtmgr.trigger("onScrollViewportH", [scrollLeft], true);
+		}
+		if (numDiff >= this._options['appendThreshold']) {
+			this._lastScrollTop = scrollTop;
+			//this._render();
+			this._removeAndRenderRows();
+			/*
+			   this._renderShift();
+			   */
+			/**
+			  그리드 뷰가 세로 스크롤 되었을 때 발생하는 이벤트 입니다.
+			  @event {Event} onScrollViewportV
+			  @author 조준호
+			  @since 1.1.7
+			  @version 1.1.7
+			  */
+			evtmgr.trigger("onScrollViewportV", false, true);
+		}
 	}
-	var numDiff = Math.abs(scrollVDist / this._getRowOuterHeight());
-	if (numDiff < this._options['appendThreshold']) {
-		return;
-	}
-	this._lastScrollTop = scrollTop;
-	this._render();
-	/*
-	   }
-	   else {
-	   this._renderShift();
-	   }
-	   */
-	/**
-	  그리드 뷰가 세로 스크롤 되었을 때 발생하는 이벤트 입니다.
-	  @event {Event} onScrollViewportV
-	  @author 조준호
-	  @since 1.1.7
-	  @version 1.1.7
-	  */
-	this.grid['event'].trigger("onScrollViewportV");
-	};
+};
 prototype.focus = function(e) {
 	/**
 	  그리드 캔바스의 DOM Elemenet 가 포커스 되기 전에 발생하는 이벤트 입니다. false 를 리턴하면 캔바스의 포커스가 취소됩니다.
@@ -2086,13 +2337,13 @@ prototype.focus = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (Util.isNotNull(e) && this.grid['event'].triggerInvalid("onBeforeFocusCanvas", [e])) {
+	if (e && this._evtmgr.triggerInvalid("onBeforeFocusCanvas", [e])) {
 		return;
 	}
 	//var scr = Util.getBodyScroll();
 	var maskEl = this._mask[0];
 	if (document.activeElement !== maskEl) {
-		if (Util.isFunction(maskEl.setActive)) {
+		if (maskEl.setActive) {
 			try {
 				maskEl.setActive();
 			}
@@ -2118,7 +2369,7 @@ prototype.focus = function(e) {
   @version 1.3.0
   */
 prototype.isRenderedById = function(id) {
-	if (Util.isNotNull(id)) {
+	if (id != null) {
 		return this._renderedRows.hasOwnProperty(id);
 	}
 	return false;
@@ -2134,7 +2385,7 @@ prototype.isRenderedById = function(id) {
   @version 1.3.0
   */
 prototype.isRendered = function(datarow) {
-	return this.isRenderedById(this.grid['dataMgr'].getId(datarow));
+	return this.isRenderedById(this._datamgr.getId(datarow));
 };
 /**
   주어진 로우 인덱스의 DOMElement 가
@@ -2147,7 +2398,7 @@ prototype.isRendered = function(datarow) {
   @version 1.3.0
   */
 prototype.isRenderedByIdx = function(rowIdx) {
-	return this.isRenderedById(this.grid['dataMgr'].getIdByIdx(rowIdx));
+	return this.isRenderedById(this._datamgr.getIdByIdx(rowIdx));
 };
 //getRow
 //tested
@@ -2157,10 +2408,10 @@ prototype.getRowById = function(id) {
 	}
 };
 prototype.getRow = function(datarow) {
-	return this.getRowById(this.grid['dataMgr'].getId(datarow));
+	return this.getRowById(this._datamgr.getId(datarow));
 };
 prototype.getRowByIdx = function(i) {
-	return this.getRowById(this.grid['dataMgr'].getIdByIdx(i));
+	return this.getRowById(this._datamgr.getIdByIdx(i));
 };
 //getRenderedRow
 //tested
@@ -2170,54 +2421,62 @@ prototype.getRenderedRowById = function(id) {
 	}
 };
 prototype.getRenderedRow = function(datarow) {
-	return this.getRenderedRowById(this.grid['dataMgr'].getId(datarow));
+	return this.getRenderedRowById(this._datamgr.getId(datarow));
 };
 prototype.getRenderedRowByIdx = function(i) {
-	return this.getRenderedRowById(this.grid['dataMgr'].getIdByIdx(i));
+	return this.getRenderedRowById(this._datamgr.getIdByIdx(i));
 };
 prototype.getRenderedRows = function() {
 	return Util.toArray(this._renderedRows);
-	return Array.prototype.slice.call(this._canvas[0].childNodes);
+	return Array.prototype.slice.call(this._canvasEl.childNodes);
 };
 prototype.getCell = function(rowIdx, colIdx) {
-	var rowNode = this.getRowByIdx(rowIdx);
-	if (Util.isNotNull(rowNode, colIdx)) {
-		return rowNode.childNodes[colIdx];
+	if (colIdx != null) {
+		var rowNode = this.getRowByIdx(rowIdx);
+		if (rowNode) {
+			return rowNode.childNodes[colIdx];
+		}
 	}
 };
 prototype.getCellByIdAndKey = function(id, key) {
-	var rowNode = this.getRowById(id),
-		colIdx = this.grid['colDefMgr'].getIdxByKey(key);
-	if (Util.isNotNullAnd(rowNode, colIdx)) {
-		return rowNode.childNodes[colIdx];
+	var colIdx = this._colmgr.getIdxByKey(key);
+	if (colIdx != null) {
+		var rowNode = this.getRowById(id);
+		if (rowNode) {
+			return rowNode.childNodes[colIdx];
+		}
 	}
 };
 prototype.getRenderedCell = function(rowIdx, colIdx) {
-	var rowNode = this.getRenderedRowByIdx(rowIdx);
-	if (Util.isNotNull(rowNode)) {
-		return rowNode.childNodes[colIdx];
+	if (colIdx != null) {
+		var rowNode = this.getRenderedRowByIdx(rowIdx);
+		if (rowNode) {
+			return rowNode.childNodes[colIdx];
+		}
 	}
 };
 prototype.getRenderedCellByIdAndKey = function(id, key) {
-	var rowNode = this.getRenderedRowById(id),
-		colIdx = this.grid['colDefMgr'].getIdxByKey(key);
-	if (Util.isNotNullAnd(rowNode, colIdx)) {
-		return rowNode.childNodes[colIdx];
+	var colIdx = this._colmgr.getIdxByKey(key);
+	if (colIdx != null) {
+		var rowNode = this.getRenderedRowById(id);
+		if (rowNode) {
+			return rowNode.childNodes[colIdx];
+		}
 	}
 };
 prototype._getClosestCell = function(obj) {
-	return Util.closestWithTag(obj, "DIV", this._options['classCell'], this._canvas[0]);
+	return Util.closestWithTag(obj, "DIV", this._cellClass, this._canvasEl);
 };
 prototype._getClosestRow = function(obj) {
-	return Util.closestWithTag(obj, "DIV", this._options['classRow'], this._canvas[0]);
+	return Util.closestWithTag(obj, "DIV", this._rowClass, this._canvasEl);
 };
 prototype._getClosestRowIdx = function(obj) {
-	return this.grid['dataMgr'].getIdxByNode(this._getClosestRow(obj));
+	return this._datamgr.getIdxByNode(this._getClosestRow(obj));
 };
 prototype._canvasFind = function(selector) {
 	return this._canvas.find(selector);
 };
 ViewportManager._renderer = function(value, rowIdx, colIdx, datarow, colDef, viewMgr) {
-	return Util.ifNull(value, "");
+	return value == null ? '' : value;
 };
 }());

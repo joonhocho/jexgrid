@@ -15,7 +15,7 @@ goog.provide('jx.grid.BaseModule');
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
 
-(function() {
+(function() {'use strict';
 
  var EventDispatcher = goog.getObjectByName('jx.events.EventDispatcher');
 	goog.exportSymbol('jx.grid.BaseModule', BaseModule);

@@ -12,7 +12,7 @@ goog.provide('Util$');
  * COPYRIGHT
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
-(function () {
+(function () {'use strict';
 
  goog.exportSymbol('jx.util$', Util$);
  goog.exportSymbol('Util$', Util$);

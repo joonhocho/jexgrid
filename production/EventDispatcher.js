@@ -11,7 +11,7 @@ goog.provide('jx.events.EventDispatcher');
 JGM
 @scope JGM
 */
-(function() {
+(function() {'use strict';
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	Disposable = goog.getObjectByName('jx.lang.Disposable');

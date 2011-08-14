@@ -24,7 +24,7 @@ goog.provide('JGM');
   @since 1.0.0
   @version 1.2.0
   */
-(function() {
+(function() {'use strict';
 	var Util = goog.getObjectByName('jx.util'),
 Util$ = goog.getObjectByName('jx.util$');
 goog.exportSymbol('JGM', JGM);
@@ -78,7 +78,7 @@ JGM._map = {
   @version 1.0.0
   */
 JGM.create = function(name, args) {
-	if (Util.isNull(args)) {
+	if (args == null) {
 		args = {};
 	}
 	if (!this.hasOwnProperty(name)) {
@@ -315,7 +315,6 @@ JGM._extend = function(defaults, options) {
 JGM.m = {length:0};
 JGM._CONST = {
 	_cssUnselectable: "-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-o-user-select:none;user-select:none;",
-	_cssUnselectable: "-webkit-user-drag:none;-moz-user-drag:none;user-drag:none;",
 	_checkboxWidth: undefined,
 	_checkboxHeight: undefined,
 	_radioWidth: undefined,

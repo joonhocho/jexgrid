@@ -17,7 +17,7 @@ goog.provide('jx.lang.Disposable');
   @scope JGM
   */
 
-(function() {
+(function() {'use strict';
 
  var util = goog.getObjectByName('jx.util');
  goog.exportSymbol('jx.lang.Disposable', Disposable);

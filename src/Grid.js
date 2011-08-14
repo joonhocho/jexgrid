@@ -43,6 +43,7 @@ goog.provide('jx.grid.Grid');
 		Util = goog.getObjectByName('jx.util'),
 		echo = goog.getObjectByName('echo'),
 		BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+		TimeWatch = goog.getObjectByName('TimeWatch'),
 		VERBOSE = 2,
 		V_KEYDOWN = 3,
 		V_KEYPRESS = 3,
@@ -288,6 +289,9 @@ prototype._defaultOptions = function() {
 				'bind': "event.bind",
 				'unregister': "event.unregister",
 				'unbind': "event.unregister",
+				'commit': "editMgr.commit",
+				'cancelEdit': "editMgr.cancel",
+				'beginEdit': "editMgr.begin",
 				'collen': "colDefMgr.length"
 			},
 
@@ -325,6 +329,9 @@ prototype._defaultOptions = function() {
 prototype._init = function(args) {
 	var ctnr = this._ctnr = args['container'],
 		opt = this._options,
+		shader,
+		color = 'black',
+		alpha = 0.3,
 		em;
 
 	/**
@@ -434,6 +441,7 @@ prototype._init = function(args) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */	
+	em.trigger("onBeforeRenderModules", false, true);
 
 	/**
 	  Grid 모듈 초기화 중 서브 모듈들을 랜더링하기 위해서 onRenderModules
@@ -445,6 +453,7 @@ prototype._init = function(args) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
+	em.trigger("onRenderModules", false, true);
 
 	/**
 	  Grid 모듈 초기화 중 서브 모듈들을 랜더링한 후에 onAfterRenderModules
@@ -456,9 +465,11 @@ prototype._init = function(args) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("onBeforeRenderModules onRenderModules onAfterRenderModules");
+	em.trigger("onAfterRenderModules", false, true);
 
 	this['msg'] =  $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(ctnr).hide();
+
+	this._busyShader = $('<div style="position:absolute;background:' + color + ';opacity:' + alpha + ';filter:alpha(opacity=' + (alpha * 100) + ')"></div>').appendTo(ctnr).hide();
 
 	ctnr = ctnr[0];
 	this._lastW = ctnr.clientWidth;
@@ -525,7 +536,7 @@ prototype.destroy = function() {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this['event'].trigger("onDestroy");
+		this['event'].trigger("onDestroy", false, true);
 
 		this.log('destroying grid vars...', V_INIT);//IF_DEBUG
 		JGM._destroy(this, {
@@ -629,6 +640,8 @@ prototype._createCss = function() {
 	  @since 1.0.0
 	  @version 1.2.2
 	  */
+	var subcss = em.trigger("onCreateCss");
+	subcss = subcss ? subcss.join('') : '';
 	var style = Util.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {
 		'selector': "#" + this.mid,
 		'font': opt['font'],
@@ -636,7 +649,7 @@ prototype._createCss = function() {
 		"border:" + opt['border'] + ";" :
 		"border-top:" + opt['border'] + ";border-bottom:" + opt['border'] + ";",
 		'style': opt['style'],
-		'submodule': event.css.join('') + em.trigger("onCreateCss").join("")
+		'submodule': event.css.join('') + subcss
 	});
 	this._style = Util.createStyle(style);
 
@@ -654,18 +667,26 @@ prototype._createCss = function() {
 	  @version 1.2.2
 	  */
 
-	this._dynStyle = Util.createStyle(event.css.join('') + ';' + em.trigger("onCreateDynamicCss").join(""));
+	subcss = em.trigger("onCreateDynamicCss");
+	subcss = subcss ? subcss.join('') : '';
+	this._dynStyle = Util.createStyle(event.css.join('') + ';' + subcss);
 };
 
 prototype._recreateDynamicCss = function() {
 	this.log('rewriting dynamic css...', V_RESIZE);//IF_DEBUG
-	Util.setStyle(this._dynStyle, this['event'].trigger("onCreateDynamicCss").join(""));
+	var subcss = this['event'].trigger("onCreateDynamicCss");
+	subcss = subcss ? subcss.join('') : '';
+	if (subcss) {
+		Util.setStyle(this._dynStyle, subcss);
+	}
 };
 
 prototype._keydown = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e],
+		keycode = e.which;
 
-	this.log('UI event:keydown detected. event=' + e.type + ', keycode=' + e.which, V_KEYDOWN);//IF_DEBUG
+	this.log('UI event:keydown detected. event=' + e.type + ', keycode=' + keycode, V_KEYDOWN);//IF_DEBUG
 
 	/**
 	  그리드에 keydown 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -679,7 +700,7 @@ prototype._keydown = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeKeydown", [e])) {
+	if (em.triggerInvalid("onBeforeKeydown", args)) {
 		this.log('UI event:keydown prevented.', V_KEYDOWN);//IF_DEBUG
 		return;
 	}
@@ -696,6 +717,7 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.1.7
 	  */	
+	em.trigger("keydown_"+keycode, args, true);
 
 	/**
 	  Grid 컨테이너에 바인드 된 jQuery keydown 이벤트가 발생할 경우 트리거되는
@@ -707,12 +729,14 @@ prototype._keydown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("keydown_" + e.which + " keydown", [e]);
+	em.trigger("keydown", args, true);
 };
 
 prototype._keyup = function(e) {
-	var em = this['event'];
-	this.log('UI event:keyup detected. event=' + e.type + ', keycode=' + e.which, V_KEYUP);//IF_DEBUG
+	var em = this['event'],
+		args = [e],
+		keycode = e.which;
+	this.log('UI event:keyup detected. event=' + e.type + ', keycode=' + keycode, V_KEYUP);//IF_DEBUG
 
 	/**
 	  그리드에 keyup 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -726,7 +750,7 @@ prototype._keyup = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeKeyup", [e])) {
+	if (em.triggerInvalid("onBeforeKeyup", args)) {
 		this.log('UI event:keyup prevented.', V_KEYUP);//IF_DEBUG
 		return;
 	}
@@ -743,6 +767,7 @@ prototype._keyup = function(e) {
 	  @since 1.0.0
 	  @version 1.1.7
 	  */
+	em.trigger("keyup_"+keycode, args, true);
 
 	/**
 	  Grid 컨테이너에 바인드 된 jQuery keyup 이벤트가 발생할 경우 트리거되는
@@ -754,12 +779,14 @@ prototype._keyup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("keyup_" + e.which + " keyup", [e]);
+	em.trigger("keyup", args, true);
 };
 
 prototype._keypress = function(e) {
-	var em = this['event'];
-	this.log('UI event:keypress detected. event=' + e.type + ', keycode=' + e.which, V_KEYPRESS);//IF_DEBUG
+	var em = this['event'],
+		args = [e],
+		keycode = e.which;
+	this.log('UI event:keypress detected. event=' + e.type + ', keycode=' + keycode, V_KEYPRESS);//IF_DEBUG
 
 	/**
 	  그리드에 keypress 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -773,7 +800,7 @@ prototype._keypress = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeKeypress", [e])) {
+	if (em.triggerInvalid("onBeforeKeypress", args)) {
 		this.log('UI event:keypress prevented.', V_KEYPRESS);//IF_DEBUG
 		return;
 	}
@@ -790,6 +817,7 @@ prototype._keypress = function(e) {
 	  @since 1.0.0
 	  @version 1.1.7
 	  */
+	em.trigger("keypress_"+keycode, args, true);
 
 	/**
 	  Grid 컨테이너에 바인드 된 jQuery keypress 이벤트가 발생할 경우 트리거되는
@@ -801,11 +829,12 @@ prototype._keypress = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("keypress_" + e.which + " keypress", [e]);
+	em.trigger("keypress", args, true);
 };
 
 prototype._mousein = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:mousein detected. event=' + e.type, V_MOUSEIN);//IF_DEBUG
 
 	/**
@@ -820,7 +849,7 @@ prototype._mousein = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMousein", [e])) {
+	if (em.triggerInvalid("onBeforeMousein", args)) {
 		this.log('UI event:mousein prevented.', V_MOUSEIN);//IF_DEBUG
 		return;
 	}
@@ -847,15 +876,14 @@ prototype._mousein = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragin mousein", [e]);
+		em.trigger("dragin", args, true);
 	}
-	else {
-		em.trigger("mousein", [e]);
-	}
+	em.trigger("mousein", args, true);
 };
 
 prototype._mouseout = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:mouseout detected. event=' + e.type, V_MOUSEOUT);//IF_DEBUG
 		
 	/**
@@ -870,7 +898,7 @@ prototype._mouseout = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseout", [e])) {
+	if (em.triggerInvalid("onBeforeMouseout", args)) {
 		this.log('UI event:mouseout prevented.', V_MOUSEOUT);//IF_DEBUG
 		return;
 	}
@@ -897,15 +925,14 @@ prototype._mouseout = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragout mouseout", [e]);
+		em.trigger("dragout", args, true);
 	}
-	else {
-		em.trigger("mouseout", [e]);
-	}
+	em.trigger("mouseout", args, true);
 };
 
 prototype._mouseenter = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:mouseenter detected. event=' + e.type, V_MOUSEENTER);//IF_DEBUG
 	/**
 	  그리드에 mouseenter 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -919,7 +946,7 @@ prototype._mouseenter = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseenter", [e])) {
+	if (em.triggerInvalid("onBeforeMouseenter", args)) {
 		this.log('UI event:mouseenter prevented.', V_MOUSEENTER);//IF_DEBUG
 		return;
 	}
@@ -946,15 +973,14 @@ prototype._mouseenter = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragenter mouseenter", [e]);
+		em.trigger("dragenter", args, true);
 	}
-	else {
-		em.trigger("mouseenter", [e]);
-	}
+	em.trigger("mouseenter", args, true);
 };
 
 prototype._mouseleave = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:mouseleave detected. event=' + e.type, V_MOUSELEAVE);//IF_DEBUG
 	/**
 	  그리드에 mouseleave 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -968,7 +994,7 @@ prototype._mouseleave = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseleave", [e])) {
+	if (em.triggerInvalid("onBeforeMouseleave", args)) {
 		this.log('UI event:mouseleave prevented.', V_MOUSELEAVE);//IF_DEBUG
 		return;
 	}
@@ -995,15 +1021,14 @@ prototype._mouseleave = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragleave mouseleave", [e]);
+		em.trigger("dragleave", args, true);
 	}
-	else {
-		em.trigger("mouseleave", [e]);
-	}
+	em.trigger("mouseleave", args, true);
 };
 
 prototype._mousemove = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:mousemove detected. event=' + e.type, V_MOUSEMOVE);//IF_DEBUG
 	/**
 	  그리드에 mousemove 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -1017,7 +1042,7 @@ prototype._mousemove = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMousemove", [e])) {
+	if (em.triggerInvalid("onBeforeMousemove", args)) {
 		this.log('UI event:mousemove prevented.', V_MOUSEMOVE);//IF_DEBUG
 		return;
 	}
@@ -1045,15 +1070,14 @@ prototype._mousemove = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragmove mousemove", [e]);
+		em.trigger("dragmove", args, true);
 	}
-	else {
-		em.trigger("mousemove", [e]);
-	}
+	em.trigger("mousemove", args, true);
 };
 
 prototype._mouseover = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:mouseover detected. event=' + e.type, V_MOUSEOVER);//IF_DEBUG
 	/**
 	  그리드에 mouseover 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -1067,7 +1091,7 @@ prototype._mouseover = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseover", [e])) {
+	if (em.triggerInvalid("onBeforeMouseover", args)) {
 		this.log('UI event:mouseover prevented.', V_MOUSEOVER);//IF_DEBUG
 		return;
 	}
@@ -1094,15 +1118,14 @@ prototype._mouseover = function(e) {
 	  @version 1.0.0
 	  */
 	if (this._drag) {
-		em.trigger("dragover mouseover", [e]);
+		em.trigger("dragover", args, true);
 	}
-	else {
-		em.trigger("mouseover", [e]);
-	}
+	em.trigger("mouseover", args, true);
 };
 
 prototype._mousedown = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:mousedown detected. event=' + e.type, V_MOUSEDOWN);//IF_DEBUG
 	this._drag = true;
 
@@ -1118,7 +1141,7 @@ prototype._mousedown = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMousedown", [e])) {
+	if (em.triggerInvalid("onBeforeMousedown", args)) {
 		this.log('UI event:mousedown prevented.', V_MOUSEDOWN);//IF_DEBUG
 		return;
 	}
@@ -1133,14 +1156,15 @@ prototype._mousedown = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("mousedown", [e]);
+	em.trigger("mousedown", args, true);
 };
 
 prototype._mouseup = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:mouseup detected. event=' + e.type, V_MOUSEUP);//IF_DEBUG
 	this._drag = false;	
-	em.trigger("unsetDrag");
+	em.trigger("unsetDrag", false, true);
 	if (!this.containsEvent(e)) {
 		return;
 	}
@@ -1157,7 +1181,7 @@ prototype._mouseup = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeMouseup", [e])) {
+	if (em.triggerInvalid("onBeforeMouseup", args)) {
 		this.log('UI event:mouseup prevented.', V_MOUSEUP);//IF_DEBUG
 		return;
 	}
@@ -1173,11 +1197,12 @@ prototype._mouseup = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("mouseup", [e]);
+	em.trigger("mouseup", args, true);
 };
 
 prototype._click = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:click detected. event=' + e.type, V_CLICK);//IF_DEBUG
 	
 	/**
@@ -1192,7 +1217,7 @@ prototype._click = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeClick", [e])) {
+	if (em.triggerInvalid("onBeforeClick", args)) {
 		this.log('UI event:click prevented.', V_CLICK);//IF_DEBUG
 		return;
 	}
@@ -1207,11 +1232,12 @@ prototype._click = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("click", [e]);
+	em.trigger("click", args, true);
 };
 
 prototype._dblclick = function(e) {
-	var em = this['event'];
+	var em = this['event'],
+		args = [e];
 	this.log('UI event:dblclick detected. event=' + e.type, V_DBLCLICK);//IF_DEBUG
 	/**
 	  그리드에 dblclick 이벤트가 발생하여 그에 맞는 작업을 진행하기 전에 발생하는 이벤트입니다.
@@ -1225,7 +1251,7 @@ prototype._dblclick = function(e) {
 	  @since 1.2.1
 	  @version 1.2.1
 	  */
-	if (em.triggerInvalid("onBeforeDblclick", [e])) {
+	if (em.triggerInvalid("onBeforeDblclick", args)) {
 		this.log('UI event:dblclick prevented.', V_DBLCLICK);//IF_DEBUG
 		return;
 	}
@@ -1240,7 +1266,7 @@ prototype._dblclick = function(e) {
 	  @since 1.0.0
 	  @version 1.0.0
 	  */
-	em.trigger("dblclick", [e]);
+	em.trigger("dblclick", args, true);
 };
 
 prototype._resize = function(e) {
@@ -1267,7 +1293,7 @@ prototype._resize = function(e) {
 		  */
 		this.log('event:resizeWidth detected. ' + cw + '->' + width, V_RESIZE);//IF_DEBUG
 
-		em.trigger("resizeWidth", [width, cw]);
+		em.trigger("resizeWidth", [width, cw], true);
 
 		this._lastW = width;
 
@@ -1286,7 +1312,7 @@ prototype._resize = function(e) {
 		  */
 		this.log('event:resizeHeight detected. ' + ch + '->' + height, V_RESIZE);//IF_DEBUG
 
-		em.trigger("resizeHeight", [height, ch]);
+		em.trigger("resizeHeight", [height, ch], true);
 
 		this._lastH = height;
 
@@ -1303,7 +1329,7 @@ prototype._resize = function(e) {
 	  @version 1.1.5
 	  */
 	if (change) {
-		em.trigger("resize", [e]);
+		em.trigger("resize", [e], true);
 	}
 };
 
@@ -1326,7 +1352,7 @@ prototype.width = function(w) {
 		return cw;
 	}
 	if (typeof w != 'number') {
-		w = parseInt(w);
+		w = parseInt(w, 10);
 	}
 	if (w < 1 || w === cw || !isFinite(w)) {
 		return cw;
@@ -1336,10 +1362,10 @@ prototype.width = function(w) {
 
 	ctnr.style.width = w + "px";
 
-	em.trigger("resizeWidth", [w, this._lastW]);
+	em.trigger("resizeWidth", [w, this._lastW], true);
 	this._lastW = w;
 
-	em.trigger("resize");
+	em.trigger("resize", false, true);
 	return w;
 };
 
@@ -1361,7 +1387,7 @@ prototype.height = function(h) {
 		return ch;
 	}
 	if (typeof h != 'number') {
-		h = parseInt(h);
+		h = parseInt(h, 10);
 	}
 	if (h < 1 || h === ch || !isFinite(h)) {
 		return ch;
@@ -1371,20 +1397,69 @@ prototype.height = function(h) {
 
 	ctnr.style.height = h + "px";
 
-	em.trigger("resizeHeight", [h, this._lastH]);
+	em.trigger("resizeHeight", [h, this._lastH], true);
 	this._lastH = h;
 
-	em.trigger("resize");
+	em.trigger("resize", false, true);
 	return h;
 };
 
 prototype.getCellByIdAndKey = function(id, key) {
-	return JGM.create("Cell", {'grid':this, 'datarow':this['dataMgr'].getById(id), 'colDef':this['colDefMgr'].getByKey(key)});
+	if (id == null || key == null) {
+		return null;
+	}
+	var datarow = this['dataMgr'].getById(id);
+	if (!datarow) {
+		return null;
+	}
+	var colDef = this['colDefMgr'].getByKey(key);
+	if (!colDef) {
+		return null;
+	}
+	return JGM.create("Cell", {'grid':this, 'datarow':datarow, 'colDef':colDef});
 };
 
 prototype.getCellByIdx = function(rowIdx, colIdx) {
-	return JGM.create("Cell", {'grid':this, 'row':rowIdx, 'col':colIdx});
+	if (rowIdx == null || colIdx == null) {
+		return null;
+	}
+	var datarow = this['dataMgr'].getByIdx(rowIdx);
+	if (!datarow) {
+		return null;
+	}
+	var colDef = this['colDefMgr'].get(colIdx);
+	if (!colDef) {
+		return null;
+	}
+	return JGM.create("Cell", {'grid':this, 'datarow':datarow, 'colDef':colDef});
 };
+
+prototype.busy = function() {
+	if (this._busyShader && !this._busy) {
+		var ctnr = this._ctnr,
+			offset = ctnr.offset(),
+			top = offset.top,
+			left = offset.left,
+			node = ctnr[0],
+			w = node.clientWidth + 1,
+			h = node.clientHeight + 1,
+			shader = this._busyShader,
+			shaderStyle = shader[0].style;
+		shaderStyle.top = offset.top + 'px';
+		shaderStyle.left = offset.left + 'px';
+		shaderStyle.width = w + 'px';
+		shaderStyle.height = h + 'px';
+		shader.show();
+	}
+	this._busy = true;
+}
+
+prototype.idle = function() {
+	if (this._busyShader && this._busy) {
+		this._busyShader.hide();
+	}
+	this._busy = false;
+}
 
 /**
   @author 조준호
@@ -1403,7 +1478,7 @@ prototype.error = function(code) {
 	e.code = code;
 	this.printError(e.message);
 	this.log('error occurred... code=' + code + ', msg=' + e.message || e.msg);//IF_DEBUG
-	this['event'].trigger("onError", [e]);
+	this['event'].trigger("onError", [e], true);
 	return e;
 };
 
@@ -1470,9 +1545,14 @@ prototype.twstop = function(msg) {
 	this._tw.stop(msg);
 };
 
-prototype.twprint = function(msg) {
-	this.log(this._tw.stack());
+prototype.twreset = function(msg) {
+	this._tw.reset(msg);
 };
+
+prototype.twprint = function() {
+	this.log(this._tw);
+};
+
 //END_IF_DEBUG
 
 prototype.chart = function(chartCont, type, columns, options) {
@@ -1578,7 +1658,7 @@ prototype.chart = function(chartCont, type, columns, options) {
 		var chart = grid._charts[chartCont] = new google.visualization[cls](document.getElementById(chartCont));
 		chart.draw(data, options);
 		grid['event'].bind('onAfterRefresh', function() {
-			this.log('redrawing chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_RESIZE);//IF_DEBUG
+			grid.log('redrawing chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_RESIZE);//IF_DEBUG
 			data.removeRows(0, data.getNumberOfRows());
 			data.addRows(dataMgr.exportToArray(columns));
 			chart.draw(data, options);

@@ -20,7 +20,7 @@ goog.provide('jx.grid.EventManager');
   @scope JGM
   */
 
-(function() {
+(function() {'use strict';
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
@@ -298,72 +298,80 @@ prototype.unregister = function(event, fn) {
   @since 1.0.0
   @version 1.1.7
   */
-prototype.trigger = function(events, args, filter) {
-	var	hans,
-		hlen,
-		map = this._map,
-		rarr = [],
-		arr = Util.split(events),
-		len = arr.length,
-		noarg = Util.isEmptyArray(args),
-		filon = Util.isFunction(filter),
-		e,
-		i,
-		j = 0;
-	for (; j < len; j++) {
-		e = arr[j];
-		this.grid.log('firing event=' + e, 3);//IF_DEBUG
-		if (!map.hasOwnProperty(e)) {
-			this.grid.log('no handlers registered for event=' + e, 4);//IF_DEBUG
-			continue;
-		}
+prototype.trigger = function(e, args, noRes) {
+	// firing single event
+	this.grid.log('firing event=' + e, 3);//IF_DEBUG
+	var map = this._map;
+	if (map.hasOwnProperty(e)) {
+		var hans = map[e],
+			hlen = hans.length;
+		if (hlen) {
+			this.grid.log(hlen + ' handlers registered for event=' + e, 4);//IF_DEBUG
 
-		hans = map[e];		
-		hlen = hans.length;
-		if (hlen === 0) {
-			this.grid.log('no handlers registered for event=' + e, 4);//IF_DEBUG
-			continue;
-		}
+			var i = 0,
+				handler;
 
-		this.grid.log(hlen + ' handlers registered for event=' + e, 4);//IF_DEBUG
-		i = 0;
-		if (filon) {
-			var res;
-			if (noarg) {
-				for (; i < hlen; i++) {
-					res = hans[i].fn.call(hans[i].target);
-					if (filter(res)) {
-						rarr.push(res);
+			if (noRes) {
+				if (args && args.length) {
+					for (; i < hlen; i++) {
+						handler = hans[i];
+						handler.fn.apply(handler.target, args);
+					}
+				}
+				else {
+					for (; i < hlen; i++) {
+						handler = hans[i];
+						handler.fn.call(handler.target);
 					}
 				}
 			}
 			else {
-				for (; i < hlen; i++) {
-					res = hans[i].fn.apply(hans[i].target, args);
-					if (filter(res)) {
-						rarr.push(res);
+				var rarr = arguments[3] || [];
+				if (args && args.length) {
+					for (; i < hlen; i++) {
+						handler = hans[i];
+						rarr.push(handler.fn.apply(handler.target, args));
 					}
 				}
+				else {
+					for (; i < hlen; i++) {
+						handler = hans[i];
+						rarr.push(handler.fn.call(handler.target));
+					}
+				}
+				return rarr;
 			}
 		}
 		else {
-			if (noarg) {
-				for (; i < hlen; i++) {
-					rarr.push(hans[i].fn.call(hans[i].target));
-				}
-			}
-			else {
-				for (; i < hlen; i++) {
-					rarr.push(hans[i].fn.apply(hans[i].target, args));
-				}
-			}
+			this.grid.log('no handlers registered for event=' + e, 4);//IF_DEBUG
 		}
 	}
-	return rarr;
+	else {
+		this.grid.log('no handlers registered for event=' + e, 4);//IF_DEBUG
+	}
 };
 
-prototype.triggerInvalid = function(events, args) {
-	return this.trigger(events, args, function(a) { return a === false; }).length !== 0;
+prototype.triggerMultiple = function(e, args, noRes) {
+	var arr = e.split(','),
+		i = 0,
+		len = arr.length;
+	if (noRes) {
+		var res = [];
+		for (; i < len; i++) {
+			this.trigger(arr[i], args, false, res);
+		}
+		return res;
+	}
+	else {
+		for (; i < len; i++) {
+			this.trigger(arr[i], args, true);
+		}
+	}
+};
+
+prototype.triggerInvalid = function(e, args) {
+	var res = this.trigger(e, args);
+	return res && res.some(function(a) { return a === false; });
 };
 
 /**

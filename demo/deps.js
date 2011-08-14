@@ -15,6 +15,7 @@ goog.require('jx.grid.Cell');
 goog.require('jx.grid.PrintManager');
 goog.require('jx.grid.ColumnHeader');
 goog.require('jx.grid.CheckManager');
+goog.require('TimeWatch');
 goog.require('jx.grid.renderer');
 goog.require('jx.grid.Column');
 goog.require('array_extension');

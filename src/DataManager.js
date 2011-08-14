@@ -21,7 +21,7 @@ goog.provide('jx.data.DataManager');
   @scope JGM
   */
 
-(function() {
+(function() {'use strict';
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
@@ -206,7 +206,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			this.idKey = "J@I" + this.mid + "@" + Util.random(10000);
 		}
 
-		this._increment = 0;
+		this._increment = 1;
 
 		this.keyToType = {};
 
@@ -1714,7 +1714,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.1.3
 		  @version 1.2.3
 		  */
-		this.grid['event'].trigger("onBeforeDataChange");
+		this.grid['event'].trigger("onBeforeDataChange", false, true);
 
 		/**
 		  그리드의 모든 데이터 어레이를 셋하기 전에 발생되는 이벤트 입니다.
@@ -1727,7 +1727,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.3.0
 		  */
-		this.grid['event'].trigger("onBeforeSetDatalist", [this.all, datalist]);
+		this.grid['event'].trigger("onBeforeSetDatalist", [this.all, datalist], true);
 
 		this.cleanList(this.all);
 
@@ -1781,7 +1781,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onAfterSetDatalist", [datalist]);
+		this.grid['event'].trigger("onAfterSetDatalist", [datalist], true);
 
 		/**
 		  그리드 데이터에 변경 사항이 있었을 경우에 발생되는 이벤트 입니다.
@@ -1792,7 +1792,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.1.3
 		  @version 1.1.3
 		  */
-		this.grid['event'].trigger("onDataChange");
+		this.grid['event'].trigger("onDataChange", false, true);
 
 		this.refresh();
 
@@ -1816,7 +1816,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return false;
 		}
 
-		this.grid['event'].trigger("onBeforeDataChange");
+		this.grid['event'].trigger("onBeforeDataChange", false, true);
 
 		this.fillTemp(datarow, args);
 
@@ -1857,8 +1857,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onAddDatarow", [datarow, args]);
-		this.grid['event'].trigger("onDataChange");
+		this.grid['event'].trigger("onAddDatarow", [datarow, args], true);
+		this.grid['event'].trigger("onDataChange", false, true);
 
 		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
@@ -1889,7 +1889,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return false;
 		}
 
-		this.grid['event'].trigger("onBeforeDataChange");
+		this.grid['event'].trigger("onBeforeDataChange", false, true);
 
 		this.fillTempList(datalist, args);
 
@@ -1930,8 +1930,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onAddDatalist", [toAdd, args]);
-		this.grid['event'].trigger("onDataChange");
+		this.grid['event'].trigger("onAddDatalist", [toAdd, args], true);
+		this.grid['event'].trigger("onDataChange", false, true);
 
 		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
@@ -1977,7 +1977,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return false;
 		}
 
-		this.grid['event'].trigger("onBeforeDataChange");
+		this.grid['event'].trigger("onBeforeDataChange", false, true);
 
 		/**
 		  데이터가 변경되기 전에 발생하는 이벤트 입니다.
@@ -1991,7 +1991,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onBeforeUpdateDatarow", [datarow, change]);
+		this.grid['event'].trigger("onBeforeUpdateDatarow", [datarow, change], true);
 
 		var before = {},
 			 i;
@@ -2046,7 +2046,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @version 1.1.1
 		  */
 		if (res !== false) {
-			this.grid['event'].trigger("onIdChange", [datarow, res, datarow[this.idKey]]);
+			this.grid['event'].trigger("onIdChange", [datarow, res, datarow[this.idKey]], true);
 		}
 
 		if (Util.isNull(args) || args['undo'] !== true) {
@@ -2072,8 +2072,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onUpdateDatarow", [datarow, change, before, args]);
-		this.grid['event'].trigger("onDataChange");
+		this.grid['event'].trigger("onUpdateDatarow", [datarow, change, before, args], true);
+		this.grid['event'].trigger("onDataChange", false, true);
 
 		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
@@ -2101,7 +2101,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return false;
 		}
 
-		this.grid['event'].trigger("onBeforeDataChange");
+		this.grid['event'].trigger("onBeforeDataChange", false, true);
 
 		/**
 		  데이터가 변경되기 전에 발생하는 이벤트 입니다.
@@ -2116,7 +2116,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onBeforeUpdateDatalist", [list]);
+		this.grid['event'].trigger("onBeforeUpdateDatalist", [list], true);
 
 		var datalist = [],
 			 befores = [],
@@ -2190,7 +2190,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @version 1.1.1
 		  */
 		if (res !== false) {
-			this.grid['event'].trigger("onIdListChange", [res.list, res.befores, this.idKey]);
+			this.grid['event'].trigger("onIdListChange", [res.list, res.befores, this.idKey], true);
 		}
 
 		if (Util.isNull(args) || args['undo'] !== true) {
@@ -2219,8 +2219,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 		/*
 		 * 1.3.0: added: changes & befores & args
 		 */
-		this.grid['event'].trigger("onUpdateDatalist", [datalist, changes, befores, args]);	
-		this.grid['event'].trigger("onDataChange");
+		this.grid['event'].trigger("onUpdateDatalist", [datalist, changes, befores, args], true);	
+		this.grid['event'].trigger("onDataChange", false, true);
 
 		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
@@ -2276,7 +2276,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return false;
 		}
 
-		this.grid['event'].trigger("onBeforeDataChange");
+		this.grid['event'].trigger("onBeforeDataChange", false, true);
 
 		this.removeFromIdMap(mapped);
 		this.removeFromUniqueMap(mapped);
@@ -2301,8 +2301,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onRemoveDatarow", [mapped, args]);
-		this.grid['event'].trigger("onDataChange");
+		this.grid['event'].trigger("onRemoveDatarow", [mapped, args], true);
+		this.grid['event'].trigger("onDataChange", false, true);
 
 		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
@@ -2335,7 +2335,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return false;
 		}
 
-		this.grid['event'].trigger("onBeforeDataChange");
+		this.grid['event'].trigger("onBeforeDataChange", false, true);
 
 		this.removeListFromIdMap(mapped);
 		this.removeListFromUniqueMap(mapped);
@@ -2360,8 +2360,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onRemoveDatalist", [mapped, args]);
-		this.grid['event'].trigger("onDataChange");
+		this.grid['event'].trigger("onRemoveDatalist", [mapped, args], true);
+		this.grid['event'].trigger("onDataChange", false, true);
 
 		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
@@ -2666,7 +2666,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onChangeSorter", [this._sorter, sorter]);
+		this.grid['event'].trigger("onChangeSorter", [this._sorter, sorter], true);
 
 		this._sorter = sorter;
 	};
@@ -2695,7 +2695,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onBeforeSort", [datalist]);
+		this.grid['event'].trigger("onBeforeSort", [datalist], true);
 
 		if (Util.isNotNull(sorter.comparator)) {
 			datalist.sort(sorter.comparator);
@@ -2718,7 +2718,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onAfterSort", [datalist]);
+		this.grid['event'].trigger("onAfterSort", [datalist], true);
 	};
 
 	/**
@@ -2776,7 +2776,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onBeforeFilter", [datalist, failed]);
+		this.grid['event'].trigger("onBeforeFilter", [datalist, failed], true);
 
 		datalist.length = 0;
 		datalist.pushList(this.all);
@@ -2804,7 +2804,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onFilter", [datalist, failed]);
+		this.grid['event'].trigger("onFilter", [datalist, failed], true);
 
 		/**
 		  데이터 필터링 후에 발생되는 이벤트 입니다.
@@ -2817,7 +2817,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onAfterFilter", [datalist, failed]);
+		this.grid['event'].trigger("onAfterFilter", [datalist, failed], true);
 	};
 
 	prototype._finish = function(args) {
@@ -2834,7 +2834,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onAfterRefresh", [args]);
+		this.grid['event'].trigger("onAfterRefresh", [args], true);
 	};
 
 
@@ -2860,16 +2860,16 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onBeforeRefresh");
+		this.grid['event'].trigger("onBeforeRefresh", false, true);
 
-		if (args === undefined) {
+		if (!args) {
 			this._sort();
 		}
-		else if (args['noSort'] !== true) {
+		else if (!args['noSort']) {
 			this._sort(args['sorter']);
 		}
 
-		if (args === undefined || args['noFilter'] !== true) {
+		if (!args || !args['noFilter']) {
 			this._filter();
 		}
 

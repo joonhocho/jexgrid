@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+		<meta http-equiv="X-UA-Compatible" content="IE=7" >
+		
+		<title>JexGrid: 트리 모듈 Collapser 사용법</title>
+
+		<script type="text/javascript" src="../lib/js/jquery-1.5.1.min.js"></script>
+		<script type="text/javascript" src="../lib/js/jquery-ui-1.8.14.custom.min.js"></script>
+		<script type="text/javascript" src="../dist/jgrid-1.4.1-min-debug.js"></script>
+		<script>
+		var grid;
+		var container;
+		var colDefs;
+		var options;
+		var data;
+		</script>
+
+		<link rel="stylesheet" href="demo.css" type="text/css" media="screen"  />
+		<script language="JavaScript" src="demo.js"></script>
+
+	</head>
+	<body>
+		<h4>JexGrid Demonstrations - Chapter 9: 트리 모듈 Collapser 사용법</h4>
+		<div class="index">
+			<span><< 이전:<a href="demo-8.html">Chapter 8: CheckManager 사용법</a></span>
+			<span>홈:<a href="index.html">JexGrid Demo Home</a></span>
+			<span>다음:<a href="demo-10.html">Chapter 10</a> >></span>
+		</div>
+
+		<div id="grid"></div>
+
+		<h5>Source Code - 직접 내용을 변경한 후 실행 버튼을 클릭하여 테스트 할 수 있습니다.</h5>
+		<textarea id="codebox" class="codebox"></textarea>
+		<button type="button" onclick="run()">실행</button>
+		<button type="button" onclick="clearConsole();run('resetcode')">초기화</button>
+		<button type="button" onclick="run('add')">로우 추가</button>
+		<button type="button" onclick="run('addlist')">여러 로우 추가</button>
+		<button type="button" onclick="run('update')">업데이트</button>
+		<button type="button" onclick="run('getList')">체크된 리스트 가져오기</button>
+		<button type="button" onclick="run('check5')">처음 5개 체크하기</button>
+		<button type="button" onclick="clearConsole();run('radio')">Radio 버튼</button>
+
+		<h5>Console</h5>
+		<textarea id="console" class="codebox" readonly="readonly"></textarea>
+		<button type="button" onclick="clearConsole()">초기화</button>
+
+
+		<div>
+			<h5>Description</h5>
+			<p>그리드 로우의 선택을 담당하는 <a href="../reference/logical/JGM/CheckManager.html">CheckManager</a> 에 대한 데모입니다.</p>
+			<ul>
+				<li><a href="../reference/logical/JGM/CheckManager.html">CheckManager</a> 는 그리드 옵션에 <code>CheckManager:{}</code> 를 넣어주면 기본 옵션으로 첫번째 컬럼에 생성됩니다.
+				</li>
+				<li><a href="../reference/logical/JGM/CheckManager.html#___options.isRadio">isRadio</a> 옵션을 true 로 설정할 경우, checkbox 대신 radio 가 생성됩니다. radio 의 특징은 checkbox 와 달리 최대 한개의 로우만을 선택할 수 있습니다.
+				</li>
+			</ul>
+		</div>
+
+<div class="hiddencode">
+
+<textarea id="resetcode">
+if (grid !== undefined){grid.destroy();grid=undefined;}
+data = [];
+for (var i = 0; i < 10000; i++) {
+	var pid = (Util.random(4) % 4) === 3 ? undefined : Util.random(i);	// parent id 랜덤 생성
+	data.push({
+		id:i,		// 트리 구조에 사용될 node id
+		pid:pid,	// 트리 구조에 사용될 parent id
+		name:"이름 " + i
+	});
+}
+
+grid = JGM.grid({ container: document.getElementById("grid"), datalist: data, colDefs: [ {key:"id",name:"아이디",width:300,filter:"number"}, { key:"name", name:"이름",filter:"string"} ],
+options: {
+	ViewportManager:{rowsPerPage:20},
+	ColHeader:{},
+	Footer:{},
+	SearchManager:{},
+	MenuBar:{},
+	DataManager:{idKey:"id"},
+	Collapser:{
+		key: "id",	// collapser 토글 아이콘을 표시할 컬럼 키 값을 정합니다.
+		Tree: {
+			nodeKey: "id",	// 트리 구조에 사용될 node key 값
+			parentKey: "pid" // 트리 구조에 사용될 parent key 값
+		}
+	}
+}});
+
+</textarea>
+
+<textarea id="add">
+var len = grid.dataMgr.all.length;
+var pid = (Util.random(4) % 4) === 3 ? undefined : Util.random(len);
+grid.dataMgr.add({
+	id:len,
+	pid:pid,
+	name:"이름 " + len
+});
+</textarea>
+
+<textarea id="addlist">
+var newList = [];
+for (var i = grid.dataMgr.all.length; i < grid.dataMgr.all.length + 10; i++) {
+	var pid = (Util.random(4) % 4) === 3 ? undefined : Util.random(i);
+	newList.push({
+		id:i,
+		pid:pid,
+		name:"이름 " + i
+	});
+}
+grid.dataMgr.addList(newList);
+</textarea>
+
+<textarea id="update">
+if (grid !== undefined){grid.destroy();grid=undefined;}
+var toUpdate = {id:3, pid:0};	// 데이터 3은 데이터 0의 Child 노드로 시작합니다.
+data = [toUpdate,{id:0, pid:0},{id:1, pid:1},{id:2, pid:2},{id:4, pid:0},{id:5, pid:3},{id:6, pid:3}];
+
+grid = JGM.grid({ container: document.getElementById("grid"), datalist: data, colDefs: [ {key:"id",name:"Node ID",width:300}, { key:"pid", name:"Parent ID"} ],
+options: {
+	ColHeader:{},
+	DataManager:{idKey:"id"},
+	Collapser:{
+		key: "id",	// collapser 토글 아이콘을 표시할 컬럼 키 값을 정합니다.
+		Tree: {
+			nodeKey: "id",	// 트리 구조에 사용될 node key 값
+			parentKey: "pid" // 트리 구조에 사용될 parent key 값
+		}
+	}
+}});
+
+grid.dataMgr.update(toUpdate, {pid:1});	// 0 에서 1의 Child 노드로 들어갑니다
+//grid.dataMgr.update(toUpdate, {id:7}); // id 가 바뀌기 때문에 pid 가 3 인 5 와 6 은 Parent 노드를 잃어버립니다. 그래서 화면에 표시되지 않습니다.
+
+</textarea>
+
+<textarea id="toggle">
+grid.checkMgr.toggleCheck(grid.dataMgr.datalist[Util.random(10)]);
+</textarea>
+
+<textarea id="getList">
+print(JSON.stringify(grid.checkMgr.getCheckList()));
+</textarea>
+
+<textarea id="check5">
+grid.checkMgr.checkList(grid.dataMgr.datalist.slice(0,5));
+</textarea>
+
+<textarea id="radio">
+if (grid !== undefined){grid.destroy();grid=undefined;}
+data = [];
+for (var i = 0; i < 20; i++)	data.push({id:i, name:"이름 " + i});
+
+grid = JGM.grid({ container: document.getElementById("grid"), datalist: data, colDefs: [ {key:"id",name:"아이디"}, { key:"name", name:"이름"} ],
+options: {
+	ColHeader:{},
+	CheckManager:{
+		isRadio: true	// checkbox 가 아닌 radio 버튼을 사용합니다. radio 버튼의 특징은 최대 한개의 로우만 선택할 수 있습니다.
+	}
+}});
+
+grid.event.register({
+	e: "onAfterCheckChange",	// 한개의 데이터가 체크/체크해제 되었을 경우 발생하는 이벤트 입니다.
+	f: function(datarow, check) {	// 이벤트 핸들러에는 데이터와 체크 여부가 파라미터로 주어집니다.
+		print(JSON.stringify(datarow) + " 가 체크" + (check ? "":"해제") + " 되었습니다.");
+	}
+});
+</textarea>
+
+</div>
+
+<script>
+run('resetcode');
+</script>
+
+</body>
+</html>

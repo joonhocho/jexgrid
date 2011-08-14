@@ -1,0 +1,83 @@
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<title>RDERP for Webcash</title>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<meta http-equiv="Cache-Control" content="No-Cache" />
+	<meta http-equiv="Pragma" content="No-Cache" />
+	<link rel="stylesheet" type="text/css" href="css/rd-style.css" />
+	<link rel="stylesheet" type="text/css" href="css/layout.css" />
+	
+	<script type="text/javascript"  src="js/protocomm.js"></script>
+	<script type="text/javascript"  src="js/jquery-1.4.2.js"></script> 
+	<script type="text/javascript"  src="js/layout/jquery.ui.sortable.js"></script>
+	<script type="text/javascript"  src="js/jex.tabs.js"></script>
+	<script type="text/javascript"  src="js/jex_web.js"></script>
+	<script type="text/javascript"  src="js/json2.js"></script>	
+	<script type="text/javascript"  src="js/gw.ui.js"></script>
+	
+	<script type="text/javascript"  src="js/rderp/layout/layoutMain.js"></script>
+	<script language="JavaScript">
+		var gUsefacSeqNo = "10";
+        var gUserId = "master";
+
+    	/*
+    	* 사용자정보 팝업호출 함수
+    	*/
+    	function uf_userInfo(){
+    		gw.ui.searchUser(null, null, "10");    
+    	}
+    </script>		
+</head>
+<body>
+<form name="frm01" id="frm01" method="post">
+<div id="mainwrap">
+	<!-- TOP Menu -->
+	<div id="header">
+	
+	<h1><a id='logo' style="cursor:hand" ><img src="img/groupware/logo.png" alt="" onclick="openTab('rmain_0001_01', '메인화면', '/rmain_0001_01.act');" /></a></h1>
+	<div class="top_right"> 
+		<a style="vertical-align:3px;cursor:hand;" id="user_info" onclick="uf_userInfo();">사용자검색</a>
+		&nbsp;<img src="img/groupware/bu_02.gif" alt="" style="vertical-align:3px;margin-right:5px;cursor:hand;" />
+		&nbsp;<a style="vertical-align:3px;cursor:hand;" id="mand_change">위임자전환</a>
+		&nbsp;<a style="cursor:hand" id='layoutMain_btn_logout'> <img src="img/00/menu/btn_logout.gif" alt="로그아웃"  /></a> 
+	</div> 
+	<div class="topmenubar" id="topmenubar"> 
+		<span class="first"><img src="img/00/menu/topmenubar_first.gif" alt="" /></span> 
+		<ul class="menu"></ul>  
+		<span class="end"><img src="img/00/menu/topmenubar_end.gif" alt="" /></span> 
+	</div> 
+
+	</div>
+	<!-- //TOP Menu -->
+	<!-- 멀티탭 -->
+	<div id="tabs">
+		<div id="multitab">
+			<ul></ul>
+    		<div class="btn_scroll">
+    			<a id='scrollLeft'  style="cursor:pointer"><img src="img/groupware/btn_multi_left.gif" alt="" /></a>
+    			<a id='scrollRight' style="cursor:pointer"><img  src="img/groupware/btn_multi_right.gif" alt="" /></a>
+				<a id='tabAllClose' style="margin-left:5px;"><img  src="img/groupware/btn_allclose.gif" alt="전체닫기" /></a>
+    		</div>
+		</div>
+		<!-- CONTENT start -->
+		<div id='tab_body'>
+		</div>
+		<!-- //CONTENT end  -->
+	</div>
+	<!-- //멀티탭 -->
+</div>
+</form>
+</body>
+</html>

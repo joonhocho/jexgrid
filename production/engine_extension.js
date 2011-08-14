@@ -7,7 +7,7 @@ goog.provide('engine_extension');
  * COPYRIGHT
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
-(function(){
+(function(){'use strict';
 var nProto = Number.prototype,
 	sProto = String.prototype,
 	aProto = Array.prototype;
@@ -19,6 +19,11 @@ if (!nProto.toFixedFloat) {
 if (!sProto.toInt) {
 	sProto.toInt = function() {
 		var a;
+		a = parseInt(this, 10);
+		if (a === a) {
+			// checking for NaN
+			return a;
+		}
 		if ((a = this.replace(/[^\d\.\-]/g, '')).length === 0) {
 			return NaN;
 		}

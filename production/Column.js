@@ -1,7 +1,7 @@
 goog.require('jx.grid');
 goog.require('jx.events.EventDispatcher');
 goog.provide('jx.grid.Column');
-(function() {
+(function() {'use strict';
 	var EventDispatcher = goog.getObjectByName('jx.events.EventDispatcher');
 	goog.exportSymbol('jx.grid.Column', Column);
 	function Column(args) {

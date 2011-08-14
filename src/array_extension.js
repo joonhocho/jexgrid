@@ -13,7 +13,7 @@ goog.provide('array_extension');
 Array
 @scope Array
 */
-(function() {
+(function() {'use strict';
 var proto = Array.prototype;
 if (!proto.indexOf) {
 	proto.indexOf = function(searchElement /*, fromIndex */) {

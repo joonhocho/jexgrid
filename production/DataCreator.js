@@ -14,7 +14,7 @@ goog.provide('jx.grid.DataCreator');
   JGM
   @scope JGM
   */
-(function() {
+(function() {'use strict';
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
@@ -344,7 +344,7 @@ prototype._addData = function() {
 	  @since 1.1.1
 	  @version 1.1.1
 	  */
-	this.grid['event'].trigger("onAfterDataCreate", [newData]);
+	this.grid['event'].trigger("onAfterDataCreate", [newData], true);
 	this.grid['dataMgr'].add(newData, {'isNew':true});
 };
 prototype._reset = function() {

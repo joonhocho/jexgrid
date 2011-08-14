@@ -17,7 +17,7 @@ goog.provide('jx.grid.ColumnManager');
 JGM
 @scope JGM
 */
-(function() {
+(function() {'use strict';
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
@@ -263,7 +263,7 @@ function ColumnManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			'renderer':		ViewportManager._renderer,
+			'renderer':		undefined,
 			/**
 			컬럼 셀 {@link jx.grid.ColumnManager.options.colDef.renderer renderer} 함수에 보낼 파라미터 타입을 정하는 옵션. true 일 경우에는
 			{@link jx.grid.Cell Cell} 인스턴스를 보내고, false 일 경우에는 다음의 파라미터들을 순서대로 보냅니다. <br>
@@ -413,14 +413,14 @@ prototype.set = function(colDefs) {
 		colDefs.pushList(filtered);
 	}
 	
-	this.grid['event'].trigger("onBeforeSetColDefs", [this._colDefs, colDefs]);
+	this.grid['event'].trigger("onBeforeSetColDefs", [this._colDefs, colDefs], true);
 	
 	this._colDefs = [];
 	this._filtered.length = 0;
 	this._keyToIdx = {};
 	this._keyToDef = {};
 	
-	this.grid['event'].trigger("onEmptyColDefs");
+	this.grid['event'].trigger("onEmptyColDefs", false, true);
 	
 	var i = 0,
 		len = colDefs.length,
@@ -451,7 +451,7 @@ prototype.set = function(colDefs) {
 	for (i = 0; i < len; i++) {
 		this._extend(colDefs[i]);
 	}
-	this.grid['event'].trigger("onAfterSetColDefs", [colDefs, this._filter()]);
+	this.grid['event'].trigger("onAfterSetColDefs", [colDefs, this._filter()], true);
 	
 	return colDefs;
 };
@@ -496,7 +496,7 @@ prototype.addAt = function(i, colDef) {
 		i += filtered.length;
 	}
 	
-	this.grid['event'].trigger("onBeforeAddColDef", [colDef]);
+	this.grid['event'].trigger("onBeforeAddColDef", [colDef], true);
 	
 	if (Util.isNull(key)) {
 		return this.grid['error']("KEY_UNDEFINED");
@@ -513,7 +513,7 @@ prototype.addAt = function(i, colDef) {
       this._reidx();
 	}
 	
-	this.grid['event'].trigger("onAfterAddColDef", [colDef, i]);
+	this.grid['event'].trigger("onAfterAddColDef", [colDef, i], true);
 	
 	return filtered.length;
 };
@@ -591,7 +591,7 @@ prototype._extend = function(colDef) {
 						parser = parseBoolean;
 						break;
 					case 'int':
-						parser = parseInt;
+						parser = function (v) { return parseInt(v, 10); };
 						break;
 					case 'float':
 						parser = parseFloat;
@@ -668,7 +668,7 @@ prototype.hide = function(i) {
 	this._filtered.removeAt(i);
 	this._reidx();
 	
-	this.grid['event'].trigger("onHideCol", [colDef, i]);
+	this.grid['event'].trigger("onHideCol", [colDef, i], true);
 	
 	return colDef;
 };
@@ -708,7 +708,7 @@ prototype.show = function(key) {
 	this._filter();
 	this._reidx();
 	
-	this.grid['event'].trigger("onShowCol", [colDef, this._keyToIdx[key]]);
+	this.grid['event'].trigger("onShowCol", [colDef, this._keyToIdx[key]], true);
 	
 	return colDef;
 };
@@ -854,7 +854,7 @@ prototype.sortByKey = function(keys) {
 	@since 1.2.1
 	@version 1.2.1
 	*/
-	this.grid['event'].trigger("onReorderCols", keys);
+	this.grid['event'].trigger("onReorderCols", keys, true);
 	return this._filtered;
 };
 prototype.getKeys = function() {

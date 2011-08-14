@@ -17,6 +17,7 @@ goog.addDependency("Cell.js", ['jx.grid.Cell'], ['jx.util', 'jx.lang.Disposable'
 goog.addDependency("PrintManager.js", ['jx.grid.PrintManager'], ['jx.util', 'jx.util$', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid']);
 goog.addDependency("ColumnHeader.js", ['jx.grid.ColumnHeader'], ['engine_extension', 'jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid', 'jx.grid.ColumnManager']);
 goog.addDependency("CheckManager.js", ['jx.grid.CheckManager'], ['engine_extension', 'jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid', 'jx.grid.ColumnManager', 'jx.data.DataManager']);
+goog.addDependency("TimeWatch.js", ['TimeWatch'], ['jx.util']);
 goog.addDependency("renderer.js", ['jx.grid.renderer'], ['jx.util', 'jx.util$', 'jx.grid']);
 goog.addDependency("Column.js", ['jx.grid.Column'], ['jx.grid', 'jx.events.EventDispatcher']);
 goog.addDependency("array_extension.js", ['array_extension'], []);
@@ -30,4 +31,4 @@ goog.addDependency("DataCreator.js", ['jx.grid.DataCreator'], ['jx.util', 'jx.gr
 goog.addDependency("Disposable.js", ['jx.lang.Disposable'], ['jx.util']);
 goog.addDependency("Tree.js", ['jx.struct.TreeNode', 'jx.struct.Tree', 'TreeNode', 'Tree'], ['engine_extension', 'jx.util', 'jx.events.EventDispatcher']);
 goog.addDependency("SearchManager.js", ['jx.grid.SearchManager'], ['array_extension', 'engine_extension', 'jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid', 'jx.data.DataManager']);
-goog.addDependency("Grid.js", ['jx.grid.Grid'], ['jx.util', 'jx.util$', 'jx.lang.Disposable', 'jx.events.EventDispatcher', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.EventManager']);
+goog.addDependency("Grid.js", ['jx.grid.Grid'], ['jx.util', 'jx.util$', 'jx.lang.Disposable', 'jx.events.EventDispatcher', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.EventManager', 'TimeWatch']);

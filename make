@@ -16,6 +16,7 @@ $distPath = "$gridPath/dist";
 $buildPath = "$gridPath/build";
 $buildResultPath = "$gridPath/results";
 $versionFile = "$gridPath/VERSION";
+$buildFile = "$gridPath/BUILD";
 $licenseFile = "$gridPath/LICENSE";
 $calcdepsFile = "$binPath/calcdeps.py";
 $generaterequires= "$binPath/generaterequires";
@@ -30,12 +31,28 @@ if (!$version) {
 }
 $version = trim($version);
 
+$build = file_get_contents($buildFile);
+if (!$build) {
+	die("Could not open the version file: $buildFile\n");
+}
+$build = ((int)trim($build)) + 1;
+file_put_contents($buildFile, $build);
+$buildtime = date("D M j G:i:s T Y");
+
+$buildinfo = "/**\n * JexGrid Build $build\n * Date: $buildtime\n */\n";
+echo "\n$buildinfo\n";
+
 $outputFileKr = "jgrid-$version-min.js";
-$fulloutpath = "$distPath/$outputFileKr";
 $outputFileUTF8 = "jgrid-$version-min-utf8.js";
+$fulloutpath = "$distPath/$outputFileKr";
 $fulloutpathUTF8 = "$distPath/$outputFileUTF8";
 
-echo "\nJexGrid v$version build...\n\n";
+$debugoutputFileKr = "jgrid-$version-min-debug.js";
+$debugoutputFileUTF8 = "jgrid-$version-min-utf8-debug.js";
+$debugfulloutpath = "$distPath/$debugoutputFileKr";
+$debugfulloutpathUTF8 = "$distPath/$debugoutputFileUTF8";
+
+echo "\nJexGrid v$version build $build...\n\n";
 
 $license = file_get_contents($licenseFile);
 if (!$license) {
@@ -63,6 +80,23 @@ foreach ($regexIterator as $file) {
 }
 echo "\n\n";
 
+// read in source files from src path using src pattern
+echo "[ reading debugging source files... ]\n\n";
+$dirIterator = new RecursiveDirectoryIterator($rawsrcPath);
+$iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
+$regexIterator = new RegexIterator($iterator, $srcPattern);
+$size = 0;
+$debugfilenames = array();
+foreach ($regexIterator as $file) {
+	if ($file->isFile()) {
+		$filename = $file->getPathname();
+		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
+		$size += $file->getSize();
+		$debugfilenames[$filename] = $filename;
+	}
+}
+echo "\n\n";
+
 echo "[ reading source externs files... ]\n\n";
 $dirIterator = new RecursiveDirectoryIterator($srcExtPath);
 $iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
@@ -74,6 +108,7 @@ foreach ($regexIterator as $file) {
 		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
 		$size += $file->getSize();
 		$filenames[$filename] = $filename;
+		$debugfilenames[$filename] = $filename;
 	}
 }
 echo "\n\n";
@@ -125,8 +160,11 @@ array_walk($libfilenames, function($n) { echo "--externs $n\n"; });
 array_walk($filenames, function($n) { echo "--js $n\n"; });
 $libFiles = implode(' ', array_map(function($n) { return "--externs $n"; }, $libfilenames));
 $sourceFiles = implode(' ', array_map(function($n) { return "--js $n"; }, $filenames));
+$debugsourceFiles = implode(' ', array_map(function($n) { return "--js $n"; }, $debugfilenames));
 $outfile = "--js_output_file $fulloutpath";
+$debugoutfile = "--js_output_file $debugfulloutpath";
 echo "$outfile\n";
+$debuggingCompilerFlags = "$compilerFlags $libFiles $debugsourceFiles $debugoutfile --formatting=PRETTY_PRINT";
 $compilerFlags .= " $libFiles $sourceFiles $outfile";
 echo "\n\n";
 
@@ -139,8 +177,20 @@ echo $compilerCommand."\n\n\n";
 // compile js sources
 system($compilerCommand);
 
-$compiled = $license . "\n" . file_get_contents($fulloutpath);
+$compiled = $buildinfo . $license . "\n" . file_get_contents($fulloutpath);
 file_put_contents($fulloutpath, $compiled);
 file_put_contents($fulloutpathUTF8, mb_convert_encoding($compiled, 'UTF-8', 'EUC-KR'));
+
+// compile for debugging
+echo "[ start compiling for debugging... ]\n\n";
+$compilerCommand = "java -jar $compilerJar$debuggingCompilerFlags";
+echo $compilerCommand."\n\n\n";
+
+// compile js sources
+system($compilerCommand);
+
+$compiled = $buildinfo . $license . "\n" . file_get_contents($debugfulloutpath);
+file_put_contents($debugfulloutpath, $compiled);
+file_put_contents($debugfulloutpathUTF8, mb_convert_encoding($compiled, 'UTF-8', 'EUC-KR'));
 
 echo "\n\n[ finished compiling... ]\n\n";

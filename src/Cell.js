@@ -14,7 +14,7 @@ goog.provide('jx.grid.Cell');
  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
  */
 
-(function() {
+(function() {'use strict';
 	var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	Disposable = goog.getObjectByName('jx.lang.Disposable');
