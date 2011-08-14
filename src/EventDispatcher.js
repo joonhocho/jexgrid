@@ -129,7 +129,7 @@ proto.removeEventListener = function(type, listener) {
 	var listeners = map[type],
 		index = -1;
 	while ((index = listeners.indexOf(listener, index + 1)) !== -1) {
-		listeners.splice(index, 1);
+		listeners.splice(index--, 1);
 	}
 	if (listeners.length === 0) {
 		delete map[type];
@@ -158,7 +158,7 @@ proto.dispatchEvent = function(event) {
 	event.target = this;
 
 	if (map.hasOwnProperty(type)) {
-		listeners = map[type];
+		listeners = map[type].slice();
 		var i = 0,
 			l = listeners.length,
 			listener;
