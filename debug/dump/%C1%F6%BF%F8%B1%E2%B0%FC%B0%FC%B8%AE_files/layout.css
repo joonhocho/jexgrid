@@ -1,0 +1,559 @@
+@charset "euc-kr";
+/* Layout */
+#wrap{width:100%;min-width:987px !important;position:relative;} /* 1024 모드일 경우*/
+#mainwrap{width:100%;min-width:987px !important;position:relative;} /* 1024 모드일 경우*/
+/* #wrap{width:100%;min-width:1230px !important;position:relative;} 1280 X 1024 모드일 경우 */
+/* #mainwrap{width:100%;min-width:1230px !important;position:relative;} 1280 X 1024 모드일 경우 */
+#tabs{
+	background:url("../img/groupware/bg_multitab.gif") repeat-x 0 0;
+	width:100%;
+	}
+
+#container{
+	padding:0 0 0 220px;
+	margin:0;
+	font-size:12px;
+	background:url("../img/00/menu/img_leftmenubg.gif") repeat-y left top;
+	clear:both;
+	overflow:hidden;
+	height:auto;
+	min-height:600px;
+}
+#content{
+	float:left;
+	width:100%;
+	margin:0;
+	position:relative;
+	padding:0px 0px 10px 0px;
+}
+#content .content_box{
+	padding:0 0 0 0;
+	margin:10px 15px 0 15px;
+	text-align:left;
+	position:relative;
+}
+/* 탑메뉴 */
+#header{
+	width:100%;
+	z-index:1500;
+	background:url("../img/00/menu/top_bg.gif") repeat-x left top;
+	margin:0;
+	padding:0;
+}
+/* 로고 */
+#header h1{
+	margin:10px 0 5px 10px !important;
+	background:none;
+	height:35px;
+	float:left; width:300px;
+}
+*:first-child+html #header h1{margin-bottom:1px;}
+#header .top_right{
+	width:500px;
+	float:right;
+	text-align:right;
+	margin:20px 20px 0 0;
+}
+.contentbg{background:url("../img/00/menu/content_bodybg.gif") no-repeat left top;}
+/* 탑메뉴나오는곳 */
+#header .topmenubar{
+	clear:both;
+	z-index:2000;
+	position:relative;
+	margin:0px;
+	height:47px;
+	background:url("../img/00/menu/topmenubar.gif") repeat-x left top;
+}
+/* 탑메뉴나오는곳 -메뉴가 여러개일경우 마진 왼쪽값 수정가능(230px) */
+#header .topmenubar ul.menu{
+	margin:0 0px 0 60px;
+	line-height:14px;
+	text-align:center;
+	clear:both;
+	overflow:hidden;
+}
+	#header .topmenubar ul.menu li{
+		float:left;
+		font:13px bold;
+		color:#fff;
+		text-align:center;
+		margin:4px 0 0 0;
+	}
+	#header .topmenubar ul.menu li a{
+		color:#fff;
+		font-weight:bold;
+		width:110px;
+		display:block;
+		margin:8px 0 0 0;
+		text-align:center;
+		padding:0px 0px 0 0px;
+		text-decoration:none;
+	}
+	#header .topmenubar ul.menu li a:hover{
+		width:110px;
+		height:31px;
+		margin:0;
+		padding:8px 0px 0 0px;
+		text-align:center;
+		background:url("../img/00/menu/topmenu_over.gif") no-repeat right top;
+	}
+	#header .topmenubar span.first{
+		position:absolute; left:0;top:0px;
+		vertical-align:top;
+	}
+	#header .topmenubar span.end{
+		position:absolute; right:0px;top:0;
+	}
+	.topbtn{margin-left:7px; vertical-align:middle;}
+
+	/* 전체메뉴보기 */
+	.topmenubar .btn_allmenu{
+	width:110px;
+	height:24px;
+	position:absolute;
+	top:9px;
+	right:10px;
+	cursor:pointer;
+	background:url("../img/00/menu/btn_allmenu.gif") no-repeat 0 0;
+	z-index:1510;
+	}
+	.topmenubar .all_menu_layer{
+	position:absolute;
+	top:40px;
+	right:15px;
+	width:190px;
+	z-index:2000;
+	display:none;
+	}
+		.all_menu_layer .bg_top{
+			background:url("../img/00/menu/allmenu_bg_top.png") no-repeat 0 0;
+			width:172px;
+			height:auto;
+			padding:15px 0 10px 15px;
+		}
+			.all_menu_layer .bg_top ul{
+				margin:0;
+				padding:0;
+			}
+			.all_menu_layer .bg_top ul li {
+				height:15px;
+				margin:0 0 5px 0;
+			}
+			.all_menu_layer .bg_top ul li a{
+				color:#fff;
+			}
+			.all_menu_layer .bg_top ul li a:hover{
+				color:#fff;
+				font-weight:bold;
+				text-decoration:none;
+			}
+		.all_menu_layer .bg_bottom{
+			background:url("../img/00/menu/allmenu_bg_bottom.png") no-repeat 0 0;
+			width:187px;
+			height:10px;
+		}
+	/* //전체메뉴보기 */
+/* //탑메뉴 */
+
+/* 상단 멀티탭(20100719) */
+#multitab{
+	width:98%;
+	position:relative;
+	clear:both;
+	overflow:hidden;
+	z-index:1400;
+	margin:0 0 0 7px;
+	padding:0;
+	background:url("../img/groupware/bg_multitab2.gif") repeat-x 0 0;
+	height:26px;
+	}
+	#multitab ul{
+		float:left;
+		}
+	#multitab .btn_scroll{
+		position:absolute;
+		top:0;
+		right:0;
+		cursor:pointer;
+		}
+		.btn_scroll a, .btn_scroll a img{display:block;margin:0;padding:0;float:left;}
+	#multitab .mul_tab{
+		background:url("../img/groupware/img_multitab.gif") no-repeat 0 0;
+		width:129px;
+		height:26px;
+		float:left;
+		margin:0 0 0 0px;
+		padding:0 0 0 0;
+		position:relative;
+		}
+	#multitab .mul_tab_on{
+		background:url("../img/groupware/img_multitab_on.gif") no-repeat 0 0;
+		width:129px;
+		height:26px;
+		float:left;
+		margin:0 0 0 0px;
+		padding:0 0 0 0;
+		position:relative;
+		}
+		#multitab .mul_tab a.mul_txt{
+			width:75px;
+			text-overflow:ellipsis; 
+			white-space:nowrap; 
+			overflow:hidden;
+			margin:0 0 0 32px;
+			padding:7px 0 0 0;
+			height:19px;
+			display:inline-block;
+			font-size:11px;
+			}
+		#multitab .mul_tab a.mul_btn{
+			width:15px;
+			height:15px;
+			margin:0;
+			padding:0;
+			display:block;
+			position:absolute;
+			top:6px;
+			right:5px;
+			}
+		#multitab .mul_tab_on a.mul_txt{
+			width:75px;
+			text-overflow:ellipsis; 
+			white-space:nowrap;
+			overflow:hidden;
+			margin:0 0 0 32px;
+			padding:7px 0 0 0;
+			height:19px;
+			display:inline-block;
+			font-size:11px;
+			}
+		#multitab .mul_tab_on a.mul_btn{
+			width:15px;
+			height:15px;
+			margin:0;
+			padding:0;
+			display:block;
+			position:absolute;
+			top:7px;
+			right:3px;
+			}
+		*html #multitab .mul_tab_on a.mul_btn{
+			width:13px;
+			margin:0 0 0 0;
+			padding:0;
+			vertical-align:-5px;
+			display:inline-block;
+			}
+	#multitab .mul_tab a:link	{color:#666; text-decoration:none;}
+	#multitab .mul_tab a:visited{color:#666; text-decoration:none;}
+	#multitab .mul_tab a:active{color:#666; text-decoration:none;}
+	#multitab .mul_tab a:hover{color:#666; text-decoration:none;}
+	#multitab .mul_tab_on a:link	{color:#000; text-decoration:none;}
+	#multitab .mul_tab_on a:visited{color:#000; text-decoration:none;}
+	#multitab .mul_tab_on a:active{color:#000; text-decoration:none;}
+	#multitab .mul_tab_on a:hover{color:#000; text-decoration:none;}
+
+/* //상단 멀티탭(20100719) */
+
+.snb{
+	width:220px;
+	float:left;
+	margin:0px -220px 0 0;
+	padding:0;
+	position:relative;
+	z-index:10;
+	left:-220px;
+}
+.aside{
+	width:180px;
+	float:left;
+	margin-top:10px;
+	background:#fff;
+	margin-left:-180px;
+	position:relative;
+	left:-200px;
+	text-align:left;
+}
+#footer{
+	width:100%;
+	clear:both;
+	padding:50px 0 0 0;
+	margin:0 auto;
+	height:30px;
+	text-align:center;
+	background:#d9d9d9 url("../img/00/menu/img_footerbg.gif") no-repeat left top;
+}
+#footer_main{
+	width:100%;
+	clear:both;
+	padding:35px 0 0 0;_padding:35px 0 5px 0;
+	margin:0 auto;
+	height:14px;
+	text-align:center;
+	background:#d9d9d9 url("../img/00/menu/img_footerbg2.gif") no-repeat left top;
+}
+
+/* 왼쪽메뉴 */
+.leftbox{
+	width:220px;
+	height:auto;
+	z-index:40;
+	background:url("../img/00/menu/img_leftmenu2.gif") no-repeat left top;
+	padding:1px 0 0 0;
+	margin:0;
+}
+.leftbox_hsplitter{
+	width:230px;
+	height:auto;
+	z-index:80;
+	background:url("../img/00/menu/img_leftmenu_new.gif") no-repeat left top;
+}
+/* 왼쪽메뉴-개인정보 */
+.leftmenub{
+	position:relative;
+	width:200px;
+	height:113px;
+	margin:3px 0 0 11px;
+	background:url("../img/00/menu/img_leftmenub.gif") no-repeat left top;
+}
+.leftmenub2{
+	position:relative;
+	width:200px;
+	height:212px;
+	margin:3px 0 0 11px;
+	background:url("../img/00/menu/img_leftmenub2.gif") no-repeat left top;
+}
+.leftmenub div.photo, .leftmenub2 div.photo{
+	position:absolute;
+	top:8px;
+	left:6px;
+}
+.leftmenub div.txt, .leftmenub2 div.txt{
+	position:absolute;
+	left:110px;
+	top:15px;
+}
+.leftmenub .date, .leftmenub2 .date{
+	font-size:11px;
+}
+ div.txt div.btn{
+	margin-top:10px;
+}
+.leftmenub2 .infolist{
+	clear:both;
+	line-height:24px;
+	padding:125px 0 0 20px;_margin:125px 0 0 20px;_padding:0;
+}
+*first-child+html, .leftmenub2 .infolist{margin:125px 0 0 20px;padding:0;}
+.leftmenub p, .leftmenub2 p{
+	text-align:left;
+	font-weight:bold;
+	line-height:18px;
+	margin-top:10px;
+	padding:0 0 0 14px;
+	background:url("../img/00/menu/ico_happy.gif") no-repeat left top;
+}
+/* 왼쪽메뉴 일정관리 */
+.schedule{
+	position:relative;
+	width:198px;
+	height:100%;
+	overflow:hidden;
+	margin:4px 0 0 11px;
+	background:#fff url("../img/00/menu/img_schedule.gif") no-repeat left top;
+}
+.schedule div.schedulebm{
+	width:198px;
+	height:20px;
+	background:#fff url("../img/00/menu/img_schedulebm.gif") no-repeat left bottom;
+}
+.schedulewrap{padding:10px 10px 10px 12px;clear:both;_padding:10px 5px;}
+.scheadd{
+	position:absolute;
+	right:8px;
+	top:10px;
+}
+ul.scheSetting{
+	margin:0 0 0 0px;
+	width:170px;
+}
+ul.scheSetting li{
+	padding:4px 0 3px 0;
+	vertical-align:middle;
+	font-weight:bold;
+	background:#fff url("../img/00/menu/img_calendardot.gif") no-repeat left bottom;
+}
+ul.scheSetting li img{
+	margin:1px 0 2px 5px;
+	vertical-align:middle;
+}
+ul.scheSetting li a{font-weight:normal;}
+ul.scheSetting li a.select{font-weight:bold;}
+/* 왼쪽메뉴-개인편지함 */
+ul.perletter{
+	clear:both;
+	margin:10px 0 0 20px;
+}
+ul.perletter li{
+	padding:0px 0 7px 0px;
+}
+ul.perletter li.submenu{
+	height:20px;
+	padding:0px 0 0 15px;
+	background:#fff url("../img/00/menu/img_leftmenubg.gif") no-repeat left 2px;
+}
+ul.perletter li.submenu2{
+	height:20px;
+	padding:0px 0 0 15px;
+	background:#fff url("../img/00/menu/img_leftmenubg3.gif") no-repeat left 0px;
+}
+ul.perletter li.submenu3{
+	height:20px;
+	padding:0px 0 0 15px;
+	background:#fff url("../img/00/menu/img_leftmenubg4.gif") no-repeat left 0px;
+}
+ul.perletter li.end{
+	height:22px;
+	padding:0 0 0 15px;
+	background:#fff url("../img/00/menu/img_leftmenubg2.gif") no-repeat left bottom;
+}
+/* 왼쪽메뉴-게시판 */
+.titbg{
+	width:198px;
+	height:25px;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+	background:url("../img/00/menu/img_lefttitbg.gif") no-repeat left bottom;
+}
+.titbg h4{padding:4px 0 0 0; font-size:12px; background:none;color:#fff;text-align:center;}
+.titbg h4 a:hover, .titbg h4 a{color:#fff;text-decoration:none;}
+.titbg_mg{margin:5px 10px; padding:5px 10px;_margin:5px 10px;_padding:0px;}
+*first-child+html, .titbg_mg{margin:5px 10px;padding:0px;}
+div.commbtnWrap{float:right; text-align:right; _width:50%; position:relative;}
+ul.commbtn{height:25px; z-index:30;}
+ul.commbtn li{float:left;}
+a.selectmenu_on{
+	width:99px;
+	height:23px;
+	padding:5px 0 0 0px;
+	text-align:center;
+	display:block;
+	float:left;
+	background:url("../img/00/menu/img_lefttit01.gif") no-repeat left top;
+}
+a.selectmenu_on:hover, a.selectmenu_off:hover{	text-decoration:none;}
+a.selectmenu_off{
+	width:99px;
+	height:23px;
+	padding-top:5px;
+	text-align:center;
+	display:block;
+	float:left;
+	background:url("../img/00/menu/img_lefttit02.gif") no-repeat left top;
+}
+.btn_searchin{
+	border:none;
+	width:40px;
+	height:20px;
+	cursor:pointer;
+	background:url("../img/00/menu/btn_searchbg.gif") no-repeat left top;
+}
+.schemenu{
+	width:183px;
+	margin:15px 0 5px 0px;
+	background:#fff ;
+}
+.schemenu ul{	padding:0px 0 0 7px;}
+.schemenu ul li{padding:2px ;}
+.schemenu ul li img{vertical-align:middle; margin-top:-3px;}
+	/* 왼쪽메뉴 트리 */
+.left_tree{
+	position:relative;
+	margin:0;
+	padding:0 0 0 5px;
+	font-size:12px;
+	background:#fff;
+	height:auto;
+	width:199px;
+	}
+.left_tree .folder_box, .nav_tree .folder_box{
+	position:relative;
+	padding:0;
+	margin:0;
+	}
+	.left_tree .menu_fold ul.h4_menu, .nav_tree .menu_fold ul.h4_menu{
+	display:none;
+	}
+	.left_tree .menu_fold button, .nav_tree .menu_fold button{
+		background:url(../img/comm/etc/btn_tree_collapse.gif) no-repeat 0 0;
+		}
+.folder_box li{
+	height:auto;
+	margin:0;
+	padding:0;
+	clear:both;
+	overflow:hidden;
+}
+.folder_box .h3{ 
+	position:relative;
+	padding:0;
+	margin:5px 0;
+	background:none;
+	font-size:12px;
+	font-weight:normal;
+	}
+	.folder_box .h3 a{
+		vertical-align:bottom;
+		display:inline-block;
+		margin:0;
+		}
+	.folder_box .h3 a img{
+		vertical-align:-3px;
+		display:inline-block;
+		margin:0;
+		}
+	.folder_box .h3 button{
+		vertical-align:middle;
+		display:inline-block;
+		margin:0;
+		width:13px;
+		height:13px;
+		border:none;
+		background:url(../img/comm/etc/btn_tree_collapse.gif) no-repeat 0 -13px;
+		cursor:pointer;
+		}
+	.folder_box .h4_menu{
+		padding:0 0 0 18px;
+		margin:0;
+		}
+	.folder_box .h4_menu li{
+		margin:0;
+		padding:0;
+		line-height:18px;
+		clear:both;
+		overflow:hidden;
+		}
+	.folder_box .h4_menu li a{
+		vertical-align:bottom;
+		margin:0;
+		padding:0;
+		display:inline-block;
+		}
+	.folder_box .h4_menu li a img{
+		vertical-align:middle;
+		margin:0;
+		padding:0;
+		display:inline-block;
+		}
+/* 트리메뉴 */
+.nav_tree {
+	position:relative;
+	margin:0;
+	padding:0 0 0 5px;
+	font-size:12px;
+	background:#fff; 
+	overflow-y:auto;
+	overflow-x:hidden;
+	border:1px solid #ccc;
+	}

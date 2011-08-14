@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80 -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-949">
+	<title>과제정보</title>
+	
+	<meta http-equiv="Cache-Control" content="No-Cache">
+	<meta http-equiv="Pragma" content="No-Cache">
+	<link rel="stylesheet" type="text/css" href="rd-style.css">
+	<link rel="stylesheet" type="text/css" href="jquery-ui-1.8.2.custom.css">
+	<link rel="stylesheet" type="text/css" href="jex.grid.css">
+
+	<script type="text/javascript" src="json2.js"></script>
+	<script type="text/javascript" src="protocomm.js"></script>   
+	<script type="text/javascript" src="jquery-1.4.2.js"></script>
+	<script type="text/javascript" src="jex_web.js"></script>
+	<script type="text/javascript" src="JexCommon.js"></script><script type="text/javascript" src="jex.tree.js"></script><script type="text/javascript" src="jquery-ui.nonWidgets.min.js"></script>
+	<script type="text/javascript" src="jex.table.js"></script>
+	<script type="text/javascript" src="jex.calendar.js"></script>
+	<script type="text/javascript" src="jex.div.js"></script>
+	<script type="text/javascript" src="common.js"></script>
+	<script type="text/javascript" src="rderp_common.js"></script><script type="text/javascript" src="gw.ui.js"></script><script type="text/javascript" src="gw.common.js"></script><script type="text/javascript" src="gw.common.js"></script><script type="text/javascript" src="gw.number.js"></script><script type="text/javascript" src="number-functions.js"></script><script type="text/javascript" src="gw.date.js"></script><script type="text/javascript" src="date-ko-KR.js"></script><script type="text/javascript" src="config.js"></script><script type="text/javascript" src="rderp_common_pop.js"></script>
+	<script type="text/javascript" src="gw.ui.js"></script>
+	
+	<script language="JavaScript" src="jquery-ui-1.8.7.custom.min.js"></script>
+	<script language="JavaScript" src="jgrid-1.1.7-min.js"></script>
+	<script language="JavaScript">
+		var gUsefacSeqNo = "10";
+		var gPrjNo       = "";
+		var gTabId       = "";
+		
+	</script>	
+	<script type="text/javascript" src="rtask_0008_t00_01.js"></script>
+</head>
+<body marginwidth="0" marginheight="0">
+<form id="frm" name="frm" action="http://172.20.20.222:8080/rtask_0008_t01_01.act" target="tabFrame">
+<input type="hidden" id="SUMUP_PRJ_NO" name="SUMUP_PRJ_NO"> <!-- 총괄과제번호 -->
+<input type="hidden" id="PRJ_NO" name="PRJ_NO"> <!-- 과제번호 -->
+<input type="hidden" id="P_PRJ_NM" name="P_PRJ_NM"> <!-- 과제명 -->
+<input type="hidden" id="P_ANL" name="P_ANL"> <!-- 차수 -->
+<input type="hidden" id="P_PRJ_RSPR_EMP_NM" name="P_PRJ_RSPR_EMP_NM"> <!-- 책임자 -->
+<input type="hidden" id="SEARCH_NM" name="SEARCH_NM">
+<input type="hidden" id="USEFAC_SEQ_NO" name="USEFAC_SEQ_NO">
+<input type="hidden" id="REQ_CNT" name="REQ_CNT">
+<input type="hidden" id="APPR_DIV_CD" name="APPR_DIV_CD"><!-- 팝업호출후 받아오는 승인코드 -->
+<input type="hidden" id="APPR_SEQ_NO" name="APPR_SEQ_NO"><!-- 결재일련번호 -->
+<input type="hidden" id="EXP_BASE_AC_USE_YN" name="EXP_BASE_AC_USE_YN">
+<input type="hidden" id="PROC_TYP_CD" name="PROC_TYP_CD">
+<input type="hidden" id="DPMNS_GOV_CD" name="DPMNS_GOV_CD">
+<input type="hidden" id="PRJ_CARD_DIV_CD" name="PRJ_CARD_DIV_CD">
+<input type="hidden" id="EXP_CATE_APLY_CD" name="EXP_CATE_APLY_CD"><!-- 비목 분류 적용 코드 -->
+<input type="hidden" id="DPMNS_BIZ_CD" name="DPMNS_BIZ_CD">
+<input type="hidden" id="PRJ_RSPR_EMP_ID" name="PRJ_RSPR_EMP_ID">
+<input type="hidden" id="ISD_PSNL_EXPN_NO_PRJ_YN" name="ISD_PSNL_EXPN_NO_PRJ_YN"><!-- 내부인건비 미포함과제여부 -->
+<input type="hidden" id="BGT_MOD_CNTRL_YN" name="BGT_MOD_CNTRL_YN"><!-- 실행예산통제여부 -->
+<input type="hidden" id="NEW_PRJ_NM" name="NEW_PRJ_NM">
+<input type="hidden" id="BGT_STD_CD" name="BGT_STD_CD">
+<div id="mainwrap">
+	<!-- container -->
+	<div id="container">
+		<!-- left 메뉴-->
+		
+
+
+
+
+
+
+
+<script>
+//요일 함수
+$(function() {
+	var week = new Array('일', '월', '화', '수', '목', '금', '토');
+	var d = new Date();
+	var dates = "2011-08-05";
+	var theday = d.getDay();
+	var w = dates + "(" + week[theday]+")";
+	
+	$("div#div_leftbox").find(".date").text(w);
+});
+
+</script>
+<!-- 슬라이딩 열기버튼 -->
+
+<div id="div_btn_hsplitter_close" style="position:absolute; left:218px; top:150px;z-index:1800;">
+	<a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#" onclick="uf_lefthsplitter_open();">
+		<img src="btn_hsplitter_close.gif" alt="">
+	</a>
+</div>
+<!--// 슬라이딩 열기버튼 -->
+
+<!-- 슬라이딩 닫기버튼 -->
+<div id="div_btn_hsplitter_open" style="position:absolute; left:7px; top:150px;z-index:1800;display:none;">
+	<a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#" onclick="uf_lefthsplitter_close();">
+		<img src="btn_hsplitter_open.gif" alt="">
+	</a>
+</div>
+<!--// 슬라이딩 닫기버튼 -->
+
+<!-- left -->
+<div class="snb" id="div_snb">
+
+	<div class="leftbox" id="div_leftbox">
+		<!-- 왼쪽메뉴-개인정보  -->
+		<div class="leftmenub">
+		
+			<div class="photo">
+				<img src="img_sample.gif" class="pic" alt="나의사진" style="width: 97px; height: 97px;" onerror="this.src=&#39;/img/00/menu/img_sample.gif&#39;;">
+			</div>
+		
+			
+			<div class="txt">
+				<span class="date">2011-08-05(금)</span>
+				<p>관리자님 <br>반갑습니다</p>
+				<div class="btn" style="text-align:right;">
+					<a href="javascript:" onclick="parent.openTab(&#39;menu_id_63&#39;, &#39;개인정보설정&#39;, &#39;/conf0001_01.act&#39;);"><img src="btn_perinfomodify(1).gif" alt="MY설정">
+					<!-- a href="javascript:" onclick=""><img src="img/00/menu/btn_perinfomodify.gif" alt="MY설정" /-->
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="left.js"></script> 		<!-- 왼쪽메뉴 --> 		<div class="schedule"> 			<div class="titbg"> 				<h4 id="_jex_left_title">과제관리</h4> 			</div> 			<!-- //왼쪽메뉴-게시판  --> 			<!-- 왼쪽메뉴 -->			<!-- 메뉴트리 --> 			<div class="left_tree">  				<ul id="Left_Menu" class="folder_box">  				<li id="menu_id_79" class="h3 nav_tree_on nav_tree_last"><button type="button"><span class="disn">-</span></button><a style="cursor:pointer"><img src="ftv2folderopen.gif" alt="folder"></a><a style="cursor:pointer">과제정보</a><ul class="h4_menu"><li id="menu_id_80" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제정보</a></li><li id="menu_id_81" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">총괄과제관리</a></li><li id="menu_id_84" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제예산신청</a></li><li id="menu_id_82" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">연차과제관리</a></li><li id="menu_id_83" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제환경설정</a></li><li id="menu_id_87" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">산학협력협약관리</a></li><li id="menu_id_85" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">참여인력신청</a></li><li id="menu_id_88" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">청년인턴</a></li><li id="menu_id_89" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">인건비풀과제관리</a></li><li id="menu_id_90" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">인건비풀지급계획등록</a></li><li id="menu_id_191" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">인건비풀링제 적용 과제조회</a></li></ul></li><li id="menu_id_76" class="h3 nav_tree_on nav_tree_last"><button type="button"><span class="disn">-</span></button><a style="cursor:pointer"><img src="ftv2folderopen.gif" alt="folder"></a><a style="cursor:pointer">과제공고</a><ul class="h4_menu"><li id="menu_id_78" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제신청관리</a></li><li id="menu_id_77" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제공고관리</a></li></ul></li><li id="menu_id_70" class="h3 nav_tree_on nav_tree_last"><button type="button"><span class="disn">-</span></button><a style="cursor:pointer"><img src="ftv2folderopen.gif" alt="folder"></a><a style="cursor:pointer">기초정보</a><ul class="h4_menu"><li id="menu_id_71" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">지원기관관리</a></li><li id="menu_id_72" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">지원사업관리</a></li><li id="menu_id_73" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">비목관리</a></li><li id="menu_id_74" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">거래처관리</a></li><li id="menu_id_75" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">거래처계좌관리</a></li></ul></li></ul> 			</div> 			<!-- //메뉴트리 -->  			<!-- //왼쪽메뉴-게시판  --> 		</div>
+		<!-- 추가될 내용.. -->		
+	</div>
+</div>
+<!-- //left -->
+		<!-- left 메뉴 -->
+
+		<!-- content -->
+		<div id="content">
+			<div class="content_box">
+			
+				<!-- location -->
+				<div id="location" class="location">과제관리 &gt; 과제정보관리 &gt; 과제정보 &gt; 기본정보</div> 
+				<!-- location -->
+				<script type="text/javascript" src="location.js"></script>	<!-- 타이틀 -->	<div class="h1_cboth">		<h1 class="f_left">과제정보</h1>		<div class="f_right">			<div class="location">			</div>		</div>	</div>	<!-- 타이틀  -->
+				<!-- 조회 테이블 -->
+
+					<!-- 강조 테이블 -->
+					<table class="tstrong mgb10" summary="과제정보 조회">
+						<colgroup>
+							<col width="*">
+							<col width="15%">
+							<col width="15%">
+							<col width="10%">
+							<col width="10%">
+							<col width="8%">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th id="PRJ_NM"></th>
+								<th>과제책임자</th>
+								<td id="PRJ_RSPR_EMP_NM" class="tstrong_td_01"></td>
+								<th>연차</th>
+								<td id="ANL" class="tstrong_td_01"></td>
+								<td class="t_right">
+									<input type="button" id="btnSearch" name="btnSearch" class="btn_s_search">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!--//강조테이블-->
+
+					<ul class="tab_1 mgb10">
+						<li id="01" class="selected"><a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#">기본정보</a></li>
+						<li id="02"><a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#">예산</a></li>
+						<li id="03"><a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#">참여인력</a></li>
+						<li id="04"><a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#">청구(결의)서</a></li>
+						<li id="05"><a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#">카드</a></li>
+						<li id="06"><a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#">자금현황</a></li>
+						<li id="07"><a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#">매입/매출증빙</a></li>
+						<li id="08"><a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#">출장/회의/물품/도서/문서</a></li>
+						<li id="09"><a href="http://172.20.20.222:8080/rtask_0008_t00_01.act?MENU_SEQ=80#">성과내역</a></li>
+					</ul>
+					 <iframe id="tabFrame" name="tabFrame" src="" scrolling="auto" width="100%" height="100%" frameborder="0" style="height: 473px; "></iframe>
+				</div>
+			</div>
+
+			<!-- EVENT Zone -->
+			<div class="aside">
+				<script type="text/javascript" src="aside.js"></script>
+			</div>
+			<!-- //EVENT Zone -->
+		</div>
+		<!-- //container -->
+
+		<!-- footer-->
+		<div id="footer">
+			<script type="text/javascript" src="footer.js"></script><span style="font-size:8pt; color:#666666;">COPYRIGHT(C) 2011 WEBCASH. ALL RIGHTS RESERVED.</span>
+		</div>
+		<!-- //footer-->
+	</div>
+	<!-- //iframe -->
+</form>
+
+		
+
+<div style="position: absolute; top: 30%; left: 30%; display: none; " id="_Jex_loadingbar"><img src="loading.gif" alt="잠시만 기다려주세요."></div></body></html>

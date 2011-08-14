@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0055)http://172.20.20.222:8080/rtask_0001_01.act?MENU_SEQ=71 -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-949">
+	<title>지원기관관리</title>
+	
+	<meta http-equiv="Cache-Control" content="No-Cache">
+	<meta http-equiv="Pragma" content="No-Cache">
+	<link rel="stylesheet" type="text/css" href="rd-style.css">	
+	
+	<script type="text/javascript" src="rderp.grid.js"></script><script language="JavaScript" src="jquery-1.4.4.min.js"></script><script language="JavaScript" src="jquery-ui-1.8.7.custom.min.js"></script><script language="JavaScript" src="jgrid-1.4.0-min.js"></script><script type="text/javascript" src="rderp_common.js"></script><script type="text/javascript" src="gw.ui.js"></script><script type="text/javascript" src="gw.common.js"></script><script type="text/javascript" src="gw.common.js"></script><script type="text/javascript" src="gw.number.js"></script><script type="text/javascript" src="number-functions.js"></script><script type="text/javascript" src="gw.date.js"></script><script type="text/javascript" src="date-ko-KR.js"></script><script type="text/javascript" src="config.js"></script><script type="text/javascript" src="rderp_common_pop.js"></script>	
+	<script type="text/javascript" src="rtask_0001_01.js"></script>
+			
+	<script type="text/javascript" src="jex_web.js"></script>
+	<script type="text/javascript" src="JexCommon.js"></script><script type="text/javascript" src="jex.tree.js"></script><script type="text/javascript" src="jquery-ui.nonWidgets.min.js"></script>
+	<script type="text/javascript" src="jex.table.js"></script>
+	<script type="text/javascript" src="jex.calendar.js"></script>
+	<script type="text/javascript" src="jex.div.js"></script>	
+	<script type="text/javascript" src="gw.ui.js"></script>
+	<script language="JavaScript" src="json2.js"></script>
+	<script type="text/javascript" src="rderp_common.js"></script><script type="text/javascript" src="config.js"></script><script type="text/javascript" src="rderp_common_pop.js"></script>	
+	<script type="text/javascript" src="protocomm.js"></script>
+<style type="text/css">#JGM0{overflow:hidden;font:12px;border:1px solid #999;}#JGM0 .jgrid-header-mask{position:relative;overflow:hidden;width:100%;font:12px;background:#dde4ec repeat-x center bottom;border-bottom:1px solid #909192}#JGM0 .jgrid-header{position:relative;overflow:hidden;white-space:nowrap;cursor:default;left:-10000px;width:100000px;line-height:21px}#JGM0 .grid-colHeader{position:relative;overflow:hidden;float:left;text-overflow:ellipsis;text-align:center;height:21px;left:10000px;border-right:1px solid #909192}#JGM0 .grid-colHeader.interactive:hover, #JGM0 .jgrid-colheader-active{background:url(../images/column-headers-over-bg.png) repeat-x scroll center}#JGM0 .jgrid-colheader-active{border-left:1px solid #909192}#JGM0 .grid-colHeader.jgrid-colheader-placeholder{background:#646464!important}#JGM0 .jgrid-sort{position:absolute;height:21px;right:4px;width:7px;background:url(../images/sort.png) no-repeat center transparent}#JGM0 .jgrid-sort-asc{background:url(../images/sort-asc.png) no-repeat center transparent}#JGM0 .jgrid-sort-desc{background:url(../images/sort-desc.png) no-repeat center transparent}#JGM0 .jgrid-resize-handle{z-index:10;background:;cursor:e-resize;position:absolute;height:21px;width:11px}#JGM0 .resize-guide{z-index:10;position:absolute;background:black;filter:alpha(opacity=40);opacity:0.4;width:1px}#JGM0 .rowSelected > *{background:#d8dfea}
+#JGM0 .selection-last{background:#f1ca7f}#JGM0 .jgrid-viewport{height:440px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:19px;cursor:default;-moz-user-select:none;-webkit-user-select:none;}#JGM0 .jgrid-viewport:focus{background:#FFF;outline:2px solid #f1ca7f}#JGM0 .jgrid-canvas{height:0px;;background:#fff}#JGM0 .jgrid-row{position:absolute;}#JGM0 .jgrid-cell{height:19px;border-bottom:1px solid #D0D7E5;display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:1px;border-right:1px solid #D0D7E5;}#JGM0 .jgrid-cell.k_SUP_ORG_CD{}#JGM0 .jgrid-cell.k_SUP_ORG_NM{}#JGM0 .jgrid-cell.k_SUP_ORG_CATE_NM{}#JGM0 .jgrid-cell.k_ATT_ORG_NM{}#JGM0 .jgrid-cell.k_CUR_ATT_ORG_NM{}#JGM0 .jgrid-cell.k_SUP_ORG_URL{}#JGM0 .jgrid-cell.k_CUR_SUP_ORG_NM{}#JGM0 .jgrid-cell.k_PRT_ORD{}</style><style type="text/css">;#JGM0 .jgrid-canvas{width:1016px}#JGM0 .jgrid-row{width:1016px}#JGM0 .jgrid-cell.k_SUP_ORG_CD{width:120px}#JGM0 .jgrid-cell.k_SUP_ORG_NM{width:160px}#JGM0 .jgrid-cell.k_SUP_ORG_CATE_NM{width:120px}#JGM0 .jgrid-cell.k_ATT_ORG_NM{width:120px}#JGM0 .jgrid-cell.k_CUR_ATT_ORG_NM{width:120px}#JGM0 .jgrid-cell.k_SUP_ORG_URL{width:120px}#JGM0 .jgrid-cell.k_CUR_SUP_ORG_NM{width:120px}#JGM0 .jgrid-cell.k_PRT_ORD{width:120px}</style></head>
+<body marginwidth="0" marginheight="0">
+<form id="frm1">
+<input type="hidden" id="UPD_YN" name="UPD_YN" value="">
+<input type="hidden" id="BATCH_INS_YN" name="BATCH_INS_YN" value="Y">
+<input type="hidden" id="PRINT_YN" name="PRINT_YN" value="Y">
+<input type="hidden" id="FILE_YN" name="FILE_YN" value="Y">
+<input type="hidden" id="SUP_ORG_CD_CNT" name="SUP_ORG_CD_CNT" value="0">
+<input type="hidden" id="USEFAC_SEQ_NO" value="10">
+<input type="hidden" id="NON_BTN_YN" value="Y">
+<div id="mainwrap">
+
+<!-- container -->
+<div id="container">
+
+	<!-- left 메뉴-->
+	
+
+
+
+
+
+
+
+<script>
+//요일 함수
+$(function() {
+	var week = new Array('일', '월', '화', '수', '목', '금', '토');
+	var d = new Date();
+	var dates = "2011-08-05";
+	var theday = d.getDay();
+	var w = dates + "(" + week[theday]+")";
+	
+	$("div#div_leftbox").find(".date").text(w);
+});
+
+</script>
+<!-- 슬라이딩 열기버튼 -->
+
+<div id="div_btn_hsplitter_close" style="position:absolute; left:218px; top:150px;z-index:1800;">
+	<a href="http://172.20.20.222:8080/rtask_0001_01.act?MENU_SEQ=71#" onclick="uf_lefthsplitter_open();">
+		<img src="btn_hsplitter_close.gif" alt="">
+	</a>
+</div>
+<!--// 슬라이딩 열기버튼 -->
+
+<!-- 슬라이딩 닫기버튼 -->
+<div id="div_btn_hsplitter_open" style="position:absolute; left:7px; top:150px;z-index:1800;display:none;">
+	<a href="http://172.20.20.222:8080/rtask_0001_01.act?MENU_SEQ=71#" onclick="uf_lefthsplitter_close();">
+		<img src="btn_hsplitter_open.gif" alt="">
+	</a>
+</div>
+<!--// 슬라이딩 닫기버튼 -->
+
+<!-- left -->
+<div class="snb" id="div_snb">
+
+	<div class="leftbox" id="div_leftbox">
+		<!-- 왼쪽메뉴-개인정보  -->
+		<div class="leftmenub">
+		
+			<div class="photo">
+				<img src="img_sample.gif" class="pic" alt="나의사진" style="width: 97px; height: 97px;" onerror="this.src=&#39;/img/00/menu/img_sample.gif&#39;;">
+			</div>
+		
+			
+			<div class="txt">
+				<span class="date">2011-08-05(금)</span>
+				<p>관리자님 <br>반갑습니다</p>
+				<div class="btn" style="text-align:right;">
+					<a href="javascript:" onclick="parent.openTab(&#39;menu_id_63&#39;, &#39;개인정보설정&#39;, &#39;/conf0001_01.act&#39;);"><img src="btn_perinfomodify(1).gif" alt="MY설정">
+					<!-- a href="javascript:" onclick=""><img src="img/00/menu/btn_perinfomodify.gif" alt="MY설정" /-->
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="left.js"></script> 		<!-- 왼쪽메뉴 --> 		<div class="schedule"> 			<div class="titbg"> 				<h4 id="_jex_left_title">과제관리</h4> 			</div> 			<!-- //왼쪽메뉴-게시판  --> 			<!-- 왼쪽메뉴 -->			<!-- 메뉴트리 --> 			<div class="left_tree">  				<ul id="Left_Menu" class="folder_box">  				<li id="menu_id_79" class="h3 nav_tree_on nav_tree_last"><button type="button"><span class="disn">-</span></button><a style="cursor:pointer"><img src="ftv2folderopen.gif" alt="folder"></a><a style="cursor:pointer">과제정보</a><ul class="h4_menu"><li id="menu_id_80" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제정보</a></li><li id="menu_id_81" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">총괄과제관리</a></li><li id="menu_id_84" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제예산신청</a></li><li id="menu_id_82" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">연차과제관리</a></li><li id="menu_id_83" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제환경설정</a></li><li id="menu_id_87" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">산학협력협약관리</a></li><li id="menu_id_85" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">참여인력신청</a></li><li id="menu_id_88" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">청년인턴</a></li><li id="menu_id_89" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">인건비풀과제관리</a></li><li id="menu_id_90" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">인건비풀지급계획등록</a></li><li id="menu_id_191" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">인건비풀링제 적용 과제조회</a></li></ul></li><li id="menu_id_76" class="h3 nav_tree_on nav_tree_last"><button type="button"><span class="disn">-</span></button><a style="cursor:pointer"><img src="ftv2folderopen.gif" alt="folder"></a><a style="cursor:pointer">과제공고</a><ul class="h4_menu"><li id="menu_id_78" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제신청관리</a></li><li id="menu_id_77" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">과제공고관리</a></li></ul></li><li id="menu_id_70" class="h3 nav_tree_on nav_tree_last"><button type="button"><span class="disn">-</span></button><a style="cursor:pointer"><img src="ftv2folderopen.gif" alt="folder"></a><a style="cursor:pointer">기초정보</a><ul class="h4_menu"><li id="menu_id_71" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">지원기관관리</a></li><li id="menu_id_72" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">지원사업관리</a></li><li id="menu_id_73" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">비목관리</a></li><li id="menu_id_74" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">거래처관리</a></li><li id="menu_id_75" class="h4_menu nav_tree_off"><a style="cursor:pointer"><img src="ftv2doc.gif" alt="doc"></a><a style="cursor:pointer">거래처계좌관리</a></li></ul></li></ul> 			</div> 			<!-- //메뉴트리 -->  			<!-- //왼쪽메뉴-게시판  --> 		</div>
+		<!-- 추가될 내용.. -->		
+	</div>
+</div>
+<!-- //left -->
+	<!-- left 메뉴 -->
+	
+	<!-- content -->
+	<div id="content">
+		<div class="content_box">
+
+			<!-- location -->
+			<div id="location" class="location">과제관리 &gt; 기초정보 &gt; 지원기관관리</div> 
+			<!-- location -->
+			<script type="text/javascript" src="location.js"></script>	<!-- 타이틀 -->	<div class="h1_cboth">		<h1 class="f_left">지원기관관리</h1>		<div class="f_right">			<div class="location">					<a href="http://172.20.20.222:8080/rtask_0001_01.act?MENU_SEQ=71#" jexgridbutton="rcomm_download" jexgridid="" type="button"><img src="btn_filesave.gif" alt="파일저장"></a>			</div>		</div>	</div>	<!-- 타이틀  -->
+			
+			<table id="mngList" name="mngList" class="ts mgb15" summary="지원기관관리 조회">
+				<colgroup>
+					<col width="12%">
+					<col width="18%">
+					<col width="10%">
+					<col width="19%">
+					<col width="*">
+				</colgroup>
+				<tbody>
+					<tr>
+						<td colspan="5" class="ht6"></td>
+					</tr>
+					<tr>
+						<th>지원기관분류</th>
+						<td>
+							<select style="width:90%;" class="select" id="SUP_ORG_CATE_CD" name="SUP_ORG_CATE_CD" type="svc" svc="rcomm_combo_01" input="{GRP_CD:&#39;RD0001&#39;}" selectedvalue="" async="2">
+								<option value="">전체</option>
+							<option class="generated" value="10">정부</option><option class="generated" value="20">정부출연(사용안함)</option><option class="generated" value="30">지방자치단체</option><option class="generated" value="40">민간/정부투자</option><option class="generated" value="50">순수민간</option><option class="generated" value="90">외국</option></select>
+						</td>
+						<th>소속부처</th>
+						<td colspan="2">
+							<select style="width:30%;" class="select" id="ATT_ORG_CD" name="ATT_ORG_CD" type="svc" svc="rcomm_combo_01" input="{GRP_CD:&#39;RD0002&#39;}" selectedvalue="" disabled="" async="2">
+								<option value="">전체</option>
+							<option class="generated" value="101">건설교통부</option><option class="generated" value="102">과학기술부</option><option class="generated" value="103">교육인적자원부</option><option class="generated" value="104">국방부</option><option class="generated" value="105">노동부</option><option class="generated" value="106">농림부</option><option class="generated" value="107">문화관광부</option><option class="generated" value="108">보건복지부</option><option class="generated" value="109">사법부</option><option class="generated" value="110">산업자원부</option><option class="generated" value="111">여성가족부</option><option class="generated" value="112">재정경제부</option><option class="generated" value="113">정보통신부</option><option class="generated" value="114">해양수산부</option><option class="generated" value="115">환경부</option><option class="generated" value="116">행정부</option><option class="generated" value="117">입법부</option><option class="generated" value="118">기타 정부기관</option><option class="generated" value="119">산림청</option><option class="generated" value="120">행정안전부</option><option class="generated" value="121">행정안전부-일반</option><option class="generated" value="122">법무부</option><option class="generated" value="123">대통령 직속기관</option><option class="generated" value="124">국토해양부</option><option class="generated" value="125">농림수산식품부</option><option class="generated" value="126">보건복지가족부</option><option class="generated" value="127">특허청</option><option class="generated" value="128">국무총리실</option><option class="generated" value="129">기획재정부</option><option class="generated" value="130">지식경제부</option><option class="generated" value="131">교육과학기술부</option><option class="generated" value="132">외교통상부</option><option class="generated" value="133">통일부</option><option class="generated" value="134">문화체육관광부</option><option class="generated" value="135">고용노동부</option><option class="generated" value="201">정부출연</option><option class="generated" value="301">지방자치단체</option><option class="generated" value="401">민간</option><option class="generated" value="402">정부투자</option><option class="generated" value="403">한국전파진흥원</option></select>
+						</td>
+					</tr>
+					<tr>
+						<th>지원기관명</th>
+						<td>
+							<input type="text" class="text" value="" id="SUP_ORG_NM" name="SUP_ORG_NM" style="ime-mode:active;ime-mode:active;width:90%;" format="kor">
+						</td>
+						<th>활동여부</th>
+						<td>
+							<select style="width:90%;" class="select" id="ACT_YN2" name="ACT_YN2">
+								<option value="">전체</option>
+								<option value="Y">활동</option>
+								<option value="N">비활동</option>
+							</select>
+						</td>
+						<td class="t_right">
+							<input type="button" class="btn_searchoff" id="btn_search" value="">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="5" class="ht6"></td>
+					</tr>
+				</tbody>
+			</table>
+			<!--//조회테이블-->
+	
+			<h2>지원기관내역</h2>
+
+			<div class="cboth">
+				<div class="f_left" style="position:relative;width:53%;" id="div_hsplitter_left">
+
+					<!-- DataGrid-->					
+					<div id="myGrid" style="float:left;width:100%;"><div id="JGM0" class="jgrid" style="width:100%px" tabindex="0"><div class="jgrid-header-mask"><div class="jgrid-header ui-sortable" unselectable="on"><div id="JGM5hSUP_ORG_CD" class="grid-colHeader  interactive" title="지원기관코드" style="width:121px;" colkey="SUP_ORG_CD">지원기관코드<span class="jgrid-sort"></span></div><div id="JGM5hSUP_ORG_NM" class="grid-colHeader  interactive" title="지원기관명" style="width:161px;" colkey="SUP_ORG_NM">지원기관명<span class="jgrid-sort"></span></div><div id="JGM5hSUP_ORG_CATE_NM" class="grid-colHeader  interactive" title="지원기관분류" style="width:121px;" colkey="SUP_ORG_CATE_NM">지원기관분류<span class="jgrid-sort"></span></div><div id="JGM5hATT_ORG_NM" class="grid-colHeader  interactive" title="소속부처" style="width:121px;" colkey="ATT_ORG_NM">소속부처<span class="jgrid-sort"></span></div><div id="JGM5hCUR_ATT_ORG_NM" class="grid-colHeader  interactive" title="현재부처" style="width:121px;" colkey="CUR_ATT_ORG_NM">현재부처<span class="jgrid-sort"></span></div><div id="JGM5hSUP_ORG_URL" class="grid-colHeader  interactive" title="지원기관URL" style="width:121px;" colkey="SUP_ORG_URL">지원기관URL<span class="jgrid-sort"></span></div><div id="JGM5hCUR_SUP_ORG_NM" class="grid-colHeader  interactive" title="현재지원기관명" style="width:121px;" colkey="CUR_SUP_ORG_NM">현재지원기관명<span class="jgrid-sort"></span></div><div id="JGM5hPRT_ORD" class="grid-colHeader  interactive" title="출력순서" style="width:121px;" colkey="PRT_ORD">출력순서<span class="jgrid-sort"></span></div><div class="jgrid-resize-handle" key="SUP_ORG_CD" ondblclick="JGM.m.ViewportManager.JGM6._autoColWidth(&quot;SUP_ORG_CD&quot;)" style="left:10116px" title="지원기관코드 컬럼의 폭을 조절합니다."></div><div class="jgrid-resize-handle" key="SUP_ORG_NM" ondblclick="JGM.m.ViewportManager.JGM6._autoColWidth(&quot;SUP_ORG_NM&quot;)" style="left:10278px" title="지원기관명 컬럼의 폭을 조절합니다."></div><div class="jgrid-resize-handle" key="SUP_ORG_CATE_NM" ondblclick="JGM.m.ViewportManager.JGM6._autoColWidth(&quot;SUP_ORG_CATE_NM&quot;)" style="left:10400px" title="지원기관분류 컬럼의 폭을 조절합니다."></div><div class="jgrid-resize-handle" key="ATT_ORG_NM" ondblclick="JGM.m.ViewportManager.JGM6._autoColWidth(&quot;ATT_ORG_NM&quot;)" style="left:10522px" title="소속부처 컬럼의 폭을 조절합니다."></div><div class="jgrid-resize-handle" key="CUR_ATT_ORG_NM" ondblclick="JGM.m.ViewportManager.JGM6._autoColWidth(&quot;CUR_ATT_ORG_NM&quot;)" style="left:10644px" title="현재부처 컬럼의 폭을 조절합니다."></div><div class="jgrid-resize-handle" key="SUP_ORG_URL" ondblclick="JGM.m.ViewportManager.JGM6._autoColWidth(&quot;SUP_ORG_URL&quot;)" style="left:10766px" title="지원기관URL 컬럼의 폭을 조절합니다."></div><div class="jgrid-resize-handle" key="CUR_SUP_ORG_NM" ondblclick="JGM.m.ViewportManager.JGM6._autoColWidth(&quot;CUR_SUP_ORG_NM&quot;)" style="left:10888px" title="현재지원기관명 컬럼의 폭을 조절합니다."></div><div class="jgrid-resize-handle" key="PRT_ORD" ondblclick="JGM.m.ViewportManager.JGM6._autoColWidth(&quot;PRT_ORD&quot;)" style="left:11010px" title="출력순서 컬럼의 폭을 조절합니다."></div></div></div><div class="jgrid-viewport" tabindex="0" onscroll="JGM.m.ViewportManager.JGM6._scroll()"><div class="jgrid-canvas" style="width: 1016px; height: 8500px; "><div class="jgrid-row" i="0" r="0" style="top:0px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">1009004</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국수자원공사</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">국토해양부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center "></div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right ">0</div></div><div class="jgrid-row" i="1" r="1" style="top:20px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">1009005</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국연구재단-2</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right ">0</div></div><div class="jgrid-row" i="2" r="2" style="top:40px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">101001</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">건설교통부-일반</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">건설교통부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">기타 정부기관</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right ">0</div></div><div class="jgrid-row" i="3" r="3" style="top:60px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">101003</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국건설교통기술평가원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">건설교통부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">기타 정부기관</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="4" r="4" style="top:80px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">101004</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국건설기술연구원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">건설교통부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">기타 정부기관</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="5" r="5" style="top:100px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">101005</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국수자원공사 밀양댐관리단</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">건설교통부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">기타 정부기관</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="6" r="6" style="top:120px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">101006</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국철도기술연구원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">건설교통부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">기타 정부기관</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="7" r="7" style="top:140px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">101007</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국수자원공사</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">건설교통부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">기타 정부기관</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="8" r="8" style="top:160px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">101008</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국철도공사</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">건설교통부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">기타 정부기관</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="9" r="9" style="top:180px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">101009</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">부산지방국토관리청</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">건설교통부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">기타 정부기관</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="10" r="10" style="top:200px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102001</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">과학기술부</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="11" r="11" style="top:220px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102002</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">국제과학기술협력재단</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="12" r="12" style="top:240px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102003</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">대구경북과학기술연구원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="13" r="13" style="top:260px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102004</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">분자및세포기능디스커버리사업단</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="14" r="14" style="top:280px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102005</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국과학재단</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="15" r="15" style="top:300px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102006</div><div class="jgrid-cell k_SUP_ORG_NM t_left "> 한국기계연구원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="16" r="16" style="top:320px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102007</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국기초과학지원연구원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right ">0</div></div><div class="jgrid-row" i="17" r="17" style="top:340px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102008</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국표준과학연구원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right ">0</div></div><div class="jgrid-row" i="18" r="18" style="top:360px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102009</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국지질자원연구원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="19" r="19" style="top:380px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102010</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국과학기술정보연구원(Kisti)</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="20" r="20" style="top:400px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102011</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">국립중앙과학관</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="21" r="21" style="top:420px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102012</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국생명공학연구원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="22" r="22" style="top:440px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102013</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국과학기술원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="23" r="23" style="top:460px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102014</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">미생물유전체활용기술개발사업단</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="24" r="24" style="top:480px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102015</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">세포응용연구사업단</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="25" r="25" style="top:500px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102016</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">이산화탄소저감및처리기술개발사업단</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="26" r="26" style="top:520px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102017</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국항공우주연구원</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center ">지식경제부</div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right "></div></div><div class="jgrid-row" i="27" r="27" style="top:540px"><div class="jgrid-cell k_SUP_ORG_CD t_center ">102018</div><div class="jgrid-cell k_SUP_ORG_NM t_left ">한국과학창의재단</div><div class="jgrid-cell k_SUP_ORG_CATE_NM t_center ">정부</div><div class="jgrid-cell k_ATT_ORG_NM t_center ">교육과학기술부</div><div class="jgrid-cell k_CUR_ATT_ORG_NM t_center "></div><div class="jgrid-cell k_SUP_ORG_URL t_left "></div><div class="jgrid-cell k_CUR_SUP_ORG_NM t_left "></div><div class="jgrid-cell k_PRT_ORD t_right ">0</div></div></div><div class="resize-guide" style="top: 0px; height: 0px; "></div></div><div id="JGM0msg" class="msg" onmousedown="$(this).hide(1000)" style="position: relative; padding-left: 4px; overflow-x: hidden; overflow-y: hidden; z-index: 100; font-size: 12px; height: 21px; line-height: 21px; display: none; "></div></div></div>
+					<!--// DataGrid-->
+					
+										
+					<!-- 화면확장기능 
+					<div class="hsplitter">
+						<div id="div_hsplitter_open">
+							<input type="button" class="btn_hsplitter_open" value="" alt="" onclick="uf_hsplitterOpen()" />
+						</div>
+						<div id="div_hsplitter_close" style="display:none;">
+							<input type="button" class="btn_hsplitter_close" value="" alt="" onclick="uf_hsplitterClose('53%')" />
+						</div>
+					</div>
+					 //화면확장기능 --> 
+				</div>
+
+				<div class="f_right" style="height:auto;width:44%;" id="div_hsplitter_right">
+					<!-- 입력테이블1 -->
+					<table id="expList" name="expList" class="tv2 mgb5" summary="지원기관내역" border="2">
+						<colgroup>
+							<col width="38%">
+							<col width="*">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>지원기관코드*</th>
+								<td>
+									<input type="text" class="text dis" id="SUP_ORG_CD" name="SUP_ORG_CD" value="" maxlengths="7" notnull="true" fieldname="지원기관코드" format="number" style="width:70px;" disabled="" readonly="">
+									<input type="checkbox" class="" id="DIRECT_CHK" name="DIRECT_CHK" disabled=""><label for="c2">직접입력</label>
+								</td>
+							</tr>
+							<tr>  
+								<th>지원기관명*</th>
+								<td><input type="text" class="text" id="SUP_ORG_NM" name="SUP_ORG_NM" value="" notnull="true" fieldname="지원기관명" format="kor" style="ime-mode:active;ime-mode:active;width:150px;"></td>
+							</tr>
+							<!-- <tr>
+								<th>지원기관약어명*</th>
+								<td><input type="text" class="text" id="SUP_ORG_SNM" name="SUP_ORG_SNM" value="" 
+								           notnull="true" fieldName="지원기관약어명" format="" style="width:150px;" /></td>
+							</tr>  -->
+							<tr>
+								<th>지원기관분류*</th>
+								<td>
+									<select style="width:155px;" id="SUP_ORG_CATE_CD" name="SUP_ORG_CATE_CD" class="select" type="svc" svc="rcomm_combo_01" input="{GRP_CD:&#39;RD0001&#39;}" selectedvalue="" async="2">
+									        <option value="">선택</option>
+									<option class="generated" value="10">정부</option><option class="generated" value="20">정부출연(사용안함)</option><option class="generated" value="30">지방자치단체</option><option class="generated" value="40">민간/정부투자</option><option class="generated" value="50">순수민간</option><option class="generated" value="90">외국</option></select>
+								</td>
+							</tr>
+							<tr>
+								<th>지원기관URL</th>
+								<td><input type="text" class="text" id="SUP_ORG_URL" name="SUP_ORG_URL" value="" style="width:150px;"></td>
+							</tr>
+							<tr>
+								<th>소속부처*</th>
+								<td>
+									<select style="width:155px;" id="ATT_ORG_CD" name="ATT_ORG_CD" class="select" type="svc" svc="rcomm_combo_01" input="{GRP_CD:&#39;RD0002&#39;}" async="2">
+									        <option value="">선택</option>										
+									<option class="generated" value="101">건설교통부</option><option class="generated" value="102">과학기술부</option><option class="generated" value="103">교육인적자원부</option><option class="generated" value="104">국방부</option><option class="generated" value="105">노동부</option><option class="generated" value="106">농림부</option><option class="generated" value="107">문화관광부</option><option class="generated" value="108">보건복지부</option><option class="generated" value="109">사법부</option><option class="generated" value="110">산업자원부</option><option class="generated" value="111">여성가족부</option><option class="generated" value="112">재정경제부</option><option class="generated" value="113">정보통신부</option><option class="generated" value="114">해양수산부</option><option class="generated" value="115">환경부</option><option class="generated" value="116">행정부</option><option class="generated" value="117">입법부</option><option class="generated" value="118">기타 정부기관</option><option class="generated" value="119">산림청</option><option class="generated" value="120">행정안전부</option><option class="generated" value="121">행정안전부-일반</option><option class="generated" value="122">법무부</option><option class="generated" value="123">대통령 직속기관</option><option class="generated" value="124">국토해양부</option><option class="generated" value="125">농림수산식품부</option><option class="generated" value="126">보건복지가족부</option><option class="generated" value="127">특허청</option><option class="generated" value="128">국무총리실</option><option class="generated" value="129">기획재정부</option><option class="generated" value="130">지식경제부</option><option class="generated" value="131">교육과학기술부</option><option class="generated" value="132">외교통상부</option><option class="generated" value="133">통일부</option><option class="generated" value="134">문화체육관광부</option><option class="generated" value="135">고용노동부</option><option class="generated" value="201">정부출연</option><option class="generated" value="301">지방자치단체</option><option class="generated" value="401">민간</option><option class="generated" value="402">정부투자</option><option class="generated" value="403">한국전파진흥원</option></select>
+								</td>
+							</tr>
+							<tr>
+								<th>현재부처</th>
+								<td>
+								<input type="text" class="text dis" id="CUR_ATT_ORG_NM" name="CUR_ATT_ORG_NM" style="width:150px;" readonly="">
+								<input type="hidden" id="CUR_ATT_ORG_CD">
+								<span class="btn_s_off"><a href="http://172.20.20.222:8080/rtask_0001_01.act?MENU_SEQ=71#" id="btnEXT1">현재부처관리</a></span>
+								</td>
+							</tr>
+							<tr>
+								<th>활동여부</th>
+								<td>
+									<select style="width:155px;" class="select" id="ACT_YN" name="ACT_YN">
+										<option value="Y">활동</option>
+										<option value="N">비활동</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>현재지원기관명</th>
+								<td>
+									<input type="text" class="text dis" id="CUR_SUP_ORG_NM" name="CUR_SUP_ORG_NM" value="" style="width:150px;" readonly="">									
+									<input type="hidden" class="text" id="CUR_SUP_ORG_CD" name="CUR_SUP_ORG_CD" value="" style="width:150px;">
+									<input type="button" class="btn_s_search" value="" onclick="" id="btnCurSupOrgCd" name="btnCurSupOrgCd">
+								</td>
+							</tr>
+							<tr>
+								<th>출력순서</th>
+								<td><input type="text" class="text" id="PRT_ORD" name="PRT_ORD" value="" style="width:150px;" notnull="true" fieldname="출력순서" format="number" maxlength="10"></td>
+							</tr>
+							<!-- <tr>
+								<th>사업자번호</th>
+								<td><input type="text" class="text" id="BIZ_NO" name="BIZ_NO" value="" format="number3" style="width:150px;" /></td>
+							</tr>
+							<tr>
+								<th>담당자성명</th>
+								<td><input type="text" class="text" id="CHRG_NM" name="CHRG_NM" value="" style="width:150px;" /></td>
+							</tr>
+							<tr>
+								<th>담당자전화번호</th>
+								<td><input type="text" class="text" id="CHRG_TEL_NO" name="CHRG_TEL_NO" vralue="" format="number3" style="width:150px;" /></td>
+							</tr>
+							<tr>
+								<th>담당자e-mail</th>
+								<td><input type="text" class="text" id="CHRG_EMAIL" name="CHRG_EMAIL" value="" style="width:150px;" /></td>
+							</tr>   -->
+							<tr>
+								<th scope="row">비고</th>
+								<td><textarea cols="" rows="4" id="RMK" name="RMK" style="width:155px;" class="textarea" format="kor"></textarea></td>
+							</tr>
+						</tbody>
+					</table>
+					<!--//입력테이블1-->
+	
+					<!-- 입력테이블2 -->
+					<table class="tv2" summary="조회분류">
+						<colgroup>
+							<col width="38%">
+							<col width="*">
+						</colgroup>
+						<tbody>
+							<tr><td colspan="2" class="ht6"></td></tr>
+							<tr>
+								<th>조회분류1</th>
+								<td><select style="width:155px;" id="GBCD1" name="GBCD1" class="select" type="svc" svc="rcomm_combo_01" input="{GRP_CD:&#39;RD9001&#39;}" selectedvalue="" async="2">
+									        <option value="">선택</option>										
+									<option class="generated" value="10">정부기관</option><option class="generated" value="20">비정부기관</option><option class="generated" value="30">테스크포스</option><option class="generated" value="40">테스트2</option></select>
+								</td>
+							</tr>
+							<tr>
+								<th>조회분류2</th>
+								<td><select style="width:155px;" id="GBCD2" name="GBCD2" class="select" type="svc" svc="rcomm_combo_01" input="{GRP_CD:&#39;RD9002&#39;}" selectedvalue="" async="2">
+									        <option value="">선택</option>										
+									<option class="generated" value="10">조회분류2</option></select>
+								</td>
+							</tr>
+							<tr>
+								<th>조회분류3</th>
+								<td><select style="width:155px;" id="GBCD3" name="GBCD3" class="select" type="svc" svc="rcomm_combo_01" input="{GRP_CD:&#39;RD9003&#39;}" selectedvalue="" async="2">	
+									        <option value="">선택</option>									
+									<option class="generated" value="10">행안부</option></select>
+								</td>
+							</tr>
+							<tr><td colspan="2" class="ht9"></td></tr>
+						</tbody>
+					</table>
+					<!--//입력테이블2-->
+	
+					<!-- 버튼양쪽정렬 -->
+					<ul class="btn_both">
+						<li class="btn_bothLeft">
+							<span class="btn_off"><a href="http://172.20.20.222:8080/rtask_0001_01.act?MENU_SEQ=71#" id="btnCustReg" onclick="">거래처 등록</a></span>
+						</li>
+						<li class="btn_bothRight">
+							<span class="btn_off"><a href="http://172.20.20.222:8080/rtask_0001_01.act?MENU_SEQ=71#" onclick="" id="keyInHelpC">신규</a></span>
+							<span class="btn_off"><a href="http://172.20.20.222:8080/rtask_0001_01.act?MENU_SEQ=71#" onclick="" id="keyInHelpU">저장</a></span>
+							<span class="btn_off"><a href="http://172.20.20.222:8080/rtask_0001_01.act?MENU_SEQ=71#" onclick="" id="keyInHelpD">삭제</a></span>
+						</li>
+					</ul>
+					<!-- //버튼양쪽정렬 -->
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- EVENT Zone -->
+	<div class="aside">
+		<script type="text/javascript" src="aside.js"></script>
+	</div>
+	<!-- //EVENT Zone -->
+</div>
+<!-- //container -->
+
+<!-- footer-->
+<div id="footer">
+	<script type="text/javascript" src="footer.js"></script><span style="font-size:8pt; color:#666666;">COPYRIGHT(C) 2011 WEBCASH. ALL RIGHTS RESERVED.</span>
+</div>
+<!-- //footer-->
+
+</div>
+</form>
+
+
+
+
+<div style="position: absolute; top: 30%; left: 30%; display: none; " id="_Jex_loadingbar"><img src="loading.gif" alt="잠시만 기다려주세요."></div></body></html>
