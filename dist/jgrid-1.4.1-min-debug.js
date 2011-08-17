@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 21
- * Date: Wed Aug 17 10:19:22 KST 2011
+ * JexGrid Build 22
+ * Date: Wed Aug 17 10:24:02 KST 2011
  */
 /*
 AUTHOR
@@ -124,25 +124,25 @@ var array_extension = {};
       if(typeof f !== "function") {
         throw new TypeError;
       }
-      for(var d = [], c = 0;c < a;c++) {
-        if(c in b) {
-          var g = b[c];
-          f.call(e, g, c, b) && d.push(g)
+      for(var c = [], d = 0;d < a;d++) {
+        if(d in b) {
+          var g = b[d];
+          f.call(e, g, d, b) && c.push(g)
         }
       }
-      return d
+      return c
     }
   }
   if(!f.forEach) {
     f.forEach = function(f, e) {
-      var b, a = Object(this), d = a.length >>> 0, c = 0;
+      var b, a = Object(this), c = a.length >>> 0, d = 0;
       if(!f || !f.call) {
         throw new TypeError;
       }
-      for(e && (b = e);c < d;) {
-        var g = String(c);
-        a.hasOwnProperty(g) && (g = a[g], f.call(b, g, c, a));
-        c++
+      for(e && (b = e);d < c;) {
+        var g = String(d);
+        a.hasOwnProperty(g) && (g = a[g], f.call(b, g, d, a));
+        d++
       }
     }
   }
@@ -155,8 +155,8 @@ var array_extension = {};
       if(typeof f !== "function") {
         throw new TypeError;
       }
-      for(var d = 0;d < a;d++) {
-        if(d in b && !f.call(e, b[d], d, b)) {
+      for(var c = 0;c < a;c++) {
+        if(c in b && !f.call(e, b[c], c, b)) {
           return!1
         }
       }
@@ -172,10 +172,10 @@ var array_extension = {};
       if(typeof f !== "function") {
         throw new TypeError;
       }
-      for(var d = Array(a), c = 0;c < a;c++) {
-        c in b && (d[c] = f.call(e, b[c], c, b))
+      for(var c = Array(a), d = 0;d < a;d++) {
+        d in b && (c[d] = f.call(e, b[d], d, b))
       }
-      return d
+      return c
     }
   }
   if(!f.some) {
@@ -187,8 +187,8 @@ var array_extension = {};
       if(typeof f !== "function") {
         throw new TypeError;
       }
-      for(var d = 0;d < a;d++) {
-        if(d in b && f.call(e, b[d], d, b)) {
+      for(var c = 0;c < a;c++) {
+        if(c in b && f.call(e, b[c], c, b)) {
           return!0
         }
       }
@@ -264,14 +264,14 @@ var engine_extension = {};
       if((b = this.replace(/[^\d\.\-]/g, "")).length === 0) {
         return NaN
       }
-      for(var a, d = 0, c = 0, g = b.length, j = 0, l = !1;j < g;j++) {
-        if(a = b.charAt(j), a === ".") {
-          if(++d === 2) {
+      for(var a, c = 0, d = 0, g = b.length, i = 0, l = !1;i < g;i++) {
+        if(a = b.charAt(i), a === ".") {
+          if(++c === 2) {
             l = !0;
             break
           }
         }else {
-          if(a === "-" && ++c === 2) {
+          if(a === "-" && ++d === 2) {
             l = !0;
             break
           }
@@ -286,19 +286,19 @@ var engine_extension = {};
       if((b = this.replace(/[^-\d\.]/g, "")).length === 0) {
         return NaN
       }
-      for(var a = 0, d = b.length, c, g = 0, j = 0;a < d;a++) {
-        if(c = b.charAt(a), c === ".") {
+      for(var a = 0, c = b.length, d, g = 0, i = 0;a < c;a++) {
+        if(d = b.charAt(a), d === ".") {
           if(g !== 0) {
             return NaN
           }else {
             g++
           }
         }else {
-          if(c === "-") {
-            if(j !== 0) {
+          if(d === "-") {
+            if(i !== 0) {
               return NaN
             }else {
-              j++
+              i++
             }
           }
         }
@@ -334,8 +334,8 @@ var engine_extension = {};
       if(this.length === 0 || b.length === 0) {
         return this
       }
-      for(var a = b.length, d = 0, c;d < a;d++) {
-        (c = this.indexOf(b[d])) !== -1 && this.splice(c, 1)
+      for(var a = b.length, c = 0, d;c < a;c++) {
+        (d = this.indexOf(b[c])) !== -1 && this.splice(d, 1)
       }
       return this
     }
@@ -363,9 +363,9 @@ var engine_extension = {};
       if(a.length === 0) {
         return this.length
       }
-      var d = [b, 0];
-      e.push.apply(d, a);
-      e.splice.apply(this, d);
+      var c = [b, 0];
+      e.push.apply(c, a);
+      e.splice.apply(this, c);
       return this.length
     }
   }
@@ -426,7 +426,7 @@ goog.globalize = function(f, h) {
 };
 goog.addDependency = function(f, h, e) {
   if(!COMPILED) {
-    for(var b, f = f.replace(/\\/g, "/"), a = goog.dependencies_, d = 0;b = h[d];d++) {
+    for(var b, f = f.replace(/\\/g, "/"), a = goog.dependencies_, c = 0;b = h[c];c++) {
       a.nameToPath[b] = f, f in a.pathToNames || (a.pathToNames[f] = {}), a.pathToNames[f][b] = !0
     }
     for(b = 0;h = e[b];b++) {
@@ -491,12 +491,12 @@ if(!COMPILED && goog.ENABLE_DEBUG_LOADER) {
     function f(a) {
       if(!(a in b.written)) {
         if(!(a in b.visited) && (b.visited[a] = !0, a in b.requires)) {
-          for(var c in b.requires[a]) {
-            if(!goog.isProvided_(c)) {
-              if(c in b.nameToPath) {
-                f(b.nameToPath[c])
+          for(var d in b.requires[a]) {
+            if(!goog.isProvided_(d)) {
+              if(d in b.nameToPath) {
+                f(b.nameToPath[d])
               }else {
-                throw Error("Undefined nameToPath for " + c);
+                throw Error("Undefined nameToPath for " + d);
               }
             }
           }
@@ -695,10 +695,10 @@ goog.getCssName = function(f, h) {
     return goog.cssNameMapping_[a] || a
   }, b;
   b = goog.cssNameMapping_ ? goog.cssNameMappingStyle_ == "BY_WHOLE" ? e : function(a) {
-    for(var a = a.split("-"), d = [], c = 0;c < a.length;c++) {
-      d.push(e(a[c]))
+    for(var a = a.split("-"), c = [], d = 0;d < a.length;d++) {
+      c.push(e(a[d]))
     }
-    return d.join("-")
+    return c.join("-")
   } : function(a) {
     return a
   };
@@ -734,12 +734,12 @@ goog.base = function(f, h, e) {
   if(b.superClass_) {
     return b.superClass_.constructor.apply(f, Array.prototype.slice.call(arguments, 1))
   }
-  for(var a = Array.prototype.slice.call(arguments, 2), d = !1, c = f.constructor;c;c = c.superClass_ && c.superClass_.constructor) {
-    if(c.prototype[h] === b) {
-      d = !0
+  for(var a = Array.prototype.slice.call(arguments, 2), c = !1, d = f.constructor;d;d = d.superClass_ && d.superClass_.constructor) {
+    if(d.prototype[h] === b) {
+      c = !0
     }else {
-      if(d) {
-        return c.prototype[h].apply(f, a)
+      if(c) {
+        return d.prototype[h].apply(f, a)
       }
     }
   }
@@ -757,7 +757,7 @@ var jx = {util:{}}, Util = {}, echo = {};
 (function() {
   var f = window.console, h = [], e;
   e = f && f.log ? function(b) {
-    for(var a = 0, d = arguments.length;a < d;a++) {
+    for(var a = 0, c = arguments.length;a < c;a++) {
       f.log(arguments[a])
     }
   } : function(b) {
@@ -804,11 +804,11 @@ var jx = {util:{}}, Util = {}, echo = {};
     }
     return!1
   };
-  Util.ifNull = function(b, a, d) {
-    return b == null ? a : d === void 0 ? b : d
+  Util.ifNull = function(b, a, c) {
+    return b == null ? a : c === void 0 ? b : c
   };
-  Util.ifTrue = function(b, a, d) {
-    return b === !0 ? a : d === void 0 ? b : d
+  Util.ifTrue = function(b, a, c) {
+    return b === !0 ? a : c === void 0 ? b : c
   };
   Util.isFunction = function(b) {
     return typeof b == "function"
@@ -826,20 +826,20 @@ var jx = {util:{}}, Util = {}, echo = {};
     var a = Array.isArray;
     return b && typeof b == "object" && (a && a(b) || typeof b.length == "number" && b.hasOwnProperty("length") && !b.propertyIsEnumerable("length"))
   };
-  Util.split = function(b, a, d, c) {
+  Util.split = function(b, a, c, d) {
     if(typeof b !== "string") {
       return[]
     }
     a = a === void 0 ? /\s+/ : a;
-    d = d === void 0 ? function(a) {
-      return!!a
-    } : d;
     c = c === void 0 ? function(a) {
-      return $.trim(a)
+      return!!a
     } : c;
+    d = d === void 0 ? function(a) {
+      return $.trim(a)
+    } : d;
     b = b.split(a);
-    c && (b = b.map(c));
-    d && (b = b.filter(d));
+    d && (b = b.map(d));
+    c && (b = b.filter(c));
     return b
   };
   Util.isEmpty = function(b) {
@@ -891,7 +891,7 @@ var jx = {util:{}}, Util = {}, echo = {};
     if(!Util.isArray(b)) {
       return!1
     }
-    for(var a = 0, d = b.length;a < d;a++) {
+    for(var a = 0, c = b.length;a < c;a++) {
       if(b.hasOwnProperty(a)) {
         return!1
       }
@@ -941,18 +941,18 @@ var jx = {util:{}}, Util = {}, echo = {};
         return b
     }
     if(Util.isArray(b)) {
-      for(var a = [], d = 0, c = b.length;d < c;d++) {
-        d in b && (a[d] = Util.deepClone(b[d]))
+      for(var a = [], c = 0, d = b.length;c < d;c++) {
+        c in b && (a[c] = Util.deepClone(b[c]))
       }
       return a
     }
     a = {};
-    for(d in b) {
-      b.hasOwnProperty(d) && (a[d] = Util.deepClone(b[d]))
+    for(c in b) {
+      b.hasOwnProperty(c) && (a[c] = Util.deepClone(b[c]))
     }
     return a
   };
-  Util.clone = function(b, a, d) {
+  Util.clone = function(b, a, c) {
     if(!b) {
       return b
     }
@@ -967,67 +967,67 @@ var jx = {util:{}}, Util = {}, echo = {};
         return b
     }
     if(Util.isArray(b)) {
-      if(d === 1) {
+      if(c === 1) {
         return Array.prototype.slice.call(b)
       }
-      for(var c = [], g = b.length, j = 0, d = d !== void 0 ? d - 1 : void 0;j < g;j++) {
-        j in b && (c[j] = Util.clone(b[j], a, d))
+      for(var d = [], g = b.length, i = 0, c = c !== void 0 ? c - 1 : void 0;i < g;i++) {
+        i in b && (d[i] = Util.clone(b[i], a, c))
       }
-      return c
+      return d
     }
-    c = {};
+    d = {};
     g = Util.isEmptyObj(a);
-    if(d === 1) {
+    if(c === 1) {
       if(g) {
-        for(j in b) {
-          b.hasOwnProperty(j) && (c[j] = b[j])
+        for(i in b) {
+          b.hasOwnProperty(i) && (d[i] = b[i])
         }
       }else {
-        for(j in a) {
-          a.hasOwnProperty(j) && b.hasOwnProperty(j) && (c[j] = b[j])
+        for(i in a) {
+          a.hasOwnProperty(i) && b.hasOwnProperty(i) && (d[i] = b[i])
         }
       }
     }else {
-      if(d = d !== void 0 ? d - 1 : void 0, g) {
-        for(j in b) {
-          b.hasOwnProperty(j) && (c[j] = Util.clone(b[j], void 0, d))
+      if(c = c !== void 0 ? c - 1 : void 0, g) {
+        for(i in b) {
+          b.hasOwnProperty(i) && (d[i] = Util.clone(b[i], void 0, c))
         }
       }else {
-        for(j in a) {
-          a.hasOwnProperty(j) && b.hasOwnProperty(j) && (c[j] = Util.clone(b[j], void 0, d))
+        for(i in a) {
+          a.hasOwnProperty(i) && b.hasOwnProperty(i) && (d[i] = Util.clone(b[i], void 0, c))
         }
       }
     }
-    return c
+    return d
   };
   Util.toArray = function(b) {
-    var a = [], d;
-    for(d in b) {
-      b.hasOwnProperty(d) && a.push(b[d])
+    var a = [], c;
+    for(c in b) {
+      b.hasOwnProperty(c) && a.push(b[c])
     }
     return a
   };
   Util.toArrayWithKey = function(b) {
-    var a = [], d;
-    for(d in b) {
-      b.hasOwnProperty(d) && a.push({key:d, val:b[d]})
+    var a = [], c;
+    for(c in b) {
+      b.hasOwnProperty(c) && a.push({key:c, val:b[c]})
     }
     return a
   };
   Util.random = function(b) {
     return Math.floor(b * Math.random())
   };
-  Util.bound = function(b, a, d) {
-    isNaN(d) || (b = Math.min(b, d));
+  Util.bound = function(b, a, c) {
+    isNaN(c) || (b = Math.min(b, c));
     isNaN(a) || (b = Math.max(b, a));
     return b
   };
   Util.callFn = function() {
     return arguments.length <= 3 ? arguments[1].call(arguments[0], arguments[2]) : arguments[1].apply(arguments[0], Array.prototype.slice.call(arguments, 2))
   };
-  Util.formatNumber = function(b, a, d, c, g) {
-    var d = d === void 0 ? "&#8361; " : d, a = isNaN(a) ? 0 : a, c = c === void 0 ? "." : c, g = g === void 0 ? "," : g, j = b < 0 ? "-" : "", l = parseInt(b = Math.abs(+b || 0).toFixed(a), 10) + "", i = l.length, i = i > 3 ? i % 3 : 0;
-    return d + j + (i ? l.substr(0, i) + g : "") + l.substr(i).replace(/(\d{3})(?=\d)/g, "$1" + g) + (a ? c + Math.abs(b - l).toFixed(a).slice(2) : "")
+  Util.formatNumber = function(b, a, c, d, g) {
+    var c = c === void 0 ? "&#8361; " : c, a = isNaN(a) ? 0 : a, d = d === void 0 ? "." : d, g = g === void 0 ? "," : g, i = b < 0 ? "-" : "", l = parseInt(b = Math.abs(+b || 0).toFixed(a), 10) + "", j = l.length, j = j > 3 ? j % 3 : 0;
+    return c + i + (j ? l.substr(0, j) + g : "") + l.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + g) + (a ? d + Math.abs(b - l).toFixed(a).slice(2) : "")
   };
   Util.getBodyScroll = function() {
     var b = 0, a = 0;
@@ -1052,25 +1052,25 @@ var jx = {util:{}}, Util = {}, echo = {};
       return!0
     }
     if(b.className) {
-      for(var d = b.classList ? b.classList : Util.split(b.className), c = 0, g = d.length;c < g;c++) {
-        if(d[c] === a) {
+      for(var c = b.classList ? b.classList : Util.split(b.className), d = 0, g = c.length;d < g;d++) {
+        if(c[d] === a) {
           return!0
         }
       }
     }
     return!1
   };
-  Util.hasTagAndClass = function(b, a, d) {
-    if(b == null || a == null || d == null) {
+  Util.hasTagAndClass = function(b, a, c) {
+    if(b == null || a == null || c == null) {
       return!1
     }
     if(b.tagName === a) {
-      if(b.className === d) {
+      if(b.className === c) {
         return!0
       }
-      if(b.className && b.className.length >= d.length) {
-        for(var b = b.classList ? b.classList : Util.split(b.className), a = 0, c = b.length;a < c;a++) {
-          if(b[a] === d) {
+      if(b.className && b.className.length >= c.length) {
+        for(var b = b.classList ? b.classList : Util.split(b.className), a = 0, d = b.length;a < d;a++) {
+          if(b[a] === c) {
             return!0
           }
         }
@@ -1078,22 +1078,22 @@ var jx = {util:{}}, Util = {}, echo = {};
     }
     return!1
   };
-  Util.closest = function(b, a, d) {
+  Util.closest = function(b, a, c) {
     if(Util.hasClass(b, a)) {
       return b
     }
-    for(b = b.parentNode;Util.isNotNull(b) && b !== d;b = b.parentNode) {
+    for(b = b.parentNode;Util.isNotNull(b) && b !== c;b = b.parentNode) {
       if(Util.hasClass(b, a)) {
         return b
       }
     }
   };
-  Util.closestWithTag = function(b, a, d, c) {
-    if(Util.hasTagAndClass(b, a, d)) {
+  Util.closestWithTag = function(b, a, c, d) {
+    if(Util.hasTagAndClass(b, a, c)) {
       return b
     }
-    for(b = b.parentNode;Util.isNotNull(b) && b !== c;b = b.parentNode) {
-      if(Util.hasTagAndClass(b, a, d)) {
+    for(b = b.parentNode;Util.isNotNull(b) && b !== d;b = b.parentNode) {
+      if(Util.hasTagAndClass(b, a, c)) {
         return b
       }
     }
@@ -1103,46 +1103,46 @@ var jx = {util:{}}, Util = {}, echo = {};
       if(Util.hasClass(b, a)) {
         return b
       }
-      for(var d = 0, c = b.childNodes, g = c.length, j;d < g;d++) {
-        if(Util.isNotNull(c[d]) && (j = Util.findFirstByClass(c[d], a)) !== void 0) {
-          return j
+      for(var c = 0, d = b.childNodes, g = d.length, i;c < g;c++) {
+        if(Util.isNotNull(d[c]) && (i = Util.findFirstByClass(d[c], a)) !== void 0) {
+          return i
         }
       }
     }
   };
-  Util.findFirstByTagAndClass = function(b, a, d) {
+  Util.findFirstByTagAndClass = function(b, a, c) {
     if(b != null) {
-      if(Util.hasTagAndClass(b, a, d)) {
+      if(Util.hasTagAndClass(b, a, c)) {
         return b
       }
-      for(var c = 0, b = b.childNodes, g = b.length, j;c < g;c++) {
-        if(Util.isNotNull(b[c]) && (j = Util.findFirstByTagAndClass(b[c], a, d)) !== void 0) {
-          return j
+      for(var d = 0, b = b.childNodes, g = b.length, i;d < g;d++) {
+        if(Util.isNotNull(b[d]) && (i = Util.findFirstByTagAndClass(b[d], a, c)) !== void 0) {
+          return i
         }
       }
     }
   };
-  Util.findByClass = function(b, a, d) {
-    d === void 0 && (d = []);
-    if(b == null) {
-      return d
-    }
-    Util.hasClass(b, a) && d.push(b);
-    for(var c = 0, b = b.childNodes, g = b.length;c < g;c++) {
-      Util.isNotNull(b[c]) && Util.findByClass(b[c], a, d)
-    }
-    return d
-  };
-  Util.findByTagAndClass = function(b, a, d, c) {
+  Util.findByClass = function(b, a, c) {
     c === void 0 && (c = []);
     if(b == null) {
       return c
     }
-    Util.hasTagAndClass(b, a, d) && c.push(b);
-    for(var g = 0, b = b.childNodes, j = b.length;g < j;g++) {
-      Util.isNotNull(b[g]) && Util.findByTagAndClass(b[g], a, d, c)
+    Util.hasClass(b, a) && c.push(b);
+    for(var d = 0, b = b.childNodes, g = b.length;d < g;d++) {
+      Util.isNotNull(b[d]) && Util.findByClass(b[d], a, c)
     }
     return c
+  };
+  Util.findByTagAndClass = function(b, a, c, d) {
+    d === void 0 && (d = []);
+    if(b == null) {
+      return d
+    }
+    Util.hasTagAndClass(b, a, c) && d.push(b);
+    for(var g = 0, b = b.childNodes, i = b.length;g < i;g++) {
+      Util.isNotNull(b[g]) && Util.findByTagAndClass(b[g], a, c, d)
+    }
+    return d
   };
   Util.getHead = function() {
     return document.head ? document.head : document.getElementsByTagName("head")[0]
@@ -1151,12 +1151,12 @@ var jx = {util:{}}, Util = {}, echo = {};
     return b.appendChild(document.createElement(a))
   };
   Util.appendHTML = function(b, a) {
-    var d = document.createElement("div"), c, g = 0, j = [];
-    d.innerHTML = a;
-    for(c = d.childNodes.length;g < c;g++) {
-      j.push(b.appendChild(d.firstChild))
+    var c = document.createElement("div"), d, g = 0, i = [];
+    c.innerHTML = a;
+    for(d = c.childNodes.length;g < d;g++) {
+      i.push(b.appendChild(c.firstChild))
     }
-    return j
+    return i
   };
   Util.createStyle = function(b) {
     b == null && (b = "");
@@ -1203,12 +1203,12 @@ var jx = {util:{}}, Util = {}, echo = {};
     }
     return a
   };
-  Util.contains = function(b, a, d) {
+  Util.contains = function(b, a, c) {
     for(;a != null;) {
       if(a === b) {
         return!0
       }
-      if(a === d) {
+      if(a === c) {
         break
       }
       a = a.parentNode
@@ -1225,8 +1225,8 @@ var jx = {util:{}}, Util = {}, echo = {};
     if(b.length !== a.length) {
       return!1
     }
-    for(var d = 0, c = b.length;d < c;d++) {
-      if(b.hasOwnProperty(d) && !a.hasOwnProperty(d) || a.hasOwnProperty(d) && !b.hasOwnProperty(d) || b[d] !== a[d]) {
+    for(var c = 0, d = b.length;c < d;c++) {
+      if(b.hasOwnProperty(c) && !a.hasOwnProperty(c) || a.hasOwnProperty(c) && !b.hasOwnProperty(c) || b[c] !== a[c]) {
         return!1
       }
     }
@@ -1242,49 +1242,49 @@ var jx = {util:{}}, Util = {}, echo = {};
     if(typeof b !== "object" || typeof a !== "object") {
       return!1
     }
-    for(var d in b) {
-      if(b.hasOwnProperty(d) && (!a.hasOwnProperty(d) || b[d] !== a[d])) {
+    for(var c in b) {
+      if(b.hasOwnProperty(c) && (!a.hasOwnProperty(c) || b[c] !== a[c])) {
         return!1
       }
     }
-    for(d in a) {
-      if(a.hasOwnProperty(d) && (!b.hasOwnProperty(d) || b[d] !== a[d])) {
+    for(c in a) {
+      if(a.hasOwnProperty(c) && (!b.hasOwnProperty(c) || b[c] !== a[c])) {
         return!1
       }
     }
     return!0
   };
-  Util.areEqualComplex = function(b, a, d) {
+  Util.areEqualComplex = function(b, a, c) {
     if(b == null || a == null) {
       return!1
     }
     if(b === a) {
       return!0
     }
-    var c = d.length, g = d[0];
-    if(c === 1) {
+    var d = c.length, g = c[0];
+    if(d === 1) {
       return g === "array" ? Util.areEqualArrays(b, a) : Util.areEqualObjects(b, a)
     }
-    if(c > 1) {
-      d = d.slice(1);
-      c = 0;
+    if(d > 1) {
+      c = c.slice(1);
+      d = 0;
       if(g === "array") {
         if(b.length !== a.length) {
           return!1
         }
-        for(g = b.length;c < g;c++) {
-          if(!a.hasOwnProperty(c) || !Util.areEqualComplex(b[c], a[c], d)) {
+        for(g = b.length;d < g;d++) {
+          if(!a.hasOwnProperty(d) || !Util.areEqualComplex(b[d], a[d], c)) {
             return!1
           }
         }
       }else {
-        for(c in b) {
-          if(b.hasOwnProperty(c) && (!a.hasOwnProperty(c) || !Util.areEqualComplex(b[c], a[c], d))) {
+        for(d in b) {
+          if(b.hasOwnProperty(d) && (!a.hasOwnProperty(d) || !Util.areEqualComplex(b[d], a[d], c))) {
             return!1
           }
         }
-        for(c in a) {
-          if(a.hasOwnProperty(c) && (!b.hasOwnProperty(c) || !Util.areEqualComplex(b[c], a[c], d))) {
+        for(d in a) {
+          if(a.hasOwnProperty(d) && (!b.hasOwnProperty(d) || !Util.areEqualComplex(b[d], a[d], c))) {
             return!1
           }
         }
@@ -1292,8 +1292,8 @@ var jx = {util:{}}, Util = {}, echo = {};
       return!0
     }
   };
-  Util.typeCheck = function(b, a, d, c, g) {
-    if(d && a === void 0 || c && a === null) {
+  Util.typeCheck = function(b, a, c, d, g) {
+    if(c && a === void 0 || d && a === null) {
       return!0
     }
     switch(typeof b) {
@@ -1312,16 +1312,16 @@ var jx = {util:{}}, Util = {}, echo = {};
     }
     throw new TypeError("object is not a " + b + ", but is a " + typeof a);
   };
-  Util.sprint = function(b, a, d, c) {
+  Util.sprint = function(b, a, c, d) {
     Util.typeCheck("string", b);
     Util.typeCheck("object", a);
-    Util.typeCheck("string", d, !0);
     Util.typeCheck("string", c, !0);
+    Util.typeCheck("string", d, !0);
     var g;
-    d === void 0 && (d = "%");
     c === void 0 && (c = "%");
+    d === void 0 && (d = "%");
     for(g in a) {
-      a.hasOwnProperty(g) && (b = b.replace(RegExp(d + g + c, "gm"), a[g]))
+      a.hasOwnProperty(g) && (b = b.replace(RegExp(c + g + d, "gm"), a[g]))
     }
     return b
   };
@@ -1336,11 +1336,11 @@ var jx = {util:{}}, Util = {}, echo = {};
     return b.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
   };
   Util.strReplace = function(b, a) {
-    var d, c = [];
-    for(d in a) {
-      a.hasOwnProperty(d) && c.push(Util.escapeRegExp(d))
+    var c, d = [];
+    for(c in a) {
+      a.hasOwnProperty(c) && d.push(Util.escapeRegExp(c))
     }
-    return b.replace(RegExp("(" + c.join("|") + ")", "gm"), function(c) {
+    return b.replace(RegExp("(" + d.join("|") + ")", "gm"), function(c) {
       return a[c]
     })
   };
@@ -1357,26 +1357,26 @@ var jx = {util:{}}, Util = {}, echo = {};
     return b
   };
   Util.which = function(b) {
-    for(var a = {}, d = 0, c;d < b.length;d++) {
-      if(c = b[d].toLowerCase(), c === "number") {
-        for(c = 48;c <= 57;c++) {
-          a[c] = !0
+    for(var a = {}, c = 0, d;c < b.length;c++) {
+      if(d = b[c].toLowerCase(), d === "number") {
+        for(d = 48;d <= 57;d++) {
+          a[d] = !0
         }
-        for(c = 96;c <= 105;c++) {
-          a[c] = !0
+        for(d = 96;d <= 105;d++) {
+          a[d] = !0
         }
       }else {
-        if(c === "alphabet") {
-          for(c = 65;c <= 90;c++) {
-            a[c] = !0
+        if(d === "alphabet") {
+          for(d = 65;d <= 90;d++) {
+            a[d] = !0
           }
         }else {
-          if(c === "arrow") {
-            for(c = 37;c <= 40;c++) {
-              a[c] = !0
+          if(d === "arrow") {
+            for(d = 37;d <= 40;d++) {
+              a[d] = !0
             }
           }else {
-            c.length > 1 && (c = c.replace(/\s/g, "")), c.length >= 3 && (c = c.replace(/numpad|num/g, "n").replace(/korean|kor/g, "kr")), a[Util.keyMapKeydown[c]] = !0
+            d.length > 1 && (d = d.replace(/\s/g, "")), d.length >= 3 && (d = d.replace(/numpad|num/g, "n").replace(/korean|kor/g, "kr")), a[Util.keyMapKeydown[d]] = !0
           }
         }
       }
@@ -1394,17 +1394,17 @@ var jx = {util:{}}, Util = {}, echo = {};
       if(arguments.length === 1) {
         e(arguments[0])
       }else {
-        for(var a = 0, d = arguments.length;a < d;a++) {
+        for(var a = 0, c = arguments.length;a < c;a++) {
           e(arguments[a])
         }
       }
     }
   };
   Util.open = function(b) {
-    var a = {url:"about:blank", name:"_blank", channelmode:"no", directories:"yes", fullscreen:"no", height:void 0, left:void 0, location:"yes", menubar:"yes", resizable:"yes", scrollbars:"yes", status:"yes", titlebar:"yes", toolbar:"yes", top:void 0, width:void 0, replace:void 0}, d;
+    var a = {url:"about:blank", name:"_blank", channelmode:"no", directories:"yes", fullscreen:"no", height:void 0, left:void 0, location:"yes", menubar:"yes", resizable:"yes", scrollbars:"yes", status:"yes", titlebar:"yes", toolbar:"yes", top:void 0, width:void 0, replace:void 0}, c;
     if(Util.isNotNull(b)) {
-      for(d in a) {
-        a.hasOwnProperty(d) && (a[d] = b[d])
+      for(c in a) {
+        a.hasOwnProperty(c) && (a[c] = b[c])
       }
     }
     b = Util.ifNull(a.height, "", "height=" + a.height + ", ") + Util.ifNull(a.left, "", "left=" + a.left + ", ") + Util.ifNull(a.top, "", "top=" + a.top + ", ") + Util.ifNull(a.width, "", "width=" + a.width + ", ") + "channelmode=" + a.channelmode + ", directories=" + a.directories + ", fullscreen=" + a.fullscreen + ", location=" + a.location + ", menubar=" + a.menubar + ", resizable=" + a.resizable + ", scrollbars=" + a.scrollbars + ", status=" + a.status + ", titlebar=" + a.titlebar + ", toolbar=" + 
@@ -1422,13 +1422,13 @@ var Tracer = {};
   var h = goog.getObjectByName("jx.util");
   goog.exportSymbol("Tracer", f);
   var e = f.prototype;
-  e.print = function(b, a, d) {
+  e.print = function(b, a, c) {
     b === void 0 && (b = "");
     a === void 0 && (a = "timer");
-    d === void 0 && (d = !0);
-    var c = this.timers[a], g = (new Date).getTime(), c = h.isNull(c) ? 0 : g - c;
-    h.print((this.stack.length > 0 ? this.stack + " :: " : "") + b + ", Time elapsed since last update: " + c + "ms");
-    d && (this.timers[a] = g)
+    c === void 0 && (c = !0);
+    var d = this.timers[a], g = (new Date).getTime(), d = h.isNull(d) ? 0 : g - d;
+    h.print((this.stack.length > 0 ? this.stack + " :: " : "") + b + ", Time elapsed since last update: " + d + "ms");
+    c && (this.timers[a] = g)
   };
   e.addStack = function(b) {
     this.stack = this.stack + " > " + b
@@ -1467,23 +1467,23 @@ var TimeWatch = {};
     b.push(e || null, (new Date).getTime())
   };
   h.toString = function() {
-    var e = this.laps, b = e.length, a = 2, d = b - (this._stopped ? 2 : 0), c = e[0], g = e[1], j = g, b = b > 2 ? [] : null, l = 0, i = "TimeWatch\n";
-    for(i += "start" + (c ? ": " + c : "") + " @" + g + "\n";a < d;a += 2) {
-      c = (c = e[a]) ? ": " + c : "", g = e[a + 1], b.push(j = g - j), l += j, i += "lap " + a / 2 + c + " @" + g + " +" + j + "ms\n", j = g
+    var e = this.laps, b = e.length, a = 2, c = b - (this._stopped ? 2 : 0), d = e[0], g = e[1], i = g, b = b > 2 ? [] : null, l = 0, j = "TimeWatch\n";
+    for(j += "start" + (d ? ": " + d : "") + " @" + g + "\n";a < c;a += 2) {
+      d = (d = e[a]) ? ": " + d : "", g = e[a + 1], b.push(i = g - i), l += i, j += "lap " + a / 2 + d + " @" + g + " +" + i + "ms\n", i = g
     }
-    d >= 2 && this._stopped && (c = (c = e[d]) ? ": " + c : "", g = e[d + 1], b.push(j = g - j), l += j, i += "stop" + c + " @" + g + " +" + j + "ms\n");
+    c >= 2 && this._stopped && (d = (d = e[c]) ? ": " + d : "", g = e[c + 1], b.push(i = g - i), l += i, j += "stop" + d + " @" + g + " +" + i + "ms\n");
     if(b) {
-      var e = b.length, p = l / e, f = 0;
-      i += "total number of laps: " + e + "\n";
-      i += "total elapsed time: " + l + "ms\n";
-      i += "average lap time: " + p.toFixed(2) + "ms\n";
+      var e = b.length, q = l / e, f = 0;
+      j += "total number of laps: " + e + "\n";
+      j += "total elapsed time: " + l + "ms\n";
+      j += "average lap time: " + q.toFixed(2) + "ms\n";
       b.forEach(function(a) {
-        f += (a - p) * (a - p)
+        f += (a - q) * (a - q)
       });
       f = Math.sqrt(f / e);
-      i += "standard deviation: " + f.toFixed(2) + "ms\n"
+      j += "standard deviation: " + f.toFixed(2) + "ms\n"
     }
-    return i
+    return j
   }
 })();
 console && console.log && console.log('reading javascript source "utiljquery.js"...');
@@ -1560,11 +1560,11 @@ var JGM = {};
     }
     if(this._map.hasOwnProperty(e)) {
       if(this._map[e].cacheModule) {
-        var a = b.mid = "JGM" + this.m.length++, d = new this[e](b);
+        var a = b.mid = "JGM" + this.m.length++, c = new this[e](b);
         this.m.hasOwnProperty(e) || (this.m[e] = {});
-        this.m[e][a] = d;
-        e === "Grid" && d.name && (this.gridMap[d.name] = d);
-        return d
+        this.m[e][a] = c;
+        e === "Grid" && c.name && (this.gridMap[c.name] = c);
+        return c
       }else {
         return new this[e](b)
       }
@@ -1573,23 +1573,23 @@ var JGM = {};
     }
   };
   JGM._destroy = function(e, b) {
-    var a, d, c, g;
-    for(d in b) {
-      if(b.hasOwnProperty(d)) {
-        switch(d) {
+    var a, c, d, g;
+    for(c in b) {
+      if(b.hasOwnProperty(c)) {
+        switch(c) {
           case "map":
-            a = b[d];
+            a = b[c];
             if(f.isString(a)) {
               a = f.split(a);
               g = a.length;
-              for(c = 0;c < g;c++) {
-                JGM._deleteMap(e, a[c])
+              for(d = 0;d < g;d++) {
+                JGM._deleteMap(e, a[d])
               }
             }else {
               if(a instanceof Array) {
                 g = a.length;
-                for(c = 0;c < g;c++) {
-                  f.emptyObject(a[c])
+                for(d = 0;d < g;d++) {
+                  f.emptyObject(a[d])
                 }
               }else {
                 f.emptyObject(a)
@@ -1597,30 +1597,30 @@ var JGM = {};
             }
             break;
           case "array":
-            a = b[d];
+            a = b[c];
             if(f.isString(a)) {
               a = f.split(a);
               g = a.length;
-              for(c = 0;c < g;c++) {
-                JGM._deleteArray(e, a[c])
+              for(d = 0;d < g;d++) {
+                JGM._deleteArray(e, a[d])
               }
             }else {
               a.length = 0
             }
             break;
           case "$":
-            a = b[d];
+            a = b[c];
             if(f.isString(a)) {
               a = f.split(a);
               g = a.length;
-              for(c = 0;c < g;c++) {
-                JGM._delete$(e, a[c])
+              for(d = 0;d < g;d++) {
+                JGM._delete$(e, a[d])
               }
             }else {
               if(a instanceof Array) {
                 g = a.length;
-                for(c = 0;c < g;c++) {
-                  h.unbindRemove(a[c])
+                for(d = 0;d < g;d++) {
+                  h.unbindRemove(a[d])
                 }
               }else {
                 h.unbindRemove(a)
@@ -1628,18 +1628,18 @@ var JGM = {};
             }
             break;
           case "style":
-            a = b[d];
+            a = b[c];
             if(f.isString(a)) {
               a = f.split(a);
               g = a.length;
-              for(c = 0;c < g;c++) {
-                JGM._deleteStyle(e, a[c])
+              for(d = 0;d < g;d++) {
+                JGM._deleteStyle(e, a[d])
               }
             }else {
               if(a instanceof Array) {
                 g = a.length;
-                for(c = 0;c < g;c++) {
-                  f.removeStyle(a[c])
+                for(d = 0;d < g;d++) {
+                  f.removeStyle(a[d])
                 }
               }else {
                 f.removeStyle(a)
@@ -1647,35 +1647,35 @@ var JGM = {};
             }
             break;
           case "property":
-            a = b[d];
+            a = b[c];
             if(f.isString(a)) {
               a = f.split(a);
               g = a.length;
-              for(c = 0;c < g;c++) {
-                delete e[a[c]]
+              for(d = 0;d < g;d++) {
+                delete e[a[d]]
               }
             }else {
               if(a instanceof Array) {
                 g = a.length;
-                for(c = 0;c < g;c++) {
-                  delete e[a[c]]
+                for(d = 0;d < g;d++) {
+                  delete e[a[d]]
                 }
               }
             }
             break;
           case "module":
-            a = b[d];
+            a = b[c];
             if(f.isString(a)) {
               a = f.split(a);
               g = a.length;
-              for(c = 0;c < g;c++) {
-                JGM._deleteModule(e, a[c])
+              for(d = 0;d < g;d++) {
+                JGM._deleteModule(e, a[d])
               }
             }else {
               if(a instanceof Array) {
                 g = a.length;
-                for(c = 0;c < g;c++) {
-                  a[c].destroy()
+                for(d = 0;d < g;d++) {
+                  a[d].destroy()
                 }
               }else {
                 a.destroy()
@@ -1683,10 +1683,10 @@ var JGM = {};
             }
             break;
           case "name":
-            e.hasOwnProperty("mid") && (JGM._remove(b[d], e.mid), delete e.mid);
+            e.hasOwnProperty("mid") && (JGM._remove(b[c], e.mid), delete e.mid);
             break;
           case "path":
-            e.hasOwnProperty("grid") && e.grid.hasOwnProperty(b[d]) && (delete e.grid[b[d]], delete e.grid)
+            e.hasOwnProperty("grid") && e.grid.hasOwnProperty(b[c]) && (delete e.grid[b[c]], delete e.grid)
         }
       }
     }
@@ -1770,37 +1770,37 @@ jx.grid.renderer = {};
   f = f.renderer = {};
   goog.exportSymbol("jx.grid.renderer", f);
   f.selectBox = function(f) {
-    var e = f.mapping, b = f.attr, a = f["default"], d = f.style, c = f.callback, g, j, l, i = 0, p = [], k = [], q = "<select";
+    var e = f.mapping, b = f.attr, a = f["default"], c = f.style, d = f.callback, g, i, l, j = 0, q = [], k = [], p = "<select";
     if(b) {
       for(l in b) {
-        b.hasOwnProperty(l) && (q += " " + l + '="' + b[l] + '"')
+        b.hasOwnProperty(l) && (p += " " + l + '="' + b[l] + '"')
       }
     }
-    if(d) {
-      q += ' style="';
-      for(l in d) {
-        d.hasOwnProperty(l) && (q += l + ":" + d[l] + ";")
+    if(c) {
+      p += ' style="';
+      for(l in c) {
+        c.hasOwnProperty(l) && (p += l + ":" + c[l] + ";")
       }
-      q += '"'
+      p += '"'
     }
-    q += ">";
+    p += ">";
     for(g in e) {
-      e.hasOwnProperty(g) && (f = e[g], p.push(g), k.push(f), a == f && (j = i), i++)
+      e.hasOwnProperty(g) && (f = e[g], q.push(g), k.push(f), a == f && (i = j), j++)
     }
     return function(a) {
-      var d, g, b = q;
-      for(g = 0;g < i;g++) {
+      var c, g, b = p;
+      for(g = 0;g < j;g++) {
         if(a == k[g]) {
-          d = g;
+          c = g;
           break
         }
       }
-      d === void 0 && (d = j);
-      for(g = 0;g < i;g++) {
-        b += '<option value="' + k[g] + '"', g === d && (b += ' selected="selected"'), b += ">" + p[g] + "</option>"
+      c === void 0 && (c = i);
+      for(g = 0;g < j;g++) {
+        b += '<option value="' + k[g] + '"', g === c && (b += ' selected="selected"'), b += ">" + q[g] + "</option>"
       }
       b += "</select>";
-      c && (d = [], d.push(b), Array.prototype.push.apply(d, arguments), b = c.apply(this, d));
+      d && (c = [], c.push(b), Array.prototype.push.apply(c, arguments), b = d.apply(this, c));
       return b
     }
   }
@@ -1811,16 +1811,16 @@ jx.lang.Disposable = {};
 (function() {
   function f() {
   }
-  function h(a, d, j) {
+  function h(a, c, i) {
     if(typeof a != "object") {
       return!1
     }
-    var b, i, e;
-    if(d) {
-      for(var j = 0, f = d.length;j < f;j++) {
-        if(b = d[j], this.hasOwnProperty(b)) {
+    var b, j, e;
+    if(c) {
+      for(var i = 0, f = c.length;i < f;i++) {
+        if(b = c[i], this.hasOwnProperty(b)) {
           if(a.hasOwnProperty(b)) {
-            if(i = this[b], e = a[b], i !== a && !(i === i || e === e)) {
+            if(j = this[b], e = a[b], j !== a && !(j === j || e === e)) {
               return!1
             }
           }else {
@@ -1833,33 +1833,33 @@ jx.lang.Disposable = {};
         }
       }
     }else {
-      if(j) {
+      if(i) {
         for(b in this) {
           if(this.hasOwnProperty(b)) {
             if(!a.hasOwnProperty(b)) {
               return!1
             }
-            i = this[b];
+            j = this[b];
             e = a[b];
-            if(i !== e) {
-              if(i) {
-                if(typeof i != "object" || typeof e != "object") {
+            if(j !== e) {
+              if(j) {
+                if(typeof j != "object" || typeof e != "object") {
                   return!1
                 }
-                if(i.equals) {
-                  if(!i.equals(e, null, j - 1)) {
+                if(j.equals) {
+                  if(!j.equals(e, null, i - 1)) {
                     return!1
                   }
                 }else {
-                  if(e.equals && !e.equals(i, null, j - 1)) {
+                  if(e.equals && !e.equals(j, null, i - 1)) {
                     return!1
                   }
                 }
-                if(!h.call(i, e, null, j - 1)) {
+                if(!h.call(j, e, null, i - 1)) {
                   return!1
                 }
               }else {
-                if(!(i === i || e === e)) {
+                if(!(j === j || e === e)) {
                   return!1
                 }
               }
@@ -1870,7 +1870,7 @@ jx.lang.Disposable = {};
         for(b in this) {
           if(this.hasOwnProperty(b)) {
             if(a.hasOwnProperty(b)) {
-              if(i = this[b], e = a[b], i !== a && !(i === i || e === e)) {
+              if(j = this[b], e = a[b], j !== a && !(j === j || e === e)) {
                 return!1
               }
             }else {
@@ -1889,28 +1889,28 @@ jx.lang.Disposable = {};
   }
   function e(a, g) {
     if(this != goog.global) {
-      var j, b;
+      var i, b;
       if(a) {
-        for(j in this) {
-          if(this.hasOwnProperty(j)) {
-            if((b = this[j]) && typeof b == "object") {
+        for(i in this) {
+          if(this.hasOwnProperty(i)) {
+            if((b = this[i]) && typeof b == "object") {
               if(b.dispose) {
                 b.dispose(a - 1, g)
               }else {
                 if(g) {
-                  if(d(b)) {
+                  if(c(b)) {
                     b.length = 0
                   }
                   e.call(b, a - 1, g)
                 }
               }
             }
-            delete this[j]
+            delete this[i]
           }
         }
       }else {
-        for(j in this) {
-          this.hasOwnProperty(j) && delete this[j]
+        for(i in this) {
+          this.hasOwnProperty(i) && delete this[i]
         }
       }
     }
@@ -1918,13 +1918,13 @@ jx.lang.Disposable = {};
   var b = goog.getObjectByName("jx.util");
   goog.exportSymbol("jx.lang.Disposable", f);
   goog.exportProperty(f.prototype, "dispose", e);
-  var a = f.prototype, d = b.isArray;
-  b.equals = Object.equals = function(a, d, j, b) {
-    return typeof a == "object" ? h.call(a, d, j, b) : a !== a && d !== d
+  var a = f.prototype, c = b.isArray;
+  b.equals = Object.equals = function(a, c, i, b) {
+    return typeof a == "object" ? h.call(a, c, i, b) : a !== a && c !== c
   };
-  b.dispose = Object.dispose = function(a, d, j) {
+  b.dispose = Object.dispose = function(a, c, i) {
     if(typeof a == "object") {
-      return e.call(a, d, j)
+      return e.call(a, c, i)
     }
   };
   a.equals = h;
@@ -2057,29 +2057,29 @@ jx.events.EventDispatcher = {};
     b.call(this._handlers, -1, !0);
     b.call(this)
   };
-  e.addEventListener = function(a, d) {
+  e.addEventListener = function(a, c) {
     if(!a) {
       throw Error("Invalid event type: " + a);
     }
-    if(typeof d != "function") {
+    if(typeof c != "function") {
       throw Error("Event listener must be a function");
     }
     if(!this._handlers) {
       this._handlers = {}
     }
-    var c = this._handlers, a = (a + "").toLowerCase();
-    c.hasOwnProperty(a) || (c[a] = []);
-    c = c[a];
-    c.indexOf(d) === -1 && c.push(d)
+    var d = this._handlers, a = (a + "").toLowerCase();
+    d.hasOwnProperty(a) || (d[a] = []);
+    d = d[a];
+    d.indexOf(c) === -1 && d.push(c)
   };
-  e.removeEventListener = function(a, d) {
+  e.removeEventListener = function(a, c) {
     if(this._handlers) {
-      var a = (a + "").toLowerCase(), c = this._handlers;
-      if(c.hasOwnProperty(a)) {
-        for(var g = c[a], j = -1;(j = g.indexOf(d, j + 1)) !== -1;) {
-          g.splice(j--, 1)
+      var a = (a + "").toLowerCase(), d = this._handlers;
+      if(d.hasOwnProperty(a)) {
+        for(var g = d[a], i = -1;(i = g.indexOf(c, i + 1)) !== -1;) {
+          g.splice(i--, 1)
         }
-        g.length === 0 && delete c[a]
+        g.length === 0 && delete d[a]
       }
     }
   };
@@ -2094,11 +2094,11 @@ jx.events.EventDispatcher = {};
       a.defaultAction && a.defaultAction(this);
       return!0
     }
-    var d = this._handlers, c = (a.type + "").toLowerCase();
+    var c = this._handlers, d = (a.type + "").toLowerCase();
     a.target = this;
-    if(d.hasOwnProperty(c)) {
-      for(var d = d[c].slice(), c = 0, g = d.length, j;c < g && !a.stopPropagation;c++) {
-        j = d[c], j.handleEvent ? j.handleEvent(a) : j.call(this, a)
+    if(c.hasOwnProperty(d)) {
+      for(var c = c[d].slice(), d = 0, g = c.length, i;d < g && !a.stopPropagation;d++) {
+        i = c[d], i.handleEvent ? i.handleEvent(a) : i.call(this, a)
       }
     }
     if(a.cancelable && a.defaultPrevented) {
@@ -2202,19 +2202,19 @@ jx.grid.BaseModule = {};
         this.grid = b.grid
       }
     }
-    var a = this._defaultOptions && this._defaultOptions(b.grid), d = b && b.options;
-    if(d || a) {
-      a || (a = {}), d && $.extend(!0, a, d), this._options = a, this.dispatchEvent({type:"afteroption", options:a})
+    var a = this._defaultOptions && this._defaultOptions(b.grid), c = b && b.options;
+    if(c || a) {
+      a || (a = {}), c && $.extend(!0, a, c), this._options = a, this.dispatchEvent({type:"afteroption", options:a})
     }
     this._init && (this.dispatchEvent({type:"beforeinit"}), this._init(b), this.dispatchEvent({type:"afterinit"}));
-    var c = this, g = this.grid;
+    var d = this, g = this.grid;
     g && ["Dispose", "CreateCss", "CreateDynamicCss", "Render", "Keydown", "Keyup", "Keypress", "Mousein", "Mouseout", "Mouseenter", "Mouseleave", "Mousemove", "Mouseover", "Mousedown", "Mouseup", "Click", "Dblclick", "Resize", "ResizeWidth", "ResizeHeight", "Scroll", "ScrollH", "ScrollV"].forEach(function(a) {
-      var d = "before" + a, a = "after" + a, b = "_" + d, e = "_" + a;
-      c[b] && g.addEventListener(d, function(a) {
-        return c[b](a)
+      var c = "before" + a, a = "after" + a, b = "_" + c, e = "_" + a;
+      d[b] && g.addEventListener(c, function(a) {
+        return d[b](a)
       });
-      c[e] && g.addEventListener(a, function(a) {
-        return c[e](a)
+      d[e] && g.addEventListener(a, function(a) {
+        return d[e](a)
       })
     });
     this._bindEvents && (this.dispatchEvent({type:"beforebindevents"}), this._bindEvents(b), this.dispatchEvent({type:"afterbindevents"}));
@@ -2267,24 +2267,24 @@ jx.grid.BaseModule = {};
     var b = this.grid.event;
     return b.trigger.apply(b, arguments)
   };
-  h.toCssStyle = function(b, a, d) {
-    var c = [];
-    d || (b = "#" + this.grid.mid + " " + b);
+  h.toCssStyle = function(b, a, c) {
+    var d = [];
+    c || (b = "#" + this.grid.mid + " " + b);
     if(typeof a != "string") {
-      var g, d = "";
-      a.hasOwnProperty("_prepend") && (a._prepend && c.push(a._prepend), delete a._prepend);
-      a.hasOwnProperty("_append") && (a._append && (d = ";" + a._append), delete a._append);
+      var g, c = "";
+      a.hasOwnProperty("_prepend") && (a._prepend && d.push(a._prepend), delete a._prepend);
+      a.hasOwnProperty("_append") && (a._append && (c = ";" + a._append), delete a._append);
       for(g in a) {
-        c.push(g + ":" + a[g])
+        d.push(g + ":" + a[g])
       }
-      c = c.join(";") + d
+      d = d.join(";") + c
     }
-    return b + "{" + c + "}"
+    return b + "{" + d + "}"
   };
-  h.toCssStyles = function(b, a, d) {
-    var b = b || [], c;
-    for(c in a) {
-      b.push(this.toCssStyle(c, a[c], d))
+  h.toCssStyles = function(b, a, c) {
+    var b = b || [], d;
+    for(d in a) {
+      b.push(this.toCssStyle(d, a[d], c))
     }
     return b
   }
@@ -2322,12 +2322,12 @@ jx.data.DataManager = {};
   };
   var b = f.prototype;
   b.__init = function(a) {
-    for(var d = 0, c = this._options.uniqueKeys, g, j = this.uniqueMap, b = c.length, i = this.keyToType, p = this.grid.colDefMgr.getAll();d < b;d++) {
-      g = c[d], typeof g === "string" && (j[g] = {})
+    for(var c = 0, d = this._options.uniqueKeys, g, i = this.uniqueMap, b = d.length, j = this.keyToType, q = this.grid.colDefMgr.getAll();c < b;c++) {
+      g = d[c], typeof g === "string" && (i[g] = {})
     }
-    b = p.length;
-    for(d = 0;d < b;d++) {
-      c = p[d], g = c.key, c.hasOwnProperty("unique") && c.unique === !0 && !j.hasOwnProperty(g) && (j[g] = {}), i[g] = this.mapDatatype(c.type)
+    b = q.length;
+    for(c = 0;c < b;c++) {
+      d = q[c], g = d.key, d.hasOwnProperty("unique") && d.unique === !0 && !i.hasOwnProperty(g) && (i[g] = {}), j[g] = this.mapDatatype(d.type)
     }
     e.ifNull(a.datalist, []);
     this.bindEvents();
@@ -2357,118 +2357,118 @@ jx.data.DataManager = {};
     this.cleanList(this.all);
     h._destroy(this, {name:"DataManager", path:"dataMgr", property:"all _idMode _increment idKey _sorter", map:"_consts _idToIdx _idToData _options", array:"datalist failed _history _redoHistory _filters"})
   };
-  b.addUniqueIndex = function(a, d, c, g) {
-    if(g !== !0 && (e.isNull(a) || e.isEmptyString(d) || e.isNull(c))) {
+  b.addUniqueIndex = function(a, c, d, g) {
+    if(g !== !0 && (e.isNull(a) || e.isEmptyString(c) || e.isNull(d))) {
       return!1
     }
-    if(c.hasOwnProperty(d) === !1) {
-      return this.grid.error("KEY_UNDEFINED", d)
+    if(d.hasOwnProperty(c) === !1) {
+      return this.grid.error("KEY_UNDEFINED", c)
     }
-    if(e.isEmptyString(g = c[d])) {
-      return this.grid.error("BAD_NULL", d)
+    if(e.isEmptyString(g = d[c])) {
+      return this.grid.error("BAD_NULL", c)
     }
     if(a.hasOwnProperty(g)) {
-      return a[g] === c ? !1 : this.grid.error("DUP_ENTRY", g, d)
+      return a[g] === d ? !1 : this.grid.error("DUP_ENTRY", g, c)
     }
-    a[g] = c;
+    a[g] = d;
     return!0
   };
-  b.addUniqueIndices = function(a, d, c, g) {
-    if(g !== !0 && (e.isNull(a) || e.isEmptyString(d) || e.isEmptyArray(c))) {
+  b.addUniqueIndices = function(a, c, d, g) {
+    if(g !== !0 && (e.isNull(a) || e.isEmptyString(c) || e.isEmptyArray(d))) {
       return!1
     }
-    for(var j = c.length, b = [], i, p, g = 0;g < j;g++) {
-      if(!e.isNull(p = c[g])) {
-        if(p.hasOwnProperty(d) === !1) {
-          return this.removeUniqueIndices(a, d, b), this.grid.error("KEY_UNDEFINED", d)
+    for(var i = d.length, b = [], j, q, g = 0;g < i;g++) {
+      if(!e.isNull(q = d[g])) {
+        if(q.hasOwnProperty(c) === !1) {
+          return this.removeUniqueIndices(a, c, b), this.grid.error("KEY_UNDEFINED", c)
         }
-        if(e.isEmptyString(i = p[d])) {
-          return this.removeUniqueIndices(a, d, b), this.grid.error("BAD_NULL", d)
+        if(e.isEmptyString(j = q[c])) {
+          return this.removeUniqueIndices(a, c, b), this.grid.error("BAD_NULL", c)
         }
-        if(a.hasOwnProperty(i)) {
-          if(a[i] === p) {
+        if(a.hasOwnProperty(j)) {
+          if(a[j] === q) {
             continue
           }
-          this.removeUniqueIndices(a, d, b);
-          return this.grid.error("DUP_ENTRY", i, d)
+          this.removeUniqueIndices(a, c, b);
+          return this.grid.error("DUP_ENTRY", j, c)
         }
-        b.push(a[i] = p)
+        b.push(a[j] = q)
       }
     }
     return b.length > 0
   };
-  b.updateUniqueIndex = function(a, d, c, g, j, b) {
-    if(b !== !0 && (e.isEmptyObj(a) || e.isEmptyString(d) || e.isNullOr(c, j) || e.isEmptyObj(g))) {
+  b.updateUniqueIndex = function(a, c, d, g, i, b) {
+    if(b !== !0 && (e.isEmptyObj(a) || e.isEmptyString(c) || e.isNullOr(d, i) || e.isEmptyObj(g))) {
       return!1
     }
-    if(g.hasOwnProperty(d) === !1) {
+    if(g.hasOwnProperty(c) === !1) {
       return!1
     }
-    if(j.hasOwnProperty(d) === !1 || c.hasOwnProperty(d) === !1) {
-      return this.grid.error("KEY_UNDEFINED", d)
+    if(i.hasOwnProperty(c) === !1 || d.hasOwnProperty(c) === !1) {
+      return this.grid.error("KEY_UNDEFINED", c)
     }
-    if(a.hasOwnProperty(j = j[d]) === !1) {
-      return this.grid.error("KEY_NOT_FOUND", j, d)
+    if(a.hasOwnProperty(i = i[c]) === !1) {
+      return this.grid.error("KEY_NOT_FOUND", i, c)
     }
-    if(e.isEmptyString(g = g[d])) {
-      return this.grid.error("BAD_NULL", d)
+    if(e.isEmptyString(g = g[c])) {
+      return this.grid.error("BAD_NULL", c)
     }
     if(a.hasOwnProperty(g)) {
-      return a[g] === c ? !1 : this.grid.error("DUP_ENTRY", g, d)
+      return a[g] === d ? !1 : this.grid.error("DUP_ENTRY", g, c)
     }
-    a[g] = c;
-    delete a[j];
-    return j
+    a[g] = d;
+    delete a[i];
+    return i
   };
-  b.updateUniqueIndices = function(a, d, c, g, j, b) {
+  b.updateUniqueIndices = function(a, c, d, g, i, b) {
     if(b !== !0) {
-      if(e.isEmptyObj(a) || e.isEmptyString(d) || e.isEmptyArray(c) || e.isEmptyArray(g) || e.isEmptyArray(j)) {
+      if(e.isEmptyObj(a) || e.isEmptyString(c) || e.isEmptyArray(d) || e.isEmptyArray(g) || e.isEmptyArray(i)) {
         return!1
       }
-      if(c.length !== g.length || c.length !== j.length) {
+      if(d.length !== g.length || d.length !== i.length) {
         return this.grid.error("LENGTH_NOT_EQUAL")
       }
     }
-    for(var b = 0, i = c.length, p, f, h, m = [], o = [], n = [], s, r;b < i;b++) {
-      if(!e.isNull(p = c[b])) {
-        if((h = g[b]).hasOwnProperty(d) !== !1) {
-          f = j[b];
-          if(f.hasOwnProperty(d) === !1 || p.hasOwnProperty(d) === !1) {
-            return this.updateUniqueIndices(a, d, m, n, o), this.grid.error("KEY_UNDEFINED", d)
+    for(var b = 0, j = d.length, q, f, h, n = [], o = [], m = [], r, s;b < j;b++) {
+      if(!e.isNull(q = d[b])) {
+        if((h = g[b]).hasOwnProperty(c) !== !1) {
+          f = i[b];
+          if(f.hasOwnProperty(c) === !1 || q.hasOwnProperty(c) === !1) {
+            return this.updateUniqueIndices(a, c, n, m, o), this.grid.error("KEY_UNDEFINED", c)
           }
-          if(a.hasOwnProperty(r = f[d]) === !1) {
-            return this.updateUniqueIndices(a, d, m, n, o), this.grid.error("KEY_NOT_FOUND", r, d)
+          if(a.hasOwnProperty(s = f[c]) === !1) {
+            return this.updateUniqueIndices(a, c, n, m, o), this.grid.error("KEY_NOT_FOUND", s, c)
           }
-          if(e.isEmptyString(s = h[d])) {
-            return this.updateUniqueIndices(a, d, m, n, o), this.grid.error("BAD_NULL", d)
+          if(e.isEmptyString(r = h[c])) {
+            return this.updateUniqueIndices(a, c, n, m, o), this.grid.error("BAD_NULL", c)
           }
-          if(a.hasOwnProperty(s)) {
-            if(a[s] === p) {
+          if(a.hasOwnProperty(r)) {
+            if(a[r] === q) {
               continue
             }
-            this.updateUniqueIndices(a, d, m, n, o);
-            return this.grid.error("DUP_ENTRY", s, d)
+            this.updateUniqueIndices(a, c, n, m, o);
+            return this.grid.error("DUP_ENTRY", r, c)
           }
-          a[s] = p;
-          delete a[r];
-          m.push(p);
+          a[r] = q;
+          delete a[s];
+          n.push(q);
           o.push(h);
-          n.push(f)
+          m.push(f)
         }
       }
     }
-    return m.length === 0 ? !1 : {datalist:m, changes:o, befores:n}
+    return n.length === 0 ? !1 : {datalist:n, changes:o, befores:m}
   };
-  b.removeUniqueIndex = function(a, d, c, g) {
-    if(!(g !== !0 && (e.isEmptyObj(a) || e.isEmptyString(d) || e.isEmptyObj(c)))) {
-      var j;
-      c.hasOwnProperty(d) && a.hasOwnProperty(j = c[d]) && delete a[j]
+  b.removeUniqueIndex = function(a, c, d, g) {
+    if(!(g !== !0 && (e.isEmptyObj(a) || e.isEmptyString(c) || e.isEmptyObj(d)))) {
+      var i;
+      d.hasOwnProperty(c) && a.hasOwnProperty(i = d[c]) && delete a[i]
     }
   };
-  b.removeUniqueIndices = function(a, d, c, g) {
-    if(!(g !== !0 && (e.isEmptyObj(a) || e.isEmptyString(d) || e.isEmptyArray(c)))) {
-      for(var j = c.length, b, i, g = 0;g < j;g++) {
-        i = c[g], i.hasOwnProperty(d) && a.hasOwnProperty(b = i[d]) && delete a[b]
+  b.removeUniqueIndices = function(a, c, d, g) {
+    if(!(g !== !0 && (e.isEmptyObj(a) || e.isEmptyString(c) || e.isEmptyArray(d)))) {
+      for(var i = d.length, b, j, g = 0;g < i;g++) {
+        j = d[g], j.hasOwnProperty(c) && a.hasOwnProperty(b = j[c]) && delete a[b]
       }
     }
   };
@@ -2476,102 +2476,102 @@ jx.data.DataManager = {};
     if(e.isEmptyObj(a) || e.isEmptyObj(this.uniqueMap)) {
       return!1
     }
-    var d = [], c, g = this.uniqueMap, j;
-    for(c in g) {
-      if(g.hasOwnProperty(c)) {
-        if(j = this.addUniqueIndex(g[c], c, a), j === !0) {
-          d.push(c)
+    var c = [], d, g = this.uniqueMap, i;
+    for(d in g) {
+      if(g.hasOwnProperty(d)) {
+        if(i = this.addUniqueIndex(g[d], d, a), i === !0) {
+          c.push(d)
         }else {
-          if(j instanceof Error) {
-            c = 0;
-            for(var b = d.length;c < b;c++) {
-              this.removeUniqueIndex(g[d[c]], d[c], a)
+          if(i instanceof Error) {
+            d = 0;
+            for(var b = c.length;d < b;d++) {
+              this.removeUniqueIndex(g[c[d]], c[d], a)
             }
-            return j
-          }
-        }
-      }
-    }
-    return d.length > 0
-  };
-  b.addListToUniqueMap = function(a) {
-    if(e.isEmptyArray(a) || e.isEmptyObj(this.uniqueMap)) {
-      return!1
-    }
-    var d = this.uniqueMap, c = [], g, j;
-    for(g in d) {
-      if(d.hasOwnProperty(g)) {
-        if(j = this.addUniqueIndices(d[g], g, a), j === !0) {
-          c.push(g)
-        }else {
-          if(j instanceof Error) {
-            g = 0;
-            for(var b = c.length;g < b;g++) {
-              this.removeUniqueIndices(d[c[g]], c[g], a)
-            }
-            return j
+            return i
           }
         }
       }
     }
     return c.length > 0
   };
-  b.updateUniqueMap = function(a, d, c) {
-    if(e.isNullOr(a, d, c) || e.isEmptyObj(this.uniqueMap)) {
+  b.addListToUniqueMap = function(a) {
+    if(e.isEmptyArray(a) || e.isEmptyObj(this.uniqueMap)) {
       return!1
     }
-    var g, j = this.uniqueMap, b = [], i;
-    for(g in j) {
-      if(j.hasOwnProperty(g)) {
-        i = this.updateUniqueIndex(j[g], g, a, d, c);
-        if(i instanceof Error) {
-          g = 0;
-          for(var p = b.length;g < p;g++) {
-            this.updateUniqueIndex(j[b[g]], b[g], a, c, d)
+    var c = this.uniqueMap, d = [], g, i;
+    for(g in c) {
+      if(c.hasOwnProperty(g)) {
+        if(i = this.addUniqueIndices(c[g], g, a), i === !0) {
+          d.push(g)
+        }else {
+          if(i instanceof Error) {
+            g = 0;
+            for(var b = d.length;g < b;g++) {
+              this.removeUniqueIndices(c[d[g]], d[g], a)
+            }
+            return i
           }
-          return i
         }
-        i !== !1 && b.push(g)
+      }
+    }
+    return d.length > 0
+  };
+  b.updateUniqueMap = function(a, c, d) {
+    if(e.isNullOr(a, c, d) || e.isEmptyObj(this.uniqueMap)) {
+      return!1
+    }
+    var g, i = this.uniqueMap, b = [], j;
+    for(g in i) {
+      if(i.hasOwnProperty(g)) {
+        j = this.updateUniqueIndex(i[g], g, a, c, d);
+        if(j instanceof Error) {
+          g = 0;
+          for(var q = b.length;g < q;g++) {
+            this.updateUniqueIndex(i[b[g]], b[g], a, d, c)
+          }
+          return j
+        }
+        j !== !1 && b.push(g)
       }
     }
     return b.length > 0
   };
-  b.updateListUniqueMap = function(a, d, c) {
-    if(e.isEmptyArray(a) || e.isEmptyArray(d) || e.isEmptyArray(c) || e.isEmptyObj(this.uniqueMap)) {
+  b.updateListUniqueMap = function(a, c, d) {
+    if(e.isEmptyArray(a) || e.isEmptyArray(c) || e.isEmptyArray(d) || e.isEmptyObj(this.uniqueMap)) {
       return!1
     }
-    if(a.length !== d.length || a.length !== c.length) {
+    if(a.length !== c.length || a.length !== d.length) {
       return this.grid.error("LENGTH_NOT_EQUAL")
     }
-    var g, j = this.uniqueMap, b = [], i;
-    for(g in j) {
-      if(j.hasOwnProperty(g)) {
-        i = this.updateUniqueIndices(j[g], g, a, d, c);
-        if(i instanceof Error) {
+    var g, i = this.uniqueMap, b = [], j;
+    for(g in i) {
+      if(i.hasOwnProperty(g)) {
+        j = this.updateUniqueIndices(i[g], g, a, c, d);
+        if(j instanceof Error) {
           g = 0;
-          for(var p = b.length;g < p;g++) {
-            this.updateUniqueIndices(j[b[g]], b[g], a, c, d)
+          for(var q = b.length;g < q;g++) {
+            this.updateUniqueIndices(i[b[g]], b[g], a, d, c)
           }
-          return i
+          return j
         }
-        i !== !1 && b.push(g)
+        j !== !1 && b.push(g)
       }
     }
     return b.length > 0
   };
   b.removeFromUniqueMap = function(a) {
     if(!e.isEmptyObj(a) && !e.isEmptyObj(this.uniqueMap)) {
-      var d, c = this.uniqueMap;
-      for(d in c) {
-        c.hasOwnProperty(d) && this.removeUniqueIndex(c[d], d, a)
+      var c, d = this.uniqueMap;
+      for(c in d) {
+        d.hasOwnProperty(c) && this.removeUniqueIndex(d[c], c, a)
       }
     }
   };
   b.removeListFromUniqueMap = function(a) {
     if(!e.isEmptyArray(a) && !e.isEmptyObj(this.uniqueMap)) {
-      var d, c = this.uniqueMap;
-      for(d in c) {
-        c.hasOwnProperty(d) && this.removeUniqueIndices(c[d], d, a)
+      var c, d = this.uniqueMap;
+      for(c in d) {
+        d.hasOwnProperty(c) && this.removeUniqueIndices(d[c], c, a)
       }
     }
   };
@@ -2579,14 +2579,14 @@ jx.data.DataManager = {};
     if(e.isNull(a)) {
       return!1
     }
-    var d = this.idKey;
+    var c = this.idKey;
     switch(this._idMode) {
       case this._consts._auto:
-        a.hasOwnProperty(d) === !1 && (a[d] = this._increment++);
+        a.hasOwnProperty(c) === !1 && (a[c] = this._increment++);
       case this._consts._given:
       ;
       case this._consts._composite:
-        return this.addUniqueIndex(this._idToData, d, a)
+        return this.addUniqueIndex(this._idToData, c, a)
     }
     return!1
   };
@@ -2594,118 +2594,118 @@ jx.data.DataManager = {};
     if(e.isEmptyArray(a)) {
       return!1
     }
-    var d = this.idKey;
+    var c = this.idKey;
     switch(this._idMode) {
       case this._consts._auto:
-        for(var c = 0, g, j = a.length;c < j;c++) {
-          if((g = a[c]).hasOwnProperty(d) === !1) {
-            g[d] = this._increment++
+        for(var d = 0, g, i = a.length;d < i;d++) {
+          if((g = a[d]).hasOwnProperty(c) === !1) {
+            g[c] = this._increment++
           }
         }
       ;
       case this._consts._given:
       ;
       case this._consts._composite:
-        return this.addUniqueIndices(this._idToData, d, a)
+        return this.addUniqueIndices(this._idToData, c, a)
     }
     return!1
   };
-  b.updateIdMap = function(a, d, c) {
-    if(e.isNullOr(a, c) || e.isEmptyObj(d)) {
+  b.updateIdMap = function(a, c, d) {
+    if(e.isNullOr(a, d) || e.isEmptyObj(c)) {
       return!1
     }
     var g = this.idKey;
     switch(this._idMode) {
       case this._consts._auto:
-        if(d.hasOwnProperty(g)) {
+        if(c.hasOwnProperty(g)) {
           return this.grid.error("NOT_MODIFIABLE", g)
         }
       ;
       case this._consts._given:
-        return this.updateUniqueIndex(this._idToData, g, a, d, c);
+        return this.updateUniqueIndex(this._idToData, g, a, c, d);
       case this._consts._composite:
-        if(d.hasOwnProperty(g)) {
+        if(c.hasOwnProperty(g)) {
           return this.grid.error("NOT_MODIFIABLE", g)
         }
-        for(var c = this._options.idColKeys, j = c.length, b = 0;b < j;b++) {
-          if(d.hasOwnProperty(c[b])) {
-            for(var i = "", p = 0, f, h, m = {}, o = {}, b = o[g] = a[g];p < j;p++) {
-              if(f = c[p], d.hasOwnProperty(f)) {
-                if(e.isEmptyString(h = d[f])) {
+        for(var d = this._options.idColKeys, i = d.length, b = 0;b < i;b++) {
+          if(c.hasOwnProperty(d[b])) {
+            for(var j = "", q = 0, f, h, n = {}, o = {}, b = o[g] = a[g];q < i;q++) {
+              if(f = d[q], c.hasOwnProperty(f)) {
+                if(e.isEmptyString(h = c[f])) {
                   return this.grid.error("BAD_NULL", f)
                 }
-                i += "&" + h
+                j += "&" + h
               }else {
-                i += "&" + a[f]
+                j += "&" + a[f]
               }
             }
-            a[g] = m[g] = i;
-            if(b === i) {
+            a[g] = n[g] = j;
+            if(b === j) {
               break
             }
-            d = this.updateUniqueIndex(this._idToData, g, a, m, o);
-            d instanceof Error && (a[g] = b);
-            return d
+            c = this.updateUniqueIndex(this._idToData, g, a, n, o);
+            c instanceof Error && (a[g] = b);
+            return c
           }
         }
     }
     return!1
   };
-  b.updateListIdMap = function(a, d, c) {
-    if(e.isEmptyArray(a) || e.isEmptyArray(d) || e.isEmptyArray(c)) {
+  b.updateListIdMap = function(a, c, d) {
+    if(e.isEmptyArray(a) || e.isEmptyArray(c) || e.isEmptyArray(d)) {
       return!1
     }
-    var g = this.idKey, j = a.length, b = 0;
+    var g = this.idKey, i = a.length, b = 0;
     switch(this._idMode) {
       case this._consts._auto:
-        for(;b < j;b++) {
-          if(d[b].hasOwnProperty(g)) {
+        for(;b < i;b++) {
+          if(c[b].hasOwnProperty(g)) {
             return this.grid.error("NOT_MODIFIABLE", g)
           }
         }
       ;
       case this._consts._given:
-        return this.updateUniqueIndices(this._idToData, g, a, d, c);
+        return this.updateUniqueIndices(this._idToData, g, a, c, d);
       case this._consts._composite:
-        for(var i = this._idToData, f, k, h = this._options.idColKeys, m = h.length, o, c = [], n = [], s = [], r = [], t, u, v, y;b < j;b++) {
-          f = a[b];
-          k = d[b];
-          if(k.hasOwnProperty(g)) {
+        for(var j = this._idToData, q, f, h = this._options.idColKeys, n = h.length, o, d = [], m = [], r = [], s = [], t, v, u, x;b < i;b++) {
+          q = a[b];
+          f = c[b];
+          if(f.hasOwnProperty(g)) {
             t = 0;
-            for(j = c.length;t < j;t++) {
-              n[t][g] = c[t]
+            for(i = d.length;t < i;t++) {
+              m[t][g] = d[t]
             }
             return this.grid.error("NOT_MODIFIABLE", g)
           }
-          for(t = 0;t < m;t++) {
-            if(k.hasOwnProperty(h[t])) {
+          for(t = 0;t < n;t++) {
+            if(f.hasOwnProperty(h[t])) {
               o = "";
-              for(u = 0;u < m;u++) {
-                if(v = h[u], k.hasOwnProperty(v)) {
-                  if(e.isEmptyString(y = k[v])) {
+              for(v = 0;v < n;v++) {
+                if(u = h[v], f.hasOwnProperty(u)) {
+                  if(e.isEmptyString(x = f[u])) {
                     t = 0;
-                    for(j = c.length;t < j;t++) {
-                      n[t][g] = c[t]
+                    for(i = d.length;t < i;t++) {
+                      m[t][g] = d[t]
                     }
-                    return this.grid.error("BAD_NULL", v)
+                    return this.grid.error("BAD_NULL", u)
                   }
-                  o += "&" + y
+                  o += "&" + x
                 }else {
-                  o += "&" + f[v]
+                  o += "&" + q[u]
                 }
               }
-              f[g] !== o && (n.push(f), s.push({}), r.push({}), c.push(f[g]), f[g] = o)
+              q[g] !== o && (m.push(q), r.push({}), s.push({}), d.push(q[g]), q[g] = o)
             }
           }
         }
-        if(n.length === 0) {
+        if(m.length === 0) {
           break
         }
-        a = this.updateUniqueIndices(i, g, n, s, r);
+        a = this.updateUniqueIndices(j, g, m, r, s);
         if(a instanceof Error) {
           t = 0;
-          for(j = c.length;t < j;t++) {
-            n[t][g] = c[t]
+          for(i = d.length;t < i;t++) {
+            m[t][g] = d[t]
           }
         }
         return a
@@ -2713,34 +2713,34 @@ jx.data.DataManager = {};
     return!1
   };
   b.removeFromIdMap = function(a) {
-    var d = this.idKey, c = this._idToData, g;
-    e.isNotNull(a) && a.hasOwnProperty(d) && c.hasOwnProperty(g = a[d]) && delete c[g]
+    var c = this.idKey, d = this._idToData, g;
+    e.isNotNull(a) && a.hasOwnProperty(c) && d.hasOwnProperty(g = a[c]) && delete d[g]
   };
   b.removeListFromIdMap = function(a) {
     if(!e.isEmptyArray(a)) {
-      for(var d = this.idKey, c = a.length, g = this._idToData, j, b, i = 0;i < c;i++) {
-        b = a[i], b.hasOwnProperty(d) && g.hasOwnProperty(j = b[d]) && delete g[j]
+      for(var c = this.idKey, d = a.length, g = this._idToData, i, b, j = 0;j < d;j++) {
+        b = a[j], b.hasOwnProperty(c) && g.hasOwnProperty(i = b[c]) && delete g[i]
       }
     }
   };
-  b.fillTemp = function(a, d) {
+  b.fillTemp = function(a, c) {
     if(!e.isNull(a)) {
-      var c = this.grid.colDefMgr.getAll(), g = c.length, j, b, i = 0;
-      if(d !== void 0 && d.isNew) {
-        for(;i < g;i++) {
-          b = c[i], j = b.key, b.nullOnCreate && e.isNull(a[j]) && (a[j] = "J@H" + this._increment++)
+      var d = this.grid.colDefMgr.getAll(), g = d.length, i, b, j = 0;
+      if(c !== void 0 && c.isNew) {
+        for(;j < g;j++) {
+          b = d[j], i = b.key, b.nullOnCreate && e.isNull(a[i]) && (a[i] = "J@H" + this._increment++)
         }
       }
     }
   };
-  b.fillTempList = function(a, d) {
+  b.fillTempList = function(a, c) {
     if(!e.isEmptyArray(a)) {
-      var c = this.grid.colDefMgr.getAll(), g = c.length, j = a.length, b, i, f = 0;
-      if(d !== void 0 && d.isNew) {
+      var d = this.grid.colDefMgr.getAll(), g = d.length, i = a.length, b, j, f = 0;
+      if(c !== void 0 && c.isNew) {
         for(;f < g;f++) {
-          if(i = c[f], b = i.key, i.nullOnCreate) {
-            for(i = 0;j;i++) {
-              a[i][b] = "J@H" + this._increment++
+          if(j = d[f], b = j.key, j.nullOnCreate) {
+            for(j = 0;i;j++) {
+              a[j][b] = "J@H" + this._increment++
             }
           }
         }
@@ -2749,19 +2749,19 @@ jx.data.DataManager = {};
   };
   b.query = function(a) {
     if(typeof a === "string" && (a = $.trim(a), a.length !== 0)) {
-      var d, c, g, j, b;
-      d = a.toLowerCase();
-      c = a.indexOf(" ");
-      if(c !== -1 && (g = d.substring(0, c), d = d.indexOf(" where "), j = d > -1, c = $.trim(j ? a.substring(c + 1, d) : a.substring(c + 1)), c.length !== 0)) {
-        switch(j && (b = $.trim(a.substring(d + 7))), g) {
+      var c, d, g, i, b;
+      c = a.toLowerCase();
+      d = a.indexOf(" ");
+      if(d !== -1 && (g = c.substring(0, d), c = c.indexOf(" where "), i = c > -1, d = $.trim(i ? a.substring(d + 1, c) : a.substring(d + 1)), d.length !== 0)) {
+        switch(i && (b = $.trim(a.substring(c + 7))), g) {
           case "select":
-            return this.executeSelect(c, b);
+            return this.executeSelect(d, b);
           case "insert":
-            return this.executeInsert(c, b);
+            return this.executeInsert(d, b);
           case "update":
-            return this.executeUpdate(c, b);
+            return this.executeUpdate(d, b);
           case "delete":
-            return this.executeDelete(c, b)
+            return this.executeDelete(d, b)
         }
       }
     }
@@ -2770,34 +2770,34 @@ jx.data.DataManager = {};
     typeof a === "string" && $.trim(a)
   };
   b.executeSelect = function(a) {
-    var a = e.split(a, /[\s,]+/), d = a.length, c = 0, g = {}, j = this.all, b = [];
-    if(d === 0) {
+    var a = e.split(a, /[\s,]+/), c = a.length, d = 0, g = {}, i = this.all, b = [];
+    if(c === 0) {
       return b
     }
-    for(;c < d;c++) {
-      if(a[c] === "*") {
+    for(;d < c;d++) {
+      if(a[d] === "*") {
         break
       }
-      g[a[c]] = !0
+      g[a[d]] = !0
     }
-    c = 0;
-    for(d = j.length;c < d;c++) {
-      b.push(e.clone(j[c], g))
+    d = 0;
+    for(c = i.length;d < c;d++) {
+      b.push(e.clone(i[d], g))
     }
     return b
   };
-  b.parse = function(a, d) {
+  b.parse = function(a, c) {
     if(e.isNull(a)) {
       return!1
     }
-    for(var c = this.grid.colDefMgr.getAll(), g = c.length, b, l, i = d !== void 0 && d.isNew, f = 0;f < g;f++) {
-      if(l = c[f], !i || !l.nullOnCreate) {
-        if(e.isFunction(b = l.parser)) {
-          if(l = l.key, a.hasOwnProperty(l)) {
+    for(var d = this.grid.colDefMgr.getAll(), g = d.length, i, b, j = c !== void 0 && c.isNew, f = 0;f < g;f++) {
+      if(b = d[f], !j || !b.nullOnCreate) {
+        if(e.isFunction(i = b.parser)) {
+          if(b = b.key, a.hasOwnProperty(b)) {
             try {
-              a[l] = b(a[l], a)
+              a[b] = i(a[b], a)
             }catch(k) {
-              return e.isNull(a) ? this.grid.error("PARSE_ERROR", a, l) : this.grid.error("PARSE_ERROR", a[l], l)
+              return e.isNull(a) ? this.grid.error("PARSE_ERROR", a, b) : this.grid.error("PARSE_ERROR", a[b], b)
             }
           }
         }
@@ -2805,181 +2805,181 @@ jx.data.DataManager = {};
     }
     return!0
   };
-  b.parseList = function(a, d) {
+  b.parseList = function(a, c) {
     if(e.isNull(a)) {
       return!1
     }
     if(a.length === 0) {
       return!0
     }
-    for(var c = this.grid.colDefMgr.getAll(), g = c.length, b = a.length, l, i, f = 0, k, h = d !== void 0 && d.isNew, m;f < g;f++) {
-      if(i = c[f], !h || !i.nullOnCreate) {
-        if(e.isFunction(l = i.parser)) {
-          i = i.key;
+    for(var d = this.grid.colDefMgr.getAll(), g = d.length, i = a.length, b, j, f = 0, k, h = c !== void 0 && c.isNew, n;f < g;f++) {
+      if(j = d[f], !h || !j.nullOnCreate) {
+        if(e.isFunction(b = j.parser)) {
+          j = j.key;
           try {
-            for(k = 0;k < b;k++) {
-              m = a[k], m.hasOwnProperty(i) && (m[i] = l(m[i], m))
+            for(k = 0;k < i;k++) {
+              n = a[k], n.hasOwnProperty(j) && (n[j] = b(n[j], n))
             }
           }catch(o) {
-            return e.isNull(m) ? this.grid.error("PARSE_ERROR", m, i) : this.grid.error("PARSE_ERROR", m[i], i)
+            return e.isNull(n) ? this.grid.error("PARSE_ERROR", n, j) : this.grid.error("PARSE_ERROR", n[j], j)
           }
         }
       }
     }
     return!0
   };
-  b.validate = function(a, d) {
+  b.validate = function(a, c) {
     if(e.isNull(a)) {
       return!1
     }
-    for(var c = this.grid.colDefMgr.getAll(), g = c.length, b, l, i, f, k, h, m, o = d !== void 0 && d.isNew, n = 0;n < g;n++) {
-      if(b = c[n], l = b.key, k = void 0, f = i = !1, !o || !b.nullOnCreate) {
-        if(b.notNull === !0) {
-          if(a.hasOwnProperty(l) === !1 || e.isEmptyString(k = a[l])) {
-            return this.grid.error("BAD_NULL", l)
+    for(var d = this.grid.colDefMgr.getAll(), g = d.length, i, b, j, f, k, h, n, o = c !== void 0 && c.isNew, m = 0;m < g;m++) {
+      if(i = d[m], b = i.key, k = void 0, f = j = !1, !o || !i.nullOnCreate) {
+        if(i.notNull === !0) {
+          if(a.hasOwnProperty(b) === !1 || e.isEmptyString(k = a[b])) {
+            return this.grid.error("BAD_NULL", b)
           }
           h = k.toString()
         }else {
-          a.hasOwnProperty(l) === !1 || e.isNull(k = a[l]) ? f = i = !0 : k === "" && (f = !0), h = i === !1 ? k.toString() : ""
+          a.hasOwnProperty(b) === !1 || e.isNull(k = a[b]) ? f = j = !0 : k === "" && (f = !0), h = j === !1 ? k.toString() : ""
         }
-        if(i === !1) {
-          if(e.isNotNull(m = b.max) && f === !1 && k > m) {
-            return this.grid.error("BIGGER_THAN", k, l, m)
+        if(j === !1) {
+          if(e.isNotNull(n = i.max) && f === !1 && k > n) {
+            return this.grid.error("BIGGER_THAN", k, b, n)
           }
-          if(e.isNotNull(m = b.min) && f === !1 && k < m) {
-            return this.grid.error("SMALLER_THAN", k, l, m)
+          if(e.isNotNull(n = i.min) && f === !1 && k < n) {
+            return this.grid.error("SMALLER_THAN", k, b, n)
           }
-          if(e.isNotNull(m = b.length)) {
-            if(f === !0 || h.length !== m) {
-              return this.grid.error("WRONG_LENGTH", h, m, l)
+          if(e.isNotNull(n = i.length)) {
+            if(f === !0 || h.length !== n) {
+              return this.grid.error("WRONG_LENGTH", h, n, b)
             }
           }else {
-            if(e.isNotNull(m = b.maxlength) && f === !1 && h.length > m) {
-              return this.grid.error("DATA_TOO_LONG", h, l, m)
+            if(e.isNotNull(n = i.maxlength) && f === !1 && h.length > n) {
+              return this.grid.error("DATA_TOO_LONG", h, b, n)
             }
-            if(e.isNotNull(m = b.minlength)) {
-              if(f === !0 || h.length < m) {
-                return this.grid.error("DATA_TOO_SHORT", h, l, m)
+            if(e.isNotNull(n = i.minlength)) {
+              if(f === !0 || h.length < n) {
+                return this.grid.error("DATA_TOO_SHORT", h, b, n)
               }
             }
           }
         }
-        if(e.isFunction(b = b.validator)) {
+        if(e.isFunction(i = i.validator)) {
           try {
-            if(b(k, a, h, i, f) !== !0) {
-              return this.grid.error("WRONG_VALUE", h, l)
+            if(i(k, a, h, j, f) !== !0) {
+              return this.grid.error("WRONG_VALUE", h, b)
             }
-          }catch(s) {
-            return this.grid.error("WRONG_VALUE", h, l)
+          }catch(r) {
+            return this.grid.error("WRONG_VALUE", h, b)
           }
         }
       }
     }
     return!0
   };
-  b.validateList = function(a, d) {
+  b.validateList = function(a, c) {
     if(e.isNull(a)) {
       return!1
     }
     if(a.length === 0) {
       return!0
     }
-    for(var c = this.grid.colDefMgr.getAll(), g = c.length, b = a.length, l, i, f = 0, k, h, m, o, n, s = d !== void 0 && d.isNew, r = [], t = [];f < g;f++) {
-      if(l = c[f], i = l.key, h = {}, m = {}, r.length = 0, t.length = 0, !s || !l.nullOnCreate) {
+    for(var d = this.grid.colDefMgr.getAll(), b = d.length, i = a.length, l, j, f = 0, k, h, n, o, m, r = c !== void 0 && c.isNew, s = [], t = [];f < b;f++) {
+      if(l = d[f], j = l.key, h = {}, n = {}, s.length = 0, t.length = 0, !r || !l.nullOnCreate) {
         if(l.notNull === !0) {
-          for(k = 0;k < b;k++) {
-            if(a[k].hasOwnProperty(i) === !1 || e.isEmptyString(o = a[k][i])) {
-              return this.grid.error("BAD_NULL", i)
+          for(k = 0;k < i;k++) {
+            if(a[k].hasOwnProperty(j) === !1 || e.isEmptyString(o = a[k][j])) {
+              return this.grid.error("BAD_NULL", j)
             }
-            r.push(o);
+            s.push(o);
             t.push(o.toString())
           }
         }else {
-          for(k = 0;k < b;k++) {
-            o = void 0, a[k].hasOwnProperty(i) === !1 || e.isNull(o = a[k][i]) ? (h[k] = !0, m[k] = !0) : o === "" && (m[k] = !0), r.push(o), h.hasOwnProperty(k) ? t.push("") : t.push(o.toString())
+          for(k = 0;k < i;k++) {
+            o = void 0, a[k].hasOwnProperty(j) === !1 || e.isNull(o = a[k][j]) ? (h[k] = !0, n[k] = !0) : o === "" && (n[k] = !0), s.push(o), h.hasOwnProperty(k) ? t.push("") : t.push(o.toString())
           }
         }
-        if(e.isNotNull(n = l.max)) {
-          for(k = 0;k < b;k++) {
-            if(m.hasOwnProperty(k) === !1 && r[k] > n) {
-              return this.grid.error("BIGGER_THAN", r[k], i, n)
+        if(e.isNotNull(m = l.max)) {
+          for(k = 0;k < i;k++) {
+            if(n.hasOwnProperty(k) === !1 && s[k] > m) {
+              return this.grid.error("BIGGER_THAN", s[k], j, m)
             }
           }
         }
-        if(e.isNotNull(n = l.min)) {
-          for(k = 0;k < b;k++) {
-            if(m.hasOwnProperty(k) === !1 && r[k] < n) {
-              return this.grid.error("SMALLER_THAN", r[k], i, n)
+        if(e.isNotNull(m = l.min)) {
+          for(k = 0;k < i;k++) {
+            if(n.hasOwnProperty(k) === !1 && s[k] < m) {
+              return this.grid.error("SMALLER_THAN", s[k], j, m)
             }
           }
         }
-        if(e.isNotNull(n = l.length)) {
-          for(k = 0;k < b;k++) {
-            if(h.hasOwnProperty(k) === !1 && (m.hasOwnProperty(k) || t[k].length !== n)) {
-              return this.grid.error("WRONG_LENGTH", t[k], n, i)
+        if(e.isNotNull(m = l.length)) {
+          for(k = 0;k < i;k++) {
+            if(h.hasOwnProperty(k) === !1 && (n.hasOwnProperty(k) || t[k].length !== m)) {
+              return this.grid.error("WRONG_LENGTH", t[k], m, j)
             }
           }
         }else {
-          if(e.isNotNull(n = l.maxlength)) {
-            for(k = 0;k < b;k++) {
-              if(m.hasOwnProperty(k) === !1 && t[k].length > n) {
-                return this.grid.error("DATA_TOO_LONG", t[k], i, n)
+          if(e.isNotNull(m = l.maxlength)) {
+            for(k = 0;k < i;k++) {
+              if(n.hasOwnProperty(k) === !1 && t[k].length > m) {
+                return this.grid.error("DATA_TOO_LONG", t[k], j, m)
               }
             }
           }
-          if(e.isNotNull(n = l.minlength)) {
-            for(k = 0;k < b;k++) {
-              if(h.hasOwnProperty(k) === !1 && (m.hasOwnProperty(k) || t[k].length < n)) {
-                return this.grid.error("DATA_TOO_SHORT", t[k], i, n)
+          if(e.isNotNull(m = l.minlength)) {
+            for(k = 0;k < i;k++) {
+              if(h.hasOwnProperty(k) === !1 && (n.hasOwnProperty(k) || t[k].length < m)) {
+                return this.grid.error("DATA_TOO_SHORT", t[k], j, m)
               }
             }
           }
         }
         if(e.isFunction(l = l.validator)) {
           try {
-            for(k = 0;k < b;k++) {
-              if(l(r[k], a[k], t[k], h.hasOwnProperty(k), m.hasOwnProperty(k)) !== !0) {
-                return this.grid.error("WRONG_VALUE", t[k], i)
+            for(k = 0;k < i;k++) {
+              if(l(s[k], a[k], t[k], h.hasOwnProperty(k), n.hasOwnProperty(k)) !== !0) {
+                return this.grid.error("WRONG_VALUE", t[k], j)
               }
             }
-          }catch(u) {
-            return this.grid.error("WRONG_VALUE", t[k], i)
+          }catch(v) {
+            return this.grid.error("WRONG_VALUE", t[k], j)
           }
         }
       }
     }
     return!0
   };
-  b.makeCompositeKey = function(a, d) {
+  b.makeCompositeKey = function(a, c) {
     if(!(this._idMode !== this._consts._composite || e.isNull(a))) {
-      if(d === !0 || a.hasOwnProperty(this.idKey) === !1) {
-        for(var c = this._options.idColKeys, g = c.length, b = 0, l = "";b < g;b++) {
-          l += "&" + a[c[b]]
+      if(c === !0 || a.hasOwnProperty(this.idKey) === !1) {
+        for(var d = this._options.idColKeys, b = d.length, i = 0, l = "";i < b;i++) {
+          l += "&" + a[d[i]]
         }
         a[this.idKey] = l
       }
     }
   };
-  b.makeCompositeKeyList = function(a, d) {
+  b.makeCompositeKeyList = function(a, c) {
     if(!(this._idMode !== this._consts._composite || a.length === 0)) {
-      var c = this.idKey, g = a.length, b = this._options.idColKeys, l = b.length, i, e = 0, f, h;
-      if(d === !0) {
-        for(;e < g;e++) {
-          i = a[e];
+      var d = this.idKey, b = a.length, i = this._options.idColKeys, l = i.length, j, e = 0, f, h;
+      if(c === !0) {
+        for(;e < b;e++) {
+          j = a[e];
           h = "";
           for(f = 0;f < l;f++) {
-            h += "&" + i[b[f]]
+            h += "&" + j[i[f]]
           }
-          i[c] = h
+          j[d] = h
         }
       }else {
-        for(;e < g;e++) {
-          if((i = a[e]).hasOwnProperty(c) === !1) {
+        for(;e < b;e++) {
+          if((j = a[e]).hasOwnProperty(d) === !1) {
             h = "";
             for(f = 0;f < l;f++) {
-              h += "&" + i[b[f]]
+              h += "&" + j[i[f]]
             }
-            i[c] = h
+            j[d] = h
           }
         }
       }
@@ -2987,10 +2987,10 @@ jx.data.DataManager = {};
   };
   b.map = function(a) {
     if(!e.isNull(a)) {
-      var d = this._idToData, c = this.idKey, g;
+      var c = this._idToData, d = this.idKey, b;
       this.makeCompositeKey(a);
-      if(a.hasOwnProperty(c) && d.hasOwnProperty(g = a[c])) {
-        return d[g]
+      if(a.hasOwnProperty(d) && c.hasOwnProperty(b = a[d])) {
+        return c[b]
       }
     }
   };
@@ -2999,10 +2999,10 @@ jx.data.DataManager = {};
       return{mapped:[], unmapped:[]}
     }
     this.makeCompositeKeyList(a);
-    for(var d = [], c = [], g = this.idKey, b = this._idToData, l = a.length, i = 0, f, k;i < l;i++) {
-      (f = a[i]).hasOwnProperty(g) && b.hasOwnProperty(k = f[g]) ? d.push(b[k]) : c.push(f)
+    for(var c = [], d = [], b = this.idKey, i = this._idToData, l = a.length, j = 0, f, k;j < l;j++) {
+      (f = a[j]).hasOwnProperty(b) && i.hasOwnProperty(k = f[b]) ? c.push(i[k]) : d.push(f)
     }
-    return{mapped:d, unmapped:c}
+    return{mapped:c, unmapped:d}
   };
   b.getById = function(a) {
     if(e.isNotNull(a) && this._idToData.hasOwnProperty(a)) {
@@ -3041,8 +3041,8 @@ jx.data.DataManager = {};
   };
   b._reidxFrom = function(a) {
     e.isNull(a) && (a = 0);
-    for(var d = this.datalist, c = d.length, g = this.idKey, b = this._idToIdx;a < c;a++) {
-      b[d[a][g]] = a
+    for(var c = this.datalist, d = c.length, b = this.idKey, i = this._idToIdx;a < d;a++) {
+      i[c[a][b]] = a
     }
   };
   b._reidx = function() {
@@ -3068,27 +3068,27 @@ jx.data.DataManager = {};
     this.grid.event.trigger("onBeforeDataChange", !1, !0);
     this.grid.event.trigger("onBeforeSetDatalist", [this.all, a], !0);
     this.cleanList(this.all);
-    var d, c = this.uniqueMap;
-    for(d in c) {
-      c.hasOwnProperty(d) && (c[d] = {})
+    var c, d = this.uniqueMap;
+    for(c in d) {
+      d.hasOwnProperty(c) && (d[c] = {})
     }
     this._idToData = {};
     this.all = [];
     this._history.length = 0;
     this._redoHistory.length = 0;
     e.isNull(a) && (a = []);
-    if((d = this.parseList(a)) instanceof Error) {
-      return d
+    if((c = this.parseList(a)) instanceof Error) {
+      return c
     }
-    if((d = this.validateList(a)) instanceof Error) {
-      return d
+    if((c = this.validateList(a)) instanceof Error) {
+      return c
     }
-    if((d = this.addListToUniqueMap(a)) instanceof Error) {
-      return d
+    if((c = this.addListToUniqueMap(a)) instanceof Error) {
+      return c
     }
     this.makeCompositeKeyList(a, !0);
-    if((d = this.addListToIdMap(a)) instanceof Error) {
-      return d
+    if((c = this.addListToIdMap(a)) instanceof Error) {
+      return c
     }
     this.all = a;
     this.grid.event.trigger("onAfterSetDatalist", [a], !0);
@@ -3096,196 +3096,196 @@ jx.data.DataManager = {};
     this.refresh();
     return!0
   };
-  b.add = function(a, d) {
+  b.add = function(a, c) {
     if(e.isNull(a) || e.isNotNull(this.map(a))) {
       return!1
     }
     this.grid.event.trigger("onBeforeDataChange", !1, !0);
-    this.fillTemp(a, d);
-    var c;
-    if((c = this.parse(a, d)) instanceof Error) {
-      return c
+    this.fillTemp(a, c);
+    var d;
+    if((d = this.parse(a, c)) instanceof Error) {
+      return d
     }
-    if((c = this.validate(a, d)) instanceof Error) {
-      return c
+    if((d = this.validate(a, c)) instanceof Error) {
+      return d
     }
-    if((c = this.addToUniqueMap(a)) instanceof Error) {
-      return c
+    if((d = this.addToUniqueMap(a)) instanceof Error) {
+      return d
     }
-    if((c = this.addToIdMap(a)) instanceof Error) {
-      return c
+    if((d = this.addToIdMap(a)) instanceof Error) {
+      return d
     }
     this.all.push(a);
-    if(e.isNull(d) || d.undo !== !0) {
+    if(e.isNull(c) || c.undo !== !0) {
       this._history.push({_action:this._consts._add, _target:a}), this._redoHistory.length = 0
     }
-    this.grid.event.trigger("onAddDatarow", [a, d], !0);
-    this.grid.event.trigger("onDataChange", !1, !0);
-    (d === void 0 || d.noRefresh !== !0) && this.refresh(d);
-    return!0
-  };
-  b.addList = function(a, d) {
-    if(e.isEmptyArray(a)) {
-      return!1
-    }
-    var c = this.mapList(a).unmapped;
-    if(c.length === 0) {
-      return!1
-    }
-    this.grid.event.trigger("onBeforeDataChange", !1, !0);
-    this.fillTempList(a, d);
-    var g;
-    if((g = this.parseList(c, d)) instanceof Error) {
-      return g
-    }
-    if((g = this.validateList(c, d)) instanceof Error) {
-      return g
-    }
-    if((g = this.addListToUniqueMap(c)) instanceof Error) {
-      return g
-    }
-    if((g = this.addListToIdMap(c)) instanceof Error) {
-      return g
-    }
-    this.all.pushList(c);
-    if(e.isNull(d) || d.undo !== !0) {
-      this._history.push({_action:this._consts._addList, _target:c}), this._redoHistory.length = 0
-    }
-    this.grid.event.trigger("onAddDatalist", [c, d], !0);
-    this.grid.event.trigger("onDataChange", !1, !0);
-    (d === void 0 || d.noRefresh !== !0) && this.refresh(d);
-    return!0
-  };
-  b.updateByKey = function(a, d, c, g) {
-    var b = {};
-    b[d] = c;
-    return this.update(a, b, g)
-  };
-  b.update = function(a, d, c) {
-    if(e.isNullOr(a, d)) {
-      return!1
-    }
-    this.grid.event.trigger("onBeforeDataChange", !1, !0);
-    this.grid.event.trigger("onBeforeUpdateDatarow", [a, d], !0);
-    var g = {}, b;
-    for(b in d) {
-      d.hasOwnProperty(b) && (a[b] === d[b] ? delete d[b] : (g[b] = a[b], a[b] = d[b]))
-    }
-    if(e.isEmptyObj(g)) {
-      return!1
-    }
-    if((b = this.parse(a, c)) instanceof Error) {
-      return this._rollback(a, g), b
-    }
-    if((b = this.validate(a, c)) instanceof Error) {
-      return this._rollback(a, g), b
-    }
-    if((b = this.updateUniqueMap(a, d, g)) instanceof Error) {
-      return this._rollback(a, g), b
-    }
-    if((b = this.updateIdMap(a, d, g)) instanceof Error) {
-      return this._rollback(a, g), b
-    }
-    b !== !1 && this.grid.event.trigger("onIdChange", [a, b, a[this.idKey]], !0);
-    if(e.isNull(c) || c.undo !== !0) {
-      this._history.push({_action:this._consts._update, _target:a, _before:g, _change:d}), this._redoHistory.length = 0
-    }
-    this.grid.event.trigger("onUpdateDatarow", [a, d, g, c], !0);
+    this.grid.event.trigger("onAddDatarow", [a, c], !0);
     this.grid.event.trigger("onDataChange", !1, !0);
     (c === void 0 || c.noRefresh !== !0) && this.refresh(c);
     return!0
   };
-  b.updateList = function(a, d) {
+  b.addList = function(a, c) {
+    if(e.isEmptyArray(a)) {
+      return!1
+    }
+    var d = this.mapList(a).unmapped;
+    if(d.length === 0) {
+      return!1
+    }
+    this.grid.event.trigger("onBeforeDataChange", !1, !0);
+    this.fillTempList(a, c);
+    var b;
+    if((b = this.parseList(d, c)) instanceof Error) {
+      return b
+    }
+    if((b = this.validateList(d, c)) instanceof Error) {
+      return b
+    }
+    if((b = this.addListToUniqueMap(d)) instanceof Error) {
+      return b
+    }
+    if((b = this.addListToIdMap(d)) instanceof Error) {
+      return b
+    }
+    this.all.pushList(d);
+    if(e.isNull(c) || c.undo !== !0) {
+      this._history.push({_action:this._consts._addList, _target:d}), this._redoHistory.length = 0
+    }
+    this.grid.event.trigger("onAddDatalist", [d, c], !0);
+    this.grid.event.trigger("onDataChange", !1, !0);
+    (c === void 0 || c.noRefresh !== !0) && this.refresh(c);
+    return!0
+  };
+  b.updateByKey = function(a, c, d, b) {
+    var i = {};
+    i[c] = d;
+    return this.update(a, i, b)
+  };
+  b.update = function(a, c, d) {
+    if(e.isNullOr(a, c)) {
+      return!1
+    }
+    this.grid.event.trigger("onBeforeDataChange", !1, !0);
+    this.grid.event.trigger("onBeforeUpdateDatarow", [a, c], !0);
+    var b = {}, i;
+    for(i in c) {
+      c.hasOwnProperty(i) && (a[i] === c[i] ? delete c[i] : (b[i] = a[i], a[i] = c[i]))
+    }
+    if(e.isEmptyObj(b)) {
+      return!1
+    }
+    if((i = this.parse(a, d)) instanceof Error) {
+      return this._rollback(a, b), i
+    }
+    if((i = this.validate(a, d)) instanceof Error) {
+      return this._rollback(a, b), i
+    }
+    if((i = this.updateUniqueMap(a, c, b)) instanceof Error) {
+      return this._rollback(a, b), i
+    }
+    if((i = this.updateIdMap(a, c, b)) instanceof Error) {
+      return this._rollback(a, b), i
+    }
+    i !== !1 && this.grid.event.trigger("onIdChange", [a, i, a[this.idKey]], !0);
+    if(e.isNull(d) || d.undo !== !0) {
+      this._history.push({_action:this._consts._update, _target:a, _before:b, _change:c}), this._redoHistory.length = 0
+    }
+    this.grid.event.trigger("onUpdateDatarow", [a, c, b, d], !0);
+    this.grid.event.trigger("onDataChange", !1, !0);
+    (d === void 0 || d.noRefresh !== !0) && this.refresh(d);
+    return!0
+  };
+  b.updateList = function(a, c) {
     if(e.isEmptyArray(a)) {
       return!1
     }
     this.grid.event.trigger("onBeforeDataChange", !1, !0);
     this.grid.event.trigger("onBeforeUpdateDatalist", [a], !0);
-    for(var c = [], g = [], b = [], l, i, f, k = a.length, h = 0, m;h < k;h++) {
-      i = {};
+    for(var d = [], b = [], i = [], l, j, f, k = a.length, h = 0, n;h < k;h++) {
+      j = {};
       l = a[h].datarow;
       f = a[h].change;
-      for(m in f) {
-        f.hasOwnProperty(m) && (l[m] === f[m] ? delete f[m] : (i[m] = l[m], l[m] = f[m]))
+      for(n in f) {
+        f.hasOwnProperty(n) && (l[n] === f[n] ? delete f[n] : (j[n] = l[n], l[n] = f[n]))
       }
-      e.isNotEmptyObj(i) && (c.push(l), g.push(i), b.push(f))
+      e.isNotEmptyObj(j) && (d.push(l), b.push(j), i.push(f))
     }
-    if(c.length === 0) {
+    if(d.length === 0) {
       return!1
     }
-    if((l = this.parseList(c, d)) instanceof Error) {
-      return this._rollbackList(c, g), l
+    if((l = this.parseList(d, c)) instanceof Error) {
+      return this._rollbackList(d, b), l
     }
-    if((l = this.validateList(c, d)) instanceof Error) {
-      return this._rollbackList(c, g), l
+    if((l = this.validateList(d, c)) instanceof Error) {
+      return this._rollbackList(d, b), l
     }
-    if((l = this.updateListUniqueMap(c, b, g)) instanceof Error) {
-      return this._rollbackList(c, g), l
+    if((l = this.updateListUniqueMap(d, i, b)) instanceof Error) {
+      return this._rollbackList(d, b), l
     }
-    if((l = this.updateListIdMap(c, b, g)) instanceof Error) {
-      return this._rollbackList(c, g), l
+    if((l = this.updateListIdMap(d, i, b)) instanceof Error) {
+      return this._rollbackList(d, b), l
     }
     l !== !1 && this.grid.event.trigger("onIdListChange", [l.list, l.befores, this.idKey], !0);
-    if(e.isNull(d) || d.undo !== !0) {
-      this._history.push({_action:this._consts._updateList, _target:c, _before:g, _change:b}), this._redoHistory.length = 0
+    if(e.isNull(c) || c.undo !== !0) {
+      this._history.push({_action:this._consts._updateList, _target:d, _before:b, _change:i}), this._redoHistory.length = 0
     }
-    this.grid.event.trigger("onUpdateDatalist", [c, b, g, d], !0);
+    this.grid.event.trigger("onUpdateDatalist", [d, i, b, c], !0);
     this.grid.event.trigger("onDataChange", !1, !0);
-    (d === void 0 || d.noRefresh !== !0) && this.refresh(d);
+    (c === void 0 || c.noRefresh !== !0) && this.refresh(c);
     return!0
   };
-  b._rollback = function(a, d) {
-    for(var c in d) {
-      d.hasOwnProperty(c) && (a[c] = d[c])
+  b._rollback = function(a, c) {
+    for(var d in c) {
+      c.hasOwnProperty(d) && (a[d] = c[d])
     }
   };
-  b._rollbackList = function(a, d) {
-    for(var c = a.length, g = 0, b, l, i;g < c;g++) {
-      for(i in b = a[g], l = d[g], l) {
-        l.hasOwnProperty(i) && (b[i] = l[i])
+  b._rollbackList = function(a, c) {
+    for(var d = a.length, b = 0, i, l, j;b < d;b++) {
+      for(j in i = a[b], l = c[b], l) {
+        l.hasOwnProperty(j) && (i[j] = l[j])
       }
     }
   };
-  b.remove = function(a, d) {
+  b.remove = function(a, c) {
     if(e.isNull(a)) {
       return!1
     }
-    var c = this.map(a);
-    if(e.isNull(c)) {
+    var d = this.map(a);
+    if(e.isNull(d)) {
       return!1
     }
     this.grid.event.trigger("onBeforeDataChange", !1, !0);
-    this.removeFromIdMap(c);
-    this.removeFromUniqueMap(c);
-    this.all.remove(c);
-    this.removeId(c);
-    if(e.isNull(d) || d.undo !== !0) {
-      this._history.push({_action:this._consts._remove, _target:c}), this._redoHistory.length = 0
+    this.removeFromIdMap(d);
+    this.removeFromUniqueMap(d);
+    this.all.remove(d);
+    this.removeId(d);
+    if(e.isNull(c) || c.undo !== !0) {
+      this._history.push({_action:this._consts._remove, _target:d}), this._redoHistory.length = 0
     }
-    this.grid.event.trigger("onRemoveDatarow", [c, d], !0);
+    this.grid.event.trigger("onRemoveDatarow", [d, c], !0);
     this.grid.event.trigger("onDataChange", !1, !0);
-    (d === void 0 || d.noRefresh !== !0) && this.refresh(d);
+    (c === void 0 || c.noRefresh !== !0) && this.refresh(c);
     return!0
   };
-  b.removeList = function(a, d) {
+  b.removeList = function(a, c) {
     if(e.isEmptyArray(a)) {
       return!1
     }
-    var c = this.mapList(a).mapped;
-    if(c.length === 0) {
+    var d = this.mapList(a).mapped;
+    if(d.length === 0) {
       return!1
     }
     this.grid.event.trigger("onBeforeDataChange", !1, !0);
-    this.removeListFromIdMap(c);
-    this.removeListFromUniqueMap(c);
-    this.all.removeList(c);
-    this.cleanList(c);
-    if(e.isNull(d) || d.undo !== !0) {
-      this._history.push({_action:this._consts._removeList, _target:c}), this._redoHistory.length = 0
+    this.removeListFromIdMap(d);
+    this.removeListFromUniqueMap(d);
+    this.all.removeList(d);
+    this.cleanList(d);
+    if(e.isNull(c) || c.undo !== !0) {
+      this._history.push({_action:this._consts._removeList, _target:d}), this._redoHistory.length = 0
     }
-    this.grid.event.trigger("onRemoveDatalist", [c, d], !0);
+    this.grid.event.trigger("onRemoveDatalist", [d, c], !0);
     this.grid.event.trigger("onDataChange", !1, !0);
-    (d === void 0 || d.noRefresh !== !0) && this.refresh(d);
+    (c === void 0 || c.noRefresh !== !0) && this.refresh(c);
     return!0
   };
   b._keydownCanvas = function(a) {
@@ -3305,23 +3305,23 @@ jx.data.DataManager = {};
     }
     var a = this._history.pop();
     this._redoHistory.push(a);
-    var d = a._target, c = a._before;
+    var c = a._target, d = a._before;
     switch(a._action) {
       case this._consts._add:
-        return this.remove(d, {undo:!0});
+        return this.remove(c, {undo:!0});
       case this._consts._addList:
-        return this.removeList(d, {undo:!0});
+        return this.removeList(c, {undo:!0});
       case this._consts._update:
-        return this.update(d, c, {undo:!0});
+        return this.update(c, d, {undo:!0});
       case this._consts._updateList:
-        for(var a = [], g = 0, b = d.length;g < b;g++) {
-          a.push({datarow:d[g], change:c[g]})
+        for(var a = [], b = 0, i = c.length;b < i;b++) {
+          a.push({datarow:c[b], change:d[b]})
         }
         return this.updateList(a, {undo:!0});
       case this._consts._remove:
-        return this.add(d, {undo:!0});
+        return this.add(c, {undo:!0});
       case this._consts._removeList:
-        return this.addList(d, {undo:!0})
+        return this.addList(c, {undo:!0})
     }
   };
   b.redo = function() {
@@ -3330,46 +3330,46 @@ jx.data.DataManager = {};
     }
     var a = this._redoHistory.pop();
     this._history.push(a);
-    var d = a._target, c = a._change;
+    var c = a._target, d = a._change;
     switch(a._action) {
       case this._consts._add:
-        return this.add(d, {undo:!0});
+        return this.add(c, {undo:!0});
       case this._consts._addList:
-        return this.addList(d, {undo:!0});
+        return this.addList(c, {undo:!0});
       case this._consts._update:
-        return this.update(d, c, {undo:!0});
+        return this.update(c, d, {undo:!0});
       case this._consts._updateList:
-        for(var a = [], g = 0, b = d.length;g < b;g++) {
-          a.push({datarow:d[g], change:c[g]})
+        for(var a = [], b = 0, i = c.length;b < i;b++) {
+          a.push({datarow:c[b], change:d[b]})
         }
         return this.updateList(a, {undo:!0});
       case this._consts._remove:
-        return this.remove(d, {undo:!0});
+        return this.remove(c, {undo:!0});
       case this._consts._removeList:
-        return this.removeList(d, {undo:!0})
+        return this.removeList(c, {undo:!0})
     }
   };
-  b.equals = function(a, d) {
-    if(e.isNullOr(a, d)) {
+  b.equals = function(a, c) {
+    if(e.isNullOr(a, c)) {
       return!1
     }
-    if(a === d) {
+    if(a === c) {
       return!0
     }
-    this._idMode === this._consts._composite && (this.makeCompositeKey(a), this.makeCompositeKey(d));
-    var c = this.idKey;
-    return e.isNull(a[c]) || e.isNull(d[c]) ? !1 : a[c] === d[c]
+    this._idMode === this._consts._composite && (this.makeCompositeKey(a), this.makeCompositeKey(c));
+    var d = this.idKey;
+    return e.isNull(a[d]) || e.isNull(c[d]) ? !1 : a[d] === c[d]
   };
   b.getReal = function() {
     var a = this._consts._notReal;
-    return this.all.filter(function(d) {
-      return d.hasOwnProperty(a) === !1
+    return this.all.filter(function(c) {
+      return c.hasOwnProperty(a) === !1
     })
   };
   b.filterReal = function(a) {
-    var d = this._consts._notReal;
+    var c = this._consts._notReal;
     return a.filter(function(a) {
-      return a.hasOwnProperty(d) === !1
+      return a.hasOwnProperty(c) === !1
     })
   };
   b.isReal = function(a) {
@@ -3377,15 +3377,15 @@ jx.data.DataManager = {};
   };
   b.dropNonReal = function(a) {
     if(!e.isEmptyArray(a)) {
-      for(var d = this._consts._notReal, c = a.length - 1;c >= 0;c--) {
-        a[c].hasOwnProperty(d) && (delete a[c][d], a.removeAt(c))
+      for(var c = this._consts._notReal, d = a.length - 1;d >= 0;d--) {
+        a[d].hasOwnProperty(c) && (delete a[d][c], a.removeAt(d))
       }
     }
   };
   b.removeIdCol = function(a) {
     if(!(this._idMode === this._consts._given || e.isEmptyArray(a))) {
-      for(var d = this.idKey, c = 0, g = a.length;c < g;c++) {
-        a[c].hasOwnProperty(d) && delete a[c][d]
+      for(var c = this.idKey, d = 0, b = a.length;d < b;d++) {
+        a[d].hasOwnProperty(c) && delete a[d][c]
       }
     }
   };
@@ -3402,14 +3402,14 @@ jx.data.DataManager = {};
     if(e.isEmptyArray(a)) {
       return[]
     }
-    for(var d = [], c = a.length, g = 0, b, l, i = this._consts._notReal;g < c;g++) {
-      if((l = a[g]).hasOwnProperty(i) === !1) {
-        for(b in d.push({}), l) {
-          l.hasOwnProperty(b) && l.hasOwnProperty(b) && b.substring(0, 3)
+    for(var c = [], d = a.length, b = 0, i, l, j = this._consts._notReal;b < d;b++) {
+      if((l = a[b]).hasOwnProperty(j) === !1) {
+        for(i in c.push({}), l) {
+          l.hasOwnProperty(i) && l.hasOwnProperty(i) && i.substring(0, 3)
         }
       }
     }
-    return d
+    return c
   };
   b.setSorter = function(a) {
     this.grid.event.trigger("onChangeSorter", [this._sorter, a], !0);
@@ -3418,10 +3418,10 @@ jx.data.DataManager = {};
   b._sort = function(a) {
     e.isNull(a) ? a = this._sorter : this.setSorter(a);
     if(!e.isNull(a)) {
-      var d = this.all;
-      this.grid.event.trigger("onBeforeSort", [d], !0);
-      e.isNotNull(a.comparator) ? (d.sort(a.comparator), a.desc && d.reverse()) : e.isNotNull(a.lexi) && this.constructor._lexi(d, a.lexi, a.desc);
-      this.grid.event.trigger("onAfterSort", [d], !0)
+      var c = this.all;
+      this.grid.event.trigger("onBeforeSort", [c], !0);
+      e.isNotNull(a.comparator) ? (c.sort(a.comparator), a.desc && c.reverse()) : e.isNotNull(a.lexi) && this.constructor._lexi(c, a.lexi, a.desc);
+      this.grid.event.trigger("onAfterSort", [c], !0)
     }
   };
   b.addFilter = function(a) {
@@ -3429,23 +3429,23 @@ jx.data.DataManager = {};
     this.refresh()
   };
   b.removeFilter = function(a) {
-    var d = this._filters.length;
+    var c = this._filters.length;
     this._filters.remove(a);
-    d !== this._filters.length && this.refresh()
+    c !== this._filters.length && this.refresh()
   };
   b._filter = function() {
-    var a = this.datalist, d = this.failed, c = 0, g = this._filters.length, b, l;
-    this.grid.event.trigger("onBeforeFilter", [a, d], !0);
+    var a = this.datalist, c = this.failed, d = 0, b = this._filters.length, i, l;
+    this.grid.event.trigger("onBeforeFilter", [a, c], !0);
     a.length = 0;
     a.pushList(this.all);
-    for(d.length = 0;c < g;c++) {
-      b = this._filters[c];
+    for(c.length = 0;d < b;d++) {
+      i = this._filters[d];
       for(l = a.length - 1;l >= 0;l--) {
-        b(a[l]) || (d.push(a[l]), a.removeAt(l))
+        i(a[l]) || (c.push(a[l]), a.removeAt(l))
       }
     }
-    this.grid.event.trigger("onFilter", [a, d], !0);
-    this.grid.event.trigger("onAfterFilter", [a, d], !0)
+    this.grid.event.trigger("onFilter", [a, c], !0);
+    this.grid.event.trigger("onAfterFilter", [a, c], !0)
   };
   b._finish = function(a) {
     this._reidx();
@@ -3457,36 +3457,36 @@ jx.data.DataManager = {};
     (!a || !a.noFilter) && this._filter();
     this._finish(a)
   };
-  b.exportRowToArray = function(a, d) {
+  b.exportRowToArray = function(a, c) {
     if(!(a in this.datalist)) {
       return null
     }
-    d || (d = this.grid.colDefMgr.getKeys());
-    for(var c = this.datalist[a], g = [], b, l = 0, i = d.length;l < i;l++) {
-      b = d[l], g.push(b in c ? c[b] : null)
+    c || (c = this.grid.colDefMgr.getKeys());
+    for(var d = this.datalist[a], b = [], i, l = 0, j = c.length;l < j;l++) {
+      i = c[l], b.push(i in d ? d[i] : null)
     }
-    return g
+    return b
   };
-  b.exportToArray = function(a, d, c) {
+  b.exportToArray = function(a, c, d) {
     a || (a = this.grid.colDefMgr.getKeys());
-    for(var d = this.datalist.slice(d, c), g = [], b, l, i = 0, e = d.length, f, h = a.length;i < e;i++) {
-      b = d[i];
+    for(var c = this.datalist.slice(c, d), b = [], i, l, j = 0, e = c.length, f, h = a.length;j < e;j++) {
+      i = c[j];
       f = 0;
-      for(c = [];f < h;f++) {
-        l = a[f], c.push(l in b ? b[l] : null)
+      for(d = [];f < h;f++) {
+        l = a[f], d.push(l in i ? i[l] : null)
       }
-      g.push(c)
+      b.push(d)
     }
-    return g
+    return b
   };
-  f._lexi = function(a, d, c) {
-    var g = Object.prototype.toString;
-    Object.prototype.toString = e.isFunction(d) ? d : function() {
-      return this[d]
+  f._lexi = function(a, c, d) {
+    var b = Object.prototype.toString;
+    Object.prototype.toString = e.isFunction(c) ? c : function() {
+      return this[c]
     };
     a.sort();
-    Object.prototype.toString = g;
-    c && a.reverse()
+    Object.prototype.toString = b;
+    d && a.reverse()
   }
 })();
 console && console.log && console.log('reading javascript source "EventManager.js"...');
@@ -3506,108 +3506,108 @@ jx.grid.EventManager = {};
   };
   var b = f.prototype;
   b.destroy = function() {
-    var a, d = this._map;
-    for(a in d) {
-      d.hasOwnProperty(a) && h._deleteArray(d, a)
+    var a, c = this._map;
+    for(a in c) {
+      c.hasOwnProperty(a) && h._deleteArray(c, a)
     }
     h._destroy(this, {name:"EventManager", path:"event", map:"_map"})
   };
-  b.register = function(a, d, c) {
+  b.register = function(a, c, d) {
     if(e.isString(a)) {
-      this._parseAndAdd(a, d, c)
+      this._parseAndAdd(a, c, d)
     }else {
       if(e.isNotNull(a.e)) {
         this._parseAndAdd(a.e, a.f, a.t)
       }else {
-        for(var g, d = a.length, b;g < d;g++) {
-          e.isNotNull(b = a[g]) && this._parseAndAdd(b.e, b.f, b.t)
+        for(var b, c = a.length, i;b < c;b++) {
+          e.isNotNull(i = a[b]) && this._parseAndAdd(i.e, i.f, i.t)
         }
       }
     }
   };
-  b.bind = function(a, d, c) {
+  b.bind = function(a, c, d) {
     if(e.isString(a)) {
-      this._parseAndAdd(a, d, c)
+      this._parseAndAdd(a, c, d)
     }else {
-      for(var g in a) {
-        a.hasOwnProperty(g) && this._parseAndAdd(g, a[g], d)
+      for(var b in a) {
+        a.hasOwnProperty(b) && this._parseAndAdd(b, a[b], c)
       }
     }
   };
-  b._parseAndAdd = function(a, d, c) {
-    e.isNull(c) && (c = window);
-    var a = e.split(a), g = a.length, b = 0;
-    if(e.isFunction(d)) {
-      for(;b < g;b++) {
-        this._addHandler(a[b], d, c)
+  b._parseAndAdd = function(a, c, d) {
+    e.isNull(d) && (d = window);
+    var a = e.split(a), b = a.length, i = 0;
+    if(e.isFunction(c)) {
+      for(;i < b;i++) {
+        this._addHandler(a[i], c, d)
       }
     }else {
-      if(e.isString(d)) {
-        for(var d = e.split(d), l = d.length, i, f;b < g;b++) {
-          i = a[b];
+      if(e.isString(c)) {
+        for(var c = e.split(c), l = c.length, j, f;i < b;i++) {
+          j = a[i];
           for(f = 0;f < l;f++) {
-            this._addHandler(i, c[d[f]], c)
+            this._addHandler(j, d[c[f]], d)
           }
         }
       }else {
-        for(l = d.length;b < g;b++) {
-          i = a[b];
+        for(l = c.length;i < b;i++) {
+          j = a[i];
           for(f = 0;f < l;f++) {
-            this._addHandler(i, d[f], c)
+            this._addHandler(j, c[f], d)
           }
         }
       }
     }
   };
-  b._addHandler = function(a, d, c) {
+  b._addHandler = function(a, c, d) {
     this._map.hasOwnProperty(a) || (this._map[a] = []);
-    this._map[a].push({fn:d, target:c})
+    this._map[a].push({fn:c, target:d})
   };
-  b.unregister = function(a, d) {
-    var c = this._map;
-    if(c.hasOwnProperty(a)) {
-      var g = c[a];
-      if(e.isNull(d)) {
-        g.length = 0, delete c[a]
+  b.unregister = function(a, c) {
+    var d = this._map;
+    if(d.hasOwnProperty(a)) {
+      var b = d[a];
+      if(e.isNull(c)) {
+        b.length = 0, delete d[a]
       }else {
-        for(var b = 0, l = g.length;b < l;b++) {
-          if(g[b].fn === d) {
-            g.removeAt(b);
-            g.length === 0 && delete c[a];
+        for(var i = 0, l = b.length;i < l;i++) {
+          if(b[i].fn === c) {
+            b.removeAt(i);
+            b.length === 0 && delete d[a];
             break
           }
         }
       }
     }
   };
-  b.trigger = function(a, d, c, g) {
+  b.trigger = function(a, c, d, b) {
     this.grid.log("firing event=" + a, 3);
-    var b = this._map;
-    if(b.hasOwnProperty(a)) {
-      var b = b[a], l = b.length;
+    var i = this._map;
+    if(i.hasOwnProperty(a)) {
+      var i = i[a], l = i.length;
       if(l) {
-        if(this.grid.log(l + " handlers registered for event=" + a, 4), a = 0, c) {
-          if(d && d.length) {
+        if(this.grid.log(l + " handlers registered for event=" + a, 4), a = 0, d) {
+          if(c && c.length) {
             for(;a < l;a++) {
-              c = b[a], c.fn.apply(c.target, d)
+              d = i[a], d.fn.apply(d.target, c)
             }
           }else {
             for(;a < l;a++) {
-              c = b[a], c.fn.call(c.target)
+              d = i[a], d.fn.call(d.target)
             }
           }
         }else {
-          g = g || [];
-          if(d && d.length) {
+          b = b || [];
+          if(c && c.length) {
             for(;a < l;a++) {
-              c = b[a], g.push(c.fn.apply(c.target, d))
+              d = i[a], b.push(d.fn.apply(d.target, c))
             }
           }else {
             for(;a < l;a++) {
-              c = b[a], g.push(c.fn.call(c.target))
+              d = i[a], b.push(d.fn.call(d.target))
             }
           }
-          return g
+          return b
         }
       }else {
         this.grid.log("no handlers registered for event=" + a, 4)
@@ -3616,44 +3616,44 @@ jx.grid.EventManager = {};
       this.grid.log("no handlers registered for event=" + a, 4)
     }
   };
-  b.triggerMultiple = function(a, d, c) {
-    var a = a.split(","), g = 0, b = a.length;
-    if(c) {
-      for(c = [];g < b;g++) {
-        this.trigger(a[g], d, !1, c)
+  b.triggerMultiple = function(a, c, d) {
+    var a = a.split(","), b = 0, i = a.length;
+    if(d) {
+      for(d = [];b < i;b++) {
+        this.trigger(a[b], c, !1, d)
       }
-      return c
+      return d
     }else {
-      for(;g < b;g++) {
-        this.trigger(a[g], d, !0)
+      for(;b < i;b++) {
+        this.trigger(a[b], c, !0)
       }
     }
   };
-  b.triggerInvalid = function(a, d) {
-    var c = this.trigger(a, d);
-    return c && c.some(function(a) {
+  b.triggerInvalid = function(a, c) {
+    var d = this.trigger(a, c);
+    return d && d.some(function(a) {
       return a === !1
     })
   };
-  b.sendToBack = function(a, d) {
-    for(var c = this._map[a], g = c.length, b, l = -1, i = 0;i < g;i++) {
-      if(c[i].fn === d) {
-        l = i;
-        b = c[i];
+  b.sendToBack = function(a, c) {
+    for(var d = this._map[a], b = d.length, i, l = -1, j = 0;j < b;j++) {
+      if(d[j].fn === c) {
+        l = j;
+        i = d[j];
         break
       }
     }
-    l > -1 && (c.removeAt(i), c.push(b))
+    l > -1 && (d.removeAt(j), d.push(i))
   };
-  b.sendToFront = function(a, d) {
-    for(var c = this._map[a], g = c.length, b, l = -1, i = 0;i < g;i++) {
-      if(c[i].fn === d) {
-        l = i;
-        b = c[i];
+  b.sendToFront = function(a, c) {
+    for(var d = this._map[a], b = d.length, i, l = -1, j = 0;j < b;j++) {
+      if(d[j].fn === c) {
+        l = j;
+        i = d[j];
         break
       }
     }
-    l > -1 && (c.removeAt(i), c.unshift(b))
+    l > -1 && (d.removeAt(j), d.unshift(i))
   }
 })();
 console && console.log && console.log('reading javascript source "Tree.js"...');
@@ -3744,48 +3744,48 @@ var TreeNode = {}, Tree = {};
   b.addChild = function(a) {
     this.hasChild(a) || (this.children.push(a), this.childrenMap[a.nodeId] = this.children.length - 1, a.setParent(this))
   };
-  b.addChildAt = function(a, d) {
-    var c;
-    if(this.hasChild(d)) {
-      c = this.childrenMap[d.nodeId];
-      if(c === a) {
+  b.addChildAt = function(a, c) {
+    var d;
+    if(this.hasChild(c)) {
+      d = this.childrenMap[c.nodeId];
+      if(d === a) {
         return
       }
-      this.children.removeAt(c)
+      this.children.removeAt(d)
     }
-    this.children.addAt(a, d);
-    e.isNotNull(c) && c < a ? this.resetChildIdx(c) : this.resetChildIdx(a);
-    d.setParent(this)
+    this.children.addAt(a, c);
+    e.isNotNull(d) && d < a ? this.resetChildIdx(d) : this.resetChildIdx(a);
+    c.setParent(this)
   };
   b.removeChild = function(a) {
     if(this.hasChild(a)) {
-      var d = this.childrenMap[a.nodeId];
-      this.children.removeAt(d);
+      var c = this.childrenMap[a.nodeId];
+      this.children.removeAt(c);
       delete this.childrenMap[a.nodeId];
-      this.resetChildIdx(d);
+      this.resetChildIdx(c);
       delete a.parent;
       delete a.level
     }
   };
   b.removeChildAt = function(a) {
-    var d = this.children[a];
+    var c = this.children[a];
     this.children.removeAt(a);
-    delete this.childrenMap[d.nodeId];
+    delete this.childrenMap[c.nodeId];
     this.resetChildIdx(a);
-    delete d.parent;
-    delete d.level
+    delete c.parent;
+    delete c.level
   };
   b.resetChildIdx = function(a) {
     e.isNull(a) && (a = 0);
-    for(var d = this.children, c = d.length, g = this.childrenMap;a < c;a++) {
-      g[d[a].nodeId] = a
+    for(var c = this.children, d = c.length, b = this.childrenMap;a < d;a++) {
+      b[c[a].nodeId] = a
     }
   };
   b.removeAllChildren = function() {
-    for(var a = 0, d = this.children, c = d.length;a < c;a++) {
-      delete d[a].parent, delete d[a].level
+    for(var a = 0, c = this.children, d = c.length;a < d;a++) {
+      delete c[a].parent, delete c[a].level
     }
-    d.length = 0;
+    c.length = 0;
     this.childrenMap = {}
   };
   b.getSiblings = function() {
@@ -3827,31 +3827,31 @@ var TreeNode = {}, Tree = {};
     return this.isRoot() ? this.level = -1 : this.level = this.parent.getLevel() + 1
   };
   b.find = function(a) {
-    return this.traverse({fn:function(d) {
+    return this.traverse({fn:function(c) {
       if(this.data === a) {
-        d.res = this, d.stop = !0
+        c.res = this, c.stop = !0
       }
     }}).res
   };
-  b.traverse = function(a, d) {
+  b.traverse = function(a, c) {
     if(a.stop) {
       return a
     }
     if(a.up) {
       this.isRoot() ? this.callFn(a) : a.post ? (this.parent.traverse(a), this.callFn(a)) : (this.callFn(a), this.parent.traverse(a))
     }else {
-      var c = 0, g = this.children, b = g.length;
+      var d = 0, b = this.children, i = b.length;
       if(a.post) {
-        for(;c < b;c++) {
-          g[c].traverse(a, c)
+        for(;d < i;d++) {
+          b[d].traverse(a, d)
         }
-        this.callFn(a, d)
+        this.callFn(a, c)
       }else {
-        if(this.callFn(a, d), a.propagate === !1) {
+        if(this.callFn(a, c), a.propagate === !1) {
           delete a.propagate
         }else {
-          for(;!a.stop && c < b;c++) {
-            g[c].traverse(a, c)
+          for(;!a.stop && d < i;d++) {
+            b[d].traverse(a, d)
           }
         }
       }
@@ -3859,16 +3859,16 @@ var TreeNode = {}, Tree = {};
     return a
   };
   b.traverseChildren = function(a) {
-    for(var d = 0, c = this.children, g = c.length;d < g;d++) {
-      c[d].traverse(a, d)
+    for(var c = 0, d = this.children, b = d.length;c < b;c++) {
+      d[c].traverse(a, c)
     }
   };
   b.traverseParent = function(a) {
     e.isNotNull(this.parent) && this.parent.traverse(a)
   };
-  b.callFn = function(a, d) {
+  b.callFn = function(a, c) {
     if(!a.stop) {
-      e.isNull(a.target) ? e.callFn(this, a.fn, a, d) : (a.node = this, e.callFn(a.target, a.fn, a, d))
+      e.isNull(a.target) ? e.callFn(this, a.fn, a, c) : (a.node = this, e.callFn(a.target, a.fn, a, c))
     }
   };
   h.getInstance = function(a) {
@@ -3894,10 +3894,10 @@ var TreeNode = {}, Tree = {};
     this.emptyInfants()
   };
   b.emptyInfants = function() {
-    var a, d = this.infants;
-    for(a in d) {
-      if(d.hasOwnProperty(a)) {
-        d[a].length = 0
+    var a, c = this.infants;
+    for(a in c) {
+      if(c.hasOwnProperty(a)) {
+        c[a].length = 0
       }
     }
     this.infants = {}
@@ -3907,16 +3907,16 @@ var TreeNode = {}, Tree = {};
     if(e.isNull(a)) {
       a = this.list
     }
-    for(var d = this._options.nodeKey, c = this.map, g = a.length, b = 0;b < g;b++) {
-      this.attachNode(c[a[b][d]])
+    for(var c = this._options.nodeKey, d = this.map, b = a.length, i = 0;i < b;i++) {
+      this.attachNode(d[a[i][c]])
     }
   };
   b.makeTree = function(a) {
     if(e.isNull(a)) {
       a = this.list
     }
-    for(var d = 0, c = a.length;d < c;d++) {
-      this.createNode(a[d])
+    for(var c = 0, d = a.length;c < d;c++) {
+      this.createNode(a[c])
     }
   };
   b.hasNode = function(a) {
@@ -3930,40 +3930,40 @@ var TreeNode = {}, Tree = {};
   };
   b.createNode = function(a) {
     if(!this.hasNode()) {
-      var d = a[this._options.nodeKey], a = new f({tree:this, data:a, nodeId:d});
-      this.map[d] = a;
+      var c = a[this._options.nodeKey], a = new f({tree:this, data:a, nodeId:c});
+      this.map[c] = a;
       this.attachNode(a);
       return a
     }
   };
-  b.adoptInfants = function(a, d) {
-    if(this.infants.hasOwnProperty(d)) {
-      for(var c = this.infants[d], g = 0, b = c.length;g < b;g++) {
-        a.addChild(c[g])
+  b.adoptInfants = function(a, c) {
+    if(this.infants.hasOwnProperty(c)) {
+      for(var d = this.infants[c], b = 0, i = d.length;b < i;b++) {
+        a.addChild(d[b])
       }
-      c.length = 0;
-      delete this.infants[d]
+      d.length = 0;
+      delete this.infants[c]
     }
   };
   b.attachNode = function(a) {
-    var d = a.nodeId, c = a.data[this._options.parentKey];
-    this.adoptInfants(a, d);
-    if(e.isNull(c) || c == d) {
+    var c = a.nodeId, d = a.data[this._options.parentKey];
+    this.adoptInfants(a, c);
+    if(e.isNull(d) || d == c) {
       return this.root.addChild(a), !0
     }
-    if(this.map.hasOwnProperty(c)) {
-      return this.map[c].addChild(a), !0
+    if(this.map.hasOwnProperty(d)) {
+      return this.map[d].addChild(a), !0
     }
-    this.addToInfants(a, c);
+    this.addToInfants(a, d);
     return!1
   };
-  b.changeNodeId = function(a, d, c) {
-    if(d !== c) {
-      delete this.map[d], this.map[c] = a, this.removeChildren(a), a.nodeId = a.data[this._options.nodeKey] = c, e.isNotNull(a.parent) && (a.parent.childrenMap[c] = a.parent.childrenMap[d], delete a.parent.childrenMap[d]), this.adoptInfants(a, c)
+  b.changeNodeId = function(a, c, d) {
+    if(c !== d) {
+      delete this.map[c], this.map[d] = a, this.removeChildren(a), a.nodeId = a.data[this._options.nodeKey] = d, e.isNotNull(a.parent) && (a.parent.childrenMap[d] = a.parent.childrenMap[c], delete a.parent.childrenMap[c]), this.adoptInfants(a, d)
     }
   };
-  b.changeParentId = function(a, d, c) {
-    d !== c && (e.isNull(a.parent) && this.removeFromInfants(a, d), d = this.map[c], a.setParent(d), a.data[this._options.parentKey] = c, e.isNull(d) && this.addToInfants(a, c))
+  b.changeParentId = function(a, c, d) {
+    c !== d && (e.isNull(a.parent) && this.removeFromInfants(a, c), c = this.map[d], a.setParent(c), a.data[this._options.parentKey] = d, e.isNull(c) && this.addToInfants(a, d))
   };
   b.destroyNodeByData = function(a) {
     this.destroyNode(this.getNode(a))
@@ -3977,13 +3977,13 @@ var TreeNode = {}, Tree = {};
   b.removeFromMap = function(a) {
     delete this.map[a.nodeId]
   };
-  b.addToInfants = function(a, d) {
-    this.infants.hasOwnProperty(d) || (this.infants[d] = []);
-    this.infants[d].push(a)
+  b.addToInfants = function(a, c) {
+    this.infants.hasOwnProperty(c) || (this.infants[c] = []);
+    this.infants[c].push(a)
   };
-  b.removeFromInfants = function(a, d) {
-    e.isNull(d) && (d = a.data[this._options.parentKey]);
-    this.infants.hasOwnProperty(d) && (this.infants[d].remove(a), this.infants[d].length === 0 && delete this.infants[d])
+  b.removeFromInfants = function(a, c) {
+    e.isNull(c) && (c = a.data[this._options.parentKey]);
+    this.infants.hasOwnProperty(c) && (this.infants[c].remove(a), this.infants[c].length === 0 && delete this.infants[c])
   };
   b.removeChildren = function(a) {
     a.children.length !== 0 && (this.infants.hasOwnProperty(a.nodeId) || (this.infants[a.nodeId] = []), this.infants[a.nodeId].pushList(a.children), a.removeAllChildren())
@@ -3998,12 +3998,12 @@ var TreeNode = {}, Tree = {};
 console && console.log && console.log('reading javascript source "Grid.js"...');
 jx.grid.Grid = {};
 (function() {
-  function f(d) {
-    this.mid = d.mid;
-    this.log("creating new Grid instance...", c);
-    a.call(this, d)
+  function f(c) {
+    this.mid = c.mid;
+    this.log("creating new Grid instance...", d);
+    a.call(this, c)
   }
-  var h = goog.getObjectByName("jx.grid"), e = goog.getObjectByName("jx.util"), b = goog.getObjectByName("echo"), a = goog.getObjectByName("jx.grid.BaseModule"), d = goog.getObjectByName("TimeWatch"), c = 1;
+  var h = goog.getObjectByName("jx.grid"), e = goog.getObjectByName("jx.util"), b = goog.getObjectByName("echo"), a = goog.getObjectByName("jx.grid.BaseModule"), c = goog.getObjectByName("TimeWatch"), d = 1;
   goog.exportSymbol("jx.grid.Grid", f);
   f.V_KEYDOWN = 3;
   f.V_KEYPRESS = 3;
@@ -4019,7 +4019,7 @@ jx.grid.Grid = {};
   f.V_CLICK = 2;
   f.V_DBLCLICK = 2;
   f.V_RESIZE = 2;
-  f.V_INIT = c;
+  f.V_INIT = d;
   goog.inherits(f, a);
   f.getInstance = function(a) {
     return new f(a)
@@ -4031,14 +4031,14 @@ jx.grid.Grid = {};
     autoWidth:!1, showMessage:!1}
   };
   g._init = function(a) {
-    var c = this._ctnr = a.container, d = this._options, g;
+    var c = this._ctnr = a.container, d = this._options, b;
     this.name = d.name;
     this._drag = !1;
     this._lastH = this._lastW = null;
     this._vars = {scrollbarDim:void 0};
     c = this._ctnr = $("<div id='" + this.mid + "' class='" + d.classGrid + "' " + (e.isNull(d.width) ? "" : "style='width:" + d.width + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(c));
     this._vars.scrollbarDim = Util$.calScrollbarDims(c);
-    g = this.event = h.create("EventManager", {grid:this, options:d.EventManager});
+    b = this.event = h.create("EventManager", {grid:this, options:d.EventManager});
     this.colDefMgr = h.create("ColumnManager", {grid:this, colDefs:a.colDefs, options:d.ColDefManager});
     this.dataMgr = h.create("DataManager", {grid:this, datalist:a.datalist, options:d.DataManager});
     d.CheckManager && (this.checkMgr = h.create("CheckManager", {grid:this, options:d.CheckManager}));
@@ -4055,11 +4055,11 @@ jx.grid.Grid = {};
     d.TooltipManager && (this.tooltip = h.create("TooltipManager", {grid:this, container:c, options:d.TooltipManager}));
     d.DataCreator && (this.creator = h.create("DataCreator", {grid:this, container:c, options:d.DataCreator}));
     d.Footer && (this.footer = h.create("Footer", {grid:this, container:c, options:d.Footer}));
-    d.autoWidth && g.bind("onResizeCanvasWidth", this.width, this);
+    d.autoWidth && b.bind("onResizeCanvasWidth", this.width, this);
     this._createCss();
-    g.trigger("onBeforeRenderModules", !1, !0);
-    g.trigger("onRenderModules", !1, !0);
-    g.trigger("onAfterRenderModules", !1, !0);
+    b.trigger("onBeforeRenderModules", !1, !0);
+    b.trigger("onRenderModules", !1, !0);
+    b.trigger("onAfterRenderModules", !1, !0);
     this.msg = $("<div id='" + this.mid + "msg' class='msg' onmousedown='$(this).hide(1000)' style='position:relative;padding-left:4px;overflow:hidden;z-index:100;font-size:12px;height:21px;line-height:21px'></div>").appendTo(c).hide();
     this._busyShader = $('<div style="position:absolute;background:black;opacity:0.3;filter:alpha(opacity=30)"></div>').appendTo(c).hide();
     c = c[0];
@@ -4069,7 +4069,7 @@ jx.grid.Grid = {};
   };
   g._bindEvents = function() {
     h._bindGlobalEvents();
-    this.log("binding Grid events...", c);
+    this.log("binding Grid events...", d);
     var a = this;
     this._ctnr.bind({keydown:function(c) {
       a._keydown(c)
@@ -4097,61 +4097,61 @@ jx.grid.Grid = {};
     this._charts = []
   };
   g.destroy = function() {
-    this.log("destroying Grid...", c);
+    this.log("destroying Grid...", d);
     try {
-      this.log("event:beforeDispose.", c), this.dispatchEvent({type:"beforeDispose"}), e.isEmptyObj(h.m.Grid) && (this.log("unbinding global event handlers.", c), h._unbindGlobalEvents()), this.log("event:onDestroy.", c), this.event.trigger("onDestroy", !1, !0), this.log("destroying grid vars...", c), h._destroy(this, {name:"Grid", module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"}), this.dispose()
+      this.log("event:beforeDispose.", d), this.dispatchEvent({type:"beforeDispose"}), e.isEmptyObj(h.m.Grid) && (this.log("unbinding global event handlers.", d), h._unbindGlobalEvents()), this.log("event:onDestroy.", d), this.event.trigger("onDestroy", !1, !0), this.log("destroying grid vars...", d), h._destroy(this, {name:"Grid", module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"}), this.dispose()
     }catch(a) {
       return a
     }
   };
   g._registerLinks = function(a) {
-    var c, d, g, b, f, h, o, n, s, r;
+    var c, d, b, g, f, h, o, m, r, s;
     a:for(c in a) {
       if(a.hasOwnProperty(c) && !(c in this)) {
         d = e.split(a[c]);
-        g = d.length;
-        b = 0;
-        b:for(;b < g;b++) {
-          if(f = d[b].split("."), h = f.length, !(h < 1)) {
+        b = d.length;
+        g = 0;
+        b:for(;g < b;g++) {
+          if(f = d[g].split("."), h = f.length, !(h < 1)) {
             o = this;
-            n = this;
-            s = "";
-            for(r = 0;r < h;r++) {
-              if(f[r] in o) {
-                n = o, o = o[s = f[r]]
+            m = this;
+            r = "";
+            for(s = 0;s < h;s++) {
+              if(f[s] in o) {
+                m = o, o = o[r = f[s]]
               }else {
                 continue b
               }
             }
-            this._registerLink(c, o, n, s);
+            this._registerLink(c, o, m, r);
             continue a
           }
         }
       }
     }
   };
-  g._registerLink = function(a, c, d, g) {
+  g._registerLink = function(a, c, d, b) {
     if(this.hasOwnProperty(a)) {
       return!1
     }
     this[a] = e.isFunction(c) ? function() {
       return c.apply(d, arguments)
     } : function() {
-      return d[g]
+      return d[b]
     };
     return!0
   };
   g._createCss = function() {
-    this.log("creating CSS...", c);
-    var a = {type:"beforeCreateCss", css:[]}, d = this._options, g = this.event;
+    this.log("creating CSS...", d);
+    var a = {type:"beforeCreateCss", css:[]}, c = this._options, b = this.event;
     this.dispatchEvent(a);
-    this.log("creating CSS for Grid...", c);
-    var b = g.trigger("onCreateCss"), b = b ? b.join("") : "", a = e.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {selector:"#" + this.mid, font:d.font, border:d.borderSide ? "border:" + d.border + ";" : "border-top:" + d.border + ";border-bottom:" + d.border + ";", style:d.style, submodule:a.css.join("") + b});
+    this.log("creating CSS for Grid...", d);
+    var g = b.trigger("onCreateCss"), g = g ? g.join("") : "", a = e.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {selector:"#" + this.mid, font:c.font, border:c.borderSide ? "border:" + c.border + ";" : "border-top:" + c.border + ";border-bottom:" + c.border + ";", style:c.style, submodule:a.css.join("") + g});
     this._style = e.createStyle(a);
     a = {type:"beforeCreateDynamicCss", css:[]};
     this.dispatchEvent(a);
-    b = (b = g.trigger("onCreateDynamicCss")) ? b.join("") : "";
-    this._dynStyle = e.createStyle(a.css.join("") + ";" + b)
+    g = (g = b.trigger("onCreateDynamicCss")) ? g.join("") : "";
+    this._dynStyle = e.createStyle(a.css.join("") + ";" + g)
   };
   g._recreateDynamicCss = function() {
     this.log("rewriting dynamic css...", 2);
@@ -4159,19 +4159,19 @@ jx.grid.Grid = {};
     (a = a ? a.join("") : "") && e.setStyle(this._dynStyle, a)
   };
   g._keydown = function(a) {
-    var c = this.event, d = [a], g = a.which;
-    this.log("UI event:keydown detected. event=" + a.type + ", keycode=" + g, 3);
-    c.triggerInvalid("onBeforeKeydown", d) ? this.log("UI event:keydown prevented.", 3) : (c.trigger("keydown_" + g, d, !0), c.trigger("keydown", d, !0))
+    var c = this.event, d = [a], b = a.which;
+    this.log("UI event:keydown detected. event=" + a.type + ", keycode=" + b, 3);
+    c.triggerInvalid("onBeforeKeydown", d) ? this.log("UI event:keydown prevented.", 3) : (c.trigger("keydown_" + b, d, !0), c.trigger("keydown", d, !0))
   };
   g._keyup = function(a) {
-    var c = this.event, d = [a], g = a.which;
-    this.log("UI event:keyup detected. event=" + a.type + ", keycode=" + g, 3);
-    c.triggerInvalid("onBeforeKeyup", d) ? this.log("UI event:keyup prevented.", 3) : (c.trigger("keyup_" + g, d, !0), c.trigger("keyup", d, !0))
+    var c = this.event, d = [a], b = a.which;
+    this.log("UI event:keyup detected. event=" + a.type + ", keycode=" + b, 3);
+    c.triggerInvalid("onBeforeKeyup", d) ? this.log("UI event:keyup prevented.", 3) : (c.trigger("keyup_" + b, d, !0), c.trigger("keyup", d, !0))
   };
   g._keypress = function(a) {
-    var c = this.event, d = [a], g = a.which;
-    this.log("UI event:keypress detected. event=" + a.type + ", keycode=" + g, 3);
-    c.triggerInvalid("onBeforeKeypress", d) ? this.log("UI event:keypress prevented.", 3) : (c.trigger("keypress_" + g, d, !0), c.trigger("keypress", d, !0))
+    var c = this.event, d = [a], b = a.which;
+    this.log("UI event:keypress detected. event=" + a.type + ", keycode=" + b, 3);
+    c.triggerInvalid("onBeforeKeypress", d) ? this.log("UI event:keypress prevented.", 3) : (c.trigger("keypress_" + b, d, !0), c.trigger("keypress", d, !0))
   };
   g._mousein = function(a) {
     var c = this.event, d = [a];
@@ -4229,17 +4229,17 @@ jx.grid.Grid = {};
   g._resize = function(a) {
     var c = this.event;
     this.log("event:resize detected. event=" + a.type, 2);
-    var d = !1, g = this._ctnr[0], b = this._lastW, e = this._lastH, f = g.clientWidth, g = g.clientHeight;
-    if(f >= 1 && b !== f) {
-      this.log("event:resizeWidth detected. " + b + "->" + f, 2), c.trigger("resizeWidth", [f, b], !0), this._lastW = f, d = !0
+    var d = !1, b = this._ctnr[0], g = this._lastW, e = this._lastH, f = b.clientWidth, b = b.clientHeight;
+    if(f >= 1 && g !== f) {
+      this.log("event:resizeWidth detected. " + g + "->" + f, 2), c.trigger("resizeWidth", [f, g], !0), this._lastW = f, d = !0
     }
-    if(g >= 1 && e !== g) {
-      this.log("event:resizeHeight detected. " + e + "->" + g, 2), c.trigger("resizeHeight", [g, e], !0), this._lastH = g, d = !0
+    if(b >= 1 && e !== b) {
+      this.log("event:resizeHeight detected. " + e + "->" + b, 2), c.trigger("resizeHeight", [b, e], !0), this._lastH = b, d = !0
     }
     d && c.trigger("resize", [a], !0)
   };
   g.width = function(a) {
-    var c = this._ctnr[0], d = c.clientWidth, g = this.event;
+    var c = this._ctnr[0], d = c.clientWidth, b = this.event;
     if(!a) {
       return d
     }
@@ -4249,13 +4249,13 @@ jx.grid.Grid = {};
     }
     this.log("set width. " + this._lastW + "->" + a, 2);
     c.style.width = a + "px";
-    g.trigger("resizeWidth", [a, this._lastW], !0);
+    b.trigger("resizeWidth", [a, this._lastW], !0);
     this._lastW = a;
-    g.trigger("resize", !1, !0);
+    b.trigger("resize", !1, !0);
     return a
   };
   g.height = function(a) {
-    var c = this._ctnr[0], d = c.clientHeight, g = this.event;
+    var c = this._ctnr[0], d = c.clientHeight, b = this.event;
     if(!a) {
       return d
     }
@@ -4265,9 +4265,9 @@ jx.grid.Grid = {};
     }
     this.log("set height. " + this._lastH + "->" + a, 2);
     c.style.height = a + "px";
-    g.trigger("resizeHeight", [a, this._lastH], !0);
+    b.trigger("resizeHeight", [a, this._lastH], !0);
     this._lastH = a;
-    g.trigger("resize", !1, !0);
+    b.trigger("resize", !1, !0);
     return a
   };
   g.getCellByIdAndKey = function(a, c) {
@@ -4278,8 +4278,8 @@ jx.grid.Grid = {};
     if(!d) {
       return null
     }
-    var g = this.colDefMgr.getByKey(c);
-    return!g ? null : h.create("Cell", {grid:this, datarow:d, colDef:g})
+    var b = this.colDefMgr.getByKey(c);
+    return!b ? null : h.create("Cell", {grid:this, datarow:d, colDef:b})
   };
   g.getCellByIdx = function(a, c) {
     if(a == null || c == null) {
@@ -4289,17 +4289,17 @@ jx.grid.Grid = {};
     if(!d) {
       return null
     }
-    var g = this.colDefMgr.get(c);
-    return!g ? null : h.create("Cell", {grid:this, datarow:d, colDef:g})
+    var b = this.colDefMgr.get(c);
+    return!b ? null : h.create("Cell", {grid:this, datarow:d, colDef:b})
   };
   g.busy = function() {
     if(this._busyShader && !this._busy) {
-      var a = this._ctnr, c = a.offset(), d = a[0], a = d.clientWidth + 1, d = d.clientHeight + 1, g = this._busyShader, b = g[0].style;
-      b.top = c.top + "px";
-      b.left = c.left + "px";
-      b.width = a + "px";
-      b.height = d + "px";
-      g.show()
+      var a = this._ctnr, c = a.offset(), d = a[0], a = d.clientWidth + 1, d = d.clientHeight + 1, b = this._busyShader, g = b[0].style;
+      g.top = c.top + "px";
+      g.left = c.left + "px";
+      g.width = a + "px";
+      g.height = d + "px";
+      b.show()
     }
     this._busy = !0
   };
@@ -4308,7 +4308,7 @@ jx.grid.Grid = {};
     this._busy = !1
   };
   g.error = function(a) {
-    for(var c = h.error[a], d = 1, g = arguments.length;d < g;d++) {
+    for(var c = h.error[a], d = 1, b = arguments.length;d < b;d++) {
       c = c.replace(RegExp("%" + (d - 1), "g"), arguments[d])
     }
     c = Error(c);
@@ -4321,11 +4321,11 @@ jx.grid.Grid = {};
   g.printError = function(a) {
     this.log("error message... msg=" + a);
     if(this._options.showMessage) {
-      var c = this.msg, d = c[0], g = d.style;
+      var c = this.msg, d = c[0], b = d.style;
       d.innerHTML = a;
-      g.width = this._ctnr[0].clientWidth + "px";
-      g.background = "#ffebe8";
-      g.color = "#333";
+      b.width = this._ctnr[0].clientWidth + "px";
+      b.background = "#ffebe8";
+      b.color = "#333";
       c.show();
       clearTimeout(this.timeout);
       this.timeout = setTimeout(function() {
@@ -4336,11 +4336,11 @@ jx.grid.Grid = {};
   g.printMessage = function(a) {
     this.log("message... msg=" + a);
     if(this._options.showMessage) {
-      var c = this.msg, d = c[0], g = d.style;
+      var c = this.msg, d = c[0], b = d.style;
       d.innerHTML = a;
-      g.width = this._ctnr[0].clientWidth + "px";
-      g.background = "#dfdfdf";
-      g.color = "#6f6f6f";
+      b.width = this._ctnr[0].clientWidth + "px";
+      b.background = "#dfdfdf";
+      b.color = "#6f6f6f";
       c.show();
       clearTimeout(this.timeout);
       this.timeout = setTimeout(function() {
@@ -4358,7 +4358,7 @@ jx.grid.Grid = {};
     2 >= (c || 0) && b("Grid[" + this.mid + "]: " + a)
   };
   g.twstart = function(a) {
-    this._tw = new d(a)
+    this._tw = new c(a)
   };
   g.twlap = function(a) {
     this._tw.lap(a)
@@ -4372,10 +4372,10 @@ jx.grid.Grid = {};
   g.twprint = function() {
     this.log(this._tw)
   };
-  g.chart = function(a, d, g, b) {
-    this.log("creating chart... type=" + d + ", columns=[" + g.join(",") + "]", c);
-    var e, f, d = d.toLowerCase();
-    switch(d) {
+  g.chart = function(a, c, b, g) {
+    this.log("creating chart... type=" + c + ", columns=[" + b.join(",") + "]", d);
+    var e, f, c = c.toLowerCase();
+    switch(c) {
       case "area":
         e = "corechart";
         f = "AreaChart";
@@ -4425,18 +4425,18 @@ jx.grid.Grid = {};
         f = "TreeMap";
         break;
       default:
-        throw Error("unknown chart type: " + d);
+        throw Error("unknown chart type: " + c);
     }
     google.load("visualization", "1", {packages:[e]});
-    var h = this, o = this.colDefMgr, n = this.dataMgr, s = g.map(function(a) {
+    var h = this, o = this.colDefMgr, m = this.dataMgr, r = b.map(function(a) {
       if(a = o.getByKey(a)) {
         return a
       }
       throw Error("column key not found");
-    }), r = n.exportToArray(g);
+    }), s = m.exportToArray(b);
     google.setOnLoadCallback(function() {
-      for(var c = new google.visualization.DataTable, e = 0, k = s.length, o, w;e < k;e++) {
-        o = s[e];
+      for(var d = new google.visualization.DataTable, e = 0, k = r.length, o, w;e < k;e++) {
+        o = r[e];
         w = o.type;
         switch(w) {
           case "boolean":
@@ -4458,16 +4458,16 @@ jx.grid.Grid = {};
           case "text":
             w = "string"
         }
-        c.addColumn(w || e === 0 && "string" || "number", o.name)
+        d.addColumn(w || e === 0 && "string" || "number", o.name)
       }
-      c.addRows(r);
-      var x = h._charts[a] = new google.visualization[f](document.getElementById(a));
-      x.draw(c, b);
+      d.addRows(s);
+      var z = h._charts[a] = new google.visualization[f](document.getElementById(a));
+      z.draw(d, g);
       h.event.bind("onAfterRefresh", function() {
-        h.log("redrawing chart... type=" + d + ", columns=[" + g.join(",") + "]", 2);
-        c.removeRows(0, c.getNumberOfRows());
-        c.addRows(n.exportToArray(g));
-        x.draw(c, b)
+        h.log("redrawing chart... type=" + c + ", columns=[" + b.join(",") + "]", 2);
+        d.removeRows(0, d.getNumberOfRows());
+        d.addRows(m.exportToArray(b));
+        z.draw(d, g)
       })
     })
   }
@@ -4502,108 +4502,108 @@ jx.grid.SelectionManager = {};
   };
   a._destroy = function() {
     h._deleteMap(this._consts, "_NAVKEYS");
-    var a, c = this._rows, g = this._cols;
-    for(a in c) {
-      c.hasOwnProperty(a) && a !== "length" && h._deleteMap(c, a)
+    var a, d = this._rows, b = this._cols;
+    for(a in d) {
+      d.hasOwnProperty(a) && a !== "length" && h._deleteMap(d, a)
     }
-    for(a in g) {
-      g.hasOwnProperty(a) && a !== "length" && h._deleteMap(g, a)
+    for(a in b) {
+      b.hasOwnProperty(a) && a !== "length" && h._deleteMap(b, a)
     }
     h._destroy(this, {name:"SelectionManager", path:"selMgr", map:"_rows _cols _range _last _consts _options"})
   };
   a._onCreateCss = function() {
-    var a = this.grid.event.trigger("onBeforeCreateSelCss"), c = "#" + this.grid.mid + " .", g = this._options, a = a || [];
-    g.highlightRowEnabled === !0 && a.push(c + g.classRowSelected + " > *{background:" + g.bgColorRowSelected + "}");
-    g.multiSelectEnabled === !0 && (a.push(c + g.classSelection + "{background:" + g.bgColorSelection + "}"), a.push(c + g.classRange + "{background:" + g.bgColorRange + "}"));
-    a.push(c + g.classLast + "{background:" + g.bgColorLast + "}");
+    var a = this.grid.event.trigger("onBeforeCreateSelCss"), d = "#" + this.grid.mid + " .", b = this._options, a = a || [];
+    b.highlightRowEnabled === !0 && a.push(d + b.classRowSelected + " > *{background:" + b.bgColorRowSelected + "}");
+    b.multiSelectEnabled === !0 && (a.push(d + b.classSelection + "{background:" + b.bgColorSelection + "}"), a.push(d + b.classRange + "{background:" + b.bgColorRange + "}"));
+    a.push(d + b.classLast + "{background:" + b.bgColorLast + "}");
     return a.join("\n")
   };
-  a._onGetCellClass = function(a, c, g, b) {
-    var f = "", i = this._last, h = this._range, k = this._rows, q = this._options;
-    e.isNotNull(i) && i.getDatarow() === g && i.getColDef() === b && (f += q.classLast);
-    q.multiSelectEnabled === !0 && (e.isNotNull(h) && h.getDatarow() === g && h.getColDef() === b && (f += " " + q.classRange), k.hasOwnProperty(a) && k[a].hasOwnProperty(c) && (f += " " + q.classSelection));
-    return f
+  a._onGetCellClass = function(a, d, b, i) {
+    var l = "", j = this._last, f = this._range, k = this._rows, h = this._options;
+    e.isNotNull(j) && j.getDatarow() === b && j.getColDef() === i && (l += h.classLast);
+    h.multiSelectEnabled === !0 && (e.isNotNull(f) && f.getDatarow() === b && f.getColDef() === i && (l += " " + h.classRange), k.hasOwnProperty(a) && k[a].hasOwnProperty(d) && (l += " " + h.classSelection));
+    return l
   };
-  a._mousedownCanvas = function(a, c) {
-    if(!e.isNotNull(this._last) || !this._last.equals(c)) {
-      this.grid.event.trigger("onBeforeSelect", [a, c], !0), this._options.multiSelectEnabled === !1 ? this.selectCell(c) : a.shiftKey && e.isNotNullAnd(this._last, this._range) ? this.selectRange(c) : a.ctrlKey ? c.getKey() === this._options.rowSelKey ? this.addRow(c) : this.addCell(c) : this.selectCell(c)
+  a._mousedownCanvas = function(a, d) {
+    if(!e.isNotNull(this._last) || !this._last.equals(d)) {
+      this.grid.event.trigger("onBeforeSelect", [a, d], !0), this._options.multiSelectEnabled === !1 ? this.selectCell(d) : a.shiftKey && e.isNotNullAnd(this._last, this._range) ? this.selectRange(d) : a.ctrlKey ? d.getKey() === this._options.rowSelKey ? this.addRow(d) : this.addCell(d) : this.selectCell(d)
     }
   };
-  a._dragoverCanvas = function(a, c) {
-    this._options.multiSelectEnabled === !1 ? this.selectCell(c) : e.isNotNullAnd(this._last, this._range) && this.selectRange(c)
+  a._dragoverCanvas = function(a, d) {
+    this._options.multiSelectEnabled === !1 ? this.selectCell(d) : e.isNotNullAnd(this._last, this._range) && this.selectRange(d)
   };
   a._keydownCanvas = function(a) {
-    var c = this._last;
-    if(e.isNullOr(c, this._range)) {
+    var d = this._last;
+    if(e.isNullOr(d, this._range)) {
       this._consts._NAVKEYS[a.which] && this.selectCell(h.create("Cell", {grid:this.grid, row:this.grid.view._getFirstSafeVisibleRow(), col:this.grid.view._getFirstSafeVisibleCol()}))
     }else {
-      var g = this.grid.event;
+      var b = this.grid.event;
       if(this._consts._NAVKEYS[a.which]) {
-        if(!g.triggerInvalid("onBeforeNavigate", [a])) {
-          var b;
+        if(!b.triggerInvalid("onBeforeNavigate", [a])) {
+          var i;
           a.preventDefault();
           switch(a.which) {
             case e.keyMapKeydown.tab:
-              b = a.shiftKey ? this._idxToCell(this._consts._LEFT, c) : this._idxToCell(this._consts._RIGHT, c);
-              this.selectCell(b);
+              i = a.shiftKey ? this._idxToCell(this._consts._LEFT, d) : this._idxToCell(this._consts._RIGHT, d);
+              this.selectCell(i);
               break;
             case e.keyMapKeydown.enter:
-              b = a.shiftKey ? this._idxToCell(this._consts._UP, c) : this._idxToCell(this._consts._DOWN, c);
-              this.selectCell(b);
+              i = a.shiftKey ? this._idxToCell(this._consts._UP, d) : this._idxToCell(this._consts._DOWN, d);
+              this.selectCell(i);
               break;
             case e.keyMapKeydown.up:
-              this._options.multiSelectEnabled && a.shiftKey ? (b = this._idxToCell(this._consts._UP, this._range), this.selectRange(b)) : (b = this._idxToCell(this._consts._UP, c), this.selectCell(b));
+              this._options.multiSelectEnabled && a.shiftKey ? (i = this._idxToCell(this._consts._UP, this._range), this.selectRange(i)) : (i = this._idxToCell(this._consts._UP, d), this.selectCell(i));
               break;
             case e.keyMapKeydown.down:
-              this._options.multiSelectEnabled && a.shiftKey ? (b = this._idxToCell(this._consts._DOWN, this._range), this.selectRange(b)) : (b = this._idxToCell(this._consts._DOWN, c), this.selectCell(b));
+              this._options.multiSelectEnabled && a.shiftKey ? (i = this._idxToCell(this._consts._DOWN, this._range), this.selectRange(i)) : (i = this._idxToCell(this._consts._DOWN, d), this.selectCell(i));
               break;
             case e.keyMapKeydown.left:
-              this._options.multiSelectEnabled && a.shiftKey ? (b = this._idxToCell(this._consts._LEFT, this._range), this.selectRange(b)) : (b = this._idxToCell(this._consts._LEFT, c), this.selectCell(b));
+              this._options.multiSelectEnabled && a.shiftKey ? (i = this._idxToCell(this._consts._LEFT, this._range), this.selectRange(i)) : (i = this._idxToCell(this._consts._LEFT, d), this.selectCell(i));
               break;
             case e.keyMapKeydown.right:
-              this._options.multiSelectEnabled && a.shiftKey ? (b = this._idxToCell(this._consts._RIGHT, this._range), this.selectRange(b)) : (b = this._idxToCell(this._consts._RIGHT, c), this.selectCell(b));
+              this._options.multiSelectEnabled && a.shiftKey ? (i = this._idxToCell(this._consts._RIGHT, this._range), this.selectRange(i)) : (i = this._idxToCell(this._consts._RIGHT, d), this.selectCell(i));
               break;
             case e.keyMapKeydown.pgup:
-              this._options.multiSelectEnabled && a.shiftKey ? (b = this._idxToCell(this._consts._PGUP, this._range), this.selectRange(b)) : (b = this._idxToCell(this._consts._PGUP, c), this.selectCell(b));
+              this._options.multiSelectEnabled && a.shiftKey ? (i = this._idxToCell(this._consts._PGUP, this._range), this.selectRange(i)) : (i = this._idxToCell(this._consts._PGUP, d), this.selectCell(i));
               break;
             case e.keyMapKeydown.pgdn:
-              this._options.multiSelectEnabled && a.shiftKey ? (b = this._idxToCell(this._consts._PGDN, this._range), this.selectRange(b)) : (b = this._idxToCell(this._consts._PGDN, c), this.selectCell(b));
+              this._options.multiSelectEnabled && a.shiftKey ? (i = this._idxToCell(this._consts._PGDN, this._range), this.selectRange(i)) : (i = this._idxToCell(this._consts._PGDN, d), this.selectCell(i));
               break;
             case e.keyMapKeydown.space:
-              b = a.shiftKey ? this._idxToCell(this._consts._PGUP, c) : this._idxToCell(this._consts._PGDN, c);
-              this.selectCell(b);
+              i = a.shiftKey ? this._idxToCell(this._consts._PGUP, d) : this._idxToCell(this._consts._PGDN, d);
+              this.selectCell(i);
               break;
             case e.keyMapKeydown.home:
-              this._options.multiSelectEnabled && a.shiftKey ? (b = this._idxToCell(this._consts._HOME, this._range), this.selectRange(b)) : (b = this._idxToCell(this._consts._HOME, c), this.selectCell(b));
+              this._options.multiSelectEnabled && a.shiftKey ? (i = this._idxToCell(this._consts._HOME, this._range), this.selectRange(i)) : (i = this._idxToCell(this._consts._HOME, d), this.selectCell(i));
               break;
             case e.keyMapKeydown.end:
-              this._options.multiSelectEnabled && a.shiftKey ? (b = this._idxToCell(this._consts._END, this._range), this.selectRange(b)) : (b = this._idxToCell(this._consts._END, c), this.selectCell(b))
+              this._options.multiSelectEnabled && a.shiftKey ? (i = this._idxToCell(this._consts._END, this._range), this.selectRange(i)) : (i = this._idxToCell(this._consts._END, d), this.selectCell(i))
           }
-          g.trigger("onAfterNavigate", [b], !0)
+          b.trigger("onAfterNavigate", [i], !0)
         }
       }else {
         if(this._cols.length === 1) {
-          var f, i = this.grid.colDefMgr, p, k = this._cols;
-          b = a.which;
-          var q = [a, null, c];
-          for(p in k) {
-            if(k.hasOwnProperty(p) && p !== "length") {
-              f = i.get(p).key, f = "keydownColSel_" + f, q[1] = k[p], g.trigger(f + "_" + b, q, !0), g.trigger(f, q, !0)
+          var l, j = this.grid.colDefMgr, f, k = this._cols;
+          i = a.which;
+          var p = [a, null, d];
+          for(f in k) {
+            if(k.hasOwnProperty(f) && f !== "length") {
+              l = j.get(f).key, l = "keydownColSel_" + l, p[1] = k[f], b.trigger(l + "_" + i, p, !0), b.trigger(l, p, !0)
             }
           }
         }
         if(this._rows.length === 1) {
-          var m;
-          p = this._rows;
-          b = a.which;
-          q = [a, null, c];
-          for(m in p) {
-            p.hasOwnProperty(m) && m !== "length" && (q[1] = p[m], g.trigger("keydownRowSel_" + b, q, !0), g.trigger("keydownRowSel", q, !0))
+          var n;
+          f = this._rows;
+          i = a.which;
+          p = [a, null, d];
+          for(n in f) {
+            f.hasOwnProperty(n) && n !== "length" && (p[1] = f[n], b.trigger("keydownRowSel_" + i, p, !0), b.trigger("keydownRowSel", p, !0))
           }
         }
-        q = [a, this._rows, this._cols];
-        g.trigger("keydownSel_" + a.which, q, !0);
-        g.trigger("keydownSel", q, !0)
+        p = [a, this._rows, this._cols];
+        b.trigger("keydownSel_" + a.which, p, !0);
+        b.trigger("keydownSel", p, !0)
       }
     }
   };
@@ -4618,55 +4618,55 @@ jx.grid.SelectionManager = {};
   b.prototype.isSelected = function() {
     return this.grid.selMgr._isSelected(this)
   };
-  a._getCellIdxToNavigate = function(a, c, g) {
+  a._getCellIdxToNavigate = function(a, d, b) {
     switch(a) {
       case this._consts._RIGHT:
-        g < this.grid.colDefMgr.length() - 1 && g++;
+        b < this.grid.colDefMgr.length() - 1 && b++;
         break;
       case this._consts._LEFT:
-        g > 0 && g--;
+        b > 0 && b--;
         break;
       case this._consts._DOWN:
-        c < this.grid.dataMgr.datalist.length - 1 && c++;
+        d < this.grid.dataMgr.datalist.length - 1 && d++;
         break;
       case this._consts._UP:
-        c > 0 && c--;
+        d > 0 && d--;
         break;
       case this._consts._PGDN:
-        c += this.grid.view._options.rowsPerPage;
-        c > this.grid.dataMgr.datalist.length - 1 && (c = this.grid.dataMgr.datalist.length - 1);
+        d += this.grid.view._options.rowsPerPage;
+        d > this.grid.dataMgr.datalist.length - 1 && (d = this.grid.dataMgr.datalist.length - 1);
         break;
       case this._consts._PGUP:
-        c -= this.grid.view._options.rowsPerPage;
-        c < 0 && (c = 0);
+        d -= this.grid.view._options.rowsPerPage;
+        d < 0 && (d = 0);
         break;
       case this._consts._HOME:
-        c = 0;
+        d = 0;
         break;
       case this._consts._END:
-        c = this.grid.dataMgr.datalist.length - 1
+        d = this.grid.dataMgr.datalist.length - 1
     }
-    return[c, g]
+    return[d, b]
   };
-  a._idxToCell = function(a, c) {
-    var g = this._getCellIdxToNavigate(a, c.getRowIdx(), c.getColIdx());
-    return h.create("Cell", {grid:this.grid, row:g[0], col:g[1]})
+  a._idxToCell = function(a, d) {
+    var b = this._getCellIdxToNavigate(a, d.getRowIdx(), d.getColIdx());
+    return h.create("Cell", {grid:this.grid, row:b[0], col:b[1]})
   };
   a.selectRow = function(a) {
-    var c = a.getRowIdx(), g = a.getColIdx();
-    this._setRange(c, g, a);
-    this._setLast(c, g, a);
-    this._setSelMap(this._getRowMap(c, g, a))
+    var d = a.getRowIdx(), b = a.getColIdx();
+    this._setRange(d, b, a);
+    this._setLast(d, b, a);
+    this._setSelMap(this._getRowMap(d, b, a))
   };
-  a.selectCell = function(a, c) {
+  a.selectCell = function(a, d) {
     this.grid.event.trigger("onBeforeSelectCell", [a], !0);
     if(this._options.multiSelectEnabled && a.getKey() === this._options.rowSelKey) {
       this.selectRow(a)
     }else {
-      var g = a.getRowIdx(), b = a.getColIdx();
-      this._setRange(g, b, a, c);
-      this._setLast(g, b, a);
-      this._setSelMap(this._getCellMap(g, b, a))
+      var b = a.getRowIdx(), i = a.getColIdx();
+      this._setRange(b, i, a, d);
+      this._setLast(b, i, a);
+      this._setSelMap(this._getCellMap(b, i, a))
     }
     this.grid.event.trigger("onAfterSelectCell", [a], !0)
   };
@@ -4682,52 +4682,52 @@ jx.grid.SelectionManager = {};
     e.isNotNull(this.toSelect) && (this.selectCell(this.toSelect, !0), this.grid.view.scrollToRowLazy(this.toSelect.getRowIdx()))
   };
   a.addRow = function(a) {
-    var c = a.getRowIdx(), g = a.getColIdx();
-    this._setRange(c, g, a);
-    this._setLast(c, g, a);
-    this._addSelMap(this._getRowMap(c, g, a))
+    var d = a.getRowIdx(), b = a.getColIdx();
+    this._setRange(d, b, a);
+    this._setLast(d, b, a);
+    this._addSelMap(this._getRowMap(d, b, a))
   };
   a.addCell = function(a) {
-    var c = a.getRowIdx(), g = a.getColIdx();
-    this._setRange(c, g, a);
-    this._setLast(c, g, a);
-    this._addSelMap(this._getCellMap(c, g, a))
+    var d = a.getRowIdx(), b = a.getColIdx();
+    this._setRange(d, b, a);
+    this._setLast(d, b, a);
+    this._addSelMap(this._getCellMap(d, b, a))
   };
   a.selectRange = function(a) {
-    var c = a.getRowIdx(), g = a.getColIdx(), b = this._last.getRowIdx(), e = this._last.getColIdx(), i = b < c ? b : c, b = b < c ? c : b, f;
-    this._setRange(c, g, a);
-    a.getKey() === this._options.rowSelKey ? (f = 0, e = this.grid.colDefMgr.length() - 1) : (f = e < g ? e : g, e = e < g ? g : e);
-    this._setSelMap(this._getRangeMap(i, f, b, e, c, g, a));
-    return{minRow:i, minCol:f, maxRow:b, maxCol:e}
+    var d = a.getRowIdx(), b = a.getColIdx(), i = this._last.getRowIdx(), e = this._last.getColIdx(), j = i < d ? i : d, i = i < d ? d : i, f;
+    this._setRange(d, b, a);
+    a.getKey() === this._options.rowSelKey ? (f = 0, e = this.grid.colDefMgr.length() - 1) : (f = e < b ? e : b, e = e < b ? b : e);
+    this._setSelMap(this._getRangeMap(j, f, i, e, d, b, a));
+    return{minRow:j, minCol:f, maxRow:i, maxCol:e}
   };
-  a._setLast = function(a, c, g) {
-    var c = this._last, b;
-    e.isNotNull(c) && (b = c.getRowIdx(), a !== b && e.isNotNull(this._range) && b !== this._range.getRowIdx() && this.grid.view.unlockRowById(c.getId()), c.get$().removeClass(this._options.classLast), this._options.highlightRowEnabled === !0 && $(c.getRowNode()).removeClass(this._options.classRowSelected), e.isNull(g) && delete this._last);
-    if(!e.isNull(g)) {
-      (this._last = g).get$().addClass(this._options.classLast), this._options.highlightRowEnabled === !0 && $(g.getRowNode()).addClass(this._options.classRowSelected), this.grid.view.lockRowByIdx(a)
+  a._setLast = function(a, d, b) {
+    var d = this._last, i;
+    e.isNotNull(d) && (i = d.getRowIdx(), a !== i && e.isNotNull(this._range) && i !== this._range.getRowIdx() && this.grid.view.unlockRowById(d.getId()), d.get$().removeClass(this._options.classLast), this._options.highlightRowEnabled === !0 && $(d.getRowNode()).removeClass(this._options.classRowSelected), e.isNull(b) && delete this._last);
+    if(!e.isNull(b)) {
+      (this._last = b).get$().addClass(this._options.classLast), this._options.highlightRowEnabled === !0 && $(b.getRowNode()).addClass(this._options.classRowSelected), this.grid.view.lockRowByIdx(a)
     }
   };
-  a._setRange = function(a, c, g, b) {
+  a._setRange = function(a, d, b, i) {
     var f = this._range;
     if(e.isNotNull(f)) {
-      var i = f.getRowIdx();
-      if(a === i && c === f.getColIdx()) {
+      var j = f.getRowIdx();
+      if(a === j && d === f.getColIdx()) {
         return
       }
-      a !== i && e.isNotNull(this._last) && i !== this._last.getRowIdx() && this.grid.view.unlockRowById(f.getId());
+      a !== j && e.isNotNull(this._last) && j !== this._last.getRowIdx() && this.grid.view.unlockRowById(f.getId());
       f.get$().removeClass(this._options.classRange);
-      e.isNull(g) && delete this._range
+      e.isNull(b) && delete this._range
     }
-    if(!e.isNull(g)) {
-      (this._range = g).get$().addClass(this._options.classRange), g = this.grid.view, g.lockRowByIdx(a), b || g.scrollToLazy(a, c)
+    if(!e.isNull(b)) {
+      (this._range = b).get$().addClass(this._options.classRange), b = this.grid.view, b.lockRowByIdx(a), i || b.scrollToLazy(a, d)
     }
   };
   a._addSelMap = function(a) {
-    var c = this._rows, g, j, e, i;
+    var d = this._rows, g, i, e, j;
     for(e in a) {
-      if(a.hasOwnProperty(e) && (j = a[e], c.hasOwnProperty(e))) {
-        for(i in g = c[e], j) {
-          j.hasOwnProperty(i) && g.hasOwnProperty(i) && (j[i] instanceof b && (g[i] = j[i]), delete j[i])
+      if(a.hasOwnProperty(e) && (i = a[e], d.hasOwnProperty(e))) {
+        for(j in g = d[e], i) {
+          i.hasOwnProperty(j) && g.hasOwnProperty(j) && (i[j] instanceof b && (g[j] = i[j]), delete i[j])
         }
       }
     }
@@ -4735,16 +4735,16 @@ jx.grid.SelectionManager = {};
     this._addToMaps(a)
   };
   a._setSelMap = function(a) {
-    var c = this._rows, g, j, e, i, f = {};
-    for(e in c) {
-      if(c.hasOwnProperty(e) && e !== "length") {
-        if(g = c[e], a.hasOwnProperty(e)) {
-          for(i in j = a[e], g) {
-            g.hasOwnProperty(i) && i !== "length" && (j.hasOwnProperty(i) ? (j[i] instanceof b && (g[i] = j[i]), delete j[i]) : (f.hasOwnProperty(e) || (f[e] = {}), f[e][i] = !0))
+    var d = this._rows, g, i, e, j, f = {};
+    for(e in d) {
+      if(d.hasOwnProperty(e) && e !== "length") {
+        if(g = d[e], a.hasOwnProperty(e)) {
+          for(j in i = a[e], g) {
+            g.hasOwnProperty(j) && j !== "length" && (i.hasOwnProperty(j) ? (i[j] instanceof b && (g[j] = i[j]), delete i[j]) : (f.hasOwnProperty(e) || (f[e] = {}), f[e][j] = !0))
           }
         }else {
-          for(i in j = f[e] = {}, g) {
-            g.hasOwnProperty(i) && i !== "length" && (j[i] = !0)
+          for(j in i = f[e] = {}, g) {
+            g.hasOwnProperty(j) && j !== "length" && (i[j] = !0)
           }
         }
       }
@@ -4753,63 +4753,63 @@ jx.grid.SelectionManager = {};
     this.addOrRemoveCss({}, !1);
     this._addSelMap(a)
   };
-  a.addOrRemoveCss = function(a, c) {
-    var g = [], j, f, i, h = this.grid.view;
-    for(j in a) {
-      if(a.hasOwnProperty(j)) {
-        for(f in i = a[j], i) {
-          i.hasOwnProperty(f) && (i[f] instanceof b ? g.push(i[f].getNode()) : g.push(h.getCell(j, f)))
+  a.addOrRemoveCss = function(a, d) {
+    var g = [], i, f, j, h = this.grid.view;
+    for(i in a) {
+      if(a.hasOwnProperty(i)) {
+        for(f in j = a[i], j) {
+          j.hasOwnProperty(f) && (j[f] instanceof b ? g.push(j[f].getNode()) : g.push(h.getCell(i, f)))
         }
       }
     }
     g = g.filter(function(a) {
       return e.isNotNull(a)
     });
-    c ? $(g).addClass(this._options.classSelection) : $(g).removeClass(this._options.classSelection)
+    d ? $(g).addClass(this._options.classSelection) : $(g).removeClass(this._options.classSelection)
   };
   a._addToMaps = function(a) {
-    var c, g, b, f = this._rows, i = this._cols, h;
-    for(c in a) {
-      if(a.hasOwnProperty(c)) {
-        for(g in h = a[c], h) {
-          h.hasOwnProperty(g) && (b = e.isNull(b = h[g]) ? !0 : b, f.hasOwnProperty(c) ? f[c].length++ : (f[c] = {length:1}, f.length++), f[c][g] = b, i.hasOwnProperty(g) ? i[g].length++ : (i[g] = {length:1}, i.length++), i[g][c] = b)
+    var d, b, i, f = this._rows, j = this._cols, h;
+    for(d in a) {
+      if(a.hasOwnProperty(d)) {
+        for(b in h = a[d], h) {
+          h.hasOwnProperty(b) && (i = e.isNull(i = h[b]) ? !0 : i, f.hasOwnProperty(d) ? f[d].length++ : (f[d] = {length:1}, f.length++), f[d][b] = i, j.hasOwnProperty(b) ? j[b].length++ : (j[b] = {length:1}, j.length++), j[b][d] = i)
         }
       }
     }
   };
   a._removeFromMaps = function(a) {
-    var c, g, b = this._rows, e = this._cols, i;
-    for(c in a) {
-      if(a.hasOwnProperty(c)) {
-        for(g in i = a[c], i) {
-          i.hasOwnProperty(g) && (--b[c].length === 0 ? (delete b[c], b.length--) : delete b[c][g], --e[g].length === 0 ? (delete e[g], e.length--) : delete e[g][c])
+    var d, b, i = this._rows, e = this._cols, j;
+    for(d in a) {
+      if(a.hasOwnProperty(d)) {
+        for(b in j = a[d], j) {
+          j.hasOwnProperty(b) && (--i[d].length === 0 ? (delete i[d], i.length--) : delete i[d][b], --e[b].length === 0 ? (delete e[b], e.length--) : delete e[b][d])
         }
       }
     }
   };
-  a._getCellMap = function(a, c, g) {
-    var b = {};
-    b[a] = {};
-    b[a][c] = g;
-    return b
+  a._getCellMap = function(a, d, b) {
+    var i = {};
+    i[a] = {};
+    i[a][d] = b;
+    return i
   };
-  a._getRowMap = function(a, c, g) {
-    var b = {}, e = this.grid.colDefMgr.length(), i = 0;
-    for(b[a] = {};i < e;i++) {
-      b[a][i] = !0
+  a._getRowMap = function(a, d, b) {
+    var i = {}, e = this.grid.colDefMgr.length(), j = 0;
+    for(i[a] = {};j < e;j++) {
+      i[a][j] = !0
     }
-    b[a][c] = g;
-    return b
+    i[a][d] = b;
+    return i
   };
-  a._getRangeMap = function(a, c, g, b, e, i, f) {
-    for(var h = {}, q;a <= g;a++) {
-      h[a] = {};
-      for(q = c;q <= b;q++) {
-        h[a][q] = !0
+  a._getRangeMap = function(a, d, b, i, e, j, f) {
+    for(var k = {}, h;a <= b;a++) {
+      k[a] = {};
+      for(h = d;h <= i;h++) {
+        k[a][h] = !0
       }
     }
-    h[e][i] = f;
-    return h
+    k[e][j] = f;
+    return k
   };
   a.empty = function() {
     this._setLast();
@@ -4831,8 +4831,8 @@ jx.grid.Editor = {};
     this.__init()
   }
   function h(a) {
-    for(var g in a) {
-      a.hasOwnProperty(g) && (this[g] = a[g])
+    for(var b in a) {
+      a.hasOwnProperty(b) && (this[b] = a[b])
     }
   }
   var e = goog.getObjectByName("jx.grid"), b = goog.getObjectByName("jx.util");
@@ -4843,139 +4843,139 @@ jx.grid.Editor = {};
   f.getInstance = function(a) {
     return new f(a)
   };
-  var d = f.prototype;
-  d.__init = function() {
+  var c = f.prototype;
+  c.__init = function() {
     this.bindEvents()
   };
-  d.bindEvents = function() {
+  c.bindEvents = function() {
     var a = {onGetColCellClass:this._onGetColCellClass, keydownCanvas:this._keydownCanvas, onDestroy:this._destroy, dblclickCanvas:this._dblclickCanvas, onCreateDynamicCss:this.onCreateDynamicCss, "onBeforeNavigate onBeforeRefresh onBeforeSelect":this.commit, onBeforeFocusCanvas:this.notActive};
     b.isNull(this.grid.selMgr) ? a.onCreateCss = this._onBeforeCreateSelCss : a.onBeforeCreateSelCss = this._onBeforeCreateSelCss;
     if(this._options.deleteEnabled) {
       a["keydownSel_" + b.keyMapKeydown.del] = this._deleteContents
     }
     if(this._options.editIconEnabled) {
-      for(var g = this.grid.colDefMgr.get(), d = g.length, e = 0;e < d;e++) {
-        if(b.isNotNull(g[e].editor)) {
-          a["onRenderHeader_" + g[e].key + "_prepend"] = this._onRenderHeader
+      for(var c = this.grid.colDefMgr.get(), i = c.length, e = 0;e < i;e++) {
+        if(b.isNotNull(c[e].editor)) {
+          a["onRenderHeader_" + c[e].key + "_prepend"] = this._onRenderHeader
         }
       }
     }
     this.grid.event.bind(a, this)
   };
-  d._destroy = function() {
+  c._destroy = function() {
     this._deleteEditor();
     e._destroy(this, {name:"EditManager", path:"editMgr", map:"_beginEditKeys _options"})
   };
-  d._onBeforeCreateSelCss = function() {
-    var a = "#" + this.grid.mid + " .", g = this._options, d = [], b = this.grid.view._getRowInnerHeight();
-    d.push(this.grid.view._getCellSelector() + "." + g.classEdit + "{background:" + g.basicBackground + "}");
-    d.push(a + g.classEdit + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + g.basicBackground + ";height:" + b + "px;line-height:" + b + "px}");
-    g.editableBgEnabled && d.push(a + g.classCellEditable + "{background:" + g.editableBg + "}");
-    g.notEditableBgEnabled && d.push(a + g.classCellNotEditable + "{background:" + g.notEditableBg + "}");
-    g.editIconEnabled && d.push(a + g.classEditIcon + "{float:left;position:absolute;left:0;top:0;padding:0 " + g.editIconPadding + "px;width:" + g.editIconWidth + "px;height:" + b + "px;background:url(" + g.urlEditIcon + ") no-repeat center transparent}");
-    d.push(a + g.classSuccess + "{background:" + g.successBackground + "}");
-    d.push(a + g.classFailure + "{background:" + g.failureBackground + "}");
-    return d.join("")
+  c._onBeforeCreateSelCss = function() {
+    var a = "#" + this.grid.mid + " .", b = this._options, c = [], e = this.grid.view._getRowInnerHeight();
+    c.push(this.grid.view._getCellSelector() + "." + b.classEdit + "{background:" + b.basicBackground + "}");
+    c.push(a + b.classEdit + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + b.basicBackground + ";height:" + e + "px;line-height:" + e + "px}");
+    b.editableBgEnabled && c.push(a + b.classCellEditable + "{background:" + b.editableBg + "}");
+    b.notEditableBgEnabled && c.push(a + b.classCellNotEditable + "{background:" + b.notEditableBg + "}");
+    b.editIconEnabled && c.push(a + b.classEditIcon + "{float:left;position:absolute;left:0;top:0;padding:0 " + b.editIconPadding + "px;width:" + b.editIconWidth + "px;height:" + e + "px;background:url(" + b.urlEditIcon + ") no-repeat center transparent}");
+    c.push(a + b.classSuccess + "{background:" + b.successBackground + "}");
+    c.push(a + b.classFailure + "{background:" + b.failureBackground + "}");
+    return c.join("")
   };
-  d.onCreateDynamicCss = function() {
-    for(var a = this.grid.view._getCellSelector(), g = this.grid.view._getPadding(), d = this.grid.colDefMgr.get(), e = 0, i = "";e < d.length;e++) {
-      b.isNotNull(d[e].editor) && (i += a + ".k_" + d[e].key + " .basic-editor{width:" + (d[e].width - 2 * g) + "px}")
+  c.onCreateDynamicCss = function() {
+    for(var a = this.grid.view._getCellSelector(), c = this.grid.view._getPadding(), i = this.grid.colDefMgr.get(), e = 0, j = "";e < i.length;e++) {
+      b.isNotNull(i[e].editor) && (j += a + ".k_" + i[e].key + " .basic-editor{width:" + (i[e].width - 2 * c) + "px}")
     }
-    return i
+    return j
   };
-  d._onRenderHeader = function(a) {
+  c._onRenderHeader = function(a) {
     a.push("<span class='" + this._options.classEditIcon + "'></span>")
   };
-  d._onRenderCell = function(a, g, d, b, e) {
-    this.grid.dataMgr.isReal(d) && e.push("<span class='" + this._options.classEditIcon + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + '.beginEdit("' + d[this.grid.dataMgr.idKey] + '","' + b.key + "\")'></span>")
+  c._onRenderCell = function(a, b, c, e, j) {
+    this.grid.dataMgr.isReal(c) && j.push("<span class='" + this._options.classEditIcon + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + '.beginEdit("' + c[this.grid.dataMgr.idKey] + '","' + e.key + "\")'></span>")
   };
-  d.cancelMouseEvent = function(a) {
+  c.cancelMouseEvent = function(a) {
     return!b.hasTagAndClass(a.target, "DIV", this._options.classEditIcon)
   };
-  d.beginEdit = function(a, g) {
-    this.begin(e.create("Cell", {grid:this.grid, datarow:this.grid.dataMgr.getById(a), colDef:this.grid.colDefMgr.getByKey(g)}))
+  c.beginEdit = function(a, b) {
+    this.begin(e.create("Cell", {grid:this.grid, datarow:this.grid.dataMgr.getById(a), colDef:this.grid.colDefMgr.getByKey(b)}))
   };
-  d._dblclickCanvas = function(a, g) {
-    g.isEdited() || this.begin(g)
+  c._dblclickCanvas = function(a, b) {
+    b.isEdited() || this.begin(b)
   };
-  d._keydownCanvas = function(a) {
+  c._keydownCanvas = function(a) {
     this.active() ? a.which === b.keyMapKeydown.esc && this.cancel() : !a.ctrlKey && !a.altKey && b.isNotNull(this.grid.selMgr) && (a.which === b.keyMapKeydown.del && this._options.deleteEnabled ? this._deleteContent(this.grid.selMgr.getCell()) : this._beginEditKeys[a.which] ? this.begin(this.grid.selMgr.getCell()) : a.which === b.keyMapKeydown.f2 && (a.preventDefault(), this.begin(this.grid.selMgr.getCell())))
   };
-  d.active = function() {
+  c.active = function() {
     return!!this.editor
   };
-  d.notActive = function() {
+  c.notActive = function() {
     return b.isNull(this.editor)
   };
-  d._isEdited = function(a) {
+  c._isEdited = function(a) {
     return this.active() && this.editor.cell && this.editor.cell.equals(a)
   };
-  d._onGetColCellClass = function(a) {
+  c._onGetColCellClass = function(a) {
     return b.isNotNull(a.editor) ? this._options.classCellEditable : this._options.classCellNotEditable
   };
   a.prototype.isEdited = function() {
     return this.grid.editMgr._isEdited(this)
   };
   a.prototype.setValue = function(a) {
-    var g = this.getDatarow(), d = this.getKey(), e;
-    b.isNotNullAnd(g, d) && (e = this.grid.dataMgr.updateByKey(g, d, a, {noSort:!0, noFilter:!0, noRerender:!0}), e === !0 && this.grid.view.rerenderRow(g));
+    var c = this.getDatarow(), i = this.getKey(), e;
+    b.isNotNullAnd(c, i) && (e = this.grid.dataMgr.updateByKey(c, i, a, {noSort:!0, noFilter:!0, noRerender:!0}), e === !0 && this.grid.view.rerenderRow(c));
     return e
   };
-  d.isEditable = function(a) {
+  c.isEditable = function(a) {
     if(a) {
-      var g = a.getColDef();
-      if(g && g.editor) {
+      var b = a.getColDef();
+      if(b && b.editor) {
         return(a = a.getDatarow()) && this.grid.dataMgr.isReal(a)
       }
     }
     return!1
   };
-  d.begin = function(a) {
+  c.begin = function(a) {
     this.active() && this.commit();
     if(this.isEditable(a)) {
-      var g = a.getNode();
-      if(g) {
-        var d = this.editor = a.getColDef().editor;
-        d.cell = a;
-        d.grid = this.grid;
-        d.before = g.innerHTML;
-        g.innerHTML = d.edit(a.getValue());
+      var b = a.getNode();
+      if(b) {
+        var c = this.editor = a.getColDef().editor;
+        c.cell = a;
+        c.grid = this.grid;
+        c.before = b.innerHTML;
+        b.innerHTML = c.edit(a.getValue());
         a.get$().addClass(this._options.classEdit);
-        d.focus()
+        c.focus()
       }
     }
   };
-  d.cancel = function() {
+  c.cancel = function() {
     if(this.active()) {
       var a = this.editor.cell;
       if(a) {
-        var g = a.getNode();
-        if(g) {
-          g.innerHTML = this.editor.before, a.get$().removeClass(this._options.classEdit)
+        var b = a.getNode();
+        if(b) {
+          b.innerHTML = this.editor.before, a.get$().removeClass(this._options.classEdit)
         }
       }
       this._deleteEditor();
       this.grid.view.focus()
     }
   };
-  d._deleteEditor = function() {
+  c._deleteEditor = function() {
     b.isNotNull(this.editor) && (delete this.editor.grid, delete this.editor.cell, delete this.editor.before, delete this.editor)
   };
-  d.commit = function() {
+  c.commit = function() {
     if(!this._beingCommitted && this.active()) {
       this._beingCommitted = !0;
       var a = this.editor.cell;
       if(a) {
-        var g = a.getNode();
-        if(g) {
-          if(g = this.editor.value(g), g == null || g == a.getValue()) {
+        var b = a.getNode();
+        if(b) {
+          if(b = this.editor.value(b), b == null || b == a.getValue()) {
             this.cancel()
           }else {
-            var g = a.setValue(g), d, b = a.get$();
-            g instanceof Error ? (this.cancel(), d = this._options.classFailure) : (this._deleteEditor(), this.grid.view.focus(), this.grid.printMessage("Successfully Updated."), d = this._options.classSuccess);
-            b.addClass(d);
+            var b = a.setValue(b), c, e = a.get$();
+            b instanceof Error ? (this.cancel(), c = this._options.classFailure) : (this._deleteEditor(), this.grid.view.focus(), this.grid.printMessage("Successfully Updated."), c = this._options.classSuccess);
+            e.addClass(c);
             setTimeout(function() {
-              b.removeClass(d)
+              e.removeClass(c)
             }, 1E3)
           }
         }
@@ -4983,25 +4983,25 @@ jx.grid.Editor = {};
       this._beingCommitted = !1
     }
   };
-  d._deleteContent = function(a) {
+  c._deleteContent = function(a) {
     if(!this.active() && this.isEditable(a)) {
-      var g = a.getColDef();
-      a.getValue() !== g.defaultValue && a.setValue(g.defaultValue)
+      var b = a.getColDef();
+      a.getValue() !== b.defaultValue && a.setValue(b.defaultValue)
     }
   };
-  d._deleteContents = function(a, g, d) {
+  c._deleteContents = function(a, c, i) {
     if(!this.active()) {
-      var a = {}, g = {}, e = [], i, f, h, q, m, o, n;
-      a:for(i in d) {
-        if(d.hasOwnProperty(i) && i !== "length") {
-          for(n in q = h = f = void 0, o = d[i], o) {
-            if(o.hasOwnProperty(n) && !(n === "length" || g.hasOwnProperty(n))) {
-              m = o[n].cell;
-              if(b.isNull(f) && (f = m.getColDef(), h = f.defaultValue, q = f.key, b.isNull(f.editor))) {
+      var a = {}, c = {}, e = [], j, f, h, p, n, o, m;
+      a:for(j in i) {
+        if(i.hasOwnProperty(j) && j !== "length") {
+          for(m in p = h = f = void 0, o = i[j], o) {
+            if(o.hasOwnProperty(m) && !(m === "length" || c.hasOwnProperty(m))) {
+              n = o[m].cell;
+              if(b.isNull(f) && (f = n.getColDef(), h = f.defaultValue, p = f.key, b.isNull(f.editor))) {
                 continue a
               }
-              m = b.isNotNull(a[n]) ? a[n].datarow : m.getDatarow();
-              this.grid.dataMgr.isReal(m) ? h !== m[q] && (b.isNull(a[n]) && (a[n] = {datarow:m, change:{}}, e.push(a[n])), a[n].change[q] = h) : g[n] = !0
+              n = b.isNotNull(a[m]) ? a[m].datarow : n.getDatarow();
+              this.grid.dataMgr.isReal(n) ? h !== n[p] && (b.isNull(a[m]) && (a[m] = {datarow:n, change:{}}, e.push(a[m])), a[m].change[p] = h) : c[m] = !0
             }
           }
         }
@@ -5012,30 +5012,30 @@ jx.grid.Editor = {};
   h.getInstance = function(a) {
     return new h(a)
   };
-  d = h.prototype;
-  d.edit = function(a) {
+  c = h.prototype;
+  c.edit = function(a) {
     return"<input type='text' class='basic-editor' value='" + (a == null ? "" : a) + "' style='position:relative'/>"
   };
-  d.focus = function() {
+  c.focus = function() {
     var a = this.cell;
     if(a) {
-      var g = a.getNode();
-      if(g && (g = g.childNodes[0])) {
-        if(g.setActive) {
+      var b = a.getNode();
+      if(b && (b = b.childNodes[0])) {
+        if(b.setActive) {
           try {
-            g.setActive()
-          }catch(d) {
+            b.setActive()
+          }catch(c) {
           }
         }
-        g.focus();
-        document.activeElement !== g && a.get$().children(":eq(0)").focus()
+        b.focus();
+        document.activeElement !== b && a.get$().children(":eq(0)").focus()
       }
     }
   };
-  d.value = function(a) {
+  c.value = function(a) {
     return a && (a = a.childNodes[0]) ? a.value : null
   };
-  d.path = function() {
+  c.path = function() {
     return"JGM.m.Editor." + this.mid
   };
   h.numberKeys = b.which(["number", "del", "backspace"]);
@@ -5088,21 +5088,21 @@ jx.grid.TooltipManager = {};
     h._destroy(this, {name:"TooltipManager", path:"tooltip", $:"_tooltip", property:"_ctnr", map:"_options"})
   };
   b._onCreateCss = function() {
-    var a = this._options, d = [];
-    d.push("#" + this.grid.mid + " ." + a.classTooltip + "{position:absolute;z-index:10;background:" + a.background + ";border:" + a.border + ";padding:" + a.padding + ";color:" + a.color + ";font:" + a.font + "}");
-    return d.join("")
+    var a = this._options, b = [];
+    b.push("#" + this.grid.mid + " ." + a.classTooltip + "{position:absolute;z-index:10;background:" + a.background + ";border:" + a.border + ";padding:" + a.padding + ";color:" + a.color + ";font:" + a.font + "}");
+    return b.join("")
   };
   b._mouseoutCanvas = function() {
     e.isNotNull(this._tooltip) && (this._ctnr[0].removeChild(this._tooltip[0]), delete this._tooltip)
   };
   b._mousemoveCanvas = function(a) {
-    var d = this._options;
-    d.tooltipSyncEnabled && e.isNotNull(this._tooltip) && this._tooltip.css({left:a.pageX + d.offsetX + "px", top:a.pageY + d.offsetY + "px"})
+    var b = this._options;
+    b.tooltipSyncEnabled && e.isNotNull(this._tooltip) && this._tooltip.css({left:a.pageX + b.offsetX + "px", top:a.pageY + b.offsetY + "px"})
   };
-  b._mouseoverCanvas = function(a, d) {
-    if(d.getColDef().tooltipEnabled && e.isNull(this._tooltip)) {
-      var c = this._options, g = document.createElement("div");
-      g.innerHTML = "<div class='" + c.classTooltip + "' style='left:" + (a.pageX + c.offsetX) + "px;top:" + (a.pageY + c.offsetY) + "px'>" + d.getValue() + "</div>";
+  b._mouseoverCanvas = function(a, b) {
+    if(b.getColDef().tooltipEnabled && e.isNull(this._tooltip)) {
+      var d = this._options, g = document.createElement("div");
+      g.innerHTML = "<div class='" + d.classTooltip + "' style='left:" + (a.pageX + d.offsetX) + "px;top:" + (a.pageY + d.offsetY) + "px'>" + b.getValue() + "</div>";
       this._tooltip = $(g.firstChild);
       this._ctnr[0].appendChild(this._tooltip[0])
     }
@@ -5133,44 +5133,44 @@ jx.grid.PrintManager = {};
     })
   };
   b.print = function() {
-    var a = this.getPrintHtml(this.grid.colDefMgr.get(), this.grid.dataMgr.datalist), d = e.open(this._options.winOptions);
-    d.document.write(a);
-    d.document.close()
+    var a = this.getPrintHtml(this.grid.colDefMgr.get(), this.grid.dataMgr.datalist), b = e.open(this._options.winOptions);
+    b.document.write(a);
+    b.document.close()
   };
-  b.getPrintHtml = function(a, d) {
-    var c = this._options, g = c.tableBorderColor, b = c.headerBorderColor, e = c.cellBorderColor, i = [], f = a.length, h = f - 1, q = d.length, m = q - 1, o = 0, n;
-    i.push("<html><head>");
-    i.push("<title>" + c.title + "</title>");
-    i.push("</head><body onload='window.print();'>");
-    i.push("<table width='100%' cellspacing='0' cellpadding='0'><tbody><tr><td align='left'>");
-    i.push("<table width='100%' cellspacing='0' cellpadding='2' style='border-collapse:collapse'>");
-    i.push("<tbody style='font:" + c.font + ";'>");
-    for(i.push("<tr style='background-color:" + c.headerBackgroundColor + ";color:" + c.headerFontColor + ";text-align:center'>");o < f;o++) {
-      i.push("<td style='border:solid 1px " + b + ";'>" + a[o].name + "</td>")
+  b.getPrintHtml = function(a, b) {
+    var d = this._options, g = d.tableBorderColor, i = d.headerBorderColor, e = d.cellBorderColor, j = [], f = a.length, h = f - 1, p = b.length, n = p - 1, o = 0, m;
+    j.push("<html><head>");
+    j.push("<title>" + d.title + "</title>");
+    j.push("</head><body onload='window.print();'>");
+    j.push("<table width='100%' cellspacing='0' cellpadding='0'><tbody><tr><td align='left'>");
+    j.push("<table width='100%' cellspacing='0' cellpadding='2' style='border-collapse:collapse'>");
+    j.push("<tbody style='font:" + d.font + ";'>");
+    for(j.push("<tr style='background-color:" + d.headerBackgroundColor + ";color:" + d.headerFontColor + ";text-align:center'>");o < f;o++) {
+      j.push("<td style='border:solid 1px " + i + ";'>" + a[o].name + "</td>")
     }
-    i.push("</tr>");
-    for(o = 0;o < q;o++) {
-      c = d[o];
-      i.push("<tr>");
+    j.push("</tr>");
+    for(o = 0;o < p;o++) {
+      d = b[o];
+      j.push("<tr>");
       if(o === 0) {
-        for(n = 0;n < f;n++) {
-          n === 0 ? i.push("<td style='border:solid 1px " + e + ";border-top:solid 1px " + b + ";border-left:solid 1px " + g + "'>" + c[a[n].key] + "</td>") : n === h ? i.push("<td style='border:solid 1px " + e + ";border-top:solid 1px " + b + ";border-right:solid 1px " + g + "'>" + c[a[n].key] + "</td>") : i.push("<td style='border:solid 1px " + e + ";border-top:solid 1px " + b + "'>" + c[a[n].key] + "</td>")
+        for(m = 0;m < f;m++) {
+          m === 0 ? j.push("<td style='border:solid 1px " + e + ";border-top:solid 1px " + i + ";border-left:solid 1px " + g + "'>" + d[a[m].key] + "</td>") : m === h ? j.push("<td style='border:solid 1px " + e + ";border-top:solid 1px " + i + ";border-right:solid 1px " + g + "'>" + d[a[m].key] + "</td>") : j.push("<td style='border:solid 1px " + e + ";border-top:solid 1px " + i + "'>" + d[a[m].key] + "</td>")
         }
       }else {
-        if(o < m) {
-          for(n = 0;n < f;n++) {
-            n === 0 ? i.push("<td style='border:solid 1px " + e + ";border-left:solid 1px " + g + "'>" + c[a[n].key] + "</td>") : n === h ? i.push("<td style='border:solid 1px " + e + ";border-right:solid 1px " + g + "'>" + c[a[n].key] + "</td>") : i.push("<td style='border:solid 1px " + e + "'>" + c[a[n].key] + "</td>")
+        if(o < n) {
+          for(m = 0;m < f;m++) {
+            m === 0 ? j.push("<td style='border:solid 1px " + e + ";border-left:solid 1px " + g + "'>" + d[a[m].key] + "</td>") : m === h ? j.push("<td style='border:solid 1px " + e + ";border-right:solid 1px " + g + "'>" + d[a[m].key] + "</td>") : j.push("<td style='border:solid 1px " + e + "'>" + d[a[m].key] + "</td>")
           }
         }else {
-          for(n = 0;n < f;n++) {
-            n === 0 ? i.push("<td style='border:solid 1px " + e + ";border-bottom:solid 1px " + g + ";border-left:solid 1px " + g + "'>" + c[a[n].key] + "</td>") : n === h ? i.push("<td style='border:solid 1px " + e + ";border-bottom:solid 1px " + g + ";border-right:solid 1px " + g + "'>" + c[a[n].key] + "</td>") : i.push("<td style='border:solid 1px " + e + ";border-bottom:solid 1px " + g + "'>" + c[a[n].key] + "</td>")
+          for(m = 0;m < f;m++) {
+            m === 0 ? j.push("<td style='border:solid 1px " + e + ";border-bottom:solid 1px " + g + ";border-left:solid 1px " + g + "'>" + d[a[m].key] + "</td>") : m === h ? j.push("<td style='border:solid 1px " + e + ";border-bottom:solid 1px " + g + ";border-right:solid 1px " + g + "'>" + d[a[m].key] + "</td>") : j.push("<td style='border:solid 1px " + e + ";border-bottom:solid 1px " + g + "'>" + d[a[m].key] + "</td>")
           }
         }
       }
-      i.push("</tr>")
+      j.push("</tr>")
     }
-    i.push("</tbody></table></td></tr></tbody></table></body></html>");
-    return i.join("")
+    j.push("</tbody></table></td></tr></tbody></table></body></html>");
+    return j.join("")
   }
 })();
 console && console.log && console.log('reading javascript source "ViewportManager.js"...');
@@ -5197,13 +5197,13 @@ jx.grid.ViewportManager = {};
   }
   var h = goog.getObjectByName("jx.grid"), e = goog.getObjectByName("jx.grid.Grid"), b = goog.getObjectByName("jx.util");
   goog.getObjectByName("jx.grid.BaseModule");
-  var a = goog.getObjectByName("jx.grid.Cell"), d = {INPUT:!0, TEXTAREA:!0, LABEL:!0, FIELDSET:!0, LEGEND:!0, SELECT:!0, OPTGROUP:!0, OPTION:!0, BUTTON:!0};
+  var a = goog.getObjectByName("jx.grid.Cell"), c = {INPUT:!0, TEXTAREA:!0, LABEL:!0, FIELDSET:!0, LEGEND:!0, SELECT:!0, OPTGROUP:!0, OPTION:!0, BUTTON:!0}, d = {checkbox:!0, radio:!0};
   goog.exportSymbol("jx.grid.ViewportManager", f);
   f.getInstance = function(a) {
     return new f(a)
   };
-  var c = f.prototype;
-  c.__init = function() {
+  var g = f.prototype;
+  g.__init = function() {
     this._mask = $("<div class='" + this._options.classView + "' tabIndex='0' onscroll='JGM.m.ViewportManager." + this.mid + "._scroll()'>").appendTo(this._ctnr);
     this._canvas = $("<div class='" + this._options.classCanvas + "'>").appendTo(this._mask);
     this._canvasEl = this._canvas[0];
@@ -5216,76 +5216,76 @@ jx.grid.ViewportManager = {};
     this._evtmgr.bind({canvasFind:this._canvasFind, onCreateCss:this._onCreateCss, onCreateDynamicCss:this._onCreateDynamicCss, onDestroy:this._onDestroy, keydown:this._keydown, keyup:this._keyup, keypress:this._keypress, mousein:this._mousein, mouseout:this._mouseout, mouseenter:this._mouseenter, mouseleave:this._mouseleave, mousemove:this._mousemove, mouseover:this._mouseover, mousedown:this._mousedown, mouseup:this._mouseup, click:this._click, dblclick:this._dblclick, resizeWidth:this._setWidth, 
     "resizeWidth onResizeCol onResizeCanvasHeight":this._resizeWidth, onAfterRefresh:this.onAfterRefresh, onRenderModules:this._render, onReorderCols:this._onReorderCols, onResizeCanvasWidth:this._scroll, onUpdateDatarow:this.onUpdateDatarow, onUpdateDatalist:this.onUpdateDatalist, onRemoveDatarow:this.onRemoveDatarow, onRemoveDatalist:this.onRemoveDatalist, onIdChange:this.onIdChange, onIdListChange:this.onIdListChange, unsetDrag:this.unsetDrag}, this)
   };
-  c.unsetDrag = function() {
+  g.unsetDrag = function() {
     this._drag = !1
   };
-  c._onDestroy = function() {
+  g._onDestroy = function() {
     h._destroy(this, {name:"ViewportManager", path:"view", $:"_canvas _mask", property:"_ctnr", map:"_vars _lockedRows _renderedRows _options"})
   };
-  c._onCreateCss = function() {
-    var a = "#" + this.grid.mid + " .", c = this._options, d = a + this._cellClass, b = a + this._rowClass, e = c.borderThickness + "px " + c.border, f = b + "[" + this._rowIdxAttr, h = this._colmgr.get(), m = h.length, o = 0, n = [];
-    n.push(a + c.classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + c.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + c.style + "}");
-    n.push(a + c.classView + ":focus{background:" + c.focusBackground + ";outline:" + c.focusOutline + "}");
-    n.push(a + c.classCanvas + "{height:" + this._calCanvasHeight() + "px;" + c.canvasStyle + ";background:#fff}");
-    n.push(b + "{position:absolute;" + c.rowStyle + "}");
-    n.push(d + "{height:" + c.rowH + "px;border-bottom:" + e + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + c.padding + "px;border-right:" + e + ";" + c.cellStyle + "}");
-    for(c.evenOddRows && n.push(f + "$='1']," + f + "$='3']," + f + "$='5']," + f + "$='7']," + f + "$='9']{background:" + c.oddRowsBackground + "}");o < m;o++) {
-      n.push(d + ".k_" + h[o].key + "{" + h[o].style + "}")
+  g._onCreateCss = function() {
+    var a = "#" + this.grid.mid + " .", b = this._options, c = a + this._cellClass, d = a + this._rowClass, g = b.borderThickness + "px " + b.border, e = d + "[" + this._rowIdxAttr, f = this._colmgr.get(), h = f.length, m = 0, r = [];
+    r.push(a + b.classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + b.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + b.style + "}");
+    r.push(a + b.classView + ":focus{background:" + b.focusBackground + ";outline:" + b.focusOutline + "}");
+    r.push(a + b.classCanvas + "{height:" + this._calCanvasHeight() + "px;" + b.canvasStyle + ";background:#fff}");
+    r.push(d + "{position:absolute;" + b.rowStyle + "}");
+    r.push(c + "{height:" + b.rowH + "px;border-bottom:" + g + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + b.padding + "px;border-right:" + g + ";" + b.cellStyle + "}");
+    for(b.evenOddRows && r.push(e + "$='1']," + e + "$='3']," + e + "$='5']," + e + "$='7']," + e + "$='9']{background:" + b.oddRowsBackground + "}");m < h;m++) {
+      r.push(c + ".k_" + f[m].key + "{" + f[m].style + "}")
     }
-    return n.join("")
+    return r.join("")
   };
-  c._onCreateDynamicCss = function() {
-    var a = "#" + this.grid.mid + " .", c = a + this._cellClass, d = a + this._rowClass;
+  g._onCreateDynamicCss = function() {
+    var a = "#" + this.grid.mid + " .", b = a + this._cellClass, c = a + this._rowClass;
     a += this._options.classCanvas;
-    var b = this._calCanvasWidth(), e = this._colmgr.get(), f = "", h = e.length, m = 0;
-    for(f += a + "{width:" + b + "px}" + d + "{width:" + b + "px}";m < h;m++) {
-      f += c + ".k_" + e[m].key + "{width:" + e[m].width + "px}"
+    var d = this._calCanvasWidth(), g = this._colmgr.get(), e = "", f = g.length, h = 0;
+    for(e += a + "{width:" + d + "px}" + c + "{width:" + d + "px}";h < f;h++) {
+      e += b + ".k_" + g[h].key + "{width:" + g[h].width + "px}"
     }
-    return f
+    return e
   };
-  c.onUpdateDatarow = function(a) {
+  g.onUpdateDatarow = function(a) {
     this.isRendered(a) && this.rerenderRow(a)
   };
-  c.onUpdateDatalist = function(a) {
-    for(var c, d = a.length, b = 0;b < d;b++) {
-      c = a[b], this.isRendered(c) && this.rerenderRow(c)
+  g.onUpdateDatalist = function(a) {
+    for(var b, c = a.length, d = 0;d < c;d++) {
+      b = a[d], this.isRendered(b) && this.rerenderRow(b)
     }
   };
-  c.onRemoveDatarow = function(a) {
+  g.onRemoveDatarow = function(a) {
     this.destroyRow(a)
   };
-  c.onRemoveDatalist = function(a) {
-    for(var c = a.length, d = 0;d < c;d++) {
-      this.destroyRow(a[d])
+  g.onRemoveDatalist = function(a) {
+    for(var b = a.length, c = 0;c < b;c++) {
+      this.destroyRow(a[c])
     }
   };
-  c.onIdChange = function(a, c, d) {
-    this.isRowLockedById(c) && (this._lockedRows[d] = this._lockedRows[c], delete this._lockedRows[c]);
-    this.isRenderedById(c) && ((this._renderedRows[d] = this._renderedRows[c]).setAttribute("i", d), delete this._renderedRows[c])
+  g.onIdChange = function(a, b, c) {
+    this.isRowLockedById(b) && (this._lockedRows[c] = this._lockedRows[b], delete this._lockedRows[b]);
+    this.isRenderedById(b) && ((this._renderedRows[c] = this._renderedRows[b]).setAttribute("i", c), delete this._renderedRows[b])
   };
-  c.onIdListChange = function(a, c, d) {
-    for(var b = a.length, e = 0, f = this._lockedRows, h = this._renderedRows, m, o;e < b;e++) {
-      m = c[e], o = a[e][d], f.hasOwnProperty(m) && (f[o] = f[m], delete f[m]), h.hasOwnProperty(m) && ((h[o] = h[m]).setAttribute("i", o), delete h[m])
+  g.onIdListChange = function(a, b, c) {
+    for(var d = a.length, g = 0, e = this._lockedRows, f = this._renderedRows, h, m;g < d;g++) {
+      h = b[g], m = a[g][c], e.hasOwnProperty(h) && (e[m] = e[h], delete e[h]), f.hasOwnProperty(h) && ((f[m] = f[h]).setAttribute("i", m), delete f[h])
     }
   };
-  c._getCellSelector = function() {
+  g._getCellSelector = function() {
     return"#" + this.grid.mid + " ." + this._cellClass
   };
-  c._getRowSelector = function() {
+  g._getRowSelector = function() {
     return"#" + this.grid.mid + " ." + this._rowClass
   };
-  c.scrollTo = function(a, c) {
+  g.scrollTo = function(a, b) {
     this.scrollToRow(a);
-    this.scrollToCol(c)
+    this.scrollToCol(b)
   };
-  c.scrollToRowLazy = function(a) {
-    var c = this.getScrollTop();
-    return a == null ? c : this._getLastSafeVisibleRow() < a ? this.scrollToRow(this._getFirstRowForSafe(a)) : this._getFirstSafeVisibleRow() > a ? this.scrollToRow(a) : c
+  g.scrollToRowLazy = function(a) {
+    var b = this.getScrollTop();
+    return a == null ? b : this._getLastSafeVisibleRow() < a ? this.scrollToRow(this._getFirstRowForSafe(a)) : this._getFirstSafeVisibleRow() > a ? this.scrollToRow(a) : b
   };
-  c.scrollToColLazy = function(a) {
-    var c = this.getScrollLeft();
+  g.scrollToColLazy = function(a) {
+    var b = this.getScrollLeft();
     if(a == null) {
-      return c
+      return b
     }
     if(this._getLastSafeVisibleCol() < a) {
       return this.setScrollLeft(this.getScrollHForSafe(a))
@@ -5294,462 +5294,462 @@ jx.grid.ViewportManager = {};
         return this.scrollToCol(a)
       }
     }
-    return c
+    return b
   };
-  c.scrollToLazy = function(a, c) {
+  g.scrollToLazy = function(a, b) {
     this.scrollToRowLazy(a);
-    this.scrollToColLazy(c)
+    this.scrollToColLazy(b)
   };
-  c.scrollToRow = function(a) {
+  g.scrollToRow = function(a) {
     return a != null ? this.setScrollTop(this._getRowOuterHeight() * a) : this.getScrollTop()
   };
-  c.scrollToCol = function(a) {
+  g.scrollToCol = function(a) {
     return this.setScrollLeft(this.getColLeft(a))
   };
-  c._getColInnerWidth = function(a) {
+  g._getColInnerWidth = function(a) {
     return this._colmgr.get(a).width
   };
-  c._getColInnerWidthByKey = function(a) {
+  g._getColInnerWidthByKey = function(a) {
     return this._colmgr.getByKey(a).width
   };
-  c.getColWidth = function(a) {
+  g.getColWidth = function(a) {
     return this._colmgr.get(a).width + this._options.padding
   };
-  c.getColWidthByKey = function(a) {
+  g.getColWidthByKey = function(a) {
     return this._colmgr.getByKey(a).width + this._options.padding
   };
-  c._getColOuterWidth = function(a) {
+  g._getColOuterWidth = function(a) {
     return this._colmgr.get(a).width + this._options.padding + this._options.borderThickness
   };
-  c._getColOuterWidthByKey = function(a) {
+  g._getColOuterWidthByKey = function(a) {
     return this._colmgr.getByKey(a).width + this._options.padding + this._options.borderThickness
   };
-  c._getPadding = function() {
+  g._getPadding = function() {
     return this._options.padding
   };
-  c._colWidthPlus = function() {
+  g._colWidthPlus = function() {
     return this._options.padding + this._options.borderThickness
   };
-  c._getRowOuterHeight = function() {
+  g._getRowOuterHeight = function() {
     return this._options.rowH + this._options.borderThickness
   };
-  c._getRowInnerHeight = function() {
+  g._getRowInnerHeight = function() {
     return this._options.rowH
   };
-  c._calHeight = function() {
+  g._calHeight = function() {
     return this._options.autoHeight ? this._calCanvasHeight() + (this.grid.width() < this._calCanvasWidth() ? this.grid._vars.scrollbarDim.h : 0) : this._getRowOuterHeight() * this._options.rowsPerPage
   };
-  c.getHeight = function() {
+  g.getHeight = function() {
     return this._mask[0].offsetHeight
   };
-  c.getInnerHeight = function() {
+  g.getInnerHeight = function() {
     return this._mask[0].clientHeight
   };
-  c._getWidth = function() {
+  g._getWidth = function() {
     return this._mask[0].offsetWidth
   };
-  c.getInnerWidth = function() {
+  g.getInnerWidth = function() {
     return this._mask[0].clientWidth
   };
-  c._calCanvasHeight = function() {
+  g._calCanvasHeight = function() {
     return this._getRowOuterHeight() * this._datamgr.datalist.length || 1
   };
-  c.getCanvasHeight = function() {
+  g.getCanvasHeight = function() {
     return this._canvasEl.clientHeight
   };
-  c._setCanvasHeight = function(a) {
+  g._setCanvasHeight = function(a) {
     a = parseInt(a, 10);
     if(isNaN(a) || a < 1) {
       a = 1
     }
-    var c = this.getCanvasHeight();
-    if(a != c) {
-      this._canvasEl.style.height = a + "px", this._evtmgr.trigger("onResizeCanvasHeight", [a, c], !0)
+    var b = this.getCanvasHeight();
+    if(a != b) {
+      this._canvasEl.style.height = a + "px", this._evtmgr.trigger("onResizeCanvasHeight", [a, b], !0)
     }
   };
-  c._calCanvasWidth = function() {
+  g._calCanvasWidth = function() {
     return this._colLefts[this._colmgr.length()]
   };
-  c.getCanvasWidth = function() {
+  g.getCanvasWidth = function() {
     return this._canvasEl.clientWidth
   };
-  c._setCanvasWidth = function(a) {
+  g._setCanvasWidth = function(a) {
     typeof a != "number" && (a = parseInt(a, 10));
     if(isFinite(a) && !(a < 1)) {
-      var c = this.getCanvasWidth();
-      if(a != c) {
-        this.grid.log("set canvas width. " + c + "->" + a, e.V_RESIZE), this._canvasEl.style.width = a + "px", this._evtmgr.trigger("onResizeCanvasWidth", [a, c], !0)
+      var b = this.getCanvasWidth();
+      if(a != b) {
+        this.grid.log("set canvas width. " + b + "->" + a, e.V_RESIZE), this._canvasEl.style.width = a + "px", this._evtmgr.trigger("onResizeCanvasWidth", [a, b], !0)
       }
     }
   };
-  c.getColLeft = function(a) {
+  g.getColLeft = function(a) {
     return this._colLefts[a]
   };
-  c._getColLefts = function() {
+  g._getColLefts = function() {
     return this._colLefts
   };
-  c._setColLefts = function(a, c) {
-    for(var a = a || 0, d = this._colmgr.get(), b = this._colWidthPlus(), c = c || d.length;a < c;a++) {
-      this._colLefts[a + 1] = this._colLefts[a] + d[a].width + b
+  g._setColLefts = function(a, b) {
+    for(var a = a || 0, c = this._colmgr.get(), d = this._colWidthPlus(), b = b || c.length;a < b;a++) {
+      this._colLefts[a + 1] = this._colLefts[a] + c[a].width + d
     }
     return this._colLefts
   };
-  c._onReorderCols = function() {
+  g._onReorderCols = function() {
     this._setColLefts();
     this._rerender()
   };
-  c.setWidthByKey = function(a, c) {
+  g.setWidthByKey = function(a, c) {
     var d = this._colmgr.getByKey(a), c = b.bound(c, d.minW, d.maxW);
     if(c !== d.width) {
       this.grid.log("set column width. key=" + a + ", w=" + c, e.V_RESIZE);
-      var f = this._evtmgr, h = this._colmgr, k = [a, c, d.width];
+      var g = this._evtmgr, f = this._colmgr, h = [a, c, d.width];
       d.width = c;
-      this._setCanvasWidth(this._setColLefts(h.getIdxByKey(a))[h.length()]);
+      this._setCanvasWidth(this._setColLefts(f.getIdxByKey(a))[f.length()]);
       this.grid._recreateDynamicCss();
-      f.trigger("onResizeCol_" + a, k, !0);
-      f.trigger("onResizeCol", k, !0)
+      g.trigger("onResizeCol_" + a, h, !0);
+      g.trigger("onResizeCol", h, !0)
     }
   };
-  c._autoColWidth = function(a) {
-    for(var c = this._canvasFind(".k_" + a), d = Number.MIN_VALUE, b = c.length, e = 0;e < b;e++) {
-      if(d < c[e].scrollWidth) {
-        d = c[e].scrollWidth
+  g._autoColWidth = function(a) {
+    for(var b = this._canvasFind(".k_" + a), c = Number.MIN_VALUE, d = b.length, g = 0;g < d;g++) {
+      if(c < b[g].scrollWidth) {
+        c = b[g].scrollWidth
       }
     }
-    d -= this._getPadding();
-    this.setWidthByKey(a, d)
+    c -= this._getPadding();
+    this.setWidthByKey(a, c)
   };
-  c._setWidth = function(a) {
+  g._setWidth = function(a) {
     a = parseInt(a, 10);
     if(!(isNaN(a) || a < 1)) {
       this._mask[0].style.width = a + "px"
     }
   };
-  c.getScrollTop = function() {
+  g.getScrollTop = function() {
     return this._mask[0].scrollTop
   };
-  c.getScrollLeft = function() {
+  g.getScrollLeft = function() {
     return this._mask[0].scrollLeft
   };
-  c.setScrollTop = function(a) {
-    var c = this.getScrollTop();
-    return a != null && c != a ? this._mask[0].scrollTop = a : c
+  g.setScrollTop = function(a) {
+    var b = this.getScrollTop();
+    return a != null && b != a ? this._mask[0].scrollTop = a : b
   };
-  c.setScrollLeft = function(a) {
-    var c = this.getScrollLeft();
-    return a != null && c != a ? this._mask[0].scrollLeft = a : c
+  g.setScrollLeft = function(a) {
+    var b = this.getScrollLeft();
+    return a != null && b != a ? this._mask[0].scrollLeft = a : b
   };
-  c._hasHScrollbar = function() {
+  g._hasHScrollbar = function() {
     return this._mask[0].offsetHeight > this._mask[0].clientHeight
   };
-  c._hasVScrollbar = function() {
+  g._hasVScrollbar = function() {
     return this._mask[0].offsetWidth > this._mask[0].clientWidth
   };
-  c._heightPlus = function() {
+  g._heightPlus = function() {
     return this._mask[0].offsetHeight - this._mask[0].clientHeight
   };
-  c._widthPlus = function() {
+  g._widthPlus = function() {
     return this._mask[0].offsetWidth - this._mask[0].clientWidth
   };
-  c._getFirstVisibleRow = function() {
+  g._getFirstVisibleRow = function() {
     return Math.floor(this.getScrollTop() / this._getRowOuterHeight())
   };
-  c._getFirstSafeVisibleRow = function() {
+  g._getFirstSafeVisibleRow = function() {
     return Math.ceil(this.getScrollTop() / this._getRowOuterHeight())
   };
-  c._getLastVisibleRow = function() {
+  g._getLastVisibleRow = function() {
     return Math.ceil((this.getScrollTop() + this._mask[0].clientHeight) / this._getRowOuterHeight()) - 1
   };
-  c._getLastSafeVisibleRow = function() {
+  g._getLastSafeVisibleRow = function() {
     return Math.floor((this.getScrollTop() + this._mask[0].clientHeight) / this._getRowOuterHeight()) - 1
   };
-  c._getFirstRowForSafe = function(a) {
+  g._getFirstRowForSafe = function(a) {
     return a - Math.floor(this._mask[0].clientHeight / this._getRowOuterHeight()) + 1
   };
-  c._getFirstVisibleCol = function() {
-    for(var a = this.getScrollLeft(), c = this._colLefts, d = 0, b = c.length;d < b;d++) {
-      if(c[d] > a) {
-        return d - 1
+  g._getFirstVisibleCol = function() {
+    for(var a = this.getScrollLeft(), b = this._colLefts, c = 0, d = b.length;c < d;c++) {
+      if(b[c] > a) {
+        return c - 1
       }
-      if(c[d] === a) {
-        return d
-      }
-    }
-    return b - 2
-  };
-  c._getFirstSafeVisibleCol = function() {
-    for(var a = this.getScrollLeft(), c = this._colLefts, d = 0, b = c.length;d < b;d++) {
-      if(c[d] >= a) {
-        return d
+      if(b[c] === a) {
+        return c
       }
     }
-    return b - 2
+    return d - 2
   };
-  c._getLastVisibleCol = function() {
-    for(var a = this.getScrollLeft() + this._mask[0].clientWidth, c = this._colLefts, d = 0, b = c.length;d < b;d++) {
-      if(c[d] >= a) {
-        return d - 1
+  g._getFirstSafeVisibleCol = function() {
+    for(var a = this.getScrollLeft(), b = this._colLefts, c = 0, d = b.length;c < d;c++) {
+      if(b[c] >= a) {
+        return c
       }
     }
-    return b - 2
+    return d - 2
   };
-  c._getLastSafeVisibleCol = function() {
-    for(var a = this.getScrollLeft() + this._mask[0].clientWidth, c = this._colLefts, d = 0, b = c.length;d < b;d++) {
-      if(c[d] > a) {
-        return d - 2
+  g._getLastVisibleCol = function() {
+    for(var a = this.getScrollLeft() + this._mask[0].clientWidth, b = this._colLefts, c = 0, d = b.length;c < d;c++) {
+      if(b[c] >= a) {
+        return c - 1
       }
     }
-    return b - 2
+    return d - 2
   };
-  c._getFirstColForSafe = function(a) {
-    var c = this._colLefts, d = c[a + 1] - this._mask[0].clientWidth, b = a;
-    if(d <= 0) {
+  g._getLastSafeVisibleCol = function() {
+    for(var a = this.getScrollLeft() + this._mask[0].clientWidth, b = this._colLefts, c = 0, d = b.length;c < d;c++) {
+      if(b[c] > a) {
+        return c - 2
+      }
+    }
+    return d - 2
+  };
+  g._getFirstColForSafe = function(a) {
+    var b = this._colLefts, c = b[a + 1] - this._mask[0].clientWidth, d = a;
+    if(c <= 0) {
       return 0
     }
-    for(;b >= 0;b--) {
-      if(b === a && c[b] <= d || c[b] === d) {
-        return b
+    for(;d >= 0;d--) {
+      if(d === a && b[d] <= c || b[d] === c) {
+        return d
       }
-      if(c[b] < d) {
-        return b + 1
+      if(b[d] < c) {
+        return d + 1
       }
     }
     return 0
   };
-  c.getScrollHForSafe = function(a) {
-    var c = this._colLefts, d = c[a + 1] - this._mask[0].clientWidth;
-    return c[a] <= d ? c[a] : d
+  g.getScrollHForSafe = function(a) {
+    var b = this._colLefts, c = b[a + 1] - this._mask[0].clientWidth;
+    return b[a] <= c ? b[a] : c
   };
-  c._getRenderRange = function() {
+  g._getRenderRange = function() {
     if(this._options.autoHeight) {
       return{start:0, end:this._datamgr.datalist.length - 1}
     }
-    var a, c = this._datamgr.datalist.length - 1;
-    return{start:(a = this._getFirstVisibleRow() - this._options.bufferSize) < 0 ? 0 : a, end:(a = this._getLastVisibleRow() + this._options.bufferSize) > c ? c : a}
+    var a, b = this._datamgr.datalist.length - 1;
+    return{start:(a = this._getFirstVisibleRow() - this._options.bufferSize) < 0 ? 0 : a, end:(a = this._getLastVisibleRow() + this._options.bufferSize) > b ? b : a}
   };
-  c._fitHeight = function() {
+  g._fitHeight = function() {
     this._mask[0].style.height = this.getCanvasHeight() + this._heightPlus() + "px"
   };
-  c._resizeWidth = function() {
+  g._resizeWidth = function() {
     this._options.autoHeight && this._fitHeight()
   };
-  c.onAfterRefresh = function(a) {
+  g.onAfterRefresh = function(a) {
     a !== void 0 && a.noRerender === !0 || this._rerender()
   };
-  c._rerender = function() {
-    var a = this.getScrollTop(), c = this.getScrollLeft();
+  g._rerender = function() {
+    var a = this.getScrollTop(), b = this.getScrollLeft();
     this._evtmgr.trigger("onBeforeRerender", !1, !0);
     this.unlockAllRows();
     this._removeRows();
-    var d = this._datamgr.datalist.length;
-    if(this._lastRowLen !== d) {
-      this._lastRowLen = d, this._setCanvasHeight(this._calCanvasHeight())
+    var c = this._datamgr.datalist.length;
+    if(this._lastRowLen !== c) {
+      this._lastRowLen = c, this._setCanvasHeight(this._calCanvasHeight())
     }
     this._render();
     this.setScrollTop(a);
-    this.setScrollLeft(c);
+    this.setScrollLeft(b);
     this._evtmgr.trigger("onAfterRerender", !1, !0)
   };
-  c._render = function(a) {
+  g._render = function(a) {
     this._removeAndRenderRows(a)
   };
-  c._renderShift = function(a) {
+  g._renderShift = function(a) {
     a = a || this._getRenderRange();
     this._removeRowsExcept(a);
     this._appendRows(a)
   };
-  c._removeRows = function(a) {
-    var c = this._canvasEl, d = this._renderedRows, b = this._lockedRows, e;
+  g._removeRows = function(a) {
+    var b = this._canvasEl, c = this._renderedRows, d = this._lockedRows, g;
     if(a) {
-      for(var f = a.start, a = a.end, h = this._datamgr;f <= a;f++) {
-        if(!b.hasOwnProperty(e = h.getIdByIdx(f)) && d.hasOwnProperty(e)) {
-          c.removeChild(d[e]), delete d[e]
+      for(var e = a.start, a = a.end, f = this._datamgr;e <= a;e++) {
+        if(!d.hasOwnProperty(g = f.getIdByIdx(e)) && c.hasOwnProperty(g)) {
+          b.removeChild(c[g]), delete c[g]
         }
       }
     }else {
       if(this._lockExist()) {
-        for(e in d) {
-          d.hasOwnProperty(e) && b.hasOwnProperty(e) && (c.removeChild(d[e]), delete d[e])
+        for(g in c) {
+          c.hasOwnProperty(g) && d.hasOwnProperty(g) && (b.removeChild(c[g]), delete c[g])
         }
       }else {
-        this._renderedRows = {}, c.innerHTML = ""
+        this._renderedRows = {}, b.innerHTML = ""
       }
     }
   };
-  c._removeRowsExcept = function(a) {
-    var c = this._canvasEl, d = this._renderedRows, b = this._lockedRows, e;
+  g._removeRowsExcept = function(a) {
+    var b = this._canvasEl, c = this._renderedRows, d = this._lockedRows, g;
     if(a) {
-      var f = a.start, a = a.end, h = this._datamgr, m;
-      for(e in d) {
-        if(d.hasOwnProperty(e) && !(b.hasOwnProperty(e) || f <= (m = h.getIdxById(e)) && m <= a)) {
-          c.removeChild(d[e]), delete d[e]
+      var e = a.start, a = a.end, f = this._datamgr, h;
+      for(g in c) {
+        if(c.hasOwnProperty(g) && !(d.hasOwnProperty(g) || e <= (h = f.getIdxById(g)) && h <= a)) {
+          b.removeChild(c[g]), delete c[g]
         }
       }
     }else {
       if(this._lockExist()) {
-        for(e in d) {
-          d.hasOwnProperty(e) && b.hasOwnProperty(e) === !1 && (c.removeChild(d[e]), delete d[e])
+        for(g in c) {
+          c.hasOwnProperty(g) && d.hasOwnProperty(g) === !1 && (b.removeChild(c[g]), delete c[g])
         }
       }else {
-        this._renderedRows = {}, c.innerHTML = ""
+        this._renderedRows = {}, b.innerHTML = ""
       }
     }
   };
-  c.destroyRow = function(a) {
+  g.destroyRow = function(a) {
     return this.destroyRowById(this._datamgr.getId(a))
   };
-  c.destroyRowById = function(a) {
+  g.destroyRowById = function(a) {
     a != null && (this.unlockRowById(a), this._renderedRows.hasOwnProperty(a) && (this._canvasEl.removeChild(this._renderedRows[a]), delete this._renderedRows[a]))
   };
-  c.destroyRowByIdx = function(a) {
+  g.destroyRowByIdx = function(a) {
     return this.destroyRowById(this._datamgr.getIdByIdx(a))
   };
-  c._lockExist = function() {
+  g._lockExist = function() {
     return b.isNotEmptyObj(this._lockedRows)
   };
-  c.isRowLockedById = function(a) {
+  g.isRowLockedById = function(a) {
     return a != null ? this._lockedRows.hasOwnProperty(a) : !1
   };
-  c.isRowLocked = function(a) {
+  g.isRowLocked = function(a) {
     return this.isRowLockedById(this._datamgr.getId(a))
   };
-  c.isRowLockedByIdx = function(a) {
+  g.isRowLockedByIdx = function(a) {
     return this.isRowLockedById(this._datamgr.getIdByIdx(a))
   };
-  c.lockRowById = function(a) {
+  g.lockRowById = function(a) {
     a != null && this._datamgr.hasById(a) && (this._lockedRows[a] = !0)
   };
-  c.lockRow = function(a) {
+  g.lockRow = function(a) {
     return this.lockRowById(this._datamgr.getId(a))
   };
-  c.lockRowByIdx = function(a) {
+  g.lockRowByIdx = function(a) {
     return this.lockRowById(this._datamgr.getIdByIdx(a))
   };
-  c.unlockRowById = function(a) {
+  g.unlockRowById = function(a) {
     this.isRowLockedById(a) && delete this._lockedRows[a]
   };
-  c.unlockRow = function(a) {
+  g.unlockRow = function(a) {
     return this.unlockRowById(this._datamgr.getId(a))
   };
-  c.unlockRowByIdx = function(a) {
+  g.unlockRowByIdx = function(a) {
     return this.unlockRowById(this._datamgr.getIdByIdx(a))
   };
-  c.unlockAllRows = function() {
+  g.unlockAllRows = function() {
     this._lockedRows = {}
   };
-  c.rerenderRowById = function(a) {
+  g.rerenderRowById = function(a) {
     if(this._datamgr.containsById(a)) {
-      var c = this._renderedRows, d = this._canvasEl, e = this._datamgr, f = e.idKey, h = e.getIdxById(a), e = e.getById(a), q = this._colmgr.get(), m = this._getColCellClasses(q).map(function(a) {
+      var c = this._renderedRows, d = this._canvasEl, g = this._datamgr, e = g.idKey, f = g.getIdxById(a), g = g.getById(a), h = this._colmgr.get(), o = this._getColCellClasses(h).map(function(a) {
         return"<div class='" + a + " "
-      }), o = this._getRendererSettings(q), n = o[0], o = o[1], s = this._getRowOuterHeight(), r = "<div class='" + this._rowClass + "' i='", t = "' " + this._rowIdxAttr + "='", u = [];
-      c.hasOwnProperty(a) && (d.removeChild(c[a]), this._evtmgr.trigger("onBeforeRenderRows", [[h]], !0), u.push(r + e[f] + t + h + "' style='top:" + s * h + "px'>"), this._renderRow(u, h, e, q, m, n, o), c[a] = b.appendHTML(d, u.join(""))[0], this._evtmgr.trigger("onAppendRows", [[h]], !0))
+      }), m = this._getRendererSettings(h), r = m[0], m = m[1], s = this._getRowOuterHeight(), t = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = [];
+      c.hasOwnProperty(a) && (d.removeChild(c[a]), this._evtmgr.trigger("onBeforeRenderRows", [[f]], !0), u.push(t + g[e] + v + f + "' style='top:" + s * f + "px'>"), this._renderRow(u, f, g, h, o, r, m), c[a] = b.appendHTML(d, u.join(""))[0], this._evtmgr.trigger("onAppendRows", [[f]], !0))
     }
   };
-  c._getRendererSettings = function(a) {
-    for(var a = a || this._colmgr.get(), c = 0, d = a.length, b, e = [], f = [], h;c < d;c++) {
-      b = a[c], (h = b.renderer) ? (e.push(!!b.rendererInput), f.push(h)) : (e.push(!1), f.push(!1))
+  g._getRendererSettings = function(a) {
+    for(var a = a || this._colmgr.get(), b = 0, c = a.length, d, g = [], e = [], f;b < c;b++) {
+      d = a[b], (f = d.renderer) ? (g.push(!!d.rendererInput), e.push(f)) : (g.push(!1), e.push(!1))
     }
-    return[f, e]
+    return[e, g]
   };
-  c.rerenderRow = function(a) {
+  g.rerenderRow = function(a) {
     return this.rerenderRowById(this._datamgr.getId(a))
   };
-  c.rerenderRowByIdx = function(a) {
+  g.rerenderRowByIdx = function(a) {
     return this.rerenderRowById(this._datamgr.getIdByIdx(a))
   };
-  c.rerenderCellByIdAndKey = function(a, c) {
-    var d = this.getCellByIdAndKey(a, c);
-    if(d) {
-      var b = this._datamgr, e = this._colmgr, f = b.getById(a), h = e.getByKey(c), b = b.getIdxById(a), e = e.getIdxByKey(c), m = h.renderer, o = m ? h.rendererInput : !1, n = [];
-      m ? o ? this._renderCell(n, b, e, f, h, m, !0) : this._renderCell(n, b, e, f, h, m) : this._renderCell(n, b, e, f, h);
-      d.innerHTML = n.join("")
+  g.rerenderCellByIdAndKey = function(a, b) {
+    var c = this.getCellByIdAndKey(a, b);
+    if(c) {
+      var d = this._datamgr, g = this._colmgr, e = d.getById(a), f = g.getByKey(b), d = d.getIdxById(a), g = g.getIdxByKey(b), h = f.renderer, m = h ? f.rendererInput : !1, r = [];
+      h ? m ? this._renderCell(r, d, g, e, f, h, !0) : this._renderCell(r, d, g, e, f, h) : this._renderCell(r, d, g, e, f);
+      c.innerHTML = r.join("")
     }
   };
-  c.rerenderCellByIdx = function(a, c) {
-    return this.rerenderCellByIdAndKey(this._datamgr.getIdByIdx(a), this._colmgr.getKeyByIdx(c))
+  g.rerenderCellByIdx = function(a, b) {
+    return this.rerenderCellByIdAndKey(this._datamgr.getIdByIdx(a), this._colmgr.getKeyByIdx(b))
   };
-  c._appendRows = function(a) {
-    var c = this._evtmgr, d = [a], e = [], f = a.start, a = a.end, h = this._datamgr, q = h.datalist, m = h.idKey, o = this._colmgr.get(), n = this._getColCellClasses(o).map(function(a) {
+  g._appendRows = function(a) {
+    var c = this._evtmgr, d = [a], g = [], e = a.start, a = a.end, f = this._datamgr, h = f.datalist, o = f.idKey, m = this._colmgr.get(), r = this._getColCellClasses(m).map(function(a) {
       return"<div class='" + a + " "
-    }), h = this._renderedRows, s = this._getRowOuterHeight(), r = this._canvasEl, t = "<div class='" + this._rowClass + "' i='", u = "' " + this._rowIdxAttr + "='", v = this._getRendererSettings(o), y = v[0], w = v[1], x, z, v = [];
-    c.trigger("onBeforeRenderRows", d, !0);
-    for(this.grid.twstart();f <= a;f++) {
-      x = q[f], z = x[m], h.hasOwnProperty(z) || (e[e.length] = t + z + u + f + "' style='top:" + s * f + "px'>", this._renderRow(e, f, x, o, n, y, w), this.grid.twlap(), v.push(z))
-    }
-    this.grid.twprint();
-    this.grid.twstop();
-    e = b.appendHTML(r, e.join(""));
-    f = 0;
-    for(a = v.length;f < a;f++) {
-      h[v[f]] = e[f]
-    }
-    c.trigger("onAppendRows", d, !0)
-  };
-  c._removeAndRenderRows = function(a) {
-    var a = a || this._getRenderRange(), c = this._evtmgr, d = [a], b = [], e = a.start, a = a.end, f = this._datamgr, h = f.datalist, f = f.idKey, m = this._colmgr.get(), o = this._getColCellClasses(m).map(function(a) {
-      return"<div class='" + a + " "
-    }), n = this._getRowOuterHeight(), s = this._canvasEl, r = "<div class='" + this._rowClass + "' i='", t = "' " + this._rowIdxAttr + "='", u = this._getRendererSettings(m), v = u[0], u = u[1], y, w, x = [], z = {};
+    }), f = this._renderedRows, s = this._getRowOuterHeight(), t = this._canvasEl, v = "<div class='" + this._rowClass + "' i='", u = "' " + this._rowIdxAttr + "='", x = this._getRendererSettings(m), w = x[0], z = x[1], y, A, x = [];
     c.trigger("onBeforeRenderRows", d, !0);
     for(this.grid.twstart();e <= a;e++) {
-      y = h[e], w = y[f], b[b.length] = r + w + t + e + "' style='top:" + n * e + "px'>", this._renderRow(b, e, y, m, o, v, u), this.grid.twlap(), x.push(w)
+      y = h[e], A = y[o], f.hasOwnProperty(A) || (g[g.length] = v + A + u + e + "' style='top:" + s * e + "px'>", this._renderRow(g, e, y, m, r, w, z), this.grid.twlap(), x.push(A))
     }
     this.grid.twprint();
     this.grid.twstop();
-    s.innerHTML = b.join("");
+    g = b.appendHTML(t, g.join(""));
     e = 0;
     for(a = x.length;e < a;e++) {
-      z[x[e]] = s.childNodes[e]
+      f[x[e]] = g[e]
     }
-    this._renderedRows = z;
     c.trigger("onAppendRows", d, !0)
   };
-  c._renderColumn = function(c, d, b, e, f, h, q) {
-    for(var m = [], o, n = 0, s = b.length, r, t, u, v = d.key, y, w = this.grid, x = this._evtmgr, z = "onRenderCell_" + v, B = [null, c, t, d], A = [null, c, null, d, null];n < s;n++) {
-      r = b[n];
-      t = e[r];
-      u = t[v];
-      o = [];
-      A[0] = B[0] = r;
-      A[2] = t;
-      A[4] = o;
-      y = x.trigger("onGetCellClass", B);
-      o[o.length] = y ? f + y.join(" ") + "'>" : f + "'>";
-      x.trigger(z + "_prepend", A, !0);
+  g._removeAndRenderRows = function(a) {
+    var a = a || this._getRenderRange(), b = this._evtmgr, c = [a], d = [], g = a.start, a = a.end, e = this._datamgr, f = e.datalist, e = e.idKey, h = this._colmgr.get(), m = this._getColCellClasses(h).map(function(a) {
+      return"<div class='" + a + " "
+    }), r = this._getRowOuterHeight(), s = this._canvasEl, t = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = this._getRendererSettings(h), x = u[0], u = u[1], w, z, y = [], A = {};
+    b.trigger("onBeforeRenderRows", c, !0);
+    for(this.grid.twstart();g <= a;g++) {
+      w = f[g], z = w[e], d[d.length] = t + z + v + g + "' style='top:" + r * g + "px'>", this._renderRow(d, g, w, h, m, x, u), this.grid.twlap(), y.push(z)
+    }
+    this.grid.twprint();
+    this.grid.twstop();
+    s.innerHTML = d.join("");
+    g = 0;
+    for(a = y.length;g < a;g++) {
+      A[y[g]] = s.childNodes[g]
+    }
+    this._renderedRows = A;
+    b.trigger("onAppendRows", c, !0)
+  };
+  g._renderColumn = function(b, c, d, g, e, f, h) {
+    for(var o = [], m, r = 0, s = d.length, t, v, u, x = c.key, w, z = this.grid, y = this._evtmgr, A = "onRenderCell_" + x, C = [null, b, v, c], B = [null, b, null, c, null];r < s;r++) {
+      t = d[r];
+      v = g[t];
+      u = v[x];
+      m = [];
+      B[0] = C[0] = t;
+      B[2] = v;
+      B[4] = m;
+      w = y.trigger("onGetCellClass", C);
+      m[m.length] = w ? e + w.join(" ") + "'>" : e + "'>";
+      y.trigger(A + "_prepend", B, !0);
       if(typeof u != "string" || u.substring(0, 3) !== "J@H") {
-        h ? o[o.length] = q ? h(new a({grid:w, row:r, col:c, datarow:t, colDef:d})) : h(u, r, c, t, d) : u != null && (o[o.length] = u)
+        f ? m[m.length] = h ? f(new a({grid:z, row:t, col:b, datarow:v, colDef:c})) : f(u, t, b, v, c) : u != null && (m[m.length] = u)
       }
-      x.trigger(z + "_append", A, !0);
-      o[o.length] = "</div>";
-      m[m.length] = o.join("")
+      y.trigger(A + "_append", B, !0);
+      m[m.length] = "</div>";
+      o[o.length] = m.join("")
     }
-    return m
+    return o
   };
-  c._getColCellClass = function(a) {
-    var c = this._cellClass + " k_" + a.key;
-    a.colClass && (c += " " + a.colClass);
-    (a = this._evtmgr.trigger("onGetColCellClass", [a])) && (c += " " + a.join(" "));
-    return c
+  g._getColCellClass = function(a) {
+    var b = this._cellClass + " k_" + a.key;
+    a.colClass && (b += " " + a.colClass);
+    (a = this._evtmgr.trigger("onGetColCellClass", [a])) && (b += " " + a.join(" "));
+    return b
   };
-  c._getColCellClasses = function(a) {
-    for(var a = a || this._colmgr.get(), c = [], d = 0, b = a.length;d < b;d++) {
-      c.push(this._getColCellClass(a[d]))
+  g._getColCellClasses = function(a) {
+    for(var a = a || this._colmgr.get(), b = [], c = 0, d = a.length;c < d;c++) {
+      b.push(this._getColCellClass(a[c]))
     }
-    return c
+    return b
   };
-  c._renderRow = function(a, c, d, b, e, f, h) {
-    for(var m = 0, o = b.length, n, s = [c, null, d, null], r = this._evtmgr, t, u;m < o;m++) {
-      n = b[m], s[1] = m, s[3] = n, t = r.trigger("onGetCellClass", s), a[a.length] = t ? e[m] + t.join(" ") + "'>" : e[m] + "'>", (u = f[m]) ? h[m] ? this._renderCell(a, c, m, d, n, u, !0) : this._renderCell(a, c, m, d, n, u) : this._renderCell(a, c, m, d, n), a[a.length] = "</div>"
+  g._renderRow = function(a, b, c, d, g, e, f) {
+    for(var h = 0, m = d.length, r, s = [b, null, c, null], t = this._evtmgr, v, u;h < m;h++) {
+      r = d[h], s[1] = h, s[3] = r, v = t.trigger("onGetCellClass", s), a[a.length] = v ? g[h] + v.join(" ") + "'>" : g[h] + "'>", (u = e[h]) ? f[h] ? this._renderCell(a, b, h, c, r, u, !0) : this._renderCell(a, b, h, c, r, u) : this._renderCell(a, b, h, c, r), a[a.length] = "</div>"
     }
     a[a.length] = "</div>";
     return a
   };
-  c._renderCell = function(c, d, b, e, f) {
-    var h = f.key, q = e[h], m = [d, b, e, f, c], o = this._evtmgr, h = "onRenderCell_" + h;
-    o.trigger(h + "_prepend", m, !0);
-    if(typeof q != "string" || q.substring(0, 3) !== "J@H") {
-      arguments.length > 5 ? c[c.length] = arguments[6] ? arguments[5](new a({grid:this.grid, row:d, col:b, datarow:e, colDef:f})) : arguments[5](q, d, b, e, f) : q != null && (c[c.length] = q)
+  g._renderCell = function(b, c, d, g, e) {
+    var f = e.key, h = g[f], o = [c, d, g, e, b], m = this._evtmgr, f = "onRenderCell_" + f;
+    m.trigger(f + "_prepend", o, !0);
+    if(typeof h != "string" || h.substring(0, 3) !== "J@H") {
+      arguments.length > 5 ? b[b.length] = arguments[6] ? arguments[5](new a({grid:this.grid, row:c, col:d, datarow:g, colDef:e})) : arguments[5](h, c, d, g, e) : h != null && (b[b.length] = h)
     }
-    o.trigger(h + "_append", m, !0)
+    m.trigger(f + "_append", o, !0)
   };
   a.prototype.rerender = function() {
     return this.grid.view.rerenderCellByIdAndKey(this.getId(), this.getKey())
@@ -5757,89 +5757,94 @@ jx.grid.ViewportManager = {};
   a.prototype.scrollTo = function() {
     this.grid.view.scrollTo(this.getRowIdx(), this.getColIdx())
   };
-  c._keydown = function(a) {
+  g._keydown = function(a) {
     b.contains(this._mask[0], document.activeElement, this._ctnr[0]) && (this.grid.log("UI event:keydown on Viewport. event=" + a.type + ", keycode=" + a.which, e.V_KEYDOWN), this._evtmgr.trigger("keydownCanvas_" + a.which, [a], !0), this._evtmgr.trigger("keydownCanvas", [a], !0))
   };
-  c._keyup = function(a) {
+  g._keyup = function(a) {
     b.contains(this._mask[0], document.activeElement, this._ctnr[0]) && (this.grid.log("UI event:keyup on Viewport. event=" + a.type + ", keycode=" + a.which, e.V_KEYUP), this._evtmgr.trigger("keyupCanvas_" + a.which, [a], !0), this._evtmgr.trigger("keyupCanvas", [a], !0))
   };
-  c._keypress = function(a) {
+  g._keypress = function(a) {
     b.contains(this._mask[0], document.activeElement, this._ctnr[0]) && (this.grid.log("UI event:keypress on Viewport. event=" + a.type + ", keycode=" + a.which, e.V_KEYPRESS), this._evtmgr.trigger("keypressCanvas_" + a.which, [a], !0), this._evtmgr.trigger("keypressCanvas", [a], !0))
   };
-  c._mousein = function(a) {
+  g._mousein = function(a) {
     this._drag ? this._triggerMouseEvent(a, "draginCanvas,mouseinCanvas", e.V_MOUSEIN) : this._triggerMouseEvent(a, "mouseinCanvas", e.V_MOUSEIN)
   };
-  c._mouseout = function(a) {
+  g._mouseout = function(a) {
     this._drag ? this._triggerMouseEvent(a, "dragoutCanvas,mouseoutCanvas", e.V_MOUSEOUT) : this._triggerMouseEvent(a, "mouseoutCanvas", e.V_MOUSEOUT)
   };
-  c._mouseenter = function(a) {
+  g._mouseenter = function(a) {
     this._drag ? this._triggerMouseEvent(a, "dragenterCanvas,mouseenterCanvas", e.V_MOUSEENTER) : this._triggerMouseEvent(a, "mouseenterCanvas", e.V_MOUSEENTER)
   };
-  c._mouseleave = function(a) {
+  g._mouseleave = function(a) {
     this._drag ? this._triggerMouseEvent(a, "dragleaveCanvas,mouseleaveCanvas", e.V_MOUSELEAVE) : this._triggerMouseEvent(a, "mouseleaveCanvas", e.V_MOUSELEAVE)
   };
-  c._mousemove = function(a) {
+  g._mousemove = function(a) {
     this._drag ? this._triggerMouseEvent(a, "dragmoveCanvas,mousemoveCanvas", e.V_MOUSEMOVE) : this._triggerMouseEvent(a, "mousemoveCanvas", e.V_MOUSEMOVE)
   };
-  c._mouseover = function(a) {
+  g._mouseover = function(a) {
     this._drag ? this._triggerMouseEvent(a, "dragoverCanvas,mouseoverCanvas", e.V_MOUSEOVER) : this._triggerMouseEvent(a, "mouseoverCanvas", e.V_MOUSEOVER)
   };
-  c._mousedown = function(a) {
+  g._mousedown = function(a) {
     if(this._triggerMouseEvent(a, "mousedownCanvas", e.V_MOUSEDOWN)) {
       this._drag = !0
     }
   };
-  c._mouseup = function(a) {
+  g._mouseup = function(a) {
     this._drag = !1;
     this._triggerMouseEvent(a, "mouseupCanvas", e.V_MOUSEUP)
   };
-  c._click = function(a) {
+  g._click = function(a) {
     this._triggerMouseEvent(a, "clickCanvas", e.V_CLICK) && this.focus(a)
   };
-  c._dblclick = function(a) {
+  g._dblclick = function(a) {
     this._triggerMouseEvent(a, "dblclickCanvas", e.V_DBLCLICK)
   };
-  c._triggerMouseEvent = function(c, b, e) {
-    var f = c.target;
-    if(f && !d[f.tagName] && (f = this._getClosestCell(c.target))) {
-      this.grid.log("UI event:" + b + " on Viewport. event=" + c.type, e);
-      f = new a({grid:this.grid, node:f});
-      e = f.getKey();
-      c = [c, f];
-      f = this._evtmgr;
-      if(b.indexOf(",") > -1) {
-        for(var b = b.split(","), h = 0, k = b.length, q;h < k;h++) {
-          q = b[h], f.trigger(q + "_" + e, c, !0), f.trigger(q, c, !0)
+  g._triggerMouseEvent = function(b, g, e) {
+    var f = b.target;
+    if(f) {
+      var h = f.tagName, f = f.type && f.type.toLowerCase();
+      if(d[f] || !c[h]) {
+        if(h = this._getClosestCell(b.target)) {
+          this.grid.log("UI event:" + g + " on Viewport. event=" + b.type, e);
+          h = new a({grid:this.grid, node:h});
+          e = h.getKey();
+          b = [b, h];
+          h = this._evtmgr;
+          if(g.indexOf(",") > -1) {
+            for(var g = g.split(","), f = 0, p = g.length, n;f < p;f++) {
+              n = g[f], h.trigger(n + "_" + e, b, !0), h.trigger(n, b, !0)
+            }
+          }else {
+            h.trigger(g + "_" + e, b, !0), h.trigger(g, b, !0)
+          }
+          return!0
         }
-      }else {
-        f.trigger(b + "_" + e, c, !0), f.trigger(b, c, !0)
       }
-      return!0
     }
     return!1
   };
-  c._scroll = function() {
-    var a = this.getScrollTop(), c = a - this._lastScrollTop, d = this.getScrollLeft(), b = d - this._lastScrollLeft;
-    if(c !== 0 || b !== 0) {
-      this.grid.log("Viewport scrolled... h=" + b + ", v=" + c, e.V_SCROLL);
-      var f = this._evtmgr, c = Math.abs(c / this._getRowOuterHeight());
-      f.trigger("onScrollViewport", !1, !0);
-      if(b) {
-        this._lastScrollLeft = d, f.trigger("onScrollViewportH", [d], !0)
+  g._scroll = function() {
+    var a = this.getScrollTop(), b = a - this._lastScrollTop, c = this.getScrollLeft(), d = c - this._lastScrollLeft;
+    if(b !== 0 || d !== 0) {
+      this.grid.log("Viewport scrolled... h=" + d + ", v=" + b, e.V_SCROLL);
+      var g = this._evtmgr, b = Math.abs(b / this._getRowOuterHeight());
+      g.trigger("onScrollViewport", !1, !0);
+      if(d) {
+        this._lastScrollLeft = c, g.trigger("onScrollViewportH", [c], !0)
       }
-      if(c >= this._options.appendThreshold) {
-        this._lastScrollTop = a, this._removeAndRenderRows(), f.trigger("onScrollViewportV", !1, !0)
+      if(b >= this._options.appendThreshold) {
+        this._lastScrollTop = a, this._removeAndRenderRows(), g.trigger("onScrollViewportV", !1, !0)
       }
     }
   };
-  c.focus = function(a) {
+  g.focus = function(a) {
     if(!a || !this._evtmgr.triggerInvalid("onBeforeFocusCanvas", [a])) {
       if(a = this._mask[0], document.activeElement !== a) {
         this.grid.log("focusing canvas...", e.V_FOCUS);
         if(a.setActive) {
           try {
             a.setActive()
-          }catch(c) {
+          }catch(b) {
           }
         }
         a.focus();
@@ -5847,84 +5852,84 @@ jx.grid.ViewportManager = {};
       }
     }
   };
-  c.isRenderedById = function(a) {
+  g.isRenderedById = function(a) {
     return a != null ? this._renderedRows.hasOwnProperty(a) : !1
   };
-  c.isRendered = function(a) {
+  g.isRendered = function(a) {
     return this.isRenderedById(this._datamgr.getId(a))
   };
-  c.isRenderedByIdx = function(a) {
+  g.isRenderedByIdx = function(a) {
     return this.isRenderedById(this._datamgr.getIdByIdx(a))
   };
-  c.getRowById = function(a) {
+  g.getRowById = function(a) {
     if(this.isRenderedById(a)) {
       return this._renderedRows[a]
     }
   };
-  c.getRow = function(a) {
+  g.getRow = function(a) {
     return this.getRowById(this._datamgr.getId(a))
   };
-  c.getRowByIdx = function(a) {
+  g.getRowByIdx = function(a) {
     return this.getRowById(this._datamgr.getIdByIdx(a))
   };
-  c.getRenderedRowById = function(a) {
+  g.getRenderedRowById = function(a) {
     if(this.isRenderedById(a)) {
       return this._renderedRows[a]
     }
   };
-  c.getRenderedRow = function(a) {
+  g.getRenderedRow = function(a) {
     return this.getRenderedRowById(this._datamgr.getId(a))
   };
-  c.getRenderedRowByIdx = function(a) {
+  g.getRenderedRowByIdx = function(a) {
     return this.getRenderedRowById(this._datamgr.getIdByIdx(a))
   };
-  c.getRenderedRows = function() {
+  g.getRenderedRows = function() {
     return b.toArray(this._renderedRows)
   };
-  c.getCell = function(a, c) {
+  g.getCell = function(a, b) {
+    if(b != null) {
+      var c = this.getRowByIdx(a);
+      if(c) {
+        return c.childNodes[b]
+      }
+    }
+  };
+  g.getCellByIdAndKey = function(a, b) {
+    var c = this._colmgr.getIdxByKey(b);
     if(c != null) {
-      var d = this.getRowByIdx(a);
+      var d = this.getRowById(a);
       if(d) {
         return d.childNodes[c]
       }
     }
   };
-  c.getCellByIdAndKey = function(a, c) {
-    var d = this._colmgr.getIdxByKey(c);
-    if(d != null) {
-      var b = this.getRowById(a);
-      if(b) {
-        return b.childNodes[d]
+  g.getRenderedCell = function(a, b) {
+    if(b != null) {
+      var c = this.getRenderedRowByIdx(a);
+      if(c) {
+        return c.childNodes[b]
       }
     }
   };
-  c.getRenderedCell = function(a, c) {
+  g.getRenderedCellByIdAndKey = function(a, b) {
+    var c = this._colmgr.getIdxByKey(b);
     if(c != null) {
-      var d = this.getRenderedRowByIdx(a);
+      var d = this.getRenderedRowById(a);
       if(d) {
         return d.childNodes[c]
       }
     }
   };
-  c.getRenderedCellByIdAndKey = function(a, c) {
-    var d = this._colmgr.getIdxByKey(c);
-    if(d != null) {
-      var b = this.getRenderedRowById(a);
-      if(b) {
-        return b.childNodes[d]
-      }
-    }
-  };
-  c._getClosestCell = function(a) {
+  g._getClosestCell = function(a) {
     return b.closestWithTag(a, "DIV", this._cellClass, this._canvasEl)
   };
-  c._getClosestRow = function(a) {
+  g._getClosestRow = function(a) {
     return b.closestWithTag(a, "DIV", this._rowClass, this._canvasEl)
   };
-  c._getClosestRowIdx = function(a) {
+  g._getClosestRowIdx = function(a) {
     return this._datamgr.getIdxByNode(this._getClosestRow(a))
   };
-  c._canvasFind = function(a) {
+  g._canvasFind = function(a) {
     return this._canvas.find(a)
   };
   f._renderer = function(a) {
@@ -6031,7 +6036,7 @@ jx.grid.ColumnManager = {};
   function a(a) {
     return new Date(Date.parse(a))
   }
-  function d(a, c) {
+  function c(a, b) {
     switch(typeof a) {
       case "undefined":
         return Number.MAX_VALUE;
@@ -6040,7 +6045,7 @@ jx.grid.ColumnManager = {};
       case "number":
         return a;
       case "string":
-        return a[c]();
+        return a[b]();
       default:
         if(a == null) {
           return Number.MAX_VALUE
@@ -6055,12 +6060,12 @@ jx.grid.ColumnManager = {};
       case "number":
         return a;
       case "string":
-        return a[c]();
+        return a[b]();
       default:
-        return a == null ? Number.MAX_VALUE : a.toString()[c]()
+        return a == null ? Number.MAX_VALUE : a.toString()[b]()
     }
   }
-  function c(a) {
+  function d(a) {
     switch(typeof a) {
       case "undefined":
         return Number.MAX_VALUE;
@@ -6071,7 +6076,7 @@ jx.grid.ColumnManager = {};
     }
     return a == null ? Number.MAX_VALUE : e(a) ? 1 : 0
   }
-  var g = goog.getObjectByName("jx.grid"), j = goog.getObjectByName("jx.util");
+  var g = goog.getObjectByName("jx.grid"), i = goog.getObjectByName("jx.util");
   goog.getObjectByName("jx.grid.BaseModule");
   goog.getObjectByName("jx.grid.Column");
   goog.getObjectByName("jx.grid.ViewportManager");
@@ -6091,17 +6096,17 @@ jx.grid.ColumnManager = {};
     return this._colDefs
   };
   l.set = function(a) {
-    if(this._colDefs === a || j.areEqualArrays(this._colDefs, a)) {
+    if(this._colDefs === a || i.areEqualArrays(this._colDefs, a)) {
       return a
     }
-    if(j.isNull(a)) {
+    if(i.isNull(a)) {
       a = []
     }else {
-      var c = a.filter(function(a) {
-        return j.isNotNull(a)
+      var b = a.filter(function(a) {
+        return i.isNotNull(a)
       });
       a.length = 0;
-      a.pushList(c)
+      a.pushList(b)
     }
     this.grid.event.trigger("onBeforeSetColDefs", [this._colDefs, a], !0);
     this._colDefs = [];
@@ -6109,23 +6114,23 @@ jx.grid.ColumnManager = {};
     this._keyToIdx = {};
     this._keyToDef = {};
     this.grid.event.trigger("onEmptyColDefs", !1, !0);
-    for(var c = 0, d = a.length, b = this._keyToDef, g, e;c < d;c++) {
-      g = a[c];
+    for(var b = 0, c = a.length, d = this._keyToDef, g, e;b < c;b++) {
+      g = a[b];
       if(!g.hasOwnProperty("key")) {
-        return this._keyToDef = {}, this.grid.error("KEY_UNDEFINED", c)
+        return this._keyToDef = {}, this.grid.error("KEY_UNDEFINED", b)
       }
       e = g.key;
-      if(j.isEmptyString(e)) {
-        return this._keyToDef = {}, this.grid.error("BAD_NULL", c)
+      if(i.isEmptyString(e)) {
+        return this._keyToDef = {}, this.grid.error("BAD_NULL", b)
       }
-      if(b.hasOwnProperty(e)) {
+      if(d.hasOwnProperty(e)) {
         return this._keyToDef = {}, this.grid.error("DUP_KEY", e)
       }
-      b[e] = g
+      d[e] = g
     }
     this._colDefs = a;
-    for(c = 0;c < d;c++) {
-      this._extend(a[c])
+    for(b = 0;b < c;b++) {
+      this._extend(a[b])
     }
     this.grid.event.trigger("onAfterSetColDefs", [a, this._filter()], !0);
     return a
@@ -6133,39 +6138,39 @@ jx.grid.ColumnManager = {};
   l.push = function(a) {
     return this.addAt(this._filtered.length, a)
   };
-  l.addAt = function(a, c) {
-    if(!j.isNull(c)) {
-      var d = c.key, b = this._keyToDef, g = this._filtered;
-      j.isNull(a) || a > g.length ? a = g.length : a < 0 && (a += g.length);
-      this.grid.event.trigger("onBeforeAddColDef", [c], !0);
-      if(j.isNull(d)) {
+  l.addAt = function(a, b) {
+    if(!i.isNull(b)) {
+      var c = b.key, d = this._keyToDef, g = this._filtered;
+      i.isNull(a) || a > g.length ? a = g.length : a < 0 && (a += g.length);
+      this.grid.event.trigger("onBeforeAddColDef", [b], !0);
+      if(i.isNull(c)) {
         return this.grid.error("KEY_UNDEFINED")
       }
-      if(b.hasOwnProperty(d)) {
-        return this.grid.error("DUP_KEY", d)
+      if(d.hasOwnProperty(c)) {
+        return this.grid.error("DUP_KEY", c)
       }
-      this._colDefs.addAt(a, this._extend(b[d] = c));
-      c.hidden !== !0 && (g.addAt(a, c), this._reidx());
-      this.grid.event.trigger("onAfterAddColDef", [c, a], !0);
+      this._colDefs.addAt(a, this._extend(d[c] = b));
+      b.hidden !== !0 && (g.addAt(a, b), this._reidx());
+      this.grid.event.trigger("onAfterAddColDef", [b, a], !0);
       return g.length
     }
   };
   l._extend = function(c) {
     if(c) {
-      var d = {}, g, j;
+      var d = {}, g, i;
       $.extend(!0, d, this._options.colDef);
       $.extend(!0, d, c);
       $.extend(!0, c, d);
       d = c.type = h(c.type);
-      j = c.key;
-      j != null && typeof j != "string" && (c.key = j = j.toString());
-      if(!j) {
+      i = c.key;
+      i != null && typeof i != "string" && (c.key = i = i.toString());
+      if(!i) {
         throw Error("column key is not defined!");
       }
       if(g = c.sorter) {
         typeof g == "string" ? g = h(g) : d && (g = d);
-        if(g = f.sorter(g, j)) {
-          g.key = j
+        if(g = f.sorter(g, i)) {
+          g.key = i
         }
         c.sorter = g
       }
@@ -6197,30 +6202,30 @@ jx.grid.ColumnManager = {};
     return c
   };
   l.hide = function(a) {
-    var c = this._filtered[a];
-    if(!j.isNull(c)) {
-      return c.hidden = !0, this._filtered.removeAt(a), this._reidx(), this.grid.event.trigger("onHideCol", [c, a], !0), c
+    var b = this._filtered[a];
+    if(!i.isNull(b)) {
+      return b.hidden = !0, this._filtered.removeAt(a), this._reidx(), this.grid.event.trigger("onHideCol", [b, a], !0), b
     }
   };
   l.show = function(a) {
-    if(!j.isNull(a)) {
-      if(!j.isString(a)) {
-        if(!j.isObject(a)) {
+    if(!i.isNull(a)) {
+      if(!i.isString(a)) {
+        if(!i.isObject(a)) {
           return
         }
         a = a.key
       }
-      var c = this._keyToDef;
-      if(c.hasOwnProperty(a)) {
+      var b = this._keyToDef;
+      if(b.hasOwnProperty(a)) {
         if(this._keyToIdx.hasOwnProperty(a)) {
-          return c[a]
+          return b[a]
         }
-        c = c[a];
-        c.hidden = !1;
+        b = b[a];
+        b.hidden = !1;
         this._filter();
         this._reidx();
-        this.grid.event.trigger("onShowCol", [c, this._keyToIdx[a]], !0);
-        return c
+        this.grid.event.trigger("onShowCol", [b, this._keyToIdx[a]], !0);
+        return b
       }
     }
   };
@@ -6236,14 +6241,14 @@ jx.grid.ColumnManager = {};
     return this._reidxFrom()
   };
   l._reidxFrom = function(a) {
-    j.isNull(a) && (a = 0);
-    for(var c = this._filtered, d = c.length, b = this._keyToIdx;a < d;a++) {
-      b[c[a].key] = a
+    i.isNull(a) && (a = 0);
+    for(var b = this._filtered, c = b.length, d = this._keyToIdx;a < c;a++) {
+      d[b[a].key] = a
     }
-    return b
+    return d
   };
   l.get = function(a) {
-    if(j.isNull(a)) {
+    if(i.isNull(a)) {
       return this._filtered
     }
     if(this._filtered.hasOwnProperty(a)) {
@@ -6251,7 +6256,7 @@ jx.grid.ColumnManager = {};
     }
   };
   l.getByKey = function(a) {
-    if(j.isNotNull(a) && this._keyToDef.hasOwnProperty(a)) {
+    if(i.isNotNull(a) && this._keyToDef.hasOwnProperty(a)) {
       return this._keyToDef[a]
     }
   };
@@ -6262,13 +6267,13 @@ jx.grid.ColumnManager = {};
     return this._keyToIdx.hasOwnProperty(a) ? this._keyToIdx[a] : -1
   };
   l.getIdx = function(a) {
-    return j.isNotNull(a) && this._keyToIdx.hasOwnProperty(a.key) ? this._keyToIdx[a.key] : -1
+    return i.isNotNull(a) && this._keyToIdx.hasOwnProperty(a.key) ? this._keyToIdx[a.key] : -1
   };
   l.sortByKey = function(a) {
     this._filtered.length = 0;
     this._keyToIdx = {};
-    for(var c = 0, d = a.length, b = this._filtered, g = this._keyToIdx, e = this._keyToDef;c < d;c++) {
-      b.push(e[a[c]]), g[a[c]] = c
+    for(var b = 0, c = a.length, d = this._filtered, g = this._keyToIdx, e = this._keyToDef;b < c;b++) {
+      d.push(e[a[b]]), g[a[b]] = b
     }
     this.grid.event.trigger("onReorderCols", a, !0);
     return this._filtered
@@ -6282,22 +6287,22 @@ jx.grid.ColumnManager = {};
     g = {on:!!g, key:b};
     switch(a) {
       case "boolean":
-        return g.comparator = function(a, d) {
-          return c(a[b]) - c(d[b])
+        return g.comparator = function(a, c) {
+          return d(a[b]) - d(c[b])
         }, g;
       case "string":
         return g.lexi = b, g;
       case "int":
-        return g.comparator = function(a, c) {
-          return d(a[b], "toInt") - d(c[b], "toInt")
+        return g.comparator = function(a, d) {
+          return c(a[b], "toInt") - c(d[b], "toInt")
         }, g;
       case "float":
-        return g.comparator = function(a, c) {
-          return d(a[b], "toFloat") - d(c[b], "toFloat")
+        return g.comparator = function(a, d) {
+          return c(a[b], "toFloat") - c(d[b], "toFloat")
         }, g;
       case "date":
-        return g.comparator = function(a, c) {
-          return d(a[b], "toInt") - d(c[b], "toInt")
+        return g.comparator = function(a, d) {
+          return c(a[b], "toInt") - c(d[b], "toInt")
         }, g
     }
     return null
@@ -6332,22 +6337,22 @@ jx.grid.MenuBar = {};
     h._destroy(this, {name:"MenuBar", path:"menubar", $:"_menubar", property:"_ctnr", map:"_options"})
   };
   a._onCreateCss = function() {
-    var a = "#" + this.grid.mid + " .", c = this._options, b = [];
-    b.push(a + c.classMenuBar + "{" + h._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + c.background + ";border-bottom:" + (c.borderThickness + "px " + c.border) + ";height:" + c.height + "px}");
-    b.push(a + c.classIcon + "{float:left;height:" + c.iconHeight + "px;width:" + c.iconWidth + "px;border:" + c.iconBorderThickness + "px " + c.iconBorder + ";margin:" + c.iconMargin + "px 0 0 " + c.iconMargin + "px;background:" + c.iconBackground + ";border-radius:" + c.iconBorderRadius + "px;-moz-border-radius:" + c.iconBorderRadius + "px}");
-    b.push(a + c.classIcon + ":hover," + a + c.classIcon + ":focus{background:" + c.iconBackgroundHover + ";border:" + c.iconBorderThickness + "px " + c.iconBorderHover + "}");
-    b.push(a + c.classIcon + ":active," + a + c.classIcon + ".active{cursor:default;background:" + c.iconBackgroundActive + ";border:" + c.iconBorderThickness + "px " + c.iconBorderActive + "}");
-    b.push(a + c.classIcon + ".active:focus{border:" + c.iconBorderThickness + "px " + c.iconBorderFocus + "}");
-    return b.join("")
+    var a = "#" + this.grid.mid + " .", b = this._options, g = [];
+    g.push(a + b.classMenuBar + "{" + h._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + b.background + ";border-bottom:" + (b.borderThickness + "px " + b.border) + ";height:" + b.height + "px}");
+    g.push(a + b.classIcon + "{float:left;height:" + b.iconHeight + "px;width:" + b.iconWidth + "px;border:" + b.iconBorderThickness + "px " + b.iconBorder + ";margin:" + b.iconMargin + "px 0 0 " + b.iconMargin + "px;background:" + b.iconBackground + ";border-radius:" + b.iconBorderRadius + "px;-moz-border-radius:" + b.iconBorderRadius + "px}");
+    g.push(a + b.classIcon + ":hover," + a + b.classIcon + ":focus{background:" + b.iconBackgroundHover + ";border:" + b.iconBorderThickness + "px " + b.iconBorderHover + "}");
+    g.push(a + b.classIcon + ":active," + a + b.classIcon + ".active{cursor:default;background:" + b.iconBackgroundActive + ";border:" + b.iconBorderThickness + "px " + b.iconBorderActive + "}");
+    g.push(a + b.classIcon + ".active:focus{border:" + b.iconBorderThickness + "px " + b.iconBorderFocus + "}");
+    return g.join("")
   };
-  a.addIcon = function(a, c, b, f, h) {
-    return $("<div class='" + this._options.classIcon + "' tabIndex='0' title='" + c + "'><div class='" + a + "' style='margin-top:" + (this._options.iconHeight - f) / 2 + "px;margin-left:" + (this._options.iconWidth - b) / 2 + "px'></div></div>").appendTo(this._menubar).click(function(a) {
-      h();
+  a.addIcon = function(a, b, g, i, f) {
+    return $("<div class='" + this._options.classIcon + "' tabIndex='0' title='" + b + "'><div class='" + a + "' style='margin-top:" + (this._options.iconHeight - i) / 2 + "px;margin-left:" + (this._options.iconWidth - g) / 2 + "px'></div></div>").appendTo(this._menubar).click(function(a) {
+      f();
       $(this).toggleClass("active");
       a.preventDefault()
     }).keydown(function(a) {
       if(a.which === e.keyMapKeydown.enter || a.which === e.keyMapKeydown.space) {
-        h(), $(this).toggleClass("active"), a.preventDefault()
+        f(), $(this).toggleClass("active"), a.preventDefault()
       }
     })
   }
@@ -6384,19 +6389,19 @@ jx.grid.Footer = {};
     this.grid.event.bind({onCreateCss:this._onCreateCss, onDestroy:this._destroy, onDataChange:[this._updateTotalCount, this._updateSums], onAfterRefresh:this._updateShownCount}, this)
   };
   b._destroy = function() {
-    var a, d = this._sumMap;
-    for(a in d) {
-      d.hasOwnProperty(a) && d[a].remove()
+    var a, b = this._sumMap;
+    for(a in b) {
+      b.hasOwnProperty(a) && b[a].remove()
     }
     h._destroy(this, {name:"Footer", path:"footer", $:"_foot", property:"_ctnr", map:"_sumMap _options"})
   };
   b._onCreateCss = function() {
-    var a = this._options, d = "#" + this.grid.mid + " ." + a.classFooter, c = [];
-    c.push(d + "{float:left;cursor:default;width:100%;" + h._CONST._cssUnselectable + "background:" + a.background + ";border-top:" + a.border + ";border-collapse:collapse;color:" + a.color + ";font-size:" + a.fontSize + ";font-weight:" + a.fontWeight + ";padding-left:8px;" + a.style + "}");
-    c.push(d + " ." + a.classCell + "{float:left;white-space:nowrap;line-height:" + a.cellHeight + "px;padding-right:" + a.cellPadding + "px;" + a.cellStyle + "}");
-    c.push(d + " ." + a.classTitle + "{text-align:right;color:" + a.titleColor + ";font-size:" + a.titleFontSize + ";font-weight:" + a.titleFontWeight + ";" + a.titleStyle + "}");
-    c.push(d + " ." + a.classContent + "{color:" + a.contentColor + ";font-size:" + a.contentFontSize + ";font-weight:" + a.contentFontWeight + ";" + a.contentStyle + "}");
-    return c.join("")
+    var a = this._options, b = "#" + this.grid.mid + " ." + a.classFooter, d = [];
+    d.push(b + "{float:left;cursor:default;width:100%;" + h._CONST._cssUnselectable + "background:" + a.background + ";border-top:" + a.border + ";border-collapse:collapse;color:" + a.color + ";font-size:" + a.fontSize + ";font-weight:" + a.fontWeight + ";padding-left:8px;" + a.style + "}");
+    d.push(b + " ." + a.classCell + "{float:left;white-space:nowrap;line-height:" + a.cellHeight + "px;padding-right:" + a.cellPadding + "px;" + a.cellStyle + "}");
+    d.push(b + " ." + a.classTitle + "{text-align:right;color:" + a.titleColor + ";font-size:" + a.titleFontSize + ";font-weight:" + a.titleFontWeight + ";" + a.titleStyle + "}");
+    d.push(b + " ." + a.classContent + "{color:" + a.contentColor + ";font-size:" + a.contentFontSize + ";font-weight:" + a.contentFontWeight + ";" + a.contentStyle + "}");
+    return d.join("")
   };
   b._updateTotalCount = function() {
     this._foot.find("[name=totalCount]")[0].innerHTML = this.grid.dataMgr.getReal().length
@@ -6405,43 +6410,43 @@ jx.grid.Footer = {};
     this._foot.find("[name=shownCount]")[0].innerHTML = this.grid.dataMgr.filterReal(this.grid.dataMgr.datalist).length
   };
   b._initSumCells = function() {
-    for(var a = this.grid.dataMgr.getReal(), d = this.grid.colDefMgr.get(), c = d.length, b, j, h, i, p = f._calSum, k = this._sumMap, q, m = 0;m < c;m++) {
-      if(b = d[m], j = b.sumRenderer, e.isNotNull(j)) {
-        if(h = b.key, b = b.name, i = p(a, h), h = k[h] = this.getNextCell(), q = h[0], e.isFunction(j)) {
-          q.innerHTML = j(b, i)
+    for(var a = this.grid.dataMgr.getReal(), b = this.grid.colDefMgr.get(), d = b.length, g, i, h, j, q = f._calSum, k = this._sumMap, p, n = 0;n < d;n++) {
+      if(g = b[n], i = g.sumRenderer, e.isNotNull(i)) {
+        if(h = g.key, g = g.name, j = q(a, h), h = k[h] = this.getNextCell(), p = h[0], e.isFunction(i)) {
+          p.innerHTML = i(g, j)
         }else {
-          if(e.isString(j)) {
-            if(h = j.toLowerCase(), h === "krw" || j === "\\") {
-              q.innerHTML = this._sumRenderer(b, e.formatNumber(i))
+          if(e.isString(i)) {
+            if(h = i.toLowerCase(), h === "krw" || i === "\\") {
+              p.innerHTML = this._sumRenderer(g, e.formatNumber(j))
             }else {
-              if(h === "usd" || j === "$") {
-                q.innerHTML = this._sumRenderer(b, e.formatNumber(i, 2, "$ "))
+              if(h === "usd" || i === "$") {
+                p.innerHTML = this._sumRenderer(g, e.formatNumber(j, 2, "$ "))
               }
             }
           }else {
-            q.innerHTML = this._sumRenderer(b, i)
+            p.innerHTML = this._sumRenderer(g, j)
           }
         }
       }
     }
   };
   b._updateSums = function() {
-    var a = this.grid.dataMgr.getReal(), d, c = this._sumMap, b = this.grid.colDefMgr, j, h, i, p = f._calSum, k, q, m = this._options.classContent;
-    for(d in c) {
-      if(c.hasOwnProperty(d)) {
-        if(j = b.getByKey(d), h = j.sumRenderer, i = p(a, d), k = c[d], q = k[0], e.isFunction(h)) {
-          q.innerHTML = h(j.name, i)
+    var a = this.grid.dataMgr.getReal(), b, d = this._sumMap, g = this.grid.colDefMgr, i, h, j, q = f._calSum, k, p, n = this._options.classContent;
+    for(b in d) {
+      if(d.hasOwnProperty(b)) {
+        if(i = g.getByKey(b), h = i.sumRenderer, j = q(a, b), k = d[b], p = k[0], e.isFunction(h)) {
+          p.innerHTML = h(i.name, j)
         }else {
           if(e.isString(h)) {
-            if(j = h.toLowerCase(), j === "krw" || h === "\\") {
-              k.find("span." + m)[0].innerHTML = e.formatNumber(i)
+            if(i = h.toLowerCase(), i === "krw" || h === "\\") {
+              k.find("span." + n)[0].innerHTML = e.formatNumber(j)
             }else {
-              if(j === "usd" || h === "$") {
-                k.find("span." + m)[0].innerHTML = e.formatNumber(i, 2, "$ ")
+              if(i === "usd" || h === "$") {
+                k.find("span." + n)[0].innerHTML = e.formatNumber(j, 2, "$ ")
               }
             }
           }else {
-            k.find("span." + m)[0].innerHTML = i
+            k.find("span." + n)[0].innerHTML = j
           }
         }
       }
@@ -6450,17 +6455,17 @@ jx.grid.Footer = {};
   b.getNextCell = function() {
     return $("<div class='" + this._options.classCell + "'/>").appendTo(this._foot)
   };
-  b._sumRenderer = function(a, d) {
-    return"<span class='" + this._options.classTitle + "'>" + a + " 합계: </span><span class='" + this._options.classContent + "'>" + d + "</span>"
+  b._sumRenderer = function(a, b) {
+    return"<span class='" + this._options.classTitle + "'>" + a + " 합계: </span><span class='" + this._options.classContent + "'>" + b + "</span>"
   };
-  f._calSum = function(a, d) {
-    for(var c = 0, b, e = a.length, f = 0;f < e;f++) {
-      if(typeof(b = a[f][d]) === "string") {
-        b = b.toFloat()
+  f._calSum = function(a, b) {
+    for(var d = 0, g, e = a.length, f = 0;f < e;f++) {
+      if(typeof(g = a[f][b]) === "string") {
+        g = g.toFloat()
       }
-      c += isNaN(b) ? 0 : b
+      d += isNaN(g) ? 0 : g
     }
-    return c
+    return d
   }
 })();
 console && console.log && console.log('reading javascript source "ColumnHeader.js"...');
@@ -6476,46 +6481,46 @@ jx.grid.ColumnHeader = {};
   f.getInstance = function(a) {
     return new f(a)
   };
-  var d = f.prototype;
-  d._init = function(c) {
+  var c = f.prototype;
+  c._init = function(b) {
     this.grid.log("initializing ColumnHeader instance...", a.V_INIT);
     this.grid.header = this;
-    this._ctnr = c.container;
+    this._ctnr = b.container;
     this._map = {};
     this._resizeMap = {};
-    c = this._options;
-    this._mask = $("<div class='" + c.classHeaderMask + "'>").prependTo(this._ctnr);
-    this._head = $("<div class='" + c.classHeader + "'>").appendTo(this._mask);
+    b = this._options;
+    this._mask = $("<div class='" + b.classHeaderMask + "'>").prependTo(this._ctnr);
+    this._head = $("<div class='" + b.classHeader + "'>").appendTo(this._mask);
     f._disableSel(this._head)
   };
-  d._bindEvents = function() {
+  c._bindEvents = function() {
     this.grid.log("binding ColumnHeader events...", a.V_INIT);
-    var c, d = this.getColumns(), b = d.length, e = 0;
-    for(c = {onRenderModules:this._onRenderModules, onAfterRenderModules:this._onAfterRenderModules, mousedown:this._mousedown, mouseup:this._mouseup, dragmove:this._dragmove, onScrollViewportH:this._onScrollViewportH, onScrollViewportV:this._onScrollViewportV, onChangeSorter:this._onChangeSorter, click:this._click, onResizeCol:this._setWidthByKey};e < b;e++) {
-      if(d[e].sorter) {
-        c["clickHeader_" + d[e].key] = this._sort
+    var b, c = this.getColumns(), e = c.length, f = 0;
+    for(b = {onRenderModules:this._onRenderModules, onAfterRenderModules:this._onAfterRenderModules, mousedown:this._mousedown, mouseup:this._mouseup, dragmove:this._dragmove, onScrollViewportH:this._onScrollViewportH, onScrollViewportV:this._onScrollViewportV, onChangeSorter:this._onChangeSorter, click:this._click, onResizeCol:this._setWidthByKey};f < e;f++) {
+      if(c[f].sorter) {
+        b["clickHeader_" + c[f].key] = this._sort
       }
     }
-    this.bindGridEvent(c, this)
+    this.bindGridEvent(b, this)
   };
-  d._defaultOptions = function(c) {
+  c._defaultOptions = function(b) {
     this.grid.log("extending ColumnHeader options...", a.V_INIT);
-    c = c._options.imageUrl;
-    return{reorderEnabled:!1, reorderSyncEnabled:!0, background:"url(" + c + "column-headers-bg.png) repeat-x scroll center", backgroundHover:"url(" + c + "column-headers-over-bg.png) repeat-x scroll center", backgroundPlaceholder:"#646464", sortBackground:c + "sort.png", sortRight:4, sortWidth:7, sortBackgroundAsc:c + "sort-asc.png", sortBackgroundDesc:c + "sort-desc.png", font:"15px Arial,Helvetica,sans-serif", height:21, borderThickness:1, border:"solid #909192", classHeaderMask:"jgrid-header-mask", 
+    b = b._options.imageUrl;
+    return{reorderEnabled:!1, reorderSyncEnabled:!0, background:"url(" + b + "column-headers-bg.png) repeat-x scroll center", backgroundHover:"url(" + b + "column-headers-over-bg.png) repeat-x scroll center", backgroundPlaceholder:"#646464", sortBackground:b + "sort.png", sortRight:4, sortWidth:7, sortBackgroundAsc:b + "sort-asc.png", sortBackgroundDesc:b + "sort-desc.png", font:"15px Arial,Helvetica,sans-serif", height:21, borderThickness:1, border:"solid #909192", classHeaderMask:"jgrid-header-mask", 
     classHeader:"jgrid-header", classColHeader:"jgrid-colheader", classColHeaderActive:"jgrid-colheader-active", classColHeaderPlaceholder:"jgrid-colheader-placeholder", classInteractive:"interactive", classColHeaderSorted:"jgrid-colheader-sorted", classSort:"jgrid-sort", classSortAsc:"jgrid-sort-asc", classSortDesc:"jgrid-sort-desc", classResizeHandle:"jgrid-resize-handle", resizeHandleWidth:11, style:"", headerStyle:"", scrollerLeft:1E4, scrollerWidth:1E5, classResizeGuide:"resize-guide", resizeGuideWidth:1, 
     resizeBackground:"black;filter:alpha(opacity=40);opacity:0.4", syncResize:!1, resizeHandleBackground:"black;filter:alpha(opacity=5);opacity:0.05"}
   };
-  d._beforeDispose = function() {
+  c._beforeDispose = function() {
     this.grid.log("disposing ColumnHeader instance...", a.V_INIT);
     this._head.sortable && this._head.sortable("destroy");
     this._destroyResizeHandles();
     h._destroy(this, {name:"ColumnHeader", path:"header", $:"_resizeGuide _mask _head", property:"_ctnr _resizeMap", map:"_map _options"});
     this.dispose()
   };
-  d._destroyResizeHandles = function() {
-    var a = this._resizeMap, d;
-    for(d in a) {
-      a.hasOwnProperty(d) && (a[d].remove(), delete a[d])
+  c._destroyResizeHandles = function() {
+    var a = this._resizeMap, b;
+    for(b in a) {
+      a.hasOwnProperty(b) && (a[b].remove(), delete a[b])
     }
     delete this._resizeKey;
     delete this._resizeInitX;
@@ -6523,40 +6528,40 @@ jx.grid.ColumnHeader = {};
     delete this._resizeInitWidth;
     delete this._resizeInitColWidth
   };
-  d._beforeCreateCss = function(c) {
+  c._beforeCreateCss = function(b) {
     this.grid.log("creating CSS for ColumnHeader...", a.V_INIT);
-    var d = "#" + this.grid.mid + " .", b = this._options, e = b.borderThickness + "px " + b.border, f = this.getColumns(), h = f.length, k = 0, q = "." + b.classHeaderMask, m = "." + b.classColHeader, o = b.scrollerLeft, o = b.scrollerLeft, n = b.height + "px", s = b.classColHeaderActive, r = {};
-    r[q] = {position:"relative", overflow:"hidden", width:"100%", font:b.font, background:b.background, "border-bottom":e, _append:b.style};
-    r["." + b.classHeader] = {position:"relative", overflow:"hidden", "white-space":"nowrap", cursor:"default", left:-o + "px", width:b.scrollerWidth + "px", "line-height":n};
-    r[m] = {position:"relative", overflow:"hidden", "float":"left", "text-overflow":"ellipsis", "text-align":"center", height:n, left:o - this.getView().getScrollLeft() + "px", "border-right":e, _append:b.headerStyle};
-    r[m + "." + b.classInteractive + ":hover, " + d + s] = {background:b.backgroundHover};
-    r["." + s] = {"border-left":e};
-    r[m + "." + b.classColHeaderPlaceholder] = {background:b.backgroundPlaceholder + "!important"};
-    r["." + b.classSort] = {position:"absolute", height:n, right:b.sortRight + "px", width:b.sortWidth + "px", background:"url(" + b.sortBackground + ") no-repeat center transparent"};
-    r["." + b.classSortAsc] = {background:"url(" + b.sortBackgroundAsc + ") no-repeat center transparent"};
-    r["." + b.classSortDesc] = {background:"url(" + b.sortBackgroundDesc + ") no-repeat center transparent"};
-    r["." + b.classResizeHandle] = {"z-index":10, background:b.resizeHandleBackground, cursor:"e-resize", position:"absolute", height:n, width:b.resizeHandleWidth + "px"};
-    for(r["." + b.classResizeGuide] = {"z-index":10, position:"absolute", background:b.resizeBackground, width:b.resizeGuideWidth + "px"};k < h;k++) {
-      f[k].headerStyle && (r[m + "#" + this.mid + "h" + f[k].key] = {_append:f[k].headerStyle})
+    var c = "#" + this.grid.mid + " .", e = this._options, f = e.borderThickness + "px " + e.border, h = this.getColumns(), q = h.length, k = 0, p = "." + e.classHeaderMask, n = "." + e.classColHeader, o = e.scrollerLeft, o = e.scrollerLeft, m = e.height + "px", r = e.classColHeaderActive, s = {};
+    s[p] = {position:"relative", overflow:"hidden", width:"100%", font:e.font, background:e.background, "border-bottom":f, _append:e.style};
+    s["." + e.classHeader] = {position:"relative", overflow:"hidden", "white-space":"nowrap", cursor:"default", left:-o + "px", width:e.scrollerWidth + "px", "line-height":m};
+    s[n] = {position:"relative", overflow:"hidden", "float":"left", "text-overflow":"ellipsis", "text-align":"center", height:m, left:o - this.getView().getScrollLeft() + "px", "border-right":f, _append:e.headerStyle};
+    s[n + "." + e.classInteractive + ":hover, " + c + r] = {background:e.backgroundHover};
+    s["." + r] = {"border-left":f};
+    s[n + "." + e.classColHeaderPlaceholder] = {background:e.backgroundPlaceholder + "!important"};
+    s["." + e.classSort] = {position:"absolute", height:m, right:e.sortRight + "px", width:e.sortWidth + "px", background:"url(" + e.sortBackground + ") no-repeat center transparent"};
+    s["." + e.classSortAsc] = {background:"url(" + e.sortBackgroundAsc + ") no-repeat center transparent"};
+    s["." + e.classSortDesc] = {background:"url(" + e.sortBackgroundDesc + ") no-repeat center transparent"};
+    s["." + e.classResizeHandle] = {"z-index":10, background:e.resizeHandleBackground, cursor:"e-resize", position:"absolute", height:m, width:e.resizeHandleWidth + "px"};
+    for(s["." + e.classResizeGuide] = {"z-index":10, position:"absolute", background:e.resizeBackground, width:e.resizeGuideWidth + "px"};k < q;k++) {
+      h[k].headerStyle && (s[n + "#" + this.mid + "h" + h[k].key] = {_append:h[k].headerStyle})
     }
-    this.toCssStyles(c.css, r)
+    this.toCssStyles(b.css, s)
   };
-  d._widthPlus = function() {
+  c._widthPlus = function() {
     return this._options.borderThickness
   };
-  d._onScrollViewportH = function(c) {
+  c._onScrollViewportH = function(b) {
     this.grid.log("adjusting Colheader style.left according to viewport scrollLeft...", a.V_RESIZE);
-    this._head[0].style.left = -this._options.scrollerLeft - c + "px"
+    this._head[0].style.left = -this._options.scrollerLeft - b + "px"
   };
-  d._onRenderModules = function() {
+  c._onRenderModules = function() {
     this.grid.log("rendering Colheader...", a.V_INIT);
-    for(var c = this.getColumns(), d = c.length, b = 0, e, f = [];b < d;b++) {
-      (e = c[b]).hidden || this._render(f, e, b)
+    for(var b = this.getColumns(), c = b.length, e = 0, f, h = [];e < c;e++) {
+      (f = b[e]).hidden || this._render(h, f, e)
     }
-    this._head[0].innerHTML = f.join("");
+    this._head[0].innerHTML = h.join("");
     this.triggerGridEvent("onRenderHeadersComplete", !1, !0)
   };
-  d._onAfterRenderModules = function() {
+  c._onAfterRenderModules = function() {
     var a = this._options;
     a.reorderEnabled && this._initReorder();
     this._initResizeHandles();
@@ -6564,13 +6569,13 @@ jx.grid.ColumnHeader = {};
     this._resizeGuide[0].style.top = "0px";
     this._resizeGuide[0].style.height = "0px"
   };
-  d._render = function(a, d, b) {
-    var e = this._options, f = d.key, h = d.noName ? "" : d.name || f, k = this._widthPlus(), q = "onRenderHeader_" + f, m = [a];
-    a.push("<div id='" + this.mid + "h" + f + "' class='" + e.classColHeader + " " + (e.reorderEnabled || d.sorter ? " " + e.classInteractive : "") + "' " + (d.noTitle ? "" : "title='" + (d.title || h) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(b) - k) + "px;' colKey='" + f + "'>");
-    this.triggerGridEvent(q + "_prepend", m, !0);
+  c._render = function(a, b, c) {
+    var e = this._options, f = b.key, h = b.noName ? "" : b.name || f, k = this._widthPlus(), p = "onRenderHeader_" + f, n = [a];
+    a.push("<div id='" + this.mid + "h" + f + "' class='" + e.classColHeader + " " + (e.reorderEnabled || b.sorter ? " " + e.classInteractive : "") + "' " + (b.noTitle ? "" : "title='" + (b.title || h) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(c) - k) + "px;' colKey='" + f + "'>");
+    this.triggerGridEvent(p + "_prepend", n, !0);
     a.push(h);
-    this.triggerGridEvent(q + "_append", m, !0);
-    d.sorter && a.push("<span class='" + e.classSort + "'></span>");
+    this.triggerGridEvent(p + "_append", n, !0);
+    b.sorter && a.push("<span class='" + e.classSort + "'></span>");
     a.push("</div>")
   };
   f._disableSel = function(a) {
@@ -6578,131 +6583,131 @@ jx.grid.ColumnHeader = {};
       return!1
     })
   };
-  d.get = function(a) {
+  c.get = function(a) {
     if(this._map.hasOwnProperty(a)) {
       return this._map[a]
     }
-    var d = document.getElementById(this.mid + "h" + a);
-    return!d ? $([]) : this._map[a] = $(d)
+    var b = document.getElementById(this.mid + "h" + a);
+    return!b ? $([]) : this._map[a] = $(b)
   };
-  d._updateIndicator = function(a, d) {
-    var b = this.get(a), e = this._options, f = b.find("." + e.classSort), h = e.classColHeaderSorted, k = e.classSortAsc, e = e.classSortDesc;
-    d === 0 ? (b.removeClass(h), f.removeClass(k + " " + e)) : (b.addClass(h), d === 1 ? f.addClass(k).removeClass(e) : d === 2 && f.addClass(e).removeClass(k))
+  c._updateIndicator = function(a, b) {
+    var c = this.get(a), e = this._options, f = c.find("." + e.classSort), h = e.classColHeaderSorted, k = e.classSortAsc, e = e.classSortDesc;
+    b === 0 ? (c.removeClass(h), f.removeClass(k + " " + e)) : (c.addClass(h), b === 1 ? f.addClass(k).removeClass(e) : b === 2 && f.addClass(e).removeClass(k))
   };
-  d._closest = function(a) {
+  c._closest = function(a) {
     return Util$.safe$(a).closest("div." + this._options.classColHeader, this._head)
   };
-  d._getDef = function(a) {
+  c._getDef = function(a) {
     return this.getColMgr().getByKey(a.attr("colKey"))
   };
-  d._sort = function(c, d, b) {
-    this.grid.log("Colheader clicked to sort. key=" + e, a.V_CLICK);
-    var e = b.key, c = b.sorter;
-    this.triggerGridEvent("onBeforeColSort_" + e, !1, !0);
+  c._sort = function(b, c, e) {
+    this.grid.log("Colheader clicked to sort. key=" + f, a.V_CLICK);
+    var f = e.key, b = e.sorter;
+    this.triggerGridEvent("onBeforeColSort_" + f, !1, !0);
     this.triggerGridEvent("onBeforeColSort", !1, !0);
-    c.desc = c.desc === !1 ? !0 : !1;
-    this.getDataMgr().refresh({sorter:c});
+    b.desc = b.desc === !1 ? !0 : !1;
+    this.getDataMgr().refresh({sorter:b});
     this.getView()._scroll()
   };
-  d._onChangeSorter = function(a, d) {
-    a !== d && a && this._updateIndicator(a.key, 0);
-    d && this._updateIndicator(d.key, d.desc ? 2 : 1)
+  c._onChangeSorter = function(a, b) {
+    a !== b && a && this._updateIndicator(a.key, 0);
+    b && this._updateIndicator(b.key, b.desc ? 2 : 1)
   };
-  d._initReorder = function() {
+  c._initReorder = function() {
     this.grid.log("initializing Colheader reorder functionality...", a.V_INIT);
-    var c = this, d = this._options, b = this.getColMgr(), e = this._head, f = this.mid.length + 1, h = function(a, c) {
-      for(var d = $(e).sortable("toArray"), g = d.length, h, p = 0;p < g;p++) {
-        h = d[p], d[p] = h === "" ? c.item.attr("id").substring(f) : h.substring(f)
+    var b = this, c = this._options, e = this.getColMgr(), f = this._head, h = this.mid.length + 1, q = function(a, b) {
+      for(var c = $(f).sortable("toArray"), d = c.length, g, q = 0;q < d;q++) {
+        g = c[q], c[q] = g === "" ? b.item.attr("id").substring(h) : g.substring(h)
       }
-      b.sortByKey(d)
+      e.sortByKey(c)
     };
-    e.sortable({items:"." + d.classColHeader, axis:"x", forcePlaceholderSize:!0, placeholder:d.classColHeaderPlaceholder + " " + d.classColHeader, tolerance:"pointer", start:function(a, d) {
-      d.item.addClass(c._options.classColHeaderActive)
-    }, stop:function(a, d) {
-      d.item.removeClass(c._options.classColHeaderActive);
-      c._syncResizeHandles()
-    }, update:h});
-    d.reorderSyncEnabled && e.sortable("option", "change", h)
+    f.sortable({items:"." + c.classColHeader, axis:"x", forcePlaceholderSize:!0, placeholder:c.classColHeaderPlaceholder + " " + c.classColHeader, tolerance:"pointer", start:function(a, c) {
+      c.item.addClass(b._options.classColHeaderActive)
+    }, stop:function(a, c) {
+      c.item.removeClass(b._options.classColHeaderActive);
+      b._syncResizeHandles()
+    }, update:q});
+    c.reorderSyncEnabled && f.sortable("option", "change", q)
   };
-  d._getDx = function(a, d) {
-    var b = a.clientX - this._resizeInitX, f = d.minW, h = e.ifNull(d.maxW, Number.MAX_VALUE), p = this._resizeInitWidth;
-    p + b < f && (b = f - p);
-    p + b > h && (b = h - p);
-    return b
+  c._getDx = function(a, b) {
+    var c = a.clientX - this._resizeInitX, f = b.minW, h = e.ifNull(b.maxW, Number.MAX_VALUE), q = this._resizeInitWidth;
+    q + c < f && (c = f - q);
+    q + c > h && (c = h - q);
+    return c
   };
-  d._click = function(c) {
-    var d = this._closest(c.target);
-    if(d.length !== 0) {
-      var b = this._getDef(d), e = b.key, c = [c, d, b];
-      this.grid.log("Colheader clicked. key=" + e, a.V_CLICK);
-      this.getEventMgr().triggerInvalid("clickHeaderValid_" + e, c) || (this.triggerGridEvent("clickHeader_" + e, c, !0), this.triggerGridEvent("clickHeader", c, !0))
+  c._click = function(b) {
+    var c = this._closest(b.target);
+    if(c.length !== 0) {
+      var e = this._getDef(c), f = e.key, b = [b, c, e];
+      this.grid.log("Colheader clicked. key=" + f, a.V_CLICK);
+      this.getEventMgr().triggerInvalid("clickHeaderValid_" + f, b) || (this.triggerGridEvent("clickHeader_" + f, b, !0), this.triggerGridEvent("clickHeader", b, !0))
     }
   };
-  d._mousedown = function(c) {
-    var d = this._options;
-    if(e.hasTagAndClass(c.target, "DIV", d.classResizeHandle)) {
-      var b = this._resizeKey = c.target.getAttribute("key");
-      this.grid.log("mousedown on ColumnHeader Resize Handle. key=" + b, a.V_MOUSEDOWN);
-      this._resizeInitWidth = this.get(b)[0].clientWidth;
-      this._resizeInitColWidth = this.getColMgr().getByKey(b).width;
-      this._resizeInitX = c.clientX;
-      this._resizeHandleInitX = this._resizeMap[b][0].offsetLeft;
-      this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (d.resizeHandleWidth - d.resizeGuideWidth) / 2 - d.scrollerLeft) + "px";
+  c._mousedown = function(b) {
+    var c = this._options;
+    if(e.hasTagAndClass(b.target, "DIV", c.classResizeHandle)) {
+      var f = this._resizeKey = b.target.getAttribute("key");
+      this.grid.log("mousedown on ColumnHeader Resize Handle. key=" + f, a.V_MOUSEDOWN);
+      this._resizeInitWidth = this.get(f)[0].clientWidth;
+      this._resizeInitColWidth = this.getColMgr().getByKey(f).width;
+      this._resizeInitX = b.clientX;
+      this._resizeHandleInitX = this._resizeMap[f][0].offsetLeft;
+      this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (c.resizeHandleWidth - c.resizeGuideWidth) / 2 - c.scrollerLeft) + "px";
       this._resizeGuide[0].style.height = this.getView().getInnerHeight() + "px"
     }else {
-      if(d = this._closest(c.target), d.length) {
-        var f = this._getDef(d), b = f.key, c = [c, d, f];
-        this.grid.log("mousedown on ColumnHeader. key=" + b, a.V_MOUSEDOWN);
-        this.triggerGridEvent("mousedownHeader", c, !0);
-        this.triggerGridEvent("mousedownHeader_" + b, c, !0)
+      if(c = this._closest(b.target), c.length) {
+        var h = this._getDef(c), f = h.key, b = [b, c, h];
+        this.grid.log("mousedown on ColumnHeader. key=" + f, a.V_MOUSEDOWN);
+        this.triggerGridEvent("mousedownHeader", b, !0);
+        this.triggerGridEvent("mousedownHeader_" + f, b, !0)
       }
     }
   };
-  d._dragmove = function(c) {
-    var d = this._resizeKey;
-    if(d != null && (c = this._getDx(c, this.getColMgr().getByKey(d)), !(Math.abs(c) < 1))) {
-      this.grid.log("drag on ColumnHeader Resize Handle. key=" + d, a.V_MOUSEMOVE);
-      var b = this._options;
-      this.get(d)[0].style.width = this._resizeInitWidth + c + "px";
-      this._moveResizeHandles(this._resizeHandleInitX + c - this._resizeMap[d][0].offsetLeft, this.getColMgr().getIdxByKey(d));
-      this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + c + (b.resizeHandleWidth - b.resizeGuideWidth) / 2 - b.scrollerLeft) + "px";
-      b.syncResize && this.getView().setWidthByKey(d, this._resizeInitColWidth + c)
+  c._dragmove = function(b) {
+    var c = this._resizeKey;
+    if(c != null && (b = this._getDx(b, this.getColMgr().getByKey(c)), !(Math.abs(b) < 1))) {
+      this.grid.log("drag on ColumnHeader Resize Handle. key=" + c, a.V_MOUSEMOVE);
+      var e = this._options;
+      this.get(c)[0].style.width = this._resizeInitWidth + b + "px";
+      this._moveResizeHandles(this._resizeHandleInitX + b - this._resizeMap[c][0].offsetLeft, this.getColMgr().getIdxByKey(c));
+      this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + b + (e.resizeHandleWidth - e.resizeGuideWidth) / 2 - e.scrollerLeft) + "px";
+      e.syncResize && this.getView().setWidthByKey(c, this._resizeInitColWidth + b)
     }
   };
-  d._mouseup = function(c) {
-    var d = this._resizeKey;
-    if(d != null) {
-      this.grid.log("mouseup on ColumnHeader Resize Handle. key=" + d, a.V_MOUSEUP), this._resizeGuide[0].style.height = "0px", c = this._getDx(c, this.getColMgr().getByKey(d)), Math.abs(c) >= 1 && this.getView().setWidthByKey(d, this._resizeInitColWidth + c), delete this._resizeKey, delete this._resizeInitX, delete this._resizeHandleInitX, delete this._resizeInitWidth, delete this._resizeInitColWidth
+  c._mouseup = function(b) {
+    var c = this._resizeKey;
+    if(c != null) {
+      this.grid.log("mouseup on ColumnHeader Resize Handle. key=" + c, a.V_MOUSEUP), this._resizeGuide[0].style.height = "0px", b = this._getDx(b, this.getColMgr().getByKey(c)), Math.abs(b) >= 1 && this.getView().setWidthByKey(c, this._resizeInitColWidth + b), delete this._resizeKey, delete this._resizeInitX, delete this._resizeHandleInitX, delete this._resizeInitWidth, delete this._resizeInitColWidth
     }
   };
-  d._setWidthByKey = function(c, d) {
-    this.grid.log("setting ColumnHeader width=" + d + ". key=" + c, a.V_RESIZE);
-    this.get(c)[0].style.width = d + this.getView()._colWidthPlus() - this._widthPlus() + "px";
-    this._syncResizeHandles(this.getColMgr().getIdxByKey(c));
+  c._setWidthByKey = function(b, c) {
+    this.grid.log("setting ColumnHeader width=" + c + ". key=" + b, a.V_RESIZE);
+    this.get(b)[0].style.width = c + this.getView()._colWidthPlus() - this._widthPlus() + "px";
+    this._syncResizeHandles(this.getColMgr().getIdxByKey(b));
     this.getView()._scroll()
   };
-  d._syncResizeHandles = function(a) {
-    for(var a = a || 0, d = this.getView()._getColLefts(), b = this.getColumns(), e = b.length, f = this._resizeMap, h;a < e;a++) {
-      if(h = b[a].key, f.hasOwnProperty(h)) {
-        f[h][0].style.left = d[a + 1] + this._resizeHandleOffset + "px"
+  c._syncResizeHandles = function(a) {
+    for(var a = a || 0, b = this.getView()._getColLefts(), c = this.getColumns(), e = c.length, f = this._resizeMap, h;a < e;a++) {
+      if(h = c[a].key, f.hasOwnProperty(h)) {
+        f[h][0].style.left = b[a + 1] + this._resizeHandleOffset + "px"
       }
     }
   };
-  d._moveResizeHandles = function(a, d) {
-    for(var d = d || 0, b = this.getColumns(), e = b.length, f = this._resizeMap, h;d < e;d++) {
-      if(h = b[d].key, f.hasOwnProperty(h)) {
+  c._moveResizeHandles = function(a, b) {
+    for(var b = b || 0, c = this.getColumns(), e = c.length, f = this._resizeMap, h;b < e;b++) {
+      if(h = c[b].key, f.hasOwnProperty(h)) {
         h = f[h][0], h.style.left = h.offsetLeft + a + "px"
       }
     }
   };
-  d._onScrollViewportV = function() {
+  c._onScrollViewportV = function() {
     this._resizeGuide[0].style.top = this.getView().getScrollTop() + "px"
   };
-  d._initResizeHandles = function() {
+  c._initResizeHandles = function() {
     this.grid.log("initializing Colheader resize functionality...", a.V_INIT);
-    for(var c = this.getColumns(), d = c.length, b = this.getView(), e = b.mid, b = b._getColLefts(), f = this._options, h = this._resizeMap, k, q = 0, m = this._resizeHandleOffset = Math.floor(f.scrollerLeft - f.resizeHandleWidth / 2), o = f.classResizeHandle, n = this._head;q < d;q++) {
-      if(f = c[q], f.resizable) {
-        k = f.key, h[k] = $("<div class='" + o + "' key='" + k + "' ondblclick='JGM.m.ViewportManager." + e + '._autoColWidth("' + k + "\")' style='left:" + (m + b[q + 1]) + "px' title='" + f.name + " 컬럼의 폭을 조절합니다.'>").appendTo(n)
+    for(var b = this.getColumns(), c = b.length, e = this.getView(), f = e.mid, e = e._getColLefts(), h = this._options, q = this._resizeMap, k, p = 0, n = this._resizeHandleOffset = Math.floor(h.scrollerLeft - h.resizeHandleWidth / 2), o = h.classResizeHandle, m = this._head;p < c;p++) {
+      if(h = b[p], h.resizable) {
+        k = h.key, q[k] = $("<div class='" + o + "' key='" + k + "' ondblclick='JGM.m.ViewportManager." + f + '._autoColWidth("' + k + "\")' style='left:" + (n + e[p + 1]) + "px' title='" + h.name + " 컬럼의 폭을 조절합니다.'>").appendTo(m)
       }
     }
   }
@@ -6711,18 +6716,18 @@ console && console.log && console.log('reading javascript source "CheckManager.j
 jx.grid.CheckManager = {};
 (function() {
   function f(a) {
-    function c() {
-      var a = this._options, c = this._isRadio = a.isRadio = !!a.isRadio;
-      this._hasMaster = a.master = !c && !!a.master;
+    function d() {
+      var a = this._options, b = this._isRadio = a.isRadio = !!a.isRadio;
+      this._hasMaster = a.master = !b && !!a.master;
       this._col = a.colDef;
       this._key = this._col.key;
       this._cssClass = a.classCheck;
       this._cssClassMaster = a.classMasterCheck;
-      this._name = a.name || c && "radio" + this.mid || null
+      this._name = a.name || b && "radio" + this.mid || null
     }
-    this.addEventListener("afteroption", c);
+    this.addEventListener("afteroption", d);
     b.call(this, a);
-    this.removeEventListener("afteroption", c)
+    this.removeEventListener("afteroption", d)
   }
   var h = goog.getObjectByName("jx.grid"), e = goog.getObjectByName("jx.util"), b = goog.getObjectByName("jx.grid.BaseModule");
   goog.exportSymbol("jx.grid.CheckManager", f);
@@ -6736,43 +6741,43 @@ jx.grid.CheckManager = {};
     this.disabledmap = {};
     this._count = 0;
     this._disabled = !1;
-    var a, c = h._CONST;
+    var a, b = h._CONST;
     a = this.getColMgr();
     a.getByKey(this._col.key) || a.addAt(this._options.colIdx, this._col);
-    if(e.isNull(c._checkboxWidth)) {
-      a = e.calCheckSize(), c._checkboxWidth = a.checkboxW, c._checkboxHeight = a.checkboxH, c._radioWidth = a.radioW, c._radioHeight = a.radioH
+    if(e.isNull(b._checkboxWidth)) {
+      a = e.calCheckSize(), b._checkboxWidth = a.checkboxW, b._checkboxHeight = a.checkboxH, b._radioWidth = a.radioW, b._radioHeight = a.radioH
     }
   };
   a._bindEvents = function() {
-    var a = this._col.key, c;
-    c = {onAfterSetDatalist:this.uncheckAll, onIdChange:this._onIdChange, onIdListChange:this._onIdListChange, onRemoveDatarow:this._onRemoveDatarow, onRemoveDatalist:this._onRemoveDatalist};
-    c["onRenderCell_" + a + "_prepend"] = this._onRenderCell;
-    c["keydownColSel_" + a + "_" + e.keyMapKeydown.space] = this._keydownColSel;
+    var a = this._col.key, b;
+    b = {onAfterSetDatalist:this.uncheckAll, onIdChange:this._onIdChange, onIdListChange:this._onIdListChange, onRemoveDatarow:this._onRemoveDatarow, onRemoveDatalist:this._onRemoveDatalist};
+    b["onRenderCell_" + a + "_prepend"] = this._onRenderCell;
+    b["keydownColSel_" + a + "_" + e.keyMapKeydown.space] = this._keydownColSel;
     if(this._hasMaster) {
-      c["onRenderHeader_" + a + "_prepend"] = this._onRenderHeader, c.onRenderHeadersComplete = this._getMaster
+      b["onRenderHeader_" + a + "_prepend"] = this._onRenderHeader, b.onRenderHeadersComplete = this._getMaster
     }
-    this.bindGridEvent(c, this)
+    this.bindGridEvent(b, this)
   };
   a._defaultOptions = function() {
     return{colDef:{key:"checkbox", width:20, name:" ", noTitle:!0, resizable:!1, sorter:null, filter:null, noSearch:!0, editor:null, inputOnCreate:!1}, colIdx:0, name:void 0, classCheck:"checkmg", classMasterCheck:"checkm", master:!0, isRadio:!1}
   };
   a._beforeCreateCss = function(a) {
-    var c, b, e = a.css;
-    this._isRadio ? (a = h._CONST._radioWidth, c = h._CONST._radioHeight) : (a = h._CONST._checkboxWidth, c = h._CONST._checkboxHeight);
-    b = "*overflow:hidden;padding:0;width:" + a + "px;height:" + c + "px;";
-    e.push(this.getView()._getCellSelector() + " ." + this._cssClass + "[mid='" + this.mid + "']{" + b + "margin:" + (this.getView()._getRowInnerHeight() - c) / 2 + "px 0 0 " + (this._col.width - this.getView()._getPadding() - a) / 2 + "px}#" + this.mid + "h{" + b + "margin:" + (this.getHeader()._options.height - c) / 2 + "px 0 0 0}")
+    var b, e, f = a.css;
+    this._isRadio ? (a = h._CONST._radioWidth, b = h._CONST._radioHeight) : (a = h._CONST._checkboxWidth, b = h._CONST._checkboxHeight);
+    e = "*overflow:hidden;padding:0;width:" + a + "px;height:" + b + "px;";
+    f.push(this.getView()._getCellSelector() + " ." + this._cssClass + "[mid='" + this.mid + "']{" + e + "margin:" + (this.getView()._getRowInnerHeight() - b) / 2 + "px 0 0 " + (this._col.width - this.getView()._getPadding() - a) / 2 + "px}#" + this.mid + "h{" + e + "margin:" + (this.getHeader()._options.height - b) / 2 + "px 0 0 0}")
   };
-  a.checkList = function(a, c) {
-    if(!c) {
+  a.checkList = function(a, b) {
+    if(!b) {
       a = this.getDataMgr().mapList(a).mapped
     }
-    for(var b = 0, e = a.length;b < e;b++) {
-      this.check(a[b], !0)
+    for(var e = 0, f = a.length;e < f;e++) {
+      this.check(a[e], !0)
     }
   };
-  a.setCheckList = function(a, c) {
+  a.setCheckList = function(a, b) {
     this.uncheckAll();
-    this.checkList(a, c)
+    this.checkList(a, b)
   };
   a.getCheckList = function() {
     return e.toArray(this._map)
@@ -6786,10 +6791,10 @@ jx.grid.CheckManager = {};
   a.checkAll = function() {
     this._hasMaster && f._check(this._master);
     f._check(this.getCheckboxes());
-    for(var a = this.getAllData(), c = a.length, b = this.getIdKey(), e = this._map, h = 0;h < c;h++) {
-      e[a[h][b]] = a[h]
+    for(var a = this.getAllData(), b = a.length, e = this.getIdKey(), i = this._map, h = 0;h < b;h++) {
+      i[a[h][e]] = a[h]
     }
-    this._count = c
+    this._count = b
   };
   a.uncheckAll = function() {
     this._hasMaster && f._uncheck(this._master);
@@ -6797,79 +6802,79 @@ jx.grid.CheckManager = {};
     this._map = {};
     this._count = 0
   };
-  a.toggleCheck = function(a, c) {
-    c || (a = this.getDataMgr().map(a));
+  a.toggleCheck = function(a, b) {
+    b || (a = this.getDataMgr().map(a));
     this.isChecked(a, !0) && !this._isRadio ? this.uncheck(a, !0) : this.check(a, !0)
   };
-  a.toggleDisable = function(a, c) {
-    c || (a = this.getDataMgr().map(a));
+  a.toggleDisable = function(a, b) {
+    b || (a = this.getDataMgr().map(a));
     this.isDisabled(a, !0) ? this.enable(a, !0) : this.disable(a, !0)
   };
   a.toggleById = function(a) {
     this.toggleCheck(this.getDataMgr().getById(a), !0)
   };
-  a.check = function(a, c) {
-    c || (a = this.getDataMgr().map(a));
+  a.check = function(a, b) {
+    b || (a = this.getDataMgr().map(a));
     this._add(a) && (f._check(this.getCheckbox(a)), this._updateMaster(), this.triggerGridEvent("onCheckChange", [a, !0], !0))
   };
-  a.uncheck = function(a, c) {
-    c || (a = this.getDataMgr().map(a));
+  a.uncheck = function(a, b) {
+    b || (a = this.getDataMgr().map(a));
     this._remove(a) && (f._uncheck(this.getCheckbox(a)), this._hasMaster && f._uncheck(this._master), this.triggerGridEvent("onCheckChange", [a, !1], !0))
   };
-  a.disable = function(a, c) {
-    var b = this.getDataMgr();
-    c || (a = b.map(a));
-    var b = b.getId(a), e = this.disabledmap;
-    e.hasOwnProperty(b) || (e[b] = a, f.disableNode(this.getCheckbox(a)), this.triggerGridEvent("onDisableCheck", [a], !0))
+  a.disable = function(a, b) {
+    var e = this.getDataMgr();
+    b || (a = e.map(a));
+    var e = e.getId(a), i = this.disabledmap;
+    i.hasOwnProperty(e) || (i[e] = a, f.disableNode(this.getCheckbox(a)), this.triggerGridEvent("onDisableCheck", [a], !0))
   };
-  a.enable = function(a, c) {
-    var b = this.getDataMgr();
-    c || (a = b.map(a));
-    var b = b.getId(a), e = this.disabledmap;
-    e.hasOwnProperty(b) && (delete e[b], f.enableNode(this.getCheckbox(a)), this.triggerGridEvent("onEnableCheck", [a], !0))
+  a.enable = function(a, b) {
+    var e = this.getDataMgr();
+    b || (a = e.map(a));
+    var e = e.getId(a), i = this.disabledmap;
+    i.hasOwnProperty(e) && (delete i[e], f.enableNode(this.getCheckbox(a)), this.triggerGridEvent("onEnableCheck", [a], !0))
   };
   a._updateMaster = function() {
     this._hasMaster && f._setCheck(this._master, this.isCheckedAll())
   };
   a._add = function(a) {
-    var c = a[this.getIdKey()];
-    if(this._map.hasOwnProperty(c)) {
+    var b = a[this.getIdKey()];
+    if(this._map.hasOwnProperty(b)) {
       return!1
     }
     if(this._isRadio) {
       this._map = {}, this._count = 0
     }
-    this._map[c] = a;
+    this._map[b] = a;
     this._count++;
     return!0
   };
   a._remove = function(a) {
-    var a = a[this.getIdKey()], c = this._map;
-    if(!c.hasOwnProperty(a)) {
+    var a = a[this.getIdKey()], b = this._map;
+    if(!b.hasOwnProperty(a)) {
       return!1
     }
-    delete c[a];
+    delete b[a];
     this._count--;
     return!0
   };
-  a.isChecked = function(a, c) {
-    var b = this.getDataMgr();
-    c || (a = b.map(a));
-    return this._map.hasOwnProperty(b.getId(a))
+  a.isChecked = function(a, b) {
+    var e = this.getDataMgr();
+    b || (a = e.map(a));
+    return this._map.hasOwnProperty(e.getId(a))
   };
-  a.isDisabled = function(a, c) {
-    var b = this.getDataMgr();
-    c || (a = b.map(a));
-    return this.disabledmap.hasOwnProperty(b.getId(a))
+  a.isDisabled = function(a, b) {
+    var e = this.getDataMgr();
+    b || (a = e.map(a));
+    return this.disabledmap.hasOwnProperty(e.getId(a))
   };
-  a.splitChecked = function(a, c) {
-    if(!c) {
+  a.splitChecked = function(a, b) {
+    if(!b) {
       a = this.getDataMgr().mapList(a).mapped
     }
-    for(var b = [], e = [], f = 0, h = a.length, p = this.getIdKey(), k, q = this._map;f < h;f++) {
-      q.hasOwnProperty((k = a[f])[p]) ? b.push(k) : e.push(k)
+    for(var e = [], f = [], h = 0, j = a.length, q = this.getIdKey(), k, p = this._map;h < j;h++) {
+      p.hasOwnProperty((k = a[h])[q]) ? e.push(k) : f.push(k)
     }
-    return{checked:b, unchecked:e}
+    return{checked:e, unchecked:f}
   };
   a.isCheckedAll = function() {
     return this._count !== 0 && this._count === this.getAllData().length ? !0 : !1
@@ -6881,10 +6886,10 @@ jx.grid.CheckManager = {};
     this._master = $(document.getElementById(this.mid + "h"))
   };
   a._getChecks = function(a) {
-    for(var c = a.length, b = [], e = 0, f = this.getColMgr().getIdxByKey(this._key);e < c;e++) {
-      b.push(a[e].childNodes[f].childNodes[0])
+    for(var b = a.length, e = [], f = 0, h = this.getColMgr().getIdxByKey(this._key);f < b;f++) {
+      e.push(a[f].childNodes[h].childNodes[0])
     }
-    return b
+    return e
   };
   a.getCheckboxes = function() {
     return this._getChecks(this.getView().getRenderedRows())
@@ -6905,34 +6910,34 @@ jx.grid.CheckManager = {};
     this.enable(a, !0)
   };
   a._onRemoveDatalist = function(a) {
-    for(var c = 0, b = a.length;c < b;c++) {
-      this.uncheck(a[c], !0), this.enable(a[c], !0)
+    for(var b = 0, e = a.length;b < e;b++) {
+      this.uncheck(a[b], !0), this.enable(a[b], !0)
     }
   };
-  a._onIdChange = function(a, c, b) {
-    var e = this._map, f = this.disabledmap;
-    e.hasOwnProperty(c) && (delete e[c], e[b] = a);
-    f.hasOwnProperty(c) && (delete f[c], f[b] = a)
+  a._onIdChange = function(a, b, e) {
+    var f = this._map, h = this.disabledmap;
+    f.hasOwnProperty(b) && (delete f[b], f[e] = a);
+    h.hasOwnProperty(b) && (delete h[b], h[e] = a)
   };
-  a._onIdListChange = function(a, c, b) {
-    for(var e = 0, f = a.length, h = this._map, p = this.disabledmap, k, q;e < f;e++) {
-      k = a[e], q = c[e], h.hasOwnProperty(q) && (delete h[q], h[k[b]] = k), p.hasOwnProperty(q) && (delete p[q], p[k[b]] = k)
+  a._onIdListChange = function(a, b, e) {
+    for(var f = 0, h = a.length, j = this._map, q = this.disabledmap, k, p;f < h;f++) {
+      k = a[f], p = b[f], j.hasOwnProperty(p) && (delete j[p], j[k[e]] = k), q.hasOwnProperty(p) && (delete q[p], q[k[e]] = k)
     }
   };
-  a._keydownColSel = function(a, c, b) {
+  a._keydownColSel = function(a, b, e) {
     a.preventDefault();
-    if(c && b) {
-      var a = this.isChecked(b.getDatarow(), !0), e, b = this.getDataList();
+    if(b && e) {
+      var a = this.isChecked(e.getDatarow(), !0), f, e = this.getDataList();
       if(this._isRadio) {
-        for(e in c) {
-          if(c.hasOwnProperty(e) && e !== "length") {
-            this.check(b[e], !0);
+        for(f in b) {
+          if(b.hasOwnProperty(f) && f !== "length") {
+            this.check(e[f], !0);
             break
           }
         }
       }else {
-        for(e in c) {
-          c.hasOwnProperty(e) && e !== "length" && (a ? this.uncheck(b[e], !0) : this.check(b[e], !0))
+        for(f in b) {
+          b.hasOwnProperty(f) && f !== "length" && (a ? this.uncheck(e[f], !0) : this.check(e[f], !0))
         }
       }
     }
@@ -6943,12 +6948,12 @@ jx.grid.CheckManager = {};
     this._disabled && a.push(" disabled='disabled'");
     a.push("/>")
   };
-  a._onRenderCell = function(a, c, b, e, f) {
-    f.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + b[this.getIdKey()] + "')\" type='" + (this._isRadio ? "radio" : "checkbox") + "' class='" + this._cssClass + "' mid='" + this.mid + "'");
-    this._name && f.push(" name='" + this._name + "'");
-    this.isChecked(b, !0) && f.push(" checked='checked'");
-    (this._disabled || this.isDisabled(b, !0)) && f.push(" disabled='disabled'");
-    f.push("/>")
+  a._onRenderCell = function(a, b, e, f, h) {
+    h.push("<input tabIndex='-1' onclick=\"JGM.m.CheckManager." + this.mid + ".toggleById('" + e[this.getIdKey()] + "')\" type='" + (this._isRadio ? "radio" : "checkbox") + "' class='" + this._cssClass + "' mid='" + this.mid + "'");
+    this._name && h.push(" name='" + this._name + "'");
+    this.isChecked(e, !0) && h.push(" checked='checked'");
+    (this._disabled || this.isDisabled(e, !0)) && h.push(" disabled='disabled'");
+    h.push("/>")
   };
   a.disableAll = function() {
     if(!this._disabled) {
@@ -6972,8 +6977,8 @@ jx.grid.CheckManager = {};
   f.enableNode = function(a) {
     a && Util$.safe$(a).removeAttr("disabled")
   };
-  f._setCheck = function(a, c) {
-    c ? f._check(a) : f._uncheck(a)
+  f._setCheck = function(a, b) {
+    b ? f._check(a) : f._uncheck(a)
   }
 })();
 console && console.log && console.log('reading javascript source "Collapser.js"...');
@@ -7006,31 +7011,31 @@ jx.grid.Collapser = {};
     this.bindEvents()
   };
   a.bindEvents = function() {
-    var a = this.key, c;
-    c = {onAfterFilter:this._onAfterFilter, onCreateCss:this._onCreateCss, onDestroy:this._destroy, onAfterSetDatalist:this._onAfterSetDatalist, onAddDatarow:this._onAddDatarow, onAddDatalist:this._onAddDatalist, onUpdateDatarow:this._onUpdateDatarow, onUpdateDatalist:this._onUpdateDatalist, onRemoveDatarow:this._onRemoveDatarow, onRemoveDatalist:this._onRemoveDatalist, onRenderHeadersComplete:this._getMaster};
-    c["onRenderHeader_" + a + "_prepend"] = this._onRenderHeader;
-    c["clickHeaderValid_" + a] = this._clickHeaderValid;
-    c["onRenderCell_" + a + "_prepend"] = this._onRenderCell;
-    c["dblclickCanvas_" + a] = this._dblclickCanvas;
-    c["keydownColSel_" + a + "_" + e.keyMapKeydown.space] = this._keydownColSel;
+    var a = this.key, b;
+    b = {onAfterFilter:this._onAfterFilter, onCreateCss:this._onCreateCss, onDestroy:this._destroy, onAfterSetDatalist:this._onAfterSetDatalist, onAddDatarow:this._onAddDatarow, onAddDatalist:this._onAddDatalist, onUpdateDatarow:this._onUpdateDatarow, onUpdateDatalist:this._onUpdateDatalist, onRemoveDatarow:this._onRemoveDatarow, onRemoveDatalist:this._onRemoveDatalist, onRenderHeadersComplete:this._getMaster};
+    b["onRenderHeader_" + a + "_prepend"] = this._onRenderHeader;
+    b["clickHeaderValid_" + a] = this._clickHeaderValid;
+    b["onRenderCell_" + a + "_prepend"] = this._onRenderCell;
+    b["dblclickCanvas_" + a] = this._dblclickCanvas;
+    b["keydownColSel_" + a + "_" + e.keyMapKeydown.space] = this._keydownColSel;
     if(e.isNotNull(this.checkMgr)) {
-      c.onCheckChange = this._onCheckChange
+      b.onCheckChange = this._onCheckChange
     }
-    this.grid.event.bind(c, this)
+    this.grid.event.bind(b, this)
   };
   a._destroy = function() {
     h._destroy(this, {name:"Collapser", path:"collapser", module:"_tree", $:"_master", property:"checkMgr", map:"_options"})
   };
   a._onCreateCss = function() {
-    var a = "#" + this.grid.mid + " .", c = this._options, b = a + this.grid.view._options.classRow + " .", f = a + c.classCollapser, h = f + "." + c.classExpanded, i = f + "." + c.classCollapsed, p = this.grid.view._getRowInnerHeight(), k = [], q = this.grid.header;
-    k.push(a + c.classIndent + "{height:" + p + "px;float:left;}");
-    k.push(f + "{width:" + c.width + "px;float:left;padding:0 " + c.padding + "px}");
-    k.push(b + c.classCollapser + "{height:" + p + "px}");
-    k.push(h + "{background:url(" + c.urlExpanded + ") no-repeat center transparent}");
-    k.push(h + ":hover{background:url(" + c.urlExpandedHover + ") no-repeat center transparent}");
-    k.push(i + "{background:url(" + c.urlCollapsed + ") no-repeat center transparent}");
-    k.push(i + ":hover{background:url(" + c.urlCollapsedHover + ") no-repeat center transparent}");
-    e.isNotNull(q) && k.push(a + q._options.classColHeader + " ." + c.classCollapser + "{height:" + q._options.height + "px}");
+    var a = "#" + this.grid.mid + " .", b = this._options, g = a + this.grid.view._options.classRow + " .", f = a + b.classCollapser, h = f + "." + b.classExpanded, j = f + "." + b.classCollapsed, q = this.grid.view._getRowInnerHeight(), k = [], p = this.grid.header;
+    k.push(a + b.classIndent + "{height:" + q + "px;float:left;}");
+    k.push(f + "{width:" + b.width + "px;float:left;padding:0 " + b.padding + "px}");
+    k.push(g + b.classCollapser + "{height:" + q + "px}");
+    k.push(h + "{background:url(" + b.urlExpanded + ") no-repeat center transparent}");
+    k.push(h + ":hover{background:url(" + b.urlExpandedHover + ") no-repeat center transparent}");
+    k.push(j + "{background:url(" + b.urlCollapsed + ") no-repeat center transparent}");
+    k.push(j + ":hover{background:url(" + b.urlCollapsedHover + ") no-repeat center transparent}");
+    e.isNotNull(p) && k.push(a + p._options.classColHeader + " ." + b.classCollapser + "{height:" + p._options.height + "px}");
     return k.join("")
   };
   a._onAfterSetDatalist = function() {
@@ -7053,43 +7058,43 @@ jx.grid.Collapser = {};
     this.grid.event.trigger("onCollapserTreeChange", !1, !0)
   };
   a._onAddDatalist = function(a) {
-    for(var c = 0, b = a.length, f = this._tree, h = f.root, i = this._options.beginCollapsed, p = this.key, k = this.grid.view, q = this.grid.dataMgr, m, o = [], n;c < b;c++) {
-      m = f.createNode(a[c]), m._collapsed = i, e.isNotNull(m.parent) && m.parent.children.length === 1 && o.push(m.parent.data)
+    for(var b = 0, g = a.length, f = this._tree, h = f.root, j = this._options.beginCollapsed, q = this.key, k = this.grid.view, p = this.grid.dataMgr, n, o = [], m;b < g;b++) {
+      n = f.createNode(a[b]), n._collapsed = j, e.isNotNull(n.parent) && n.parent.children.length === 1 && o.push(n.parent.data)
     }
     if(k !== void 0) {
-      c = 0;
-      for(b = o.length;c < b;c++) {
-        k.rerenderCellByIdAndKey(q.getId(o[c]), p)
+      b = 0;
+      for(g = o.length;b < g;b++) {
+        k.rerenderCellByIdAndKey(p.getId(o[b]), q)
       }
     }
     h.traverseChildren({fn:function(a) {
-      n = this.parent;
-      e.isNotNull(n) && (n === h || n._shown && !n._collapsed) ? this._shown = !0 : (a.propagate = !1, this.traverse({fn:function() {
+      m = this.parent;
+      e.isNotNull(m) && (m === h || m._shown && !m._collapsed) ? this._shown = !0 : (a.propagate = !1, this.traverse({fn:function() {
         this._shown = !1
       }}))
     }});
     this.grid.event.trigger("onCollapserTreeChange", !1, !0)
   };
-  a._onUpdateDatarow = function(a, c, b) {
-    var f = this._tree, h = f._options.nodeKey, i = f._options.parentKey, p;
-    c.hasOwnProperty(h) && (p = f.getNodeByNodeId(b[h]), f.changeNodeId(p, b[h], c[h]), this.grid.event.trigger("onCollapserTreeChange", !1, !0));
-    c.hasOwnProperty(i) && (e.isNull(p) && (p = f.getNode(a)), f.changeParentId(p, b[i], c[i]), this.grid.event.trigger("onCollapserTreeChange", !1, !0))
+  a._onUpdateDatarow = function(a, b, g) {
+    var f = this._tree, h = f._options.nodeKey, j = f._options.parentKey, q;
+    b.hasOwnProperty(h) && (q = f.getNodeByNodeId(g[h]), f.changeNodeId(q, g[h], b[h]), this.grid.event.trigger("onCollapserTreeChange", !1, !0));
+    b.hasOwnProperty(j) && (e.isNull(q) && (q = f.getNode(a)), f.changeParentId(q, g[j], b[j]), this.grid.event.trigger("onCollapserTreeChange", !1, !0))
   };
-  a._onUpdateDatalist = function(a, c, b) {
-    for(var c = this._tree, f = c._options.nodeKey, h = c._options.parentKey, i, p, k, q = [], m = [], o = 0, n = a.length;o < n;o++) {
-      i = b[o], p = a[o], k = void 0, i.hasOwnProperty(f) && (e.isNull(k) && (k = c.getNodeByNodeId(i[f])), q.push({node:k, before:i[f], newId:p[f]})), i.hasOwnProperty(h) && (e.isNull(k) && (k = c.getNode(p)), m.push({node:k, before:i[h], newId:p[h]}))
+  a._onUpdateDatalist = function(a, b, g) {
+    for(var b = this._tree, f = b._options.nodeKey, h = b._options.parentKey, j, q, k, p = [], n = [], o = 0, m = a.length;o < m;o++) {
+      j = g[o], q = a[o], k = void 0, j.hasOwnProperty(f) && (e.isNull(k) && (k = b.getNodeByNodeId(j[f])), p.push({node:k, before:j[f], newId:q[f]})), j.hasOwnProperty(h) && (e.isNull(k) && (k = b.getNode(q)), n.push({node:k, before:j[h], newId:q[h]}))
     }
-    a = q.length;
-    b = m.length;
-    if(a + b !== 0) {
-      if(a + b > 10) {
-        c.reattach()
+    a = p.length;
+    g = n.length;
+    if(a + g !== 0) {
+      if(a + g > 10) {
+        b.reattach()
       }else {
         for(o = 0;o < a;o++) {
-          f = q[o], c.changeNodeId(f.node, f.before, f.newId)
+          f = p[o], b.changeNodeId(f.node, f.before, f.newId)
         }
-        for(o = 0;o < b;o++) {
-          f = m[o], c.changeParentId(f.node, f.before, f.newId)
+        for(o = 0;o < g;o++) {
+          f = n[o], b.changeParentId(f.node, f.before, f.newId)
         }
       }
       this.grid.event.trigger("onCollapserTreeChange", !1, !0)
@@ -7100,32 +7105,32 @@ jx.grid.Collapser = {};
     this.grid.event.trigger("onCollapserTreeChange", !1, !0)
   };
   a._onRemoveDatalist = function(a) {
-    for(var c = 0, b = a.length, e = this._tree;c < b;c++) {
-      e.destroyNodeByData(a[c])
+    for(var b = 0, e = a.length, f = this._tree;b < e;b++) {
+      f.destroyNodeByData(a[b])
     }
     this.grid.event.trigger("onCollapserTreeChange", !1, !0)
   };
-  a._onAfterFilter = function(a, c) {
-    var b = this._tree;
-    if(c.length > 0) {
-      var f = this.grid.dataMgr, h = a.length, i = f._idToIdx, p = f.idKey, k, q = 0, m = function(b) {
-        e.isNotNull(this.parent) ? (k = this.parent.data, e.isNotNull(k) && !f.has(k) && (a.push(k), c.remove(k), i[k[p]] = -1)) : b.stop = !0
+  a._onAfterFilter = function(a, b) {
+    var g = this._tree;
+    if(b.length > 0) {
+      var f = this.grid.dataMgr, h = a.length, j = f._idToIdx, q = f.idKey, k, p = 0, n = function(g) {
+        e.isNotNull(this.parent) ? (k = this.parent.data, e.isNotNull(k) && !f.has(k) && (a.push(k), b.remove(k), j[k[q]] = -1)) : g.stop = !0
       };
       f._reidx();
-      for(b.reattach();q < h;q++) {
-        b.getNode(a[q]).traverse({up:!0, fn:m})
+      for(g.reattach();p < h;p++) {
+        g.getNode(a[p]).traverse({up:!0, fn:n})
       }
-      b.reattach(a);
-      b.sortList(a);
+      g.reattach(a);
+      g.sortList(a);
       this.grid.event.trigger("onCollapserTreeChange", !1, !0)
     }else {
-      b.reattach(a), this.grid.event.trigger("onCollapserTreeChange", !1, !0), this._filter(a, c)
+      g.reattach(a), this.grid.event.trigger("onCollapserTreeChange", !1, !0), this._filter(a, b)
     }
   };
-  a._filter = function(a, c) {
+  a._filter = function(a, b) {
     a.length = 0;
     this._tree.root.traverseChildren({fn:function() {
-      this._shown ? a.push(this.data) : c.push(this.data)
+      this._shown ? a.push(this.data) : b.push(this.data)
     }})
   };
   a.toggleById = function(a) {
@@ -7144,40 +7149,40 @@ jx.grid.Collapser = {};
       return!1
     }
   };
-  a._dblclickCanvas = function(a, c) {
-    e.hasTagAndClass(a.target, "DIV", this._options.classCollapser) || this.toggleCollapse(this._tree.getNode(c.getDatarow()))
+  a._dblclickCanvas = function(a, b) {
+    e.hasTagAndClass(a.target, "DIV", this._options.classCollapser) || this.toggleCollapse(this._tree.getNode(b.getDatarow()))
   };
-  a._keydownColSel = function(a, c, b) {
+  a._keydownColSel = function(a, b, f) {
     a.preventDefault();
-    if(e.isNotNullAnd(c, b)) {
-      var a = this._tree, b = a.getNode(b.getDatarow())._collapsed, f = this.grid.dataMgr.datalist, h, i;
-      for(i in c) {
-        c.hasOwnProperty(i) && i !== "length" && (h = a.getNode(f[i]), b ? this.expand(h) : this.collapse(h))
+    if(e.isNotNullAnd(b, f)) {
+      var a = this._tree, f = a.getNode(f.getDatarow())._collapsed, i = this.grid.dataMgr.datalist, h, j;
+      for(j in b) {
+        b.hasOwnProperty(j) && j !== "length" && (h = a.getNode(i[j]), f ? this.expand(h) : this.collapse(h))
       }
       this._filterRefresh()
     }
   };
   a._makeTree = function() {
-    var a = this._tree, c, b;
+    var a = this._tree, b, e;
     a.__init();
-    b = a.map;
+    e = a.map;
     a = a.root;
     if(this._options.beginCollapsed) {
-      for(c in b) {
-        if(b.hasOwnProperty(c)) {
-          b[c]._collapsed = !0, b[c]._shown = !1
+      for(b in e) {
+        if(e.hasOwnProperty(b)) {
+          e[b]._collapsed = !0, e[b]._shown = !1
         }
       }
-      b = a.children;
-      var e = b.length;
-      for(c = 0;c < e;c++) {
-        b[c]._shown = !0
+      e = a.children;
+      var f = e.length;
+      for(b = 0;b < f;b++) {
+        e[b]._shown = !0
       }
       a._collapsed = !0
     }else {
-      for(c in b) {
-        if(b.hasOwnProperty(c)) {
-          b[c]._collapsed = !1, b[c]._shown = !0
+      for(b in e) {
+        if(e.hasOwnProperty(b)) {
+          e[b]._collapsed = !1, e[b]._shown = !0
         }
       }
       a._collapsed = !1
@@ -7189,58 +7194,58 @@ jx.grid.Collapser = {};
     this._tree.root._collapsed ? a.push(" " + this._options.classCollapsed) : a.push(" " + this._options.classExpanded);
     a.push("'></div>")
   };
-  a._onRenderCell = function(a, c, b, f, h) {
-    a = this._tree.getNode(b);
+  a._onRenderCell = function(a, b, f, i, h) {
+    a = this._tree.getNode(f);
     if(e.isNull(a)) {
       return null
     }
-    b = this.grid.dataMgr.getId(b);
-    c = this._options;
-    h.push("<div class='" + c.classIndent + "' style='width:" + c.indentSize * a.getLevel() + "px;'></div><div ");
-    a.isLeaf() ? h.push("class='" + c.classCollapser) : (h.push('onmousedown="JGM.m.Collapser.' + this.mid + ".toggleById('" + b + "');\" class='" + c.classCollapser), a._collapsed ? h.push(" " + c.classCollapsed) : h.push(" " + c.classExpanded));
+    f = this.grid.dataMgr.getId(f);
+    b = this._options;
+    h.push("<div class='" + b.classIndent + "' style='width:" + b.indentSize * a.getLevel() + "px;'></div><div ");
+    a.isLeaf() ? h.push("class='" + b.classCollapser) : (h.push('onmousedown="JGM.m.Collapser.' + this.mid + ".toggleById('" + f + "');\" class='" + b.classCollapser), a._collapsed ? h.push(" " + b.classCollapsed) : h.push(" " + b.classExpanded));
     h.push("'></div>")
   };
   a.getLevel = function(a) {
     a = this._tree.getNode(a);
     return e.isNull(a) ? null : a.getLevel()
   };
-  a.collapse = function(a, c) {
+  a.collapse = function(a, b) {
     if(!(a._collapsed === !0 || a.isLeaf())) {
       a._collapsed = !0;
       a.traverseChildren({fn:function(a) {
         this._shown = !1;
         this._collapsed && (a.propagate = !1)
       }});
-      var b = this._getCollapser(a.data);
-      b.length > 0 && this._setClass(b, !0);
-      if(!c && a.parent === this._tree.root && this._tree.root._collapsed === !1) {
+      var e = this._getCollapser(a.data);
+      e.length > 0 && this._setClass(e, !0);
+      if(!b && a.parent === this._tree.root && this._tree.root._collapsed === !1) {
         this._setClass(this._master, this._tree.root._collapsed = !0)
       }
     }
   };
-  a.expand = function(a, c) {
+  a.expand = function(a, b) {
     if(!(a._collapsed === !1 || a.isLeaf())) {
       a._collapsed = !1;
       a.traverseChildren({fn:function(a) {
         this._shown = !0;
         this._collapsed && (a.propagate = !1)
       }});
-      var b = this._getCollapser(a.data), e = this._tree;
-      b.length > 0 && this._setClass(b, !1);
-      if(!c && a.parent === e.root) {
-        for(var b = e.root.children, f = b.length, h = 0;h < f;h++) {
-          if(b[h]._collapsed) {
+      var e = this._getCollapser(a.data), f = this._tree;
+      e.length > 0 && this._setClass(e, !1);
+      if(!b && a.parent === f.root) {
+        for(var e = f.root.children, h = e.length, j = 0;j < h;j++) {
+          if(e[j]._collapsed) {
             return
           }
         }
-        this._setClass(this._master, e.root._collapsed = !1)
+        this._setClass(this._master, f.root._collapsed = !1)
       }
     }
   };
   a._setClass = function(a, b) {
     if(!e.isNull(a)) {
-      var g = this._options;
-      b ? a.addClass(g.classCollapsed).removeClass(g.classExpanded) : a.addClass(g.classExpanded).removeClass(g.classCollapsed)
+      var f = this._options;
+      b ? a.addClass(f.classCollapsed).removeClass(f.classExpanded) : a.addClass(f.classExpanded).removeClass(f.classCollapsed)
     }
   };
   a.toggleMaster = function() {
@@ -7264,25 +7269,25 @@ jx.grid.Collapser = {};
     return a
   };
   a._onCheckChange = function(a, b) {
-    var g = this._tree.getNode(a), f = this.checkMgr, l = [], i;
-    b ? (g.traverseChildren({fn:function(a) {
-      f.isChecked(this.data) ? a.propagate = !1 : (f._add(this.data), e.isNotNull(i = f.getCheckbox(this.data)) && l.push(i))
-    }}), g.traverseParent({up:!0, fn:function(a) {
-      e.isNull(this.data) || f.isChecked(this.data) ? a.stop = !0 : (f._add(this.data), e.isNotNull(i = f.getCheckbox(this.data)) && l.push(i))
-    }}), h.CheckManager._check($(l)), f._updateMaster()) : (g.traverseChildren({fn:function(a) {
-      f.isChecked(this.data) ? (f._remove(this.data), e.isNotNull(i = f.getCheckbox(this.data)) && l.push(i)) : a.propagate = !1
-    }}), g.traverseParent({up:!0, fn:function(a) {
-      if(e.isNull(this.data) || !f.isChecked(this.data)) {
+    var f = this._tree.getNode(a), i = this.checkMgr, l = [], j;
+    b ? (f.traverseChildren({fn:function(a) {
+      i.isChecked(this.data) ? a.propagate = !1 : (i._add(this.data), e.isNotNull(j = i.getCheckbox(this.data)) && l.push(j))
+    }}), f.traverseParent({up:!0, fn:function(a) {
+      e.isNull(this.data) || i.isChecked(this.data) ? a.stop = !0 : (i._add(this.data), e.isNotNull(j = i.getCheckbox(this.data)) && l.push(j))
+    }}), h.CheckManager._check($(l)), i._updateMaster()) : (f.traverseChildren({fn:function(a) {
+      i.isChecked(this.data) ? (i._remove(this.data), e.isNotNull(j = i.getCheckbox(this.data)) && l.push(j)) : a.propagate = !1
+    }}), f.traverseParent({up:!0, fn:function(a) {
+      if(e.isNull(this.data) || !i.isChecked(this.data)) {
         a.stop = !0
       }else {
         for(var b = 0, c = this.children, d = c.length;b < d;b++) {
-          if(f.isChecked(c[b].data)) {
+          if(i.isChecked(c[b].data)) {
             a.stop = !0;
             return
           }
         }
-        f._remove(this.data);
-        e.isNotNull(i = f.getCheckbox(this.data)) && l.push(i)
+        i._remove(this.data);
+        e.isNotNull(j = i.getCheckbox(this.data)) && l.push(j)
       }
     }}), h.CheckManager._uncheck($(l)))
   };
@@ -7322,10 +7327,10 @@ jx.grid.ColumnGroup = {};
   };
   var b = f.prototype;
   b.__init = function() {
-    var a = this.grid, b = a.dataMgr, c = this._options;
+    var a = this.grid, b = a.dataMgr, d = this._options;
     this.bindEvents();
-    a = this.collapser = h.create("Collapser", {grid:a, options:c.Collapser});
-    delete c.Collapser;
+    a = this.collapser = h.create("Collapser", {grid:a, options:d.Collapser});
+    delete d.Collapser;
     this._processData(b.all);
     a.__init();
     b.refresh()
@@ -7334,10 +7339,10 @@ jx.grid.ColumnGroup = {};
     var a;
     a = {onBeforeSetDatalist:this._removeAll, "onAfterSetDatalist onAddDatalist":this._processData, onAddDatarow:this._onAddDatarow, onUpdateDatarow:this._onUpdateDatarow, onUpdateDatalist:this._onUpdateDatalist, onRemoveDatarow:this._onRemoveDatarow, onRemoveDatalist:this._onRemoveDatalist, onDestroy:this._destroy};
     if(this._options.sumColKeys.length !== 0) {
-      var b = this.mid, c = this.grid.dataMgr._consts._notReal, e = 0, f, h = this._options.sumColKeys, i = this._options.prefix, p = h.length;
+      var b = this.mid, d = this.grid.dataMgr._consts._notReal, e = 0, f, h = this._options.sumColKeys, j = this._options.prefix, q = h.length;
       for(f = function(a, e, f, g, h) {
-        f[c] === b && h.push(i)
-      };e < p;e++) {
+        f[d] === b && h.push(j)
+      };e < q;e++) {
         a["onRenderCell_" + h[e] + "_prepend"] = f
       }
       a.onCollapserTreeChange = this._onCollapserTreeChange
@@ -7348,27 +7353,27 @@ jx.grid.ColumnGroup = {};
     h._destroy(this, {name:"ColumnGroup", path:"colGroup", property:"collapser", map:"_parentMap _options"})
   };
   b._processData = function(a) {
-    for(var b = a.length, c = this._options.key, f = this._options.padColKeys, h = this.grid.dataMgr, l = h._consts._notReal, i = h.idKey, p = this.collapser, k = p._tree._options.nodeKey, q = p._tree._options.parentKey, m = [], o = 0;o < b;o++) {
-      this._addData(a[o], c, i, l, k, q, f, m)
+    for(var b = a.length, d = this._options.key, f = this._options.padColKeys, h = this.grid.dataMgr, l = h._consts._notReal, j = h.idKey, q = this.collapser, k = q._tree._options.nodeKey, p = q._tree._options.parentKey, n = [], o = 0;o < b;o++) {
+      this._addData(a[o], d, j, l, k, p, f, n)
     }
-    m.length !== 0 && (h.all.pushList(m), h.makeCompositeKeyList(m, !0), h.addListToIdMap(m), e.isNotNull(p) && p._onAddDatalist(m));
-    return m
+    n.length !== 0 && (h.all.pushList(n), h.makeCompositeKeyList(n, !0), h.addListToIdMap(n), e.isNotNull(q) && q._onAddDatalist(n));
+    return n
   };
-  b._addData = function(a, b, c, e, f, h, i, p) {
-    var k = a[b], q = this._parentMap;
-    q.hasOwnProperty(k) || (b = this._makeParent(a, b, c, k, e, f, i), p.push(b), q[k] = b);
-    a[f] = a[c];
+  b._addData = function(a, b, d, e, f, h, j, q) {
+    var k = a[b], p = this._parentMap;
+    p.hasOwnProperty(k) || (b = this._makeParent(a, b, d, k, e, f, j), q.push(b), p[k] = b);
+    a[f] = a[d];
     a[h] = this.mid + k
   };
-  b._makeParent = function(a, b, c, e, f, h, i) {
-    var p = {}, k = 0, q = i.length;
-    p[f] = this.mid;
-    p[h] = this.mid + e;
-    p[b] = e;
-    for(p[c] = (this.grid.colDefMgr.getByKey(b).name || b) + ": " + e;k < q;k++) {
-      p[i[k]] = a[i[k]]
+  b._makeParent = function(a, b, d, e, f, h, j) {
+    var q = {}, k = 0, p = j.length;
+    q[f] = this.mid;
+    q[h] = this.mid + e;
+    q[b] = e;
+    for(q[d] = (this.grid.colDefMgr.getByKey(b).name || b) + ": " + e;k < p;k++) {
+      q[j[k]] = a[j[k]]
     }
-    return p
+    return q
   };
   b._isParent = function(a) {
     return a[this.grid.dataMgr._consts._notReal] === this.mid
@@ -7377,35 +7382,35 @@ jx.grid.ColumnGroup = {};
     this._parentMap = {}
   };
   b._onAddDatarow = function(a) {
-    var b = [], c = this._options, e = this.grid.dataMgr, f = this.collapser, h = f._tree._options;
-    this._addData(a, c.key, e.idKey, e._consts._notReal, h.nodeKey, h.parentKey, c.padColKeys, b);
+    var b = [], d = this._options, e = this.grid.dataMgr, f = this.collapser, h = f._tree._options;
+    this._addData(a, d.key, e.idKey, e._consts._notReal, h.nodeKey, h.parentKey, d.padColKeys, b);
     b.length !== 0 && (a = b[0], e.all.push(a), e.makeCompositeKey(a, !0), e.addToIdMap(a), f._onAddDatarow(a))
   };
-  b._onUpdateDatarow = function(a, b, c) {
+  b._onUpdateDatarow = function(a, b, d) {
     if(b.hasOwnProperty(this._options.key)) {
-      var e = this._options.key, b = b[e], c = c[e], f = this.mid, e = this.collapser, h = e._tree, i = h._options.parentKey, p = {}, k = {}, q = this._parentMap;
-      q.hasOwnProperty(b) || this._onAddDatarow(a);
-      p[i] = f + b;
-      k[i] = f + c;
-      e._onUpdateDatarow(a, p, k);
-      a = h.getNode(q[c]);
-      a.children.length === 0 && (this.grid.dataMgr.all.remove(a.data), delete q[c], e._onRemoveDatarow(a.data))
+      var e = this._options.key, b = b[e], d = d[e], f = this.mid, e = this.collapser, h = e._tree, j = h._options.parentKey, q = {}, k = {}, p = this._parentMap;
+      p.hasOwnProperty(b) || this._onAddDatarow(a);
+      q[j] = f + b;
+      k[j] = f + d;
+      e._onUpdateDatarow(a, q, k);
+      a = h.getNode(p[d]);
+      a.children.length === 0 && (this.grid.dataMgr.all.remove(a.data), delete p[d], e._onRemoveDatarow(a.data))
     }
   };
-  b._onUpdateDatalist = function(a, b, c) {
-    var e = this._options.key, f = this.mid, h = this.collapser, i = h._tree, p = i._options.parentKey, k, q = {};
+  b._onUpdateDatalist = function(a, b, d) {
+    var e = this._options.key, f = this.mid, h = this.collapser, j = h._tree, q = j._options.parentKey, k, p = {};
     k = {};
-    for(var m = [], o = [], n = [], s = 0, r = a.length;s < r;s++) {
-      k = b[s], k.hasOwnProperty(e) && (q = {}, q[p] = f + k[e], m.push(q), k = {}, k[p] = f + c[s][e], o.push(k), n.push(a[s]))
+    for(var n = [], o = [], m = [], r = 0, s = a.length;r < s;r++) {
+      k = b[r], k.hasOwnProperty(e) && (p = {}, p[q] = f + k[e], n.push(p), k = {}, k[q] = f + d[r][e], o.push(k), m.push(a[r]))
     }
-    if(n.length !== 0) {
+    if(m.length !== 0) {
       a = this._parentMap;
       b = [];
-      this._processData(n);
-      h._onUpdateDatalist(n, m, o);
-      s = 0;
-      for(r = o.length;s < r;s++) {
-        m = o[s][p], a.hasOwnProperty(m) && (n = i.getNode(a[m]), n.children.length === 0 && (delete a[m], b.push(n.data)))
+      this._processData(m);
+      h._onUpdateDatalist(m, n, o);
+      r = 0;
+      for(s = o.length;r < s;r++) {
+        n = o[r][q], a.hasOwnProperty(n) && (m = j.getNode(a[n]), m.children.length === 0 && (delete a[n], b.push(m.data)))
       }
       b.length !== 0 && (h._onRemoveDatalist(b), this.grid.dataMgr.all.removeList(b))
     }
@@ -7414,25 +7419,25 @@ jx.grid.ColumnGroup = {};
     this._isParent(a) ? delete this._parentMap[a[this._options.key]] : (a = this.collapser._tree.getNode(a).parent, a.children.length === 1 && this.grid.dataMgr.remove(a.data))
   };
   b._onRemoveDatalist = function(a) {
-    for(var b = 0, c = a.length;b < c;b++) {
+    for(var b = 0, d = a.length;b < d;b++) {
       this._onRemoveDatarow(a[b])
     }
   };
   b._onCollapserTreeChange = function() {
-    for(var a = {}, b = this._options.sumColKeys, c = b.length, e = 0, f = this.grid.dataMgr._consts._notReal, h = this.mid, i, p, k;e < c;e++) {
+    for(var a = {}, b = this._options.sumColKeys, d = b.length, e = 0, f = this.grid.dataMgr._consts._notReal, h = this.mid, j, q, k;e < d;e++) {
       a[b[e]] = 0
     }
     this.collapser._tree.root.traverseChildren({post:!0, fn:function() {
-      i = this.data;
+      j = this.data;
       e = 0;
-      if(i[f] === h) {
-        for(;e < c;e++) {
-          p = b[e], i[p] = a[p], a[p] = 0
+      if(j[f] === h) {
+        for(;e < d;e++) {
+          q = b[e], j[q] = a[q], a[q] = 0
         }
       }else {
-        if(!i.hasOwnProperty(f)) {
-          for(;e < c;e++) {
-            if(typeof(k = i[b[e]]) === "string") {
+        if(!j.hasOwnProperty(f)) {
+          for(;e < d;e++) {
+            if(typeof(k = j[b[e]]) === "string") {
               k = k.toFloat()
             }
             a[b[e]] += isNaN(k) ? 0 : k
@@ -7469,45 +7474,45 @@ jx.grid.DataCreator = {};
     this.grid.event.bind({onRenderModules:this._onRenderModules, onCreateCss:this._onCreateCss, onDestroy:this._destroy}, this)
   };
   b._onCreateCss = function() {
-    var a = "#" + this.grid.mid + " .", b = this._options, c = [];
-    c.push(a + b.classCreator + "{" + h._CONST._cssUnselectable + "float:left;width:100%;padding-left:8px;background:" + b.background + ";border-top:" + (b.borderThickness + "px " + b.border) + ";font:" + b.font + "}");
-    c.push(a + b.classCreator + " button{float:left;margin:" + b.padding + "px " + b.padding + "px 0 0;height:" + (b.height - 2 * b.padding) + "px}");
-    c.push(a + b.classCreator + " input{float:left;padding:0;margin-top:" + (b.height - b.inputHeight - 2 * b.inputBorderThickness) / 2 + "px;height:" + b.inputHeight + "px;border:" + b.inputBorderThickness + "px " + b.inputBorder + ";border-radius:" + b.inputBorderRadius + "px;-moz-border-radius:" + b.inputBorderRadius + "px}");
-    c.push(a + b.classCol + "{float:left;overflow:hidden;white-space:nowrap;line-height:" + b.height + "px;margin-right:" + b.inputMargin + "px}");
-    c.push(a + b.classColName + "{float:left;margin-right:" + b.nameMargin + "px}");
-    c.push(a + b.classCreatorIcon + "{background:url(" + b.creatorIconUrl + ") no-repeat center;width:" + b.creatorIconWidth + "px;height:" + b.creatorIconHeight + "px}");
-    return c.join("")
+    var a = "#" + this.grid.mid + " .", b = this._options, d = [];
+    d.push(a + b.classCreator + "{" + h._CONST._cssUnselectable + "float:left;width:100%;padding-left:8px;background:" + b.background + ";border-top:" + (b.borderThickness + "px " + b.border) + ";font:" + b.font + "}");
+    d.push(a + b.classCreator + " button{float:left;margin:" + b.padding + "px " + b.padding + "px 0 0;height:" + (b.height - 2 * b.padding) + "px}");
+    d.push(a + b.classCreator + " input{float:left;padding:0;margin-top:" + (b.height - b.inputHeight - 2 * b.inputBorderThickness) / 2 + "px;height:" + b.inputHeight + "px;border:" + b.inputBorderThickness + "px " + b.inputBorder + ";border-radius:" + b.inputBorderRadius + "px;-moz-border-radius:" + b.inputBorderRadius + "px}");
+    d.push(a + b.classCol + "{float:left;overflow:hidden;white-space:nowrap;line-height:" + b.height + "px;margin-right:" + b.inputMargin + "px}");
+    d.push(a + b.classColName + "{float:left;margin-right:" + b.nameMargin + "px}");
+    d.push(a + b.classCreatorIcon + "{background:url(" + b.creatorIconUrl + ") no-repeat center;width:" + b.creatorIconWidth + "px;height:" + b.creatorIconHeight + "px}");
+    return d.join("")
   };
   b._onRenderModules = function() {
-    for(var a = [], b = this.grid.colDefMgr.getAll(), c = b.length, f, h = this._options, l = h.classCol, i = h.classColName, p = this, k = this._creator, q = this._inputMap, m = 0, o = function(a) {
-      a.which === e.keyMapKeydown.enter && p._addData()
-    };m < c;m++) {
-      f = b[m], f.inputOnCreate === !0 && a.push("<div key='" + f.key + "' class='" + l + "'><div class='" + i + "'>" + f.name + "</div><input type='text' value='" + e.ifNull(f.defaultValue, "") + "' style='width:" + f.width + "px'/></div>")
+    for(var a = [], b = this.grid.colDefMgr.getAll(), d = b.length, f, h = this._options, l = h.classCol, j = h.classColName, q = this, k = this._creator, p = this._inputMap, n = 0, o = function(a) {
+      a.which === e.keyMapKeydown.enter && q._addData()
+    };n < d;n++) {
+      f = b[n], f.inputOnCreate === !0 && a.push("<div key='" + f.key + "' class='" + l + "'><div class='" + j + "'>" + f.name + "</div><input type='text' value='" + e.ifNull(f.defaultValue, "") + "' style='width:" + f.width + "px'/></div>")
     }
     k[0].innerHTML = a.join("") + "<button type='button' onclick='JGM.m.DataCreator." + this.mid + "._addData()'>등록</button><button type='button' onclick='JGM.m.DataCreator." + this.mid + "._reset()'>초기화</button>";
-    for(m = 0;m < c;m++) {
-      f = b[m], f.inputOnCreate === !0 && (q[f.key] = k.find("div[key='" + f.key + "'] input").keyup(o))
+    for(n = 0;n < d;n++) {
+      f = b[n], f.inputOnCreate === !0 && (p[f.key] = k.find("div[key='" + f.key + "'] input").keyup(o))
     }
     e.isNotNull(this.grid.menubar) && (this.grid.menubar.addIcon(h.classCreatorIcon, "데이터 로우를 추가합니다.", h.creatorIconWidth, h.creatorIconHeight, function() {
       k.toggle("fast")
     }), k.hide())
   };
   b._addData = function() {
-    var a, b = this._inputMap, c = this.grid.colDefMgr, e = {}, f = c.getAll(), h = f.length, i = 0;
+    var a, b = this._inputMap, d = this.grid.colDefMgr, e = {}, f = d.getAll(), h = f.length, j = 0;
     for(a in b) {
-      b.hasOwnProperty(a) && c.getByKey(a)
+      b.hasOwnProperty(a) && d.getByKey(a)
     }
-    for(;i < h;i++) {
-      c = f[i], a = c.key, b.hasOwnProperty(a) ? e[a] = b[a][0].value : c.defaultValue !== void 0 && (e[a] = c.defaultValue)
+    for(;j < h;j++) {
+      d = f[j], a = d.key, b.hasOwnProperty(a) ? e[a] = b[a][0].value : d.defaultValue !== void 0 && (e[a] = d.defaultValue)
     }
     this.grid.event.trigger("onAfterDataCreate", [e], !0);
     this.grid.dataMgr.add(e, {isNew:!0})
   };
   b._reset = function() {
-    var a, b = this.grid.colDefMgr, c, e = this._inputMap;
+    var a, b = this.grid.colDefMgr, d, e = this._inputMap;
     for(a in e) {
-      if(e.hasOwnProperty(a) && (c = b.getByKey(a), c.defaultValue !== void 0)) {
-        e[a][0].value = c.defaultValue
+      if(e.hasOwnProperty(a) && (d = b.getByKey(a), d.defaultValue !== void 0)) {
+        e[a][0].value = d.defaultValue
       }
     }
   };
@@ -7547,20 +7552,20 @@ jx.grid.SearchManager = {};
   var b = f.prototype;
   b._onCreateCss = function() {
     var a = "#" + this.grid.mid + " .", b = this._options, c = b.borderThickness + "px " + b.border, d = "border-radius:" + b.tagsBorderRadius + "px;-moz-border-radius:" + b.tagsBorderRadius + "px", e = b.advButtonBorderThickness + "px " + b.advButtonBorder, f = b.advButtonBorderThickness + "px " + b.advButtonBorderHover, g = b.advButtonBorderThickness + "px " + b.advButtonBorderActive, i = b.advButtonBorderThickness + "px " + b.advButtonBorderOpened, j = b.tagsHeight - 2 * b.tagsPadding, k = j - 
-    2 * b.advButtonBorderThickness, l = j - 2 * b.tagBorderThickness, m = a + b.classMask, o = a + b.classSearchbar, n = a + b.classAdvButton, q = a + b.classRemoveTag, p = [];
+    2 * b.advButtonBorderThickness, l = j - 2 * b.tagBorderThickness, m = a + b.classMask, n = a + b.classSearchbar, o = a + b.classAdvButton, q = a + b.classRemoveTag, p = [];
     p.push(m + "{" + h._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + b.background + "}");
     p.push(m + " button{margin:0;padding:0 3px}");
     p.push(m + " input{border:" + b.inputBorder + ";padding:" + b.inputPadding + "}");
-    p.push(o + "{text-align:" + b.searchbarAlign + ";border-bottom:" + c + "}");
-    p.push(o + " input{width:" + b.searchbarWidth + ";margin:" + b.searchbarMargin + "px 0;height:" + b.searchbarHeight + "px;" + d + "}");
+    p.push(n + "{text-align:" + b.searchbarAlign + ";border-bottom:" + c + "}");
+    p.push(n + " input{width:" + b.searchbarWidth + ";margin:" + b.searchbarMargin + "px 0;height:" + b.searchbarHeight + "px;" + d + "}");
     p.push(a + b.classTagbar + "{cursor:default;height:" + (b.tagsHeight - b.tagsPadding) + "px;padding:" + b.tagsPadding + "px 0 0 " + b.tagsPadding + "px;border-bottom:" + c + "}");
-    p.push(n + "{float:left;margin-right:" + b.tagsPadding + "px;background:" + b.advButtonBg + ";border:" + e + ";padding:0 " + b.advButtonPadding + "px;" + d + "}");
-    p.push(n + ":hover{background:" + b.advButtonBgHover + ";border:" + f + "}");
-    p.push(n + ".opened{background:" + b.advButtonBgOpened + ";border:" + i + "}");
-    p.push(n + ":active{background:" + b.advButtonBgActive + ";border:" + g + "}");
+    p.push(o + "{float:left;margin-right:" + b.tagsPadding + "px;background:" + b.advButtonBg + ";border:" + e + ";padding:0 " + b.advButtonPadding + "px;" + d + "}");
+    p.push(o + ":hover{background:" + b.advButtonBgHover + ";border:" + f + "}");
+    p.push(o + ".opened{background:" + b.advButtonBgOpened + ";border:" + i + "}");
+    p.push(o + ":active{background:" + b.advButtonBgActive + ";border:" + g + "}");
     p.push(a + b.classAdvButtonName + "{float:left;color:" + b.advButtonColor + ";font:" + b.advButtonFont + ";line-height:" + k + "px}");
     p.push(a + b.classAdvButtonIcon + "{float:left;height:" + k + "px;margin-left:" + b.advButtonIconMargin + "px;background:url(" + b.advButtonIconUrl + ") no-repeat center;width:" + b.advButtonIconWidth + "px}");
-    p.push(n + ".opened ." + b.classAdvButtonIcon + "{background:url(" + b.advButtonIconCloseUrl + ") no-repeat center}");
+    p.push(o + ".opened ." + b.classAdvButtonIcon + "{background:url(" + b.advButtonIconCloseUrl + ") no-repeat center}");
     p.push(a + b.classTag + "{float:left;border:" + b.tagBorderThickness + "px " + b.tagBorder + ";margin:0 " + b.tagsPadding + "px " + b.tagsPadding + "px 0;padding:0 " + b.tagPadding + "px;background:" + b.tagBackground + ";" + d + "}");
     p.push(a + b.classTagName + "{float:left;color:" + b.tagColor + ";font:" + b.tagFont + ";line-height:" + l + "px}");
     p.push(q + "{float:left;margin-left:" + b.tagPadding + "px;background:url(" + b.tagRemoveIconUrl + ") no-repeat center;width:" + b.tagRemoveIconWidth + "px;height:" + l + "px}");
@@ -7661,45 +7666,45 @@ jx.grid.SearchManager = {};
   };
   b._onFilter = function(a, b) {
     if(!(this._global.length === 0 && e.isEmptyObj(this._codeMap))) {
-      var c, d = this._tagMap, f, g, h = a.length, i, j = this._filterMap, k = this.constructor.CONST.and, l, m = this._global.length > 0, o, n;
+      var c, d = this._tagMap, f, g, h = a.length, i, j = this._filterMap, k = this.constructor.CONST.and, l, m = this._global.length > 0, n, o;
       if(m) {
-        var p = this._global, q;
+        var q = this._global, p;
         i = this.grid.colDefMgr.get().filter(function(a) {
           return!a.noSearch
         });
         var r = i.length, s = [];
-        for(o = 0;o < r;o++) {
-          s.push(i[o].key)
+        for(n = 0;n < r;n++) {
+          s.push(i[n].key)
         }
       }
-      o = h - 1;
-      a:for(;o >= 0;o--) {
-        h = a[o];
+      n = h - 1;
+      a:for(;n >= 0;n--) {
+        h = a[n];
         if(m) {
-          i = p.slice();
+          i = q.slice();
           c = 0;
           for(;i.length !== 0 && c < r;c++) {
-            if(!e.isNull(q = h[s[c]])) {
-              e.isString(q) || (q = q.toString());
-              for(n = i.length - 1;n >= 0;n--) {
-                q.indexOf(i[n]) !== -1 && i.removeAt(n)
+            if(!e.isNull(p = h[s[c]])) {
+              e.isString(p) || (p = p.toString());
+              for(o = i.length - 1;o >= 0;o--) {
+                p.indexOf(i[o]) !== -1 && i.removeAt(o)
               }
             }
           }
           if(i.length !== 0) {
-            a.removeAt(o);
+            a.removeAt(n);
             b.push(h);
             continue a
           }
         }
         for(f in d) {
           if(d.hasOwnProperty(f)) {
-            if(n = d[f], c = j[f].andor, i = h[f], c === k) {
-              for(g in n) {
-                if(n.hasOwnProperty(g)) {
-                  for(l in c = n[g], c) {
+            if(o = d[f], c = j[f].andor, i = h[f], c === k) {
+              for(g in o) {
+                if(o.hasOwnProperty(g)) {
+                  for(l in c = o[g], c) {
                     if(c.hasOwnProperty(l) && !c[l].fn(i)) {
-                      a.removeAt(o);
+                      a.removeAt(n);
                       b.push(h);
                       continue a
                     }
@@ -7707,16 +7712,16 @@ jx.grid.SearchManager = {};
                 }
               }
             }else {
-              for(g in n) {
-                if(n.hasOwnProperty(g)) {
-                  for(l in c = n[g], c) {
+              for(g in o) {
+                if(o.hasOwnProperty(g)) {
+                  for(l in c = o[g], c) {
                     if(c.hasOwnProperty(l) && c[l].fn(i)) {
                       continue a
                     }
                   }
                 }
               }
-              a.removeAt(o);
+              a.removeAt(n);
               b.push(h);
               continue a
             }
@@ -7837,11 +7842,11 @@ jx.grid.SearchManager = {};
     if(k[c].hasOwnProperty(d)) {
       return!1
     }
-    var l, m, n, o, p = this._filterMap[a], q;
+    var l, m, n, o, q = this._filterMap[a], p;
     for(n in k) {
       if(k.hasOwnProperty(n)) {
         for(o in l = k[n], l) {
-          l.hasOwnProperty(o) && (q = l[o], m = e.isNotNull(p.parser) ? p.parser(o) : o, f._checkDisable(h.type, q.option.type, i, d, m) && (delete j[a + "@T" + q.option.tag + "@B" + m], q.tag.remove(), delete q.tag, delete q.option, delete q.fn, delete l[o]))
+          l.hasOwnProperty(o) && (p = l[o], m = e.isNotNull(q.parser) ? q.parser(o) : o, f._checkDisable(h.type, p.option.type, i, d, m) && (delete j[a + "@T" + p.option.tag + "@B" + m], p.tag.remove(), delete p.tag, delete p.option, delete p.fn, delete l[o]))
         }
       }
     }
@@ -7883,66 +7888,66 @@ jx.grid.SearchManager = {};
     var e = this._options;
     return this._tagMap[a][b.tag][c] = {tag:$("<div class='" + e.classTag + "' title='" + b.comment(d, c) + "'><div class='" + e.classTagName + "'>@" + d + " " + b.tag + " " + c + "</div><div class='" + e.classRemoveTag + "' title='필터 제거' onclick=\"JGM.m.SearchManager." + this.mid + "._removeOption('" + a + "','" + b.tag + "','" + c + "')\"></div></div>").appendTo(this._tag), option:b, fn:b.fn(c)}
   };
-  var a = f.CONST = {lt:0, lte:1, eq:2, neq:3, gt:4, gte:5, and:6, or:7, T:8, F:9}, b = a.lt, d = a.gt, c = a.eq, g = a.neq, j = a.and, l = a.or, i = a.T, a = a.F, p = f._comparator = {}, k = p[b] = function(a, b) {
+  var a = f.CONST = {lt:0, lte:1, eq:2, neq:3, gt:4, gte:5, and:6, or:7, T:8, F:9}, b = a.lt, c = a.gt, d = a.eq, g = a.neq, i = a.and, l = a.or, j = a.T, a = a.F, q = f._comparator = {}, k = q[b] = function(a, b) {
     return a <= b
-  }, q = p[d] = function(a, b) {
+  }, p = q[c] = function(a, b) {
     return a >= b
-  }, m = p[c] = function(a, b) {
+  }, n = q[d] = function(a, b) {
     return a === b
-  }, i = p[i] = function() {
+  }, j = q[j] = function() {
     return!0
-  }, o = f._disableMap = {}, n = o[b] = {}, s = o[d] = {}, r = o[c] = {}, o = o[g] = {};
-  p[a] = function() {
+  }, o = f._disableMap = {}, m = o[b] = {}, r = o[c] = {}, s = o[d] = {}, o = o[g] = {};
+  q[a] = function() {
     return!1
   };
-  n[b] = {};
-  n[b][j] = i;
-  n[b][l] = i;
-  n[d] = {};
-  n[d][j] = k;
-  n[d][l] = q;
-  n[c] = {};
-  n[c][j] = i;
-  n[c][l] = q;
-  n[g] = {};
-  n[g][j] = k;
-  n[g][l] = i;
-  s[b] = {};
-  s[b][j] = q;
-  s[b][l] = k;
-  s[d] = {};
-  s[d][j] = i;
-  s[d][l] = i;
-  s[c] = {};
-  s[c][j] = i;
-  s[c][l] = k;
-  s[g] = {};
-  s[g][j] = q;
-  s[g][l] = i;
+  m[b] = {};
+  m[b][i] = j;
+  m[b][l] = j;
+  m[c] = {};
+  m[c][i] = k;
+  m[c][l] = p;
+  m[d] = {};
+  m[d][i] = j;
+  m[d][l] = p;
+  m[g] = {};
+  m[g][i] = k;
+  m[g][l] = j;
   r[b] = {};
-  r[b][j] = i;
+  r[b][i] = p;
   r[b][l] = k;
-  r[d] = {};
-  r[d][j] = i;
-  r[d][l] = q;
   r[c] = {};
-  r[c][j] = i;
-  r[c][l] = m;
+  r[c][i] = j;
+  r[c][l] = j;
+  r[d] = {};
+  r[d][i] = j;
+  r[d][l] = k;
   r[g] = {};
-  r[g][j] = i;
-  r[g][l] = i;
+  r[g][i] = p;
+  r[g][l] = j;
+  s[b] = {};
+  s[b][i] = j;
+  s[b][l] = k;
+  s[c] = {};
+  s[c][i] = j;
+  s[c][l] = p;
+  s[d] = {};
+  s[d][i] = j;
+  s[d][l] = n;
+  s[g] = {};
+  s[g][i] = j;
+  s[g][l] = j;
   o[b] = {};
-  o[b][j] = q;
-  o[b][l] = i;
-  o[d] = {};
-  o[d][j] = k;
-  o[d][l] = i;
+  o[b][i] = p;
+  o[b][l] = j;
   o[c] = {};
-  o[c][j] = i;
-  o[c][l] = i;
+  o[c][i] = k;
+  o[c][l] = j;
+  o[d] = {};
+  o[d][i] = j;
+  o[d][l] = j;
   o[g] = {};
-  o[g][j] = m;
-  o[g][l] = i;
+  o[g][i] = n;
+  o[g][l] = j;
   f._checkDisable = function(a, b, c, d, e) {
     try {
       return this._disableMap[a][b][c](d, e)
@@ -7950,14 +7955,14 @@ jx.grid.SearchManager = {};
       return!1
     }
   };
-  f._numberFilter = [{name:"gt", tag:">", type:d, comment:function(a, b) {
+  f._numberFilter = [{name:"gt", tag:">", type:c, comment:function(a, b) {
     return a + " 이(가) " + b + "보다 큰"
   }, fn:function(a) {
     e.isString(a) && (a = a.toFloat());
     return function(b) {
       return b > a
     }
-  }}, {name:"gte", tag:">=", type:d, comment:function(a, b) {
+  }}, {name:"gte", tag:">=", type:c, comment:function(a, b) {
     return a + " 이(가) " + b + "보다 크거나 같은"
   }, fn:function(a) {
     e.isString(a) && (a = a.toFloat());
@@ -7978,7 +7983,7 @@ jx.grid.SearchManager = {};
     return function(b) {
       return b <= a
     }
-  }}, {name:"eq", tag:"=", type:c, comment:function(a, b) {
+  }}, {name:"eq", tag:"=", type:d, comment:function(a, b) {
     return a + " 이(가) " + b + "인"
   }, fn:function(a) {
     e.isString(a) && (a = a.toFloat());
@@ -8011,14 +8016,14 @@ jx.grid.SearchManager = {};
     return function(b) {
       return b.toLowerCase() <= a
     }
-  }}, {name:"from", tag:">=", type:d, comment:function(a, b) {
+  }}, {name:"from", tag:">=", type:c, comment:function(a, b) {
     return a + " 이(가) " + b + "보다 사전에서 이후인"
   }, fn:function(a) {
     a = $.trim(a).toLowerCase();
     return function(b) {
       return b.toLowerCase() >= a
     }
-  }}, {name:"equals", tag:"=", type:c, comment:function(a, b) {
+  }}, {name:"equals", tag:"=", type:d, comment:function(a, b) {
     return a + " 이(가) " + b + "와(과) 같은"
   }, fn:function(a) {
     a = $.trim(a).toLowerCase();

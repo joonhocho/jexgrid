@@ -32,6 +32,10 @@ goog.provide('jx.grid.ViewportManager');
 		OPTGROUP: true,
 		OPTION: true,
 		BUTTON: true
+	},
+	allowInputType = {
+		checkbox: true,
+		radio: true
 	};
 goog.exportSymbol('jx.grid.ViewportManager', ViewportManager);
 /**
@@ -2253,8 +2257,9 @@ prototype._dblclick = function(e) {
 prototype._triggerMouseEvent = function(e, events) {
 	var target = e.target;
 	if (target) {
-		var tag = target.tagName;
-		if (!inputTags[tag]) {
+		var tag = target.tagName,
+			type = target.type && target.type.toLowerCase();
+		if (allowInputType[type] || !inputTags[tag]) {
 			var node = this._getClosestCell(e.target);
 			if (node) {
 				var cell = new Cell({'grid':this.grid, 'node':node}),
