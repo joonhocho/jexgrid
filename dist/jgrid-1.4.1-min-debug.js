@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 20
- * Date: Thu Aug 11 10:17:33 KST 2011
+ * JexGrid Build 21
+ * Date: Wed Aug 17 10:19:22 KST 2011
  */
 /*
 AUTHOR
@@ -2077,7 +2077,7 @@ jx.events.EventDispatcher = {};
       var a = (a + "").toLowerCase(), c = this._handlers;
       if(c.hasOwnProperty(a)) {
         for(var g = c[a], j = -1;(j = g.indexOf(d, j + 1)) !== -1;) {
-          g.splice(j, 1)
+          g.splice(j--, 1)
         }
         g.length === 0 && delete c[a]
       }
@@ -2097,7 +2097,7 @@ jx.events.EventDispatcher = {};
     var d = this._handlers, c = (a.type + "").toLowerCase();
     a.target = this;
     if(d.hasOwnProperty(c)) {
-      for(var d = d[c], c = 0, g = d.length, j;c < g && !a.stopPropagation;c++) {
+      for(var d = d[c].slice(), c = 0, g = d.length, j;c < g && !a.stopPropagation;c++) {
         j = d[c], j.handleEvent ? j.handleEvent(a) : j.call(this, a)
       }
     }
