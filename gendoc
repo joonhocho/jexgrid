@@ -1,0 +1,88 @@
+#!/usr/bin/php
+<?php
+$gridPath = __DIR__;
+$pathlen = strlen($gridPath);
+
+/**
+ * Build Path Settings
+ */
+$encoding = 'euc-kr';
+$binPath = "$gridPath/bin";
+$docconf = "$binPath/docconf.json";
+$rawsrcPath = "$gridPath/src";
+$docpath = "$gridPath/doc";
+$jsdocPath = "$gridPath/../lib/jsdoc";
+$jsdoc = "$gridPath/../lib/jsdoc/jsdoc";
+$srcPath = "$gridPath/production";
+$libPath = "$gridPath/externs";
+$srcExtPath = "$gridPath/srcexterns";
+$versionFile = "$gridPath/VERSION";
+$buildFile = "$gridPath/BUILD";
+$licenseFile = "$gridPath/LICENSE";
+$srcPattern = '/.*\.js$/';
+
+$version = file_get_contents($versionFile);
+if (!$version) {
+	die("Could not open the version file: $versionFile\n");
+}
+$version = trim($version);
+
+$build = file_get_contents($buildFile);
+if (!$build) {
+	die("Could not open the version file: $buildFile\n");
+}
+$build = ((int)trim($build)) + 1;
+file_put_contents($buildFile, $build);
+$buildtime = date("D M j G:i:s T Y");
+
+$buildinfo = "/**\n * JexGrid Build $build\n * Date: $buildtime\n */\n";
+echo "\n$buildinfo\n";
+
+echo "\nJexGrid v$version build $build...\n\n";
+
+$license = file_get_contents($licenseFile);
+if (!$license) {
+	die("Could not open the version file: $licenseFile\n");
+}
+$license = "/*\n" . trim($license) . "\n*/\n";
+//echo "\n$license\n";
+
+// read in source files from src path using src pattern
+echo "[ reading debugging source files... ]\n\n";
+$dirIterator = new RecursiveDirectoryIterator($rawsrcPath);
+$iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::SELF_FIRST);
+$regexIterator = new RegexIterator($iterator, $srcPattern);
+$size = 0;
+$debugfilenames = array();
+foreach ($regexIterator as $file) {
+	if ($file->isFile()) {
+		$filename = $file->getPathname();
+		echo "found \"$filename\": " . round($file->getSize() / 1024, 1) . "KB, " . date("Y-m-d", $file->getMTime()) . "\n";
+		$size += $file->getSize();
+		$debugfilenames[$filename] = $filename;
+	}
+}
+echo "\n\n";
+
+
+/**
+OPTIONS:
+-t or --template <value> The name of the template to use. Default: the "default" template
+-c or --configure <value> The path to the configuration file. Default: jsdoc __dirname + /conf.json
+-e or --encoding <value> Assume this encoding when reading all source files. Default: your system default encoding
+-n or --nocode Ignore doclets that don't explicitly provide a symbol name.
+-T or --test Run all tests and quit.
+-d or --destination <value> The path to the output folder. Use "console" to dump data to the console. Default: console
+-V or --validate Validate the results produced by parsing the source code.
+-r or --recurse Recurse into subdirectories when scanning for source code files.
+-h or --help Print this message and quit.
+-X or --expel Dump all found doclet internals to console and quit.
+-q or --query <value> Provide a querystring to define custom variable names/values to add to the options hash.
+**/
+
+//generate doc
+$command = $jsdoc . " -c $docconf -d $docpath " . implode(' ', $debugfilenames);
+echo $command . "\n\n";
+system($command);
+
+echo "\n\n[ finished genarating documents... ]\n\n";
