@@ -11,8 +11,10 @@ $binPath = "$gridPath/bin";
 $docconf = "$binPath/docconf.json";
 $rawsrcPath = "$gridPath/src";
 $docpath = "$gridPath/doc";
-$jsdocPath = "$gridPath/../lib/jsdoc";
-$jsdoc = "$gridPath/../lib/jsdoc/jsdoc";
+$jsdocPath = "$gridPath/../lib/jsdoc-toolkit";
+$jsdocjar = "$jsdocPath/jsrun.jar";
+$jsdocscript = "$jsdocPath/app/run.js";
+$template = "$jsdocPath/templates/jsdoc";
 $srcPath = "$gridPath/production";
 $libPath = "$gridPath/externs";
 $srcExtPath = "$gridPath/srcexterns";
@@ -81,7 +83,7 @@ OPTIONS:
 **/
 
 //generate doc
-$command = $jsdoc . " -e EUC-KR -c $docconf -d $docpath $rawsrcPath/BaseModule.js";// . implode(' ', $debugfilenames);
+$command = "java -jar $jsdocjar $jsdocscript $rawsrcPath/ --encoding=EUC-KR --directory=$docpath --template=$template --verbose --recursive";// . implode(' ', $debugfilenames);
 echo $command . "\n\n";
 system($command);
 

@@ -1,0 +1,489 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=EUC-KR"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="NAME">console</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console.log</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'reading javascript source "DataCreator.js"...'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="COMM">//IF_DEBUG</span><span class="WHIT">
+<span class='line'>  2</span> 
+<span class='line'>  3</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'jx.util'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'jx.grid'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'jx.grid.BaseModule'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'jx.grid.Grid'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  7</span> 
+<span class='line'>  8</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'jx.grid.DataCreator'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  9</span> 
+<span class='line'> 10</span> </span><span class="COMM">/*!
+<span class='line'> 11</span>  * AUTHOR
+<span class='line'> 12</span>  *   The JexGrid was written and is maintained by:
+<span class='line'> 13</span>  *       Joon Ho Cho &lt;joonho1101@gmail.com>
+<span class='line'> 14</span>  * COPYRIGHT
+<span class='line'> 15</span>  *   Copyright (c) 2010-2011, WebCash Inc. All rights reserved.
+<span class='line'> 16</span>  */</span><span class="WHIT">
+<span class='line'> 17</span> 
+<span class='line'> 18</span> </span><span class="COMM">/**
+<span class='line'> 19</span>   JGM
+<span class='line'> 20</span>   @scope JGM
+<span class='line'> 21</span>   */</span><span class="WHIT">
+<span class='line'> 22</span> 
+<span class='line'> 23</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">'use strict'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">JGM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.getObjectByName</span><span class="PUNC">(</span><span class="STRN">'jx.grid'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">	</span><span class="NAME">Util</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.getObjectByName</span><span class="PUNC">(</span><span class="STRN">'jx.util'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">	</span><span class="NAME">BaseModule</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.getObjectByName</span><span class="PUNC">(</span><span class="STRN">'jx.grid.BaseModule'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 27</span> 
+<span class='line'> 28</span> </span><span class="WHIT"> </span><span class="NAME">goog.exportSymbol</span><span class="PUNC">(</span><span class="STRN">'jx.grid.DataCreator'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">DataCreator</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> 
+<span class='line'> 30</span> </span><span class="WHIT"> </span><span class="COMM">/**
+<span class='line'> 31</span>    DataCreator 모듈. 새로운 데이터의 생성과 추가를 담당하는 모듈입니다.
+<span class='line'> 32</span>    DataCreator 클래스. 새로운 데이터의 생성과 추가를 담당합니다.
+<span class='line'> 33</span> 
+<span class='line'> 34</span>    @class {DataCreator} JGM.DataCreator
+<span class='line'> 35</span> 
+<span class='line'> 36</span>    @author 조준호
+<span class='line'> 37</span>    @since 1.1.1
+<span class='line'> 38</span>    @version 1.1.7
+<span class='line'> 39</span>    */</span><span class="WHIT">
+<span class='line'> 40</span> 
+<span class='line'> 41</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 42</span> 	  DataCreator 컨스트럭터 입니다.
+<span class='line'> 43</span> 
+<span class='line'> 44</span> 	  @constructor {DataCreator} DataCreator
+<span class='line'> 45</span> 	  @param {Object} args - DataCreator 모듈 파라미터 오브젝트
+<span class='line'> 46</span> 	  @... {jQuery} args.container - DataCreator 를 넣을 컨테이너 오브젝트
+<span class='line'> 47</span> 	  @... {jx.grid.Grid} args.grid - DataCreator 를 포함하는 {@link jx.grid.Grid} 인스턴스
+<span class='line'> 48</span> 	  @... {Object} args.options - DataCreator 옵션 오브젝트
+<span class='line'> 49</span> 	  @returns {DataCreator} DataCreator 모듈 인스턴스를 리턴합니다.
+<span class='line'> 50</span> 
+<span class='line'> 51</span> 	  @author 조준호
+<span class='line'> 52</span> 	  @since 1.1.1
+<span class='line'> 53</span> 	  @version 1.1.1
+<span class='line'> 54</span> 	  */</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">	</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">DataCreator</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 57</span> 		  {@link JGM} 이 할당해주는 DataCreator 모듈 고유 아이디입니다. 읽기 전용.
+<span class='line'> 58</span> 
+<span class='line'> 59</span> 		  @var {string} mid
+<span class='line'> 60</span> 
+<span class='line'> 61</span> 		  @author 조준호
+<span class='line'> 62</span> 		  @since 1.1.1
+<span class='line'> 63</span> 		  @version 1.1.1
+<span class='line'> 64</span> 		  */</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">		</span><span class="NAME">this.mid</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args.mid</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> 
+<span class='line'> 67</span> </span><span class="WHIT">		</span><span class="NAME">this._ctnr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'container'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> 
+<span class='line'> 69</span> </span><span class="WHIT">		</span><span class="NAME">this._creator</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 70</span> 
+<span class='line'> 71</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 72</span> 		  DataCreator 를 포함하는 {@link jx.grid.Grid} 인스턴스.
+<span class='line'> 73</span> 
+<span class='line'> 74</span> 		  @var {jx.grid.Grid} grid
+<span class='line'> 75</span> 
+<span class='line'> 76</span> 		  @author 조준호
+<span class='line'> 77</span> 		  @since 1.1.1
+<span class='line'> 78</span> 		  @version 1.1.1
+<span class='line'> 79</span> 		  */</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">		</span><span class="NAME">this.grid</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args.grid</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 81</span> 
+<span class='line'> 82</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 83</span> 		  새로운 데이터 생성을 관리하는 {@link JGM.DataCreator DataCreator} 인스턴스 입니다.
+<span class='line'> 84</span> 
+<span class='line'> 85</span> 		  @var {JGM.DataCreator} jx.grid.Grid.creator
+<span class='line'> 86</span> 
+<span class='line'> 87</span> 		  @author 조준호
+<span class='line'> 88</span> 		  @since 1.1.6
+<span class='line'> 89</span> 		  @version 1.1.6
+<span class='line'> 90</span> 		  */</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">		</span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'creator'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> 
+<span class='line'> 93</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 94</span> 		  DataCreator 모듈의 기본 옵션 값들을 정의합니다.
+<span class='line'> 95</span> 
+<span class='line'> 96</span> 		  @type {Object} options
+<span class='line'> 97</span> 		  @private
+<span class='line'> 98</span> 
+<span class='line'> 99</span> 		  @author 조준호
+<span class='line'>100</span> 		  @since 1.1.1
+<span class='line'>101</span> 		  @version 1.1.1
+<span class='line'>102</span> 		  */</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">options</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">			</span><span class="COMM">/**
+<span class='line'>105</span> 			  모듈의 기본 배경을 정합니다. &lt;br>기본값:&lt;code>"#dfdfdf"&lt;/code>
+<span class='line'>106</span> 
+<span class='line'>107</span> 			  @type {string=} JGM.DataCreator.options.background
+<span class='line'>108</span> 			  @private
+<span class='line'>109</span> 
+<span class='line'>110</span> 			  @author 조준호
+<span class='line'>111</span> 			  @since 1.1.1
+<span class='line'>112</span> 			  @version 1.1.1
+<span class='line'>113</span> 			  */</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="STRN">'background'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"#dfdfdf"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>115</span> 
+<span class='line'>116</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>117</span> 					모듈의 border 의 두께를 정합니다. &lt;br>기본값:&lt;code>0&lt;/code>
+<span class='line'>118</span> 
+<span class='line'>119</span> 					@type {number=} JGM.DataCreator.options.borderThickness
+<span class='line'>120</span> 					@private
+<span class='line'>121</span> 
+<span class='line'>122</span> 					@author 조준호
+<span class='line'>123</span> 					@since 1.1.1
+<span class='line'>124</span> 					@version 1.1.1
+<span class='line'>125</span> 					*/</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">				  </span><span class="STRN">'borderThickness'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>127</span> 
+<span class='line'>128</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>129</span> 					모듈의 border 스타일을 정합니다. &lt;br>기본값:&lt;code>"solid #D6D6D6"&lt;/code>
+<span class='line'>130</span> 
+<span class='line'>131</span> 					@type {string=} JGM.DataCreator.options.border
+<span class='line'>132</span> 					@private
+<span class='line'>133</span> 
+<span class='line'>134</span> 					@author 조준호
+<span class='line'>135</span> 					@since 1.1.1
+<span class='line'>136</span> 					@version 1.1.1
+<span class='line'>137</span> 					*/</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">				  </span><span class="STRN">'border'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"solid #D6D6D6"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>139</span> 
+<span class='line'>140</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>141</span> 					모듈 내의 input 의 border 스타일을 정합니다. &lt;br>기본값:&lt;code>"solid #A7A7A7"&lt;/code>
+<span class='line'>142</span> 
+<span class='line'>143</span> 					@type {string=} JGM.DataCreator.options.inputBorder
+<span class='line'>144</span> 					@private
+<span class='line'>145</span> 
+<span class='line'>146</span> 					@author 조준호
+<span class='line'>147</span> 					@since 1.1.1
+<span class='line'>148</span> 					@version 1.1.1
+<span class='line'>149</span> 					*/</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">				  </span><span class="STRN">'inputBorder'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"solid #A7A7A7"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>151</span> 
+<span class='line'>152</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>153</span> 					모듈 내의 input 의 두께를 정합니다. &lt;br>기본값:&lt;code>1&lt;/code>
+<span class='line'>154</span> 
+<span class='line'>155</span> 					@type {number=} JGM.DataCreator.options.inputBorderThickness
+<span class='line'>156</span> 					@private
+<span class='line'>157</span> 
+<span class='line'>158</span> 					@author 조준호
+<span class='line'>159</span> 					@since 1.1.1
+<span class='line'>160</span> 					@version 1.1.1
+<span class='line'>161</span> 					*/</span><span class="WHIT">
+<span class='line'>162</span> </span><span class="WHIT">				  </span><span class="STRN">'inputBorderThickness'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>163</span> 
+<span class='line'>164</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>165</span> 					모듈 내의 input 의 높이를 정합니다. &lt;br>기본값:&lt;code>18&lt;/code>
+<span class='line'>166</span> 
+<span class='line'>167</span> 					@type {number=} JGM.DataCreator.options.inputHeight
+<span class='line'>168</span> 					@private
+<span class='line'>169</span> 
+<span class='line'>170</span> 					@author 조준호
+<span class='line'>171</span> 					@since 1.1.1
+<span class='line'>172</span> 					@version 1.1.1
+<span class='line'>173</span> 					*/</span><span class="WHIT">
+<span class='line'>174</span> </span><span class="WHIT">				  </span><span class="STRN">'inputHeight'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">18</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>175</span> 
+<span class='line'>176</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>177</span> 					모듈 내의 input 의 margin 을 정합니다. &lt;br>기본값:&lt;code>8&lt;/code>
+<span class='line'>178</span> 
+<span class='line'>179</span> 					@type {number=} JGM.DataCreator.options.inputMargin
+<span class='line'>180</span> 					@private
+<span class='line'>181</span> 
+<span class='line'>182</span> 					@author 조준호
+<span class='line'>183</span> 					@since 1.1.1
+<span class='line'>184</span> 					@version 1.1.1
+<span class='line'>185</span> 					*/</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="WHIT">				  </span><span class="STRN">'inputMargin'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">8</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>187</span> 
+<span class='line'>188</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>189</span> 					모듈 내의 컬럼 명의 margin 을 정합니다. &lt;br>기본값:&lt;code>2&lt;/code>
+<span class='line'>190</span> 
+<span class='line'>191</span> 					@type {number=} JGM.DataCreator.options.nameMargin
+<span class='line'>192</span> 					@private
+<span class='line'>193</span> 
+<span class='line'>194</span> 					@author 조준호
+<span class='line'>195</span> 					@since 1.1.1
+<span class='line'>196</span> 					@version 1.1.1
+<span class='line'>197</span> 					*/</span><span class="WHIT">
+<span class='line'>198</span> </span><span class="WHIT">				  </span><span class="STRN">'nameMargin'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>199</span> 
+<span class='line'>200</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>201</span> 					모듈 내의 컬럼 명의 font 를 정합니다. &lt;br>기본값:&lt;code>"12px Arial,Helvetica,sans-serif"&lt;/code>
+<span class='line'>202</span> 
+<span class='line'>203</span> 					@type {string=} JGM.DataCreator.options.font
+<span class='line'>204</span> 					@private
+<span class='line'>205</span> 
+<span class='line'>206</span> 					@author 조준호
+<span class='line'>207</span> 					@since 1.1.1
+<span class='line'>208</span> 					@version 1.1.1
+<span class='line'>209</span> 					*/</span><span class="WHIT">
+<span class='line'>210</span> </span><span class="WHIT">				  </span><span class="STRN">'font'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"12px Arial,Helvetica,sans-serif"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>211</span> 
+<span class='line'>212</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>213</span> 					모듈의 높이를 정합니다. &lt;br>기본값:&lt;code>28&lt;/code>
+<span class='line'>214</span> 
+<span class='line'>215</span> 					@type {number=} JGM.DataCreator.options.height
+<span class='line'>216</span> 					@private
+<span class='line'>217</span> 
+<span class='line'>218</span> 					@author 조준호
+<span class='line'>219</span> 					@since 1.1.1
+<span class='line'>220</span> 					@version 1.1.1
+<span class='line'>221</span> 					*/</span><span class="WHIT">
+<span class='line'>222</span> </span><span class="WHIT">				  </span><span class="STRN">'height'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">28</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>223</span> 
+<span class='line'>224</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>225</span> 					모듈의 padding 을 정합니다. &lt;br>기본값:&lt;code>3&lt;/code>
+<span class='line'>226</span> 
+<span class='line'>227</span> 					@type {number=} JGM.DataCreator.options.padding
+<span class='line'>228</span> 					@private
+<span class='line'>229</span> 
+<span class='line'>230</span> 					@author 조준호
+<span class='line'>231</span> 					@since 1.1.1
+<span class='line'>232</span> 					@version 1.1.1
+<span class='line'>233</span> 					*/</span><span class="WHIT">
+<span class='line'>234</span> </span><span class="WHIT">				  </span><span class="STRN">'padding'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">3</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>235</span> 
+<span class='line'>236</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>237</span> 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 CSS 클래스 입니다. &lt;br>기본값:&lt;code>"creator-icon"&lt;/code>
+<span class='line'>238</span> 
+<span class='line'>239</span> 					@type {string=} JGM.DataCreator.options.classCreatorIcon
+<span class='line'>240</span> 					@private
+<span class='line'>241</span> 
+<span class='line'>242</span> 					@author 조준호
+<span class='line'>243</span> 					@since 1.1.1
+<span class='line'>244</span> 					@version 1.1.1
+<span class='line'>245</span> 					*/</span><span class="WHIT">
+<span class='line'>246</span> </span><span class="WHIT">				  </span><span class="STRN">'classCreatorIcon'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"creator-icon"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>247</span> 
+<span class='line'>248</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>249</span> 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘의 이미지 url 입니다. &lt;br>기본값:&lt;code>imageUrl + "data-creator-icon.png"&lt;/code>
+<span class='line'>250</span> 
+<span class='line'>251</span> 					@type {string=} JGM.DataCreator.options.creatorIconUrl
+<span class='line'>252</span> 					@private
+<span class='line'>253</span> 
+<span class='line'>254</span> 					@author 조준호
+<span class='line'>255</span> 					@since 1.1.1
+<span class='line'>256</span> 					@version 1.1.1
+<span class='line'>257</span> 					*/</span><span class="WHIT">
+<span class='line'>258</span> </span><span class="WHIT">				  </span><span class="STRN">'creatorIconUrl'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.grid._options</span><span class="PUNC">[</span><span class="STRN">'imageUrl'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"data-creator-icon.png"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>259</span> 
+<span class='line'>260</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>261</span> 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 폭 입니다. &lt;br>기본값:&lt;code>13&lt;/code>
+<span class='line'>262</span> 
+<span class='line'>263</span> 					@type {number=} JGM.DataCreator.options.creatorIconWidth
+<span class='line'>264</span> 					@private
+<span class='line'>265</span> 
+<span class='line'>266</span> 					@author 조준호
+<span class='line'>267</span> 					@since 1.1.1
+<span class='line'>268</span> 					@version 1.1.1
+<span class='line'>269</span> 					*/</span><span class="WHIT">
+<span class='line'>270</span> </span><span class="WHIT">				  </span><span class="STRN">'creatorIconWidth'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">13</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>271</span> 
+<span class='line'>272</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>273</span> 					{@link JGM.MenuBar MenuBar} 에 추가될 아이콘 이미지의 높이 입니다. &lt;br>기본값:&lt;code>13&lt;/code>
+<span class='line'>274</span> 
+<span class='line'>275</span> 					@type {number=} JGM.DataCreator.options.creatorIconHeight
+<span class='line'>276</span> 					@private
+<span class='line'>277</span> 
+<span class='line'>278</span> 					@author 조준호
+<span class='line'>279</span> 					@since 1.1.1
+<span class='line'>280</span> 					@version 1.1.1
+<span class='line'>281</span> 					*/</span><span class="WHIT">
+<span class='line'>282</span> </span><span class="WHIT">				  </span><span class="STRN">'creatorIconHeight'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">13</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>283</span> 
+<span class='line'>284</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>285</span> 					모듈의 CSS 클래스 입니다. &lt;br>기본값:&lt;code>"data-creator"&lt;/code>
+<span class='line'>286</span> 
+<span class='line'>287</span> 					@type {string=} JGM.DataCreator.options.classCreator
+<span class='line'>288</span> 					@private
+<span class='line'>289</span> 
+<span class='line'>290</span> 					@author 조준호
+<span class='line'>291</span> 					@since 1.1.1
+<span class='line'>292</span> 					@version 1.1.1
+<span class='line'>293</span> 					*/</span><span class="WHIT">
+<span class='line'>294</span> </span><span class="WHIT">				  </span><span class="STRN">'classCreator'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"data-creator"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>295</span> 
+<span class='line'>296</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>297</span> 					모듈 내의 컬럼 명의 CSS 클래스 입니다. &lt;br>기본값:&lt;code>"data-creator-name"&lt;/code>
+<span class='line'>298</span> 
+<span class='line'>299</span> 					@type {string=} JGM.DataCreator.options.classColName
+<span class='line'>300</span> 					@private
+<span class='line'>301</span> 
+<span class='line'>302</span> 					@author 조준호
+<span class='line'>303</span> 					@since 1.1.1
+<span class='line'>304</span> 					@version 1.1.1
+<span class='line'>305</span> 					*/</span><span class="WHIT">
+<span class='line'>306</span> </span><span class="WHIT">				  </span><span class="STRN">'classColName'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"data-creator-name"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>307</span> 
+<span class='line'>308</span> </span><span class="WHIT">				  </span><span class="COMM">/**
+<span class='line'>309</span> 					모듈 내의 input tag 에 적용되는 border radius 입니다. &lt;br>기본값:&lt;code>3&lt;/code>
+<span class='line'>310</span> 
+<span class='line'>311</span> 					@type {number=} JGM.DataCreator.options.inputBorderRadius
+<span class='line'>312</span> 					@private
+<span class='line'>313</span> 
+<span class='line'>314</span> 					@author 조준호
+<span class='line'>315</span> 					@since 1.1.7
+<span class='line'>316</span> 					@version 1.1.7
+<span class='line'>317</span> 					*/</span><span class="WHIT">
+<span class='line'>318</span> </span><span class="WHIT">				  </span><span class="STRN">'inputBorderRadius'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">3</span><span class="WHIT">
+<span class='line'>319</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>320</span> 
+<span class='line'>321</span> </span><span class="WHIT">		</span><span class="NAME">this._options</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JGM._extend</span><span class="PUNC">(</span><span class="NAME">options</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'options'</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>322</span> 
+<span class='line'>323</span> </span><span class="NAME">this._inputMap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>324</span> 
+<span class='line'>325</span> </span><span class="NAME">this.__init</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>326</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>327</span> 
+<span class='line'>328</span> </span><span class="NAME">DataCreator.getInstance</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>329</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">DataCreator</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>330</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>331</span> 
+<span class='line'>332</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">DataCreator.prototype</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>333</span> 
+<span class='line'>334</span> </span><span class="NAME">prototype.__init</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>335</span> </span><span class="WHIT">	</span><span class="NAME">this._creator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'>336</span> </span><span class="WHIT">		</span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">"&lt;div class='"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this._options</span><span class="PUNC">[</span><span class="STRN">'classCreator'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"'>"</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>337</span> </span><span class="WHIT">		</span><span class="PUNC">.</span><span class="NAME">appendTo</span><span class="PUNC">(</span><span class="NAME">this._ctnr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>338</span> 
+<span class='line'>339</span> </span><span class="WHIT">	</span><span class="NAME">this.bindEvents</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>340</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>341</span> 
+<span class='line'>342</span> </span><span class="NAME">prototype.bindEvents</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>343</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">events</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>344</span> </span><span class="STRN">'onRenderModules'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._onRenderModules</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>345</span> </span><span class="WHIT">				 </span><span class="STRN">'onCreateCss'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._onCreateCss</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>346</span> </span><span class="WHIT">				 </span><span class="STRN">'onDestroy'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._destroy</span><span class="WHIT">
+<span class='line'>347</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>348</span> </span><span class="WHIT">	</span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'event'</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">bind</span><span class="PUNC">(</span><span class="NAME">events</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>349</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>350</span> 
+<span class='line'>351</span> </span><span class="NAME">prototype._onCreateCss</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>352</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">gridId</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"#"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'mid'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">" ."</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>353</span> </span><span class="WHIT">		</span><span class="NAME">opt</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._options</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>354</span> </span><span class="WHIT">		</span><span class="NAME">border</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'borderThickness'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'border'</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>355</span> </span><span class="WHIT">		</span><span class="NAME">rules</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>356</span> 
+<span class='line'>357</span> </span><span class="WHIT">	</span><span class="NAME">rules.push</span><span class="PUNC">(</span><span class="NAME">gridId</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'classCreator'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"{"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">JGM._CONST._cssUnselectable</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"float:left;width:100%;padding-left:8px;background:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'background'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">";border-top:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">border</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">";font:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'font'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"}"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>358</span> </span><span class="WHIT">	</span><span class="NAME">rules.push</span><span class="PUNC">(</span><span class="NAME">gridId</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'classCreator'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">" button{float:left;margin:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'padding'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'padding'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px 0 0;height:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'height'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'padding'</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px}"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>359</span> </span><span class="WHIT">	</span><span class="NAME">rules.push</span><span class="PUNC">(</span><span class="NAME">gridId</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'classCreator'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">" input{float:left;padding:0;margin-top:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'height'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'inputHeight'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'inputBorderThickness'</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px;height:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'inputHeight'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px;border:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'inputBorderThickness'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'inputBorder'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">";border-radius:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'inputBorderRadius'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px;-moz-border-radius:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'inputBorderRadius'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px}"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>360</span> </span><span class="WHIT">	</span><span class="NAME">rules.push</span><span class="PUNC">(</span><span class="NAME">gridId</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'classCol'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"{float:left;overflow:hidden;white-space:nowrap;line-height:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'height'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px;margin-right:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'inputMargin'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px}"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>361</span> </span><span class="WHIT">	</span><span class="NAME">rules.push</span><span class="PUNC">(</span><span class="NAME">gridId</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'classColName'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"{float:left;margin-right:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'nameMargin'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px}"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>362</span> </span><span class="WHIT">	</span><span class="NAME">rules.push</span><span class="PUNC">(</span><span class="NAME">gridId</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'classCreatorIcon'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"{background:url("</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'creatorIconUrl'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">") no-repeat center;width:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'creatorIconWidth'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px;height:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'creatorIconHeight'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px}"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>363</span> 
+<span class='line'>364</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">rules.join</span><span class="PUNC">(</span><span class="STRN">""</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>365</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>366</span> 
+<span class='line'>367</span> </span><span class="NAME">prototype._onRenderModules</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>368</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">html</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>369</span> </span><span class="WHIT">		</span><span class="NAME">colDefs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'colDefMgr'</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">getAll</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>370</span> </span><span class="WHIT">		</span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">colDefs.length</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>371</span> </span><span class="WHIT">		</span><span class="NAME">colDef</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>372</span> </span><span class="WHIT">		</span><span class="NAME">opt</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._options</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>373</span> </span><span class="WHIT">		</span><span class="NAME">classCol</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'classCol'</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>374</span> </span><span class="WHIT">		</span><span class="NAME">classColName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'classColName'</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>375</span> </span><span class="WHIT">		</span><span class="NAME">thisIns</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>376</span> </span><span class="WHIT">		</span><span class="NAME">creator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._creator</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>377</span> </span><span class="WHIT">		</span><span class="NAME">imap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._inputMap</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>378</span> </span><span class="WHIT">		</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>379</span> </span><span class="WHIT">		</span><span class="NAME">keyupfn</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>380</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e.which</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">Util.keyMapKeydown.enter</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>381</span> </span><span class="WHIT">				</span><span class="NAME">thisIns._addData</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>382</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>383</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>384</span> 
+<span class='line'>385</span> </span><span class="WHIT">	</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>386</span> </span><span class="WHIT">		</span><span class="NAME">colDef</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">colDefs</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>387</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'inputOnCreate'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>388</span> </span><span class="WHIT">			</span><span class="NAME">html.push</span><span class="PUNC">(</span><span class="STRN">"&lt;div key='"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'key'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"' class='"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">classCol</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"'>&lt;div class='"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">classColName</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"'>"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'name'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"&lt;/div>&lt;input type='text' value='"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">Util.ifNull</span><span class="PUNC">(</span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'defaultValue'</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"' style='width:"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'width'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"px'/>&lt;/div>"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>389</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>390</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>391</span> 
+<span class='line'>392</span> </span><span class="WHIT">	</span><span class="NAME">creator</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">innerHTML</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">html.join</span><span class="PUNC">(</span><span class="STRN">""</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"&lt;button type='button' onclick='JGM.m.DataCreator."</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.mid</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"._addData()'>등록&lt;/button>&lt;button type='button' onclick='JGM.m.DataCreator."</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.mid</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"._reset()'>초기화&lt;/button>"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>393</span> 
+<span class='line'>394</span> </span><span class="WHIT">	</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>395</span> </span><span class="WHIT">		</span><span class="NAME">colDef</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">colDefs</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>396</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'inputOnCreate'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>397</span> </span><span class="WHIT">			</span><span class="NAME">imap</span><span class="PUNC">[</span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'key'</span><span class="PUNC">]</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">creator.find</span><span class="PUNC">(</span><span class="STRN">"div[key='"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'key'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"'] input"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">keyup</span><span class="PUNC">(</span><span class="NAME">keyupfn</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>398</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>399</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>400</span> 
+<span class='line'>401</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">Util.isNotNull</span><span class="PUNC">(</span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'menubar'</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>402</span> </span><span class="WHIT">		</span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'menubar'</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">addIcon</span><span class="PUNC">(</span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'classCreatorIcon'</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"데이터 로우를 추가합니다."</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'creatorIconWidth'</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">opt</span><span class="PUNC">[</span><span class="STRN">'creatorIconHeight'</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>403</span> </span><span class="WHIT">				</span><span class="NAME">creator.toggle</span><span class="PUNC">(</span><span class="STRN">"fast"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>404</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>405</span> </span><span class="WHIT">		</span><span class="NAME">creator.hide</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>406</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>407</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>408</span> 
+<span class='line'>409</span> </span><span class="NAME">prototype._addData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>410</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>411</span> </span><span class="WHIT">		</span><span class="NAME">imap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._inputMap</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>412</span> </span><span class="WHIT">		</span><span class="NAME">cmgr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'colDefMgr'</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>413</span> </span><span class="WHIT">		</span><span class="NAME">colDef</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>414</span> </span><span class="WHIT">		</span><span class="NAME">input</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>415</span> </span><span class="WHIT">		</span><span class="NAME">newData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>416</span> </span><span class="WHIT">		</span><span class="NAME">colDefs</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">cmgr.getAll</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>417</span> </span><span class="WHIT">		</span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">colDefs.length</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>418</span> </span><span class="WHIT">		</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>419</span> </span><span class="WHIT">	</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">key</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">imap</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>420</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">imap.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>421</span> </span><span class="WHIT">			</span><span class="NAME">colDef</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">cmgr.getByKey</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>422</span> </span><span class="WHIT">			</span><span class="NAME">input</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">imap</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>423</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>424</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>425</span> </span><span class="WHIT">	</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>426</span> </span><span class="WHIT">		</span><span class="NAME">colDef</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">colDefs</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>427</span> </span><span class="WHIT">		</span><span class="NAME">key</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'key'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>428</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">imap.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>429</span> </span><span class="WHIT">			</span><span class="NAME">newData</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">imap</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>430</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>431</span> </span><span class="WHIT">		</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'defaultValue'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>432</span> </span><span class="WHIT">			</span><span class="NAME">newData</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'defaultValue'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>433</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>434</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>435</span> 
+<span class='line'>436</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>437</span> 	  새로운 데이터를 생성을 완료하고 그리드에 입력하기 전에 발생되는 이벤트입니다.
+<span class='line'>438</span> 
+<span class='line'>439</span> 	  @event {Event} onAfterDataCreate
+<span class='line'>440</span> 	  @param {Object} newData - 새로 생성된 로우 데이터
+<span class='line'>441</span> 
+<span class='line'>442</span> 	  @author 조준호
+<span class='line'>443</span> 	  @since 1.1.1
+<span class='line'>444</span> 	  @version 1.1.1
+<span class='line'>445</span> 	  */</span><span class="WHIT">
+<span class='line'>446</span> </span><span class="WHIT">	</span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'event'</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">trigger</span><span class="PUNC">(</span><span class="STRN">"onAfterDataCreate"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">newData</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>447</span> </span><span class="WHIT">	</span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'dataMgr'</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">add</span><span class="PUNC">(</span><span class="NAME">newData</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">'isNew'</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>448</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>449</span> 
+<span class='line'>450</span> </span><span class="NAME">prototype._reset</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>451</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>452</span> </span><span class="WHIT">		</span><span class="NAME">cmgr</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.grid</span><span class="PUNC">[</span><span class="STRN">'colDefMgr'</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>453</span> </span><span class="WHIT">		</span><span class="NAME">colDef</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>454</span> </span><span class="WHIT">		</span><span class="NAME">imap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._inputMap</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>455</span> </span><span class="WHIT">	</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">key</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">imap</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>456</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">imap.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>457</span> </span><span class="WHIT">			</span><span class="NAME">colDef</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">cmgr.getByKey</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>458</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'defaultValue'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>459</span> </span><span class="WHIT">				</span><span class="NAME">imap</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">colDef</span><span class="PUNC">[</span><span class="STRN">'defaultValue'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>460</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>461</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>462</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>463</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>464</span> 
+<span class='line'>465</span> </span><span class="NAME">prototype._destroy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>466</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>467</span> </span><span class="WHIT">		</span><span class="NAME">imap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._inputMap</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>468</span> </span><span class="WHIT">	</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">i</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">imap</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>469</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">imap.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">i</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>470</span> </span><span class="WHIT">			</span><span class="NAME">JGM._delete$</span><span class="PUNC">(</span><span class="NAME">imap</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>471</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>472</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>473</span> 
+<span class='line'>474</span> </span><span class="WHIT">	</span><span class="NAME">JGM._destroy</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>475</span> </span><span class="NAME">name</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"DataCreator"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>476</span> </span><span class="NAME">path</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"creator"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>477</span> </span><span class="STRN">"$"</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"_creator"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>478</span> </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"_inputMap _options"</span><span class="WHIT">
+<span class='line'>479</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>480</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>481</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>482</span> </span></pre></body></html>

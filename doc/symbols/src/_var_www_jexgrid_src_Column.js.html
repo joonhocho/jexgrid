@@ -1,0 +1,443 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=EUC-KR"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="NAME">console</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console.log</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'reading javascript source "Column.js"...'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="COMM">//IF_DEBUG</span><span class="WHIT">
+<span class='line'>  2</span> 
+<span class='line'>  3</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'jx.grid'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'jx.events.EventDispatcher'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  5</span> 
+<span class='line'>  6</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'jx.grid.Column'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  7</span> 
+<span class='line'>  8</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">'use strict'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">goog.getObjectByName</span><span class="PUNC">(</span><span class="STRN">'jx.events.EventDispatcher'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 10</span> 
+<span class='line'> 11</span> </span><span class="WHIT">	</span><span class="NAME">goog.exportSymbol</span><span class="PUNC">(</span><span class="STRN">'jx.grid.Column'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Column</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> 
+<span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">Column</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'manager'</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'manager'</span><span class="PUNC">]</span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">'object'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="WHIT">			</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Column needs a valid manager!'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 17</span> </span><span class="WHIT">		</span><span class="NAME">this.manager</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'manager'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 18</span> 
+<span class='line'> 19</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 20</span> 		  로우 데이터에서 해당 컬럼 데이터를 가져올 때 사용되는 키입니다. 컬럼
+<span class='line'> 21</span> 		  정의 오브젝트에서 필수적으로 각 컬럼마다 유니크한 키 값을 지정해줘야
+<span class='line'> 22</span> 		  합니다. &lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'> 23</span> 
+<span class='line'> 24</span> 		  @type {string=} jgrid.grid.ColumnManager.options.colDef.key
+<span class='line'> 25</span> 		  @private
+<span class='line'> 26</span> 
+<span class='line'> 27</span> 		  @author 조준호
+<span class='line'> 28</span> 		  @since 1.0.0
+<span class='line'> 29</span> 		  @version 1.0.0
+<span class='line'> 30</span> 		  */</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">		</span><span class="COMM">// stringify</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">		</span><span class="NAME">this.key</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'key'</span><span class="PUNC">]</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="WHIT">			</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Column needs a non-empty key!'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 36</span> 
+<span class='line'> 37</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">error</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'column key='</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.key</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 38</span> 
+<span class='line'> 39</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.manager.hasKey</span><span class="PUNC">(</span><span class="NAME">this.key</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="WHIT">			</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Duplicate column key!'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 42</span> 
+<span class='line'> 43</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 44</span> 		  컬럼 이름. 이 값이 지정될 경우 컬럼 헤더에 key 값 대신 이 값을
+<span class='line'> 45</span> 		  이름으로 대신 표시합니다. &lt;br>기본값:&lt;code>""&lt;/code>
+<span class='line'> 46</span> 
+<span class='line'> 47</span> 		  @type {string=} jgrid.grid.ColumnManager.options.colDef.name
+<span class='line'> 48</span> 		  @private
+<span class='line'> 49</span> 
+<span class='line'> 50</span> 		  @author 조준호
+<span class='line'> 51</span> 		  @since 1.0.0
+<span class='line'> 52</span> 		  @version 1.0.0
+<span class='line'> 53</span> 		  */</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">		</span><span class="COMM">// stringify</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'name'</span><span class="PUNC">]</span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'name'</span><span class="PUNC">]</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> 
+<span class='line'> 57</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 58</span> 		  컬럼 헤더에 입력할 타이틀 attribute 의 내용. &lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'> 59</span> 
+<span class='line'> 60</span> 		  @type {string=} jgrid.grid.ColumnManager.options.colDef.title
+<span class='line'> 61</span> 		  @private
+<span class='line'> 62</span> 
+<span class='line'> 63</span> 		  @author 조준호
+<span class='line'> 64</span> 		  @since 1.1.7
+<span class='line'> 65</span> 		  @version 1.1.7
+<span class='line'> 66</span> 		  */</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">		</span><span class="COMM">// stringify</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">		</span><span class="NAME">this.title</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'title'</span><span class="PUNC">]</span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'title'</span><span class="PUNC">]</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> 
+<span class='line'> 70</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 71</span> 		  컬럼 헤더에 이름값 입력 여부. &lt;br>기본값:&lt;code>false&lt;/code>
+<span class='line'> 72</span> 
+<span class='line'> 73</span> 		  @type {boolean=} jgrid.grid.ColumnManager.options.colDef.noName
+<span class='line'> 74</span> 		  @private
+<span class='line'> 75</span> 
+<span class='line'> 76</span> 		  @author 조준호
+<span class='line'> 77</span> 		  @since 1.1.7
+<span class='line'> 78</span> 		  @version 1.1.7
+<span class='line'> 79</span> 		  */</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">		</span><span class="COMM">// booleanify</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">		</span><span class="NAME">this.noName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'noName'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 82</span> 
+<span class='line'> 83</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 84</span> 		  컬럼 헤더에 타이틀 attribute 입력 여부. &lt;br>기본값:&lt;code>false&lt;/code>
+<span class='line'> 85</span> 
+<span class='line'> 86</span> 		  @type {boolean=} jgrid.grid.ColumnManager.options.colDef.noTitle
+<span class='line'> 87</span> 		  @private
+<span class='line'> 88</span> 
+<span class='line'> 89</span> 		  @author 조준호
+<span class='line'> 90</span> 		  @since 1.1.7
+<span class='line'> 91</span> 		  @version 1.1.7
+<span class='line'> 92</span> 		  */</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">		</span><span class="COMM">// booleanify</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">		</span><span class="NAME">this.noTitle</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'noTitle'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 95</span> 
+<span class='line'> 96</span> </span><span class="WHIT">		</span><span class="COMM">// stringify</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">		</span><span class="NAME">this.type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'type'</span><span class="PUNC">]</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 98</span> 
+<span class='line'> 99</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>100</span> 		  새로운 로우 데이터를 생성하거나 셀의 데이터를 del 키를 눌러서 삭제했을 경우에
+<span class='line'>101</span> 		  컬럼에 자동적으로 채워지는 컬럼의 기본 값입니다. &lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>102</span> 
+<span class='line'>103</span> 		  @type {?=} jgrid.grid.ColumnManager.options.colDef.defaultValue
+<span class='line'>104</span> 		  @private
+<span class='line'>105</span> 
+<span class='line'>106</span> 		  @author 조준호
+<span class='line'>107</span> 		  @since 1.1.1
+<span class='line'>108</span> 		  @version 1.1.1
+<span class='line'>109</span> 		  */</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">		</span><span class="COMM">// as is</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="WHIT">		</span><span class="NAME">this.defaultValue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'defaultValue'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>112</span> 
+<span class='line'>113</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>114</span> 		  {@link jgrid.grid.DataCreator DataCreator} 를 사용하여 새로운 로우 데이터를 생성할 경우,
+<span class='line'>115</span> 		  로우 데이터의 컬럼 값을 직접적으로 입력할지의 여부입니다. &lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>116</span> 
+<span class='line'>117</span> 		  @type {boolean=} jgrid.grid.ColumnManager.options.colDef.inputOnCreate
+<span class='line'>118</span> 		  @private
+<span class='line'>119</span> 
+<span class='line'>120</span> 		  @author 조준호
+<span class='line'>121</span> 		  @since 1.1.1
+<span class='line'>122</span> 		  @version 1.1.1
+<span class='line'>123</span> 		  */</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">		</span><span class="COMM">// booleanify</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">		</span><span class="NAME">this.inputOnCreate</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'inputOnCreate'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>126</span> 
+<span class='line'>127</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>128</span> 		  컬럼의 기본 폭 픽셀. &lt;br>기본값:&lt;code>80&lt;/code>
+<span class='line'>129</span> 
+<span class='line'>130</span> 		  @type {number=} jgrid.grid.ColumnManager.options.colDef.width
+<span class='line'>131</span> 		  @private
+<span class='line'>132</span> 
+<span class='line'>133</span> 		  @author 조준호
+<span class='line'>134</span> 		  @since 1.0.0
+<span class='line'>135</span> 		  @version 1.0.0
+<span class='line'>136</span> 		  */</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">		</span><span class="COMM">// numberify</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">		</span><span class="NAME">this.width</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'width'</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">		</span><span class="NAME">this.width</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.width</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">90</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>140</span> 
+<span class='line'>141</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>142</span> 		  컬럼의 폭을 조절할 경우 사용되는 최소 폭 픽셀. &lt;br>기본값:&lt;code>30&lt;/code>
+<span class='line'>143</span> 
+<span class='line'>144</span> 		  @type {number=} jgrid.grid.ColumnManager.options.colDef.minW
+<span class='line'>145</span> 		  @private
+<span class='line'>146</span> 
+<span class='line'>147</span> 		  @author 조준호
+<span class='line'>148</span> 		  @since 1.0.0
+<span class='line'>149</span> 		  @version 1.0.0
+<span class='line'>150</span> 		  */</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">		</span><span class="COMM">// numberify</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">		</span><span class="NAME">this.minW</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'minW'</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">		</span><span class="NAME">this.minW</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.minW</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">30</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>154</span> 
+<span class='line'>155</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>156</span> 		  컬럼의 폭을 조절할 경우 사용되는 최대 폭 픽셀. &lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>157</span> 
+<span class='line'>158</span> 		  @type {number=} jgrid.grid.ColumnManager.options.colDef.maxW
+<span class='line'>159</span> 		  @private
+<span class='line'>160</span> 
+<span class='line'>161</span> 		  @author 조준호
+<span class='line'>162</span> 		  @since 1.0.0
+<span class='line'>163</span> 		  @version 1.0.0
+<span class='line'>164</span> 		  */</span><span class="WHIT">
+<span class='line'>165</span> </span><span class="WHIT">		</span><span class="COMM">// numberify</span><span class="WHIT">
+<span class='line'>166</span> </span><span class="WHIT">		</span><span class="NAME">this.maxW</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'maxW'</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>167</span> 
+<span class='line'>168</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>169</span> 		  컬럼의 폭 조절 가능 여부. &lt;br>기본값:&lt;code>false&lt;/code>
+<span class='line'>170</span> 
+<span class='line'>171</span> 		  @type {boolean=} jgrid.grid.ColumnManager.options.colDef.resizable
+<span class='line'>172</span> 		  @private
+<span class='line'>173</span> 
+<span class='line'>174</span> 		  @author 조준호
+<span class='line'>175</span> 		  @since 1.1.2
+<span class='line'>176</span> 		  @version 1.1.2
+<span class='line'>177</span> 		  */</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">		</span><span class="COMM">// booleanify</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">		</span><span class="NAME">this.resizable</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'resizable'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>180</span> 
+<span class='line'>181</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>182</span> 		  컬럼의 숨기기 여부. &lt;br>기본값:&lt;code>false&lt;/code>
+<span class='line'>183</span> 
+<span class='line'>184</span> 		  @type {boolean=} jgrid.grid.ColumnManager.options.colDef.hidden
+<span class='line'>185</span> 		  @private
+<span class='line'>186</span> 
+<span class='line'>187</span> 		  @author 조준호
+<span class='line'>188</span> 		  @since 1.0.0
+<span class='line'>189</span> 		  @version 1.0.0
+<span class='line'>190</span> 		  */</span><span class="WHIT">
+<span class='line'>191</span> </span><span class="WHIT">		</span><span class="COMM">// booleanify</span><span class="WHIT">
+<span class='line'>192</span> </span><span class="WHIT">		</span><span class="NAME">this.hidden</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'hidden'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>193</span> 
+<span class='line'>194</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>195</span> 		  컬럼이 필터링 시에 검색에 포함되는지 여부.&lt;br>기본값:&lt;code>false&lt;/code>
+<span class='line'>196</span> 
+<span class='line'>197</span> 		  @type {boolean=} jgrid.grid.ColumnManager.options.colDef.noSearch
+<span class='line'>198</span> 		  @private
+<span class='line'>199</span> 
+<span class='line'>200</span> 		  @author 조준호
+<span class='line'>201</span> 		  @since 1.2.0
+<span class='line'>202</span> 		  @version 1.2.0
+<span class='line'>203</span> 		  */</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">		</span><span class="COMM">// booleanify</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">		</span><span class="NAME">this.noSearch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'noSearch'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>206</span> 
+<span class='line'>207</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>208</span> 		  마우스를 컬럼 셀위에 올려놓을 경우 보여지는 툴팁의 활성 여부. &lt;br>기본값:&lt;code>false&lt;/code>
+<span class='line'>209</span> 
+<span class='line'>210</span> 		  @type {boolean=} jgrid.grid.ColumnManager.options.colDef.tooltipEnabled
+<span class='line'>211</span> 		  @private
+<span class='line'>212</span> 
+<span class='line'>213</span> 		  @author 조준호
+<span class='line'>214</span> 		  @since 1.0.0
+<span class='line'>215</span> 		  @version 1.0.0
+<span class='line'>216</span> 		  */</span><span class="WHIT">
+<span class='line'>217</span> </span><span class="WHIT">		</span><span class="COMM">// booleanify</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="WHIT">		</span><span class="NAME">this.tooltipEnabled</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'tooltipEnabled'</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>219</span> 
+<span class='line'>220</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>221</span> 		  컬럼 셀 노드들에 적용되는 CSS 클래스. &lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>222</span> 
+<span class='line'>223</span> 		  @type {string=} jgrid.grid.ColumnManager.options.colDef.colClass
+<span class='line'>224</span> 		  @private
+<span class='line'>225</span> 
+<span class='line'>226</span> 		  @author 조준호
+<span class='line'>227</span> 		  @since 1.0.0
+<span class='line'>228</span> 		  @version 1.0.0
+<span class='line'>229</span> 		  */</span><span class="WHIT">
+<span class='line'>230</span> </span><span class="WHIT">		</span><span class="COMM">// stringify</span><span class="WHIT">
+<span class='line'>231</span> </span><span class="WHIT">		</span><span class="NAME">this.colClass</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'colClass'</span><span class="PUNC">]</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>232</span> 
+<span class='line'>233</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>234</span> 		  컬럼 셀 노드들에 공통적으로 적용되는 CSS style 입니다.&lt;br>
+<span class='line'>235</span> 		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
+<span class='line'>236</span> 		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
+<span class='line'>237</span> 		  &lt;br>기본값:&lt;code>""&lt;/code>
+<span class='line'>238</span> 
+<span class='line'>239</span> 		  @type {string=} jgrid.grid.ColumnManager.options.colDef.style
+<span class='line'>240</span> 		  @private
+<span class='line'>241</span> 
+<span class='line'>242</span> 		  @author 조준호
+<span class='line'>243</span> 		  @since 1.0.0
+<span class='line'>244</span> 		  @version 1.0.0
+<span class='line'>245</span> 		  */</span><span class="WHIT">
+<span class='line'>246</span> </span><span class="WHIT">		</span><span class="COMM">// stringify</span><span class="WHIT">
+<span class='line'>247</span> </span><span class="WHIT">		</span><span class="NAME">this.style</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'style'</span><span class="PUNC">]</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>248</span> 
+<span class='line'>249</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>250</span> 		  컬럼 헤더에게 적용되는 CSS style 입니다.&lt;br>
+<span class='line'>251</span> 		  주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
+<span class='line'>252</span> 		  꼭, 크기에 영향이 없는 style 변경을 할때만 사용하세요.
+<span class='line'>253</span> 		  &lt;br>기본값:&lt;code>""&lt;/code>
+<span class='line'>254</span> 
+<span class='line'>255</span> 		  @type {string=} jgrid.grid.ColumnManager.options.colDef.headerStyle
+<span class='line'>256</span> 		  @private
+<span class='line'>257</span> 
+<span class='line'>258</span> 		  @author 조준호
+<span class='line'>259</span> 		  @since 1.0.0
+<span class='line'>260</span> 		  @version 1.0.0
+<span class='line'>261</span> 		  */</span><span class="WHIT">
+<span class='line'>262</span> </span><span class="WHIT">		</span><span class="COMM">// stringify</span><span class="WHIT">
+<span class='line'>263</span> </span><span class="WHIT">		</span><span class="NAME">this.headerStyle</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'headerStyle'</span><span class="PUNC">]</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>264</span> 
+<span class='line'>265</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>266</span> 		  데이터 parsing 을 담당하는 함수입니다. 그리드에 입력되거나 내용이 변경되는 모든 데이터는 이 함수에 의해서
+<span class='line'>267</span> 		  parsing 이 됩니다.
+<span class='line'>268</span> 		  !!!!!!!!!!!!!!!
+<span class='line'>269</span> 		  커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.&lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>270</span> 
+<span class='line'>271</span> 		  @type {Array.&lt;Object> | string=} jgrid.grid.ColumnManager.options.colDef.parser
+<span class='line'>272</span> 		  @private
+<span class='line'>273</span> 
+<span class='line'>274</span> 		  @author 조준호
+<span class='line'>275</span> 		  @since 1.3.0
+<span class='line'>276</span> 		  @version 1.3.0
+<span class='line'>277</span> 		  */</span><span class="WHIT">
+<span class='line'>278</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'parser'</span><span class="PUNC">]</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'parser'</span><span class="PUNC">]</span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>279</span> </span><span class="WHIT">			</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Invalid parser!'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>280</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>281</span> </span><span class="WHIT">		</span><span class="NAME">this.parser</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'parser'</span><span class="PUNC">]</span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>282</span> 
+<span class='line'>283</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>284</span> 		  필터링 시에 사용될 추가 옵션 필터입니다. 커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.&lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>285</span> 		  !!!!!!!!!!
+<span class='line'>286</span> 		  @type {Array.&lt;Object> | string=} jgrid.grid.ColumnManager.options.colDef.validator
+<span class='line'>287</span> 		  @private
+<span class='line'>288</span> 
+<span class='line'>289</span> 		  @author 조준호
+<span class='line'>290</span> 		  @since 1.3.0
+<span class='line'>291</span> 		  @version 1.3.0
+<span class='line'>292</span> 		  */</span><span class="WHIT">
+<span class='line'>293</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'validator'</span><span class="PUNC">]</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'validator'</span><span class="PUNC">]</span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>294</span> </span><span class="WHIT">			</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Invalid validator!'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>295</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>296</span> </span><span class="WHIT">		</span><span class="NAME">this.validator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'validator'</span><span class="PUNC">]</span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>297</span> 
+<span class='line'>298</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>299</span> 		  컬럼 셀 랜더러.
+<span class='line'>300</span> 		  렌더러는 파라미터로 {@link jgrid.grid.Cell Cell} 인스턴스 또는
+<span class='line'>301</span> 		  value, rowIdx, colIdx, datarow, colDef, {@link jgrid.grid.ViewportManager ViewportManager} 를 순서대로 받고,
+<span class='line'>302</span> 		  셀 HTML 을 리턴하는 Function 입니다.
+<span class='line'>303</span> 		  &lt;br>기본값:기본 텍스트 렌더러
+<span class='line'>304</span> 
+<span class='line'>305</span> 		  @type {Function=} jgrid.grid.ColumnManager.options.colDef.renderer
+<span class='line'>306</span> 		  @private
+<span class='line'>307</span> 		  @see jgrid.grid.ColumnManager.options.colDef.rendererInput
+<span class='line'>308</span> 
+<span class='line'>309</span> 		  @author 조준호
+<span class='line'>310</span> 		  @since 1.0.0
+<span class='line'>311</span> 		  @version 1.0.0
+<span class='line'>312</span> 		  */</span><span class="WHIT">
+<span class='line'>313</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'renderer'</span><span class="PUNC">]</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'renderer'</span><span class="PUNC">]</span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>314</span> </span><span class="WHIT">			</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Invalid renderer!'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>315</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>316</span> </span><span class="WHIT">		</span><span class="NAME">this.renderer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'renderer'</span><span class="PUNC">]</span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>317</span> 
+<span class='line'>318</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>319</span> 		  컬럼 데이터 합계의 {@link jgrid.grid.Footer Footer} 에 표시 여부.
+<span class='line'>320</span> 		  "krw" 입력시 \ 10,000,000 포맷으로 렌더링하며, "usd" 입력시 $ 10,000,000.00 포맷으로 렌더링 합니다.
+<span class='line'>321</span> 		  함수 입력시 컬럼명과 합계 값을 파라미터로 받습니다.
+<span class='line'>322</span> 		  &lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>323</span> 
+<span class='line'>324</span> 		  @type {Function=} jgrid.grid.ColumnManager.options.colDef.sumRenderer
+<span class='line'>325</span> 		  @private
+<span class='line'>326</span> 
+<span class='line'>327</span> 		  @author 조준호
+<span class='line'>328</span> 		  @since 1.0.0
+<span class='line'>329</span> 		  @version 1.0.0
+<span class='line'>330</span> 		  */</span><span class="WHIT">
+<span class='line'>331</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'sumRenderer'</span><span class="PUNC">]</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'sumRenderer'</span><span class="PUNC">]</span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>332</span> </span><span class="WHIT">			</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Invalid sum renderer!'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>333</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>334</span> </span><span class="WHIT">		</span><span class="NAME">this.sumRenderer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'sumRenderer'</span><span class="PUNC">]</span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>335</span> 
+<span class='line'>336</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>337</span> 		  셀 에디팅을 할 때 사용되는 컬럼 에디터. &lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>338</span> 
+<span class='line'>339</span> 		  @type {jgrid.grid.Editor=} jgrid.grid.ColumnManager.options.colDef.editor
+<span class='line'>340</span> 		  @private
+<span class='line'>341</span> 
+<span class='line'>342</span> 		  @author 조준호
+<span class='line'>343</span> 		  @since 1.0.0
+<span class='line'>344</span> 		  @version 1.0.0
+<span class='line'>345</span> 		  */</span><span class="WHIT">
+<span class='line'>346</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'editor'</span><span class="PUNC">]</span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'editor'</span><span class="PUNC">]</span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'object'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>347</span> </span><span class="WHIT">			</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Invalid editor!'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>348</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>349</span> </span><span class="WHIT">		</span><span class="NAME">this.editor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'editor'</span><span class="PUNC">]</span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>350</span> 
+<span class='line'>351</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>352</span> 		  컬럼 정렬할 때 사용되는 컬럼 정렬 오브젝트. &lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>353</span> 
+<span class='line'>354</span> 		  @type {Object=} jgrid.grid.ColumnManager.options.colDef.sorter
+<span class='line'>355</span> 		  @private
+<span class='line'>356</span> 
+<span class='line'>357</span> 		  @author 조준호
+<span class='line'>358</span> 		  @since 1.0.0
+<span class='line'>359</span> 		  @version 1.0.0
+<span class='line'>360</span> 		  */</span><span class="WHIT">
+<span class='line'>361</span> </span><span class="WHIT">		</span><span class="NAME">this.sorter</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'sorter'</span><span class="PUNC">]</span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>362</span> 
+<span class='line'>363</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>364</span> 		  필터링 시에 사용될 추가 옵션 필터입니다. 커스텀 필터 또는 "string", "number" 를 입력할 수 있습니다.&lt;br>기본값:&lt;code>undefined&lt;/code>
+<span class='line'>365</span> 
+<span class='line'>366</span> 		  @type {Array.&lt;Object> | string=} jgrid.grid.ColumnManager.options.colDef.filter
+<span class='line'>367</span> 		  @private
+<span class='line'>368</span> 
+<span class='line'>369</span> 		  @author 조준호
+<span class='line'>370</span> 		  @since 1.2.0
+<span class='line'>371</span> 		  @version 1.2.0
+<span class='line'>372</span> 		  */</span><span class="WHIT">
+<span class='line'>373</span> </span><span class="WHIT">		</span><span class="NAME">this.filter</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="STRN">'filter'</span><span class="PUNC">]</span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>374</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>375</span> 
+<span class='line'>376</span> </span><span class="WHIT">	</span><span class="NAME">goog.inherits</span><span class="PUNC">(</span><span class="NAME">Column</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>377</span> 
+<span class='line'>378</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">proto</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Column.prototype</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>379</span> 
+<span class='line'>380</span> </span><span class="WHIT">	</span><span class="NAME">proto.show</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>381</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.hidden</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>382</span> </span><span class="WHIT">			</span><span class="NAME">this.hidden</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>383</span> </span><span class="WHIT">			</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>384</span> </span><span class="WHIT">				</span><span class="STRN">'type'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'hidden'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>385</span> </span><span class="WHIT">				</span><span class="STRN">'value'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="WHIT">
+<span class='line'>386</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>387</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>388</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>389</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>390</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>391</span> 
+<span class='line'>392</span> </span><span class="WHIT">	</span><span class="NAME">proto.hide</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>393</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.hidden</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>394</span> </span><span class="WHIT">			</span><span class="NAME">this.hidden</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>395</span> </span><span class="WHIT">			</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>396</span> </span><span class="WHIT">				</span><span class="STRN">'type'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'hidden'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>397</span> </span><span class="WHIT">				</span><span class="STRN">'value'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="WHIT">
+<span class='line'>398</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>399</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>400</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>401</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>402</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>403</span> 
+<span class='line'>404</span> </span><span class="WHIT">	</span><span class="NAME">proto.setHidden</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">hidden</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>405</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">hidden</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">this.hide</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.show</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>406</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>407</span> 
+<span class='line'>408</span> </span><span class="WHIT">	</span><span class="NAME">proto.setWidth</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">w</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>409</span> </span><span class="WHIT">		</span><span class="NAME">w</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">w</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>410</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">w</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">this.width</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">w</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>411</span> </span><span class="WHIT">			</span><span class="NAME">this.width</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">w</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>412</span> </span><span class="WHIT">			</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>413</span> </span><span class="WHIT">				</span><span class="STRN">'type'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'width'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>414</span> </span><span class="WHIT">				</span><span class="STRN">'value'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">w</span><span class="WHIT">
+<span class='line'>415</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>416</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">w</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>417</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>418</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>419</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>420</span> 
+<span class='line'>421</span> </span><span class="WHIT">	</span><span class="NAME">proto.setRenderer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">renderer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>422</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.renderer</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">renderer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>423</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">renderer</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">renderer</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>424</span> </span><span class="WHIT">				</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">error</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'column key='</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.key</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>425</span> </span><span class="WHIT">				</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'Invalid renderer!'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>426</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>427</span> </span><span class="WHIT">			</span><span class="NAME">this.renderer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">renderer</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>428</span> </span><span class="WHIT">			</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>429</span> </span><span class="WHIT">				</span><span class="STRN">'type'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'renderer'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>430</span> </span><span class="WHIT">				</span><span class="STRN">'value'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">renderer</span><span class="WHIT">
+<span class='line'>431</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>432</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>433</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>434</span> 
+<span class='line'>435</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>436</span> </span></pre></body></html>
