@@ -94,32 +94,37 @@ JGM._map = {
   @since 1.0.0
   @version 1.0.0
   */
+
 JGM.create = function(name, args) {
 	if (args == null) {
 		args = {};
 	}
-	if (!this.hasOwnProperty(name)) {
+	if (!JGM.hasOwnProperty(name)) {
 		throw new Error('cannot find a grid module: name=' + name);
 	}
-	if (this._map.hasOwnProperty(name)) {
-		if (this._map[name].cacheModule) {
-			var mid = args.mid = "JGM" + this.m.length++;
-			var module = new this[name](args);
-			if (!this.m.hasOwnProperty(name)) {
-				this.m[name] = {};
+	if (JGM._map.hasOwnProperty(name)) {
+		if (JGM._map[name].cacheModule) {
+			var mid = args.mid = "JGM" + JGM.m.length++;
+			var module = new JGM[name](args);
+			if (!JGM.m.hasOwnProperty(name)) {
+				JGM.m[name] = {};
 			}
-			this.m[name][mid] = module;
-			if (name === "Grid" && module.name) {
-				this.gridMap[module.name] = module;
+			JGM.m[name][mid] = module;
+			if (name === "Grid") {
+				if (module.name == null) {
+					module.name = JGM.grids.length;
+				}
+				JGM.gridMap[module.name] = module;
+				JGM.grids.push(module);
 			}
 			return module;
 		}
 		else {
-			return new this[name](args);
+			return new JGM[name](args);
 		}
 	}
 	else {
-		return new this[name](args);
+		return new JGM[name](args);
 	}
 };
 
@@ -296,7 +301,7 @@ JGM._deleteModule = function(obj, name) {
 };
 
 JGM._remove = function(name, mid) {
-	delete this.m[name][mid];
+	delete JGM.m[name][mid];
 };
 
 /**
@@ -311,19 +316,21 @@ JGM._remove = function(name, mid) {
   @version 1.0.1
   */
 JGM.grid = function(args) {
-	return this.create("Grid", args);
+	return JGM.create("Grid", args);
 };
 
 JGM.gridMap = {};
 
 JGM.getGrid = function(name) {
-	if (this.gridMap.hasOwnProperty(name)) {
-		return this.gridMap[name];
+	if (JGM.gridMap.hasOwnProperty(name)) {
+		return JGM.gridMap[name];
 	}
 };
 
+JGM.grids = [];
+
 JGM._add = function(name, module) {
-	this[name] = module;
+	JGM[name] = module;
 };
 
 JGM._extend = function(defaults, options) {
@@ -389,24 +396,24 @@ JGM._globalEvents = {
 };
 
 JGM._bindGlobalEvents = function() {
-	if (!this._globalEventsBound) {
+	if (!JGM._globalEventsBound) {
 		$(document).bind({
-			'mousemove':this._globalEvents._mousemove,
-			'mouseup':this._globalEvents._mouseup
+			'mousemove':JGM._globalEvents._mousemove,
+			'mouseup':JGM._globalEvents._mouseup
 		});
-		$(window).resize(this._globalEvents._resize);
-		this._globalEventsBound = true;
+		$(window).resize(JGM._globalEvents._resize);
+		JGM._globalEventsBound = true;
 	}
 };
 
 JGM._unbindGlobalEvents = function() {
-	if (this._globalEventsBound) {
+	if (JGM._globalEventsBound) {
 		$(document).unbind({
-			'mousemove':this._globalEvents._mousemove,
-			'mouseup':this._globalEvents._mouseup
+			'mousemove':JGM._globalEvents._mousemove,
+			'mouseup':JGM._globalEvents._mouseup
 		});
-		$(window).unbind("resize", this._globalEvents._resize);
-		this._globalEventsBound = false;
+		$(window).unbind("resize", JGM._globalEvents._resize);
+		JGM._globalEventsBound = false;
 	}
 };
 
