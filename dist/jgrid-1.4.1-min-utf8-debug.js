@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 22
- * Date: Wed Aug 17 10:24:02 KST 2011
+ * JexGrid Build 34
+ * Date: Thu Aug 18 19:31:09 KST 2011
  */
 /*
 AUTHOR
@@ -1555,21 +1555,27 @@ var JGM = {};
   MenuBar:{cacheModule:!0}, ViewportManager:{cacheModule:!0}, SelectionManager:{cacheModule:!0}, SearchManager:{cacheModule:!0}, TooltipManager:{cacheModule:!0}, Tracer:{cacheModule:!1}, Tree:{cacheModule:!0}, TreeNode:{cacheModule:!1}, Util:{cacheModule:!1}, Util$:{cacheModule:!1}};
   JGM.create = function(e, b) {
     b == null && (b = {});
-    if(!this.hasOwnProperty(e)) {
+    if(!JGM.hasOwnProperty(e)) {
       throw Error("cannot find a grid module: name=" + e);
     }
-    if(this._map.hasOwnProperty(e)) {
-      if(this._map[e].cacheModule) {
-        var a = b.mid = "JGM" + this.m.length++, c = new this[e](b);
-        this.m.hasOwnProperty(e) || (this.m[e] = {});
-        this.m[e][a] = c;
-        e === "Grid" && c.name && (this.gridMap[c.name] = c);
+    if(JGM._map.hasOwnProperty(e)) {
+      if(JGM._map[e].cacheModule) {
+        var a = b.mid = "JGM" + JGM.m.length++, c = new JGM[e](b);
+        JGM.m.hasOwnProperty(e) || (JGM.m[e] = {});
+        JGM.m[e][a] = c;
+        if(e === "Grid") {
+          if(c.name == null) {
+            c.name = JGM.grids.length
+          }
+          JGM.gridMap[c.name] = c;
+          JGM.grids.push(c)
+        }
         return c
       }else {
-        return new this[e](b)
+        return new JGM[e](b)
       }
     }else {
-      return new this[e](b)
+      return new JGM[e](b)
     }
   };
   JGM._destroy = function(e, b) {
@@ -1710,19 +1716,20 @@ var JGM = {};
     e.hasOwnProperty(b) && (e[b].destroy(), delete e[b])
   };
   JGM._remove = function(e, b) {
-    delete this.m[e][b]
+    delete JGM.m[e][b]
   };
   JGM.grid = function(e) {
-    return this.create("Grid", e)
+    return JGM.create("Grid", e)
   };
   JGM.gridMap = {};
   JGM.getGrid = function(e) {
-    if(this.gridMap.hasOwnProperty(e)) {
-      return this.gridMap[e]
+    if(JGM.gridMap.hasOwnProperty(e)) {
+      return JGM.gridMap[e]
     }
   };
+  JGM.grids = [];
   JGM._add = function(e, b) {
-    this[e] = b
+    JGM[e] = b
   };
   JGM._extend = function(e, b) {
     var a = f.ifNull(b, {});
@@ -1750,13 +1757,13 @@ var JGM = {};
     }
   }};
   JGM._bindGlobalEvents = function() {
-    if(!this._globalEventsBound) {
-      $(document).bind({mousemove:this._globalEvents._mousemove, mouseup:this._globalEvents._mouseup}), $(window).resize(this._globalEvents._resize), this._globalEventsBound = !0
+    if(!JGM._globalEventsBound) {
+      $(document).bind({mousemove:JGM._globalEvents._mousemove, mouseup:JGM._globalEvents._mouseup}), $(window).resize(JGM._globalEvents._resize), JGM._globalEventsBound = !0
     }
   };
   JGM._unbindGlobalEvents = function() {
-    if(this._globalEventsBound) {
-      $(document).unbind({mousemove:this._globalEvents._mousemove, mouseup:this._globalEvents._mouseup}), $(window).unbind("resize", this._globalEvents._resize), this._globalEventsBound = !1
+    if(JGM._globalEventsBound) {
+      $(document).unbind({mousemove:JGM._globalEvents._mousemove, mouseup:JGM._globalEvents._mouseup}), $(window).unbind("resize", JGM._globalEvents._resize), JGM._globalEventsBound = !1
     }
   };
   JGM.error = {LENGTH_NOT_EQUAL:"Lengths are not equal", NOT_MODIFIABLE:"Cannot modify value for '%0'.", KEY_UNDEFINED:"Column '%0' is undefined.", BAD_NULL:"Column '%0' cannot be null.", DUP_KEY:"Duplicate column key '%0'.", DUP_ENTRY:"Duplicate entry '%0' for '%1'.", KEY_NOT_FOUND:"'%0' for '%1' doesn't exist in table.", PARSE_ERROR:"Cannot parse '%0' for '%1'.", INVALID_DEFAULT:"Invalid default value '%0' for '%1'.", MULTIPLE_PRI_KEY:"Multiple primary key defined.", DATA_TOO_LONG:"Data '%0' too long for column '%1'. Maximum is %2.", 
@@ -4099,9 +4106,19 @@ jx.grid.Grid = {};
   g.destroy = function() {
     this.log("destroying Grid...", d);
     try {
-      this.log("event:beforeDispose.", d), this.dispatchEvent({type:"beforeDispose"}), e.isEmptyObj(h.m.Grid) && (this.log("unbinding global event handlers.", d), h._unbindGlobalEvents()), this.log("event:onDestroy.", d), this.event.trigger("onDestroy", !1, !0), this.log("destroying grid vars...", d), h._destroy(this, {name:"Grid", module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"}), this.dispose()
-    }catch(a) {
-      return a
+      var a = h.grids.indexOf(this);
+      a > -1 && h.grids.splice(a, 1);
+      this.name != null && delete h.gridMap[this.name];
+      this.log("event:beforeDispose.", d);
+      this.dispatchEvent({type:"beforeDispose"});
+      e.isEmptyObj(h.m.Grid) && (this.log("unbinding global event handlers.", d), h._unbindGlobalEvents());
+      this.log("event:onDestroy.", d);
+      this.event.trigger("onDestroy", !1, !0);
+      this.log("destroying grid vars...", d);
+      h._destroy(this, {name:"Grid", module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"});
+      this.dispose()
+    }catch(c) {
+      return c
     }
   };
   g._registerLinks = function(a) {
@@ -4269,6 +4286,9 @@ jx.grid.Grid = {};
     this._lastH = a;
     b.trigger("resize", !1, !0);
     return a
+  };
+  g.syncScroll = function() {
+    this.view._scroll()
   };
   g.getCellByIdAndKey = function(a, c) {
     if(a == null || c == null) {
@@ -4802,14 +4822,14 @@ jx.grid.SelectionManager = {};
     return i
   };
   a._getRangeMap = function(a, d, b, i, e, j, f) {
-    for(var k = {}, h;a <= b;a++) {
-      k[a] = {};
-      for(h = d;h <= i;h++) {
-        k[a][h] = !0
+    for(var h = {}, p;a <= b;a++) {
+      h[a] = {};
+      for(p = d;p <= i;p++) {
+        h[a][p] = !0
       }
     }
-    k[e][j] = f;
-    return k
+    h[e][j] = f;
+    return h
   };
   a.empty = function() {
     this._setLast();
@@ -7668,7 +7688,7 @@ jx.grid.SearchManager = {};
     if(!(this._global.length === 0 && e.isEmptyObj(this._codeMap))) {
       var c, d = this._tagMap, f, g, h = a.length, i, j = this._filterMap, k = this.constructor.CONST.and, l, m = this._global.length > 0, n, o;
       if(m) {
-        var q = this._global, p;
+        var p = this._global, q;
         i = this.grid.colDefMgr.get().filter(function(a) {
           return!a.noSearch
         });
@@ -7681,13 +7701,13 @@ jx.grid.SearchManager = {};
       a:for(;n >= 0;n--) {
         h = a[n];
         if(m) {
-          i = q.slice();
+          i = p.slice();
           c = 0;
           for(;i.length !== 0 && c < r;c++) {
-            if(!e.isNull(p = h[s[c]])) {
-              e.isString(p) || (p = p.toString());
+            if(!e.isNull(q = h[s[c]])) {
+              e.isString(q) || (q = q.toString());
               for(o = i.length - 1;o >= 0;o--) {
-                p.indexOf(i[o]) !== -1 && i.removeAt(o)
+                q.indexOf(i[o]) !== -1 && i.removeAt(o)
               }
             }
           }

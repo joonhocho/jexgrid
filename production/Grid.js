@@ -416,6 +416,13 @@ prototype._bindEvents = function() {
   */
 prototype.destroy = function() {	
 	try {
+		var i = JGM.grids.indexOf(this);
+		if (i > -1) {
+			JGM.grids.splice(i, 1);
+		}
+		if (this.name != null) {
+			delete JGM.gridMap[this.name];
+		}
 		this.dispatchEvent({'type':'beforeDispose'});
 		if (Util.isEmptyObj(JGM.m.Grid)) {
 			JGM._unbindGlobalEvents();
@@ -1120,6 +1127,9 @@ prototype.height = function(h) {
 	em.trigger("resize", false, true);
 	return h;
 };
+prototype.syncScroll = function() {
+	this['view']._scroll();
+}
 prototype.getCellByIdAndKey = function(id, key) {
 	if (id == null || key == null) {
 		return null;
