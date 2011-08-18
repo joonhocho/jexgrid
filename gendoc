@@ -81,7 +81,7 @@ OPTIONS:
 **/
 
 //generate doc
-$command = $jsdoc . " -c $docconf -d $docpath " . implode(' ', $debugfilenames);
+$command = $jsdoc . " -e EUC-KR -c $docconf -d $docpath " . implode(' ', $debugfilenames);
 echo $command . "\n\n";
 system($command);
 
