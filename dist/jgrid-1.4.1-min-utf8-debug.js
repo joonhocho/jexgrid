@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 36
- * Date: Tue Aug 23 10:34:24 KST 2011
+ * JexGrid Build 37
+ * Date: Tue Aug 23 10:56:38 KST 2011
  */
 /*
 AUTHOR
@@ -4488,7 +4488,8 @@ jx.grid.Grid = {};
         d.removeRows(0, d.getNumberOfRows());
         d.addRows(s.exportToArray(b, e, f));
         y.draw(d, g)
-      })
+      });
+      m.event.trigger("onChartLoaded", [y, d], !0)
     })
   }
 })();
