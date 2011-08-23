@@ -1674,6 +1674,7 @@ prototype.chart = function(chartCont, type, columns, options, from, to) {
 			data.addRows(dataMgr.exportToArray(columns, from, to));
 			chart.draw(data, options);
 		});
+		grid['event'].trigger('onChartLoaded', [chart, data], true);
 	});
 };
 
