@@ -1240,7 +1240,7 @@ prototype.containsEvent = function(e) {
 prototype.getChart = function(name) {
 	return this._charts[name];
 };
-prototype.chart = function(chartCont, type, columns, options) {
+prototype.chart = function(chartCont, type, columns, options, from, to) {
 	var pack,
 		cls;
 	type = type.toLowerCase();
@@ -1307,7 +1307,7 @@ prototype.chart = function(chartCont, type, columns, options) {
 			}
 			throw new Error('column key not found');
 		}),
-		rows = dataMgr.exportToArray(columns);
+		rows = dataMgr.exportToArray(columns, from, to);
 	google.setOnLoadCallback(function() {
 		var data = new google.visualization.DataTable(),
 			i = 0,
