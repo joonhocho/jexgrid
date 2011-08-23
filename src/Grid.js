@@ -1671,7 +1671,7 @@ prototype.chart = function(chartCont, type, columns, options, from, to) {
 		grid['event'].bind('onAfterRefresh', function() {
 			grid.log('redrawing chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_RESIZE);//IF_DEBUG
 			data.removeRows(0, data.getNumberOfRows());
-			data.addRows(dataMgr.exportToArray(columns));
+			data.addRows(dataMgr.exportToArray(columns, from, to));
 			chart.draw(data, options);
 		});
 	});
