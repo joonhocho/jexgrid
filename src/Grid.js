@@ -1566,7 +1566,7 @@ prototype.twprint = function() {
 
 //END_IF_DEBUG
 
-prototype.chart = function(chartCont, type, columns, options) {
+prototype.chart = function(chartCont, type, columns, options, from, to) {
 	this.log('creating chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_INIT);//IF_DEBUG
 
 	var pack,
@@ -1635,7 +1635,7 @@ prototype.chart = function(chartCont, type, columns, options) {
 			}
 			throw new Error('column key not found');
 		}),
-		rows = dataMgr.exportToArray(columns);
+		rows = dataMgr.exportToArray(columns, from, to);
 	google.setOnLoadCallback(function() {
 		var data = new google.visualization.DataTable(),
 			i = 0,
