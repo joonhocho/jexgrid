@@ -1342,7 +1342,7 @@ prototype.chart = function(chartCont, type, columns, options, from, to) {
 		chart.draw(data, options);
 		grid['event'].bind('onAfterRefresh', function() {
 			data.removeRows(0, data.getNumberOfRows());
-			data.addRows(dataMgr.exportToArray(columns));
+			data.addRows(dataMgr.exportToArray(columns, from, to));
 			chart.draw(data, options);
 		});
 	});
