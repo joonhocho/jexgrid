@@ -1,4 +1,4 @@
-console && console.log && console.log('reading javascript source "SearchManager.js"...');//IF_DEBUG
+window.console && window.console.log && window.console.log('reading javascript source "SearchManager.js"...');//IF_DEBUG
 
 goog.require('array_extension');
 goog.require('engine_extension');

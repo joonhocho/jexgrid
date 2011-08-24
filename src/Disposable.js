@@ -1,4 +1,4 @@
-console && console.log && console.log('reading javascript source "Disposable.js"...');//IF_DEBUG
+window.console && window.console.log && window.console.log('reading javascript source "Disposable.js"...');//IF_DEBUG
 
 goog.require('jx.util');
 
