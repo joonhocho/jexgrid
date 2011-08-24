@@ -175,7 +175,7 @@ prototype._defaultOptions = function() {
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'width': undefined,
+			'width': '100%',
 
 			/**
 			  컨테이너에 적용되는 CSS font 스타일 입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
@@ -354,7 +354,17 @@ prototype._init = function(args) {
 		scrollbarDim: undefined
 	};
 
-	ctnr = this._ctnr = $("<div id='" + this.mid + "' class='" + opt['classGrid'] + "' " + (Util.isNull(opt['width']) ? "" : "style='width:" + opt['width'] + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(ctnr));
+	var width = opt['width'];
+	if (width) {
+		if (width.indexOf('%') === -1) {
+			width += 'px';
+		}
+	}
+	else {
+		width = '';
+	}
+
+	ctnr = this._ctnr = $("<div id='" + this.mid + "' class='" + opt['classGrid'] + "' " + (width ? "" : "style='width:" + width + "' ") + "tabIndex='0'>").appendTo(Util$.safe$(ctnr));
 
 	this._vars.scrollbarDim = Util$.calScrollbarDims(ctnr);
 
@@ -649,7 +659,7 @@ prototype._createCss = function() {
 	  */
 	var subcss = em.trigger("onCreateCss");
 	subcss = subcss ? subcss.join('') : '';
-	var style = Util.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {
+	var style = Util.sprint("%selector%{overflow:hidden;width:100%;height:100%;font:%font%;%border%%style%}%submodule%", {
 		'selector': "#" + this.mid,
 		'font': opt['font'],
 		'border': opt['borderSide'] ?
@@ -1281,11 +1291,12 @@ prototype._resize = function(e) {
 	this.log('event:resize detected. event=' + e.type, V_RESIZE);//IF_DEBUG
 
 	var change = false,
-		ctnr = this._ctnr[0],
+	    ctnr$ = this._ctnr,
+		ctnr = ctnr$[0],
 		cw = this._lastW,
 		ch = this._lastH,
-		width = ctnr.clientWidth,
-		height = ctnr.clientHeight;
+		width = ctnr.clientWidth || ctnr$.width(),
+		height = ctnr.clientHeight || ctnr$.height();
 
 	if (width >= 1 && cw !== width) {
 		/**
