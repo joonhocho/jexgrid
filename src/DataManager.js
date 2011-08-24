@@ -208,8 +208,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 		this._increment = 1;
 
-		this.keyToType = {};
-
 		this._idToIdx = {};
 		this._idToData = {};
 
@@ -219,7 +217,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this._history = [];
 		this._redoHistory = [];
 
-		this.uniqueMap = {};
+		this.uniqueMap = false;
 
 		this.__init(args);
 	}
@@ -231,59 +229,41 @@ var JGM = goog.getObjectByName('jx.grid'),
 	var prototype = DataManager.prototype;
 
 	prototype.__init = function(args) {
-		var i = 0,
-			 ukeys = this._options['uniqueKeys'],
-			 ukey,
-			 umap = this.uniqueMap,
-			 len = ukeys.length,
-			 tmap = this.keyToType,
-			 colDefs = this.grid['colDefMgr'].getAll(),
-			 colDef,
-			 key;
+		var umap = this.uniqueMap = {},
+			i = 0,
+			l,
+			ukeys = this._options['uniqueKeys'],
+			hasUnique = false;
 
-		for (; i < len; i++) {
-			ukey = ukeys[i];
-			if (typeof ukey === "string") {
-				umap[ukey] = {};
+		if (ukeys && ukeys.length) {
+			hasUnique = true;
+			l = ukeys.length;
+			for (; i < l; i++) {
+				umap[ukeys[i]] = {};
 			}
 		}
 
-		len = colDefs.length;
-		for (i = 0; i < len; i++) {
+		var colDefs = this.grid['colDefMgr'].getAll(),
+			colDef,
+			key;
+
+		i = 0;
+		l = colDefs.length;
+		for (; i < l; i++) {
 			colDef = colDefs[i];
-			key = colDef['key'];
-			if (colDef.hasOwnProperty("unique") && colDef['unique'] === true && !umap.hasOwnProperty(key)) {
-				umap[key] = {};
+			if (colDef.unique) {
+				hasUnique = true;
+				umap[colDef['key']] = {};
 			}
-			tmap[key] = this.mapDatatype(colDef['type']);
 		}
 
-		Util.ifNull(args['datalist'], []);
+		if (!hasUnique) {
+			this.uniqueMap = false;
+		}
 
 		this.bindEvents();
 
 		this.set(args['datalist']);
-	};
-
-	prototype.mapDatatype = function(type) {
-		if (typeof type === "string") {
-			type = type.toLowerCase();
-			switch (type) {
-				case "number":
-					return this._consts.number;
-				case "string":
-					return this._consts.string;
-				case "boolean":
-					return this._consts["boolean"];
-				case "date":
-					return this._consts.date;
-				case "enum":
-					return this._consts["enum"];
-				default:	
-					return this._consts.unknown;
-			}
-		}
-		return this._consts.unknown;
 	};
 
 	prototype.bindEvents = function() {
@@ -462,13 +442,10 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	//tested implicitly
-	prototype.removeUniqueIndex = function(map, key, data, safe) {
-		if (safe !== true) {
-			if (Util.isEmptyObj(map) || Util.isEmptyString(key) || Util.isEmptyObj(data)) {
-				return;
-			}
-		} 
-
+	prototype.removeUniqueIndex = function(map, key, data) {
+		// map is always set
+		// key is always set
+		// data is always set
 		var val;
 		if (data.hasOwnProperty(key) && map.hasOwnProperty(val = data[key])) {
 			delete map[val];
@@ -498,151 +475,146 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	//tested
 	prototype.addToUniqueMap = function(datarow) {
-		if (Util.isEmptyObj(datarow) || Util.isEmptyObj(this.uniqueMap)) {
-			return false;
-		}
-
-		var added = [],
-			 key,
-			 umap = this.uniqueMap,
-			 res;
-		for (key in umap) {
-			if (umap.hasOwnProperty(key)) {
-				res = this.addUniqueIndex(umap[key], key, datarow);
-				if (res === true) {
-					added.push(key);
-				}
-				else if (res instanceof Error) {
-					var i = 0,
-						len = added.length;
-					for (; i < len; i++) {
-						this.removeUniqueIndex(umap[added[i]], added[i], datarow);
+		// datarow always set
+		if (this.uniqueMap) {
+			var added = [],
+				 key,
+				 umap = this.uniqueMap,
+				 res;
+			for (key in umap) {
+				if (umap.hasOwnProperty(key)) {
+					res = this.addUniqueIndex(umap[key], key, datarow);
+					if (res === true) {
+						added.push(key);
 					}
-					return res;
+					else if (res instanceof Error) {
+						var i = 0,
+							len = added.length;
+						for (; i < len; i++) {
+							this.removeUniqueIndex(umap[added[i]], added[i], datarow);
+						}
+						return res;
+					}
 				}
 			}
+			return added.length > 0;
 		}
-		return added.length > 0;
+		return false;
 	};
 
 	//tested
 	prototype.addListToUniqueMap = function(datalist) {
-		if (Util.isEmptyArray(datalist) || Util.isEmptyObj(this.uniqueMap)) {
-			return false;
-		}
-
-		var umap = this.uniqueMap,
-			 success = [],
-			 key,
-			 res;
-		for (key in umap) {
-			if (umap.hasOwnProperty(key)) {
-				res = this.addUniqueIndices(umap[key], key, datalist);
-				if (res === true) {
-					success.push(key);
-				}
-				else if (res instanceof Error) {
-					var i = 0,
-						len = success.length;
-					for (; i < len; i++) {
-						this.removeUniqueIndices(umap[success[i]], success[i], datalist);
+		// datalist is always set and not empty
+		if (this.uniqueMap) {
+			var umap = this.uniqueMap,
+				 success = [],
+				 key,
+				 res;
+			for (key in umap) {
+				if (umap.hasOwnProperty(key)) {
+					res = this.addUniqueIndices(umap[key], key, datalist);
+					if (res === true) {
+						success.push(key);
 					}
-					return res;
+					else if (res instanceof Error) {
+						var i = 0,
+							len = success.length;
+						for (; i < len; i++) {
+							this.removeUniqueIndices(umap[success[i]], success[i], datalist);
+						}
+						return res;
+					}
 				}
 			}
+			return success.length > 0;
 		}
-		return success.length > 0;
+		return false;
 	};
 
 	//tested
 	prototype.updateUniqueMap = function(datarow, change, before) {
-		if (Util.isNullOr(datarow, change, before) || Util.isEmptyObj(this.uniqueMap)) {
-			return false;
-		}
-
-		var key,
-			 umap = this.uniqueMap,
-			 changed = [],
-			 res;
-		for (key in umap) {
-			if (umap.hasOwnProperty(key)) {
-				res = this.updateUniqueIndex(umap[key], key, datarow, change, before);
-				if (res instanceof Error) {
-					var i = 0,
-						len = changed.length;
-					for (; i < len; i++) {
-						this.updateUniqueIndex(umap[changed[i]], changed[i], datarow, before, change);
+		// datarow, change and before is always set
+		if (this.uniqueMap) {
+			var key,
+				umap = this.uniqueMap,
+				changed = [],
+				res;
+			for (key in umap) {
+				if (umap.hasOwnProperty(key)) {
+					res = this.updateUniqueIndex(umap[key], key, datarow, change, before);
+					if (res instanceof Error) {
+						var i = 0,
+							len = changed.length;
+						for (; i < len; i++) {
+							this.updateUniqueIndex(umap[changed[i]], changed[i], datarow, before, change);
+						}
+						return res;
 					}
-					return res;
-				}
-				if (res !== false) {
-					changed.push(key);
+					if (res !== false) {
+						changed.push(key);
+					}
 				}
 			}
+			return changed.length > 0;
 		}
-		return changed.length > 0;
+		return false;
 	};
 
 	//tested
 	prototype.updateListUniqueMap = function(datalist, changes, befores) {
-		if (Util.isEmptyArray(datalist) || Util.isEmptyArray(changes) || Util.isEmptyArray(befores) || Util.isEmptyObj(this.uniqueMap)) {
-			return false;
-		}
-		if (datalist.length !== changes.length || datalist.length !== befores.length) {
-			return this.grid['error']("LENGTH_NOT_EQUAL");
-		}
-
-		var key,
-			 umap = this.uniqueMap,
-			 changed = [],
-			 res;
-		for (key in umap) {
-			if (umap.hasOwnProperty(key)) {
-				res = this.updateUniqueIndices(umap[key], key, datalist, changes, befores);
-				if (res instanceof Error) {
-					var i = 0,
-						len = changed.length;
-					for (; i < len; i++) {
-						this.updateUniqueIndices(umap[changed[i]], changed[i], datalist, befores, changes);
+		// datalist, changes, befores are always set and not empty
+		if (this.uniqueMap) {
+			var key,
+				umap = this.uniqueMap,
+				changed = [],
+				res;
+			for (key in umap) {
+				if (umap.hasOwnProperty(key)) {
+					res = this.updateUniqueIndices(umap[key], key, datalist, changes, befores);
+					if (res instanceof Error) {
+						var i = 0,
+							len = changed.length;
+						for (; i < len; i++) {
+							this.updateUniqueIndices(umap[changed[i]], changed[i], datalist, befores, changes);
+						}
+						return res;
 					}
-					return res;
-				}
-				if (res !== false) {
-					changed.push(key);
+					if (res !== false) {
+						changed.push(key);
+					}
 				}
 			}
+			return changed.length > 0;
 		}
-		return changed.length > 0;
+		return false;
 	};
 
 	//tested implicitly
 	prototype.removeFromUniqueMap = function(added) {
-		if (Util.isEmptyObj(added) || Util.isEmptyObj(this.uniqueMap)) {
-			return;
-		}
+		// added is always set
+		if (this.uniqueMap) {
+			var key,
+				 umap = this.uniqueMap;
 
-		var key,
-			 umap = this.uniqueMap;
-
-		for (key in umap) {
-			if (umap.hasOwnProperty(key)) {
-				this.removeUniqueIndex(umap[key], key, added); 
+			for (key in umap) {
+				if (umap.hasOwnProperty(key)) {
+					this.removeUniqueIndex(umap[key], key, added); 
+				}
 			}
 		}
 	};
 
 	//tested implicitly
 	prototype.removeListFromUniqueMap = function(addedList) {
-		if (Util.isEmptyArray(addedList) || Util.isEmptyObj(this.uniqueMap)) {
-			return;
-		}
+		// addedList is always not empty
+		if (this.uniqueMap) {
+			var key,
+				umap = this.uniqueMap;
 
-		var key,
-			 umap = this.uniqueMap;
-
-		for (key in umap) {
-			if (umap.hasOwnProperty(key)) {
-				this.removeUniqueIndices(umap[key], key, addedList);
+			for (key in umap) {
+				if (umap.hasOwnProperty(key)) {
+					this.removeUniqueIndices(umap[key], key, addedList);
+				}
 			}
 		}
 	};
@@ -667,10 +639,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	//tested
 	prototype.addListToIdMap = function(datalist) {
-		if (Util.isEmptyArray(datalist)) {
-			return false; 
-		}
-
+		// datalist always set and not empty
 		var idKey = this.idKey;
 		switch (this._idMode) {
 			case this._consts._auto:
@@ -874,7 +843,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		var colDefs = this.grid['colDefMgr'].getAll(),
 			 clen = colDefs.length,
 			 key,
-			 isNew = args !== undefined && args['isNew'],
+			 isNew = args && args.isNew,
 			 colDef,
 			 i = 0;
 
@@ -898,7 +867,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 clen = colDefs.length,
 			 len = datalist.length,
 			 key,
-			 isNew = args !== undefined && args['isNew'],
+			 isNew = args && args.isNew,
 			 colDef,
 			 i = 0,
 			 j;
@@ -1017,14 +986,12 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	//tested
 	prototype.parse = function(datarow, args) {
-		if (Util.isNull(datarow)) {
-			return false;
-		}
+		// datarow always set
 		var colDefs = this.grid['colDefMgr'].getAll(),
 			 clen = colDefs.length,
 			 parser,
 			 key,
-			 isNew = args !== undefined && args['isNew'],
+			 isNew = args && args.isNew,
 			 colDef,
 			 i = 0;
 		for (; i < clen; i++) {
@@ -1056,12 +1023,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	//tested
 	prototype.parseList = function(list, args) {
-		if (Util.isNull(list)) {
-			return false;
-		}
-		if (list.length === 0) {
-			return true;
-		}
+		// list always set and not empty
 		var colDefs = this.grid['colDefMgr'].getAll(),
 			 clen = colDefs.length,
 			 len = list.length,
@@ -1069,13 +1031,13 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 key,
 			 i = 0,
 			 j,
-			 isNew = args !== undefined && args['isNew'],
+			 isNew = args && args.isNew,
 			 colDef,
 			 datarow;
 		for (; i < clen; i++) {
 			colDef = colDefs[i];
-			// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
 			if (isNew && colDef['nullOnCreate']) {
+				// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
 				continue;
 			}
 
@@ -1104,9 +1066,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	//tested
 	prototype.validate = function(datarow, args) {
-		if (Util.isNull(datarow)) {
-			return false;
-		}
+		// datarow always set
 		var colDefs = this.grid['colDefMgr'].getAll(),
 			 clen = colDefs.length,
 			 validator,
@@ -1117,7 +1077,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 val,
 			 stringval,
 			 test,
-			 isNew = args !== undefined && args['isNew'],
+			 isNew = args && args.isNew,
 			 i = 0;
 		for (; i < clen; i++) {
 			colDef = colDefs[i];
@@ -1205,12 +1165,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	//tested
 	prototype.validateList = function(list, args) {
-		if (Util.isNull(list)) {
-			return false;
-		}
-		if (list.length === 0) {
-			return true;
-		}
+		// list is always set and not empty
 		var colDefs = this.grid['colDefMgr'].getAll(),
 			 clen = colDefs.length,
 			 len = list.length,
@@ -1223,7 +1178,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 emptystrs, // has true for empty rows
 			 val,
 			 test,
-			 isNew = args !== undefined && args['isNew'],
+			 isNew = args && args.isNew,
 			 vals = [], // has values for all rows for current column
 			 stringvals = []; // has string values for all rows for current column
 		for (; i < clen; i++) {
@@ -1347,7 +1302,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.makeCompositeKeyList = function(datalist, update) {
-		if (this._idMode !== this._consts._composite || datalist.length === 0) {
+		// datalist always set and not empty
+		if (this._idMode !== this._consts._composite) {
 			return;
 		}
 
@@ -1426,7 +1382,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.mapList = function(list) {
-		if (Util.isEmptyArray(list)) { 
+		if (!(list && list.length)) {
 			return {'mapped':[], 'unmapped':[]};
 		}
 
@@ -1701,9 +1657,15 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.set = function(datalist) {
-		if (this.all === datalist || (Util.isEmptyArray(datalist) && this.all === 0)) {
+		var all = this.all;
+		if (all === datalist || (!all.length && !(datalist && datalist.length))) {
 			return false;
 		}
+
+		datalist = datalist || [];
+
+		var grid = this.grid,
+			em = grid['event'];
 
 		/**
 		  그리드 데이터에 변경이 적용되기 전에 발생되는 이벤트 입니다.
@@ -1714,7 +1676,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.1.3
 		  @version 1.2.3
 		  */
-		this.grid['event'].trigger("onBeforeDataChange", false, true);
+		em.trigger("onBeforeDataChange", false, true);
 
 		/**
 		  그리드의 모든 데이터 어레이를 셋하기 전에 발생되는 이벤트 입니다.
@@ -1727,46 +1689,45 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.3.0
 		  */
-		this.grid['event'].trigger("onBeforeSetDatalist", [this.all, datalist], true);
+		em.trigger("onBeforeSetDatalist", [all, datalist], true);
 
-		this.cleanList(this.all);
+		this.cleanList(all);
 
-		var key,
-			 umap = this.uniqueMap;
-		for (key in umap) {
-			if (umap.hasOwnProperty(key)) {
-				umap[key] = {};
+		if (this.uniqueMap) {
+			var key,
+				umap = this.uniqueMap;
+
+			for (key in umap) {
+				if (umap.hasOwnProperty(key)) {
+					umap[key] = {};
+				}
 			}
 		}
 
 		this._idToData = {};
 
-		this.all = [];
-
 		this._history.length = 0;
 		this._redoHistory.length = 0;
 
-		if (Util.isNull(datalist)) {
-			datalist = [];
-		}
+		if (datalist.length) {
+			var res;
+			if ((res = this.parseList(datalist)) instanceof Error) {
+				return res;
+			}
 
-		var res;
-		if ((res = this.parseList(datalist)) instanceof Error) {
-			return res;
-		}
+			if ((res = this.validateList(datalist)) instanceof Error) {
+				return res;
+			}
 
-		if ((res = this.validateList(datalist)) instanceof Error) {
-			return res;
-		}
+			if ((res = this.addListToUniqueMap(datalist)) instanceof Error) {
+				return res;
+			}
 
-		if ((res = this.addListToUniqueMap(datalist)) instanceof Error) {
-			return res;
-		}
+			this.makeCompositeKeyList(datalist, true);
 
-		this.makeCompositeKeyList(datalist, true);
-
-		if ((res = this.addListToIdMap(datalist)) instanceof Error) {
-			return res;
+			if ((res = this.addListToIdMap(datalist)) instanceof Error) {
+				return res;
+			}
 		}
 
 		this.all = datalist;
@@ -1781,7 +1742,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onAfterSetDatalist", [datalist], true);
+		em.trigger("onAfterSetDatalist", [datalist], true);
 
 		/**
 		  그리드 데이터에 변경 사항이 있었을 경우에 발생되는 이벤트 입니다.
@@ -1792,7 +1753,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.1.3
 		  @version 1.1.3
 		  */
-		this.grid['event'].trigger("onDataChange", false, true);
+		em.trigger("onDataChange", false, true);
 
 		this.refresh();
 
@@ -1812,11 +1773,13 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.add = function(datarow, args) {
-		if (Util.isNull(datarow) || Util.isNotNull(this.map(datarow))) {
+		if (!datarow || this.map(datarow)) {
+			// null or already in this grid
 			return false;
 		}
 
-		this.grid['event'].trigger("onBeforeDataChange", false, true);
+		var em = this.grid['event'];
+		em.trigger("onBeforeDataChange", false, true);
 
 		this.fillTemp(datarow, args);
 
@@ -1857,8 +1820,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onAddDatarow", [datarow, args], true);
-		this.grid['event'].trigger("onDataChange", false, true);
+		em.trigger("onAddDatarow", [datarow, args], true);
+		em.trigger("onDataChange", false, true);
 
 		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
@@ -1880,12 +1843,12 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.addList = function(datalist, args) {
-		if (Util.isEmptyArray(datalist)) {
+		if (!(datalist && datalist.length)) {
 			return false;
 		}
 
 		var toAdd = this.mapList(datalist).unmapped;
-		if (toAdd.length === 0) {
+		if (!toAdd.length) {
 			return false;
 		}
 
@@ -1973,7 +1936,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.update = function(datarow, change, args) {
-		if (Util.isNullOr(datarow, change)) {
+		if (!(datarow && change)) {
 			return false;
 		}
 
@@ -2097,11 +2060,12 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.0.0
 	  */
 	prototype.updateList = function(list, args) {
-		if (Util.isEmptyArray(list)) {
+		if (!(list && list.length)) {
 			return false;
 		}
 
-		this.grid['event'].trigger("onBeforeDataChange", false, true);
+		var em = this.grid['event'];
+		em.trigger("onBeforeDataChange", false, true);
 
 		/**
 		  데이터가 변경되기 전에 발생하는 이벤트 입니다.
@@ -2116,7 +2080,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		this.grid['event'].trigger("onBeforeUpdateDatalist", [list], true);
+		em.trigger("onBeforeUpdateDatalist", [list], true);
 
 		var datalist = [],
 			 befores = [],
@@ -2151,7 +2115,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}
 		}
 
-		if (datalist.length === 0) {
+		if (!datalist.length) {
 			return false;
 		}
 
@@ -2190,7 +2154,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		  @version 1.1.1
 		  */
 		if (res !== false) {
-			this.grid['event'].trigger("onIdListChange", [res.list, res.befores, this.idKey], true);
+			em.trigger("onIdListChange", [res.list, res.befores, this.idKey], true);
 		}
 
 		if (Util.isNull(args) || args['undo'] !== true) {
@@ -2219,8 +2183,8 @@ var JGM = goog.getObjectByName('jx.grid'),
 		/*
 		 * 1.3.0: added: changes & befores & args
 		 */
-		this.grid['event'].trigger("onUpdateDatalist", [datalist, changes, befores, args], true);	
-		this.grid['event'].trigger("onDataChange", false, true);
+		em.trigger("onUpdateDatalist", [datalist, changes, befores, args], true);	
+		em.trigger("onDataChange", false, true);
 
 		if (args === undefined || args['noRefresh'] !== true) {
 			this.refresh(args);
@@ -2272,7 +2236,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 
 		var mapped = this.map(datarow);
-		if (Util.isNull(mapped)) {
+		if (!mapped) {
 			return false;
 		}
 
@@ -2324,14 +2288,14 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.removeList = function(datalist, args) {
-		if (Util.isEmptyArray(datalist)) {
+		if (!(datalist && datalist.length)) {
 			return false;
 		}
 
 		var map = this.mapList(datalist),
 			 mapped = map.mapped;
 
-		if (mapped.length === 0) {
+		if (!mapped.length) {
 			return false;
 		}
 
@@ -2567,24 +2531,22 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.dropNonReal = function(datalist) {
-		if (Util.isEmptyArray(datalist)) {
-			return;
-		}
+		if (datalist && datalist.length) {
+			var notReal = this._consts._notReal,
+				 len = datalist.length,
+				 i = len - 1;
 
-		var notReal = this._consts._notReal,
-			 len = datalist.length,
-			 i = len - 1;
-
-		for (; i >= 0; i--) {
-			if (datalist[i].hasOwnProperty(notReal)) {
-				delete datalist[i][notReal];
-				datalist.removeAt(i);
+			for (; i >= 0; i--) {
+				if (datalist[i].hasOwnProperty(notReal)) {
+					delete datalist[i][notReal];
+					datalist.removeAt(i);
+				}
 			}
 		}
 	};
 
 	prototype.removeIdCol = function(datalist) {
-		if (this._idMode === this._consts._given || Util.isEmptyArray(datalist)) {
+		if (this._idMode === this._consts._given || !(datalist && datalist.length)) {
 			return;
 		}
 
@@ -2606,41 +2568,10 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.cleanList = function(datalist) {
-		if (!Util.isEmptyArray(datalist)) {
+		if (datalist && datalist.length) {
 			this.removeIdCol(datalist);
 			this.dropNonReal(datalist);
 		}
-	};
-
-	prototype.purify = function(datalist) {
-		if (datalist !== undefined) {
-			datalist = this.all;
-		}
-		if (Util.isEmptyArray(datalist)) {
-			return [];
-		}
-		var list = [],
-			 len = datalist.length,
-			 i = 0,
-			 j,
-			 data,
-			 clone,
-			 notReal = this._consts._notReal;
-
-		for (; i < len; i++) {
-			if ((data = datalist[i]).hasOwnProperty(notReal) === false) {
-				list.push(clone = {});
-				for (j in data) {
-					if (data.hasOwnProperty(j)) {
-						if (data.hasOwnProperty(j) && j.substring(0, 3) !== "J@I") {
-							clone[j] = data[j];
-						}
-					}
-				}
-			}
-		}
-
-		return list;
 	};
 
 	/**
