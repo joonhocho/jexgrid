@@ -475,7 +475,7 @@ prototype.__init = function() {
 		//'resizeHeight': this.resizeHeight,
 		'onAfterRefresh': this.onAfterRefresh,
 		'onRenderModules': this._render,
-		'onReorderCols': this._onReorderCols,
+		'changeVisibleColumns': this._onReorderCols,
 		'onResizeCanvasWidth': this._scroll,
 		'onUpdateDatarow': this.onUpdateDatarow,
 		'onUpdateDatalist': this.onUpdateDatalist,

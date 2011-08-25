@@ -75,31 +75,36 @@
 
 				if (grid !== undefined){grid.destroy();grid=undefined;}
 				data = [];
-				for (var i = 0; i < 200; i++)	data.push({id:-Math.floor(i / 4), name:-(i % 4), 0: i, 1: 1231232132313, 2:'-'+i});
+				for (var i = 0; i < 200; i++)	data.push({id:-Math.floor(i / 4), name:'' + (-(i % 4)), 0: i, 1: 1231232132313, 2:'-'+i});
 				colDefs = [
 				{
-				key:"id",
-				name:"아이디",
-				width:100,
-				filter:"number",
-				sumRenderer:true,
-				inputOnCreate:true,
-				defaultValue:30,
-				sorter:"int",
-				maxlength: 10,
-				resizable:true
+					key:"id",
+					name:"아이디",
+					width:100,
+					filter:"number",
+					sumRenderer:true,
+					inputOnCreate:true,
+					defaultValue:30,
+					sorter:"int",
+					maxlength: 10,
+					resizable:true
 				},
 				{
-				key:"name",
-				name:"이름",
-				width:100,
-				filter:"number",
-				inputOnCreate:true,
-				defaultValue:"이름",
-				sorter:"int",
-				resizable:true,
-				editor:JGM.create("Editor"),
-				CheckManager:{}
+					key:"name",
+					name:"이름",
+					width:100,
+					filter:"number",
+					inputOnCreate:true,
+					defaultValue:"이름",
+					sorter:"int",
+					resizable:true,
+					editor:JGM.create("Editor"),
+					CheckManager:{},
+					type: 'int',
+					parser: true,
+					validator: function(v, d, s, n, e) {
+						return isFinite(v);
+					}
 				},a ];
 
 				for (var i = 0; i < 20; i++)
@@ -115,7 +120,7 @@
 				rowsPerPage: 20,
 				autoHeight:false
 				},
-				DataManager:{idColKeys:["id","name"]},
+				DataManager:{idKey:'0'},
 				ColHeader:{
 				reorderEnabled:true,
 				syncResize:false

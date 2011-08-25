@@ -182,7 +182,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			"enum":5
 		};
 
-		if (Util.isNotNull(this._options['idKey'])) {
+		if (this._options['idKey'] != null) {
 			this._idMode = this._consts._given;
 
 			/**
@@ -286,62 +286,51 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	//tested implicitly
-	prototype.addUniqueIndex = function(map, key, data, safe) {
-		if (safe !== true) {
-			if (Util.isNull(map) || Util.isEmptyString(key) || Util.isNull(data)) {
-				return false;
-			}
-		} 
-		if (data.hasOwnProperty(key) === false) {
+	prototype.addUniqueIndex = function(map, key, data) {
+		// map is always set
+		// key is always set
+		// data is always set
+		if (!data.hasOwnProperty(key)) {
 			return this.grid['error']("KEY_UNDEFINED", key);
 		}
-		var val;
-		if (Util.isEmptyString(val = data[key])) {
+
+		var val = data[key];
+		if (val == null || val === '') {
 			return this.grid['error']("BAD_NULL", key);
 		}
+
 		if (map.hasOwnProperty(val)) {
 			if (map[val] === data) {
 				return false;
 			}
 			return this.grid['error']("DUP_ENTRY", val, key);
 		}
+
 		map[val] = data;
 		return true;
 	};
 
 	//tested implicitly
-	prototype.addUniqueIndices = function(map, key, list, safe) {
-		if (safe !== true) {
-			if (Util.isNull(map) || Util.isEmptyString(key) || Util.isEmptyArray(list)) {
-				return false;
-			}
-		} 
-
+	prototype.addUniqueIndices = function(map, key, list) {
+		// map is always set
+		// key is always set
+		// list is always set and not empty
 		var i,
-			 len = list.length,
-			 success = [],
-			 val,
-			 data;
+			len = list.length,
+			success = [],
+			res,
+			data;
 		for (i = 0; i < len; i++) {
-			if (Util.isNull(data = list[i])) {
-				continue;
-			}
-			if (data.hasOwnProperty(key) === false) {
-				this.removeUniqueIndices(map, key, success);
-				return this.grid['error']("KEY_UNDEFINED", key);
-			}
-			if (Util.isEmptyString(val = data[key])) {
-				this.removeUniqueIndices(map, key, success);
-				return this.grid['error']("BAD_NULL", key);
-			}
-			if (map.hasOwnProperty(val)) {
-				if (map[val] === data) {
-					continue;
+			if (data = list[i]) {
+				res = this.addUniqueIndex(map, key, data);
+				if (res) {
+					if (res instanceof Error) {
+						this.removeUniqueIndices(map, key, success);
+						return res;
+					}
+					success.push(map[data[key]] = data);
 				}
-				this.removeUniqueIndices(map, key, success);
-				return this.grid['error']("DUP_ENTRY", val, key);
 			}
-			success.push(map[val] = data);
 		}
 		return success.length > 0;
 	};
@@ -354,15 +343,15 @@ var JGM = goog.getObjectByName('jx.grid'),
 			}
 		}
 
-		if (change.hasOwnProperty(key) === false) {
+		if (!change.hasOwnProperty(key)) {
 			return false;
 		}
 		var oldKey,
 			 newKey;
-		if (before.hasOwnProperty(key) === false || data.hasOwnProperty(key) === false) {
+		if (!before.hasOwnProperty(key) || !data.hasOwnProperty(key)) {
 			return this.grid['error']("KEY_UNDEFINED", key);
 		}
-		if (map.hasOwnProperty(oldKey = before[key]) === false) {
+		if (!map.hasOwnProperty(oldKey = before[key])) {
 			return this.grid['error']("KEY_NOT_FOUND", oldKey, key);
 		}
 		if (Util.isEmptyString(newKey = change[key])) {
@@ -404,15 +393,15 @@ var JGM = goog.getObjectByName('jx.grid'),
 			if (Util.isNull(data = list[i])) {
 				continue;
 			}
-			if ((change = changes[i]).hasOwnProperty(key) === false) {
+			if (!(change = changes[i]).hasOwnProperty(key)) {
 				continue;
 			}
 			before = befores[i];
-			if (before.hasOwnProperty(key) === false || data.hasOwnProperty(key) === false) {
+			if (!before.hasOwnProperty(key) || !data.hasOwnProperty(key)) {
 				this.updateUniqueIndices(map, key, slist, sbefores, schanges);
 				return this.grid['error']("KEY_UNDEFINED", key);
 			}
-			if (map.hasOwnProperty(oldKey = before[key]) === false) {
+			if (!map.hasOwnProperty(oldKey = before[key])) {
 				this.updateUniqueIndices(map, key, slist, sbefores, schanges);
 				return this.grid['error']("KEY_NOT_FOUND", oldKey, key);
 			}
@@ -435,7 +424,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			sbefores.push(before);
 		}
 
-		if (slist.length === 0) {
+		if (!slist.length) {
 			return false;
 		}
 		return {datalist:slist, changes:schanges, befores:sbefores};
@@ -484,16 +473,19 @@ var JGM = goog.getObjectByName('jx.grid'),
 			for (key in umap) {
 				if (umap.hasOwnProperty(key)) {
 					res = this.addUniqueIndex(umap[key], key, datarow);
-					if (res === true) {
-						added.push(key);
-					}
-					else if (res instanceof Error) {
-						var i = 0,
-							len = added.length;
-						for (; i < len; i++) {
-							this.removeUniqueIndex(umap[added[i]], added[i], datarow);
+					if (res) {
+						// true or error
+						if (res instanceof Error) {
+							// error
+							var i = 0,
+								len = added.length;
+							for (; i < len; i++) {
+								this.removeUniqueIndex(umap[added[i]], added[i], datarow);
+							}
+							return res;
 						}
-						return res;
+						// true
+						added.push(key);
 					}
 				}
 			}
@@ -507,22 +499,24 @@ var JGM = goog.getObjectByName('jx.grid'),
 		// datalist is always set and not empty
 		if (this.uniqueMap) {
 			var umap = this.uniqueMap,
-				 success = [],
-				 key,
-				 res;
+				success = [],
+				key,
+				res;
 			for (key in umap) {
 				if (umap.hasOwnProperty(key)) {
 					res = this.addUniqueIndices(umap[key], key, datalist);
-					if (res === true) {
-						success.push(key);
-					}
-					else if (res instanceof Error) {
-						var i = 0,
-							len = success.length;
-						for (; i < len; i++) {
-							this.removeUniqueIndices(umap[success[i]], success[i], datalist);
+					if (res) {
+						// true or error
+						if (res instanceof Error) {
+							// error
+							var i = 0,
+								len = success.length;
+							for (; i < len; i++) {
+								this.removeUniqueIndices(umap[success[i]], success[i], datalist);
+							}
+							return res;
 						}
-						return res;
+						success.push(key);
 					}
 				}
 			}
@@ -542,15 +536,18 @@ var JGM = goog.getObjectByName('jx.grid'),
 			for (key in umap) {
 				if (umap.hasOwnProperty(key)) {
 					res = this.updateUniqueIndex(umap[key], key, datarow, change, before);
-					if (res instanceof Error) {
-						var i = 0,
-							len = changed.length;
-						for (; i < len; i++) {
-							this.updateUniqueIndex(umap[changed[i]], changed[i], datarow, before, change);
+					if (res) {
+						// true or error
+						if (res instanceof Error) {
+							// error
+							var i = 0,
+								len = changed.length;
+							for (; i < len; i++) {
+								this.updateUniqueIndex(umap[changed[i]], changed[i], datarow, before, change);
+							}
+							return res;
 						}
-						return res;
-					}
-					if (res !== false) {
+						// true
 						changed.push(key);
 					}
 				}
@@ -571,15 +568,17 @@ var JGM = goog.getObjectByName('jx.grid'),
 			for (key in umap) {
 				if (umap.hasOwnProperty(key)) {
 					res = this.updateUniqueIndices(umap[key], key, datalist, changes, befores);
-					if (res instanceof Error) {
-						var i = 0,
-							len = changed.length;
-						for (; i < len; i++) {
-							this.updateUniqueIndices(umap[changed[i]], changed[i], datalist, befores, changes);
+					if (res) {
+						// true or error
+						if (res instanceof Error) {
+							// error
+							var i = 0,
+								len = changed.length;
+							for (; i < len; i++) {
+								this.updateUniqueIndices(umap[changed[i]], changed[i], datalist, befores, changes);
+							}
+							return res;
 						}
-						return res;
-					}
-					if (res !== false) {
 						changed.push(key);
 					}
 				}
@@ -621,13 +620,11 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	//tested
 	prototype.addToIdMap = function(datarow) {
-		if (Util.isNull(datarow)) {
-			return false;
-		}
+		// datarow is always set
 		var idKey = this.idKey;
 		switch (this._idMode) {
 			case this._consts._auto:
-				if (datarow.hasOwnProperty(idKey) === false) {
+				if (!datarow.hasOwnProperty(idKey)) {
 					datarow[idKey] = this._increment++;
 				}
 			case this._consts._given:
@@ -647,7 +644,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 					 datarow,
 					 len = datalist.length;
 				for (; i < len; i++) {
-					if ((datarow = datalist[i]).hasOwnProperty(idKey) === false) {
+					if (!(datarow = datalist[i]).hasOwnProperty(idKey)) {
 						datarow[idKey] = this._increment++;
 					}
 				}
@@ -794,7 +791,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 						}
 					}
 				}
-				if (list.length === 0) {
+				if (!list.length) {
 					return false;
 				}
 				res = this.updateUniqueIndices(idMap, idKey, list, idChanges, idBefores);
@@ -837,22 +834,20 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.fillTemp = function(datarow, args) {
-		if (Util.isNull(datarow)) {
-			return;
-		}
+		// datarow is always set
 		var colDefs = this.grid['colDefMgr'].getAll(),
-			 clen = colDefs.length,
-			 key,
-			 isNew = args && args.isNew,
-			 colDef,
-			 i = 0;
+			clen = colDefs.length,
+			key,
+			isNew = args && args.isNew,
+			colDef,
+			i = 0;
 
 		if (isNew) {
 			for (; i < clen; i++) {
 				colDef = colDefs[i];
 				key = colDef['key'];
 				// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-				if (colDef['nullOnCreate'] && Util.isNull(datarow[key])) {
+				if (colDef['nullOnCreate'] && datarow[key] == null) {
 					datarow[key] = "J@H" + this._increment++;
 				}
 			}
@@ -860,9 +855,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.fillTempList = function(datalist, args) {
-		if (Util.isEmptyArray(datalist)) {
-			return;
-		}
+		// datalist is always set and not empty
 		var colDefs = this.grid['colDefMgr'].getAll(),
 			 clen = colDefs.length,
 			 len = datalist.length,
@@ -891,7 +884,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return;
 		}
 		query = $.trim(query);
-		if (query.length === 0) {
+		if (!query.length) {
 			return;
 		}
 		var lquery,
@@ -911,7 +904,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		whereIndex = lquery.indexOf(' where ');
 		hasWhere = whereIndex > -1;
 		stmt = $.trim(hasWhere ? query.substring(opIndex + 1, whereIndex) : query.substring(opIndex + 1));
-		if (stmt.length === 0) {
+		if (!stmt.length) {
 			return;
 		}
 		if (hasWhere) {
@@ -935,7 +928,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			return;
 		}
 		where = $.trim(where);
-		if (where.length === 0) {
+		if (!where.length) {
 			return;
 		} 
 
@@ -964,7 +957,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 res = [],
 			 all = false;
 
-		if (len === 0) {
+		if (!len) {
 			return res;
 		}
 
@@ -987,79 +980,54 @@ var JGM = goog.getObjectByName('jx.grid'),
 	//tested
 	prototype.parse = function(datarow, args) {
 		// datarow always set
-		var colDefs = this.grid['colDefMgr'].getAll(),
-			 clen = colDefs.length,
-			 parser,
-			 key,
-			 isNew = args && args.isNew,
-			 colDef,
-			 i = 0;
-		for (; i < clen; i++) {
-			colDef = colDefs[i];
-			// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-			if (isNew && colDef['nullOnCreate']) {
-				continue;
-			}
+		var colmgr = this.grid['colDefMgr'],
+			parsers = colmgr.getParser(),
+			nullOnCreates = colmgr.getNullOnCreate(),
+			key,
+			isNew = args && args.isNew;
 
-			if (Util.isFunction(parser = colDef['parser'])) {
-				key = colDef['key'];
-				if (datarow.hasOwnProperty(key)) {
-					try {
-						datarow[key] = parser(datarow[key], datarow);
-					}
-					catch (e) {
-						if (Util.isNull(datarow)) {
-							return this.grid['error']("PARSE_ERROR", datarow, key);
-						}
-						else {
-							return this.grid['error']("PARSE_ERROR", datarow[key], key);
-						}
-					}
+		try {
+			for (key in parsers) {
+				if (parsers.hasOwnProperty(key) && !(isNew && nullOnCreates.hasOwnProperty(key))) {
+					// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
+					datarow[key] = parsers[key](datarow[key], datarow);
 				}
 			}
 		}
+		catch (e) {
+			return this.grid['error']("PARSE_ERROR", datarow[key], key);
+		}
+
 		return true;
 	};
 
 	//tested
 	prototype.parseList = function(list, args) {
 		// list always set and not empty
-		var colDefs = this.grid['colDefMgr'].getAll(),
-			 clen = colDefs.length,
-			 len = list.length,
-			 parser,
-			 key,
-			 i = 0,
-			 j,
-			 isNew = args && args.isNew,
-			 colDef,
-			 datarow;
-		for (; i < clen; i++) {
-			colDef = colDefs[i];
-			if (isNew && colDef['nullOnCreate']) {
-				// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-				continue;
-			}
+		var colmgr = this.grid['colDefMgr'],
+			parsers = colmgr.getParser(),
+			nullOnCreates = colmgr.getNullOnCreate(),
+			key,
+			parser,
+			isNew = args && args.isNew,
+			i,
+			l = list.length,
+			datarow;
 
-			if (Util.isFunction(parser = colDef['parser'])) {
-				key = colDef['key'];
-				try {
-					for (j = 0; j < len; j++) {
-						datarow = list[j];
-						if (datarow.hasOwnProperty(key)) {
-							datarow[key] = parser(datarow[key], datarow);
-						}
-					}
-				}
-				catch (e) {
-					if (Util.isNull(datarow)) {
-						return this.grid['error']("PARSE_ERROR", datarow, key);
-					}
-					else {
-						return this.grid['error']("PARSE_ERROR", datarow[key], key);
+		try {
+			for (key in parsers) {
+				if (parsers.hasOwnProperty(key) && !(isNew && nullOnCreates.hasOwnProperty(key))) {
+					// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
+					parser = parsers[key];
+					for (i = 0; i < l; i++) {
+						datarow = list[i];
+						datarow[key] = parser(datarow[key], datarow);
 					}
 				}
 			}
+		}
+		catch (e) {
+			return this.grid['error']("PARSE_ERROR", datarow[key], key);
 		}
 		return true;
 	};
@@ -1067,98 +1035,40 @@ var JGM = goog.getObjectByName('jx.grid'),
 	//tested
 	prototype.validate = function(datarow, args) {
 		// datarow always set
-		var colDefs = this.grid['colDefMgr'].getAll(),
-			 clen = colDefs.length,
-			 validator,
-			 colDef,
-			 key,
-			 isnull,
-			 emptystr,
-			 val,
-			 stringval,
-			 test,
-			 isNew = args && args.isNew,
-			 i = 0;
-		for (; i < clen; i++) {
-			colDef = colDefs[i];
-			key = colDef['key'];
-			val = undefined;
-			isnull = false;
-			emptystr = false;
+		var colmgr = this.grid['colDefMgr'],
+			validators = colmgr.getValidator(),
+			nullOnCreates = colmgr.getNullOnCreate(),
+			key,
+			val,
+			stringval,
+			isnull,
+			emptystr,
+			isNew = args && args.isNew;
 
-			// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-			if (isNew && colDef['nullOnCreate']) {
-				continue;
-			}
+		try {
+			for (key in validators) {
+				if (validators.hasOwnProperty(key) && !(isNew && nullOnCreates.hasOwnProperty(key))) {
+					// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
 
-			// validate not null
-			if (colDef['notNull'] === true) {
-				if (datarow.hasOwnProperty(key) === false || Util.isEmptyString(val = datarow[key])) {
-					return this.grid['error']("BAD_NULL", key);
-				}
-				stringval = val.toString();
-			}
-			// make nulls and empty strings map for later validates
-			else {
-				if (datarow.hasOwnProperty(key) === false || Util.isNull(val = datarow[key])) {
-					isnull = true;
-					emptystr = true;
-				}
-				else if (val === "") {
-					emptystr = true;
-				}
-				if (isnull === false) {
-					stringval = val.toString();
-				}
-				else {
-					stringval = "";
-				}
-			}
-			if (isnull === false) {
-				// test if value does not violate max limit
-				if (Util.isNotNull(test = colDef['max'])) {
-					if (emptystr === false && val > test) {
-						return this.grid['error']("BIGGER_THAN", val, key, test);
+					if (datarow.hasOwnProperty(key) && (val = datarow[key]) != null) {
+						isnull = false;
+						stringval = typeof val == 'string' ? val : val.toString();
+						emptystr = !stringval;
 					}
-				}
-				// test if value does not violate min limit
-				if (Util.isNotNull(test = colDef['min'])) {
-					if (emptystr === false && val < test) {
-						return this.grid['error']("SMALLER_THAN", val, key, test);
+					else {
+						val = null;
+						emptystr = isnull = true;
+						stringval = '';
 					}
-				}
-				// test if value does not violate length 
-				if (Util.isNotNull(test = colDef['length'])) {
-					if (emptystr === true || stringval.length !== test) {
-						return this.grid['error']("WRONG_LENGTH", stringval, test, key);
-					}
-				}
-				else {
-					// test if value does not violate max length 
-					if (Util.isNotNull(test = colDef['maxlength'])) {
-						if (emptystr === false && stringval.length > test) {
-							return this.grid['error']("DATA_TOO_LONG", stringval, key, test);
-						}
-					}
-					// test if value does not violate min length 
-					if (Util.isNotNull(test = colDef['minlength'])) {
-						if (emptystr === true || stringval.length < test) {
-							return this.grid['error']("DATA_TOO_SHORT", stringval, key, test);
-						}
-					}
-				}
-			}
-			// test if value passes validator 
-			if (Util.isFunction(validator = colDef['validator'])) {
-				try {
-					if (validator(val, datarow, stringval, isnull, emptystr) !== true) {
+
+					if (!validators[key](val, datarow, stringval, isnull, emptystr)) {
 						return this.grid['error']("WRONG_VALUE", stringval, key);
 					}
 				}
-				catch (e) {
-					return this.grid['error']("WRONG_VALUE", stringval, key);
-				}
 			}
+		}
+		catch (e) {
+			return this.grid['error']("WRONG_VALUE", stringval, key);
 		}
 		return true;
 	};
@@ -1166,138 +1076,66 @@ var JGM = goog.getObjectByName('jx.grid'),
 	//tested
 	prototype.validateList = function(list, args) {
 		// list is always set and not empty
-		var colDefs = this.grid['colDefMgr'].getAll(),
-			 clen = colDefs.length,
-			 len = list.length,
-			 validator,
-			 colDef,
-			 key,
-			 i = 0,
-			 j,
-			 nulls, // has true for null rows
-			 emptystrs, // has true for empty rows
-			 val,
-			 test,
-			 isNew = args && args.isNew,
-			 vals = [], // has values for all rows for current column
-			 stringvals = []; // has string values for all rows for current column
-		for (; i < clen; i++) {
-			// initialize column validation test
-			colDef = colDefs[i];
-			key = colDef['key'];
-			nulls = {};
-			emptystrs = {};
-			vals.length = 0;
-			stringvals.length = 0;
+		var colmgr = this.grid['colDefMgr'],
+			validators = colmgr.getValidator(),
+			nullOnCreates = colmgr.getNullOnCreate(),
+			key,
+			validator,
+			isNew = args && args.isNew,
+			i,
+			l = list.length,
+			val,
+			stringval,
+			isnull,
+			emptystr,
+			datarow;
 
-			// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
-			if (isNew && colDef['nullOnCreate']) {
-				continue;
-			}
+		try {
+			for (key in validators) {
+				if (validators.hasOwnProperty(key) && !(isNew && nullOnCreates.hasOwnProperty(key))) {
+					// if data is newly created and column is null on create because its content will be given from server through ajax then skip validation
 
-			// validate not null
-			if (colDef['notNull'] === true) {
-				for (j = 0; j < len; j++) {
-					if (list[j].hasOwnProperty(key) === false || Util.isEmptyString(val = list[j][key])) {
-						return this.grid['error']("BAD_NULL", key);
-					}
-					vals.push(val);
-					stringvals.push(val.toString());
-				}
-			}
-			// make nulls and empty strings map for later validates
-			else {
-				for (j = 0; j < len; j++) {
-					val = undefined;
-					if (list[j].hasOwnProperty(key) === false || Util.isNull(val = list[j][key])) {
-						nulls[j] = true;
-						emptystrs[j] = true;
-					}
-					else if (val === "") {
-						emptystrs[j] = true;
-					}
-					vals.push(val);
-					if (nulls.hasOwnProperty(j)) {
-						stringvals.push("");
-					}
-					else {
-						stringvals.push(val.toString());
-					}
-				}
-			}
-			// test if value does not violate max limit
-			if (Util.isNotNull(test = colDef['max'])) {
-				for (j = 0; j < len; j++) {
-					if (emptystrs.hasOwnProperty(j) === false && vals[j] > test) {
-						return this.grid['error']("BIGGER_THAN", vals[j], key, test);
-					}
-				}
-			}
-			// test if value does not violate min limit
-			if (Util.isNotNull(test = colDef['min'])) {
-				for (j = 0; j < len; j++) {
-					if (emptystrs.hasOwnProperty(j) === false && vals[j] < test) {
-						return this.grid['error']("SMALLER_THAN", vals[j], key, test);
-					}
-				}
-			}
-			// test if value does not violate length 
-			if (Util.isNotNull(test = colDef['length'])) {
-				for (j = 0; j < len; j++) {
-					if (nulls.hasOwnProperty(j) === false && (emptystrs.hasOwnProperty(j) || stringvals[j].length !== test)) {
-						return this.grid['error']("WRONG_LENGTH", stringvals[j], test, key);
-					}
-				}
-			}
-			else {
-				// test if value does not violate max length 
-				if (Util.isNotNull(test = colDef['maxlength'])) {
-					for (j = 0; j < len; j++) {
-						if (emptystrs.hasOwnProperty(j) === false && stringvals[j].length > test) {
-							return this.grid['error']("DATA_TOO_LONG", stringvals[j], key, test);
+					validator = validators[key];
+					for (i = 0; i < l; i++) {
+						datarow = list[i];
+
+						if (datarow.hasOwnProperty(key) && (val = datarow[key]) != null) {
+							isnull = false;
+							stringval = typeof val == 'string' ? val : val.toString();
+							emptystr = !stringval;
 						}
-					}
-				}
-				// test if value does not violate min length 
-				if (Util.isNotNull(test = colDef['minlength'])) {
-					for (j = 0; j < len; j++) {
-						if (nulls.hasOwnProperty(j) === false && (emptystrs.hasOwnProperty(j) || stringvals[j].length < test)) {
-							return this.grid['error']("DATA_TOO_SHORT", stringvals[j], key, test);
+						else {
+							val = null;
+							emptystr = isnull = true;
+							stringval = '';
+						}
+
+						if (!validator(val, datarow, stringval, isnull, emptystr)) {
+							return this.grid['error']("WRONG_VALUE", stringval, key);
 						}
 					}
 				}
 			}
-			// test if value passes validator 
-			if (Util.isFunction(validator = colDef['validator'])) {
-				try {
-					for (j = 0; j < len; j++) {
-						if (validator(vals[j], list[j], stringvals[j], nulls.hasOwnProperty(j), emptystrs.hasOwnProperty(j)) !== true) {
-							return this.grid['error']("WRONG_VALUE", stringvals[j], key);
-						}
-					}
-				}
-				catch (e) {
-					return this.grid['error']("WRONG_VALUE", stringvals[j], key);
-				}
-			}
+		}
+		catch (e) {
+			return this.grid['error']("WRONG_VALUE", stringval, key);
 		}
 		return true;
 	};
 
 	prototype.makeCompositeKey = function(datarow, update) {
-		if (this._idMode !== this._consts._composite || Util.isNull(datarow)) {
-			return;
-		}
-
-		if (update === true || datarow.hasOwnProperty(this.idKey) === false) {
-			var idColKeys = this._options['idColKeys'],
-				keylen = idColKeys.length,
-						 i = 0,
-						 id = "";
-			for (; i < keylen; i++) {
-				id += "&" + datarow[idColKeys[i]];
+		// datarow is always set
+		if (this._idMode === this._consts._composite) {
+			if (update || !datarow.hasOwnProperty(this.idKey)) {
+				var idColKeys = this._options['idColKeys'],
+					keylen = idColKeys.length,
+						   i = 0,
+						   id = "";
+				for (; i < keylen; i++) {
+					id += "&" + datarow[idColKeys[i]];
+				}
+				datarow[this.idKey] = id;
 			}
-			datarow[this.idKey] = id;
 		}
 	};
 
@@ -1315,7 +1153,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			 i = 0,
 			 j,
 			 id;
-		if (update === true) {
+		if (update) {
 			for (; i < datalen; i++) {
 				data = datalist[i];
 				id = "";
@@ -1328,7 +1166,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		}
 		else {
 			for (; i < datalen; i++) {
-				if ((data = datalist[i]).hasOwnProperty(idKey) === false) {
+				if (!(data = datalist[i]).hasOwnProperty(idKey)) {
 					id = "";
 					j = 0;
 					for (; j < keylen; j++) {
@@ -1354,18 +1192,18 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.map = function(datarow) {
-		if (Util.isNull(datarow)) {
-			return;
-		}
-		var idMap = this._idToData,
-			 idKey = this.idKey,
-			 id;
+		if (datarow) {
+			var idMap = this._idToData,
+				idKey = this.idKey,
+				id;
 
-		this.makeCompositeKey(datarow);
+			this.makeCompositeKey(datarow);
 
-		if (datarow.hasOwnProperty(idKey) && idMap.hasOwnProperty(id = datarow[idKey])) {
-			return idMap[id];
+			if (datarow.hasOwnProperty(idKey) && idMap.hasOwnProperty(id = datarow[idKey])) {
+				return idMap[id];
+			}
 		}
+		return null;
 	};
 
 	/**
@@ -1382,31 +1220,30 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.mapList = function(list) {
-		if (!(list && list.length)) {
-			return {'mapped':[], 'unmapped':[]};
-		}
+		if (list && list.length) {
+			this.makeCompositeKeyList(list);
 
-		this.makeCompositeKeyList(list);
+			var mapped = [],
+				unmapped = [],
+				idKey = this.idKey,
+				idMap = this._idToData,
+				len = list.length,
+				i = 0,
+				datarow,
+				id;
 
-		var mapped = [],
-			 unmapped = [],
-			 idKey = this.idKey,
-			 idMap = this._idToData,
-			 len = list.length,
-			 i = 0,
-			 datarow,
-			 id;
-
-		for (; i < len; i++) {
-			if ((datarow = list[i]).hasOwnProperty(idKey) && idMap.hasOwnProperty(id = datarow[idKey])) {
-				mapped.push(idMap[id]);
+			for (; i < len; i++) {
+				if ((datarow = list[i]).hasOwnProperty(idKey) && idMap.hasOwnProperty(id = datarow[idKey])) {
+					mapped.push(idMap[id]);
+				}
+				else {
+					unmapped.push(datarow);
+				}
 			}
-			else {
-				unmapped.push(datarow);
-			}
-		}
 
-		return {'mapped':mapped, 'unmapped':unmapped};
+			return {'mapped':mapped, 'unmapped':unmapped};
+		}
+		return {'mapped':[], 'unmapped':[]};
 	};
 
 	/**
@@ -1421,9 +1258,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.0.0
 	  */
 	prototype.getById = function(id) {
-		if (Util.isNotNull(id) && this._idToData.hasOwnProperty(id)) {
-			return this._idToData[id];
-		}
+		return (id != null && this._idToData.hasOwnProperty(id)) ? this._idToData[id] : null;
 	};
 
 	/**
@@ -1438,9 +1273,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.3.0
 	  */
 	prototype.getByIdx = function(i) {
-		if (Util.isNotNull(i) && this.datalist.hasOwnProperty(i)) {
-			return this.datalist[i];
-		}
+		return (i != null && this.datalist.hasOwnProperty(i)) ? this.datalist[i] : null;
 	};
 
 	/**
@@ -1486,10 +1319,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.0.0
 	  */
 	prototype.getIdxById = function(id) {
-		if (Util.isNotNull(id) && this._idToIdx.hasOwnProperty(id)) {
-			return this._idToIdx[id];
-		}
-		return -1;
+		return (id != null && this._idToIdx.hasOwnProperty(id)) ? this._idToIdx[id] : -1;
 	};
 
 	/**
@@ -1519,9 +1349,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.3.0
 	  */
 	prototype.getId = function(datarow) {
-		if (Util.isNotNull(datarow) && datarow.hasOwnProperty(this.idKey)) {
-			return datarow[this.idKey];
-		}
+		return (datarow && datarow.hasOwnProperty(this.idKey)) ? datarow[this.idKey] : null;
 	};
 
 	/**
@@ -1551,21 +1379,16 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.3.0
 	  */
 	prototype.getIdByNode = function(node) {
-		if (Util.isNotNull(node)) {
-			return node.getAttribute('i');
-		}
+		return node ? node.getAttribute('i') : null;
 	};
 
 	prototype._reidxFrom = function(from) {
-		if (Util.isNull(from)) {
-			from = 0;
-		}
-
+		from = from || 0;
 		var datalist = this.datalist,
-			 datalen = datalist.length,
-			 idKey = this.idKey,
-			 idxMap = this._idToIdx,
-			 i = from;
+			datalen = datalist.length,
+			idKey = this.idKey,
+			idxMap = this._idToIdx,
+			i = from;
 
 		for (; i < datalen; i++) {
 			idxMap[datalist[i][idKey]] = i;
@@ -1607,10 +1430,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.3.0
 	  */
 	prototype.hasById = function(id) {
-		if (Util.isNotNull(id)) {
-			return this._idToIdx.hasOwnProperty(id);
-		}
-		return false;
+		return id == null ? false : this._idToIdx.hasOwnProperty(id);
 	};
 
 	/**
@@ -1640,10 +1460,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.3.0
 	  */
 	prototype.containsById = function(id) {
-		if (Util.isNotNull(id)) {
-			return this._idToData.hasOwnProperty(id);
-		}
-		return false;
+		return id == null ? false : this._idToData.hasOwnProperty(id);
 	};
 
 	/**
@@ -1802,7 +1619,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 		this.all.push(datarow);
 
-		if (Util.isNull(args) || args['undo'] !== true) {
+		if (!args || args['undo'] !== true) {
 			this._history.push({
 				_action:this._consts._add,
 				_target:datarow
@@ -1823,7 +1640,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		em.trigger("onAddDatarow", [datarow, args], true);
 		em.trigger("onDataChange", false, true);
 
-		if (args === undefined || args['noRefresh'] !== true) {
+		if (!args || args['noRefresh'] !== true) {
 			this.refresh(args);
 		}
 
@@ -1843,64 +1660,63 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.addList = function(datalist, args) {
-		if (!(datalist && datalist.length)) {
-			return false;
+		if (datalist && datalist.length) {
+			var toAdd = this.mapList(datalist).unmapped;
+			if (!toAdd.length) {
+				return false;
+			}
+
+			this.grid['event'].trigger("onBeforeDataChange", false, true);
+
+			this.fillTempList(datalist, args);
+
+			var res;
+			if ((res = this.parseList(toAdd, args)) instanceof Error) {
+				return res;
+			}
+
+			if ((res = this.validateList(toAdd, args)) instanceof Error) {
+				return res;
+			}
+
+			if ((res = this.addListToUniqueMap(toAdd)) instanceof Error) {
+				return res;
+			}
+
+			if ((res = this.addListToIdMap(toAdd)) instanceof Error) {
+				return res;
+			}
+
+			this.all.pushList(toAdd);
+
+			if (!args || args['undo'] !== true) {
+				this._history.push({
+					_action:this._consts._addList,
+					_target:toAdd
+				});
+				this._redoHistory.length = 0;
+			}
+
+			/**
+			  여러개의 데이터 로우를 추가한 후에 발생되는 이벤트 입니다.
+
+			  @event {Event} onAddDatalist
+			  @param {Array.<Object>} datalist - 추가된 데이터 어레이
+
+			  @author 조준호
+			  @since 1.0.0
+			  @version 1.0.0
+			  */
+			this.grid['event'].trigger("onAddDatalist", [toAdd, args], true);
+			this.grid['event'].trigger("onDataChange", false, true);
+
+			if (!args || args['noRefresh'] !== true) {
+				this.refresh(args);
+			}
+
+			return true;
 		}
-
-		var toAdd = this.mapList(datalist).unmapped;
-		if (!toAdd.length) {
-			return false;
-		}
-
-		this.grid['event'].trigger("onBeforeDataChange", false, true);
-
-		this.fillTempList(datalist, args);
-
-		var res;
-		if ((res = this.parseList(toAdd, args)) instanceof Error) {
-			return res;
-		}
-
-		if ((res = this.validateList(toAdd, args)) instanceof Error) {
-			return res;
-		}
-
-		if ((res = this.addListToUniqueMap(toAdd)) instanceof Error) {
-			return res;
-		}
-
-		if ((res = this.addListToIdMap(toAdd)) instanceof Error) {
-			return res;
-		}
-
-		this.all.pushList(toAdd);
-
-		if (Util.isNull(args) || args['undo'] !== true) {
-			this._history.push({
-				_action:this._consts._addList,
-				_target:toAdd
-			});
-			this._redoHistory.length = 0;
-		}
-
-		/**
-		  여러개의 데이터 로우를 추가한 후에 발생되는 이벤트 입니다.
-
-		  @event {Event} onAddDatalist
-		  @param {Array.<Object>} datalist - 추가된 데이터 어레이
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this.grid['event'].trigger("onAddDatalist", [toAdd, args], true);
-		this.grid['event'].trigger("onDataChange", false, true);
-
-		if (args === undefined || args['noRefresh'] !== true) {
-			this.refresh(args);
-		}
-
-		return true;
+		return false;
 	};
 
 
@@ -2012,7 +1828,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			this.grid['event'].trigger("onIdChange", [datarow, res, datarow[this.idKey]], true);
 		}
 
-		if (Util.isNull(args) || args['undo'] !== true) {
+		if (!args || args['undo'] !== true) {
 			this._history.push({
 				_action:this._consts._update,
 				_target:datarow,
@@ -2038,7 +1854,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		this.grid['event'].trigger("onUpdateDatarow", [datarow, change, before, args], true);
 		this.grid['event'].trigger("onDataChange", false, true);
 
-		if (args === undefined || args['noRefresh'] !== true) {
+		if (!args || args['noRefresh'] !== true) {
 			this.refresh(args);
 		}
 
@@ -2157,7 +1973,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 			em.trigger("onIdListChange", [res.list, res.befores, this.idKey], true);
 		}
 
-		if (Util.isNull(args) || args['undo'] !== true) {
+		if (!args || args['undo'] !== true) {
 			this._history.push({
 				_action:this._consts._updateList,
 				_target:datalist,
@@ -2186,7 +2002,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 		em.trigger("onUpdateDatalist", [datalist, changes, befores, args], true);	
 		em.trigger("onDataChange", false, true);
 
-		if (args === undefined || args['noRefresh'] !== true) {
+		if (!args || args['noRefresh'] !== true) {
 			this.refresh(args);
 		}
 
@@ -2231,48 +2047,43 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.remove = function(datarow, args) {
-		if (Util.isNull(datarow)) {
-			return false;
-		}
-
 		var mapped = this.map(datarow);
-		if (!mapped) {
-			return false;
+		if (mapped) {
+			this.grid['event'].trigger("onBeforeDataChange", false, true);
+
+			this.removeFromIdMap(mapped);
+			this.removeFromUniqueMap(mapped);
+			this.all.remove(mapped);
+			this.removeId(mapped);
+
+			if (!args || args['undo'] !== true) {
+				this._history.push({
+					_action:this._consts._remove,
+					_target:mapped
+				});
+				this._redoHistory.length = 0;
+			}
+
+			/**
+			  하나의 데이터가 제거된 후 발생되는 이벤트입니다.
+
+			  @event {Event} onRemoveDatarow
+			  @param {Object} datarow - 제거된 데이터 로우
+
+			  @author 조준호
+			  @since 1.0.0
+			  @version 1.0.0
+			  */
+			this.grid['event'].trigger("onRemoveDatarow", [mapped, args], true);
+			this.grid['event'].trigger("onDataChange", false, true);
+
+			if (!args || args['noRefresh'] !== true) {
+				this.refresh(args);
+			}
+
+			return true;
 		}
-
-		this.grid['event'].trigger("onBeforeDataChange", false, true);
-
-		this.removeFromIdMap(mapped);
-		this.removeFromUniqueMap(mapped);
-		this.all.remove(mapped);
-		this.removeId(mapped);
-
-		if (Util.isNull(args) || args['undo'] !== true) {
-			this._history.push({
-				_action:this._consts._remove,
-				_target:mapped
-			});
-			this._redoHistory.length = 0;
-		}
-
-		/**
-		  하나의 데이터가 제거된 후 발생되는 이벤트입니다.
-
-		  @event {Event} onRemoveDatarow
-		  @param {Object} datarow - 제거된 데이터 로우
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this.grid['event'].trigger("onRemoveDatarow", [mapped, args], true);
-		this.grid['event'].trigger("onDataChange", false, true);
-
-		if (args === undefined || args['noRefresh'] !== true) {
-			this.refresh(args);
-		}
-
-		return true;
+		return false;
 	};
 
 
@@ -2288,50 +2099,47 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.removeList = function(datalist, args) {
-		if (!(datalist && datalist.length)) {
-			return false;
+		if (datalist && datalist.length) {
+			var map = this.mapList(datalist),
+				mapped = map.mapped;
+
+			if (mapped.length) {
+				this.grid['event'].trigger("onBeforeDataChange", false, true);
+
+				this.removeListFromIdMap(mapped);
+				this.removeListFromUniqueMap(mapped);
+				this.all.removeList(mapped);
+				this.cleanList(mapped);
+
+				if (!args || args['undo'] !== true) {
+					this._history.push({
+						_action:this._consts._removeList,
+						_target:mapped
+					});
+					this._redoHistory.length = 0;
+				}
+
+				/**
+				  여러개의 데이터가 제거된 후 발생되는 이벤트입니다.
+
+				  @event {Event} onRemoveDatalist
+				  @param {Object} datarow - 제거된 데이터 어레이
+
+				  @author 조준호
+				  @since 1.0.0
+				  @version 1.0.0
+				  */
+				this.grid['event'].trigger("onRemoveDatalist", [mapped, args], true);
+				this.grid['event'].trigger("onDataChange", false, true);
+
+				if (!args || args['noRefresh'] !== true) {
+					this.refresh(args);
+				}
+
+				return true;
+			}
 		}
-
-		var map = this.mapList(datalist),
-			 mapped = map.mapped;
-
-		if (!mapped.length) {
-			return false;
-		}
-
-		this.grid['event'].trigger("onBeforeDataChange", false, true);
-
-		this.removeListFromIdMap(mapped);
-		this.removeListFromUniqueMap(mapped);
-		this.all.removeList(mapped);
-		this.cleanList(mapped);
-
-		if (Util.isNull(args) || args['undo'] !== true) {
-			this._history.push({
-				_action:this._consts._removeList,
-				_target:mapped
-			});
-			this._redoHistory.length = 0;
-		}
-
-		/**
-		  여러개의 데이터가 제거된 후 발생되는 이벤트입니다.
-
-		  @event {Event} onRemoveDatalist
-		  @param {Object} datarow - 제거된 데이터 어레이
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this.grid['event'].trigger("onRemoveDatalist", [mapped, args], true);
-		this.grid['event'].trigger("onDataChange", false, true);
-
-		if (args === undefined || args['noRefresh'] !== true) {
-			this.refresh(args);
-		}
-
-		return true;
+		return false;
 	};
 
 	prototype._keydownCanvas = function(e) {
@@ -2358,7 +2166,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.1.4
 	  */
 	prototype.undo = function() {
-		if (this._history.length === 0) {
+		if (!this._history.length) {
 			return false;
 		}
 
@@ -2400,7 +2208,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.1.4
 	  */
 	prototype.redo = function() {
-		if (this._redoHistory.length === 0) {
+		if (!this._redoHistory.length) {
 			return false;
 		}
 
@@ -2445,25 +2253,24 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.2.3
 	  */
 	prototype.equals = function(a, b) {
-		if (Util.isNullOr(a, b)) {
-			return false;
-		}
+		if (a && b) {
+			if (a === b) {
+				return true;
+			}
 
-		if (a === b) {
-			return true;
-		}
+			if (this._idMode === this._consts._composite) {
+				this.makeCompositeKey(a);
+				this.makeCompositeKey(b);
+			}
 
-		if (this._idMode === this._consts._composite) {
-			this.makeCompositeKey(a);
-			this.makeCompositeKey(b);
+			var idKey = this.idKey,
+				aid = a[idKey];
+			if (aid == null) {
+				return false;
+			}
+			return aid === b[idKey];
 		}
-
-		var idKey = this.idKey;
-		if (Util.isNull(a[idKey]) || Util.isNull(b[idKey])) {
-			return false;
-		}
-
-		return a[idKey] === b[idKey];
+		return false;
 	};
 
 
@@ -2480,7 +2287,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	prototype.getReal = function() {
 		var notReal = this._consts._notReal;
 		return this.all.filter(function(datarow) {
-			return datarow.hasOwnProperty(notReal) === false;
+			return !datarow.hasOwnProperty(notReal);
 		});
 	};
 
@@ -2498,7 +2305,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	prototype.filterReal = function(list) {
 		var notReal = this._consts._notReal;
 		return list.filter(function(datarow) {
-			return datarow.hasOwnProperty(notReal) === false;
+			return !datarow.hasOwnProperty(notReal);
 		});
 	};
 
@@ -2515,7 +2322,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	  @version 1.1.0
 	  */
 	prototype.isReal = function(datarow) {
-		return Util.isNotNull(datarow) && datarow.hasOwnProperty(this._consts._notReal) === false;
+		return datarow && !datarow.hasOwnProperty(this._consts._notReal);
 	};
 
 
@@ -2562,7 +2369,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype.removeId = function(datarow) {
-		if (Util.isNotNull(datarow) && this._idMode !== this._consts._given && datarow.hasOwnProperty(this.idKey)) {
+		if (datarow && this._idMode !== this._consts._given && datarow.hasOwnProperty(this.idKey)) {
 			delete datarow[this.idKey];
 		}
 	};
@@ -2603,53 +2410,52 @@ var JGM = goog.getObjectByName('jx.grid'),
 	};
 
 	prototype._sort = function(sorter) {
-		if (Util.isNull(sorter)) {
-			sorter = this._sorter;
-		}
-		else {
+		if (sorter) {
 			this.setSorter(sorter);
 		}
-
-		if (Util.isNull(sorter)) {
-			return;
+		else {
+			sorter = this._sorter;
 		}
 
-		var datalist = this.all;
+		if (sorter) {
+			var datalist = this.all,
+				em = this.grid['event'],
+				args = [datalist];
 
-		/**
-		  데이터를 정렬하기 전에 발생되는 이벤트 입니다.
+			/**
+			  데이터를 정렬하기 전에 발생되는 이벤트 입니다.
 
-		  @event {Event} onBeforeSort
-		  @param {Array.<Object>} datalist - 정렬하기 전의 데이터 어레이
+			  @event {Event} onBeforeSort
+			  @param {Array.<Object>} datalist - 정렬하기 전의 데이터 어레이
 
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this.grid['event'].trigger("onBeforeSort", [datalist], true);
+			  @author 조준호
+			  @since 1.0.0
+			  @version 1.0.0
+			  */
+			em.trigger("onBeforeSort", args, true);
 
-		if (Util.isNotNull(sorter.comparator)) {
-			datalist.sort(sorter.comparator);
-			if (sorter.desc) {
-				datalist.reverse();
+			if (sorter.comparator) {
+				datalist.sort(sorter.comparator);
+				if (sorter.desc) {
+					datalist.reverse();
+				}
 			}
+			else if (sorter.lexi) {
+				this.constructor._lexi(datalist, sorter.lexi, sorter.desc);
+			}
+
+			/**
+			  데이터를 정렬한 후에 발생되는 이벤트 입니다.
+
+			  @event {Event} onAfterSort
+			  @param {Array.<Object>} datalist - 정렬한 후의 데이터 어레이
+
+			  @author 조준호
+			  @since 1.0.0
+			  @version 1.0.0
+			  */
+			em.trigger("onAfterSort", args, true);
 		}
-		else if (Util.isNotNull(sorter.lexi)) {
-			this.constructor._lexi(datalist, sorter.lexi, sorter.desc);
-		}
-
-
-		/**
-		  데이터를 정렬한 후에 발생되는 이벤트 입니다.
-
-		  @event {Event} onAfterSort
-		  @param {Array.<Object>} datalist - 정렬한 후의 데이터 어레이
-
-		  @author 조준호
-		  @since 1.0.0
-		  @version 1.0.0
-		  */
-		this.grid['event'].trigger("onAfterSort", [datalist], true);
 	};
 
 	/**
@@ -2857,7 +2663,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 
 	DataManager._lexi = function(datalist, key, desc) {
 		var oldToString = Object.prototype.toString;
-		Object.prototype.toString = Util.isFunction(key)? key : function() { return this[key]; };
+		Object.prototype.toString = typeof key == 'function' ? key : function() { return this[key]; };
 		datalist.sort();
 		Object.prototype.toString = oldToString;
 		if (desc) {
