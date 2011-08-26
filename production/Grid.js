@@ -143,7 +143,7 @@ prototype._defaultOptions = function() {
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'width': undefined,
+			'width': '100%',
 			/**
 			  컨테이너에 적용되는 CSS font 스타일 입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
 			  @type {string=} jx.grid.Grid.options.font
@@ -293,7 +293,16 @@ prototype._init = function(args) {
 	this._vars = {
 		scrollbarDim: undefined
 	};
-	ctnr = this._ctnr = $("<div id='" + this.mid + "' class='" + opt['classGrid'] + "' " + (Util.isNull(opt['width']) ? "" : "style='width:" + opt['width'] + "px' ") + "tabIndex='0'>").appendTo(Util$.safe$(ctnr));
+	var width = opt['width'];
+	if (width) {
+		if (width.indexOf('%') === -1) {
+			width += 'px';
+		}
+	}
+	else {
+		width = '';
+	}
+	ctnr = this._ctnr = $("<div id='" + this.mid + "' class='" + opt['classGrid'] + "' " + (width ? "" : "style='width:" + width + "' ") + "tabIndex='0'>").appendTo(Util$.safe$(ctnr));
 	this._vars.scrollbarDim = Util$.calScrollbarDims(ctnr);
 	em = this['event'] =  JGM.create("EventManager", {grid:this, 'options':opt['EventManager']});
 	this['colDefMgr'] =  JGM.create("ColumnManager", {grid:this, colDefs:args['colDefs'], 'options':opt['ColDefManager']});
@@ -523,7 +532,7 @@ prototype._createCss = function() {
 	  */
 	var subcss = em.trigger("onCreateCss");
 	subcss = subcss ? subcss.join('') : '';
-	var style = Util.sprint("%selector%{overflow:hidden;font:%font%;%border%%style%}%submodule%", {
+	var style = Util.sprint("%selector%{overflow:hidden;width:100%;height:100%;font:%font%;%border%%style%}%submodule%", {
 		'selector': "#" + this.mid,
 		'font': opt['font'],
 		'border': opt['borderSide'] ?
@@ -1027,11 +1036,12 @@ prototype._dblclick = function(e) {
 prototype._resize = function(e) {
 	var em = this['event'];
 	var change = false,
-		ctnr = this._ctnr[0],
+	    ctnr$ = this._ctnr,
+		ctnr = ctnr$[0],
 		cw = this._lastW,
 		ch = this._lastH,
-		width = ctnr.clientWidth,
-		height = ctnr.clientHeight;
+		width = ctnr.clientWidth || ctnr$.width(),
+		height = ctnr.clientHeight || ctnr$.height();
 	if (width >= 1 && cw !== width) {
 		/**
 		  Grid 컨테이너의 폭이 변경되었을 경우 발생하는 이벤트입니다.
@@ -1335,7 +1345,7 @@ prototype.chart = function(chartCont, type, columns, options, from, to) {
 				case 'date':
 					break;
 			}
-			data.addColumn(datatype || (i === 0 && 'string') || 'number', coldef.name);
+			data.addColumn(datatype || (rows[0] && rows[0][i] != null && typeof rows[0][i]) || (i === 0 && 'string') || 'number', coldef.name);
 		}
 		data.addRows(rows);
 		var chart = grid._charts[chartCont] = new google.visualization[cls](document.getElementById(chartCont));

@@ -332,7 +332,7 @@ ViewportManager.getInstance = function(args) {
 var prototype = ViewportManager.prototype;
 prototype.__init = function() {
 	this._mask =
-		$("<div class='" + this._options['classView'] + "' tabIndex='0' onscroll='JGM.m.ViewportManager." + this.mid + "._scroll()'>")
+		$("<div class='" + this._options['classView'] + "' tabIndex='0' style='width:100%' onscroll='JGM.m.ViewportManager." + this.mid + "._scroll()'>")
 		.appendTo(this._ctnr);
 	this._canvas =
 		$("<div class='" + this._options['classCanvas'] + "'>")
@@ -370,7 +370,7 @@ prototype.__init = function() {
 		//'resizeHeight': this.resizeHeight,
 		'onAfterRefresh': this.onAfterRefresh,
 		'onRenderModules': this._render,
-		'onReorderCols': this._onReorderCols,
+		'changeVisibleColumns': this._onReorderCols,
 		'onResizeCanvasWidth': this._scroll,
 		'onUpdateDatarow': this.onUpdateDatarow,
 		'onUpdateDatalist': this.onUpdateDatalist,
@@ -404,10 +404,10 @@ prototype._onCreateCss = function() {
 		clen = colDefs.length,
 		i = 0,
 		rules = [];
-	rules.push(gridId + opt['classView'] + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + opt['rowH'] + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + opt['style'] + "}");
+	rules.push(gridId + opt['classView'] + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + opt['rowH'] + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + opt['style'] + ";background:url(" + this.grid._options['imageUrl'] + "loading.gif) repeat center}");
 	rules.push(gridId + opt['classView'] + ":focus{background:" + opt['focusBackground'] + ";outline:" + opt['focusOutline'] + "}");
-	rules.push(gridId + opt['classCanvas'] + "{height:" + this._calCanvasHeight() + "px;" + opt['canvasStyle'] + ";background:#fff}");
-	rules.push(rowSel + "{position:absolute;" + opt['rowStyle'] + "}");
+	rules.push(gridId + opt['classCanvas'] + "{height:" + this._calCanvasHeight() + "px;" + opt['canvasStyle'] + ";}");
+	rules.push(rowSel + "{background:white;position:absolute;" + opt['rowStyle'] + "}");
 	rules.push(cellSel + "{height:" + opt['rowH'] + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + opt['padding'] + "px;border-right:" + border + ";" + opt['cellStyle'] + "}");
 	if (opt['evenOddRows']) {
 		rules.push(
@@ -2314,21 +2314,37 @@ prototype._scroll = function() {
 			  */
 			evtmgr.trigger("onScrollViewportH", [scrollLeft], true);
 		}
+		var lastElapsed = this.renderElapsed;
+		if (lastElapsed == null) {
+			lastElapsed = 50;
+		}
+		if (lastElapsed > 500) {
+			lastElapsed = 500;
+		}
 		if (numDiff >= this._options['appendThreshold']) {
-			this._lastScrollTop = scrollTop;
-			//this._render();
-			this._removeAndRenderRows();
-			/*
-			   this._renderShift();
-			   */
-			/**
-			  그리드 뷰가 세로 스크롤 되었을 때 발생하는 이벤트 입니다.
-			  @event {Event} onScrollViewportV
-			  @author 조준호
-			  @since 1.1.7
-			  @version 1.1.7
-			  */
-			evtmgr.trigger("onScrollViewportV", false, true);
+			if (this.scrollHandlerId) {
+				window.clearTimeout(this.scrollHandlerId);
+				this.scrollHandlerId = null;
+			}
+			var that = this;
+			this.scrollHandlerId = window.setTimeout(function() {
+				var start = new Date().getTime();
+				that._lastScrollTop = scrollTop;
+				//that._render();
+				that._removeAndRenderRows();
+				/*
+				   this._renderShift();
+				   */
+				/**
+				  그리드 뷰가 세로 스크롤 되었을 때 발생하는 이벤트 입니다.
+				  @event {Event} onScrollViewportV
+				  @author 조준호
+				  @since 1.1.7
+				  @version 1.1.7
+				  */
+				evtmgr.trigger("onScrollViewportV", false, true);
+				that.renderElapsed = new Date().getTime() - start;
+			}, lastElapsed);
 		}
 	}
 };

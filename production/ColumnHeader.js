@@ -607,7 +607,7 @@ prototype._onAfterRenderModules = function() {
 	this._initResizeHandles();
 	
 	this._resizeGuide = $("<div class='" + opt['classResizeGuide'] + "'>")
-		.appendTo(this.getView()._mask);
+		.appendTo(this.getView()._mask).hide();
 	this._resizeGuide[0].style.top = "0px";
 	this._resizeGuide[0].style.height = "0px";
 };
@@ -848,6 +848,7 @@ prototype._mousedown = function(e) {
 		this._resizeHandleInitX = this._resizeMap[key][0].offsetLeft;
 		this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (opt['resizeHandleWidth'] - opt['resizeGuideWidth']) / 2 - opt['scrollerLeft']) + "px";
 		this._resizeGuide[0].style.height = this.getView().getInnerHeight() + "px";
+		this._resizeGuide.show();
 		return;
 	}
 	
@@ -905,6 +906,7 @@ prototype._mouseup = function(e) {
 		return;
 	}
 	
+	this._resizeGuide.hide();
 	this._resizeGuide[0].style.height = "0px";
 		
 	var dx = this._getDx(e, this.getColMgr().getByKey(key));	

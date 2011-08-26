@@ -342,7 +342,9 @@ function ColumnManager(args) {
 			@since 1.3.0
 			@version 1.3.0
 			*/
-			'validator': undefined
+			'validator': undefined,
+			'nullOnCreate': false,
+			'notNull': false
 		}
 	};
 	this._options = JGM._extend(options, args['options']);
@@ -350,6 +352,10 @@ function ColumnManager(args) {
 	this._filtered = [];
 	this._keyToDef = {};
 	this._keyToIdx = {};
+	this._parsers = {};
+	this._sorters = {};
+	this._validators = {};
+	this._nullOnCreates = {};
 	this.__init(args);
 }
 ColumnManager.getInstance = function(args) {
@@ -381,6 +387,16 @@ prototype._destroy = function() {
 prototype.getAll = function() {
 	return this._colDefs;
 };
+prototype.empty = function() {
+	this._colDefs = [];
+	this._filtered.length = 0;
+	this._keyToIdx = {};
+	this._keyToDef = {};
+	this._parsers = {};
+	this._sorters = {};
+	this._validators = {};
+	this._nullOnCreates = {};
+}
 /**
 컬럼 정의 어레이를 셋합니다. 기본 컬럼 정의 옵션들을 익스텐드하고 필터링 된 컬럼
 정의 어레이를 셋합니다.
@@ -395,66 +411,80 @@ changelog
 1.3.0:
 - function: set
 @ setAll -> set
-+ event: onBeforeSetColDefs, onAfterSetColDefs
 + return: colDefs
 */
 // tested
 prototype.set = function(colDefs) {
-	if (this._colDefs === colDefs || Util.areEqualArrays(this._colDefs, colDefs)) {
+	colDefs = colDefs || [];
+	if (this._colDefs === colDefs) {
 		return colDefs;
 	}
-	
-	if (Util.isNull(colDefs)) {
-		colDefs = [];
-	}
-	else {
-		var filtered = colDefs.filter(function(a) { return Util.isNotNull(a); });
-		colDefs.length = 0;
-		colDefs.pushList(filtered);
-	}
-	
-	this.grid['event'].trigger("onBeforeSetColDefs", [this._colDefs, colDefs], true);
-	
-	this._colDefs = [];
-	this._filtered.length = 0;
-	this._keyToIdx = {};
-	this._keyToDef = {};
-	
-	this.grid['event'].trigger("onEmptyColDefs", false, true);
-	
+	var em = this.grid['event'];
+	this.empty();
+	this.eventChangeVisible();
 	var i = 0,
 		len = colDefs.length,
-		map = this._keyToDef,
 		col,
 		key;
-		
 	for (; i < len; i++) {
 		col = colDefs[i];
-		if (!col.hasOwnProperty('key')) {
-			this._keyToDef = {};
-			return this.grid['error']("KEY_UNDEFINED", i);
+		key = col.key
+		try {
+			if (this.hasKey(key, true)) {
+				throw new Error('duplicate column key, key = ' + key);
+				//return this.grid['error']("DUP_KEY", key);
+			}
 		}
-		key = col.key;
-      if (Util.isEmptyString(key)) {
-			this._keyToDef = {};
-			return this.grid['error']("BAD_NULL", i);
+		catch (e) {
+			this.empty();
+			throw e;
 		}
-		if (map.hasOwnProperty(key)) {
-			this._keyToDef = {};
-			return this.grid['error']("DUP_KEY", key);
-		}
-		map[key] = col;
+		this._extend(col);
 	}
-	
 	this._colDefs = colDefs;
-		
-	for (i = 0; i < len; i++) {
-		this._extend(colDefs[i]);
-	}
-	this.grid['event'].trigger("onAfterSetColDefs", [colDefs, this._filter()], true);
-	
+	this._filter();
+	this.eventChangeVisible();
 	return colDefs;
 };
+prototype.getSorter = function(key) {
+	if (key == null) {
+		return this._sorters;
+	}
+	if (this.hasKey(key, true)) {
+		var sorters = this._sorters;
+		return sorters.hasOwnProperty(key) ? sorters[key] : null;
+	}
+	throw new Error('column key not found! key=' + key);
+}
+prototype.getValidator = function(key) {
+	if (key == null) {
+		return this._validators;
+	}
+	if (this.hasKey(key, true)) {
+		var validators = this._validators;
+		return validators.hasOwnProperty(key) ? validators[key] : null;
+	}
+	throw new Error('column key not found! key=' + key);
+}
+prototype.getParser = function(key) {
+	if (key == null) {
+		return this._parsers;
+	}
+	if (this.hasKey(key, true)) {
+		var parsers = this._parsers;
+		return parsers.hasOwnProperty(key) ? parsers[key] : null;
+	}
+	throw new Error('column key not found! key=' + key);
+}
+prototype.getNullOnCreate = function(key) {
+	if (key == null) {
+		return this._nullOnCreates;
+	}
+	if (this.hasKey(key, true)) {
+		return this._nullOnCreates.hasOwnProperty(key);
+	}
+	throw new Error('column key not found! key=' + key);
+}
 /*
 changelog
 1.3.0:
@@ -478,44 +508,28 @@ prototype.push = function(colDef) {
 changelog
 1.3.0:
 + function: addAt
-+ event: onBeforeSetColDefs, onAfterSetColDefs
 + return: colDefs
 */
 // tested
 prototype.addAt = function(i, colDef) {
-	if (Util.isNull(colDef)) {
-		return;
-	}
 	var key = colDef['key'],
-		map = this._keyToDef,
-		filtered = this._filtered;
-	if (Util.isNull(i) || i > filtered.length) {
-		i = filtered.length;
+		colDefs = this._colDefs,
+		em = this.grid['event'];
+	if (this.hasKey(key, true)) {
+		throw new Error('duplicate column key, key = ' + key);
+		//return this.grid['error']("DUP_KEY", key);
 	}
-	else if (i < 0) {
-		i += filtered.length;
-	}
-	
-	this.grid['event'].trigger("onBeforeAddColDef", [colDef], true);
-	
-	if (Util.isNull(key)) {
-		return this.grid['error']("KEY_UNDEFINED");
+	if (i < 0 || i > colDefs.length) {
+		throw new Error('index out of bound, i = ' + i);
 	}
 	
-	if (map.hasOwnProperty(key)) {
-		return this.grid['error']("DUP_KEY", key);
-	}
 	
-	this._colDefs.addAt(i, this._extend(map[key] = colDef));
+	colDefs.addAt(i, this._extend(colDef));
+	this._filter();
 	
-	if (colDef['hidden'] !== true) {
-		filtered.addAt(i, colDef);
-      this._reidx();
-	}
+	this.eventChangeVisible();
 	
-	this.grid['event'].trigger("onAfterAddColDef", [colDef, i], true);
-	
-	return filtered.length;
+	return colDefs.length;
 };
 function normalizeType(type) {
 	if (type) {
@@ -550,10 +564,12 @@ function normalizeType(type) {
 }
 // tested
 prototype._extend = function(colDef) {
-	if (colDef) {
+	if (colDef && !colDef._extended) {
+		colDef._extended = true;
 		var options = {},
 			sorter,
 			parser,
+			validator,
 			type,
 			key;
 		$.extend(true, options, this._options['colDef']);
@@ -561,16 +577,10 @@ prototype._extend = function(colDef) {
 		$.extend(true, colDef, options);
 		// normalize data type into boolean | int | float | string | date
 		type = colDef['type'] = normalizeType(colDef['type']);
-		key = colDef['key'];
-		if (key != null && typeof key != 'string') {
-			// stringify
-			colDef['key'] = key = key.toString();
-		}
-		if (!key) {
-			throw new Error('column key is not defined!');
-		}
-		sorter = colDef['sorter'];
-		if (sorter) {
+		// validity already checked
+		key = colDef['key'].toString();
+		this._keyToDef[key] = colDef;
+		if (sorter = colDef['sorter']) {
 			if (typeof sorter == 'string') {
 				sorter = normalizeType(sorter);
 			}
@@ -580,11 +590,11 @@ prototype._extend = function(colDef) {
 			sorter = ColumnManager.sorter(sorter, key);
 			if (sorter) {
 				sorter.key = key;
+				this._sorters[key] = sorter;
 			}
 			colDef['sorter'] = sorter;
 		}
-		parser = colDef['parser'];
-		if (parser) {
+		if (parser = colDef['parser']) {
 			if (type && typeof parser != 'function') {
 				switch (type) {
 					case 'boolean':
@@ -607,6 +617,23 @@ prototype._extend = function(colDef) {
 				}
 				colDef['parser'] = parser;
 			}
+			this._parsers[key] = parser;
+		}
+		// boolean attributes
+		colDef['inputOnCreate'] = !!colDef['inputOnCreate'];
+		colDef['hidden'] = !!colDef['hidden'];
+		colDef['tooltipEnabled'] = !!colDef['tooltipEnabled'];
+		colDef['resizable'] = !!colDef['resizable'];
+		colDef['rendererInput'] = !!colDef['rendererInput'];
+		colDef['noTitle'] = !!colDef['noTitle'];
+		colDef['noName'] = !!colDef['noName'];
+		colDef['noSearch'] = !!colDef['noSearch'];
+		colDef['nullOnCreate'] = !!colDef['nullOnCreate'];
+		if (validator = colDef['validator']) {
+			this._validators[key] = validator;
+		}
+		if (colDef['nullOnCreate']) {
+			this._nullOnCreates[key] = true;
 		}
 	}
 	return colDef;
@@ -649,29 +676,23 @@ function parseString(v) {
 function parseDate(v) {
 	return new Date(Date.parse(v));
 }
-/*
-changelog
-1.3.0:
-+ function hide
-+ event: onHideCol
-+ return: colDef
-*/
-// tested
-prototype.hide = function(i) {
-	var colDef = this._filtered[i];
-	if (Util.isNull(colDef)) {
-		return;
+prototype.setVisible = function(key, visible) {
+	var colDef = this.getByKey(key, true);
+	if (!colDef) {
+		throw new Error('column key not found! key=' + key);
 	}
+	// to bool
+	visible = !!visible;
+	if (!colDef['hidden'] !== visible) {
+		// if hidden column
+		colDef['hidden'] = !visible;
 	
-	colDef['hidden'] = true;
+		this._filter();
 	
-	this._filtered.removeAt(i);
-	this._reidx();
-	
-	this.grid['event'].trigger("onHideCol", [colDef, i], true);
-	
+		this.eventChangeVisible();
+	}
 	return colDef;
-};
+}
 /*
 changelog
 1.3.0:
@@ -681,60 +702,33 @@ changelog
 */
 // tested
 prototype.show = function(key) {
-	if (Util.isNull(key)) {
-		return;
-	}
-	
-	if (!Util.isString(key)) {
-		if (!Util.isObject(key)) {
-			return;
-		}
-		key = key.key;
-	}
-	
-	var map = this._keyToDef,
-		colDef;
-	if (!map.hasOwnProperty(key)) {
-		return;
-	}
-	
-	if (this._keyToIdx.hasOwnProperty(key)) {
-		return map[key];
-	}
-	
-	colDef = map[key];
-	colDef['hidden'] = false;
-	
-	this._filter();
-	this._reidx();
-	
-	this.grid['event'].trigger("onShowCol", [colDef, this._keyToIdx[key]], true);
-	
-	return colDef;
+	return this.setVisible(key, true);
+};
+/*
+changelog
+1.3.0:
++ function hide
++ event: onHideCol
++ return: colDef
+*/
+// tested
+prototype.hide = function(key) {
+	return this.setVisible(key, false);
 };
 // implicitly tested
 prototype._filter = function() {
 	this._filtered = this._colDefs.filter(function(colDef) {
-		return colDef['hidden'] !== true;
+		return !colDef['hidden'];
 	});
 	this._reidx();
 	return this._filtered;
 };
 // implicitly tested
-prototype._reidx = function() {
-	this._keyToIdx = {};
-	return this._reidxFrom();
-};
-// implicitly tested
-prototype._reidxFrom = function(from) {
-	if (Util.isNull(from)) {
-		from = 0;
-	}
-	
-	var i = from,
-		f = this._filtered,
+prototype._reidx = function(i) {
+	i = i || 0;
+	var f = this._filtered,
 		len = f.length,
-		map = this._keyToIdx;
+		map = this._keyToIdx = {};
 		
 	for (; i < len; i++) {
 		map[f[i].key] = i;
@@ -757,12 +751,43 @@ prototype._reidxFrom = function(from) {
 */
 // tested
 prototype.get = function(i) {
-	if (Util.isNull(i)) {
+	if (i == null) {
 		return this._filtered;
 	}
-	if (this._filtered.hasOwnProperty(i)) {
-		return this._filtered[i];
+	var filtered = this._filtered;
+	if (i < 0 || i >= filtered.length) {
+		throw new Error('index out of bound, i = ' + i);
 	}
+	return this._filtered[i];
+};
+prototype.checkKey = function(key, throwe) {
+	if (key == null) {
+		if (throwe) {
+			throw new Error('column key is null');
+		}
+		return false;
+		//return this.grid['error']("KEY_UNDEFINED");
+	}
+	if (typeof key != 'string') {
+		key = key.toString();
+	}
+	if (!key) {
+		if (throwe) {
+			throw new Error('column key is empty');
+		}
+		//return this.grid['error']("BAD_NULL");
+	}
+	return true;
+}
+prototype.mapKeys = function(keys) {
+	var that = this;
+	return keys.map(function(k) {
+		var col = that.getByKey(k, true);
+		if (!col) {
+			throw new Error('column key not found! key=' + k);
+		}
+		return col;
+	});
 };
 /**
 컬럼 키에 맞는 컬럼 정의 오브젝트를 리턴합니다.
@@ -774,11 +799,14 @@ prototype.get = function(i) {
 @version 1.0.0
 */
 // tested
-prototype.getByKey = function(key) {
-	if (Util.isNotNull(key) && this._keyToDef.hasOwnProperty(key)) {
-		return this._keyToDef[key];
-	}
+prototype.getByKey = function(key, throwe) {
+	// this may throw when key is bad
+	return this.hasKey(key, throwe) ? this._keyToDef[key] : null;
 };
+prototype.hasKey = function(key, throwe) {
+	// this may throw when key is bad
+	return this.checkKey(key, throwe) ? this._keyToDef.hasOwnProperty(key) : false;
+}
 /**
 화면에 보여지는 컬럼의 수를 리턴합니다. 필터링된 컬럼 정의 오브젝트 어레이에 길이를 리턴합니다.
 @function {number} length
@@ -830,20 +858,18 @@ prototype.getIdx = function(colDef) {
 @since 1.0.0
 @version 1.0.0
 */
-prototype.sortByKey = function(keys) {
-	this._filtered.length = 0;
-	this._keyToIdx = {};
-	
-	var i = 0,
-		len = keys.length,
-		f = this._filtered,
-		map = this._keyToIdx,
-		dmap = this._keyToDef;
+prototype.sortByKey = function(keys) {	
+	var f = this._filtered,
+		imap = this._keyToIdx = {};
 		
-	for (; i < len; i++) {
-		f.push(dmap[keys[i]]);
-		map[keys[i]] = i;
-	}
+	f.length = 0;
+		
+	var cols = this.mapKeys(keys).forEach(function(col, i) {
+		if (!col.hidden) {
+			f.push(col);
+			imap[col.key] = i;
+		}
+	})
 	
 	/**
 	그리드 컬럼 순서가 변경되었을 경우 발생하는 이벤트 입니다.
@@ -854,9 +880,28 @@ prototype.sortByKey = function(keys) {
 	@since 1.2.1
 	@version 1.2.1
 	*/
-	this.grid['event'].trigger("onReorderCols", keys, true);
-	return this._filtered;
+	this.grid['event'].trigger("onReorderCols", [cols], true);
+	this.eventChangeVisible();
+	return f;
 };
+prototype.eventChangeVisible = function() {
+	/**
+	그리드 컬럼 순서가 변경되었을 경우 발생하는 이벤트 입니다.
+	
+	@event {Event} onReorderCols
+	@param {Array.<string>} keys - 새로 정렬된 컬럼 키 순서
+	@author 조준호
+	@since 1.2.1
+	@version 1.2.1
+	*/
+	this.grid['event'].trigger('changeVisibleColumns', [this._filtered]);
+	/*
+	this.dispatchEvent({
+		type: 'changeVisible',
+		columns: this._filtered
+	});
+	*/
+}
 prototype.getKeys = function() {
 	return this._filtered.map(function(def) { return def.key; });
 }

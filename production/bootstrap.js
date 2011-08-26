@@ -393,4 +393,115 @@ JGM.error = {
 	'SMALLER_THAN': "Data '%0' too small for column '%1'. Minimum is %2.",
 	'WRONG_VALUE': "Incorrect value: '%0' for '%1'."
 };
+JGM.chart = function(chartCont, type, columns, options, datalist) {
+	var pack,
+		cls;
+	type = type.toLowerCase();
+	switch (type) {
+		case 'area':
+			pack = 'corechart';
+			cls = 'AreaChart';
+			break;
+		case 'bar':
+			pack = 'corechart';
+			cls = 'BarChart';
+			break;
+		case 'candle':
+			pack = 'corechart';
+			cls = 'CandlestickChart';
+			break;
+		case 'column':
+			pack = 'corechart';
+			cls = 'ColumnChart';
+			break;
+		case 'combo':
+			pack = 'corechart';
+			cls = 'ComboChart';
+			break;
+		case 'gauge':
+			pack = 'gauge';
+			cls = 'Gauge';
+			break;
+		case 'geo':
+			pack = 'geochart';
+			cls = 'GeoChart';
+			break;
+		case 'line':
+			pack = 'corechart';
+			cls = 'LineChart';
+			break;
+		case 'pie':
+			pack = 'corechart';
+			cls = 'PieChart';
+			break;
+		case 'scatter':
+			pack = 'corechart';
+			cls = 'ScatterChart';
+			break;
+		case 'table':
+			pack = 'table';
+			cls = 'Table';
+			break;
+		case 'treemap':
+			pack = 'treemap';
+			cls = 'TreeMap';
+			break;
+		default:
+			throw new Error('unknown chart type: ' + type);
+	}
+	google.load("visualization", "1", {packages:[pack]});
+	var rows = JGM.exportToArray(datalist, columns.map(function(c) { return c.key; }));
+	google.setOnLoadCallback(function() {
+		var data = new google.visualization.DataTable(),
+			i = 0,
+			l = columns.length,
+			col,
+			datatype;
+		for (; i < l; i++) {
+			col = columns[i];
+			datatype = col.type;
+			switch(datatype) {
+				case 'boolean':
+					datatype = 'boolean';
+					break;
+				case 'int':
+				case 'integer':
+				case 'long':
+				case 'float':
+				case 'double':
+					datatype = 'number';
+					break;
+				case 'string':
+				case 'text':
+					datatype = 'string';
+					break;
+				case 'date':
+					break;
+			}
+			data.addColumn(datatype || typeof rows[0][i] || (i === 0 && 'string') || 'number', col.name);
+		}
+		data.addRows(rows);
+		var chart = new google.visualization[cls](document.getElementById(chartCont));
+		chart.draw(data, options);
+	});
+};
+JGM.exportToArray = function(datalist, keys) {'use strict';
+	var array,
+		arr = [],
+		datarow,
+		key,
+		j = 0,
+		jl = datalist.length,
+		i,
+		l = keys.length;
+	for (; j < jl; j++) {
+		datarow = datalist[j];
+		for (i = 0, array = []; i < l; i++) {
+			key = keys[i];
+			array.push((key in datarow) ? datarow[key] : null);
+		}
+		arr.push(array);
+	}
+	return arr;
+}
 })();
