@@ -2638,13 +2638,11 @@ prototype.exportRowToArray = function(index, keys) {'use strict';
 	return array;
 }
 
-prototype.exportToArray = function(keys, from, to) {'use strict';
-	if (!keys) {
-		keys = this.grid['colDefMgr'].getKeys();
-	}
+prototype.exportToArray = function(keys, from, to, datalist) {'use strict';
+	keys = keys || this.grid['colDefMgr'].getKeys();
+	datalist = datalist || this.datalist.slice(from, to);
 
-	var datalist = this.datalist.slice(from, to),
-		array,
+	var array,
 		arr = [],
 		datarow,
 		key,

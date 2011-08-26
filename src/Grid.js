@@ -1674,7 +1674,7 @@ prototype.chart = function(chartCont, type, columns, options, from, to) {
 				case 'date':
 					break;
 			}
-			data.addColumn(datatype || (i === 0 && 'string') || 'number', coldef.name);
+			data.addColumn(datatype || (rows[0] && rows[0][i] != null && typeof rows[0][i]) || (i === 0 && 'string') || 'number', coldef.name);
 		}
 		data.addRows(rows);
 		var chart = grid._charts[chartCont] = new google.visualization[cls](document.getElementById(chartCont));
@@ -1688,7 +1688,6 @@ prototype.chart = function(chartCont, type, columns, options, from, to) {
 		grid['event'].trigger('onChartLoaded', [chart, data], true);
 	});
 };
-
 
 
 }());
