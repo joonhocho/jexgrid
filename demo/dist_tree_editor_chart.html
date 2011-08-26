@@ -19,6 +19,7 @@
 	<body>
 		<div id="myGrid"></div>
 		<div id="mychart"></div>
+		<div id="mychart1"></div>
 		<script>
 			function rand(num, start) {
 				return Math.round(Math.random() * num) + (start ? start : 0);
@@ -162,6 +163,31 @@
 					}
 				}
 			});
+
+			JGM.chart('mychart1', 'area', [{
+				type:'string',
+				key:'name',
+				name:'ÀÌ¸§'
+			},
+			{
+				type:'int',
+				key:'id',
+				name:'ID'
+			}],
+			{
+				width: 400,
+				height: 300,
+				title: 'Test Chart2'
+			},
+			[{
+				'name':'N1',
+				'id':1
+			},
+			{
+				'name':'N2',
+				'id':2
+			}]
+			);
 		</script>
 	</body>
 </html>
