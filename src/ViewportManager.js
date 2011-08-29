@@ -1071,6 +1071,7 @@ prototype._autoColWidth = function(key) {
 };
 
 prototype._setWidth = function(w) {
+	return;
 	w = parseInt(w, 10);
 	if (isNaN(w) || w < 1) {
 		return;
