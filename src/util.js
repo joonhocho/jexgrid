@@ -457,21 +457,20 @@ Util.getBodyScroll = function() {
 
 // tested
 Util.hasClass = function(node, className) {
-	if (node == null || className == null) {
-		return false;
-	}
+	if (node && className) {
+		var nodeClass = node.className;
+		if (nodeClass === className) {
+			return true;
+		}
 
-	if (node.className === className) {
-		return true;
-	}
-
-	if (node.className) {
-		var cl = node.classList ? node.classList : Util.split(node.className),
-			i = 0,
-			  len = cl.length;
-		for (; i < len; i++) {
-			if (cl[i] === className) {
-				return true;
+		if (nodeClass && nodeClass.length >= className.length) {
+			var cl = node.classList || Util.split(nodeClass),
+				i = 0,
+				len = cl.length;
+			for (; i < len; i++) {
+				if (cl[i] === className) {
+					return true;
+				}
 			}
 		}
 	}
@@ -480,22 +479,21 @@ Util.hasClass = function(node, className) {
 
 // tested
 Util.hasTagAndClass = function(node, tag, className) {
-	if (node == null || tag == null || className == null) {
-		return false;
-	}
+	if (node && tag && className) {
+		if (node.tagName === tag) {
+			var nodeClass = node.className;
+			if (nodeClass === className) {
+				return true;
+			}
 
-	if (node.tagName === tag) {
-		if (node.className === className) {
-			return true;
-		}
-
-		if (node.className && node.className.length >= className.length) {
-			var cl = node.classList ? node.classList : Util.split(node.className),
-				i = 0,
-				  len = cl.length;
-			for (; i < len; i++) {
-				if (cl[i] === className) {
-					return true;
+			if (nodeClass && nodeClass.length >= className.length) {
+				var cl = node.classList || Util.split(nodeClass),
+					i = 0,
+					len = cl.length;
+				for (; i < len; i++) {
+					if (cl[i] === className) {
+						return true;
+					}
 				}
 			}
 		}
@@ -509,12 +507,29 @@ Util.closest = function(node, className, end) {
 		return node;
 	}
 
+	if (end) {
+		// node must be contained inside the end node
+		var p = node,
+			contained = false;
+		while (p) {
+			if (p === end) {
+				contained = true;
+				break;
+			}
+			p = p.parentNode;
+		}
+		if (!contained) {
+			return null;
+		}
+	}
+
 	var found;
-	for (node = node.parentNode; Util.isNotNull(node) && node !== end; node = node.parentNode) {
+	for (node = node.parentNode; node && node !== end; node = node.parentNode) {
 		if (Util.hasClass(node, className)) {
 			return node;
 		}
 	}
+	return null;
 };
 
 // tested
@@ -523,77 +538,89 @@ Util.closestWithTag = function(node, tag, className, end) {
 		return node;
 	}
 
+	if (end) {
+		// node must be contained inside the end node
+		var p = node,
+			contained = false;
+		while (p) {
+			if (p === end) {
+				contained = true;
+				break;
+			}
+			p = p.parentNode;
+		}
+		if (!contained) {
+			return null;
+		}
+	}
+
 	var found;
-	for (node = node.parentNode; Util.isNotNull(node) && node !== end; node = node.parentNode) {
+	for (node = node.parentNode; node && node !== end; node = node.parentNode) {
 		if (Util.hasTagAndClass(node, tag, className)) {
 			return node;
 		}
 	}
+	return null;
 };
 
 // tested
 Util.findFirstByClass = function(node, className) {
-	if (node == null) {
-		return;
-	}
+	if (node) {
+		if (Util.hasClass(node, className)) {
+			return node;
+		}
 
-	if (Util.hasClass(node, className)) {
-		return node;
-	}
-
-	var i = 0,
-		c = node.childNodes,
-		clen = c.length,
-		found;
-	for (; i < clen; i++) {
-		if (Util.isNotNull(c[i]) && (found = Util.findFirstByClass(c[i], className)) !== undefined) {
-			return found;
+		var i = 0,
+			c = node.childNodes,
+			clen = c.length,
+			n,
+			found;
+		for (; i < clen; i++) {
+			n = c[i];
+			if (n && (found = Util.findFirstByClass(n, className)) !== undefined) {
+				return found;
+			}
 		}
 	}
+	return null;
 };
 
 // tested
 Util.findFirstByTagAndClass = function(node, tag, className) {
-	if (node == null) {
-		return;
-	}
+	if (node) {
+		if (Util.hasTagAndClass(node, tag, className)) {
+			return node;
+		}
 
-	if (Util.hasTagAndClass(node, tag, className)) {
-		return node;
-	}
-
-	var i = 0,
-		c = node.childNodes,
-		clen = c.length,
-		found;
-	for (; i < clen; i++) {
-		if (Util.isNotNull(c[i]) && (found = Util.findFirstByTagAndClass(c[i], tag, className)) !== undefined) {
-			return found;
+		var i = 0,
+			c = node.childNodes,
+			clen = c.length,
+			found;
+		for (; i < clen; i++) {
+			if (Util.isNotNull(c[i]) && (found = Util.findFirstByTagAndClass(c[i], tag, className)) !== undefined) {
+				return found;
+			}
 		}
 	}
+	return null;
 };
 
 // tested
 Util.findByClass = function(node, className, list) {
-	if (list === undefined) {
-		list = [];
-	}
+	list = list || [];
+	if (node) {
+		if (Util.hasClass(node, className)) {
+			list.push(node);
+		}
 
-	if (node == null) {
-		return list;
-	}
+		var i = 0,
+			c = node.childNodes,
+			clen = c.length;
 
-	if (Util.hasClass(node, className)) {
-		list.push(node);
-	}
-
-	var i = 0,
-		c = node.childNodes,
-		clen = c.length;
-
-	for (; i < clen; i++) {
-		if (Util.isNotNull(c[i])) {
-			Util.findByClass(c[i], className, list);
+		for (; i < clen; i++) {
+			if (Util.isNotNull(c[i])) {
+				Util.findByClass(c[i], className, list);
+			}
 		}
 	}
 
@@ -602,24 +629,19 @@ Util.findByClass = function(node, className, list) {
 
 // tested
 Util.findByTagAndClass = function(node, tag, className, list) {
-	if (list === undefined) {
-		list = [];
-	}
+	list = list || [];
+	if (node) {
+		if (Util.hasTagAndClass(node, tag, className)) {
+			list.push(node);
+		}
 
-	if (node == null) {
-		return list;
-	}
-
-	if (Util.hasTagAndClass(node, tag, className)) {
-		list.push(node);
-	}
-
-	var i = 0,
-		c = node.childNodes,
-		clen = c.length;
-	for (; i < clen; i++) {
-		if (Util.isNotNull(c[i])) {
-			Util.findByTagAndClass(c[i], tag, className, list);
+		var i = 0,
+			c = node.childNodes,
+			clen = c.length;
+		for (; i < clen; i++) {
+			if (Util.isNotNull(c[i])) {
+				Util.findByTagAndClass(c[i], tag, className, list);
+			}
 		}
 	}
 
@@ -1313,7 +1335,7 @@ Util.open = function(options) {
 		"status=" + ops.status + ", " +
 		"titlebar=" + ops.titlebar + ", " +
 		"toolbar=" + ops.toolbar;
-	if (Util.isNull(ops.replace)) {
+	if (ops.replace == null) {
 		return window.open(ops.url, ops.name, specs);
 	}
 	return window.open(ops.url, ops.name, specs, ops.replace);
