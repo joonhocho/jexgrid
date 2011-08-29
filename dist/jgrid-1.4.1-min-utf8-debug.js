@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 38
- * Date: Fri Aug 26 15:16:02 KST 2011
+ * JexGrid Build 39
+ * Date: Mon Aug 29 10:34:06 KST 2011
  */
 /*
 AUTHOR
@@ -5364,11 +5364,7 @@ jx.grid.ViewportManager = {};
     c -= this._getPadding();
     this.setWidthByKey(a, c)
   };
-  e._setWidth = function(a) {
-    a = parseInt(a, 10);
-    if(!(isNaN(a) || a < 1)) {
-      this._mask[0].style.width = a + "px"
-    }
+  e._setWidth = function() {
   };
   e.getScrollTop = function() {
     return this._mask[0].scrollTop
