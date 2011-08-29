@@ -441,9 +441,6 @@ Util.hasTagAndClass = function(node, tag, className) {
 };
 // tested
 Util.closest = function(node, className, end) {
-	if (Util.hasClass(node, className)) {
-		return node;
-	}
 	if (end) {
 		// node must be contained inside the end node
 		var p = node,
@@ -458,6 +455,9 @@ Util.closest = function(node, className, end) {
 		if (!contained) {
 			return null;
 		}
+	}
+	if (Util.hasClass(node, className)) {
+		return node;
 	}
 	var found;
 	for (node = node.parentNode; node && node !== end; node = node.parentNode) {
@@ -469,9 +469,6 @@ Util.closest = function(node, className, end) {
 };
 // tested
 Util.closestWithTag = function(node, tag, className, end) {
-	if (Util.hasTagAndClass(node, tag, className)) {
-		return node;
-	}
 	if (end) {
 		// node must be contained inside the end node
 		var p = node,
@@ -486,6 +483,9 @@ Util.closestWithTag = function(node, tag, className, end) {
 		if (!contained) {
 			return null;
 		}
+	}
+	if (Util.hasTagAndClass(node, tag, className)) {
+		return node;
 	}
 	var found;
 	for (node = node.parentNode; node && node !== end; node = node.parentNode) {

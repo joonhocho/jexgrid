@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 41
- * Date: Mon Aug 29 11:40:20 KST 2011
+ * JexGrid Build 42
+ * Date: Mon Aug 29 11:48:50 KST 2011
  */
 /*
 AUTHOR
@@ -1077,9 +1077,6 @@ var jx = {util:{}}, Util = {}, echo = {};
     return!1
   };
   Util.closest = function(b, a, c) {
-    if(Util.hasClass(b, a)) {
-      return b
-    }
     if(c) {
       for(var d = b, e = !1;d;) {
         if(d === c) {
@@ -1092,6 +1089,9 @@ var jx = {util:{}}, Util = {}, echo = {};
         return null
       }
     }
+    if(Util.hasClass(b, a)) {
+      return b
+    }
     for(b = b.parentNode;b && b !== c;b = b.parentNode) {
       if(Util.hasClass(b, a)) {
         return b
@@ -1100,9 +1100,6 @@ var jx = {util:{}}, Util = {}, echo = {};
     return null
   };
   Util.closestWithTag = function(b, a, c, d) {
-    if(Util.hasTagAndClass(b, a, c)) {
-      return b
-    }
     if(d) {
       for(var e = b, i = !1;e;) {
         if(e === d) {
@@ -1114,6 +1111,9 @@ var jx = {util:{}}, Util = {}, echo = {};
       if(!i) {
         return null
       }
+    }
+    if(Util.hasTagAndClass(b, a, c)) {
+      return b
     }
     for(b = b.parentNode;b && b !== d;b = b.parentNode) {
       if(Util.hasTagAndClass(b, a, c)) {
