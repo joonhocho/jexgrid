@@ -166,7 +166,7 @@ prototype._defaultOptions = function() {
 			'border': "1px solid #868686",
 
 			/**
-			  컨테이너에 적용되는 CSS width 픽셀값 입니다. 이 옵션 값이 입력되지 않을 경우 <code>width:100%</code> 로 설정하는 것과 같은 효과를 가집니다.<br>기본값:<code>undefined</code>
+			  컨테이너에 적용되는 CSS width 픽셀값 입니다. 이 옵션 값이 입력되지 않을 경우 <code>width:''</code> 로 설정하는 것과 같은 효과를 가집니다.<br>기본값:<code>undefined</code>
 
 			  @type {number=} jx.grid.Grid.options.width
 			  @private
@@ -175,7 +175,7 @@ prototype._defaultOptions = function() {
 			  @since 1.0.0
 			  @version 1.0.0
 			  */
-			'width': '100%',
+			'width': '',
 
 			/**
 			  컨테이너에 적용되는 CSS font 스타일 입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
@@ -659,7 +659,7 @@ prototype._createCss = function() {
 	  */
 	var subcss = em.trigger("onCreateCss");
 	subcss = subcss ? subcss.join('') : '';
-	var style = Util.sprint("%selector%{overflow:hidden;width:100%;height:100%;font:%font%;%border%%style%}%submodule%", {
+	var style = Util.sprint("%selector%{overflow:hidden;height:100%;font:%font%;%border%%style%}%submodule%", {
 		'selector': "#" + this.mid,
 		'font': opt['font'],
 		'border': opt['borderSide'] ?
