@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 40
- * Date: Mon Aug 29 10:58:21 KST 2011
+ * JexGrid Build 41
+ * Date: Mon Aug 29 11:40:20 KST 2011
  */
 /*
 AUTHOR
@@ -1045,31 +1045,29 @@ var jx = {util:{}}, Util = {}, echo = {};
     return[b, a]
   };
   Util.hasClass = function(b, a) {
-    if(b == null || a == null) {
-      return!1
-    }
-    if(b.className === a) {
-      return!0
-    }
-    if(b.className) {
-      for(var c = b.classList ? b.classList : Util.split(b.className), d = 0, e = c.length;d < e;d++) {
-        if(c[d] === a) {
-          return!0
+    if(b && a) {
+      var c = b.className;
+      if(c === a) {
+        return!0
+      }
+      if(c && c.length >= a.length) {
+        for(var c = b.classList || Util.split(c), d = 0, e = c.length;d < e;d++) {
+          if(c[d] === a) {
+            return!0
+          }
         }
       }
     }
     return!1
   };
   Util.hasTagAndClass = function(b, a, c) {
-    if(b == null || a == null || c == null) {
-      return!1
-    }
-    if(b.tagName === a) {
-      if(b.className === c) {
+    if(b && a && c && b.tagName === a) {
+      a = b.className;
+      if(a === c) {
         return!0
       }
-      if(b.className && b.className.length >= c.length) {
-        for(var b = b.classList ? b.classList : Util.split(b.className), a = 0, d = b.length;a < d;a++) {
+      if(a && a.length >= c.length) {
+        for(var b = b.classList || Util.split(a), a = 0, d = b.length;a < d;a++) {
           if(b[a] === c) {
             return!0
           }
@@ -1082,36 +1080,63 @@ var jx = {util:{}}, Util = {}, echo = {};
     if(Util.hasClass(b, a)) {
       return b
     }
-    for(b = b.parentNode;Util.isNotNull(b) && b !== c;b = b.parentNode) {
+    if(c) {
+      for(var d = b, e = !1;d;) {
+        if(d === c) {
+          e = !0;
+          break
+        }
+        d = d.parentNode
+      }
+      if(!e) {
+        return null
+      }
+    }
+    for(b = b.parentNode;b && b !== c;b = b.parentNode) {
       if(Util.hasClass(b, a)) {
         return b
       }
     }
+    return null
   };
   Util.closestWithTag = function(b, a, c, d) {
     if(Util.hasTagAndClass(b, a, c)) {
       return b
     }
-    for(b = b.parentNode;Util.isNotNull(b) && b !== d;b = b.parentNode) {
+    if(d) {
+      for(var e = b, i = !1;e;) {
+        if(e === d) {
+          i = !0;
+          break
+        }
+        e = e.parentNode
+      }
+      if(!i) {
+        return null
+      }
+    }
+    for(b = b.parentNode;b && b !== d;b = b.parentNode) {
       if(Util.hasTagAndClass(b, a, c)) {
         return b
       }
     }
+    return null
   };
   Util.findFirstByClass = function(b, a) {
-    if(b != null) {
+    if(b) {
       if(Util.hasClass(b, a)) {
         return b
       }
-      for(var c = 0, d = b.childNodes, e = d.length, i;c < e;c++) {
-        if(Util.isNotNull(d[c]) && (i = Util.findFirstByClass(d[c], a)) !== void 0) {
-          return i
+      for(var c = 0, d = b.childNodes, e = d.length, i, n;c < e;c++) {
+        if((i = d[c]) && (n = Util.findFirstByClass(i, a)) !== void 0) {
+          return n
         }
       }
     }
+    return null
   };
   Util.findFirstByTagAndClass = function(b, a, c) {
-    if(b != null) {
+    if(b) {
       if(Util.hasTagAndClass(b, a, c)) {
         return b
       }
@@ -1121,26 +1146,25 @@ var jx = {util:{}}, Util = {}, echo = {};
         }
       }
     }
+    return null
   };
   Util.findByClass = function(b, a, c) {
-    c === void 0 && (c = []);
-    if(b == null) {
-      return c
-    }
-    Util.hasClass(b, a) && c.push(b);
-    for(var d = 0, b = b.childNodes, e = b.length;d < e;d++) {
-      Util.isNotNull(b[d]) && Util.findByClass(b[d], a, c)
+    c = c || [];
+    if(b) {
+      Util.hasClass(b, a) && c.push(b);
+      for(var d = 0, b = b.childNodes, e = b.length;d < e;d++) {
+        Util.isNotNull(b[d]) && Util.findByClass(b[d], a, c)
+      }
     }
     return c
   };
   Util.findByTagAndClass = function(b, a, c, d) {
-    d === void 0 && (d = []);
-    if(b == null) {
-      return d
-    }
-    Util.hasTagAndClass(b, a, c) && d.push(b);
-    for(var e = 0, b = b.childNodes, i = b.length;e < i;e++) {
-      Util.isNotNull(b[e]) && Util.findByTagAndClass(b[e], a, c, d)
+    d = d || [];
+    if(b) {
+      Util.hasTagAndClass(b, a, c) && d.push(b);
+      for(var e = 0, b = b.childNodes, i = b.length;e < i;e++) {
+        Util.isNotNull(b[e]) && Util.findByTagAndClass(b[e], a, c, d)
+      }
     }
     return d
   };
@@ -1409,7 +1433,7 @@ var jx = {util:{}}, Util = {}, echo = {};
     }
     b = Util.ifNull(a.height, "", "height=" + a.height + ", ") + Util.ifNull(a.left, "", "left=" + a.left + ", ") + Util.ifNull(a.top, "", "top=" + a.top + ", ") + Util.ifNull(a.width, "", "width=" + a.width + ", ") + "channelmode=" + a.channelmode + ", directories=" + a.directories + ", fullscreen=" + a.fullscreen + ", location=" + a.location + ", menubar=" + a.menubar + ", resizable=" + a.resizable + ", scrollbars=" + a.scrollbars + ", status=" + a.status + ", titlebar=" + a.titlebar + ", toolbar=" + 
     a.toolbar;
-    return Util.isNull(a.replace) ? window.open(a.url, a.name, b) : window.open(a.url, a.name, b, a.replace)
+    return a.replace == null ? window.open(a.url, a.name, b) : window.open(a.url, a.name, b, a.replace)
   }
 })();
 window.console && window.console.log && window.console.log('reading javascript source "Tracer.js"...');
@@ -3496,48 +3520,48 @@ jx.grid.EventManager = {};
   b.unregister = function(a, c) {
     var d = this._map;
     if(d.hasOwnProperty(a)) {
-      var b = d[a];
+      var e = d[a];
       if(f.isNull(c)) {
-        b.length = 0, delete d[a]
+        e.length = 0, delete d[a]
       }else {
-        for(var i = 0, n = b.length;i < n;i++) {
-          if(b[i].fn === c) {
-            b.removeAt(i);
-            b.length === 0 && delete d[a];
+        for(var i = 0, b = e.length;i < b;i++) {
+          if(e[i].fn === c) {
+            e.removeAt(i);
+            e.length === 0 && delete d[a];
             break
           }
         }
       }
     }
   };
-  b.trigger = function(a, c, d, b) {
+  b.trigger = function(a, c, d, e) {
     this.grid.log("firing event=" + a, 3);
     var i = this._map;
     if(i.hasOwnProperty(a)) {
-      var i = i[a], n = i.length;
-      if(n) {
-        if(this.grid.log(n + " handlers registered for event=" + a, 4), a = 0, d) {
+      var i = i[a], b = i.length;
+      if(b) {
+        if(this.grid.log(b + " handlers registered for event=" + a, 4), a = 0, d) {
           if(c && c.length) {
-            for(;a < n;a++) {
+            for(;a < b;a++) {
               d = i[a], d.fn.apply(d.target, c)
             }
           }else {
-            for(;a < n;a++) {
+            for(;a < b;a++) {
               d = i[a], d.fn.call(d.target)
             }
           }
         }else {
-          b = b || [];
+          e = e || [];
           if(c && c.length) {
-            for(;a < n;a++) {
-              d = i[a], b.push(d.fn.apply(d.target, c))
+            for(;a < b;a++) {
+              d = i[a], e.push(d.fn.apply(d.target, c))
             }
           }else {
-            for(;a < n;a++) {
-              d = i[a], b.push(d.fn.call(d.target))
+            for(;a < b;a++) {
+              d = i[a], e.push(d.fn.call(d.target))
             }
           }
-          return b
+          return e
         }
       }else {
         this.grid.log("no handlers registered for event=" + a, 4)
@@ -3547,15 +3571,15 @@ jx.grid.EventManager = {};
     }
   };
   b.triggerMultiple = function(a, c, d) {
-    var a = a.split(","), b = 0, i = a.length;
+    var a = a.split(","), e = 0, i = a.length;
     if(d) {
-      for(d = [];b < i;b++) {
-        this.trigger(a[b], c, !1, d)
+      for(d = [];e < i;e++) {
+        this.trigger(a[e], c, !1, d)
       }
       return d
     }else {
-      for(;b < i;b++) {
-        this.trigger(a[b], c, !0)
+      for(;e < i;e++) {
+        this.trigger(a[e], c, !0)
       }
     }
   };
@@ -4776,8 +4800,8 @@ jx.grid.Editor = {};
     this.__init()
   }
   function h(a) {
-    for(var b in a) {
-      a.hasOwnProperty(b) && (this[b] = a[b])
+    for(var c in a) {
+      a.hasOwnProperty(c) && (this[c] = a[c])
     }
   }
   var f = goog.getObjectByName("jx.grid"), b = goog.getObjectByName("jx.util");
@@ -4812,15 +4836,15 @@ jx.grid.Editor = {};
     f._destroy(this, {name:"EditManager", path:"editMgr", map:"_beginEditKeys _options"})
   };
   c._onBeforeCreateSelCss = function() {
-    var a = "#" + this.grid.mid + " .", b = this._options, c = [], f = this.grid.view._getRowInnerHeight();
-    c.push(this.grid.view._getCellSelector() + "." + b.classEdit + "{background:" + b.basicBackground + "}");
-    c.push(a + b.classEdit + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + b.basicBackground + ";height:" + f + "px;line-height:" + f + "px}");
-    b.editableBgEnabled && c.push(a + b.classCellEditable + "{background:" + b.editableBg + "}");
-    b.notEditableBgEnabled && c.push(a + b.classCellNotEditable + "{background:" + b.notEditableBg + "}");
-    b.editIconEnabled && c.push(a + b.classEditIcon + "{float:left;position:absolute;left:0;top:0;padding:0 " + b.editIconPadding + "px;width:" + b.editIconWidth + "px;height:" + f + "px;background:url(" + b.urlEditIcon + ") no-repeat center transparent}");
-    c.push(a + b.classSuccess + "{background:" + b.successBackground + "}");
-    c.push(a + b.classFailure + "{background:" + b.failureBackground + "}");
-    return c.join("")
+    var a = "#" + this.grid.mid + " .", c = this._options, b = [], f = this.grid.view._getRowInnerHeight();
+    b.push(this.grid.view._getCellSelector() + "." + c.classEdit + "{background:" + c.basicBackground + "}");
+    b.push(a + c.classEdit + " input{position:absolute;z-index:10;top:0;padding:0;border:0;margin:0;background:" + c.basicBackground + ";height:" + f + "px;line-height:" + f + "px}");
+    c.editableBgEnabled && b.push(a + c.classCellEditable + "{background:" + c.editableBg + "}");
+    c.notEditableBgEnabled && b.push(a + c.classCellNotEditable + "{background:" + c.notEditableBg + "}");
+    c.editIconEnabled && b.push(a + c.classEditIcon + "{float:left;position:absolute;left:0;top:0;padding:0 " + c.editIconPadding + "px;width:" + c.editIconWidth + "px;height:" + f + "px;background:url(" + c.urlEditIcon + ") no-repeat center transparent}");
+    b.push(a + c.classSuccess + "{background:" + c.successBackground + "}");
+    b.push(a + c.classFailure + "{background:" + c.failureBackground + "}");
+    return b.join("")
   };
   c.onCreateDynamicCss = function() {
     for(var a = this.grid.view._getCellSelector(), c = this.grid.view._getPadding(), i = this.grid.colDefMgr.get(), f = 0, j = "";f < i.length;f++) {
@@ -4831,17 +4855,17 @@ jx.grid.Editor = {};
   c._onRenderHeader = function(a) {
     a.push("<span class='" + this._options.classEditIcon + "'></span>")
   };
-  c._onRenderCell = function(a, b, c, f, j) {
-    this.grid.dataMgr.isReal(c) && j.push("<span class='" + this._options.classEditIcon + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + '.beginEdit("' + c[this.grid.dataMgr.idKey] + '","' + f.key + "\")'></span>")
+  c._onRenderCell = function(a, c, b, f, j) {
+    this.grid.dataMgr.isReal(b) && j.push("<span class='" + this._options.classEditIcon + "' title='클릭하여 에디팅을 시작합니다' onclick='JGM.m.EditManager." + this.mid + '.beginEdit("' + b[this.grid.dataMgr.idKey] + '","' + f.key + "\")'></span>")
   };
   c.cancelMouseEvent = function(a) {
     return!b.hasTagAndClass(a.target, "DIV", this._options.classEditIcon)
   };
-  c.beginEdit = function(a, b) {
-    this.begin(f.create("Cell", {grid:this.grid, datarow:this.grid.dataMgr.getById(a), colDef:this.grid.colDefMgr.getByKey(b)}))
+  c.beginEdit = function(a, c) {
+    this.begin(f.create("Cell", {grid:this.grid, datarow:this.grid.dataMgr.getById(a), colDef:this.grid.colDefMgr.getByKey(c)}))
   };
-  c._dblclickCanvas = function(a, b) {
-    b.isEdited() || this.begin(b)
+  c._dblclickCanvas = function(a, c) {
+    c.isEdited() || this.begin(c)
   };
   c._keydownCanvas = function(a) {
     this.active() ? a.which === b.keyMapKeydown.esc && this.cancel() : !a.ctrlKey && !a.altKey && b.isNotNull(this.grid.selMgr) && (a.which === b.keyMapKeydown.del && this._options.deleteEnabled ? this._deleteContent(this.grid.selMgr.getCell()) : this._beginEditKeys[a.which] ? this.begin(this.grid.selMgr.getCell()) : a.which === b.keyMapKeydown.f2 && (a.preventDefault(), this.begin(this.grid.selMgr.getCell())))
@@ -4868,8 +4892,8 @@ jx.grid.Editor = {};
   };
   c.isEditable = function(a) {
     if(a) {
-      var b = a.getColDef();
-      if(b && b.editor) {
+      var c = a.getColDef();
+      if(c && c.editor) {
         return(a = a.getDatarow()) && this.grid.dataMgr.isReal(a)
       }
     }
@@ -4878,15 +4902,15 @@ jx.grid.Editor = {};
   c.begin = function(a) {
     this.active() && this.commit();
     if(this.isEditable(a)) {
-      var b = a.getNode();
-      if(b) {
-        var c = this.editor = a.getColDef().editor;
-        c.cell = a;
-        c.grid = this.grid;
-        c.before = b.innerHTML;
-        b.innerHTML = c.edit(a.getValue());
+      var c = a.getNode();
+      if(c) {
+        var b = this.editor = a.getColDef().editor;
+        b.cell = a;
+        b.grid = this.grid;
+        b.before = c.innerHTML;
+        c.innerHTML = b.edit(a.getValue());
         a.get$().addClass(this._options.classEdit);
-        c.focus()
+        b.focus()
       }
     }
   };
@@ -4894,9 +4918,9 @@ jx.grid.Editor = {};
     if(this.active()) {
       var a = this.editor.cell;
       if(a) {
-        var b = a.getNode();
-        if(b) {
-          b.innerHTML = this.editor.before, a.get$().removeClass(this._options.classEdit)
+        var c = a.getNode();
+        if(c) {
+          c.innerHTML = this.editor.before, a.get$().removeClass(this._options.classEdit)
         }
       }
       this._deleteEditor();
@@ -4911,16 +4935,16 @@ jx.grid.Editor = {};
       this._beingCommitted = !0;
       var a = this.editor.cell;
       if(a) {
-        var b = a.getNode();
-        if(b) {
-          if(b = this.editor.value(b), b == null || b == a.getValue()) {
+        var c = a.getNode();
+        if(c) {
+          if(c = this.editor.value(c), c == null || c == a.getValue()) {
             this.cancel()
           }else {
-            var b = a.setValue(b), c, f = a.get$();
-            b instanceof Error ? (this.cancel(), c = this._options.classFailure) : (this._deleteEditor(), this.grid.view.focus(), this.grid.printMessage("Successfully Updated."), c = this._options.classSuccess);
-            f.addClass(c);
+            var c = a.setValue(c), b, f = a.get$();
+            c instanceof Error ? (this.cancel(), b = this._options.classFailure) : (this._deleteEditor(), this.grid.view.focus(), this.grid.printMessage("Successfully Updated."), b = this._options.classSuccess);
+            f.addClass(b);
             setTimeout(function() {
-              f.removeClass(c)
+              f.removeClass(b)
             }, 1E3)
           }
         }
@@ -4930,8 +4954,8 @@ jx.grid.Editor = {};
   };
   c._deleteContent = function(a) {
     if(!this.active() && this.isEditable(a)) {
-      var b = a.getColDef();
-      a.getValue() !== b.defaultValue && a.setValue(b.defaultValue)
+      var c = a.getColDef();
+      a.getValue() !== c.defaultValue && a.setValue(c.defaultValue)
     }
   };
   c._deleteContents = function(a, c, i) {
@@ -4964,16 +4988,16 @@ jx.grid.Editor = {};
   c.focus = function() {
     var a = this.cell;
     if(a) {
-      var b = a.getNode();
-      if(b && (b = b.childNodes[0])) {
-        if(b.setActive) {
+      var c = a.getNode();
+      if(c && (c = c.childNodes[0])) {
+        if(c.setActive) {
           try {
-            b.setActive()
-          }catch(c) {
+            c.setActive()
+          }catch(b) {
           }
         }
-        b.focus();
-        document.activeElement !== b && a.get$().children(":eq(0)").focus()
+        c.focus();
+        document.activeElement !== c && a.get$().children(":eq(0)").focus()
       }
     }
   };
@@ -5033,21 +5057,21 @@ jx.grid.TooltipManager = {};
     h._destroy(this, {name:"TooltipManager", path:"tooltip", $:"_tooltip", property:"_ctnr", map:"_options"})
   };
   b._onCreateCss = function() {
-    var a = this._options, b = [];
-    b.push("#" + this.grid.mid + " ." + a.classTooltip + "{position:absolute;z-index:10;background:" + a.background + ";border:" + a.border + ";padding:" + a.padding + ";color:" + a.color + ";font:" + a.font + "}");
-    return b.join("")
+    var a = this._options, c = [];
+    c.push("#" + this.grid.mid + " ." + a.classTooltip + "{position:absolute;z-index:10;background:" + a.background + ";border:" + a.border + ";padding:" + a.padding + ";color:" + a.color + ";font:" + a.font + "}");
+    return c.join("")
   };
   b._mouseoutCanvas = function() {
     f.isNotNull(this._tooltip) && (this._ctnr[0].removeChild(this._tooltip[0]), delete this._tooltip)
   };
   b._mousemoveCanvas = function(a) {
-    var b = this._options;
-    b.tooltipSyncEnabled && f.isNotNull(this._tooltip) && this._tooltip.css({left:a.pageX + b.offsetX + "px", top:a.pageY + b.offsetY + "px"})
+    var c = this._options;
+    c.tooltipSyncEnabled && f.isNotNull(this._tooltip) && this._tooltip.css({left:a.pageX + c.offsetX + "px", top:a.pageY + c.offsetY + "px"})
   };
-  b._mouseoverCanvas = function(a, b) {
-    if(b.getColDef().tooltipEnabled && f.isNull(this._tooltip)) {
-      var d = this._options, e = document.createElement("div");
-      e.innerHTML = "<div class='" + d.classTooltip + "' style='left:" + (a.pageX + d.offsetX) + "px;top:" + (a.pageY + d.offsetY) + "px'>" + b.getValue() + "</div>";
+  b._mouseoverCanvas = function(a, c) {
+    if(c.getColDef().tooltipEnabled && f.isNull(this._tooltip)) {
+      var b = this._options, e = document.createElement("div");
+      e.innerHTML = "<div class='" + b.classTooltip + "' style='left:" + (a.pageX + b.offsetX) + "px;top:" + (a.pageY + b.offsetY) + "px'>" + c.getValue() + "</div>";
       this._tooltip = $(e.firstChild);
       this._ctnr[0].appendChild(this._tooltip[0])
     }
@@ -5078,37 +5102,37 @@ jx.grid.PrintManager = {};
     })
   };
   b.print = function() {
-    var a = this.getPrintHtml(this.grid.colDefMgr.get(), this.grid.dataMgr.datalist), b = f.open(this._options.winOptions);
-    b.document.write(a);
-    b.document.close()
+    var a = this.getPrintHtml(this.grid.colDefMgr.get(), this.grid.dataMgr.datalist), c = f.open(this._options.winOptions);
+    c.document.write(a);
+    c.document.close()
   };
-  b.getPrintHtml = function(a, b) {
-    var d = this._options, e = d.tableBorderColor, i = d.headerBorderColor, f = d.cellBorderColor, j = [], g = a.length, h = g - 1, p = b.length, q = p - 1, l = 0, k;
+  b.getPrintHtml = function(a, c) {
+    var b = this._options, e = b.tableBorderColor, i = b.headerBorderColor, f = b.cellBorderColor, j = [], g = a.length, h = g - 1, p = c.length, q = p - 1, l = 0, k;
     j.push("<html><head>");
-    j.push("<title>" + d.title + "</title>");
+    j.push("<title>" + b.title + "</title>");
     j.push("</head><body onload='window.print();'>");
     j.push("<table width='100%' cellspacing='0' cellpadding='0'><tbody><tr><td align='left'>");
     j.push("<table width='100%' cellspacing='0' cellpadding='2' style='border-collapse:collapse'>");
-    j.push("<tbody style='font:" + d.font + ";'>");
-    for(j.push("<tr style='background-color:" + d.headerBackgroundColor + ";color:" + d.headerFontColor + ";text-align:center'>");l < g;l++) {
+    j.push("<tbody style='font:" + b.font + ";'>");
+    for(j.push("<tr style='background-color:" + b.headerBackgroundColor + ";color:" + b.headerFontColor + ";text-align:center'>");l < g;l++) {
       j.push("<td style='border:solid 1px " + i + ";'>" + a[l].name + "</td>")
     }
     j.push("</tr>");
     for(l = 0;l < p;l++) {
-      d = b[l];
+      b = c[l];
       j.push("<tr>");
       if(l === 0) {
         for(k = 0;k < g;k++) {
-          k === 0 ? j.push("<td style='border:solid 1px " + f + ";border-top:solid 1px " + i + ";border-left:solid 1px " + e + "'>" + d[a[k].key] + "</td>") : k === h ? j.push("<td style='border:solid 1px " + f + ";border-top:solid 1px " + i + ";border-right:solid 1px " + e + "'>" + d[a[k].key] + "</td>") : j.push("<td style='border:solid 1px " + f + ";border-top:solid 1px " + i + "'>" + d[a[k].key] + "</td>")
+          k === 0 ? j.push("<td style='border:solid 1px " + f + ";border-top:solid 1px " + i + ";border-left:solid 1px " + e + "'>" + b[a[k].key] + "</td>") : k === h ? j.push("<td style='border:solid 1px " + f + ";border-top:solid 1px " + i + ";border-right:solid 1px " + e + "'>" + b[a[k].key] + "</td>") : j.push("<td style='border:solid 1px " + f + ";border-top:solid 1px " + i + "'>" + b[a[k].key] + "</td>")
         }
       }else {
         if(l < q) {
           for(k = 0;k < g;k++) {
-            k === 0 ? j.push("<td style='border:solid 1px " + f + ";border-left:solid 1px " + e + "'>" + d[a[k].key] + "</td>") : k === h ? j.push("<td style='border:solid 1px " + f + ";border-right:solid 1px " + e + "'>" + d[a[k].key] + "</td>") : j.push("<td style='border:solid 1px " + f + "'>" + d[a[k].key] + "</td>")
+            k === 0 ? j.push("<td style='border:solid 1px " + f + ";border-left:solid 1px " + e + "'>" + b[a[k].key] + "</td>") : k === h ? j.push("<td style='border:solid 1px " + f + ";border-right:solid 1px " + e + "'>" + b[a[k].key] + "</td>") : j.push("<td style='border:solid 1px " + f + "'>" + b[a[k].key] + "</td>")
           }
         }else {
           for(k = 0;k < g;k++) {
-            k === 0 ? j.push("<td style='border:solid 1px " + f + ";border-bottom:solid 1px " + e + ";border-left:solid 1px " + e + "'>" + d[a[k].key] + "</td>") : k === h ? j.push("<td style='border:solid 1px " + f + ";border-bottom:solid 1px " + e + ";border-right:solid 1px " + e + "'>" + d[a[k].key] + "</td>") : j.push("<td style='border:solid 1px " + f + ";border-bottom:solid 1px " + e + "'>" + d[a[k].key] + "</td>")
+            k === 0 ? j.push("<td style='border:solid 1px " + f + ";border-bottom:solid 1px " + e + ";border-left:solid 1px " + e + "'>" + b[a[k].key] + "</td>") : k === h ? j.push("<td style='border:solid 1px " + f + ";border-bottom:solid 1px " + e + ";border-right:solid 1px " + e + "'>" + b[a[k].key] + "</td>") : j.push("<td style='border:solid 1px " + f + ";border-bottom:solid 1px " + e + "'>" + b[a[k].key] + "</td>")
           }
         }
       }
@@ -5168,23 +5192,23 @@ jx.grid.ViewportManager = {};
     h._destroy(this, {name:"ViewportManager", path:"view", $:"_canvas _mask", property:"_ctnr", map:"_vars _lockedRows _renderedRows _options"})
   };
   e._onCreateCss = function() {
-    var a = "#" + this.grid.mid + " .", b = this._options, c = a + this._cellClass, d = a + this._rowClass, e = b.borderThickness + "px " + b.border, f = d + "[" + this._rowIdxAttr, g = this._colmgr.get(), h = g.length, k = 0, r = [];
-    r.push(a + b.classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + b.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + b.style + ";background:url(" + this.grid._options.imageUrl + "loading.gif) repeat center}");
-    r.push(a + b.classView + ":focus{background:" + b.focusBackground + ";outline:" + b.focusOutline + "}");
-    r.push(a + b.classCanvas + "{height:" + this._calCanvasHeight() + "px;" + b.canvasStyle + ";}");
-    r.push(d + "{background:white;position:absolute;" + b.rowStyle + "}");
-    r.push(c + "{height:" + b.rowH + "px;border-bottom:" + e + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + b.padding + "px;border-right:" + e + ";" + b.cellStyle + "}");
-    for(b.evenOddRows && r.push(f + "$='1']," + f + "$='3']," + f + "$='5']," + f + "$='7']," + f + "$='9']{background:" + b.oddRowsBackground + "}");k < h;k++) {
-      r.push(c + ".k_" + g[k].key + "{" + g[k].style + "}")
+    var a = "#" + this.grid.mid + " .", c = this._options, b = a + this._cellClass, d = a + this._rowClass, e = c.borderThickness + "px " + c.border, f = d + "[" + this._rowIdxAttr, g = this._colmgr.get(), h = g.length, k = 0, r = [];
+    r.push(a + c.classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + c.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + c.style + ";background:url(" + this.grid._options.imageUrl + "loading.gif) repeat center}");
+    r.push(a + c.classView + ":focus{background:" + c.focusBackground + ";outline:" + c.focusOutline + "}");
+    r.push(a + c.classCanvas + "{height:" + this._calCanvasHeight() + "px;" + c.canvasStyle + ";}");
+    r.push(d + "{background:white;position:absolute;" + c.rowStyle + "}");
+    r.push(b + "{height:" + c.rowH + "px;border-bottom:" + e + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + c.padding + "px;border-right:" + e + ";" + c.cellStyle + "}");
+    for(c.evenOddRows && r.push(f + "$='1']," + f + "$='3']," + f + "$='5']," + f + "$='7']," + f + "$='9']{background:" + c.oddRowsBackground + "}");k < h;k++) {
+      r.push(b + ".k_" + g[k].key + "{" + g[k].style + "}")
     }
     return r.join("")
   };
   e._onCreateDynamicCss = function() {
-    var a = "#" + this.grid.mid + " .", b = a + this._cellClass, c = a + this._rowClass;
+    var a = "#" + this.grid.mid + " .", c = a + this._cellClass, b = a + this._rowClass;
     a += this._options.classCanvas;
     var d = this._calCanvasWidth(), e = this._colmgr.get(), f = "", g = e.length, h = 0;
-    for(f += a + "{width:" + d + "px}" + c + "{width:" + d + "px}";h < g;h++) {
-      f += b + ".k_" + e[h].key + "{width:" + e[h].width + "px}"
+    for(f += a + "{width:" + d + "px}" + b + "{width:" + d + "px}";h < g;h++) {
+      f += c + ".k_" + e[h].key + "{width:" + e[h].width + "px}"
     }
     return f
   };
@@ -5192,25 +5216,25 @@ jx.grid.ViewportManager = {};
     this.isRendered(a) && this.rerenderRow(a)
   };
   e.onUpdateDatalist = function(a) {
-    for(var b, c = a.length, d = 0;d < c;d++) {
-      b = a[d], this.isRendered(b) && this.rerenderRow(b)
+    for(var c, b = a.length, d = 0;d < b;d++) {
+      c = a[d], this.isRendered(c) && this.rerenderRow(c)
     }
   };
   e.onRemoveDatarow = function(a) {
     this.destroyRow(a)
   };
   e.onRemoveDatalist = function(a) {
-    for(var b = a.length, c = 0;c < b;c++) {
-      this.destroyRow(a[c])
+    for(var c = a.length, b = 0;b < c;b++) {
+      this.destroyRow(a[b])
     }
   };
-  e.onIdChange = function(a, b, c) {
-    this.isRowLockedById(b) && (this._lockedRows[c] = this._lockedRows[b], delete this._lockedRows[b]);
-    this.isRenderedById(b) && ((this._renderedRows[c] = this._renderedRows[b]).setAttribute("i", c), delete this._renderedRows[b])
+  e.onIdChange = function(a, c, b) {
+    this.isRowLockedById(c) && (this._lockedRows[b] = this._lockedRows[c], delete this._lockedRows[c]);
+    this.isRenderedById(c) && ((this._renderedRows[b] = this._renderedRows[c]).setAttribute("i", b), delete this._renderedRows[c])
   };
-  e.onIdListChange = function(a, b, c) {
+  e.onIdListChange = function(a, c, b) {
     for(var d = a.length, e = 0, f = this._lockedRows, g = this._renderedRows, h, k;e < d;e++) {
-      h = b[e], k = a[e][c], f.hasOwnProperty(h) && (f[k] = f[h], delete f[h]), g.hasOwnProperty(h) && ((g[k] = g[h]).setAttribute("i", k), delete g[h])
+      h = c[e], k = a[e][b], f.hasOwnProperty(h) && (f[k] = f[h], delete f[h]), g.hasOwnProperty(h) && ((g[k] = g[h]).setAttribute("i", k), delete g[h])
     }
   };
   e._getCellSelector = function() {
@@ -5219,18 +5243,18 @@ jx.grid.ViewportManager = {};
   e._getRowSelector = function() {
     return"#" + this.grid.mid + " ." + this._rowClass
   };
-  e.scrollTo = function(a, b) {
+  e.scrollTo = function(a, c) {
     this.scrollToRow(a);
-    this.scrollToCol(b)
+    this.scrollToCol(c)
   };
   e.scrollToRowLazy = function(a) {
-    var b = this.getScrollTop();
-    return a == null ? b : this._getLastSafeVisibleRow() < a ? this.scrollToRow(this._getFirstRowForSafe(a)) : this._getFirstSafeVisibleRow() > a ? this.scrollToRow(a) : b
+    var c = this.getScrollTop();
+    return a == null ? c : this._getLastSafeVisibleRow() < a ? this.scrollToRow(this._getFirstRowForSafe(a)) : this._getFirstSafeVisibleRow() > a ? this.scrollToRow(a) : c
   };
   e.scrollToColLazy = function(a) {
-    var b = this.getScrollLeft();
+    var c = this.getScrollLeft();
     if(a == null) {
-      return b
+      return c
     }
     if(this._getLastSafeVisibleCol() < a) {
       return this.setScrollLeft(this.getScrollHForSafe(a))
@@ -5239,11 +5263,11 @@ jx.grid.ViewportManager = {};
         return this.scrollToCol(a)
       }
     }
-    return b
+    return c
   };
-  e.scrollToLazy = function(a, b) {
+  e.scrollToLazy = function(a, c) {
     this.scrollToRowLazy(a);
-    this.scrollToColLazy(b)
+    this.scrollToColLazy(c)
   };
   e.scrollToRow = function(a) {
     return a != null ? this.setScrollTop(this._getRowOuterHeight() * a) : this.getScrollTop()
@@ -5307,9 +5331,9 @@ jx.grid.ViewportManager = {};
     if(isNaN(a) || a < 1) {
       a = 1
     }
-    var b = this.getCanvasHeight();
-    if(a != b) {
-      this._canvasEl.style.height = a + "px", this._evtmgr.trigger("onResizeCanvasHeight", [a, b], !0)
+    var c = this.getCanvasHeight();
+    if(a != c) {
+      this._canvasEl.style.height = a + "px", this._evtmgr.trigger("onResizeCanvasHeight", [a, c], !0)
     }
   };
   e._calCanvasWidth = function() {
@@ -5321,9 +5345,9 @@ jx.grid.ViewportManager = {};
   e._setCanvasWidth = function(a) {
     typeof a != "number" && (a = parseInt(a, 10));
     if(isFinite(a) && !(a < 1)) {
-      var b = this.getCanvasWidth();
-      if(a != b) {
-        this.grid.log("set canvas width. " + b + "->" + a, f.V_RESIZE), this._canvasEl.style.width = a + "px", this._evtmgr.trigger("onResizeCanvasWidth", [a, b], !0)
+      var c = this.getCanvasWidth();
+      if(a != c) {
+        this.grid.log("set canvas width. " + c + "->" + a, f.V_RESIZE), this._canvasEl.style.width = a + "px", this._evtmgr.trigger("onResizeCanvasWidth", [a, c], !0)
       }
     }
   };
@@ -5333,9 +5357,9 @@ jx.grid.ViewportManager = {};
   e._getColLefts = function() {
     return this._colLefts
   };
-  e._setColLefts = function(a, b) {
-    for(var a = a || 0, c = this._colmgr.get(), d = this._colWidthPlus(), b = b || c.length;a < b;a++) {
-      this._colLefts[a + 1] = this._colLefts[a] + c[a].width + d
+  e._setColLefts = function(a, c) {
+    for(var a = a || 0, b = this._colmgr.get(), d = this._colWidthPlus(), c = c || b.length;a < c;a++) {
+      this._colLefts[a + 1] = this._colLefts[a] + b[a].width + d
     }
     return this._colLefts
   };
@@ -5356,13 +5380,13 @@ jx.grid.ViewportManager = {};
     }
   };
   e._autoColWidth = function(a) {
-    for(var b = this._canvasFind(".k_" + a), c = Number.MIN_VALUE, d = b.length, e = 0;e < d;e++) {
-      if(c < b[e].scrollWidth) {
-        c = b[e].scrollWidth
+    for(var c = this._canvasFind(".k_" + a), b = Number.MIN_VALUE, d = c.length, e = 0;e < d;e++) {
+      if(b < c[e].scrollWidth) {
+        b = c[e].scrollWidth
       }
     }
-    c -= this._getPadding();
-    this.setWidthByKey(a, c)
+    b -= this._getPadding();
+    this.setWidthByKey(a, b)
   };
   e._setWidth = function() {
   };
@@ -5373,12 +5397,12 @@ jx.grid.ViewportManager = {};
     return this._mask[0].scrollLeft
   };
   e.setScrollTop = function(a) {
-    var b = this.getScrollTop();
-    return a != null && b != a ? this._mask[0].scrollTop = a : b
+    var c = this.getScrollTop();
+    return a != null && c != a ? this._mask[0].scrollTop = a : c
   };
   e.setScrollLeft = function(a) {
-    var b = this.getScrollLeft();
-    return a != null && b != a ? this._mask[0].scrollLeft = a : b
+    var c = this.getScrollLeft();
+    return a != null && c != a ? this._mask[0].scrollLeft = a : c
   };
   e._hasHScrollbar = function() {
     return this._mask[0].offsetHeight > this._mask[0].clientHeight
@@ -5408,65 +5432,65 @@ jx.grid.ViewportManager = {};
     return a - Math.floor(this._mask[0].clientHeight / this._getRowOuterHeight()) + 1
   };
   e._getFirstVisibleCol = function() {
-    for(var a = this.getScrollLeft(), b = this._colLefts, c = 0, d = b.length;c < d;c++) {
-      if(b[c] > a) {
-        return c - 1
+    for(var a = this.getScrollLeft(), c = this._colLefts, b = 0, d = c.length;b < d;b++) {
+      if(c[b] > a) {
+        return b - 1
       }
-      if(b[c] === a) {
-        return c
+      if(c[b] === a) {
+        return b
       }
     }
     return d - 2
   };
   e._getFirstSafeVisibleCol = function() {
-    for(var a = this.getScrollLeft(), b = this._colLefts, c = 0, d = b.length;c < d;c++) {
-      if(b[c] >= a) {
-        return c
+    for(var a = this.getScrollLeft(), c = this._colLefts, b = 0, d = c.length;b < d;b++) {
+      if(c[b] >= a) {
+        return b
       }
     }
     return d - 2
   };
   e._getLastVisibleCol = function() {
-    for(var a = this.getScrollLeft() + this._mask[0].clientWidth, b = this._colLefts, c = 0, d = b.length;c < d;c++) {
-      if(b[c] >= a) {
-        return c - 1
+    for(var a = this.getScrollLeft() + this._mask[0].clientWidth, c = this._colLefts, b = 0, d = c.length;b < d;b++) {
+      if(c[b] >= a) {
+        return b - 1
       }
     }
     return d - 2
   };
   e._getLastSafeVisibleCol = function() {
-    for(var a = this.getScrollLeft() + this._mask[0].clientWidth, b = this._colLefts, c = 0, d = b.length;c < d;c++) {
-      if(b[c] > a) {
-        return c - 2
+    for(var a = this.getScrollLeft() + this._mask[0].clientWidth, c = this._colLefts, b = 0, d = c.length;b < d;b++) {
+      if(c[b] > a) {
+        return b - 2
       }
     }
     return d - 2
   };
   e._getFirstColForSafe = function(a) {
-    var b = this._colLefts, c = b[a + 1] - this._mask[0].clientWidth, d = a;
-    if(c <= 0) {
+    var c = this._colLefts, b = c[a + 1] - this._mask[0].clientWidth, d = a;
+    if(b <= 0) {
       return 0
     }
     for(;d >= 0;d--) {
-      if(d === a && b[d] <= c || b[d] === c) {
+      if(d === a && c[d] <= b || c[d] === b) {
         return d
       }
-      if(b[d] < c) {
+      if(c[d] < b) {
         return d + 1
       }
     }
     return 0
   };
   e.getScrollHForSafe = function(a) {
-    var b = this._colLefts, c = b[a + 1] - this._mask[0].clientWidth;
-    return b[a] <= c ? b[a] : c
+    var c = this._colLefts, b = c[a + 1] - this._mask[0].clientWidth;
+    return c[a] <= b ? c[a] : b
   };
   e._getRenderRange = function() {
     if(this._options.autoHeight) {
       return{start:0, end:this._datamgr.datalist.length - 1}
     }
-    var a, b = this._datamgr.datalist.length - 1;
-    return{start:(a = this._getFirstVisibleRow() - this._options.bufferSize) < 0 ? 0 : a, end:(a = this._getLastVisibleRow() + this._options.bufferSize) > b ? b : a}
+    var a, c = this._datamgr.datalist.length - 1;
+    return{start:(a = this._getFirstVisibleRow() - this._options.bufferSize) < 0 ? 0 : a, end:(a = this._getLastVisibleRow() + this._options.bufferSize) > c ? c : a}
   };
   e._fitHeight = function() {
     this._mask[0].style.height = this.getCanvasHeight() + this._heightPlus() + "px"
@@ -5478,17 +5502,17 @@ jx.grid.ViewportManager = {};
     a !== void 0 && a.noRerender === !0 || this._rerender()
   };
   e._rerender = function() {
-    var a = this.getScrollTop(), b = this.getScrollLeft();
+    var a = this.getScrollTop(), c = this.getScrollLeft();
     this._evtmgr.trigger("onBeforeRerender", !1, !0);
     this.unlockAllRows();
     this._removeRows();
-    var c = this._datamgr.datalist.length;
-    if(this._lastRowLen !== c) {
-      this._lastRowLen = c, this._setCanvasHeight(this._calCanvasHeight())
+    var b = this._datamgr.datalist.length;
+    if(this._lastRowLen !== b) {
+      this._lastRowLen = b, this._setCanvasHeight(this._calCanvasHeight())
     }
     this._render();
     this.setScrollTop(a);
-    this.setScrollLeft(b);
+    this.setScrollLeft(c);
     this._evtmgr.trigger("onAfterRerender", !1, !0)
   };
   e._render = function(a) {
@@ -5500,39 +5524,39 @@ jx.grid.ViewportManager = {};
     this._appendRows(a)
   };
   e._removeRows = function(a) {
-    var b = this._canvasEl, c = this._renderedRows, d = this._lockedRows, e;
+    var c = this._canvasEl, b = this._renderedRows, d = this._lockedRows, e;
     if(a) {
       for(var f = a.start, a = a.end, g = this._datamgr;f <= a;f++) {
-        if(!d.hasOwnProperty(e = g.getIdByIdx(f)) && c.hasOwnProperty(e)) {
-          b.removeChild(c[e]), delete c[e]
+        if(!d.hasOwnProperty(e = g.getIdByIdx(f)) && b.hasOwnProperty(e)) {
+          c.removeChild(b[e]), delete b[e]
         }
       }
     }else {
       if(this._lockExist()) {
-        for(e in c) {
-          c.hasOwnProperty(e) && d.hasOwnProperty(e) && (b.removeChild(c[e]), delete c[e])
+        for(e in b) {
+          b.hasOwnProperty(e) && d.hasOwnProperty(e) && (c.removeChild(b[e]), delete b[e])
         }
       }else {
-        this._renderedRows = {}, b.innerHTML = ""
+        this._renderedRows = {}, c.innerHTML = ""
       }
     }
   };
   e._removeRowsExcept = function(a) {
-    var b = this._canvasEl, c = this._renderedRows, d = this._lockedRows, e;
+    var c = this._canvasEl, b = this._renderedRows, d = this._lockedRows, e;
     if(a) {
       var f = a.start, a = a.end, g = this._datamgr, h;
-      for(e in c) {
-        if(c.hasOwnProperty(e) && !(d.hasOwnProperty(e) || f <= (h = g.getIdxById(e)) && h <= a)) {
-          b.removeChild(c[e]), delete c[e]
+      for(e in b) {
+        if(b.hasOwnProperty(e) && !(d.hasOwnProperty(e) || f <= (h = g.getIdxById(e)) && h <= a)) {
+          c.removeChild(b[e]), delete b[e]
         }
       }
     }else {
       if(this._lockExist()) {
-        for(e in c) {
-          c.hasOwnProperty(e) && d.hasOwnProperty(e) === !1 && (b.removeChild(c[e]), delete c[e])
+        for(e in b) {
+          b.hasOwnProperty(e) && d.hasOwnProperty(e) === !1 && (c.removeChild(b[e]), delete b[e])
         }
       }else {
-        this._renderedRows = {}, b.innerHTML = ""
+        this._renderedRows = {}, c.innerHTML = ""
       }
     }
   };
@@ -5587,8 +5611,8 @@ jx.grid.ViewportManager = {};
     }
   };
   e._getRendererSettings = function(a) {
-    for(var a = a || this._colmgr.get(), b = 0, c = a.length, d, e = [], f = [], g;b < c;b++) {
-      d = a[b], (g = d.renderer) ? (e.push(!!d.rendererInput), f.push(g)) : (e.push(!1), f.push(!1))
+    for(var a = a || this._colmgr.get(), c = 0, b = a.length, d, e = [], f = [], g;c < b;c++) {
+      d = a[c], (g = d.renderer) ? (e.push(!!d.rendererInput), f.push(g)) : (e.push(!1), f.push(!1))
     }
     return[f, e]
   };
@@ -5598,16 +5622,16 @@ jx.grid.ViewportManager = {};
   e.rerenderRowByIdx = function(a) {
     return this.rerenderRowById(this._datamgr.getIdByIdx(a))
   };
-  e.rerenderCellByIdAndKey = function(a, b) {
-    var c = this.getCellByIdAndKey(a, b);
-    if(c) {
-      var d = this._datamgr, e = this._colmgr, f = d.getById(a), g = e.getByKey(b), d = d.getIdxById(a), e = e.getIdxByKey(b), h = g.renderer, k = h ? g.rendererInput : !1, r = [];
+  e.rerenderCellByIdAndKey = function(a, c) {
+    var b = this.getCellByIdAndKey(a, c);
+    if(b) {
+      var d = this._datamgr, e = this._colmgr, f = d.getById(a), g = e.getByKey(c), d = d.getIdxById(a), e = e.getIdxByKey(c), h = g.renderer, k = h ? g.rendererInput : !1, r = [];
       h ? k ? this._renderCell(r, d, e, f, g, h, !0) : this._renderCell(r, d, e, f, g, h) : this._renderCell(r, d, e, f, g);
-      c.innerHTML = r.join("")
+      b.innerHTML = r.join("")
     }
   };
-  e.rerenderCellByIdx = function(a, b) {
-    return this.rerenderCellByIdAndKey(this._datamgr.getIdByIdx(a), this._colmgr.getKeyByIdx(b))
+  e.rerenderCellByIdx = function(a, c) {
+    return this.rerenderCellByIdAndKey(this._datamgr.getIdByIdx(a), this._colmgr.getKeyByIdx(c))
   };
   e._appendRows = function(a) {
     var c = this._evtmgr, d = [a], e = [], f = a.start, a = a.end, g = this._datamgr, h = g.datalist, l = g.idKey, k = this._colmgr.get(), r = this._getColCellClasses(k).map(function(a) {
@@ -5627,10 +5651,10 @@ jx.grid.ViewportManager = {};
     c.trigger("onAppendRows", d, !0)
   };
   e._removeAndRenderRows = function(a) {
-    var a = a || this._getRenderRange(), b = this._evtmgr, c = [a], d = [], e = a.start, a = a.end, f = this._datamgr, g = f.datalist, f = f.idKey, h = this._colmgr.get(), k = this._getColCellClasses(h).map(function(a) {
+    var a = a || this._getRenderRange(), c = this._evtmgr, b = [a], d = [], e = a.start, a = a.end, f = this._datamgr, g = f.datalist, f = f.idKey, h = this._colmgr.get(), k = this._getColCellClasses(h).map(function(a) {
       return"<div class='" + a + " "
     }), r = this._getRowOuterHeight(), s = this._canvasEl, t = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = this._getRendererSettings(h), x = u[0], u = u[1], z, A, w = [], y = {};
-    b.trigger("onBeforeRenderRows", c, !0);
+    c.trigger("onBeforeRenderRows", b, !0);
     for(this.grid.twstart();e <= a;e++) {
       z = g[e], A = z[f], d[d.length] = t + A + v + e + "' style='top:" + r * e + "px'>", this._renderRow(d, e, z, h, k, x, u), this.grid.twlap(), w.push(A)
     }
@@ -5642,10 +5666,10 @@ jx.grid.ViewportManager = {};
       y[w[e]] = s.childNodes[e]
     }
     this._renderedRows = y;
-    b.trigger("onAppendRows", c, !0)
+    c.trigger("onAppendRows", b, !0)
   };
-  e._renderColumn = function(b, c, d, e, f, g, h) {
-    for(var l = [], k, r = 0, s = d.length, t, v, u, x = c.key, z, A = this.grid, w = this._evtmgr, y = "onRenderCell_" + x, C = [null, b, v, c], B = [null, b, null, c, null];r < s;r++) {
+  e._renderColumn = function(c, b, d, e, f, g, h) {
+    for(var l = [], k, r = 0, s = d.length, t, v, u, x = b.key, z, A = this.grid, w = this._evtmgr, y = "onRenderCell_" + x, C = [null, c, v, b], B = [null, c, null, b, null];r < s;r++) {
       t = d[r];
       v = e[t];
       u = v[x];
@@ -5657,7 +5681,7 @@ jx.grid.ViewportManager = {};
       k[k.length] = z ? f + z.join(" ") + "'>" : f + "'>";
       w.trigger(y + "_prepend", B, !0);
       if(typeof u != "string" || u.substring(0, 3) !== "J@H") {
-        g ? k[k.length] = h ? g(new a({grid:A, row:t, col:b, datarow:v, colDef:c})) : g(u, t, b, v, c) : u != null && (k[k.length] = u)
+        g ? k[k.length] = h ? g(new a({grid:A, row:t, col:c, datarow:v, colDef:b})) : g(u, t, c, v, b) : u != null && (k[k.length] = u)
       }
       w.trigger(y + "_append", B, !0);
       k[k.length] = "</div>";
@@ -5666,29 +5690,29 @@ jx.grid.ViewportManager = {};
     return l
   };
   e._getColCellClass = function(a) {
-    var b = this._cellClass + " k_" + a.key;
-    a.colClass && (b += " " + a.colClass);
-    (a = this._evtmgr.trigger("onGetColCellClass", [a])) && (b += " " + a.join(" "));
-    return b
+    var c = this._cellClass + " k_" + a.key;
+    a.colClass && (c += " " + a.colClass);
+    (a = this._evtmgr.trigger("onGetColCellClass", [a])) && (c += " " + a.join(" "));
+    return c
   };
   e._getColCellClasses = function(a) {
-    for(var a = a || this._colmgr.get(), b = [], c = 0, d = a.length;c < d;c++) {
-      b.push(this._getColCellClass(a[c]))
+    for(var a = a || this._colmgr.get(), c = [], b = 0, d = a.length;b < d;b++) {
+      c.push(this._getColCellClass(a[b]))
     }
-    return b
+    return c
   };
-  e._renderRow = function(a, b, c, d, e, f, g) {
-    for(var h = 0, k = d.length, r, s = [b, null, c, null], t = this._evtmgr, v, u;h < k;h++) {
-      r = d[h], s[1] = h, s[3] = r, v = t.trigger("onGetCellClass", s), a[a.length] = v ? e[h] + v.join(" ") + "'>" : e[h] + "'>", (u = f[h]) ? g[h] ? this._renderCell(a, b, h, c, r, u, !0) : this._renderCell(a, b, h, c, r, u) : this._renderCell(a, b, h, c, r), a[a.length] = "</div>"
+  e._renderRow = function(a, c, b, d, e, f, g) {
+    for(var h = 0, k = d.length, r, s = [c, null, b, null], t = this._evtmgr, v, u;h < k;h++) {
+      r = d[h], s[1] = h, s[3] = r, v = t.trigger("onGetCellClass", s), a[a.length] = v ? e[h] + v.join(" ") + "'>" : e[h] + "'>", (u = f[h]) ? g[h] ? this._renderCell(a, c, h, b, r, u, !0) : this._renderCell(a, c, h, b, r, u) : this._renderCell(a, c, h, b, r), a[a.length] = "</div>"
     }
     a[a.length] = "</div>";
     return a
   };
-  e._renderCell = function(b, c, d, e, f) {
-    var g = f.key, h = e[g], l = [c, d, e, f, b], k = this._evtmgr, g = "onRenderCell_" + g;
+  e._renderCell = function(c, b, d, e, f) {
+    var g = f.key, h = e[g], l = [b, d, e, f, c], k = this._evtmgr, g = "onRenderCell_" + g;
     k.trigger(g + "_prepend", l, !0);
     if(typeof h != "string" || h.substring(0, 3) !== "J@H") {
-      arguments.length > 5 ? b[b.length] = arguments[6] ? arguments[5](new a({grid:this.grid, row:c, col:d, datarow:e, colDef:f})) : arguments[5](h, c, d, e, f) : h != null && (b[b.length] = h)
+      arguments.length > 5 ? c[c.length] = arguments[6] ? arguments[5](new a({grid:this.grid, row:b, col:d, datarow:e, colDef:f})) : arguments[5](h, b, d, e, f) : h != null && (c[c.length] = h)
     }
     k.trigger(g + "_append", l, !0)
   };
@@ -5765,29 +5789,29 @@ jx.grid.ViewportManager = {};
     return!1
   };
   e._scroll = function() {
-    var a = this.getScrollTop(), b = a - this._lastScrollTop, c = this.getScrollLeft(), d = c - this._lastScrollLeft;
-    if(b !== 0 || d !== 0) {
-      this.grid.log("Viewport scrolled... h=" + d + ", v=" + b, f.V_SCROLL);
-      var e = this._evtmgr, b = Math.abs(b / this._getRowOuterHeight());
+    var a = this.getScrollTop(), c = a - this._lastScrollTop, b = this.getScrollLeft(), d = b - this._lastScrollLeft;
+    if(c !== 0 || d !== 0) {
+      this.grid.log("Viewport scrolled... h=" + d + ", v=" + c, f.V_SCROLL);
+      var e = this._evtmgr, c = Math.abs(c / this._getRowOuterHeight());
       e.trigger("onScrollViewport", !1, !0);
       if(d) {
-        this._lastScrollLeft = c, e.trigger("onScrollViewportH", [c], !0)
+        this._lastScrollLeft = b, e.trigger("onScrollViewportH", [b], !0)
       }
-      c = this.renderElapsed;
-      c == null && (c = 50);
-      c > 500 && (c = 500);
-      if(b >= this._options.appendThreshold) {
+      b = this.renderElapsed;
+      b == null && (b = 50);
+      b > 500 && (b = 500);
+      if(c >= this._options.appendThreshold) {
         if(this.scrollHandlerId) {
           window.clearTimeout(this.scrollHandlerId), this.scrollHandlerId = null
         }
         var g = this;
         this.scrollHandlerId = window.setTimeout(function() {
-          var b = (new Date).getTime();
+          var c = (new Date).getTime();
           g._lastScrollTop = a;
           g._removeAndRenderRows();
           e.trigger("onScrollViewportV", !1, !0);
-          g.renderElapsed = (new Date).getTime() - b
-        }, c)
+          g.renderElapsed = (new Date).getTime() - c
+        }, b)
       }
     }
   };
@@ -5798,7 +5822,7 @@ jx.grid.ViewportManager = {};
         if(a.setActive) {
           try {
             a.setActive()
-          }catch(b) {
+          }catch(c) {
           }
         }
         a.focus();
@@ -5840,37 +5864,37 @@ jx.grid.ViewportManager = {};
   e.getRenderedRows = function() {
     return b.toArray(this._renderedRows)
   };
-  e.getCell = function(a, b) {
-    if(b != null) {
-      var c = this.getRowByIdx(a);
-      if(c) {
-        return c.childNodes[b]
+  e.getCell = function(a, c) {
+    if(c != null) {
+      var b = this.getRowByIdx(a);
+      if(b) {
+        return b.childNodes[c]
       }
     }
   };
-  e.getCellByIdAndKey = function(a, b) {
-    var c = this._colmgr.getIdxByKey(b);
-    if(c != null) {
+  e.getCellByIdAndKey = function(a, c) {
+    var b = this._colmgr.getIdxByKey(c);
+    if(b != null) {
       var d = this.getRowById(a);
       if(d) {
-        return d.childNodes[c]
+        return d.childNodes[b]
       }
     }
   };
-  e.getRenderedCell = function(a, b) {
-    if(b != null) {
-      var c = this.getRenderedRowByIdx(a);
-      if(c) {
-        return c.childNodes[b]
-      }
-    }
-  };
-  e.getRenderedCellByIdAndKey = function(a, b) {
-    var c = this._colmgr.getIdxByKey(b);
+  e.getRenderedCell = function(a, c) {
     if(c != null) {
+      var b = this.getRenderedRowByIdx(a);
+      if(b) {
+        return b.childNodes[c]
+      }
+    }
+  };
+  e.getRenderedCellByIdAndKey = function(a, c) {
+    var b = this._colmgr.getIdxByKey(c);
+    if(b != null) {
       var d = this.getRenderedRowById(a);
       if(d) {
-        return d.childNodes[c]
+        return d.childNodes[b]
       }
     }
   };
@@ -5994,7 +6018,7 @@ jx.grid.ColumnManager = {};
   function a(a) {
     return new Date(Date.parse(a))
   }
-  function c(a, b) {
+  function c(a, c) {
     switch(typeof a) {
       case "undefined":
         return Number.MAX_VALUE;
@@ -6003,7 +6027,7 @@ jx.grid.ColumnManager = {};
       case "number":
         return a;
       case "string":
-        return a[b]();
+        return a[c]();
       default:
         if(a == null) {
           return Number.MAX_VALUE
@@ -6018,9 +6042,9 @@ jx.grid.ColumnManager = {};
       case "number":
         return a;
       case "string":
-        return a[b]();
+        return a[c]();
       default:
-        return a == null ? Number.MAX_VALUE : a.toString()[b]()
+        return a == null ? Number.MAX_VALUE : a.toString()[c]()
     }
   }
   function d(a) {
@@ -6070,8 +6094,8 @@ jx.grid.ColumnManager = {};
     }
     this.empty();
     this.eventChangeVisible();
-    for(var b = 0, c = a.length, d, e;b < c;b++) {
-      d = a[b];
+    for(var c = 0, b = a.length, d, e;c < b;c++) {
+      d = a[c];
       e = d.key;
       try {
         if(this.hasKey(e, !0)) {
@@ -6092,8 +6116,8 @@ jx.grid.ColumnManager = {};
       return this._sorters
     }
     if(this.hasKey(a, !0)) {
-      var b = this._sorters;
-      return b.hasOwnProperty(a) ? b[a] : null
+      var c = this._sorters;
+      return c.hasOwnProperty(a) ? c[a] : null
     }
     throw Error("column key not found! key=" + a);
   };
@@ -6102,8 +6126,8 @@ jx.grid.ColumnManager = {};
       return this._validators
     }
     if(this.hasKey(a, !0)) {
-      var b = this._validators;
-      return b.hasOwnProperty(a) ? b[a] : null
+      var c = this._validators;
+      return c.hasOwnProperty(a) ? c[a] : null
     }
     throw Error("column key not found! key=" + a);
   };
@@ -6112,8 +6136,8 @@ jx.grid.ColumnManager = {};
       return this._parsers
     }
     if(this.hasKey(a, !0)) {
-      var b = this._parsers;
-      return b.hasOwnProperty(a) ? b[a] : null
+      var c = this._parsers;
+      return c.hasOwnProperty(a) ? c[a] : null
     }
     throw Error("column key not found! key=" + a);
   };
@@ -6129,15 +6153,15 @@ jx.grid.ColumnManager = {};
   n.push = function(a) {
     return this.addAt(this._filtered.length, a)
   };
-  n.addAt = function(a, b) {
-    var c = b.key, d = this._colDefs;
-    if(this.hasKey(c, !0)) {
-      throw Error("duplicate column key, key = " + c);
+  n.addAt = function(a, c) {
+    var b = c.key, d = this._colDefs;
+    if(this.hasKey(b, !0)) {
+      throw Error("duplicate column key, key = " + b);
     }
     if(a < 0 || a > d.length) {
       throw Error("index out of bound, i = " + a);
     }
-    d.addAt(a, this._extend(b));
+    d.addAt(a, this._extend(c));
     this._filter();
     this.eventChangeVisible();
     return d.length
@@ -6202,16 +6226,16 @@ jx.grid.ColumnManager = {};
     }
     return c
   };
-  n.setVisible = function(a, b) {
-    var c = this.getByKey(a, !0);
-    if(!c) {
+  n.setVisible = function(a, c) {
+    var b = this.getByKey(a, !0);
+    if(!b) {
       throw Error("column key not found! key=" + a);
     }
-    b = !!b;
-    if(!c.hidden !== b) {
-      c.hidden = !b, this._filter(), this.eventChangeVisible()
+    c = !!c;
+    if(!b.hidden !== c) {
+      b.hidden = !c, this._filter(), this.eventChangeVisible()
     }
-    return c
+    return b
   };
   n.show = function(a) {
     return this.setVisible(a, !0)
@@ -6227,8 +6251,8 @@ jx.grid.ColumnManager = {};
     return this._filtered
   };
   n._reidx = function(a) {
-    for(var a = a || 0, b = this._filtered, c = b.length, d = this._keyToIdx = {};a < c;a++) {
-      d[b[a].key] = a
+    for(var a = a || 0, c = this._filtered, b = c.length, d = this._keyToIdx = {};a < b;a++) {
+      d[c[a].key] = a
     }
     return d
   };
@@ -6236,40 +6260,40 @@ jx.grid.ColumnManager = {};
     if(a == null) {
       return this._filtered
     }
-    var b = this._filtered;
-    if(a < 0 || a >= b.length) {
+    var c = this._filtered;
+    if(a < 0 || a >= c.length) {
       throw Error("index out of bound, i = " + a);
     }
     return this._filtered[a]
   };
-  n.checkKey = function(a, b) {
+  n.checkKey = function(a, c) {
     if(a == null) {
-      if(b) {
+      if(c) {
         throw Error("column key is null");
       }
       return!1
     }
     typeof a != "string" && (a = a.toString());
-    if(!a && b) {
+    if(!a && c) {
       throw Error("column key is empty");
     }
     return!0
   };
   n.mapKeys = function(a) {
-    var b = this;
+    var c = this;
     return a.map(function(a) {
-      var c = b.getByKey(a, !0);
-      if(!c) {
+      var b = c.getByKey(a, !0);
+      if(!b) {
         throw Error("column key not found! key=" + a);
       }
-      return c
+      return b
     })
   };
-  n.getByKey = function(a, b) {
-    return this.hasKey(a, b) ? this._keyToDef[a] : null
+  n.getByKey = function(a, c) {
+    return this.hasKey(a, c) ? this._keyToDef[a] : null
   };
-  n.hasKey = function(a, b) {
-    return this.checkKey(a, b) ? this._keyToDef.hasOwnProperty(a) : !1
+  n.hasKey = function(a, c) {
+    return this.checkKey(a, c) ? this._keyToDef.hasOwnProperty(a) : !1
   };
   n.length = function() {
     return this._filtered.length
@@ -6281,13 +6305,13 @@ jx.grid.ColumnManager = {};
     return i.isNotNull(a) && this._keyToIdx.hasOwnProperty(a.key) ? this._keyToIdx[a.key] : -1
   };
   n.sortByKey = function(a) {
-    var b = this._filtered, c = this._keyToIdx = {};
-    b.length = 0;
+    var c = this._filtered, b = this._keyToIdx = {};
+    c.length = 0;
     this.grid.event.trigger("onReorderCols", [this.mapKeys(a).forEach(function(a, d) {
-      a.hidden || (b.push(a), c[a.key] = d)
+      a.hidden || (c.push(a), b[a.key] = d)
     })], !0);
     this.eventChangeVisible();
-    return b
+    return c
   };
   n.eventChangeVisible = function() {
     this.grid.event.trigger("changeVisibleColumns", [this._filtered])
@@ -6403,19 +6427,19 @@ jx.grid.Footer = {};
     this.grid.event.bind({onCreateCss:this._onCreateCss, onDestroy:this._destroy, onDataChange:[this._updateTotalCount, this._updateSums], onAfterRefresh:this._updateShownCount}, this)
   };
   b._destroy = function() {
-    var a, b = this._sumMap;
-    for(a in b) {
-      b.hasOwnProperty(a) && b[a].remove()
+    var a, c = this._sumMap;
+    for(a in c) {
+      c.hasOwnProperty(a) && c[a].remove()
     }
     h._destroy(this, {name:"Footer", path:"footer", $:"_foot", property:"_ctnr", map:"_sumMap _options"})
   };
   b._onCreateCss = function() {
-    var a = this._options, b = "#" + this.grid.mid + " ." + a.classFooter, d = [];
-    d.push(b + "{float:left;cursor:default;width:100%;" + h._CONST._cssUnselectable + "background:" + a.background + ";border-top:" + a.border + ";border-collapse:collapse;color:" + a.color + ";font-size:" + a.fontSize + ";font-weight:" + a.fontWeight + ";padding-left:8px;" + a.style + "}");
-    d.push(b + " ." + a.classCell + "{float:left;white-space:nowrap;line-height:" + a.cellHeight + "px;padding-right:" + a.cellPadding + "px;" + a.cellStyle + "}");
-    d.push(b + " ." + a.classTitle + "{text-align:right;color:" + a.titleColor + ";font-size:" + a.titleFontSize + ";font-weight:" + a.titleFontWeight + ";" + a.titleStyle + "}");
-    d.push(b + " ." + a.classContent + "{color:" + a.contentColor + ";font-size:" + a.contentFontSize + ";font-weight:" + a.contentFontWeight + ";" + a.contentStyle + "}");
-    return d.join("")
+    var a = this._options, c = "#" + this.grid.mid + " ." + a.classFooter, b = [];
+    b.push(c + "{float:left;cursor:default;width:100%;" + h._CONST._cssUnselectable + "background:" + a.background + ";border-top:" + a.border + ";border-collapse:collapse;color:" + a.color + ";font-size:" + a.fontSize + ";font-weight:" + a.fontWeight + ";padding-left:8px;" + a.style + "}");
+    b.push(c + " ." + a.classCell + "{float:left;white-space:nowrap;line-height:" + a.cellHeight + "px;padding-right:" + a.cellPadding + "px;" + a.cellStyle + "}");
+    b.push(c + " ." + a.classTitle + "{text-align:right;color:" + a.titleColor + ";font-size:" + a.titleFontSize + ";font-weight:" + a.titleFontWeight + ";" + a.titleStyle + "}");
+    b.push(c + " ." + a.classContent + "{color:" + a.contentColor + ";font-size:" + a.contentFontSize + ";font-weight:" + a.contentFontWeight + ";" + a.contentStyle + "}");
+    return b.join("")
   };
   b._updateTotalCount = function() {
     this._foot.find("[name=totalCount]")[0].innerHTML = this.grid.dataMgr.getReal().length
@@ -6424,8 +6448,8 @@ jx.grid.Footer = {};
     this._foot.find("[name=shownCount]")[0].innerHTML = this.grid.dataMgr.filterReal(this.grid.dataMgr.datalist).length
   };
   b._initSumCells = function() {
-    for(var a = this.grid.dataMgr.getReal(), b = this.grid.colDefMgr.get(), d = b.length, e, i, h, j, o = g._calSum, m = this._sumMap, p, q = 0;q < d;q++) {
-      if(e = b[q], i = e.sumRenderer, f.isNotNull(i)) {
+    for(var a = this.grid.dataMgr.getReal(), c = this.grid.colDefMgr.get(), b = c.length, e, i, h, j, o = g._calSum, m = this._sumMap, p, q = 0;q < b;q++) {
+      if(e = c[q], i = e.sumRenderer, f.isNotNull(i)) {
         if(h = e.key, e = e.name, j = o(a, h), h = m[h] = this.getNextCell(), p = h[0], f.isFunction(i)) {
           p.innerHTML = i(e, j)
         }else {
@@ -6445,10 +6469,10 @@ jx.grid.Footer = {};
     }
   };
   b._updateSums = function() {
-    var a = this.grid.dataMgr.getReal(), b, d = this._sumMap, e = this.grid.colDefMgr, i, h, j, o = g._calSum, m, p, q = this._options.classContent;
-    for(b in d) {
-      if(d.hasOwnProperty(b)) {
-        if(i = e.getByKey(b), h = i.sumRenderer, j = o(a, b), m = d[b], p = m[0], f.isFunction(h)) {
+    var a = this.grid.dataMgr.getReal(), c, b = this._sumMap, e = this.grid.colDefMgr, i, h, j, o = g._calSum, m, p, q = this._options.classContent;
+    for(c in b) {
+      if(b.hasOwnProperty(c)) {
+        if(i = e.getByKey(c), h = i.sumRenderer, j = o(a, c), m = b[c], p = m[0], f.isFunction(h)) {
           p.innerHTML = h(i.name, j)
         }else {
           if(f.isString(h)) {
@@ -6469,17 +6493,17 @@ jx.grid.Footer = {};
   b.getNextCell = function() {
     return $("<div class='" + this._options.classCell + "'/>").appendTo(this._foot)
   };
-  b._sumRenderer = function(a, b) {
-    return"<span class='" + this._options.classTitle + "'>" + a + " 합계: </span><span class='" + this._options.classContent + "'>" + b + "</span>"
+  b._sumRenderer = function(a, c) {
+    return"<span class='" + this._options.classTitle + "'>" + a + " 합계: </span><span class='" + this._options.classContent + "'>" + c + "</span>"
   };
-  g._calSum = function(a, b) {
-    for(var d = 0, e, f = a.length, g = 0;g < f;g++) {
-      if(typeof(e = a[g][b]) === "string") {
+  g._calSum = function(a, c) {
+    for(var b = 0, e, f = a.length, g = 0;g < f;g++) {
+      if(typeof(e = a[g][c]) === "string") {
         e = e.toFloat()
       }
-      d += isNaN(e) ? 0 : e
+      b += isNaN(e) ? 0 : e
     }
-    return d
+    return b
   }
 })();
 window.console && window.console.log && window.console.log('reading javascript source "ColumnHeader.js"...');
@@ -6496,31 +6520,31 @@ jx.grid.ColumnHeader = {};
     return new g(a)
   };
   var c = g.prototype;
-  c._init = function(b) {
+  c._init = function(c) {
     this.grid.log("initializing ColumnHeader instance...", a.V_INIT);
     this.grid.header = this;
-    this._ctnr = b.container;
+    this._ctnr = c.container;
     this._map = {};
     this._resizeMap = {};
-    b = this._options;
-    this._mask = $("<div class='" + b.classHeaderMask + "'>").prependTo(this._ctnr);
-    this._head = $("<div class='" + b.classHeader + "'>").appendTo(this._mask);
+    c = this._options;
+    this._mask = $("<div class='" + c.classHeaderMask + "'>").prependTo(this._ctnr);
+    this._head = $("<div class='" + c.classHeader + "'>").appendTo(this._mask);
     g._disableSel(this._head)
   };
   c._bindEvents = function() {
     this.grid.log("binding ColumnHeader events...", a.V_INIT);
-    var b, c = this.getColumns(), f = c.length, g = 0;
-    for(b = {onRenderModules:this._onRenderModules, onAfterRenderModules:this._onAfterRenderModules, mousedown:this._mousedown, mouseup:this._mouseup, dragmove:this._dragmove, onScrollViewportH:this._onScrollViewportH, onScrollViewportV:this._onScrollViewportV, onChangeSorter:this._onChangeSorter, click:this._click, onResizeCol:this._setWidthByKey};g < f;g++) {
-      if(c[g].sorter) {
-        b["clickHeader_" + c[g].key] = this._sort
+    var c, b = this.getColumns(), f = b.length, g = 0;
+    for(c = {onRenderModules:this._onRenderModules, onAfterRenderModules:this._onAfterRenderModules, mousedown:this._mousedown, mouseup:this._mouseup, dragmove:this._dragmove, onScrollViewportH:this._onScrollViewportH, onScrollViewportV:this._onScrollViewportV, onChangeSorter:this._onChangeSorter, click:this._click, onResizeCol:this._setWidthByKey};g < f;g++) {
+      if(b[g].sorter) {
+        c["clickHeader_" + b[g].key] = this._sort
       }
     }
-    this.bindGridEvent(b, this)
+    this.bindGridEvent(c, this)
   };
-  c._defaultOptions = function(b) {
+  c._defaultOptions = function(c) {
     this.grid.log("extending ColumnHeader options...", a.V_INIT);
-    b = b._options.imageUrl;
-    return{reorderEnabled:!1, reorderSyncEnabled:!0, background:"url(" + b + "column-headers-bg.png) repeat-x scroll center", backgroundHover:"url(" + b + "column-headers-over-bg.png) repeat-x scroll center", backgroundPlaceholder:"#646464", sortBackground:b + "sort.png", sortRight:4, sortWidth:7, sortBackgroundAsc:b + "sort-asc.png", sortBackgroundDesc:b + "sort-desc.png", font:"15px Arial,Helvetica,sans-serif", height:21, borderThickness:1, border:"solid #909192", classHeaderMask:"jgrid-header-mask", 
+    c = c._options.imageUrl;
+    return{reorderEnabled:!1, reorderSyncEnabled:!0, background:"url(" + c + "column-headers-bg.png) repeat-x scroll center", backgroundHover:"url(" + c + "column-headers-over-bg.png) repeat-x scroll center", backgroundPlaceholder:"#646464", sortBackground:c + "sort.png", sortRight:4, sortWidth:7, sortBackgroundAsc:c + "sort-asc.png", sortBackgroundDesc:c + "sort-desc.png", font:"15px Arial,Helvetica,sans-serif", height:21, borderThickness:1, border:"solid #909192", classHeaderMask:"jgrid-header-mask", 
     classHeader:"jgrid-header", classColHeader:"jgrid-colheader", classColHeaderActive:"jgrid-colheader-active", classColHeaderPlaceholder:"jgrid-colheader-placeholder", classInteractive:"interactive", classColHeaderSorted:"jgrid-colheader-sorted", classSort:"jgrid-sort", classSortAsc:"jgrid-sort-asc", classSortDesc:"jgrid-sort-desc", classResizeHandle:"jgrid-resize-handle", resizeHandleWidth:11, style:"", headerStyle:"", scrollerLeft:1E4, scrollerWidth:1E5, classResizeGuide:"resize-guide", resizeGuideWidth:1, 
     resizeBackground:"black;filter:alpha(opacity=40);opacity:0.4", syncResize:!1, resizeHandleBackground:"black;filter:alpha(opacity=5);opacity:0.05"}
   };
@@ -6532,9 +6556,9 @@ jx.grid.ColumnHeader = {};
     this.dispose()
   };
   c._destroyResizeHandles = function() {
-    var a = this._resizeMap, b;
-    for(b in a) {
-      a.hasOwnProperty(b) && (a[b].remove(), delete a[b])
+    var a = this._resizeMap, c;
+    for(c in a) {
+      a.hasOwnProperty(c) && (a[c].remove(), delete a[c])
     }
     delete this._resizeKey;
     delete this._resizeInitX;
@@ -6542,13 +6566,13 @@ jx.grid.ColumnHeader = {};
     delete this._resizeInitWidth;
     delete this._resizeInitColWidth
   };
-  c._beforeCreateCss = function(b) {
+  c._beforeCreateCss = function(c) {
     this.grid.log("creating CSS for ColumnHeader...", a.V_INIT);
-    var c = "#" + this.grid.mid + " .", f = this._options, g = f.borderThickness + "px " + f.border, h = this.getColumns(), o = h.length, m = 0, p = "." + f.classHeaderMask, q = "." + f.classColHeader, l = f.scrollerLeft, l = f.scrollerLeft, k = f.height + "px", r = f.classColHeaderActive, s = {};
+    var b = "#" + this.grid.mid + " .", f = this._options, g = f.borderThickness + "px " + f.border, h = this.getColumns(), o = h.length, m = 0, p = "." + f.classHeaderMask, q = "." + f.classColHeader, l = f.scrollerLeft, l = f.scrollerLeft, k = f.height + "px", r = f.classColHeaderActive, s = {};
     s[p] = {position:"relative", overflow:"hidden", width:"100%", font:f.font, background:f.background, "border-bottom":g, _append:f.style};
     s["." + f.classHeader] = {position:"relative", overflow:"hidden", "white-space":"nowrap", cursor:"default", left:-l + "px", width:f.scrollerWidth + "px", "line-height":k};
     s[q] = {position:"relative", overflow:"hidden", "float":"left", "text-overflow":"ellipsis", "text-align":"center", height:k, left:l - this.getView().getScrollLeft() + "px", "border-right":g, _append:f.headerStyle};
-    s[q + "." + f.classInteractive + ":hover, " + c + r] = {background:f.backgroundHover};
+    s[q + "." + f.classInteractive + ":hover, " + b + r] = {background:f.backgroundHover};
     s["." + r] = {"border-left":g};
     s[q + "." + f.classColHeaderPlaceholder] = {background:f.backgroundPlaceholder + "!important"};
     s["." + f.classSort] = {position:"absolute", height:k, right:f.sortRight + "px", width:f.sortWidth + "px", background:"url(" + f.sortBackground + ") no-repeat center transparent"};
@@ -6558,19 +6582,19 @@ jx.grid.ColumnHeader = {};
     for(s["." + f.classResizeGuide] = {"z-index":10, position:"absolute", background:f.resizeBackground, width:f.resizeGuideWidth + "px"};m < o;m++) {
       h[m].headerStyle && (s[q + "#" + this.mid + "h" + h[m].key] = {_append:h[m].headerStyle})
     }
-    this.toCssStyles(b.css, s)
+    this.toCssStyles(c.css, s)
   };
   c._widthPlus = function() {
     return this._options.borderThickness
   };
-  c._onScrollViewportH = function(b) {
+  c._onScrollViewportH = function(c) {
     this.grid.log("adjusting Colheader style.left according to viewport scrollLeft...", a.V_RESIZE);
-    this._head[0].style.left = -this._options.scrollerLeft - b + "px"
+    this._head[0].style.left = -this._options.scrollerLeft - c + "px"
   };
   c._onRenderModules = function() {
     this.grid.log("rendering Colheader...", a.V_INIT);
-    for(var b = this.getColumns(), c = b.length, f = 0, g, h = [];f < c;f++) {
-      (g = b[f]).hidden || this._render(h, g, f)
+    for(var c = this.getColumns(), b = c.length, f = 0, g, h = [];f < b;f++) {
+      (g = c[f]).hidden || this._render(h, g, f)
     }
     this._head[0].innerHTML = h.join("");
     this.triggerGridEvent("onRenderHeadersComplete", !1, !0)
@@ -6583,13 +6607,13 @@ jx.grid.ColumnHeader = {};
     this._resizeGuide[0].style.top = "0px";
     this._resizeGuide[0].style.height = "0px"
   };
-  c._render = function(a, b, c) {
-    var f = this._options, g = b.key, h = b.noName ? "" : b.name || g, m = this._widthPlus(), p = "onRenderHeader_" + g, q = [a];
-    a.push("<div id='" + this.mid + "h" + g + "' class='" + f.classColHeader + " " + (f.reorderEnabled || b.sorter ? " " + f.classInteractive : "") + "' " + (b.noTitle ? "" : "title='" + (b.title || h) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(c) - m) + "px;' colKey='" + g + "'>");
+  c._render = function(a, c, b) {
+    var f = this._options, g = c.key, h = c.noName ? "" : c.name || g, m = this._widthPlus(), p = "onRenderHeader_" + g, q = [a];
+    a.push("<div id='" + this.mid + "h" + g + "' class='" + f.classColHeader + " " + (f.reorderEnabled || c.sorter ? " " + f.classInteractive : "") + "' " + (c.noTitle ? "" : "title='" + (c.title || h) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(b) - m) + "px;' colKey='" + g + "'>");
     this.triggerGridEvent(p + "_prepend", q, !0);
     a.push(h);
     this.triggerGridEvent(p + "_append", q, !0);
-    b.sorter && a.push("<span class='" + f.classSort + "'></span>");
+    c.sorter && a.push("<span class='" + f.classSort + "'></span>");
     a.push("</div>")
   };
   g._disableSel = function(a) {
@@ -6601,12 +6625,12 @@ jx.grid.ColumnHeader = {};
     if(this._map.hasOwnProperty(a)) {
       return this._map[a]
     }
-    var b = document.getElementById(this.mid + "h" + a);
-    return!b ? $([]) : this._map[a] = $(b)
+    var c = document.getElementById(this.mid + "h" + a);
+    return!c ? $([]) : this._map[a] = $(c)
   };
-  c._updateIndicator = function(a, b) {
-    var c = this.get(a), f = this._options, g = c.find("." + f.classSort), h = f.classColHeaderSorted, m = f.classSortAsc, f = f.classSortDesc;
-    b === 0 ? (c.removeClass(h), g.removeClass(m + " " + f)) : (c.addClass(h), b === 1 ? g.addClass(m).removeClass(f) : b === 2 && g.addClass(f).removeClass(m))
+  c._updateIndicator = function(a, c) {
+    var b = this.get(a), f = this._options, g = b.find("." + f.classSort), h = f.classColHeaderSorted, m = f.classSortAsc, f = f.classSortDesc;
+    c === 0 ? (b.removeClass(h), g.removeClass(m + " " + f)) : (b.addClass(h), c === 1 ? g.addClass(m).removeClass(f) : c === 2 && g.addClass(f).removeClass(m))
   };
   c._closest = function(a) {
     return Util$.safe$(a).closest("div." + this._options.classColHeader, this._head)
@@ -6614,103 +6638,103 @@ jx.grid.ColumnHeader = {};
   c._getDef = function(a) {
     return this.getColMgr().getByKey(a.attr("colKey"))
   };
-  c._sort = function(b, c, f) {
+  c._sort = function(c, b, f) {
     this.grid.log("Colheader clicked to sort. key=" + g, a.V_CLICK);
-    var g = f.key, b = f.sorter;
+    var g = f.key, c = f.sorter;
     this.triggerGridEvent("onBeforeColSort_" + g, !1, !0);
     this.triggerGridEvent("onBeforeColSort", !1, !0);
-    b.desc = b.desc === !1 ? !0 : !1;
-    this.getDataMgr().refresh({sorter:b});
+    c.desc = c.desc === !1 ? !0 : !1;
+    this.getDataMgr().refresh({sorter:c});
     this.getView()._scroll()
   };
-  c._onChangeSorter = function(a, b) {
-    a !== b && a && this._updateIndicator(a.key, 0);
-    b && this._updateIndicator(b.key, b.desc ? 2 : 1)
+  c._onChangeSorter = function(a, c) {
+    a !== c && a && this._updateIndicator(a.key, 0);
+    c && this._updateIndicator(c.key, c.desc ? 2 : 1)
   };
   c._initReorder = function() {
     this.grid.log("initializing Colheader reorder functionality...", a.V_INIT);
-    var b = this, c = this._options, f = this.getColMgr(), g = this._head, h = this.mid.length + 1, o = function(a, b) {
-      for(var c = $(g).sortable("toArray"), d = c.length, e, o = 0;o < d;o++) {
-        e = c[o], c[o] = e === "" ? b.item.attr("id").substring(h) : e.substring(h)
+    var c = this, b = this._options, f = this.getColMgr(), g = this._head, h = this.mid.length + 1, o = function(a, c) {
+      for(var b = $(g).sortable("toArray"), d = b.length, e, o = 0;o < d;o++) {
+        e = b[o], b[o] = e === "" ? c.item.attr("id").substring(h) : e.substring(h)
       }
-      f.sortByKey(c)
+      f.sortByKey(b)
     };
-    g.sortable({items:"." + c.classColHeader, axis:"x", forcePlaceholderSize:!0, placeholder:c.classColHeaderPlaceholder + " " + c.classColHeader, tolerance:"pointer", start:function(a, c) {
-      c.item.addClass(b._options.classColHeaderActive)
-    }, stop:function(a, c) {
-      c.item.removeClass(b._options.classColHeaderActive);
-      b._syncResizeHandles()
+    g.sortable({items:"." + b.classColHeader, axis:"x", forcePlaceholderSize:!0, placeholder:b.classColHeaderPlaceholder + " " + b.classColHeader, tolerance:"pointer", start:function(a, b) {
+      b.item.addClass(c._options.classColHeaderActive)
+    }, stop:function(a, b) {
+      b.item.removeClass(c._options.classColHeaderActive);
+      c._syncResizeHandles()
     }, update:o});
-    c.reorderSyncEnabled && g.sortable("option", "change", o)
+    b.reorderSyncEnabled && g.sortable("option", "change", o)
   };
-  c._getDx = function(a, b) {
-    var c = a.clientX - this._resizeInitX, g = b.minW, h = f.ifNull(b.maxW, Number.MAX_VALUE), o = this._resizeInitWidth;
-    o + c < g && (c = g - o);
-    o + c > h && (c = h - o);
-    return c
+  c._getDx = function(a, c) {
+    var b = a.clientX - this._resizeInitX, g = c.minW, h = f.ifNull(c.maxW, Number.MAX_VALUE), o = this._resizeInitWidth;
+    o + b < g && (b = g - o);
+    o + b > h && (b = h - o);
+    return b
   };
-  c._click = function(b) {
-    var c = this._closest(b.target);
-    if(c.length !== 0) {
-      var f = this._getDef(c), g = f.key, b = [b, c, f];
+  c._click = function(c) {
+    var b = this._closest(c.target);
+    if(b.length !== 0) {
+      var f = this._getDef(b), g = f.key, c = [c, b, f];
       this.grid.log("Colheader clicked. key=" + g, a.V_CLICK);
-      this.getEventMgr().triggerInvalid("clickHeaderValid_" + g, b) || (this.triggerGridEvent("clickHeader_" + g, b, !0), this.triggerGridEvent("clickHeader", b, !0))
+      this.getEventMgr().triggerInvalid("clickHeaderValid_" + g, c) || (this.triggerGridEvent("clickHeader_" + g, c, !0), this.triggerGridEvent("clickHeader", c, !0))
     }
   };
-  c._mousedown = function(b) {
-    var c = this._options;
-    if(f.hasTagAndClass(b.target, "DIV", c.classResizeHandle)) {
-      var g = this._resizeKey = b.target.getAttribute("key");
+  c._mousedown = function(c) {
+    var b = this._options;
+    if(f.hasTagAndClass(c.target, "DIV", b.classResizeHandle)) {
+      var g = this._resizeKey = c.target.getAttribute("key");
       this.grid.log("mousedown on ColumnHeader Resize Handle. key=" + g, a.V_MOUSEDOWN);
       this._resizeInitWidth = this.get(g)[0].clientWidth;
       this._resizeInitColWidth = this.getColMgr().getByKey(g).width;
-      this._resizeInitX = b.clientX;
+      this._resizeInitX = c.clientX;
       this._resizeHandleInitX = this._resizeMap[g][0].offsetLeft;
-      this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (c.resizeHandleWidth - c.resizeGuideWidth) / 2 - c.scrollerLeft) + "px";
+      this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + (b.resizeHandleWidth - b.resizeGuideWidth) / 2 - b.scrollerLeft) + "px";
       this._resizeGuide[0].style.height = this.getView().getInnerHeight() + "px";
       this._resizeGuide.show()
     }else {
-      if(c = this._closest(b.target), c.length) {
-        var h = this._getDef(c), g = h.key, b = [b, c, h];
+      if(b = this._closest(c.target), b.length) {
+        var h = this._getDef(b), g = h.key, c = [c, b, h];
         this.grid.log("mousedown on ColumnHeader. key=" + g, a.V_MOUSEDOWN);
-        this.triggerGridEvent("mousedownHeader", b, !0);
-        this.triggerGridEvent("mousedownHeader_" + g, b, !0)
+        this.triggerGridEvent("mousedownHeader", c, !0);
+        this.triggerGridEvent("mousedownHeader_" + g, c, !0)
       }
     }
   };
-  c._dragmove = function(b) {
-    var c = this._resizeKey;
-    if(c != null && (b = this._getDx(b, this.getColMgr().getByKey(c)), !(Math.abs(b) < 1))) {
-      this.grid.log("drag on ColumnHeader Resize Handle. key=" + c, a.V_MOUSEMOVE);
+  c._dragmove = function(c) {
+    var b = this._resizeKey;
+    if(b != null && (c = this._getDx(c, this.getColMgr().getByKey(b)), !(Math.abs(c) < 1))) {
+      this.grid.log("drag on ColumnHeader Resize Handle. key=" + b, a.V_MOUSEMOVE);
       var f = this._options;
-      this.get(c)[0].style.width = this._resizeInitWidth + b + "px";
-      this._moveResizeHandles(this._resizeHandleInitX + b - this._resizeMap[c][0].offsetLeft, this.getColMgr().getIdxByKey(c));
-      this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + b + (f.resizeHandleWidth - f.resizeGuideWidth) / 2 - f.scrollerLeft) + "px";
-      f.syncResize && this.getView().setWidthByKey(c, this._resizeInitColWidth + b)
+      this.get(b)[0].style.width = this._resizeInitWidth + c + "px";
+      this._moveResizeHandles(this._resizeHandleInitX + c - this._resizeMap[b][0].offsetLeft, this.getColMgr().getIdxByKey(b));
+      this._resizeGuide[0].style.left = Math.floor(this._resizeHandleInitX + c + (f.resizeHandleWidth - f.resizeGuideWidth) / 2 - f.scrollerLeft) + "px";
+      f.syncResize && this.getView().setWidthByKey(b, this._resizeInitColWidth + c)
     }
   };
-  c._mouseup = function(b) {
-    var c = this._resizeKey;
-    if(c != null) {
-      this.grid.log("mouseup on ColumnHeader Resize Handle. key=" + c, a.V_MOUSEUP), this._resizeGuide.hide(), this._resizeGuide[0].style.height = "0px", b = this._getDx(b, this.getColMgr().getByKey(c)), Math.abs(b) >= 1 && this.getView().setWidthByKey(c, this._resizeInitColWidth + b), delete this._resizeKey, delete this._resizeInitX, delete this._resizeHandleInitX, delete this._resizeInitWidth, delete this._resizeInitColWidth
+  c._mouseup = function(c) {
+    var b = this._resizeKey;
+    if(b != null) {
+      this.grid.log("mouseup on ColumnHeader Resize Handle. key=" + b, a.V_MOUSEUP), this._resizeGuide.hide(), this._resizeGuide[0].style.height = "0px", c = this._getDx(c, this.getColMgr().getByKey(b)), Math.abs(c) >= 1 && this.getView().setWidthByKey(b, this._resizeInitColWidth + c), delete this._resizeKey, delete this._resizeInitX, delete this._resizeHandleInitX, delete this._resizeInitWidth, delete this._resizeInitColWidth
     }
   };
-  c._setWidthByKey = function(b, c) {
-    this.grid.log("setting ColumnHeader width=" + c + ". key=" + b, a.V_RESIZE);
-    this.get(b)[0].style.width = c + this.getView()._colWidthPlus() - this._widthPlus() + "px";
-    this._syncResizeHandles(this.getColMgr().getIdxByKey(b));
+  c._setWidthByKey = function(c, b) {
+    this.grid.log("setting ColumnHeader width=" + b + ". key=" + c, a.V_RESIZE);
+    this.get(c)[0].style.width = b + this.getView()._colWidthPlus() - this._widthPlus() + "px";
+    this._syncResizeHandles(this.getColMgr().getIdxByKey(c));
     this.getView()._scroll()
   };
   c._syncResizeHandles = function(a) {
-    for(var a = a || 0, b = this.getView()._getColLefts(), c = this.getColumns(), f = c.length, g = this._resizeMap, h;a < f;a++) {
-      if(h = c[a].key, g.hasOwnProperty(h)) {
-        g[h][0].style.left = b[a + 1] + this._resizeHandleOffset + "px"
+    for(var a = a || 0, c = this.getView()._getColLefts(), b = this.getColumns(), f = b.length, g = this._resizeMap, h;a < f;a++) {
+      if(h = b[a].key, g.hasOwnProperty(h)) {
+        g[h][0].style.left = c[a + 1] + this._resizeHandleOffset + "px"
       }
     }
   };
-  c._moveResizeHandles = function(a, b) {
-    for(var b = b || 0, c = this.getColumns(), f = c.length, g = this._resizeMap, h;b < f;b++) {
-      if(h = c[b].key, g.hasOwnProperty(h)) {
+  c._moveResizeHandles = function(a, c) {
+    for(var c = c || 0, b = this.getColumns(), f = b.length, g = this._resizeMap, h;c < f;c++) {
+      if(h = b[c].key, g.hasOwnProperty(h)) {
         h = g[h][0], h.style.left = h.offsetLeft + a + "px"
       }
     }
@@ -6720,8 +6744,8 @@ jx.grid.ColumnHeader = {};
   };
   c._initResizeHandles = function() {
     this.grid.log("initializing Colheader resize functionality...", a.V_INIT);
-    for(var b = this.getColumns(), c = b.length, f = this.getView(), g = f.mid, f = f._getColLefts(), h = this._options, o = this._resizeMap, m, p = 0, q = this._resizeHandleOffset = Math.floor(h.scrollerLeft - h.resizeHandleWidth / 2), l = h.classResizeHandle, k = this._head;p < c;p++) {
-      if(h = b[p], h.resizable) {
+    for(var c = this.getColumns(), b = c.length, f = this.getView(), g = f.mid, f = f._getColLefts(), h = this._options, o = this._resizeMap, m, p = 0, q = this._resizeHandleOffset = Math.floor(h.scrollerLeft - h.resizeHandleWidth / 2), l = h.classResizeHandle, k = this._head;p < b;p++) {
+      if(h = c[p], h.resizable) {
         m = h.key, o[m] = $("<div class='" + l + "' key='" + m + "' ondblclick='JGM.m.ViewportManager." + g + '._autoColWidth("' + m + "\")' style='left:" + (q + f[p + 1]) + "px' title='" + h.name + " 컬럼의 폭을 조절합니다.'>").appendTo(k)
       }
     }
@@ -6732,13 +6756,13 @@ jx.grid.CheckManager = {};
 (function() {
   function g(a) {
     function d() {
-      var a = this._options, b = this._isRadio = a.isRadio = !!a.isRadio;
-      this._hasMaster = a.master = !b && !!a.master;
+      var a = this._options, c = this._isRadio = a.isRadio = !!a.isRadio;
+      this._hasMaster = a.master = !c && !!a.master;
       this._col = a.colDef;
       this._key = this._col.key;
       this._cssClass = a.classCheck;
       this._cssClassMaster = a.classMasterCheck;
-      this._name = a.name || b && "radio" + this.mid || null
+      this._name = a.name || c && "radio" + this.mid || null
     }
     this.addEventListener("afteroption", d);
     b.call(this, a);
