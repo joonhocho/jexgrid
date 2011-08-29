@@ -239,6 +239,7 @@ _UP:		1,
 
  prototype.bindEvents = function() {
 	 this.grid['event'].bind({
+			 'onAfterSetDatalist': this.empty,
 			 'onGetCellClass': this._onGetCellClass,
 			 'onCreateCss': this._onCreateCss,
 			 'onDestroy': this._destroy,
@@ -299,12 +300,12 @@ prototype._onGetCellClass = function(row, col, datarow, colDef) {
 		range = this._range,
 		rows = this._rows,
 		opt = this._options;
-	if (Util.isNotNull(last) && last.getDatarow() === datarow && last.getColDef() === colDef) {
+	if (last && last.getDatarow() === datarow && last.getColDef() === colDef) {
 		css += opt['classLast'];
 	}
 
 	if (opt['multiSelectEnabled'] === true) {
-		if (Util.isNotNull(range) && range.getDatarow() === datarow && range.getColDef() === colDef) {
+		if (range && range.getDatarow() === datarow && range.getColDef() === colDef) {
 			css += " " + opt['classRange'];
 		}
 		if (rows.hasOwnProperty(row) && rows[row].hasOwnProperty(col)) {
@@ -315,7 +316,7 @@ prototype._onGetCellClass = function(row, col, datarow, colDef) {
 };
 
 prototype._mousedownCanvas = function(e, cell) {
-	if (Util.isNotNull(this._last) && this._last.equals(cell)) {
+	if (this._last && this._last.equals(cell)) {
 		return;
 	}
 	/**
@@ -335,7 +336,7 @@ prototype._mousedownCanvas = function(e, cell) {
 		this.selectCell(cell);
 	}
 	else {
-		if (e.shiftKey && Util.isNotNullAnd(this._last, this._range)) {
+		if (e.shiftKey && this._last && this._range) {
 			this.selectRange(cell);
 		}
 		else if (e.ctrlKey) {
@@ -356,7 +357,7 @@ prototype._dragoverCanvas = function(e, cell) {
 	if (this._options['multiSelectEnabled'] === false) {
 		this.selectCell(cell);
 	}
-	else if (Util.isNotNullAnd(this._last, this._range)) {
+	else if (this._last && this._range) {
 		this.selectRange(cell);
 	}
 };
@@ -365,7 +366,7 @@ prototype._keydownCanvas = function(e) {
 	var last = this._last,
 		range = this._range;
 
-	if (Util.isNullOr(last, this._range)) {
+	if (last || this._range) {
 		if (this._consts._NAVKEYS[e.which]) {
 			this.selectCell(JGM.create("Cell", {'grid':this.grid, 'row':this.grid['view']._getFirstSafeVisibleRow(), 'col':this.grid['view']._getFirstSafeVisibleCol()}));
 		}
@@ -648,14 +649,12 @@ prototype._keydownCanvas = function(e) {
   */
 //tested
 prototype.getCell = function() {
-	if (Util.isNotNull(this._last)) {
-		return this._last;
-	}
+	return this._last || null;
 };
 
 //tested
 prototype._isSelected = function(cell) {
-	return Util.isNotNull(this._last) && this._last.equals(cell);
+	return cell && this._last && this._last.equals(cell);
 };
 
 /**
@@ -797,14 +796,14 @@ prototype.onBeforeDataChange = function() {
 };
 
 prototype._onBeforeRerender = function() {
-	if (Util.isNotNull(this._last)) {
+	if (this._last) {
 		this.toSelect = this._last;
 	}
 	this.empty();
 };
 
 prototype.onAfterRerender = function() {
-	if (Util.isNotNull(this.toSelect)) {
+	if (this.toSelect) {
 		this.selectCell(this.toSelect, true);
 		this.grid['view'].scrollToRowLazy(this.toSelect.getRowIdx());
 	}
@@ -889,10 +888,10 @@ prototype.selectRange = function(cell) {
 prototype._setLast = function(row, col, cell) {
 	var last = this._last,
 		lastRow;
-	if (Util.isNotNull(last)) {
+	if (last) {
 		lastRow = last.getRowIdx();
 
-		if (row !== lastRow && (Util.isNotNull(this._range) &&  lastRow !== this._range.getRowIdx())) {
+		if (row !== lastRow && (this._range &&  lastRow !== this._range.getRowIdx())) {
 			this.grid['view'].unlockRowById(last.getId());
 		}
 
@@ -901,12 +900,12 @@ prototype._setLast = function(row, col, cell) {
 			$(last.getRowNode()).removeClass(this._options['classRowSelected']);
 		}
 
-		if (Util.isNull(cell)) {
+		if (!cell) {
 			delete this._last;
 		}
 	}
 
-	if (Util.isNull(cell)) {
+	if (!cell) {
 		return;
 	}
 
@@ -920,25 +919,25 @@ prototype._setLast = function(row, col, cell) {
 
 prototype._setRange = function(row, col, cell, noScroll) {
 	var range = this._range;
-	if (Util.isNotNull(range)) {
+	if (range) {
 		var rangeRow = range.getRowIdx();
 
 		if (row === rangeRow && col === range.getColIdx()) {
 			return;
 		}
 
-		if (row !== rangeRow && (Util.isNotNull(this._last) &&  rangeRow !== this._last.getRowIdx())) {
+		if (row !== rangeRow && (this._last &&  rangeRow !== this._last.getRowIdx())) {
 			this.grid['view'].unlockRowById(range.getId());
 		}
 
 		range.get$().removeClass(this._options['classRange']);
 
-		if (Util.isNull(cell)) {
+		if (!cell) {
 			delete this._range;
 		}
 	}
 
-	if (Util.isNull(cell)) {
+	if (!cell) {
 		return;
 	}
 
@@ -1057,7 +1056,7 @@ prototype.addOrRemoveCss = function(map, add) {
 			}
 		}
 	}
-	list = list.filter(function(n) {return Util.isNotNull(n);});
+	list = list.filter(function(n) {return n;});
 	if (add) {
 		$(list).addClass(this._options['classSelection']);
 	}
@@ -1078,7 +1077,7 @@ prototype._addToMaps = function(map) {
 			row = map[r];
 			for (c in row) {
 				if (row.hasOwnProperty(c)) {
-					cell = Util.isNull(cell = row[c]) ? true : cell;
+					cell = (cell = row[c]) ? true : cell;
 
 					if (rowmap.hasOwnProperty(r)) {
 						rowmap[r].length++;
