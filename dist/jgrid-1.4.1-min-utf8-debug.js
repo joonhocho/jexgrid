@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 42
- * Date: Mon Aug 29 11:48:50 KST 2011
+ * JexGrid Build 43
+ * Date: Mon Aug 29 16:15:43 KST 2011
  */
 /*
 AUTHOR
@@ -4467,7 +4467,7 @@ jx.grid.SelectionManager = {};
     this.bindEvents()
   };
   a.bindEvents = function() {
-    this.grid.event.bind({onGetCellClass:this._onGetCellClass, onCreateCss:this._onCreateCss, onDestroy:this._destroy, keydownCanvas:this._keydownCanvas, dragoverCanvas:this._dragoverCanvas, mousedownCanvas:this._mousedownCanvas, onBeforeRerender:this._onBeforeRerender, onAfterRerender:this.onAfterRerender, onBeforeDataChange:this.onBeforeDataChange}, this)
+    this.grid.event.bind({onAfterSetDatalist:this.empty, onGetCellClass:this._onGetCellClass, onCreateCss:this._onCreateCss, onDestroy:this._destroy, keydownCanvas:this._keydownCanvas, dragoverCanvas:this._dragoverCanvas, mousedownCanvas:this._mousedownCanvas, onBeforeRerender:this._onBeforeRerender, onAfterRerender:this.onAfterRerender, onBeforeDataChange:this.onBeforeDataChange}, this)
   };
   a._destroy = function() {
     h._deleteMap(this._consts, "_NAVKEYS");
@@ -4488,22 +4488,22 @@ jx.grid.SelectionManager = {};
     return a.join("\n")
   };
   a._onGetCellClass = function(a, d, b, i) {
-    var g = "", j = this._last, h = this._range, m = this._rows, p = this._options;
-    f.isNotNull(j) && j.getDatarow() === b && j.getColDef() === i && (g += p.classLast);
-    p.multiSelectEnabled === !0 && (f.isNotNull(h) && h.getDatarow() === b && h.getColDef() === i && (g += " " + p.classRange), m.hasOwnProperty(a) && m[a].hasOwnProperty(d) && (g += " " + p.classSelection));
-    return g
+    var f = "", j = this._last, g = this._range, h = this._rows, p = this._options;
+    j && j.getDatarow() === b && j.getColDef() === i && (f += p.classLast);
+    p.multiSelectEnabled === !0 && (g && g.getDatarow() === b && g.getColDef() === i && (f += " " + p.classRange), h.hasOwnProperty(a) && h[a].hasOwnProperty(d) && (f += " " + p.classSelection));
+    return f
   };
   a._mousedownCanvas = function(a, d) {
-    if(!f.isNotNull(this._last) || !this._last.equals(d)) {
-      this.grid.event.trigger("onBeforeSelect", [a, d], !0), this._options.multiSelectEnabled === !1 ? this.selectCell(d) : a.shiftKey && f.isNotNullAnd(this._last, this._range) ? this.selectRange(d) : a.ctrlKey ? d.getKey() === this._options.rowSelKey ? this.addRow(d) : this.addCell(d) : this.selectCell(d)
+    if(!this._last || !this._last.equals(d)) {
+      this.grid.event.trigger("onBeforeSelect", [a, d], !0), this._options.multiSelectEnabled === !1 ? this.selectCell(d) : a.shiftKey && this._last && this._range ? this.selectRange(d) : a.ctrlKey ? d.getKey() === this._options.rowSelKey ? this.addRow(d) : this.addCell(d) : this.selectCell(d)
     }
   };
   a._dragoverCanvas = function(a, d) {
-    this._options.multiSelectEnabled === !1 ? this.selectCell(d) : f.isNotNullAnd(this._last, this._range) && this.selectRange(d)
+    this._options.multiSelectEnabled === !1 ? this.selectCell(d) : this._last && this._range && this.selectRange(d)
   };
   a._keydownCanvas = function(a) {
     var d = this._last;
-    if(f.isNullOr(d, this._range)) {
+    if(d || this._range) {
       this._consts._NAVKEYS[a.which] && this.selectCell(h.create("Cell", {grid:this.grid, row:this.grid.view._getFirstSafeVisibleRow(), col:this.grid.view._getFirstSafeVisibleCol()}))
     }else {
       var b = this.grid.event;
@@ -4577,12 +4577,10 @@ jx.grid.SelectionManager = {};
     }
   };
   a.getCell = function() {
-    if(f.isNotNull(this._last)) {
-      return this._last
-    }
+    return this._last || null
   };
   a._isSelected = function(a) {
-    return f.isNotNull(this._last) && this._last.equals(a)
+    return a && this._last && this._last.equals(a)
   };
   b.prototype.isSelected = function() {
     return this.grid.selMgr._isSelected(this)
@@ -4642,13 +4640,13 @@ jx.grid.SelectionManager = {};
   a.onBeforeDataChange = function() {
   };
   a._onBeforeRerender = function() {
-    if(f.isNotNull(this._last)) {
+    if(this._last) {
       this.toSelect = this._last
     }
     this.empty()
   };
   a.onAfterRerender = function() {
-    f.isNotNull(this.toSelect) && (this.selectCell(this.toSelect, !0), this.grid.view.scrollToRowLazy(this.toSelect.getRowIdx()))
+    this.toSelect && (this.selectCell(this.toSelect, !0), this.grid.view.scrollToRowLazy(this.toSelect.getRowIdx()))
   };
   a.addRow = function(a) {
     var d = a.getRowIdx(), b = a.getColIdx();
@@ -4671,23 +4669,23 @@ jx.grid.SelectionManager = {};
   };
   a._setLast = function(a, d, b) {
     var d = this._last, i;
-    f.isNotNull(d) && (i = d.getRowIdx(), a !== i && f.isNotNull(this._range) && i !== this._range.getRowIdx() && this.grid.view.unlockRowById(d.getId()), d.get$().removeClass(this._options.classLast), this._options.highlightRowEnabled === !0 && $(d.getRowNode()).removeClass(this._options.classRowSelected), f.isNull(b) && delete this._last);
-    if(!f.isNull(b)) {
+    d && (i = d.getRowIdx(), a !== i && this._range && i !== this._range.getRowIdx() && this.grid.view.unlockRowById(d.getId()), d.get$().removeClass(this._options.classLast), this._options.highlightRowEnabled === !0 && $(d.getRowNode()).removeClass(this._options.classRowSelected), b || delete this._last);
+    if(b) {
       (this._last = b).get$().addClass(this._options.classLast), this._options.highlightRowEnabled === !0 && $(b.getRowNode()).addClass(this._options.classRowSelected), this.grid.view.lockRowByIdx(a)
     }
   };
   a._setRange = function(a, d, b, i) {
-    var g = this._range;
-    if(f.isNotNull(g)) {
-      var j = g.getRowIdx();
-      if(a === j && d === g.getColIdx()) {
+    var f = this._range;
+    if(f) {
+      var j = f.getRowIdx();
+      if(a === j && d === f.getColIdx()) {
         return
       }
-      a !== j && f.isNotNull(this._last) && j !== this._last.getRowIdx() && this.grid.view.unlockRowById(g.getId());
-      g.get$().removeClass(this._options.classRange);
-      f.isNull(b) && delete this._range
+      a !== j && this._last && j !== this._last.getRowIdx() && this.grid.view.unlockRowById(f.getId());
+      f.get$().removeClass(this._options.classRange);
+      b || delete this._range
     }
-    if(!f.isNull(b)) {
+    if(b) {
       (this._range = b).get$().addClass(this._options.classRange), b = this.grid.view, b.lockRowByIdx(a), i || b.scrollToLazy(a, d)
     }
   };
@@ -4723,25 +4721,25 @@ jx.grid.SelectionManager = {};
     this._addSelMap(a)
   };
   a.addOrRemoveCss = function(a, d) {
-    var e = [], i, g, j, h = this.grid.view;
+    var e = [], i, f, j, g = this.grid.view;
     for(i in a) {
       if(a.hasOwnProperty(i)) {
-        for(g in j = a[i], j) {
-          j.hasOwnProperty(g) && (j[g] instanceof b ? e.push(j[g].getNode()) : e.push(h.getCell(i, g)))
+        for(f in j = a[i], j) {
+          j.hasOwnProperty(f) && (j[f] instanceof b ? e.push(j[f].getNode()) : e.push(g.getCell(i, f)))
         }
       }
     }
     e = e.filter(function(a) {
-      return f.isNotNull(a)
+      return a
     });
     d ? $(e).addClass(this._options.classSelection) : $(e).removeClass(this._options.classSelection)
   };
   a._addToMaps = function(a) {
-    var d, b, i, g = this._rows, j = this._cols, h;
+    var d, b, i, f = this._rows, j = this._cols, g;
     for(d in a) {
       if(a.hasOwnProperty(d)) {
-        for(b in h = a[d], h) {
-          h.hasOwnProperty(b) && (i = f.isNull(i = h[b]) ? !0 : i, g.hasOwnProperty(d) ? g[d].length++ : (g[d] = {length:1}, g.length++), g[d][b] = i, j.hasOwnProperty(b) ? j[b].length++ : (j[b] = {length:1}, j.length++), j[b][d] = i)
+        for(b in g = a[d], g) {
+          g.hasOwnProperty(b) && (i = (i = g[b]) ? !0 : i, f.hasOwnProperty(d) ? f[d].length++ : (f[d] = {length:1}, f.length++), f[d][b] = i, j.hasOwnProperty(b) ? j[b].length++ : (j[b] = {length:1}, j.length++), j[b][d] = i)
         }
       }
     }
@@ -6783,7 +6781,7 @@ jx.grid.CheckManager = {};
     var a, b = h._CONST;
     a = this.getColMgr();
     a.getByKey(this._col.key) || a.addAt(this._options.colIdx, this._col);
-    if(f.isNull(b._checkboxWidth)) {
+    if(!b._checkboxWidth) {
       a = f.calCheckSize(), b._checkboxWidth = a.checkboxW, b._checkboxHeight = a.checkboxH, b._radioWidth = a.radioW, b._radioHeight = a.radioH
     }
   };
@@ -6802,7 +6800,7 @@ jx.grid.CheckManager = {};
   };
   a._beforeCreateCss = function(a) {
     var b, e, f = a.css;
-    this._isRadio ? (a = h._CONST._radioWidth, b = h._CONST._radioHeight) : (a = h._CONST._checkboxWidth, b = h._CONST._checkboxHeight);
+    this._isRadio ? (a = h._CONST._radioWidth || 13, b = h._CONST._radioHeight || 13) : (a = h._CONST._checkboxWidth || 13, b = h._CONST._checkboxHeight || 13);
     e = "*overflow:hidden;padding:0;width:" + a + "px;height:" + b + "px;";
     f.push(this.getView()._getCellSelector() + " ." + this._cssClass + "[mid='" + this.mid + "']{" + e + "margin:" + (this.getView()._getRowInnerHeight() - b) / 2 + "px 0 0 " + (this._col.width - this.getView()._getPadding() - a) / 2 + "px}#" + this.mid + "h{" + e + "margin:" + (this.getHeader()._options.height - b) / 2 + "px 0 0 0}")
   };
@@ -6825,7 +6823,7 @@ jx.grid.CheckManager = {};
     return f.toArray(this.disabledmap)
   };
   a.toggleCheckAll = function() {
-    this.isCheckedAll() ? this.uncheckAll() : this.checkAll()
+    return this.isCheckedAll() ? this.uncheckAll() : this.checkAll()
   };
   a.checkAll = function() {
     this._hasMaster && g._check(this._master);
@@ -6916,7 +6914,7 @@ jx.grid.CheckManager = {};
     return{checked:e, unchecked:f}
   };
   a.isCheckedAll = function() {
-    return this._count !== 0 && this._count === this.getAllData().length ? !0 : !1
+    return this._count && this._count === this.getAllData().length
   };
   a.removeChecked = function() {
     return this.getDataMgr().removeList(this.getCheckList())

@@ -73,7 +73,7 @@ prototype._init = function() {
 	if (!colmgr.getByKey(this._col.key)) {
 		colmgr.addAt(this._options['colIdx'], this._col);
 	}
-	if (Util.isNull(con._checkboxWidth)) {
+	if (!con._checkboxWidth) {
 		size = Util.calCheckSize();
 		con._checkboxWidth = size.checkboxW;
 		con._checkboxHeight = size.checkboxH;
@@ -181,12 +181,12 @@ prototype._beforeCreateCss = function(event) {
 		checkCommon,
 		css = event.css;
 	if (this._isRadio) {
-		w = JGM._CONST._radioWidth;
-		h = JGM._CONST._radioHeight;
+		w = JGM._CONST._radioWidth || 13;
+		h = JGM._CONST._radioHeight || 13;
 	}
 	else {
-		w = JGM._CONST._checkboxWidth;
-		h = JGM._CONST._checkboxHeight;
+		w = JGM._CONST._checkboxWidth || 13;
+		h = JGM._CONST._checkboxHeight || 13;
 	}
 	checkCommon = "*overflow:hidden;padding:0;width:" + w + "px;height:" + h + "px;";
 	css.push(this.getView()._getCellSelector() + " ." + this._cssClass + "[mid='" + this.mid + "']{" +
@@ -267,12 +267,7 @@ prototype.getDisableds = function() {
   @version 1.0.0
   */
 prototype.toggleCheckAll = function() {
-	if (this.isCheckedAll()) {
-		this.uncheckAll();
-	}
-	else {
-		this.checkAll();
-	}
+	return this.isCheckedAll() ? this.uncheckAll() : this.checkAll();
 };
 /**
   모든 데이터를 체크합니다.
@@ -580,8 +575,7 @@ prototype.splitChecked = function(datalist, nomap) {
   @version 1.0.0
   */
 prototype.isCheckedAll = function() {
-	return (this._count !== 0 &&
-			this._count === this.getAllData().length ? true : false);
+	return this._count && this._count === this.getAllData().length;
 };
 /**
   체크된 모든 데이터를 그리드에서 제거합니다.
