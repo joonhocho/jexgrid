@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 39
- * Date: Mon Aug 29 10:34:06 KST 2011
+ * JexGrid Build 40
+ * Date: Mon Aug 29 10:58:21 KST 2011
  */
 /*
 AUTHOR
@@ -3956,7 +3956,7 @@ jx.grid.Grid = {};
   };
   var e = g.prototype;
   e._defaultOptions = function() {
-    return{classGrid:"jgrid", border:"1px solid #868686", width:"100%", font:"15px Arial,Helvetica,sans-serif", style:"", borderSide:!0, imageUrl:"../images/", links:{data:"dataMgr.all", datalen:"dataMgr.all.length", shown:"dataMgr.datalist", set:"dataMgr.set", add:"dataMgr.add", addList:"dataMgr.addList", update:"dataMgr.update", updateByKey:"dataMgr.updateByKey", updateList:"dataMgr.updateList", remove:"dataMgr.remove", removeList:"dataMgr.removeList", select:"dataMgr.executeSelect", undo:"dataMgr.undo", 
+    return{classGrid:"jgrid", border:"1px solid #868686", width:"", font:"15px Arial,Helvetica,sans-serif", style:"", borderSide:!0, imageUrl:"../images/", links:{data:"dataMgr.all", datalen:"dataMgr.all.length", shown:"dataMgr.datalist", set:"dataMgr.set", add:"dataMgr.add", addList:"dataMgr.addList", update:"dataMgr.update", updateByKey:"dataMgr.updateByKey", updateList:"dataMgr.updateList", remove:"dataMgr.remove", removeList:"dataMgr.removeList", select:"dataMgr.executeSelect", undo:"dataMgr.undo", 
     redo:"dataMgr.redo", addFilter:"dataMgr.addFilter", removeFilter:"dataMgr.removeFilter", check:"collapser.checkMgr.checkList checkMgr.checkList", checked:"collapser.checkMgr.getCheckList checkMgr.getCheckList", removeChecked:"collapser.checkMgr.removeChecked checkMgr.removeChecked", register:"event.register", trigger:"event.trigger", bind:"event.bind", unregister:"event.unregister", unbind:"event.unregister", commit:"editMgr.commit", cancelEdit:"editMgr.cancel", beginEdit:"editMgr.begin", collen:"colDefMgr.length"}, 
     autoWidth:!1, showMessage:!1}
   };
@@ -4087,7 +4087,7 @@ jx.grid.Grid = {};
     var a = {type:"beforeCreateCss", css:[]}, c = this._options, b = this.event;
     this.dispatchEvent(a);
     this.log("creating CSS for Grid...", d);
-    var e = b.trigger("onCreateCss"), e = e ? e.join("") : "", a = f.sprint("%selector%{overflow:hidden;width:100%;height:100%;font:%font%;%border%%style%}%submodule%", {selector:"#" + this.mid, font:c.font, border:c.borderSide ? "border:" + c.border + ";" : "border-top:" + c.border + ";border-bottom:" + c.border + ";", style:c.style, submodule:a.css.join("") + e});
+    var e = b.trigger("onCreateCss"), e = e ? e.join("") : "", a = f.sprint("%selector%{overflow:hidden;height:100%;font:%font%;%border%%style%}%submodule%", {selector:"#" + this.mid, font:c.font, border:c.borderSide ? "border:" + c.border + ";" : "border-top:" + c.border + ";border-bottom:" + c.border + ";", style:c.style, submodule:a.css.join("") + e});
     this._style = f.createStyle(a);
     a = {type:"beforeCreateDynamicCss", css:[]};
     this.dispatchEvent(a);
