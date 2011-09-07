@@ -295,7 +295,7 @@ prototype._init = function(args) {
 	};
 	var width = opt['width'];
 	if (width) {
-		if (width.indexOf('%') === -1) {
+		if (typeof width === 'number' || width.indexOf('%') === -1) {
 			width += 'px';
 		}
 	}

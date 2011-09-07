@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 43
- * Date: Mon Aug 29 16:15:43 KST 2011
+ * JexGrid Build 44
+ * Date: Wed Sep 7 11:26:08 KST 2011
  */
 /*
 AUTHOR
@@ -3990,7 +3990,13 @@ jx.grid.Grid = {};
     this._drag = !1;
     this._lastH = this._lastW = null;
     this._vars = {scrollbarDim:void 0};
-    (b = d.width) ? b.indexOf("%") === -1 && (b += "px") : b = "";
+    if(b = d.width) {
+      if(typeof b === "number" || b.indexOf("%") === -1) {
+        b += "px"
+      }
+    }else {
+      b = ""
+    }
     c = this._ctnr = $("<div id='" + this.mid + "' class='" + d.classGrid + "' " + (b ? "" : "style='width:" + b + "' ") + "tabIndex='0'>").appendTo(Util$.safe$(c));
     this._vars.scrollbarDim = Util$.calScrollbarDims(c);
     b = this.event = h.create("EventManager", {grid:this, options:d.EventManager});
