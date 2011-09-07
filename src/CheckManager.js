@@ -386,7 +386,6 @@ prototype.clickMaster = function(checked) {
 			}
 		}
 	}
-	echo(this._count);
 }
 
 
@@ -670,7 +669,6 @@ prototype.enable = function(datarow, nomap) {
 
 prototype._updateMaster = function() {
 	if (this._hasMaster) {
-		echo (this.isCheckedAll());
 		CheckManager._setCheck(this._master, this.isCheckedAll());
 	}
 };
