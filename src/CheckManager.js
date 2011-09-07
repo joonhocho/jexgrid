@@ -111,6 +111,7 @@ prototype._bindEvents = function() {
 
 	events = {
 		'onAfterSetDatalist': this.uncheckAll,
+		'onAfterRerender': this._updateMaster,
 		'onIdChange': this._onIdChange,
 		'onIdListChange': this._onIdListChange,
 		'onRemoveDatarow': this._onRemoveDatarow,
@@ -344,6 +345,49 @@ prototype.getDisableds = function() {
 prototype.toggleCheckAll = function() {
 	return this.isCheckedAll() ? this.uncheckAll() : this.checkAll();
 };
+
+prototype.clickMaster = function(checked) {
+	var all = this.getAllData(),
+		list = this.getDataList();
+
+	if (all.length === list.length) {
+		return checked ? this.checkAll() : this.uncheckAll();
+	}
+
+	if (checked) {
+		CheckManager._check(this.getCheckboxes());
+
+		var len = list.length,
+			idKey = this.getIdKey(),
+			id,
+			datarow,
+			i = 0;
+
+		for (; i < len; i++) {
+			datarow = list[i];
+			if (this._add(datarow, datarow[idKey])) {
+				this.triggerGridEvent("onCheckChange", [datarow, true], true);
+			}
+		}
+	}
+	else {
+		CheckManager._uncheck(this.getCheckboxes());
+
+		var len = list.length,
+			idKey = this.getIdKey(),
+			id,
+			datarow,
+			i = 0;
+
+		for (; i < len; i++) {
+			datarow = list[i];
+			if (this._remove(datarow, datarow[idKey])) {
+				this.triggerGridEvent("onCheckChange", [datarow, false], true);
+			}
+		}
+	}
+	echo(this._count);
+}
 
 
 /**
@@ -626,12 +670,13 @@ prototype.enable = function(datarow, nomap) {
 
 prototype._updateMaster = function() {
 	if (this._hasMaster) {
+		echo (this.isCheckedAll());
 		CheckManager._setCheck(this._master, this.isCheckedAll());
 	}
 };
 
-prototype._add = function(datarow) {
-	var id = datarow[this.getIdKey()];
+prototype._add = function(datarow, id) {
+	id = id || datarow[this.getIdKey()];
 
 	if (this._map.hasOwnProperty(id)) {
 		return false;
@@ -648,9 +693,9 @@ prototype._add = function(datarow) {
 	return true;
 };
 
-prototype._remove = function(datarow) {
-	var id = datarow[this.getIdKey()],
-		map = this._map;
+prototype._remove = function(datarow, id) {
+	id = id || datarow[this.getIdKey()];
+	var map = this._map;
 
 	if (!map.hasOwnProperty(id)) {
 		return false;
@@ -740,7 +785,25 @@ prototype.splitChecked = function(datalist, nomap) {
   @version 1.0.0
   */
 prototype.isCheckedAll = function() {
-	return this._count && this._count === this.getAllData().length;
+	var count = this._count;
+	if (count) {
+		var allLen = this.getAllData().length;
+		if (count === allLen) {
+			return true;
+		}
+		var datalist = this.getDataList(),
+			showLen = datalist.length;
+		if (showLen !== allLen) {
+			var i = 0;
+			for (; i < showLen; i++) {
+				if (!this.isChecked(datalist[i], true)) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+	return false;
 };
 
 /**
@@ -915,7 +978,7 @@ prototype._keydownColSel = function(e, colSelections, lastSelection) {
 };
 
 prototype._onRenderHeader = function(headerHtml) {
-	headerHtml.push("<input id='" + this.mid + "h' type='checkbox' tabIndex='-1' onclick='JGM.m.CheckManager." + this.mid + ".toggleCheckAll();' class='" + this._cssClass + " " + this._cssClassMaster + "' mid='" + this.mid + "'");
+	headerHtml.push("<input id='" + this.mid + "h' type='checkbox' tabIndex='-1' onclick='JGM.m.CheckManager." + this.mid + ".clickMaster(this.checked);' class='" + this._cssClass + " " + this._cssClassMaster + "' mid='" + this.mid + "'");
 	if (this.isCheckedAll()) {
 		headerHtml.push(" checked='checked'");
 	}
