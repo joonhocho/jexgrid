@@ -96,13 +96,13 @@ prototype._init = function(args) {
 	this._resizeHandleOffset;
 
 	var opt = this._options;
-	this._mask =
-		$("<div class='" + opt['classHeaderMask'] + "'>")
-		.prependTo(this._ctnr);
+	this._mask = $("<div class='" + opt['classHeaderMask'] + "'>").prependTo(this._ctnr);
 
-	this._head =
-		$("<div class='" + opt['classHeader'] + "'>")
-		.appendTo(this._mask);
+	if (this.getColMgr().hasGroups()) {
+		this._doubleHead = $("<div class='" + opt['classHeader'] + "'>").appendTo(this._mask);
+	}
+
+	this._head = $("<div class='" + opt['classHeader'] + "'>").appendTo(this._mask);
 
 	ColumnHeader._disableSel(this._head);
 
@@ -656,6 +656,7 @@ prototype._beforeCreateCss = function(e) {
 		overflow: 'hidden',
 		'white-space': 'nowrap',
 		cursor: 'default',
+		background: opt['background'],
 		left: (-scrollerLeft) + 'px',
 		width: opt['scrollerWidth'] + 'px',
 		'line-height': height
@@ -737,6 +738,41 @@ prototype._onRenderModules = function() {
 		colDef,
 		headers = [];
 
+	var colmgr = this.getColMgr();
+	if (colmgr.hasGroups()) {
+		// group header enabled
+		// disable reordering
+		var opt = this._options;
+		opt['reorderEnabled'] = false;
+
+		var groups = colmgr.getGroups(),
+			j = 0,
+			l = groups.length,
+			group,
+			groupName,
+			groupWidth,
+			doubleHeaders = [],
+			k = 0,
+			m = 0,
+			view = this.getView(),
+			glen;
+		for (; j < l; j++) {
+			group = groups[j];
+			groupName = group[0].parent;
+			groupWidth = 0;
+			for (k = 0, glen = group.length; k < glen; k++) {
+				if (!group[k].hidden) {
+					echo (group[k].key, view._getColOuterWidth(m));
+					groupWidth += view._getColOuterWidth(m++);
+				}
+			}
+			doubleHeaders.push("<div class='" + opt['classColHeader'] + "' title='" + groupName + "' style='width:" + groupWidth + "px;'>" + groupName + "</div>");
+		}
+
+
+		this._doubleHead[0].innerHTML = doubleHeaders.join("");
+	}
+
 	for (; i < len; i++) {
 		if (!(colDef = colDefs[i]).hidden) {
 			this._render(headers, colDef, i);
@@ -758,7 +794,7 @@ prototype._onRenderModules = function() {
 prototype._onAfterRenderModules = function() {
 	var opt = this._options;
 
-	if (opt['reorderEnabled']) {
+	if (!this.getColMgr().hasGroups() && opt['reorderEnabled']) {
 		this._initReorder();
 	}
 	

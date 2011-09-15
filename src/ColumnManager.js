@@ -459,6 +459,8 @@ function ColumnManager(args) {
 	this._sorters = {};
 	this._validators = {};
 	this._nullOnCreates = {};
+	this._groups = null;
+	this._groupsByName = null;
 
 	this.__init(args);
 }
@@ -509,6 +511,8 @@ prototype.empty = function() {
 	this._sorters = {};
 	this._validators = {};
 	this._nullOnCreates = {};
+	this._groups = null;
+	this._groupsByName = null;
 
 }
 
@@ -547,7 +551,15 @@ prototype.set = function(colDefs) {
 	var i = 0,
 		len = colDefs.length,
 		col,
-		key;
+		key,
+		// if double header feature is needed
+		doubleHeader = colDefs.some(function(col) { return col.parent != null; });
+
+	if (doubleHeader) {
+		var groups = this._groups = [],
+			groupsByName = this._groupsByName = {},
+			parent;
+	}
 
 	for (; i < len; i++) {
 		col = colDefs[i];
@@ -564,7 +576,34 @@ prototype.set = function(colDefs) {
 			throw e;
 		}
 
+		if (doubleHeader) {
+			// if double header feature is needed
+			parent = col.parent = (col.parent == null ? ' ' : col.parent);
+			if (!groupsByName.hasOwnProperty(parent)) {
+				groups.push(groupsByName[parent] = []);
+			}
+			groupsByName[parent].push(col);
+		}
+
 		this._extend(col);
+	}
+
+	if (doubleHeader) {
+		var i = 0,
+			l = groups.length,
+			j,
+			jl,
+			group;
+
+		colDefs = [];
+		for (; i < l; i++) {
+			group = groups[i];
+			j = 0;
+			jl = group.length;
+			for (; j < jl; j++) {
+				colDefs.push(group[j]);
+			}
+		}
 	}
 
 	this._colDefs = colDefs;
@@ -573,6 +612,20 @@ prototype.set = function(colDefs) {
 	this.eventChangeVisible();
 
 	return colDefs;
+};
+
+prototype.hasGroups = function() {
+	return !!this._groups;
+};
+
+prototype.getGroups = function() {
+	return this._groups;
+};
+
+prototype.getGroupByName = function(name) {
+	if (name != null && this._groupsByName && this._groupsByName.hasOwnProperty(name)) {
+		return this._groupsByName[name];
+	}
 };
 
 prototype.getSorter = function(key) {
