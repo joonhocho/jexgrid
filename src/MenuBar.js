@@ -108,19 +108,35 @@ proto._onCreateCss = function() {
 };
 
 proto.addIcon = function(css, title, width, height, fn) {
-	return $("<div class='" + this._options['classIcon'] + "' tabIndex='0' title='" + title + "'><div class='" + css + "' style='margin-top:" + ((this._options['iconHeight'] - height) / 2) + "px;margin-left:" + ((this._options['iconWidth'] - width) / 2) + "px'></div></div>").appendTo(this._menubar)
-	.click(function(e) {
-		fn();
-		$(this).toggleClass("active");
-		e.preventDefault();
-	})
-	.keydown(function(e) {
-		if (e.which === Util.keyMapKeydown.enter || e.which === Util.keyMapKeydown.space) {
+	var button = $("<div class='" + this._options['classIcon'] + "' tabIndex='0' title='" + title + "'><div class='" + css + "' style='margin-top:" + ((this._options['iconHeight'] - height) / 2) + "px;margin-left:" + ((this._options['iconWidth'] - width) / 2) + "px'></div></div>").appendTo(this._menubar);
+
+	function runButton(e) {
+		if (fn) {
 			fn();
-			$(this).toggleClass("active");
-			e.preventDefault();
+		}
+		button.toggleClass("active");
+		e.preventDefault();
+	}
+
+	var enterKey = Util.keyMapKeydown.enter,
+		spaceKey = Util.keyMapKeydown.space;
+
+	button.click(runButton).keydown(function(e) {
+		var key = e.which;
+		if (key === enterKey || key === spaceKey) {
+			runButton(e);
 		}
 	});
+
+	return button;
+};
+
+proto.appendHtml = function(html) {
+	return $(html).appendTo(this._menubar);
+};
+
+proto.append$ = function(jq) {
+	return jq.appendTo(this._menubar);
 };
 
 }());
