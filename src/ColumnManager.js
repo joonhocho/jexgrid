@@ -237,7 +237,7 @@ function ColumnManager(args) {
 			@since 1.0.0
 			@version 1.0.0
 			*/
-			'minW':			30,
+			'minW':			0,
 
 			/**
 			컬럼의 폭을 조절할 경우 사용되는 최대 폭 픽셀. <br>기본값:<code>undefined</code>

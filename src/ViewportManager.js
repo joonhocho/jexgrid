@@ -230,7 +230,7 @@ function ViewportManager(args) {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		'padding':					1,
+		'padding':					0,
 
 		/**
 		  홀수번째 로우와 짝수번째 로우의 바탕색을 다르게 할 지 정합니다. <br>기본값:<code>false</code>
