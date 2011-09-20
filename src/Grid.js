@@ -414,6 +414,9 @@ prototype._init = function(args) {
 	}
 
 	if (opt['SearchManager']) {
+		if (!opt['MenuBar']) {
+			opt['MenuBar'] = {};
+		}
 		this['search'] =  JGM.create("SearchManager", {grid:this, 'container':ctnr, 'options':opt['SearchManager']});
 	}
 

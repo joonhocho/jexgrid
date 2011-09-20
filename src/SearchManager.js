@@ -27,7 +27,6 @@ var JGM = goog.getObjectByName('jx.grid'),
 function SearchManager(args) {
 	this.mid = args.mid;
 
-	this._ctnr = args['container'];
 	this._mask = null;
 
 	this._masterInput = null;
@@ -267,7 +266,8 @@ prototype._onRenderModules = function() {
 	var menubar = this.grid['menubar'],
 		thisIns = this;
 
-	var button = menubar.addIcon(opt['classSearchIcon'], "데이터 검색을 합니다.", opt['searchIconWidth'], opt['searchIconHeight'], function() {
+
+	menubar.addIcon(opt['classSearchIcon'], "데이터 검색을 합니다.", opt['searchIconWidth'], opt['searchIconHeight'], function() {
 		mask.toggle("fast");
 	});
 	mask.hide();
@@ -366,7 +366,6 @@ prototype._destroy = function() {
 		name: "SearchManager",
 		path: "search",
 		"$": "_advButton _mask _tag _adv",
-		property: "_ctnr",
 		array: "_global",
 		map: "_globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"
 	});
