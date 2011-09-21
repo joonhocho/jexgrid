@@ -26,7 +26,8 @@ JGM
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
-	Grid = goog.getObjectByName('jx.grid.Grid');
+	Grid = goog.getObjectByName('jx.grid.Grid'),
+	element = Util.element;
 
  goog.exportSymbol('jx.grid.ColumnHeader', ColumnHeader);
 
@@ -71,6 +72,7 @@ var prototype = ColumnHeader.prototype;
 
 prototype._init = function(args) {
 	this.grid.log('initializing ColumnHeader instance...', Grid.V_INIT);//IF_DEBUG
+
 	/**
 	그리드 컬럼 헤더를 관리하는 {@link jx.grid.ColumnHeader ColumnHeader} 인스턴스 입니다.
 
@@ -82,34 +84,34 @@ prototype._init = function(args) {
 	*/
 	this.grid['header'] = this;
 
-	this._ctnr = args['container'];
-
 	this._map = {};
-	
-	this._resizeKey;
-	this._resizeInitX;
-	this._resizeHandleInitX;
-	this._resizeInitWidth;
-	this._resizeMap = {};
-	this._resizeInitColWidth;
-	this._resizeGuide;
-	this._resizeHandleOffset;
 
-	var opt = this._options;
-	this._mask = $("<div class='" + opt['classHeaderMask'] + "'>").prependTo(this._ctnr);
+	this._resizeMap = {};
+	
+	this._resizeKey = this._resizeInitX = this._resizeHandleInitX = this._resizeInitWidth = this._resizeInitColWidth = this._resizeGuide = this._resizeHandleOffset = null;
+
+	var opt = this._options,
+		mask = this._mask = $(element('div', {
+			'class': opt['classHeaderMask']
+		})).prependTo(this._ctnr = args['container']);
 
 	if (this.getColMgr().hasGroups()) {
-		this._doubleHead = $("<div class='" + opt['classHeader'] + "'>").appendTo(this._mask);
+		this._doubleHead = $(element('div', {
+			'class': opt['classHeader']
+		})).appendTo(mask);
 	}
 
-	this._head = $("<div class='" + opt['classHeader'] + "'>").appendTo(this._mask);
+	var head = this._head = $(element('div', {
+		'class': opt['classHeader']
+	})).appendTo(mask);
 
-	ColumnHeader._disableSel(this._head);
+	ColumnHeader._disableSel(head);
 
 };
 
 prototype._bindEvents = function() {
 	this.grid.log('binding ColumnHeader events...', Grid.V_INIT);//IF_DEBUG
+
 	var events,
 		colDefs = this.getColumns(),
 		len = colDefs.length,
@@ -766,7 +768,13 @@ prototype._onRenderModules = function() {
 					groupWidth += view._getColOuterWidth(m++);
 				}
 			}
-			doubleHeaders.push("<div class='" + opt['classColHeader'] + "' title='" + groupName + "' style='width:" + groupWidth + "px;'>" + groupName + "</div>");
+			doubleHeaders.push(element('div', {
+				'class': opt['classColHeader'],
+				'title': groupName,
+				'style': {
+					width: groupWidth + 'px'
+				}
+			}, groupName));
 		}
 
 
@@ -800,8 +808,9 @@ prototype._onAfterRenderModules = function() {
 	
 	this._initResizeHandles();
 	
-	this._resizeGuide = $("<div class='" + opt['classResizeGuide'] + "'>")
-		.appendTo(this.getView()._mask).hide();
+	this._resizeGuide = $(element('div', {
+		'class': opt['classResizeGuide']
+	})).appendTo(this.getView()._mask).hide();
 	this._resizeGuide[0].style.top = "0px";
 	this._resizeGuide[0].style.height = "0px";
 };
@@ -814,8 +823,23 @@ prototype._render = function(header, colDef, i) {
 		event = "onRenderHeader_" + key,
 		args = [header];
 
-	header.push("<div id='" + this.mid + "h" + key + "' class='" + opt['classColHeader'] + " " + (opt['reorderEnabled'] || colDef['sorter'] ? " " + opt['classInteractive'] : "") +
-		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + key + "'>");
+	var classname = opt['classColHeader'];
+	if (opt['reorderEnabled'] || colDef['sorter']) {
+		classname += " " + opt['classInteractive'];
+	}
+	var attr = {
+		'id': this.mid + "h" + key,
+		'class': classname,
+		colKey: key,
+		'style': {
+			width: (this.getView()._getColOuterWidth(i) - widthPlus) + "px"
+		}
+	};
+	if (!colDef['noTitle']) {
+		attr.title = colDef['title'] || name;
+	}
+	
+	header.push(element('div', attr, null, Util.LEAVE_OPENED));
 
 	/**
 	ColumnHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 앞에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
@@ -842,7 +866,9 @@ prototype._render = function(header, colDef, i) {
 	this.triggerGridEvent(event+"_append", args, true);
 
 	if (colDef['sorter']) {
-		header.push("<span class='" + opt['classSort'] + "'></span>");
+		header.push(element('span', {
+			'class': opt['classSort']
+		}));
 	}
 
 	header.push("</div>");
