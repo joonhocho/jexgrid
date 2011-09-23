@@ -97,10 +97,12 @@ proto._init = function(args) {
 		id = mid + '-toggle-column-' + key;
 		list += element('label', {
 			'for': id
-		}, element('li', null, input('checkbox', {
+		}, element('li', {
+			'class': column.hidden ? 'unchecked' : null
+		}, input('checkbox', {
 			'id': id,
 			checked: !column.hidden,
-			onclick: "JGM.m.MenuBar." + mid + ".toggleColumn('" + key + "', this.checked)"
+			onclick: "JGM.m.MenuBar." + mid + ".toggleColumn('" + key + "', this.checked, this)"
 		}) + column.name, SAFE), SAFE);
 	}
 	var ul = this.ul = $(element('ul', {
@@ -125,14 +127,16 @@ proto.mousedown = function(e) {
 	}
 }
 
-proto.toggleColumn = function(key, show) {
+proto.toggleColumn = function(key, show, checkbox) {
 	columnWidths = this.columnWidths;
 	if (show) {
 		this.getView().setWidthByKey(key, this.columnWidths[key]);
+		$(checkbox.parentNode).removeClass('unchecked');
 	}
 	else {
 		this.columnWidths[key] = this.getColMgr().getByKey(key).width;
 		this.getView().setWidthByKey(key, 0);
+		$(checkbox.parentNode).addClass('unchecked');
 	}
 };
 
@@ -169,7 +173,8 @@ proto._onCreateCss = function() {
 
 	rules.push('.jgrid-column-toggle-box{position:absolute;top:0;left:0;z-index:100;list-style-type:none;margin:0;padding:0;border:1px solid #888;background:#eee}');
 	rules.push('.jgrid-column-toggle-box li{cursor:pointer;padding:1px 4px 1px 0px}');
-	rules.push('.jgrid-column-toggle-box li:hover{background:#ccc}');
+	rules.push('.jgrid-column-toggle-box li.unchecked{background:#ccc}');
+	//rules.push('.jgrid-column-toggle-box li:hover{background:#cdf}');
 	
 	return rules.join("");
 };
