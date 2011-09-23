@@ -34,6 +34,7 @@ var JGM = goog.getObjectByName('jx.grid'),
 function MenuBar(args) {
 	goog.base(this, args);
 	this.grid['menubar'] = this;
+	this.columnWidths = {};
 }
 
 goog.inherits(MenuBar, BaseModule);
@@ -45,21 +46,26 @@ MenuBar.getInstance = function(args) {
 var proto = MenuBar.prototype;
 
 proto._defaultOptions = function() {
+	var imgUrl = this.grid._options['imageUrl'];
 	return {
-		'background': "url(" + this.grid._options['imageUrl'] + "menubar-bg.png) repeat-x scroll center",
+		'background': "url(" + imgUrl + "menubar-bg.png) repeat-x scroll center",
 		'borderThickness': 1,
 		'border': "solid #b6bac0",
 		'height': 27,
 		'classMenuBar': "menubar",
 		'classIcon': "menu-icon",
+		'classColumnToggleIcon': "jgrid-column-toggle-icon",
+		'columnIconUrl': imgUrl + "search-icon.png",
+		'columnIconWidth': 15,
+		'columnIconHeight': 15,
 		'iconBorderThickness': 1,
 		'iconBorder': "solid transparent",
 		'iconBorderHover': "solid #d4d4d4",
 		'iconBorderActive': "solid #9a9a9a",
 		'iconMargin': 2,
 		'iconBackground': "",
-		'iconBackgroundHover': "url(" + this.grid._options['imageUrl'] + "menu-icon-hover.png) repeat-x scroll center",
-		'iconBackgroundActive': "url(" + this.grid._options['imageUrl'] + "menu-icon-active.png) repeat-x scroll center",
+		'iconBackgroundHover': "url(" + imgUrl + "menu-icon-hover.png) repeat-x scroll center",
+		'iconBackgroundActive': "url(" + imgUrl + "menu-icon-active.png) repeat-x scroll center",
 		'iconHeight': 21,
 		'iconWidth': 21,
 		'iconBorderRadius': 4,
@@ -68,17 +74,73 @@ proto._defaultOptions = function() {
 }
 
 proto._init = function(args) {
+	var opt = this._options;
 	this._ctnr = args['container'];
 	this._menubar =
-		$("<div class='" + this._options['classMenuBar'] + "'></div>")
+		$("<div class='" + opt['classMenuBar'] + "'></div>")
 		.prependTo(this._ctnr);
 
+	var element = Util.element,
+		input = Util.input,
+		SAFE = Util.SAFE,
+		columns = this.getColumns(),
+		i = 0,
+		l = columns.length,
+		list = '',
+		mid = this.mid,
+		column,
+		key,
+		id;
+	for (; i < l; i++) {
+		column = columns[i];
+		key = column.key;
+		id = mid + '-toggle-column-' + key;
+		list += element('label', {
+			'for': id
+		}, element('li', null, input('checkbox', {
+			'id': id,
+			checked: !column.hidden,
+			onclick: "JGM.m.MenuBar." + mid + ".toggleColumn('" + key + "', this.checked)"
+		}) + column.name, SAFE), SAFE);
+	}
+	var ul = this.ul = $(element('ul', {
+		'class': 'jgrid-column-toggle-box'
+	}, list, SAFE)).appendTo(document.body);
+
+	var offset = ul.offset();
+	ul.css({
+		top: offset.top,
+		left: offset.left + 26
+	});
+
+	ul.hide();
+	this.columnIcon = this.addIcon(opt['classColumnToggleIcon'], "현재 보여지는 열을 숨기거나 숨겨진 열을 보이도록 합니다.", opt['columnIconWidth'], opt['columnIconHeight'], function() {
+		ul.toggle();
+	});
+};
+
+proto.mousedown = function(e) {
+	if (!(Util.contains(this.columnIcon[0], e.target) || Util.contains(this.ul[0], e.target))) {
+		this.ul.hide();
+	}
+}
+
+proto.toggleColumn = function(key, show) {
+	columnWidths = this.columnWidths;
+	if (show) {
+		this.getView().setWidthByKey(key, this.columnWidths[key]);
+	}
+	else {
+		this.columnWidths[key] = this.getColMgr().getByKey(key).width;
+		this.getView().setWidthByKey(key, 0);
+	}
 };
 
 proto._bindEvents = function(args) {
 	this.grid['event'].bind({
 		'onCreateCss': this._onCreateCss,
-		'onDestroy': this._destroy
+		'onDestroy': this._destroy,
+		'mousedown': this.mousedown
 	}, this);
 }
 
@@ -98,11 +160,16 @@ proto._onCreateCss = function() {
       border = opt['borderThickness'] + "px " + opt['border'],
       rules = [];
 
-	rules.push(gridId + opt['classMenuBar'] + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + opt['background'] + ";border-bottom:" + border + ";height:" + opt['height'] + "px}");
+	rules.push(gridId + opt['classMenuBar'] + "{" + JGM._CONST._cssUnselectable + "position:relative;overflow:hidden;width:100%;background:" + opt['background'] + ";border-bottom:" + border + ";height:" + opt['height'] + "px}");
 	rules.push(gridId + opt['classIcon'] + "{float:left;height:" + opt['iconHeight'] + "px;width:" + opt['iconWidth'] + "px;border:" + opt['iconBorderThickness'] + "px " + opt['iconBorder'] + ";margin:" + opt['iconMargin'] + "px 0 0 " + opt['iconMargin'] + "px;background:" + opt['iconBackground'] + ";border-radius:" + opt['iconBorderRadius'] + "px;-moz-border-radius:" + opt['iconBorderRadius'] + "px}");
 	rules.push(gridId + opt['classIcon'] + ":hover," + gridId + opt['classIcon'] + ":focus{background:" + opt['iconBackgroundHover'] + ";border:" + opt['iconBorderThickness'] + "px " + opt['iconBorderHover'] + "}");
 	rules.push(gridId + opt['classIcon'] + ":active," + gridId + opt['classIcon'] + ".active{cursor:default;background:" + opt['iconBackgroundActive'] + ";border:" + opt['iconBorderThickness'] + "px " + opt['iconBorderActive'] + "}");
 	rules.push(gridId + opt['classIcon'] + ".active:focus{border:" + opt['iconBorderThickness'] + "px " + opt['iconBorderFocus'] + "}");
+	rules.push(gridId + opt['classColumnToggleIcon'] + "{background:url(" + opt['columnIconUrl'] + ") no-repeat center;width:" + opt['columnIconWidth'] + "px;height:" + opt['columnIconHeight'] + "px}");
+
+	rules.push('.jgrid-column-toggle-box{position:absolute;top:0;left:0;z-index:100;list-style-type:none;margin:0;padding:0;border:1px solid #888;background:#eee}');
+	rules.push('.jgrid-column-toggle-box li{cursor:pointer;padding:1px 4px 1px 0px}');
+	rules.push('.jgrid-column-toggle-box li:hover{background:#ccc}');
 	
 	return rules.join("");
 };

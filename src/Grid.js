@@ -391,6 +391,9 @@ prototype._init = function(args) {
 		}
 	}
 	*/
+	if (!opt['MenuBar']) {
+		opt['MenuBar'] = {};
+	}
 
 	if (opt['Collapser']) {
 		this['collapser'] =  JGM.create("Collapser", {grid:this, 'options':opt['Collapser']});
@@ -414,15 +417,10 @@ prototype._init = function(args) {
 	}
 
 	if (opt['SearchManager']) {
-		if (!opt['MenuBar']) {
-			opt['MenuBar'] = {};
-		}
 		this['search'] =  JGM.create("SearchManager", {grid:this, 'container':ctnr, 'options':opt['SearchManager']});
 	}
 
-	if (opt['MenuBar']) {
-		this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':ctnr, 'options':opt['MenuBar']});
-	}
+	this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':ctnr, 'options':opt['MenuBar']});
 
 	this['view'] =  JGM.create("ViewportManager", {grid:this, 'container':ctnr, 'options':opt['ViewportManager']});
 

@@ -276,6 +276,8 @@ prototype._defaultOptions = function(grid) {
 		*/
 		'sortBackgroundDesc': imgurl + "sort-desc.png",
 
+		'headerMoreButton': imgurl + "header-more-button.gif",
+
 		/**
 		컬럼 헤더의 폰트 스타일입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
 
@@ -466,7 +468,7 @@ prototype._defaultOptions = function(grid) {
 		@since 1.1.2
 		@version 1.1.2
 		*/
-		'resizeHandleWidth': 11,
+		'resizeHandleWidth': 5,
 
 		/**
 		컬럼 헤더 컨테이너 마스크에 적용되는 CSS style 입니다.<br>
@@ -587,7 +589,7 @@ prototype._defaultOptions = function(grid) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'resizeHandleBackground': "black;filter:alpha(opacity=5);opacity:0.05"
+		'resizeHandleBackground': "black;filter:alpha(opacity=10);opacity:0.10"
 	};
 }
 
@@ -669,12 +671,14 @@ prototype._beforeCreateCss = function(e) {
 		'float': 'left',
 		'text-overflow':'ellipsis',
 		'text-align':'center',
+		'vertical-align': 'middle',
 		height: height,
 		left: (scrollerLeft - this.getView().getScrollLeft()) + "px",
 		'border-right': border,
 		_append: opt['headerStyle']
 	};
 	styles[classColHeader + "." + opt['classInteractive'] + ":hover, " + gridId + classColHeaderActive] = {
+		cursor: 'pointer',
 		background: opt['backgroundHover']
 	};
 	styles['.' + classColHeaderActive] = {
@@ -683,10 +687,26 @@ prototype._beforeCreateCss = function(e) {
 	styles[classColHeader + "." + opt['classColHeaderPlaceholder']] = {
 		background: opt['backgroundPlaceholder'] + "!important"
 	};
+
+	styles['.jgrid-header-text'] = {
+		'vertical-align': 'middle'
+	};
+
+	styles['.jgrid-header-more'] = {
+		position: 'absolute',
+		cursor: 'pointer',
+		height: '100%',
+		width: "14px",
+		right: 0,
+		top: 0
+	};
+	styles['.jgrid-header-more:hover'] = {
+		'border-left': '1px solid black',
+		background: "url(" + opt['headerMoreButton'] + ") no-repeat left center"
+	};
 	styles['.' + opt['classSort']] = {
 		position: 'absolute',
-		height: height,
-		right: opt['sortRight'] + "px",
+		height: '100%',
 		width: opt['sortWidth'] + "px",
 		background: "url(" + opt['sortBackground'] + ") no-repeat center transparent"
 	};
@@ -701,7 +721,7 @@ prototype._beforeCreateCss = function(e) {
 		background: opt['resizeHandleBackground'],
 		cursor:'e-resize',
 		position:'absolute',
-		height: height,
+		height: '100%',
 		width: opt['resizeHandleWidth'] + "px"
 	};
 	styles['.' + opt['classResizeGuide']] = {
@@ -764,7 +784,6 @@ prototype._onRenderModules = function() {
 			groupWidth = 0;
 			for (k = 0, glen = group.length; k < glen; k++) {
 				if (!group[k].hidden) {
-					echo (group[k].key, view._getColOuterWidth(m));
 					groupWidth += view._getColOuterWidth(m++);
 				}
 			}
@@ -870,6 +889,12 @@ prototype._render = function(header, colDef, i) {
 			'class': opt['classSort']
 		}));
 	}
+
+	/*
+	header.push(element('span', {
+		'class': 'jgrid-header-more'
+	}));
+	*/
 
 	header.push("</div>");
 };
