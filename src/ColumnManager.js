@@ -578,7 +578,7 @@ prototype.set = function(colDefs) {
 
 		if (doubleHeader) {
 			// if double header feature is needed
-			parent = col.parent = (col.parent == null ? ' ' : col.parent);
+			parent = col.parent = (col.parent == null ? col.name || col.key : col.parent);
 			if (!groupsByName.hasOwnProperty(parent)) {
 				groups.push(groupsByName[parent] = []);
 			}
@@ -614,6 +614,45 @@ prototype.set = function(colDefs) {
 	return colDefs;
 };
 
+prototype.reorganizeGroups = function() {
+	if (this.hasGroups()) {
+		var cols = this._colDefs,
+			i = 0,
+			l = cols.length,
+			col,
+			groups = this._groups = [],
+			groupsByName = this._groupsByName = {},
+			parent;
+		for (; i < l; i++) {
+			col = cols[i];
+			parent = col.parent = (col.parent == null ? col.name || col.key : col.parent);
+			if (!groupsByName.hasOwnProperty(parent)) {
+				groups.push(groupsByName[parent] = []);
+			}
+			groupsByName[parent].push(col);
+		}
+
+		i = 0;
+		l = groups.length;
+
+		var j,
+			jl,
+			group;
+
+		colDefs = [];
+		for (; i < l; i++) {
+			group = groups[i];
+			j = 0;
+			jl = group.length;
+			for (; j < jl; j++) {
+				colDefs.push(group[j]);
+			}
+		}
+
+		this._colDefs = colDefs;
+	}
+};
+
 prototype.hasGroups = function() {
 	return !!this._groups;
 };
@@ -626,6 +665,32 @@ prototype.getGroupByName = function(name) {
 	if (name != null && this._groupsByName && this._groupsByName.hasOwnProperty(name)) {
 		return this._groupsByName[name];
 	}
+};
+
+prototype.getGroupByGroupIdx = function(i) {
+	return this._groups[i];
+};
+
+prototype.getGroupIndexByKey = function(key) {
+	var groups = this._groups;
+	if (groups) {
+		var i = 0,
+			l = groups.length,
+			group,
+			j,
+			jl;
+		for (; i < l; i++) {
+			group = groups[i];
+			j = 0;
+			jl = group.length;
+			for (; j < jl; j++) {
+				if (group[j].key == key) {
+					return i;
+				}
+			}
+		}
+	}
+	return null;
 };
 
 prototype.getSorter = function(key) {
@@ -715,8 +780,9 @@ prototype.addAt = function(i, colDef) {
 		throw new Error('index out of bound, i = ' + i);
 	}
 	
-	
 	colDefs.addAt(i, this._extend(colDef));
+
+	this.reorganizeGroups();
 
 	this._filter();
 	

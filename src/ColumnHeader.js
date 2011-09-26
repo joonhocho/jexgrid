@@ -748,7 +748,11 @@ prototype._widthPlus = function() {
 
 prototype._onScrollViewportH = function(scrollLeft) {
 	this.grid.log('adjusting Colheader style.left according to viewport scrollLeft...', Grid.V_RESIZE);//IF_DEBUG
-	this._head[0].style.left = (-this._options['scrollerLeft'] - scrollLeft) + "px";
+	var left = -this._options['scrollerLeft'] - scrollLeft;
+	this._head[0].style.left = left + "px";
+	if (this._doubleHead) {
+		this._doubleHead[0].style.left = left + "px";
+	}
 };
 
 prototype._onRenderModules = function() {
@@ -791,11 +795,10 @@ prototype._onRenderModules = function() {
 				'class': opt['classColHeader'],
 				'title': groupName,
 				'style': {
-					width: groupWidth + 'px'
+					width: (groupWidth - this._widthPlus()) + 'px'
 				}
 			}, groupName));
 		}
-
 
 		this._doubleHead[0].innerHTML = doubleHeaders.join("");
 	}
@@ -1233,6 +1236,25 @@ prototype._setWidthByKey = function(key, w, o) {
 	this.grid.log('setting ColumnHeader width=' + w + '. key=' + key, Grid.V_RESIZE);//IF_DEBUG
 
 	this.get(key)[0].style.width = w + this.getView()._colWidthPlus() - this._widthPlus() + "px";
+
+	if (this._doubleHead) {
+		var colmgr = this.getColMgr(),
+			view = this.getView(),
+			viewWidthPlus = view._colWidthPlus(),
+			groupIdx = colmgr.getGroupIndexByKey(key),
+			group = colmgr.getGroupByGroupIdx(groupIdx),
+			i = 0,
+			l = group.length,
+			groupWidth = 0;
+
+		for (; i < l; i++) {
+			if (!group[i].hidden) {
+				groupWidth += group[i].width + viewWidthPlus;
+			}
+		}
+
+		this._doubleHead[0].childNodes[groupIdx].style.width = groupWidth - this._widthPlus() + 'px';
+	}
 	
 	this._syncResizeHandles(this.getColMgr().getIdxByKey(key));
 
