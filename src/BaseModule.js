@@ -160,6 +160,11 @@ goog.provide('jx.grid.BaseModule');
 			}
 		}
 
+		this._datamgr = null;
+		this._colmgr = null;
+		this._evtmgr = null;
+		this._view = null;
+
 		// options
 		var defaults = this._defaultOptions && this._defaultOptions(args.grid),
 			opts = args && args['options'];
@@ -270,6 +275,11 @@ goog.provide('jx.grid.BaseModule');
 	 */
 	proto.dispose = function() {
 		delete this.grid;
+		delete this._datamgr;
+		delete this._colmgr;
+		delete this._evtmgr;
+		delete this._view;
+
 		this.dispatchEvent({
 			'type':'beforedispose'
 		});
@@ -290,7 +300,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getDataMgr = function() {
-		return this.grid['dataMgr'];
+		return this._datamgr || (this._datamgr = this.grid['dataMgr']);
 	}
 
 	/**
@@ -307,7 +317,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getAllData = function() {
-		return this.grid['dataMgr']['all'];
+		return this.getDataMgr()['all'];
 	}
 
 	/**
@@ -324,7 +334,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getDataList = function() {
-		return this.grid['dataMgr']['datalist'];
+		return this.getDataMgr()['datalist'];
 	}
 
 	/**
@@ -341,7 +351,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getIdKey = function() {
-		return this.grid['dataMgr'].idKey;
+		return this.getDataMgr().idKey;
 	}
 
 	/**
@@ -358,7 +368,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getColMgr = function() {
-		return this.grid['colDefMgr'];
+		return this._colmgr || (this._colmgr = this.grid['colDefMgr']);
 	}
 
 	/**
@@ -375,7 +385,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getColumns = function() {
-		return this.grid['colDefMgr'].get();
+		return this.getColMgr().get();
 	}
 
 	/**
@@ -392,7 +402,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getEventMgr = function() {
-		return this.grid['event'];
+		return this._evtmgr || (this._evtmgr = this.grid['event']);
 	}
 
 	/**
@@ -409,7 +419,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getView = function() {
-		return this.grid['view'];
+		return this._view || (this._view = this.grid['view']);
 	}
 
 	/**
@@ -444,7 +454,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.bindGridEvent = function() {
-		var event = this.grid['event'];
+		var event = this.getEventMgr();
 		return event.bind.apply(event, arguments);
 	}
 
@@ -463,7 +473,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.triggerGridEvent = function() {
-		var event = this.grid['event'];
+		var event = this.getEventMgr();
 		return event.trigger.apply(event, arguments);
 	}
 

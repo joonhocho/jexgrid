@@ -641,7 +641,6 @@ prototype._beforeCreateCss = function(e) {
 		classHeaderMask = '.' + opt['classHeaderMask'],
 		classColHeader = '.' + opt['classColHeader'],
 		scrollerLeft = opt['scrollerLeft'],
-		scrollerLeft = opt['scrollerLeft'],
 		height = opt['height'] + 'px',
 		classColHeaderActive = opt['classColHeaderActive'],
 		styles = {};

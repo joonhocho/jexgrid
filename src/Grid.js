@@ -1578,6 +1578,12 @@ prototype.twprint = function() {
 
 //END_IF_DEBUG
 
+prototype.getShownColumns = function() {
+	return this.colDefMgr.get().filter(function(c) {
+		return c.width > 0;
+	});
+};
+
 prototype.chart = function(chartCont, type, columns, options, from, to) {
 	this.log('creating chart... type=' + type + ', columns=[' + columns.join(',') + ']', V_INIT);//IF_DEBUG
 
