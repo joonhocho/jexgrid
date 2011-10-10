@@ -414,6 +414,7 @@ prototype.__init = function() {
 	this._updateTotalCount();
 	this._updateShownCount();
 
+	this.renderCells();
 	this._initSumCells();
 	this.bindEvents();
 };
@@ -423,10 +424,58 @@ prototype.bindEvents = function() {
 		'onCreateCss': this._onCreateCss,
 		'onDestroy': this._destroy,
 		'onDataChange': [this._updateTotalCount, this._updateSums],
-		'onAfterRefresh': this._updateShownCount
+		'onAfterRefresh': this._updateShownCount,
+		'onResizeCol': this._setWidthByKey,
+		'onScrollViewportH': this._onScrollViewportH
 	}, this);
 };
 
+prototype._setWidthByKey = function(key, w, o) {
+	var el = this.getSumCell(key);
+	if (el) {
+		var widthPlus = 1;
+		el.style.width = w + this.grid['view']._colWidthPlus() - widthPlus + "px";
+	}
+};
+
+prototype._onScrollViewportH = function(scrollLeft) {
+	var left = -10000 - scrollLeft;
+	this._slider[0].style.left = left + "px";
+};
+
+prototype.renderCells = function() {
+
+	var colDefs = this.grid['colDefMgr'].get(),
+		i = 0,
+		l = colDefs.length,
+		colDef,
+		view = this.grid['view'],
+		cells = [],
+		widthPlus = 1;
+
+	for (; i < l; i++) {
+		cells.push(element('div', {
+			'class': 'classSliderCell',
+			'id': this.mid + '_sum_' + colDefs[i].key,
+			'style': {
+				width: (view._getColOuterWidth(i) - widthPlus) + "px"
+			}
+		}));
+	}
+
+	this._slider[0].innerHTML = cells.join("");
+};
+
+prototype.getSumCell = function(key) {
+	return document.getElementById(this.mid + '_sum_' + key);
+};
+
+prototype.setCellValue = function(key, value) {
+	var el = this.getSumCell(key);
+	if (el) {
+		el.innerHTML = value;
+	}
+};
 
 prototype._destroy = function() {
 	var i,
@@ -466,8 +515,7 @@ prototype._onCreateCss = function() {
 		width: '100%',
 		font: opt['font'],
 		background: opt['background'],
-		'border-bottom': border,
-		_append: opt['style']
+		'border-bottom': border
 	};
 
 	styles[gridsel + ' .classSlider'] = {
@@ -477,7 +525,7 @@ prototype._onCreateCss = function() {
 		cursor: 'default',
 		background: opt['background'],
 		left: '-10000px',
-		width: opt['scrollerWidth'] + 'px',
+		width: '100000px',
 		'line-height': '21px'
 	};
 
@@ -490,8 +538,7 @@ prototype._onCreateCss = function() {
 		'vertical-align': 'middle',
 		height: '21px',
 		left: (10000 - this.grid['view'].getScrollLeft()) + "px",
-		'border-right': border,
-		_append: opt['headerStyle']
+		'border-right': border
 	};
 
 	var i,
@@ -533,32 +580,38 @@ prototype._initSumCells = function() {
 		map = this._sumMap,
 		cell,
 		node,
+		html,
 		i = 0;
 	for (; i < clen; i++) {
 		colDef = colDefs[i];
 		renderer = colDef['sumRenderer'];
-		if (Util.isNotNull(renderer)) {
+		if (renderer) {
 			key = colDef['key'];
 			name = colDef['name'];
 			sum = sumfn(rows, key);
 			cell = map[key] = this.getNextCell();
 			node = cell[0];
 
-			if (Util.isFunction(renderer)) {
-				node.innerHTML = renderer(name, sum);
+			switch (typeof renderer) {
+				case 'function':
+					// has custom sum renderer
+					html = renderer(name, sum);
+					break;
+				case 'string':
+					lower = renderer.toLowerCase();
+					if (lower === "krw" || renderer === "\\") {
+						html = Util.formatNumber(sum);
+					}
+					else if (lower === "usd" || renderer === "$") {
+						html = Util.formatNumber(sum, 2, "$ ");
+					}
+					break;
+				default:
+					html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
+					break;
 			}
-			else if (Util.isString(renderer)) {
-				lower = renderer.toLowerCase();
-				if (lower === "krw" || renderer === "\\") {
-					node.innerHTML = this._sumRenderer(name, Util.formatNumber(sum));
-				}
-				else if (lower === "usd" || renderer === "$") {
-					node.innerHTML = this._sumRenderer(name, Util.formatNumber(sum, 2, "$ "));
-				}
-			}
-			else {
-				node.innerHTML = this._sumRenderer(name, sum);
-			}
+			node.innerHTML = html;
+			this.setCellValue(key, html);
 		}
 	}
 };
@@ -576,6 +629,7 @@ prototype._updateSums = function() {
 		sumfn = Footer._calSum,
 		cell,
 		node,
+		html,
 		content = this._options['classContent'];
 	for (key in map) {
 		if (map.hasOwnProperty(key)) {
@@ -586,21 +640,26 @@ prototype._updateSums = function() {
 			cell = map[key];
 			node = cell[0];
 
-			if (Util.isFunction(renderer)) {
-				node.innerHTML = renderer(colDef['name'], sum);
+			switch (typeof renderer) {
+				case 'function':
+					// has custom sum renderer
+					html = renderer(name, sum);
+					break;
+				case 'string':
+					lower = renderer.toLowerCase();
+					if (lower === "krw" || renderer === "\\") {
+						html = Util.formatNumber(sum);
+					}
+					else if (lower === "usd" || renderer === "$") {
+						html = Util.formatNumber(sum, 2, "$ ");
+					}
+					break;
+				default:
+					html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
+					break;
 			}
-			else if (Util.isString(renderer)) {
-				lower = renderer.toLowerCase();
-				if (lower === "krw" || renderer === "\\") {
-					cell.find("span." + content)[0].innerHTML = Util.formatNumber(sum);				
-				}
-				else if (lower === "usd" || renderer === "$") {
-					cell.find("span." + content)[0].innerHTML = Util.formatNumber(sum, 2, "$ ");
-				}
-			}	
-			else {
-				cell.find("span." + content)[0].innerHTML = sum;
-			}
+			node.innerHTML = html;
+			this.setCellValue(key, html);
 		}
 	}
 };
