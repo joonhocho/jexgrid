@@ -55,7 +55,7 @@ proto._defaultOptions = function() {
 		'classMenuBar': "menubar",
 		'classIcon': "menu-icon",
 		'classColumnToggleIcon': "jgrid-column-toggle-icon",
-		'columnIconUrl': imgUrl + "search-icon.png",
+		'columnIconUrl': imgUrl + "data-creator-icon.png",
 		'columnIconWidth': 15,
 		'columnIconHeight': 15,
 		'iconBorderThickness': 1,

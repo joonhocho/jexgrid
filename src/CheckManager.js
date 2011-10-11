@@ -115,7 +115,8 @@ prototype._bindEvents = function() {
 		'onIdChange': this._onIdChange,
 		'onIdListChange': this._onIdListChange,
 		'onRemoveDatarow': this._onRemoveDatarow,
-		'onRemoveDatalist': this._onRemoveDatalist
+		'onRemoveDatalist': this._onRemoveDatalist,
+		'onSearch': this._onSearch
 	};
 
 	events["onRenderCell_" + key + "_prepend"] = this._onRenderCell;
@@ -126,6 +127,16 @@ prototype._bindEvents = function() {
 		events.onRenderHeadersComplete = this._getMaster;
 	}
 	this.bindGridEvent(events, this);
+};
+
+prototype._onSearch = function(filtered) {
+	if (filtered) {
+		this.disableMaster();
+	}
+	else {
+		this.enableMaster();
+	}
+
 };
 
 prototype._defaultOptions = function() {
@@ -1054,6 +1065,18 @@ prototype.enableAll = function() {
 	}
 
 	$(this.getCheckboxes()).removeAttr("disabled");
+};
+
+prototype.disableMaster = function() {
+	if (this._hasMaster) {
+		this._master.attr("disabled", "disabled");
+	}
+};
+
+prototype.enableMaster = function() {
+	if (this._hasMaster) {
+		this._master.removeAttr("disabled");
+	}
 };
 
 CheckManager._check = function(obj) {

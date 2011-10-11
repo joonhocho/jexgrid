@@ -373,8 +373,11 @@ prototype._destroy = function() {
 
 prototype._onFilter = function(success, failed) {
 	if (this._global.length === 0 && Util.isEmptyObj(this._codeMap)) {
+		this.grid.event.trigger("onSearch", [false], true);
 		return;
 	}
+
+	this.grid.event.trigger("onSearch", [true], true);
 
 	var options,
 		tagMap = this._tagMap,

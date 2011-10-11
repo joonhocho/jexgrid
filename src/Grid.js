@@ -364,7 +364,7 @@ prototype._init = function(args) {
 		width = '';
 	}
 
-	ctnr = this._ctnr = $("<div id='" + this.mid + "' class='" + opt['classGrid'] + "' " + (width ? "" : "style='width:" + width + "' ") + "tabIndex='0'>").appendTo(Util$.safe$(ctnr));
+	ctnr = this._ctnr = $("<div id='" + this.mid + "' class='" + opt['classGrid'] + "' " + (width ? "style='width:" + width + "' " : '') + "tabIndex='0'>").appendTo(Util$.safe$(ctnr));
 
 	this._vars.scrollbarDim = Util$.calScrollbarDims(ctnr);
 
