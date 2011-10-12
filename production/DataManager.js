@@ -2246,6 +2246,32 @@ prototype.exportToArray = function(keys, from, to, datalist) {'use strict';
 	}
 	return arr;
 }
+prototype.select = function(keys, from, to, datalist) {'use strict';
+	keys = keys || this.grid['colDefMgr'].getKeys();
+	datalist = datalist || this.datalist.slice(from, to);
+	var row,
+		arr = [],
+		datarow,
+		key,
+		j = 0,
+		jl = datalist.length,
+		i,
+		l = keys.length;
+	for (; j < jl; j++) {
+		datarow = datalist[j];
+		i = 0;
+		row = {};
+		for (; i < l; i++) {
+			key = keys[i];
+			row[key] = datarow.hasOwnProperty(key) && datarow[key] != null ? datarow[key] : null;
+		}
+		arr.push(row);
+	}
+	return arr;
+}
+prototype.slice = function(from, to) {'use strict';
+	return this.select(null, from, to);
+}
 DataManager._lexi = function(datalist, key, desc) {
 	var oldToString = Object.prototype.toString;
 	Object.prototype.toString = typeof key == 'function' ? key : function() { return this[key]; };

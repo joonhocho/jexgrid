@@ -20,13 +20,11 @@ var JGM = goog.getObjectByName('jx.grid'),
  goog.exportSymbol('jx.grid.SearchManager', SearchManager);
 function SearchManager(args) {
 	this.mid = args.mid;
-	this._ctnr = args['container'];
-	this._mask;
-	this._search;
-	this._masterInput;
-	this._tag;
-	this._advButton;
-	this._adv;
+	this._mask = null;
+	this._masterInput = null;
+	this._tag = null;
+	this._advButton = null;
+	this._adv = null;
 	this.grid = args.grid;
 	
 	/**
@@ -39,17 +37,18 @@ function SearchManager(args) {
 	this.grid['search'] = this;
 	var options = {
 		'background': "#f0f0f0",
-		'borderThickness': 1,
+		'borderThickness': 0,
 		'border': "solid #d6d6d6",
 		'inputBorder': "1px solid #A7A7A7",
 		'inputPadding': 0,
 		'searchbarAlign': "center",
 		'searchbarMargin': 3,
-		'searchbarWidth': "99%",
+		'searchbarWidth': "140px",
 		'searchbarHeight': 20,
 		'tagsHeight': 26,
 		'tagsPadding': 2,
 		'tagsBorderRadius': 3,
+		'resetButton': false,
 		'advButtonColor': "#123272",
 		'advButtonFont': "bold 12px Arial,Helvetica,sans-serif",
 		'advButtonPadding': 5,
@@ -106,7 +105,6 @@ function SearchManager(args) {
 	this._codeMap = {};
 	this._global = [];
 	this._globalMap = {};
-	this._hasFilter;
 	this._keyToName = {};
 	
 	this.__init();
@@ -129,12 +127,11 @@ prototype._onCreateCss = function() {
 		classAdvButton = gridId + opt['classAdvButton'],
 		classRemoveTag = gridId + opt['classRemoveTag'],
 		rules = [];
-	rules.push(classMask + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;width:100%;background:" + opt['background'] +"}");
+	rules.push(classMask + "{" + JGM._CONST._cssUnselectable + "overflow:hidden;float:left;background:" + opt['background'] +"}");
 	rules.push(classMask + " button{margin:0;padding:0 3px}");
 	rules.push(classMask + " input{border:" + opt['inputBorder'] + ";padding:" + opt['inputPadding'] + "}");
-	rules.push(classSearchar + "{text-align:" + opt['searchbarAlign'] + ";border-bottom:" + border + "}");
-	rules.push(classSearchar + " input{width:" + opt['searchbarWidth'] + ";margin:" + opt['searchbarMargin'] + "px 0;height:" + opt['searchbarHeight'] + "px;" + tagsBorderRadius + "}");
-	rules.push(gridId + opt['classTagbar'] + "{cursor:default;height:" + (opt['tagsHeight'] - opt['tagsPadding']) + "px;padding:" + opt['tagsPadding'] + "px 0 0 " + opt['tagsPadding'] + "px;border-bottom:" + border + "}");
+	rules.push(classSearchar + "{float:left;width:" + opt['searchbarWidth'] + ";margin:" + opt['searchbarMargin'] + "px 2px;height:" + opt['searchbarHeight'] + "px;" + tagsBorderRadius + "}");
+	rules.push(gridId + opt['classTagbar'] + "{float:left;cursor:default;height:" + (opt['tagsHeight'] - opt['tagsPadding']) + "px;padding:" + opt['tagsPadding'] + "px 0 0 " + opt['tagsPadding'] + "px;border-bottom:" + border + "}");
 	rules.push(classAdvButton + "{float:left;margin-right:" + opt['tagsPadding'] + "px;background:" + opt['advButtonBg'] + ";border:" + advButtonBorder + ";padding:0 " + opt['advButtonPadding'] + "px;" + tagsBorderRadius + "}");
 	rules.push(classAdvButton + ":hover{background:" + opt['advButtonBgHover'] + ";border:" + advButtonBorderHover + "}");
 	rules.push(classAdvButton + ".opened{background:" + opt['advButtonBgOpened'] + ";border:" + advButtonBorderOpened + "}");
@@ -158,24 +155,25 @@ SearchManager.getInstance = function(args) {
 	return new SearchManager(args);
 };
 prototype.__init = function() {
-	var opt = this._options,
-		thisIns = this,
-		mask,
-		hasFilter,
-		tag;
-	mask = this._mask = $("<div class='" + opt['classMask'] + "'>").prependTo(this._ctnr);
-	this._search = $("<div class='" + opt['classSearchbar'] + "'><input type='text'/></div>").appendTo(mask);
-	this._masterInput = this._search.children(":eq(0)").keyup(function(e) {
-		if (e.which === Util.keyMapKeydown.enter) {
-			thisIns._parse($(this)[0].value);
-		}
-		else if (e.which === Util.keyMapKeydown.esc) {
-			thisIns._removeAllOptions();
-		}
-	});
-	hasFilter = this._hasFilter = this.grid['colDefMgr'].get().some(function(a){return Util.isNotNull(a.filter);});
-	tag = this._tag =
-		$("<div class='" + opt['classTagbar'] + "'>" + (hasFilter ? "<div class='" + opt['classAdvButton'] + "'><div class='" + opt['classAdvButtonName'] + "'>추가 옵션</div><div class='" + opt['classAdvButtonIcon'] + "'></div></div>" : "") + "<button type='button' class='" + opt['classClearTags'] + "' onclick='JGM.m.SearchManager." + this.mid + "._removeAllOptions()'>모든 필터 제거</button></div>")
+	this.grid['event'].bind({
+		'onRenderModules': this._onRenderModules,
+		'onCreateCss': this._onCreateCss,
+		'onFilter': this._onFilter,
+		'onDestroy': this._destroy,
+		'onAfterRenderModules': this._onAfterRenderModules
+	}, this);
+};
+prototype._onRenderModules = function() {
+	var html = [],
+		opt = this._options,
+		colMgr = this.grid['colDefMgr'],
+		colDefs = colMgr.get(),
+		hasFilter = false,//colDefs.some(function(a){ return a.filter != null; }),
+		mid = this.mid,
+		searchbarId = "jgrid-search-input-" + mid,
+		mask = this._mask = $('<div class="' + opt['classMask'] + '"><input type="text" id="' + searchbarId + '" class="' + opt['classSearchbar'] + '" style="float:left;"/></div>'),
+		tag = this._tag =
+		$("<div class='" + opt['classTagbar'] + "'>" + (hasFilter ? "<div class='" + opt['classAdvButton'] + "'><div class='" + opt['classAdvButtonName'] + "'></div><div class='" + opt['classAdvButtonIcon'] + "'></div></div>" : "") + (opt['resetButton'] ? "<button type='button' class='" + opt['classClearTags'] + "' onclick='JGM.m.SearchManager." + mid + "._removeAllOptions()'>초기화</button>" : '') + "</div>")
 		.appendTo(mask);
 	if (hasFilter) {
 		var adv = this._adv = $("<div class='" + opt['classAdvanced'] + "'>").appendTo(mask).hide()
@@ -190,22 +188,7 @@ prototype.__init = function() {
 			$(this).toggleClass("opened");
 			adv.toggle("fast");
 		});
-	}
-	this.grid['event'].bind({
-		'onRenderModules': this._onRenderModules,
-		'onCreateCss': this._onCreateCss,
-		'onFilter': this._onFilter,
-		'onDestroy': this._destroy,
-		'onAfterRenderModules': this._onAfterRenderModules
-	}, this);
-};
-prototype._onRenderModules = function() {
-	var html = [],
-		opt = this._options,
-		mask = this._mask;
-	if (this._hasFilter) {			
-		var colDefs = this.grid['colDefMgr'].get(),
-			len = colDefs.length,
+		var len = colDefs.length,
 			keymap = opt['keyMap'],
 			nmap = this._nameMap,
 			kmap = this._keyToName,
@@ -215,9 +198,9 @@ prototype._onRenderModules = function() {
 			i = 0;
 		for (; i < len; i++) {
 			colDef = colDefs[i];
-			if (Util.isNotNull(colDef['filter'])) {
+			if (colDef['filter'] != null) {
 				key = colDef['key'];
-				if (Util.isNull(keymap) || !keymap.hasOwnProperty(key)) {
+				if (keymap == null || !keymap.hasOwnProperty(key)) {
 					nick = colDef['name'] || key;
 				}
 				else {
@@ -231,15 +214,26 @@ prototype._onRenderModules = function() {
 				html.push("</div>");
 			}
 		}
-		this._adv[0].innerHTML = html.join("");
+		adv[0].innerHTML = html.join("");
 	}
-	
-	if (Util.isNotNull(this.grid['menubar'])) {
-		this.grid['menubar'].addIcon(opt['classSearchIcon'], "데이터 검색을 합니다.", opt['searchIconWidth'], opt['searchIconHeight'], function() {
-			mask.toggle("fast");
-		});
-		mask.hide();
-	}
+	var menubar = this.grid['menubar'],
+		thisIns = this;
+	menubar.addIcon(opt['classSearchIcon'], "데이터 검색을 합니다.", opt['searchIconWidth'], opt['searchIconHeight'], function() {
+		mask.toggle("fast");
+	});
+	mask.hide();
+	menubar.appendHtml(mask);
+	var searchbar = this._masterInput = document.getElementById(searchbarId);
+	///////////////////
+	$(searchbar).keyup(function(e) {
+		var key = e.which;
+		if (key === Util.keyMapKeydown.enter) {
+			thisIns._parse(searchbar.value);
+		}
+		else if (key === Util.keyMapKeydown.esc) {
+			thisIns._removeAllOptions();
+		}
+	});
 };
 prototype._onAfterRenderModules = function() {
 	var map = this._filterMap,
@@ -315,16 +309,17 @@ prototype._destroy = function() {
 	JGM._destroy(this, {
 		name: "SearchManager",
 		path: "search",
-		"$": "_masterInput _advButton _mask _search _tag _adv",
-		property: "_ctnr _hasFilter",
+		"$": "_advButton _mask _tag _adv",
 		array: "_global",
 		map: "_globalMap _filterMap _tagMap _codeMap _nameMap _options _keyToName"
 	});
 };
 prototype._onFilter = function(success, failed) {
 	if (this._global.length === 0 && Util.isEmptyObj(this._codeMap)) {
+		this.grid.event.trigger("onSearch", [false], true);
 		return;
 	}
+	this.grid.event.trigger("onSearch", [true], true);
 	var options,
 		tagMap = this._tagMap,
 		key,
@@ -362,7 +357,7 @@ prototype._onFilter = function(success, failed) {
 			k = 0;
 			key_loop:
 			for (; globalToFind.length !== 0 && k < keylen; k++) {
-				if (Util.isNull(val = data[keys[k]])) {
+				if ((val = data[keys[k]]) == null) {
 					continue;
 				}
 				if (!Util.isString(val)) {
@@ -509,14 +504,14 @@ prototype._parse = function(str) {
 						base = undefined;
 						status = 0;
 					}
-					else if (Util.isNull(key)) {
+					else if (key == null) {
 						global.push(arg);
 					}
 					else {
 						base += " " + arg;
 					}
 				}
-				else if (Util.isNull(key)) {
+				else if (key == null) {
 					global.push(arg);
 				}
 				else {
@@ -567,10 +562,10 @@ prototype._syncMasterInput = function() {
 				}
 			}
 		}					
-		this._masterInput[0].value = $.trim(inputStr);
+		this._masterInput.value = $.trim(inputStr);
 	}
 	else {
-		this._masterInput[0].value = "";
+		this._masterInput.value = "";
 	}
 };
 prototype._registerGlobal = function(toAdd) {
@@ -619,7 +614,7 @@ prototype._registerOption = function(key, nick, optionTag, base, norefresh) {
 		cmap = this._codeMap;
 	if (fmap.hasOwnProperty(key) && (fkmap = fmap[key]).hasOwnProperty(optionTag)) {
 		fkomap = fkmap[optionTag];
-		if (Util.isNull(base)) {
+		if (base == null) {
 			var input = fkomap.input;
 			base = $.trim(input.val());
 			input.val("");
@@ -631,13 +626,13 @@ prototype._registerOption = function(key, nick, optionTag, base, norefresh) {
 		if (base.length === 0) {
 			return false;
 		}
-		if (Util.isNotNull(fkmap.parser)) {
+		if (fkmap.parser != null) {
 			base = fkmap.parser(base);
 		}
 		if (cmap.hasOwnProperty(key + "@T" + optionTag + "@B" + base)) {
 			return false;
 		}
-		if (Util.isNotNull(fkmap.validator)) {
+		if (fkmap.validator != null) {
 			if (!fkmap.validator(base)) {
 				return false;
 			}
@@ -664,7 +659,7 @@ prototype._registerOption = function(key, nick, optionTag, base, norefresh) {
 			for (otherbase in options) {
 				if (options.hasOwnProperty(otherbase)) {
 					oomap = options[otherbase];
-					if (Util.isNotNull(filtermap.parser)) {
+					if (filtermap.parser != null) {
 						parsedOther = filtermap.parser(otherbase);
 					}
 					else {

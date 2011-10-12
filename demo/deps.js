@@ -12,6 +12,7 @@ goog.require('jx.grid.ColumnManager');
 goog.require('jx.grid.TooltipManager');
 goog.require('jx.grid.Footer');
 goog.require('jx.grid.Cell');
+goog.require('jx.grid.HideColumn');
 goog.require('jx.grid.PrintManager');
 goog.require('jx.grid.ColumnHeader');
 goog.require('jx.grid.CheckManager');

@@ -1164,4 +1164,341 @@ Util.open = function(options) {
 	}
 	return window.open(ops.url, ops.name, specs, ops.replace);
 };
+Util.cloneObject = cloneObject;
+Util.extendObject = extendObject;
+Util.extendOrClone = extendOrClone;
+Util.lcfirst = lcfirst;
+Util.ucfirst = ucfirst;
+function cloneObject(o, shallow) {
+	if (o) {
+		var c = {},
+			i,
+				v,
+				undefined = void 0;
+		if (shallow) {
+			for (i in o) {
+				if (o.hasOwnProperty(i) && (v = o[i]) !== undefined) {
+					c[i] = v;
+				}
+			}
+		}
+		else {
+			for (i in o) {
+				if (o.hasOwnProperty(i)) {
+					v = o[i];
+					switch (typeof v) {
+						case 'undefined':
+							// do nothing
+							break;
+						case 'object':
+							c[i] = cloneObject(v);
+							break;
+						default:
+							// overwrite
+							c[i] = v;
+							break;
+					}
+				}
+			}
+		}
+		return c;
+	}
+	return null;
+}
+function extendObject(o1, o2, shallow) {
+	if (o2) {
+		if (o1) {
+			var i,
+				v1,
+					v2;
+			if (shallow) {
+				// shallow extend
+				var undefined = void 0;
+				for (i in o2) {
+					if (o2.hasOwnProperty(i) && (v2 = o2[i]) !== undefined) {
+						o1[i] = v2;
+					}
+				}
+			}
+			else {
+				// recursive deep
+				for (i in o2) {
+					if (o2.hasOwnProperty(i)) {
+						v2 = o2[i];
+						switch (typeof v2) {
+							case 'undefined':
+								// do nothing
+								break;
+							case 'object':
+								if (v2 && o1.hasOwnProperty(i) && (v1 = o1[i]) && typeof v1 == 'object') {
+									// v2 != null && v1 != null
+									// extend
+									extendObject(v1, v2);
+								}
+								else {
+									// overwrite
+									o1[i] = v2;
+								}
+								break;
+							default:
+								// overwrite
+								o1[i] = v2;
+								break;
+						}
+					}
+				}
+			}
+			return o1;
+		}
+		return o2;
+	}
+	return o1;
+}
+function extendOrClone(o1, o2) {
+	if (o2) {
+		if (o1) {
+			return extendObject(o1, o2);
+		}
+		else {
+			return cloneObject(o2);
+		}
+	}
+	else {
+		return o1;
+	}
+}
+function lcfirst(str) {
+	return str ? str.charAt(0).toLowerCase() + str.substring(1) : '';
+}
+function ucfirst(str) {
+	return str ? str.charAt(0).toUpperCase() + str.substring(1) : '';
+}
+var booleanAttributes = {
+		// http://www.w3.org/TR/xhtml-media-types/
+		checked:true,
+		compact:true,
+		declare:true,
+		defer:true,
+		disabled:true,
+		ismap:true,
+		multiple:true,
+		nohref:true,
+		noresize:true,
+		noshade:true,
+		nowrap:true,
+		readonly:true,
+		selected:true
+	},
+	emptyElements = {
+		// http://www.w3.org/TR/html-markup/syntax.html 
+		area:true,
+		base:true,
+		basefont:true,
+		br:true,
+		col:true,
+		command:true,
+		embed:true,
+		frame:true,
+		hr:true,
+		img:true,
+		input:true,
+		isindex:true,
+		keygen:true,
+		link:true,
+		meta:true,
+		param:true,
+		source:true,
+		track:true,
+		wbr:true
+	},
+	inputTypes = {
+		// http://www.w3.org/TR/html5/the-input-element.html
+		hidden:true,
+		text:true,
+		search:true,
+		tel:true,
+		url:true,
+		email:true,
+		password:true,
+		date:true,
+		month:true,
+		week:true,
+		time:true,
+		datetime:true,
+		number:true,
+		range:true,
+		color:true,
+		checkbox:true,
+		radio:true,
+		file:true,
+		submit:true,
+		image:true,
+		reset:true,
+		button:true
+	};
+Util.emptyElements = emptyElements;
+Util.element = element;
+Util.input = input;
+Util.attribute = attribute;
+Util.style = style;
+Util.escapeChar = escapeChar;
+Util.encode = encode;
+var SAFE = 1,
+	LEAVE_OPENED = 2;
+Util.SAFE = SAFE;
+Util.LEAVE_OPENED = LEAVE_OPENED;
+function element(tag, attr, content, flags) {
+	if (emptyElements.hasOwnProperty(tag)) {
+		if (content != null) {
+			throw new Error('empty element, ' + tag + ', cannot have content!');
+		}
+		if (SAFE & flags) {
+			return '<' + tag + attribute(attr, true) + '/>';
+		}
+		else {
+			return '<' + encode(tag) + attribute(attr, false) + '/>';
+		}
+	}
+	var html;
+	if (SAFE & flags) {
+		html = '<' + tag + attribute(attr, true) + '>';
+		if (content != null) {
+			html += content;
+		}
+	}
+	else {
+		tag = encode(tag);
+		html = '<' + tag + attribute(attr, false) + '>';
+		if (content != null) {
+			html += encode(content);
+		}
+	}
+	if (LEAVE_OPENED & flags) {
+		return html;
+	}
+	else {
+		return html + '</' + tag + '>';
+	}
+}
+function input(type, attr, safe) {
+	if (inputTypes.hasOwnProperty(type)) {
+		attr.type = type;
+		return element('input', attr, null, safe);
+	}
+	else {
+		throw new Error('invalid input type, ' + type + '!');
+	}
+}
+function attribute(attr, safe) {
+	if (attr) {
+		var html = '',
+			styleVal,
+				i,
+				v;
+		if (attr.style) {
+			// save style to render and restore later
+			styleVal = attr.style;
+			// remove style attributes for now. it will be restored later
+			delete attr.style;
+		}
+		if (safe) {
+			// is safe
+			for (i in attr) {
+				if (attr.hasOwnProperty(i)) {
+					if (booleanAttributes.hasOwnProperty(i)) {
+						// is a boolean attribute
+						if (attr[i]) {
+							html += ' ' + i + '="' + i + '"';
+						}
+					}
+					else {
+						v = attr[i];
+						if (v != null) {
+							html += ' ' + i + '="' + v + '"';
+						}
+					}
+				}
+			}
+		}
+		else {
+			// is unsafe
+			for (i in attr) {
+				if (attr.hasOwnProperty(i)) {
+					if (booleanAttributes.hasOwnProperty(i)) {
+						// is a boolean attribute
+						// is safe
+						if (attr[i]) {
+							html += ' ' + i + '="' + i + '"';
+						}
+					}
+					else {
+						v = attr[i];
+						if (v != null) {
+							html += ' ' + encode(i) + '="' + encode(v) + '"';
+						}
+					}
+				}
+			}
+		}
+		if (styleVal) {
+			html += style(styleVal, safe);
+			// restore style attribute
+			attr.style = styleVal;
+		}
+		return html;
+	}
+	return '';
+}
+function style(sty, safe) {
+	if (sty) {
+		if (typeof sty == 'string') {
+			return ' style="' + (safe ? sty : encode(sty)) + '"';
+		}
+		var html = ' style="',
+			i,
+			v;
+		if (safe) {
+			for (i in sty) {
+				if (sty.hasOwnProperty(i)) {
+					v = sty[i];
+					if (v != null) {
+						html += i + ':' + v + ';';
+					}
+				}
+			}
+		}
+		else {
+			for (i in sty) {
+				if (sty.hasOwnProperty(i)) {
+					v = sty[i];
+					if (v != null) {
+						html += encode(i) + ':' + encode(v) + ';';
+					}
+				}
+			}
+		}
+		return html + '"';
+	}
+	return '';
+}
+var toEscape = {
+	'&': '&amp;',
+	'<': '&lt;',
+	'>': '&gt;',
+	'"': '&quot;',
+	"'": '&#x27;',
+	'/': '&#x2F;'
+};
+function escapeChar(char) {
+	return toEscape[char] || char;
+}
+function encode(str) {
+	if (str != null) {
+		if (typeof str != 'string') {
+			str = str.toString();
+		}
+		return str.replace(/[&<>"'\/]/g, escapeChar);
+	}
+	return '';
+}
 })();
