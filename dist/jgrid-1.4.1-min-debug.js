@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 48
- * Date: Wed Oct 12 15:03:42 KST 2011
+ * JexGrid Build 49
+ * Date: Wed Oct 12 17:41:18 KST 2011
  */
 /*
 AUTHOR
@@ -6631,7 +6631,7 @@ jx.grid.MenuBar = {};
     for(var a = h.element, c = h.input, d = h.SAFE, e = this.getColumns(), g = 0, i = e.length, p = "", o = this.mid, n, m, l;g < i;g++) {
       n = e[g], m = n.key, l = o + "-toggle-column-" + m, p += a("label", {"for":l}, a("li", {"class":n.hidden ? "unchecked" : null}, c("checkbox", {id:l, checked:!n.hidden, onclick:"JGM.m.MenuBar." + o + ".toggleColumn('" + m + "', this.checked, this)"}) + n.name, d), d)
     }
-    var q = this.ul = $(a("ul", {"class":"jgrid-column-toggle-box"}, p, d)).appendTo(document.body), a = q.offset();
+    var q = this.ul = $(a("ul", {"class":"jgrid-column-toggle-box"}, p, d)).appendTo(this.grid._ctnr), a = q.offset();
     q.css({top:a.top, left:a.left + 26});
     q.hide();
     this.columnIcon = this.addIcon(b.classColumnToggleIcon, "현재 보여지는 열을 숨기거나 숨겨진 열을 보이도록 합니다.", b.columnIconWidth, b.columnIconHeight, function() {
@@ -6706,8 +6706,13 @@ jx.grid.Footer = {};
   };
   var b = g.prototype;
   b.__init = function() {
+    this._hasSum = this.grid.colDefMgr.get().some(function(a) {
+      return!!a.sumRenderer
+    });
     var a = this._mask = $(e("div", {"class":"classSliderMask"})).appendTo(this._ctnr);
-    this._slider = $(e("div", {"class":"classSlider"})).appendTo(a);
+    if(this._hasSum) {
+      this._slider = $(e("div", {"class":"classSlider"})).appendTo(a)
+    }
     this._foot = $("<div class='" + this._options.classFooter + "'>").appendTo(this._ctnr);
     this.getNextCell().html(this._options.countTemplate);
     this._updateTotalCount();
@@ -6726,13 +6731,17 @@ jx.grid.Footer = {};
     }
   };
   b._onScrollViewportH = function(a) {
-    this._slider[0].style.left = -1E4 - a + "px"
+    if(this._hasSum) {
+      this._slider[0].style.left = -1E4 - a + "px"
+    }
   };
   b.renderCells = function() {
-    for(var a = this.grid.colDefMgr.get(), b = 0, c = a.length, d = this.grid.view, g = [];b < c;b++) {
-      g.push(e("div", {"class":"classSliderCell", id:this.mid + "_sum_" + a[b].key, style:{width:d._getColOuterWidth(b) - 1 + "px"}}))
+    if(this._hasSum) {
+      for(var a = this.grid.colDefMgr.get(), b = 0, c = a.length, d = this.grid.view, g = [];b < c;b++) {
+        g.push(e("div", {"class":"classSliderCell", id:this.mid + "_sum_" + a[b].key, style:{width:d._getColOuterWidth(b) - 1 + "px"}}))
+      }
+      this._slider[0].innerHTML = g.join("")
     }
-    this._slider[0].innerHTML = g.join("")
   };
   b.getSumCell = function(a) {
     return document.getElementById(this.mid + "_sum_" + a)
@@ -6781,59 +6790,63 @@ jx.grid.Footer = {};
     this._foot.find("[name=shownCount]")[0].innerHTML = this.grid.dataMgr.filterReal(this.grid.dataMgr.datalist).length
   };
   b._initSumCells = function() {
-    for(var a = this.grid.dataMgr.getReal(), b = this.grid.colDefMgr.get(), c = b.length, d, e, i, s, p, o = g._calSum, n = this._sumMap, m, l = 0;l < c;l++) {
-      if(d = b[l], e = d.sumRenderer) {
-        i = d.key;
-        s = d.name;
-        p = o(a, i);
-        n[i] = !0;
-        switch(typeof e) {
-          case "function":
-            m = e(s, p);
-            break;
-          case "string":
-            d = e.toLowerCase();
-            if(d === "krw" || e === "\\") {
-              m = h.formatNumber(p)
-            }else {
-              if(d === "usd" || e === "$") {
-                m = h.formatNumber(p, 2, "$ ")
+    if(this._hasSum) {
+      for(var a = this.grid.dataMgr.getReal(), b = this.grid.colDefMgr.get(), c = b.length, d, e, i, s, p, o = g._calSum, n = this._sumMap, m, l = 0;l < c;l++) {
+        if(d = b[l], e = d.sumRenderer) {
+          i = d.key;
+          s = d.name;
+          p = o(a, i);
+          n[i] = !0;
+          switch(typeof e) {
+            case "function":
+              m = e(s, p);
+              break;
+            case "string":
+              d = e.toLowerCase();
+              if(d === "krw" || e === "\\") {
+                m = h.formatNumber(p)
+              }else {
+                if(d === "usd" || e === "$") {
+                  m = h.formatNumber(p, 2, "$ ")
+                }
               }
-            }
-            break;
-          default:
-            m = d.renderer ? d.renderer(p) : p
+              break;
+            default:
+              m = d.renderer ? d.renderer(p) : p
+          }
+          this.setCellValue(i, m)
         }
-        this.setCellValue(i, m)
       }
     }
   };
   b._updateSums = function() {
-    var a = this.grid.dataMgr.getReal(), b, c = this._sumMap, d = this.grid.colDefMgr, e, i, s, p, o = g._calSum, n;
-    for(b in c) {
-      if(c.hasOwnProperty(b)) {
-        e = d.getByKey(b);
-        s = e.name;
-        i = e.sumRenderer;
-        p = o(a, b);
-        switch(typeof i) {
-          case "function":
-            n = i(s, p);
-            break;
-          case "string":
-            e = i.toLowerCase();
-            if(e === "krw" || i === "\\") {
-              n = h.formatNumber(p)
-            }else {
-              if(e === "usd" || i === "$") {
-                n = h.formatNumber(p, 2, "$ ")
+    if(this._hasSum) {
+      var a = this.grid.dataMgr.getReal(), b, c = this._sumMap, d = this.grid.colDefMgr, e, i, s, p, o = g._calSum, n;
+      for(b in c) {
+        if(c.hasOwnProperty(b)) {
+          e = d.getByKey(b);
+          s = e.name;
+          i = e.sumRenderer;
+          p = o(a, b);
+          switch(typeof i) {
+            case "function":
+              n = i(s, p);
+              break;
+            case "string":
+              e = i.toLowerCase();
+              if(e === "krw" || i === "\\") {
+                n = h.formatNumber(p)
+              }else {
+                if(e === "usd" || i === "$") {
+                  n = h.formatNumber(p, 2, "$ ")
+                }
               }
-            }
-            break;
-          default:
-            n = e.renderer ? e.renderer(p) : p
+              break;
+            default:
+              n = e.renderer ? e.renderer(p) : p
+          }
+          this.setCellValue(b, n)
         }
-        this.setCellValue(b, n)
       }
     }
   };
