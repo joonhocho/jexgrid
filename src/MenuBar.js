@@ -107,7 +107,7 @@ proto._init = function(args) {
 	}
 	var ul = this.ul = $(element('ul', {
 		'class': 'jgrid-column-toggle-box'
-	}, list, SAFE)).appendTo(document.body);
+	}, list, SAFE)).appendTo(this.grid._ctnr);
 
 	var offset = ul.offset();
 	ul.css({
