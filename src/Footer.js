@@ -513,8 +513,6 @@ prototype._onCreateCss = function() {
 		position: 'relative',
 		overflow: 'hidden',
 		width: '100%',
-		font: opt['font'],
-		background: opt['background'],
 		'border-bottom': border
 	};
 
@@ -523,7 +521,7 @@ prototype._onCreateCss = function() {
 		overflow: 'hidden',
 		'white-space': 'nowrap',
 		cursor: 'default',
-		background: opt['background'],
+		background: '#f0f0f0',
 		left: '-10000px',
 		width: '100000px',
 		'line-height': '21px'
@@ -589,8 +587,9 @@ prototype._initSumCells = function() {
 			key = colDef['key'];
 			name = colDef['name'];
 			sum = sumfn(rows, key);
-			cell = map[key] = this.getNextCell();
-			node = cell[0];
+			map[key] = true;
+			//cell = map[key] = this.getNextCell();
+			//node = cell[0];
 
 			switch (typeof renderer) {
 				case 'function':
@@ -610,7 +609,7 @@ prototype._initSumCells = function() {
 					html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
 					break;
 			}
-			node.innerHTML = html;
+			//node.innerHTML = html;
 			this.setCellValue(key, html);
 		}
 	}
@@ -637,8 +636,8 @@ prototype._updateSums = function() {
 			name = colDef['name'];
 			renderer = colDef['sumRenderer'];
 			sum = sumfn(rows, key);
-			cell = map[key];
-			node = cell[0];
+			//cell = map[key];
+			//node = cell[0];
 
 			switch (typeof renderer) {
 				case 'function':
@@ -658,7 +657,7 @@ prototype._updateSums = function() {
 					html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
 					break;
 			}
-			node.innerHTML = html;
+			//node.innerHTML = html;
 			this.setCellValue(key, html);
 		}
 	}
