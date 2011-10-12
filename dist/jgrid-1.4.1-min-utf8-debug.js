@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 49
- * Date: Wed Oct 12 17:41:18 KST 2011
+ * JexGrid Build 50
+ * Date: Wed Oct 12 17:47:18 KST 2011
  */
 /*
 AUTHOR
@@ -6631,8 +6631,8 @@ jx.grid.MenuBar = {};
     for(var a = h.element, c = h.input, d = h.SAFE, e = this.getColumns(), g = 0, i = e.length, p = "", o = this.mid, n, m, l;g < i;g++) {
       n = e[g], m = n.key, l = o + "-toggle-column-" + m, p += a("label", {"for":l}, a("li", {"class":n.hidden ? "unchecked" : null}, c("checkbox", {id:l, checked:!n.hidden, onclick:"JGM.m.MenuBar." + o + ".toggleColumn('" + m + "', this.checked, this)"}) + n.name, d), d)
     }
-    var q = this.ul = $(a("ul", {"class":"jgrid-column-toggle-box"}, p, d)).appendTo(this.grid._ctnr), a = q.offset();
-    q.css({top:a.top, left:a.left + 26});
+    var q = this.ul = $(a("ul", {"class":"jgrid-column-toggle-box"}, p, d)).appendTo(this.grid._ctnr);
+    q.css({top:11, left:34});
     q.hide();
     this.columnIcon = this.addIcon(b.classColumnToggleIcon, "현재 보여지는 열을 숨기거나 숨겨진 열을 보이도록 합니다.", b.columnIconWidth, b.columnIconHeight, function() {
       q.toggle()

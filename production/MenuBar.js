@@ -94,10 +94,9 @@ proto._init = function(args) {
 	var ul = this.ul = $(element('ul', {
 		'class': 'jgrid-column-toggle-box'
 	}, list, SAFE)).appendTo(this.grid._ctnr);
-	var offset = ul.offset();
 	ul.css({
-		top: offset.top,
-		left: offset.left + 26
+		top: 11,
+		left: 34 
 	});
 	ul.hide();
 	this.columnIcon = this.addIcon(opt['classColumnToggleIcon'], "현재 보여지는 열을 숨기거나 숨겨진 열을 보이도록 합니다.", opt['columnIconWidth'], opt['columnIconHeight'], function() {
