@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 50
- * Date: Wed Oct 12 17:47:18 KST 2011
+ * JexGrid Build 51
+ * Date: Wed Oct 12 17:51:01 KST 2011
  */
 /*
 AUTHOR
@@ -4297,7 +4297,7 @@ jx.grid.Grid = {};
     var d = {type:"beforeCreateCss", css:[]}, a = this._options, b = this.event;
     this.dispatchEvent(d);
     this.log("creating CSS for Grid...", f);
-    var c = b.trigger("onCreateCss"), c = c ? c.join("") : "", d = h.sprint("%selector%{overflow:hidden;height:100%;font:%font%;%border%%style%}%submodule%", {selector:"#" + this.mid, font:a.font, border:a.borderSide ? "border:" + a.border + ";" : "border-top:" + a.border + ";border-bottom:" + a.border + ";", style:a.style, submodule:d.css.join("") + c});
+    var c = b.trigger("onCreateCss"), c = c ? c.join("") : "", d = h.sprint("%selector%{overflow:hidden;height:100%;font:%font%;%border%%style%}%submodule%", {selector:"#" + this.mid, position:"relative", font:a.font, border:a.borderSide ? "border:" + a.border + ";" : "border-top:" + a.border + ";border-bottom:" + a.border + ";", style:a.style, submodule:d.css.join("") + c});
     this._style = h.createStyle(d);
     d = {type:"beforeCreateDynamicCss", css:[]};
     this.dispatchEvent(d);

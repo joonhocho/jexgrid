@@ -535,6 +535,7 @@ prototype._createCss = function() {
 	subcss = subcss ? subcss.join('') : '';
 	var style = Util.sprint("%selector%{overflow:hidden;height:100%;font:%font%;%border%%style%}%submodule%", {
 		'selector': "#" + this.mid,
+		'position': 'relative',
 		'font': opt['font'],
 		'border': opt['borderSide'] ?
 		"border:" + opt['border'] + ";" :
