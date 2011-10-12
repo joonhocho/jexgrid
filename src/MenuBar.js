@@ -109,10 +109,9 @@ proto._init = function(args) {
 		'class': 'jgrid-column-toggle-box'
 	}, list, SAFE)).appendTo(this.grid._ctnr);
 
-	var offset = ul.offset();
 	ul.css({
-		top: offset.top,
-		left: offset.left + 26
+		top: 11,
+		left: 34 
 	});
 
 	ul.hide();
