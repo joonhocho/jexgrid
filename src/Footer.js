@@ -397,14 +397,21 @@ Footer.getInstance = function(args) {
 var prototype = Footer.prototype;
 
 prototype.__init = function() {
+
+	this._hasSum = this.grid.colDefMgr.get().some(function(c) {
+		return !!c['sumRenderer'];
+	});
+
 	var opt = this._options,
 		mask = this._mask = $(element('div', {
 			'class': 'classSliderMask'
 		})).appendTo(this._ctnr);
 
-	this._slider = $(element('div', {
-		'class': 'classSlider'
-	})).appendTo(mask);
+	if (this._hasSum) {
+		this._slider = $(element('div', {
+			'class': 'classSlider'
+		})).appendTo(mask);
+	}
 
 	this._foot =
 		$("<div class='" + this._options['classFooter'] + "'>")
@@ -439,31 +446,34 @@ prototype._setWidthByKey = function(key, w, o) {
 };
 
 prototype._onScrollViewportH = function(scrollLeft) {
-	var left = -10000 - scrollLeft;
-	this._slider[0].style.left = left + "px";
+	if (this._hasSum) {
+		var left = -10000 - scrollLeft;
+		this._slider[0].style.left = left + "px";
+	}
 };
 
 prototype.renderCells = function() {
+	if (this._hasSum) {
+		var colDefs = this.grid['colDefMgr'].get(),
+			i = 0,
+			l = colDefs.length,
+			colDef,
+			view = this.grid['view'],
+			cells = [],
+			widthPlus = 1;
 
-	var colDefs = this.grid['colDefMgr'].get(),
-		i = 0,
-		l = colDefs.length,
-		colDef,
-		view = this.grid['view'],
-		cells = [],
-		widthPlus = 1;
+		for (; i < l; i++) {
+			cells.push(element('div', {
+				'class': 'classSliderCell',
+				'id': this.mid + '_sum_' + colDefs[i].key,
+				'style': {
+					width: (view._getColOuterWidth(i) - widthPlus) + "px"
+				}
+			}));
+		}
 
-	for (; i < l; i++) {
-		cells.push(element('div', {
-			'class': 'classSliderCell',
-			'id': this.mid + '_sum_' + colDefs[i].key,
-			'style': {
-				width: (view._getColOuterWidth(i) - widthPlus) + "px"
-			}
-		}));
+		this._slider[0].innerHTML = cells.join("");
 	}
-
-	this._slider[0].innerHTML = cells.join("");
 };
 
 prototype.getSumCell = function(key) {
@@ -565,100 +575,104 @@ prototype._updateShownCount = function() {
 };
 
 prototype._initSumCells = function() {
-	var rows = this.grid['dataMgr'].getReal(),
-		colDefs = this.grid['colDefMgr'].get(),
-		clen = colDefs.length,
-		colDef,
-		renderer,
-		lower,
-		key,
-		name,
-		sum,
-		sumfn = Footer._calSum,
-		map = this._sumMap,
-		cell,
-		node,
-		html,
-		i = 0;
-	for (; i < clen; i++) {
-		colDef = colDefs[i];
-		renderer = colDef['sumRenderer'];
-		if (renderer) {
-			key = colDef['key'];
-			name = colDef['name'];
-			sum = sumfn(rows, key);
-			map[key] = true;
-			//cell = map[key] = this.getNextCell();
-			//node = cell[0];
+	if (this._hasSum) {
+		var rows = this.grid['dataMgr'].getReal(),
+			colDefs = this.grid['colDefMgr'].get(),
+					clen = colDefs.length,
+					colDef,
+					renderer,
+					lower,
+					key,
+					name,
+					sum,
+					sumfn = Footer._calSum,
+					map = this._sumMap,
+					cell,
+					node,
+					html,
+					i = 0;
+		for (; i < clen; i++) {
+			colDef = colDefs[i];
+			renderer = colDef['sumRenderer'];
+			if (renderer) {
+				key = colDef['key'];
+				name = colDef['name'];
+				sum = sumfn(rows, key);
+				map[key] = true;
+				//cell = map[key] = this.getNextCell();
+				//node = cell[0];
 
-			switch (typeof renderer) {
-				case 'function':
-					// has custom sum renderer
-					html = renderer(name, sum);
-					break;
-				case 'string':
-					lower = renderer.toLowerCase();
-					if (lower === "krw" || renderer === "\\") {
-						html = Util.formatNumber(sum);
-					}
-					else if (lower === "usd" || renderer === "$") {
-						html = Util.formatNumber(sum, 2, "$ ");
-					}
-					break;
-				default:
-					html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
-					break;
+				switch (typeof renderer) {
+					case 'function':
+						// has custom sum renderer
+						html = renderer(name, sum);
+						break;
+					case 'string':
+						lower = renderer.toLowerCase();
+						if (lower === "krw" || renderer === "\\") {
+							html = Util.formatNumber(sum);
+						}
+						else if (lower === "usd" || renderer === "$") {
+							html = Util.formatNumber(sum, 2, "$ ");
+						}
+						break;
+					default:
+						html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
+						break;
+				}
+				//node.innerHTML = html;
+				this.setCellValue(key, html);
 			}
-			//node.innerHTML = html;
-			this.setCellValue(key, html);
 		}
 	}
 };
 
 prototype._updateSums = function() {
-	var rows = this.grid['dataMgr'].getReal(),
-		key,
-		map = this._sumMap,
-		cmgr = this.grid['colDefMgr'],
-		colDef,
-		renderer,
-		lower,
-		name,
-		sum,
-		sumfn = Footer._calSum,
-		cell,
-		node,
-		html,
-		content = this._options['classContent'];
-	for (key in map) {
-		if (map.hasOwnProperty(key)) {
-			colDef = cmgr.getByKey(key);
-			name = colDef['name'];
-			renderer = colDef['sumRenderer'];
-			sum = sumfn(rows, key);
-			//cell = map[key];
-			//node = cell[0];
+	if (this._hasSum) {
+		var rows = this.grid['dataMgr'].getReal(),
+			key,
+				map = this._sumMap,
+				cmgr = this.grid['colDefMgr'],
+				colDef,
+				renderer,
+				lower,
+				name,
+				sum,
+				sumfn = Footer._calSum,
+				cell,
+				node,
+				html,
+				content = this._options['classContent'];
+		for (key in map) {
+			if (map.hasOwnProperty(key)) {
+				colDef = cmgr.getByKey(key);
+				name = colDef['name'];
+				renderer = colDef['sumRenderer'];
+				sum = sumfn(rows, key);
+				//cell = map[key];
+				//node = cell[0];
 
-			switch (typeof renderer) {
-				case 'function':
-					// has custom sum renderer
-					html = renderer(name, sum);
-					break;
-				case 'string':
-					lower = renderer.toLowerCase();
-					if (lower === "krw" || renderer === "\\") {
-						html = Util.formatNumber(sum);
-					}
-					else if (lower === "usd" || renderer === "$") {
-						html = Util.formatNumber(sum, 2, "$ ");
-					}
-					break;
-				default:
-					html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
-					break;
+				switch (typeof renderer) {
+					case 'function':
+						// has custom sum renderer
+						html = renderer(name, sum);
+						break;
+					case 'string':
+						lower = renderer.toLowerCase();
+						if (lower === "krw" || renderer === "\\") {
+							html = Util.formatNumber(sum);
+						}
+						else if (lower === "usd" || renderer === "$") {
+							html = Util.formatNumber(sum, 2, "$ ");
+						}
+						break;
+					default:
+						html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
+						break;
+				}
+				//node.innerHTML = html;
+				this.setCellValue(key, html);
 			}
-			//node.innerHTML = html;
-			this.setCellValue(key, html);
 		}
 	}
 };
