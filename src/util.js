@@ -1682,17 +1682,23 @@ function style(sty, safe) {
 	return '';
 }
 
-var toEscape = {
-	'&': '&amp;',
-	'<': '&lt;',
-	'>': '&gt;',
-	'"': '&quot;',
-	"'": '&#x27;',
-	'/': '&#x2F;'
-};
-
-function escapeChar(char) {
-	return toEscape[char] || char;
+function escapeChar(c) {
+	switch (c) {
+		case "&":
+			return "&amp;";
+		case "<":
+			return "&lt;";
+		case ">":
+			return "&gt;";
+		case '"':
+			return "&quot;";
+		case "'":
+			return "&#x27;";
+		case "/":
+			return "&#x2F;";
+		default:
+			return c;
+	}
 }
 
 function encode(str) {
