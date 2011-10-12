@@ -303,7 +303,7 @@ prototype._onRenderModules = function() {
 			imap[colDef['key']] = creator.find("div[key='" + colDef['key'] + "'] input").keyup(keyupfn);
 		}
 	}
-	if (Util.isNotNull(this.grid['menubar'])) {
+	if (this.grid['menubar'] != null) {
 		this.grid['menubar'].addIcon(opt['classCreatorIcon'], "데이터 로우를 추가합니다.", opt['creatorIconWidth'], opt['creatorIconHeight'], function() {
 				creator.toggle("fast");
 				});

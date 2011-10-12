@@ -20,7 +20,8 @@ JGM
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
-	Grid = goog.getObjectByName('jx.grid.Grid');
+	Grid = goog.getObjectByName('jx.grid.Grid'),
+	element = Util.element;
  goog.exportSymbol('jx.grid.ColumnHeader', ColumnHeader);
 /**
 ColumnHeader 모듈. 컬럼 헤더들을 담당하는 모듈입니다.
@@ -60,25 +61,23 @@ prototype._init = function(args) {
 	@version 1.0.0
 	*/
 	this.grid['header'] = this;
-	this._ctnr = args['container'];
 	this._map = {};
-	
-	this._resizeKey;
-	this._resizeInitX;
-	this._resizeHandleInitX;
-	this._resizeInitWidth;
 	this._resizeMap = {};
-	this._resizeInitColWidth;
-	this._resizeGuide;
-	this._resizeHandleOffset;
-	var opt = this._options;
-	this._mask =
-		$("<div class='" + opt['classHeaderMask'] + "'>")
-		.prependTo(this._ctnr);
-	this._head =
-		$("<div class='" + opt['classHeader'] + "'>")
-		.appendTo(this._mask);
-	ColumnHeader._disableSel(this._head);
+	
+	this._resizeKey = this._resizeInitX = this._resizeHandleInitX = this._resizeInitWidth = this._resizeInitColWidth = this._resizeGuide = this._resizeHandleOffset = null;
+	var opt = this._options,
+		mask = this._mask = $(element('div', {
+			'class': opt['classHeaderMask']
+		})).prependTo(this._ctnr = args['container']);
+	if (this.getColMgr().hasGroups()) {
+		this._doubleHead = $(element('div', {
+			'class': opt['classHeader']
+		})).appendTo(mask);
+	}
+	var head = this._head = $(element('div', {
+		'class': opt['classHeader']
+	})).appendTo(mask);
+	ColumnHeader._disableSel(head);
 };
 prototype._bindEvents = function() {
 	var events,
@@ -206,6 +205,7 @@ prototype._defaultOptions = function(grid) {
 		@version 1.0.0
 		*/
 		'sortBackgroundDesc': imgurl + "sort-desc.png",
+		'headerMoreButton': imgurl + "header-more-button.gif",
 		/**
 		컬럼 헤더의 폰트 스타일입니다. <br>기본값:<code>"15px Arial,Helvetica,sans-serif"</code>
 		@type {string=} jx.grid.ColumnHeader.options.font
@@ -349,7 +349,7 @@ prototype._defaultOptions = function(grid) {
 		@since 1.1.2
 		@version 1.1.2
 		*/
-		'resizeHandleWidth': 11,
+		'resizeHandleWidth': 5,
 		/**
 		컬럼 헤더 컨테이너 마스크에 적용되는 CSS style 입니다.<br>
 		주의할 점: 이 옵션에 입력된 style 이 적용되었을때 DOM 의 크기가 변하면 그리드의 내부적인 크기 계산에 오류가 생깁니다.
@@ -449,7 +449,7 @@ prototype._defaultOptions = function(grid) {
 		@since 1.2.1
 		@version 1.2.1
 		*/
-		'resizeHandleBackground': "black;filter:alpha(opacity=5);opacity:0.05"
+		'resizeHandleBackground': "black;filter:alpha(opacity=10);opacity:0.10"
 	};
 }
 prototype._beforeDispose = function() {	
@@ -493,7 +493,6 @@ prototype._beforeCreateCss = function(e) {
 		classHeaderMask = '.' + opt['classHeaderMask'],
 		classColHeader = '.' + opt['classColHeader'],
 		scrollerLeft = opt['scrollerLeft'],
-		scrollerLeft = opt['scrollerLeft'],
 		height = opt['height'] + 'px',
 		classColHeaderActive = opt['classColHeaderActive'],
 		styles = {};
@@ -511,6 +510,7 @@ prototype._beforeCreateCss = function(e) {
 		overflow: 'hidden',
 		'white-space': 'nowrap',
 		cursor: 'default',
+		background: opt['background'],
 		left: (-scrollerLeft) + 'px',
 		width: opt['scrollerWidth'] + 'px',
 		'line-height': height
@@ -521,12 +521,14 @@ prototype._beforeCreateCss = function(e) {
 		'float': 'left',
 		'text-overflow':'ellipsis',
 		'text-align':'center',
+		'vertical-align': 'middle',
 		height: height,
 		left: (scrollerLeft - this.getView().getScrollLeft()) + "px",
 		'border-right': border,
 		_append: opt['headerStyle']
 	};
 	styles[classColHeader + "." + opt['classInteractive'] + ":hover, " + gridId + classColHeaderActive] = {
+		cursor: 'pointer',
 		background: opt['backgroundHover']
 	};
 	styles['.' + classColHeaderActive] = {
@@ -535,10 +537,24 @@ prototype._beforeCreateCss = function(e) {
 	styles[classColHeader + "." + opt['classColHeaderPlaceholder']] = {
 		background: opt['backgroundPlaceholder'] + "!important"
 	};
+	styles['.jgrid-header-text'] = {
+		'vertical-align': 'middle'
+	};
+	styles['.jgrid-header-more'] = {
+		position: 'absolute',
+		cursor: 'pointer',
+		height: '100%',
+		width: "14px",
+		right: 0,
+		top: 0
+	};
+	styles['.jgrid-header-more:hover'] = {
+		'border-left': '1px solid black',
+		background: "url(" + opt['headerMoreButton'] + ") no-repeat left center"
+	};
 	styles['.' + opt['classSort']] = {
 		position: 'absolute',
-		height: height,
-		right: opt['sortRight'] + "px",
+		height: '100%',
 		width: opt['sortWidth'] + "px",
 		background: "url(" + opt['sortBackground'] + ") no-repeat center transparent"
 	};
@@ -553,7 +569,7 @@ prototype._beforeCreateCss = function(e) {
 		background: opt['resizeHandleBackground'],
 		cursor:'e-resize',
 		position:'absolute',
-		height: height,
+		height: '100%',
 		width: opt['resizeHandleWidth'] + "px"
 	};
 	styles['.' + opt['classResizeGuide']] = {
@@ -575,7 +591,11 @@ prototype._widthPlus = function() {
 	return this._options['borderThickness'];
 };
 prototype._onScrollViewportH = function(scrollLeft) {
-	this._head[0].style.left = (-this._options['scrollerLeft'] - scrollLeft) + "px";
+	var left = -this._options['scrollerLeft'] - scrollLeft;
+	this._head[0].style.left = left + "px";
+	if (this._doubleHead) {
+		this._doubleHead[0].style.left = left + "px";
+	}
 };
 prototype._onRenderModules = function() {
 	var colDefs = this.getColumns(),
@@ -583,6 +603,42 @@ prototype._onRenderModules = function() {
 		i = 0,
 		colDef,
 		headers = [];
+	var colmgr = this.getColMgr();
+	if (colmgr.hasGroups()) {
+		// group header enabled
+		// disable reordering
+		var opt = this._options;
+		opt['reorderEnabled'] = false;
+		var groups = colmgr.getGroups(),
+			j = 0,
+			l = groups.length,
+			group,
+			groupName,
+			groupWidth,
+			doubleHeaders = [],
+			k = 0,
+			m = 0,
+			view = this.getView(),
+			glen;
+		for (; j < l; j++) {
+			group = groups[j];
+			groupName = group[0].parent;
+			groupWidth = 0;
+			for (k = 0, glen = group.length; k < glen; k++) {
+				if (!group[k].hidden) {
+					groupWidth += view._getColOuterWidth(m++);
+				}
+			}
+			doubleHeaders.push(element('div', {
+				'class': opt['classColHeader'],
+				'title': groupName,
+				'style': {
+					width: (groupWidth - this._widthPlus()) + 'px'
+				}
+			}, groupName));
+		}
+		this._doubleHead[0].innerHTML = doubleHeaders.join("");
+	}
 	for (; i < len; i++) {
 		if (!(colDef = colDefs[i]).hidden) {
 			this._render(headers, colDef, i);
@@ -600,14 +656,15 @@ prototype._onRenderModules = function() {
 };
 prototype._onAfterRenderModules = function() {
 	var opt = this._options;
-	if (opt['reorderEnabled']) {
+	if (!this.getColMgr().hasGroups() && opt['reorderEnabled']) {
 		this._initReorder();
 	}
 	
 	this._initResizeHandles();
 	
-	this._resizeGuide = $("<div class='" + opt['classResizeGuide'] + "'>")
-		.appendTo(this.getView()._mask).hide();
+	this._resizeGuide = $(element('div', {
+		'class': opt['classResizeGuide']
+	})).appendTo(this.getView()._mask).hide();
 	this._resizeGuide[0].style.top = "0px";
 	this._resizeGuide[0].style.height = "0px";
 };
@@ -618,8 +675,23 @@ prototype._render = function(header, colDef, i) {
 		widthPlus = this._widthPlus(),
 		event = "onRenderHeader_" + key,
 		args = [header];
-	header.push("<div id='" + this.mid + "h" + key + "' class='" + opt['classColHeader'] + " " + (opt['reorderEnabled'] || colDef['sorter'] ? " " + opt['classInteractive'] : "") +
-		"' " + (colDef['noTitle'] ? "" : "title='" + (colDef['title'] || name) + "' ") + "style='width:" + (this.getView()._getColOuterWidth(i) - widthPlus) + "px;' colKey='" + key + "'>");
+	var classname = opt['classColHeader'];
+	if (opt['reorderEnabled'] || colDef['sorter']) {
+		classname += " " + opt['classInteractive'];
+	}
+	var attr = {
+		'id': this.mid + "h" + key,
+		'class': classname,
+		colKey: key,
+		'style': {
+			width: (this.getView()._getColOuterWidth(i) - widthPlus) + "px"
+		}
+	};
+	if (!colDef['noTitle']) {
+		attr.title = colDef['title'] || name;
+	}
+	
+	header.push(element('div', attr, null, Util.LEAVE_OPENED));
 	/**
 	ColumnHeader 렌더링 시에 발생되는 이벤트로 컬럼 이름 앞에 넣을 모듈 들을 렌더링하기 위해 트리거 됩니다.
 	@event {Event} onRenderHeader_COLKEY_prepend
@@ -640,8 +712,15 @@ prototype._render = function(header, colDef, i) {
 	*/
 	this.triggerGridEvent(event+"_append", args, true);
 	if (colDef['sorter']) {
-		header.push("<span class='" + opt['classSort'] + "'></span>");
+		header.push(element('span', {
+			'class': opt['classSort']
+		}));
 	}
+	/*
+	header.push(element('span', {
+		'class': 'jgrid-header-more'
+	}));
+	*/
 	header.push("</div>");
 };
 ColumnHeader._disableSel = function(target) {
@@ -922,6 +1001,22 @@ prototype._mouseup = function(e) {
 };
 prototype._setWidthByKey = function(key, w, o) {
 	this.get(key)[0].style.width = w + this.getView()._colWidthPlus() - this._widthPlus() + "px";
+	if (this._doubleHead) {
+		var colmgr = this.getColMgr(),
+			view = this.getView(),
+			viewWidthPlus = view._colWidthPlus(),
+			groupIdx = colmgr.getGroupIndexByKey(key),
+			group = colmgr.getGroupByGroupIdx(groupIdx),
+			i = 0,
+			l = group.length,
+			groupWidth = 0;
+		for (; i < l; i++) {
+			if (!group[i].hidden) {
+				groupWidth += group[i].width + viewWidthPlus;
+			}
+		}
+		this._doubleHead[0].childNodes[groupIdx].style.width = groupWidth - this._widthPlus() + 'px';
+	}
 	
 	this._syncResizeHandles(this.getColMgr().getIdxByKey(key));
 	// IE needs this hack to sync scrollLeft of canvas and that of headers

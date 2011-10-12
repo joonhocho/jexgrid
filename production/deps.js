@@ -14,6 +14,7 @@ goog.addDependency("ColumnManager.js", ['jx.grid.ColumnManager'], ['array_extens
 goog.addDependency("TooltipManager.js", ['jx.grid.TooltipManager'], ['jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid', 'jx.data.DataManager']);
 goog.addDependency("Footer.js", ['jx.grid.Footer'], ['engine_extension', 'jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid', 'jx.grid.ColumnManager', 'jx.data.DataManager']);
 goog.addDependency("Cell.js", ['jx.grid.Cell'], ['jx.util', 'jx.lang.Disposable', 'jx.grid']);
+goog.addDependency("HideColumn.js", ['jx.grid.HideColumn'], ['array_extension', 'engine_extension', 'jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid']);
 goog.addDependency("PrintManager.js", ['jx.grid.PrintManager'], ['jx.util', 'jx.util$', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid']);
 goog.addDependency("ColumnHeader.js", ['jx.grid.ColumnHeader'], ['engine_extension', 'jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid', 'jx.grid.ColumnManager']);
 goog.addDependency("CheckManager.js", ['jx.grid.CheckManager'], ['engine_extension', 'jx.util', 'jx.grid', 'jx.grid.BaseModule', 'jx.grid.Grid', 'jx.grid.ColumnManager', 'jx.data.DataManager']);

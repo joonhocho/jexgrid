@@ -151,6 +151,10 @@ goog.provide('jx.grid.BaseModule');
 				this.grid = args.grid;
 			}
 		}
+		this._datamgr = null;
+		this._colmgr = null;
+		this._evtmgr = null;
+		this._view = null;
 		// options
 		var defaults = this._defaultOptions && this._defaultOptions(args.grid),
 			opts = args && args['options'];
@@ -253,6 +257,10 @@ goog.provide('jx.grid.BaseModule');
 	 */
 	proto.dispose = function() {
 		delete this.grid;
+		delete this._datamgr;
+		delete this._colmgr;
+		delete this._evtmgr;
+		delete this._view;
 		this.dispatchEvent({
 			'type':'beforedispose'
 		});
@@ -272,7 +280,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getDataMgr = function() {
-		return this.grid['dataMgr'];
+		return this._datamgr || (this._datamgr = this.grid['dataMgr']);
 	}
 	/**
 	 * 이 모듈이 소속된 그리드의 모든 데이터의 어레이를 리턴합니다.
@@ -288,7 +296,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getAllData = function() {
-		return this.grid['dataMgr']['all'];
+		return this.getDataMgr()['all'];
 	}
 	/**
 	 * 이 모듈이 소속된 그리드의 화면에 보이는 데이터의 어레이를 리턴합니다.
@@ -304,7 +312,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getDataList = function() {
-		return this.grid['dataMgr']['datalist'];
+		return this.getDataMgr()['datalist'];
 	}
 	/**
 	 * 이 모듈이 소속된 그리드의 데이터 매니저의 idKey 를 리턴합니다.
@@ -320,7 +328,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getIdKey = function() {
-		return this.grid['dataMgr'].idKey;
+		return this.getDataMgr().idKey;
 	}
 	/**
 	 * 이 모듈이 소속된 그리드의 컬럼 매니저를 리턴합니다.
@@ -336,7 +344,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getColMgr = function() {
-		return this.grid['colDefMgr'];
+		return this._colmgr || (this._colmgr = this.grid['colDefMgr']);
 	}
 	/**
 	 * 이 모듈이 소속된 그리드의 컬럼 정의 오브젝트 어레이를 리턴합니다.
@@ -352,7 +360,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getColumns = function() {
-		return this.grid['colDefMgr'].get();
+		return this.getColMgr().get();
 	}
 	/**
 	 * 이 모듈이 소속된 그리드의 이벤트 매니저를 리턴합니다.
@@ -368,7 +376,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getEventMgr = function() {
-		return this.grid['event'];
+		return this._evtmgr || (this._evtmgr = this.grid['event']);
 	}
 	/**
 	 * 이 모듈이 소속된 그리드의 뷰포트 매니저를 리턴합니다.
@@ -384,7 +392,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.getView = function() {
-		return this.grid['view'];
+		return this._view || (this._view = this.grid['view']);
 	}
 	/**
 	 * 이 모듈이 소속된 그리드의 컬럼 헤더를 리턴합니다.
@@ -417,7 +425,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.bindGridEvent = function() {
-		var event = this.grid['event'];
+		var event = this.getEventMgr();
 		return event.bind.apply(event, arguments);
 	}
 	/**
@@ -435,7 +443,7 @@ goog.provide('jx.grid.BaseModule');
 	 * @version 2.0.0
 	 */
 	proto.triggerGridEvent = function() {
-		var event = this.grid['event'];
+		var event = this.getEventMgr();
 		return event.trigger.apply(event, arguments);
 	}
 	/**

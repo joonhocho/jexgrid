@@ -302,7 +302,7 @@ prototype._init = function(args) {
 	else {
 		width = '';
 	}
-	ctnr = this._ctnr = $("<div id='" + this.mid + "' class='" + opt['classGrid'] + "' " + (width ? "" : "style='width:" + width + "' ") + "tabIndex='0'>").appendTo(Util$.safe$(ctnr));
+	ctnr = this._ctnr = $("<div id='" + this.mid + "' class='" + opt['classGrid'] + "' " + (width ? "style='width:" + width + "' " : '') + "tabIndex='0'>").appendTo(Util$.safe$(ctnr));
 	this._vars.scrollbarDim = Util$.calScrollbarDims(ctnr);
 	em = this['event'] =  JGM.create("EventManager", {grid:this, 'options':opt['EventManager']});
 	this['colDefMgr'] =  JGM.create("ColumnManager", {grid:this, colDefs:args['colDefs'], 'options':opt['ColDefManager']});
@@ -323,6 +323,9 @@ prototype._init = function(args) {
 		}
 	}
 	*/
+	if (!opt['MenuBar']) {
+		opt['MenuBar'] = {};
+	}
 	if (opt['Collapser']) {
 		this['collapser'] =  JGM.create("Collapser", {grid:this, 'options':opt['Collapser']});
 		this['collapser'].__init();
@@ -342,9 +345,7 @@ prototype._init = function(args) {
 	if (opt['SearchManager']) {
 		this['search'] =  JGM.create("SearchManager", {grid:this, 'container':ctnr, 'options':opt['SearchManager']});
 	}
-	if (opt['MenuBar']) {
-		this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':ctnr, 'options':opt['MenuBar']});
-	}
+	this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':ctnr, 'options':opt['MenuBar']});
 	this['view'] =  JGM.create("ViewportManager", {grid:this, 'container':ctnr, 'options':opt['ViewportManager']});
 	if (opt['TooltipManager']) {
 		this['tooltip'] =  JGM.create("TooltipManager", {grid:this, 'container':ctnr, 'options':opt['TooltipManager']});
@@ -1249,6 +1250,11 @@ prototype.containsEvent = function(e) {
 };
 prototype.getChart = function(name) {
 	return this._charts[name];
+};
+prototype.getShownColumns = function() {
+	return this.colDefMgr.get().filter(function(c) {
+		return c.width > 0;
+	});
 };
 prototype.chart = function(chartCont, type, columns, options, from, to) {
 	var pack,

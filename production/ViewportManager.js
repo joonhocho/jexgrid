@@ -179,7 +179,7 @@ function ViewportManager(args) {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		'padding':					1,
+		'padding':					0,
 		/**
 		  홀수번째 로우와 짝수번째 로우의 바탕색을 다르게 할 지 정합니다. <br>기본값:<code>false</code>
 		  @type {boolean=} jx.grid.ViewportManager.options.evenOddRows
@@ -404,7 +404,8 @@ prototype._onCreateCss = function() {
 		clen = colDefs.length,
 		i = 0,
 		rules = [];
-	rules.push(gridId + opt['classView'] + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + opt['rowH'] + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + opt['style'] + ";background:url(" + this.grid._options['imageUrl'] + "loading.gif) repeat center}");
+	//background:url(" + this.grid._options['imageUrl'] + "loading.gif) repeat center
+	rules.push(gridId + opt['classView'] + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + opt['rowH'] + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + opt['style'] + ";}");
 	rules.push(gridId + opt['classView'] + ":focus{background:" + opt['focusBackground'] + ";outline:" + opt['focusOutline'] + "}");
 	rules.push(gridId + opt['classCanvas'] + "{height:" + this._calCanvasHeight() + "px;" + opt['canvasStyle'] + ";}");
 	rules.push(rowSel + "{background:white;position:absolute;" + opt['rowStyle'] + "}");
