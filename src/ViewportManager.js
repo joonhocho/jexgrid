@@ -2874,6 +2874,7 @@ prototype.focus = function(e) {
 
 	//var scr = Util.getBodyScroll();
 
+	/*
 	var maskEl = this._mask[0];
 	if (document.activeElement !== maskEl) {
 		this.grid.log('focusing canvas...', Grid.V_FOCUS);//IF_DEBUG
@@ -2888,6 +2889,7 @@ prototype.focus = function(e) {
 			this._mask.focus();
 		}
 	}
+	*/
 
 	//Util.setBodyScroll(scr[0], scr[1]);
 };

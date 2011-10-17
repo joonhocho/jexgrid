@@ -364,17 +364,22 @@ prototype._dragoverCanvas = function(e, cell) {
 
 prototype._keydownCanvas = function(e) {
 	var last = this._last,
-		range = this._range;
+		range = this._range,
+		keyCode = e.which;
 
-	if (last || this._range) {
-		if (this._consts._NAVKEYS[e.which]) {
+
+	/*
+	 * don't know what this is for
+	if (last || range) {
+		if (this._consts._NAVKEYS[keyCode]) {
 			this.selectCell(JGM.create("Cell", {'grid':this.grid, 'row':this.grid['view']._getFirstSafeVisibleRow(), 'col':this.grid['view']._getFirstSafeVisibleCol()}));
 		}
 		return;
 	}
+	*/
 
 	var evtmgr = this.grid['event'];
-	if (this._consts._NAVKEYS[e.which]) {
+	if (this._consts._NAVKEYS[keyCode]) {
 		/**
 		  셀 선택 후 키보드로 셀 네비게이션을 하기 전에 발생되는 이벤트 입니다.
 
@@ -393,7 +398,7 @@ prototype._keydownCanvas = function(e) {
 		var nextCell;
 
 		e.preventDefault();
-		switch (e.which) {
+		switch (keyCode) {
 			case Util.keyMapKeydown.tab:
 				if (e.shiftKey) {
 					nextCell = this._idxToCell(this._consts._LEFT, last);
@@ -524,7 +529,6 @@ prototype._keydownCanvas = function(e) {
 				cmgr = this.grid['colDefMgr'],
 				col,
 				cols = this._cols,
-				keycode = e.which,
 				event,
 				args = [e, null, last];
 
@@ -592,7 +596,6 @@ prototype._keydownCanvas = function(e) {
 		if (this._rows.length === 1) {
 			var row,
 				rows = this._rows,
-				keycode = e.which,
 				args = [e, null, last];
 
 			for (row in rows) {
@@ -631,7 +634,7 @@ prototype._keydownCanvas = function(e) {
 		  @version 1.2.3
 		  */
 		var args = [e, this._rows, this._cols];
-		evtmgr.trigger("keydownSel_"+e.which, args, true);
+		evtmgr.trigger("keydownSel_"+keyCode, args, true);
 		evtmgr.trigger("keydownSel", args, true);
 	}
 };
