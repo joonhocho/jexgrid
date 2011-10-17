@@ -411,12 +411,7 @@ prototype._onCreateCss = function() {
 	rules.push(rowSel + "{background:white;position:absolute;" + opt['rowStyle'] + "}");
 	rules.push(cellSel + "{height:" + opt['rowH'] + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + opt['padding'] + "px;border-right:" + border + ";" + opt['cellStyle'] + "}");
 	if (opt['evenOddRows']) {
-		rules.push(
-				attrRowIdx + "$='1']," +
-				attrRowIdx + "$='3']," +
-				attrRowIdx + "$='5']," +
-				attrRowIdx + "$='7']," +
-				attrRowIdx + "$='9']{background:" + opt['oddRowsBackground'] + "}");
+		rules.push(rowSel + ".odd{background:" + opt['oddRowsBackground'] + "}");
 	}
 	for (; i < clen; i++) {
 		rules.push(cellSel + ".k_" + colDefs[i].key + "{" + colDefs[i].style + "}");
@@ -1309,7 +1304,8 @@ prototype.rerenderRowById = function(id) {
 		renderers = renSettings[0],
 		cellInputs = renSettings[1],
 		rowH = this._getRowOuterHeight(),
-		rowCommon = "<div class='" + this._rowClass + "' i='",
+		rowCommon = "<div class='" + this._rowClass + " odd' i='",
+		rowCommonEven = "<div class='" + this._rowClass + "' i='",
 		rowCommon2 = "' " + this._rowIdxAttr + "='",
 		html = [],
 		newNodes;
@@ -1319,7 +1315,7 @@ prototype.rerenderRowById = function(id) {
 		// fire event to notify onBeforeRenderRows
 		this._evtmgr.trigger("onBeforeRenderRows", [[i]], true);
 		// render and append to canvas
-		html.push(rowCommon + datarow[idKey] + rowCommon2 + i + "' style='top:" + (rowH * i) + "px'>");
+		html.push(((i % 2) ? rowCommonEven : rowCommon) + datarow[idKey] + rowCommon2 + i + "' style='top:" + (rowH * i) + "px'>");
 		this._renderRow(html, i, datarow, colDefs, colCommon, renderers, cellInputs);
 		rmap[id] = Util.appendHTML(canvas, html.join(""))[0];
 		// fire event to notify rendere completion
@@ -1433,7 +1429,8 @@ prototype._appendRows = function(range) {
 		rendered = this._renderedRows,
 		rowH = this._getRowOuterHeight(),
 		canvas = this._canvasEl,
-		rowCommon = "<div class='" + this._rowClass + "' i='",
+		rowCommon = "<div class='" + this._rowClass + " odd' i='",
+		rowCommonEven = "<div class='" + this._rowClass + "' i='",
 		rowCommon2 = "' " + this._rowIdxAttr + "='",
 		renSettings = this._getRendererSettings(colDefs),
 		renderers = renSettings[0],
@@ -1447,7 +1444,7 @@ prototype._appendRows = function(range) {
 		datarow = datalist[i];
 		id = datarow[idKey];
 		if (!rendered.hasOwnProperty(id)) {
-			html[html.length] = rowCommon + id + rowCommon2 + i + "' style='top:" + (rowH * i) + "px'>";
+			html[html.length] = ((i % 2) ? rowCommonEven : rowCommon) + id + rowCommon2 + i + "' style='top:" + (rowH * i) + "px'>";
 			this._renderRow(html, i, datarow, colDefs, colCommon, renderers, cellInputs);
 			added.push(id);
 		}
@@ -1474,7 +1471,8 @@ prototype._removeAndRenderRows = function(range) {
 		colCommon = this._getColCellClasses(colDefs).map(function(cls) { return "<div class='" + cls + " "; }),
 		rowH = this._getRowOuterHeight(),
 		canvas = this._canvasEl,
-		rowCommon = "<div class='" + this._rowClass + "' i='",
+		rowCommon = "<div class='" + this._rowClass + " odd' i='",
+		rowCommonEven = "<div class='" + this._rowClass + "' i='",
 		rowCommon2 = "' " + this._rowIdxAttr + "='",
 		renSettings = this._getRendererSettings(colDefs),
 		renderers = renSettings[0],
@@ -1487,7 +1485,7 @@ prototype._removeAndRenderRows = function(range) {
 	for (; i <= len; i++) {
 		datarow = datalist[i];
 		id = datarow[idKey];
-		html[html.length] = rowCommon + id + rowCommon2 + i + "' style='top:" + (rowH * i) + "px'>";
+		html[html.length] = ((i % 2) ? rowCommonEven : rowCommon) + id + rowCommon2 + i + "' style='top:" + (rowH * i) + "px'>";
 		this._renderRow(html, i, datarow, colDefs, colCommon, renderers, cellInputs);
 		added.push(id);
 	}
@@ -2364,6 +2362,7 @@ prototype.focus = function(e) {
 		return;
 	}
 	//var scr = Util.getBodyScroll();
+	/*
 	var maskEl = this._mask[0];
 	if (document.activeElement !== maskEl) {
 		if (maskEl.setActive) {
@@ -2377,6 +2376,7 @@ prototype.focus = function(e) {
 			this._mask.focus();
 		}
 	}
+	*/
 	//Util.setBodyScroll(scr[0], scr[1]);
 };
 //isRendered
