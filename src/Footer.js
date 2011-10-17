@@ -433,8 +433,18 @@ prototype.bindEvents = function() {
 		'onDataChange': [this._updateTotalCount, this._updateSums],
 		'onAfterRefresh': this._updateShownCount,
 		'onResizeCol': this._setWidthByKey,
+		'changeVisibleColumns': this._onReorderCols,
 		'onScrollViewportH': this._onScrollViewportH
 	}, this);
+};
+
+prototype._onReorderCols = function() {
+	var colDefs = this.grid['colDefMgr'].get(),
+		i = 0,
+		l = colDefs.length;
+	for (; i < l; i++) {
+		this._slider[0].appendChild(this.getSumCell(colDefs[i].key));
+	}
 };
 
 prototype._setWidthByKey = function(key, w, o) {

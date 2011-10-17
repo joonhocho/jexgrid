@@ -124,10 +124,12 @@ proto._init = function(args) {
 };
 
 proto.mousedown = function(e) {
-	if (!(Util.contains(this.columnIcon[0], e.target) || Util.contains(this.ul[0], e.target))) {
-		this.ul.hide();
-		if (this.columnIcon.hasClass("active")) {
-			this.columnIcon.toggleClass("active");
+	if (this.columnIcon) {
+		if (!(Util.contains(this.columnIcon[0], e.target) || Util.contains(this.ul[0], e.target))) {
+			this.ul.hide();
+			if (this.columnIcon.hasClass("active")) {
+				this.columnIcon.toggleClass("active");
+			}
 		}
 	}
 }
