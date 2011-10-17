@@ -391,7 +391,7 @@ prototype._init = function(args) {
 		}
 	}
 	*/
-	if (!opt['MenuBar']) {
+	if (!opt['MenuBar'] && (opt['columnHideEnabled'] || opt['SearchManager'])) {
 		opt['MenuBar'] = {};
 	}
 
@@ -420,7 +420,9 @@ prototype._init = function(args) {
 		this['search'] =  JGM.create("SearchManager", {grid:this, 'container':ctnr, 'options':opt['SearchManager']});
 	}
 
-	this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':ctnr, 'options':opt['MenuBar']});
+	if (opt['MenuBar']) {
+		this['menubar'] =  JGM.create("MenuBar", {grid:this, 'container':ctnr, 'options':opt['MenuBar']});
+	}
 
 	this['view'] =  JGM.create("ViewportManager", {grid:this, 'container':ctnr, 'options':opt['ViewportManager']});
 

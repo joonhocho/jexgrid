@@ -80,44 +80,47 @@ proto._init = function(args) {
 		$("<div class='" + opt['classMenuBar'] + "'></div>")
 		.prependTo(this._ctnr);
 
-	var element = Util.element,
-		input = Util.input,
-		SAFE = Util.SAFE,
-		columns = this.getColumns(),
-		i = 0,
-		l = columns.length,
-		list = '',
-		mid = this.mid,
-		column,
-		key,
-		id;
-	for (; i < l; i++) {
-		column = columns[i];
-		key = column.key;
-		id = mid + '-toggle-column-' + key;
-		list += element('label', {
-			'for': id
-		}, element('li', {
-			'class': column.hidden ? 'unchecked' : null
-		}, input('checkbox', {
-			'id': id,
-			checked: !column.hidden,
-			onclick: "JGM.m.MenuBar." + mid + ".toggleColumn('" + key + "', this.checked, this)"
-		}) + column.name, SAFE), SAFE);
+	if (this.grid._options['columnHideEnabled']) {
+		var element = Util.element,
+			input = Util.input,
+			SAFE = Util.SAFE,
+			columns = this.getColumns(),
+			i = 0,
+			l = columns.length,
+			list = '',
+			mid = this.mid,
+			column,
+			key,
+			id;
+
+		for (; i < l; i++) {
+			column = columns[i];
+			key = column.key;
+			id = mid + '-toggle-column-' + key;
+			list += element('label', {
+				'for': id
+			}, element('li', null,
+				input('checkbox', {
+					'id': id,
+				checked: true,
+				onclick: "JGM.m.MenuBar." + mid + ".toggleColumn('" + key + "', this.checked, this)"
+				}) + column.name, SAFE), SAFE);
+		}
+
+		var ul = this.ul = $(element('ul', {
+			'class': 'jgrid-column-toggle-box'
+		}, list, SAFE)).appendTo(this.grid._ctnr);
+
+		ul.css({
+			top: 11,
+			left: 34 
+		});
+
+		ul.hide();
+		this.columnIcon = this.addIcon(opt['classColumnToggleIcon'], "현재 보여지는 열을 숨기거나 숨겨진 열을 보이도록 합니다.", opt['columnIconWidth'], opt['columnIconHeight'], function() {
+			ul.toggle();
+		});
 	}
-	var ul = this.ul = $(element('ul', {
-		'class': 'jgrid-column-toggle-box'
-	}, list, SAFE)).appendTo(this.grid._ctnr);
-
-	ul.css({
-		top: 11,
-		left: 34 
-	});
-
-	ul.hide();
-	this.columnIcon = this.addIcon(opt['classColumnToggleIcon'], "현재 보여지는 열을 숨기거나 숨겨진 열을 보이도록 합니다.", opt['columnIconWidth'], opt['columnIconHeight'], function() {
-		ul.toggle();
-	});
 };
 
 proto.mousedown = function(e) {
