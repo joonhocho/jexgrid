@@ -26,6 +26,7 @@ JGM
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Cell = goog.getObjectByName('jx.grid.Cell');
 
  goog.exportSymbol('jx.grid.EditManager', EditManager);
@@ -349,6 +350,7 @@ prototype.bindEvents = function() {
 };
 
 prototype._destroy = function() {
+	this.grid.log('destroying EditManager instance...', Grid.V_INIT);//IF_DEBUG
 	this._deleteEditor();
 
 	JGM._destroy(this, {

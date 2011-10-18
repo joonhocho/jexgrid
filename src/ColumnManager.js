@@ -27,6 +27,7 @@ JGM
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Column = goog.getObjectByName('jx.grid.Column'),
 	ViewportManager = goog.getObjectByName('jx.grid.ViewportManager');
 
@@ -477,6 +478,7 @@ prototype.__init = function(args) {
 };
 
 prototype._destroy = function() {
+	this.grid.log('destroying ColumnManager instance...', Grid.V_INIT);//IF_DEBUG
 	JGM._destroy(this, {
 		name: "ColumnManager",
 		path: "colDefMgr",

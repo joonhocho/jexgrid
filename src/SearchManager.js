@@ -20,6 +20,7 @@ goog.provide('jx.grid.SearchManager');
 (function() {'use strict';
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.SearchManager', SearchManager);
@@ -311,6 +312,7 @@ prototype._onAfterRenderModules = function() {
 };
 
 prototype._destroy = function() {
+	this.grid.log('destroying SearchManager instance...', Grid.V_INIT);//IF_DEBUG
 	var key,
 		tag,
 		base,

@@ -24,6 +24,7 @@ JGM
 (function() {'use strict';
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.TooltipManager', TooltipManager);
@@ -235,6 +236,7 @@ prototype.__init = function() {
 };
 
 prototype._destroy = function() {
+	this.grid.log('destroying TooltipManager instance...', Grid.V_INIT);//IF_DEBUG
 	JGM._destroy(this, {
 		name: "TooltipManager",
 		path: "tooltip",

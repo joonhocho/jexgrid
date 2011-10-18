@@ -31,6 +31,7 @@ JGM
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Collapser = goog.getObjectByName('jx.grid.Collapser');
 
  goog.exportSymbol('jx.grid.ColumnGroup', ColumnGroup);
@@ -258,6 +259,7 @@ prototype.bindEvents = function() {
 };
 
 prototype._destroy = function() {
+	this.grid.log('destroying ColumnGroup instance...', Grid.V_INIT);//IF_DEBUG
 	JGM._destroy(this, {
 		name: "ColumnGroup",
 		path: "colGroup",

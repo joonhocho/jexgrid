@@ -23,6 +23,7 @@ goog.provide('jx.grid.DataCreator');
 (function() {'use strict';
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
  goog.exportSymbol('jx.grid.DataCreator', DataCreator);
@@ -463,6 +464,7 @@ prototype._reset = function() {
 };
 
 prototype._destroy = function() {
+	this.grid.log('destroying DataCreator instance...', Grid.V_INIT);//IF_DEBUG
 	var i,
 		imap = this._inputMap;
 	for (i in imap) {

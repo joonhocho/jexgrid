@@ -27,6 +27,7 @@ goog.provide('jx.grid.SelectionManager');
  var JGM = goog.getObjectByName('jx.grid'),
  Util = goog.getObjectByName('jx.util'),
  BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
  Cell = goog.getObjectByName('jx.grid.Cell');
 
  goog.exportSymbol('jx.grid.SelectionManager', SelectionManager);
@@ -253,6 +254,7 @@ _UP:		1,
  };
 
  prototype._destroy = function() {
+	 this.grid.log('destroying SelectionManager instance...', Grid.V_INIT);//IF_DEBUG
 	 JGM._deleteMap(this._consts, "_NAVKEYS");
 
 	 var i,

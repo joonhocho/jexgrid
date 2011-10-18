@@ -24,6 +24,7 @@ goog.provide('jx.data.DataManager');
 (function() {'use strict';
 	var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule');
 
 goog.exportSymbol('jx.data.DataManager', DataManager);
@@ -274,6 +275,7 @@ prototype.bindEvents = function() {
 };
 
 prototype._destroy = function() {
+	this.grid.log('destroying DataManager instance...', Grid.V_INIT);//IF_DEBUG
 	this.cleanList(this.all);
 
 	JGM._destroy(this, {

@@ -492,6 +492,8 @@ prototype.unsetDrag = function() {
 };
 
 prototype._onDestroy = function() {
+	this.grid.log('disposing ViewportManager instance...', Grid.V_INIT);//IF_DEBUG
+
 	JGM._destroy(this, {
 		name: "ViewportManager",
 		path: "view",

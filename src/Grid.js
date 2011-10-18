@@ -569,6 +569,7 @@ prototype.destroy = function() {
 		this.dispose();
 	}
 	catch (e) {
+		this.log(e.stack);
 		return e;
 	}
 };
