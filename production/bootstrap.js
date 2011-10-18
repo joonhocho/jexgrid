@@ -111,166 +111,168 @@ JGM.create = function(name, args) {
 };
 //tested
 JGM._destroy = function(obj, args) {
-	var cur,
-		arr,
-		i,
-		j,
-		len;
-	for (i in args) {
-		if (args.hasOwnProperty(i)) {
-			switch (i) {
-				case "map":
-					cur = args[i];
-					if (Util.isString(cur)) {
-						arr = Util.split(cur);
-						len = arr.length;
-						for (j = 0; j < len; j++) {
-							JGM._deleteMap(obj, arr[j]);
+	if (obj && args) {
+		var cur,
+			arr,
+				i,
+				j,
+				len;
+		for (i in args) {
+			if (args.hasOwnProperty(i)) {
+				switch (i) {
+					case "map":
+						cur = args[i];
+						if (typeof cur == 'string') {
+							arr = Util.split(cur);
+							len = arr.length;
+							for (j = 0; j < len; j++) {
+								JGM._deleteMap(obj, arr[j]);
+							}
 						}
-					}
-					else if (cur instanceof Array) {
-						len = cur.length;
-						for (j = 0; j < len; j++) {
-							Util.emptyObject(cur[j]);
+						else if (cur instanceof Array) {
+							len = cur.length;
+							for (j = 0; j < len; j++) {
+								Util.emptyObject(cur[j]);
+							}
 						}
-					}
-					else {
-						Util.emptyObject(cur);
-					}
-					break;
-				case "array":
-					cur = args[i];
-					if (Util.isString(cur)) {
-						arr = Util.split(cur);
-						len = arr.length;
-						for (j = 0; j < len; j++) {
-							JGM._deleteArray(obj, arr[j]);
+						else {
+							Util.emptyObject(cur);
 						}
-					}
-					else {
-						cur.length = 0;
-					}
-					break;
-				case "$":
-					cur = args[i];
-					if (Util.isString(cur)) {
-						arr = Util.split(cur);
-						len = arr.length;
-						for (j = 0; j < len; j++) {
-							JGM._delete$(obj, arr[j]);
+						break;
+					case "array":
+						cur = args[i];
+						if (typeof cur == 'string') {
+							arr = Util.split(cur);
+							len = arr.length;
+							for (j = 0; j < len; j++) {
+								JGM._deleteArray(obj, arr[j]);
+							}
 						}
-					}
-					else if (cur instanceof Array) {
-						len = cur.length;
-						for (j = 0; j < len; j++) {
-							Util$.unbindRemove(cur[j]);
+						else {
+							cur.length = 0;
 						}
-					}
-					else {
-						Util$.unbindRemove(cur);
-					}
-					break;
-				case "style":
-					cur = args[i];
-					if (Util.isString(cur)) {
-						arr = Util.split(cur);
-						len = arr.length;
-						for (j = 0; j < len; j++) {
-							JGM._deleteStyle(obj, arr[j]);
+						break;
+					case "$":
+						cur = args[i];
+						if (typeof cur == 'string') {
+							arr = Util.split(cur);
+							len = arr.length;
+							for (j = 0; j < len; j++) {
+								JGM._delete$(obj, arr[j]);
+							}
 						}
-					}
-					else if (cur instanceof Array) {
-						len = cur.length;
-						for (j = 0; j < len; j++) {
-							Util.removeStyle(cur[j]);
+						else if (cur instanceof Array) {
+							len = cur.length;
+							for (j = 0; j < len; j++) {
+								Util$.unbindRemove(cur[j]);
+							}
 						}
-					}
-					else {
-						Util.removeStyle(cur);
-					}
-					break;
-				case "property":
-					cur = args[i];
-					if (Util.isString(cur)) {
-						arr = Util.split(cur);
-						len = arr.length;
-						for (j = 0; j < len; j++) {
-							delete obj[arr[j]];
+						else {
+							Util$.unbindRemove(cur);
 						}
-					}
-					else if (cur instanceof Array) {
-						len = cur.length;
-						for (j = 0; j < len; j++) {
-							delete obj[cur[j]];
+						break;
+					case "style":
+						cur = args[i];
+						if (typeof cur == 'string') {
+							arr = Util.split(cur);
+							len = arr.length;
+							for (j = 0; j < len; j++) {
+								JGM._deleteStyle(obj, arr[j]);
+							}
 						}
-					}
-					break;
-				case "module":
-					cur = args[i];
-					if (Util.isString(cur)) {
-						arr = Util.split(cur);
-						len = arr.length;
-						for (j = 0; j < len; j++) {
-							JGM._deleteModule(obj, arr[j]);
+						else if (cur instanceof Array) {
+							len = cur.length;
+							for (j = 0; j < len; j++) {
+								Util.removeStyle(cur[j]);
+							}
 						}
-					}
-					else if (cur instanceof Array) {
-						len = cur.length;
-						for (j = 0; j < len; j++) {
-							cur[j].destroy();
+						else {
+							Util.removeStyle(cur);
 						}
-					}
-					else {
-						cur.destroy();
-					}
-					break;
-				case "name":
-					if (obj.hasOwnProperty("mid")) {
-						JGM._remove(args[i], obj.mid);
-						delete obj.mid;
-					}
-					break;
-				case "path":
-					if (obj.hasOwnProperty("grid") && obj.grid.hasOwnProperty(args[i])) {
-						delete obj.grid[args[i]];
-						delete obj.grid;
-					}
-					break;
+						break;
+					case "property":
+						cur = args[i];
+						if (typeof cur == 'string') {
+							arr = Util.split(cur);
+							len = arr.length;
+							for (j = 0; j < len; j++) {
+								delete obj[arr[j]];
+							}
+						}
+						else if (cur instanceof Array) {
+							len = cur.length;
+							for (j = 0; j < len; j++) {
+								delete obj[cur[j]];
+							}
+						}
+						break;
+					case "module":
+						cur = args[i];
+						if (typeof cur == 'string') {
+							arr = Util.split(cur);
+							len = arr.length;
+							for (j = 0; j < len; j++) {
+								JGM._deleteModule(obj, arr[j]);
+							}
+						}
+						else if (cur instanceof Array) {
+							len = cur.length;
+							for (j = 0; j < len; j++) {
+								cur[j].destroy();
+							}
+						}
+						else {
+							cur.destroy();
+						}
+						break;
+					case "name":
+						if (obj.hasOwnProperty("mid")) {
+							JGM._remove(args[i], obj.mid);
+							delete obj.mid;
+						}
+						break;
+					case "path":
+						if (obj.hasOwnProperty("grid") && obj.grid.hasOwnProperty(args[i])) {
+							delete obj.grid[args[i]];
+							delete obj.grid;
+						}
+						break;
+				}
 			}
 		}
+		Util.emptyObject(obj);
 	}
-	Util.emptyObject(obj);
 };
 // tested
 JGM._deleteMap = function(obj, name) {
-	if (obj.hasOwnProperty(name)) {
+	if (obj && obj.hasOwnProperty(name) && obj[name]) {
 		Util.emptyObject(obj[name]);
 		delete obj[name];
 	}
 };
 // tested
 JGM._deleteArray = function(obj, name) {
-	if (obj.hasOwnProperty(name)) {
+	if (obj && obj.hasOwnProperty(name) && obj[name]) {
 		obj[name].length = 0;
 		delete obj[name];
 	}
 };
 // tested
 JGM._delete$ = function(obj, name) {
-	if (obj.hasOwnProperty(name)) {
+	if (obj && obj.hasOwnProperty(name) && obj[name]) {
 		Util$.unbindRemove(obj[name]);
 		delete obj[name];
 	}
 };
 // tested
 JGM._deleteStyle = function(obj, name) {
-	if (obj.hasOwnProperty(name)) {
+	if (obj && obj.hasOwnProperty(name) && obj[name]) {
 		Util.removeStyle(obj[name]);
 		delete obj[name];
 	}
 };
 JGM._deleteModule = function(obj, name) {
-	if (obj.hasOwnProperty(name)) {
+	if (obj && obj.hasOwnProperty(name) && obj[name]) {
 		obj[name].destroy();
 		delete obj[name];
 	}

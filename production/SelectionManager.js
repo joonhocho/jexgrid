@@ -21,6 +21,7 @@ goog.provide('jx.grid.SelectionManager');
  var JGM = goog.getObjectByName('jx.grid'),
  Util = goog.getObjectByName('jx.util'),
  BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
  Cell = goog.getObjectByName('jx.grid.Cell');
  goog.exportSymbol('jx.grid.SelectionManager', SelectionManager);
  /**

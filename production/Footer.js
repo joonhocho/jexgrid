@@ -21,6 +21,7 @@ goog.provide('jx.grid.Footer');
 	var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	element = Util.element;
 goog.exportSymbol('jx.grid.Footer', Footer);
 /**
@@ -388,9 +389,17 @@ prototype._destroy = function() {
 	var i,
 		map = this._sumMap;
 	for (i in map) {
-		if (map.hasOwnProperty(i)) {
+		if (map.hasOwnProperty(i) && map[i] && map[i].remove) {
 			map[i].remove();
 		}
+	}
+	if (this._mask) {
+		this._mask.remove();
+		delete this._mask;
+	}
+	if (this._slider) {
+		this._slider.remove();
+		delete this._slider;
 	}
 	JGM._destroy(this, {
 		name: "Footer",

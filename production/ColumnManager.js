@@ -21,6 +21,7 @@ JGM
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Column = goog.getObjectByName('jx.grid.Column'),
 	ViewportManager = goog.getObjectByName('jx.grid.ViewportManager');
  goog.exportSymbol('jx.grid.ColumnManager', ColumnManager);

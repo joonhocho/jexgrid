@@ -20,6 +20,7 @@ JGM
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Cell = goog.getObjectByName('jx.grid.Cell');
  goog.exportSymbol('jx.grid.EditManager', EditManager);
  goog.exportSymbol('jx.grid.Editor', Editor);

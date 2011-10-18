@@ -24,6 +24,7 @@ goog.provide('jx.grid.Collapser');
 var JGM = goog.getObjectByName('jx.grid'),
 	Util = goog.getObjectByName('jx.util'),
 	BaseModule = goog.getObjectByName('jx.grid.BaseModule'),
+	Grid = goog.getObjectByName('jx.grid.Grid'),
 	Tree = goog.getObjectByName('jx.struct.Tree');
  goog.exportSymbol('jx.grid.Collapser', Collapser);
 	/**
