@@ -646,7 +646,10 @@ prototype._getPadding = function() {
 	return this._options['padding'];
 };
 prototype._colWidthPlus = function() {
-	return this._options['padding'] + this._options['borderThickness'];
+	if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
+		return 0; // IE6 | quirks mode
+	}
+	return this._options['padding'] + this._options['borderThickness']; // correct standard
 };
 prototype._getRowOuterHeight = function() {
 	return this._options['rowH'] + this._options['borderThickness'];
