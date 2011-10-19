@@ -706,6 +706,7 @@ prototype._beforeCreateCss = function(e) {
 	styles['.' + opt['classSort']] = {
 		position: 'absolute',
 		height: '100%',
+		top: (opt['sortTop'] || 0) + 'px',
 		width: opt['sortWidth'] + "px",
 		background: "url(" + opt['sortBackground'] + ") no-repeat center transparent"
 	};
@@ -720,6 +721,7 @@ prototype._beforeCreateCss = function(e) {
 		background: opt['resizeHandleBackground'],
 		cursor:'e-resize',
 		position:'absolute',
+		top: (opt['resizeHandleTop'] || 0) + 'px',
 		height: '100%',
 		width: opt['resizeHandleWidth'] + "px"
 	};
