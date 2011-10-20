@@ -23,13 +23,14 @@ if (!nProto.toFixedFloat) {
 if (!sProto.toInt) {
 	sProto.toInt = function() {
 		var a;
+		if ((a = this.replace(/[^\d\.\-]/g, '')).length === 0) {
+			return NaN;
+		}
+		
 		a = parseInt(this, 10);
 		if (a === a) {
 			// checking for NaN
 			return a;
-		}
-		if ((a = this.replace(/[^\d\.\-]/g, '')).length === 0) {
-			return NaN;
 		}
 		var c,
 			dot = 0,
