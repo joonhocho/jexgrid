@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 54
- * Date: Wed Oct 19 11:24:57 KST 2011
+ * JexGrid Build 55
+ * Date: Thu Oct 20 14:07:49 KST 2011
  */
 /*
 AUTHOR
@@ -257,12 +257,12 @@ var engine_extension = {};
   if(!i.toInt) {
     i.toInt = function() {
       var g;
+      if(this.replace(/[^\d\.\-]/g, "").length === 0) {
+        return NaN
+      }
       g = parseInt(this, 10);
       if(g === g) {
         return g
-      }
-      if((g = this.replace(/[^\d\.\-]/g, "")).length === 0) {
-        return NaN
       }
       for(var e, d = 0, c = 0, a = g.length, b = 0, j = !1;b < a;b++) {
         if(e = g.charAt(b), e === ".") {
