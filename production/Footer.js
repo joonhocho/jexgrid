@@ -290,7 +290,8 @@ function Footer(args) {
 		  @since 1.0.0
 		  @version 1.0.0
 		  */
-		'contentStyle': ""
+		'contentStyle': "",
+		'sumAlign': 'right'
 	};
 	this._options = JGM._extend(options, args['options']);
 	this._sumMap = {};
@@ -441,7 +442,7 @@ prototype._onCreateCss = function() {
 		overflow: 'hidden',
 		'float': 'left',
 		'text-overflow':'ellipsis',
-		'text-align':'center',
+		'text-align':opt['sumAlign'],
 		'vertical-align': 'middle',
 		height: '21px',
 		left: (10000 - this.grid['view'].getScrollLeft()) + "px",

@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 55
- * Date: Thu Oct 20 14:07:49 KST 2011
+ * JexGrid Build 56
+ * Date: Fri Oct 21 18:25:52 KST 2011
  */
 /*
 AUTHOR
@@ -4893,11 +4893,11 @@ jx.grid.SelectionManager = {};
   d._setRange = function(c, a, b, d) {
     var e = this._range;
     if(e) {
-      var f = e.getRowIdx();
-      if(c === f && a === e.getColIdx()) {
+      var l = e.getRowIdx();
+      if(c === l && a === e.getColIdx()) {
         return
       }
-      c !== f && this._last && f !== this._last.getRowIdx() && this.grid.view.unlockRowById(e.getId());
+      c !== l && this._last && l !== this._last.getRowIdx() && this.grid.view.unlockRowById(e.getId());
       e.get$().removeClass(this._options.classRange);
       b || delete this._range
     }
@@ -6714,7 +6714,7 @@ jx.grid.Footer = {};
     this.grid = c.grid;
     this.grid.footer = this;
     this._options = i._extend({classCell:"footer-cell", background:"#F1F5FB", border:"0px solid #CCD9EA", color:"#000", fontSize:"13px", fontWeight:"normal", cellHeight:25, cellPadding:40, countTemplate:"현재 <span name='shownCount'></span> 건 / 총 <span name='totalCount'></span> 건", titleColor:"#5A6779", titleFontSize:"12px", titleFontWeight:"normal", contentColor:"#1E395B", contentFontSize:"12px", contentFontWeight:"normal", classFooter:"jgrid-footer", classTitle:"footer-title", classContent:"footer-content", 
-    style:"", cellStyle:"", titleStyle:"", contentStyle:""}, c.options);
+    style:"", cellStyle:"", titleStyle:"", contentStyle:"", sumAlign:"right"}, c.options);
     this._sumMap = {};
     this.__init()
   }
@@ -6794,18 +6794,17 @@ jx.grid.Footer = {};
     b.push(a + " ." + c.classCell + "{float:left;white-space:nowrap;line-height:" + c.cellHeight + "px;padding-right:" + c.cellPadding + "px;" + c.cellStyle + "}");
     b.push(a + " ." + c.classTitle + "{text-align:right;color:" + c.titleColor + ";font-size:" + c.titleFontSize + ";font-weight:" + c.titleFontWeight + ";" + c.titleStyle + "}");
     b.push(a + " ." + c.classContent + "{color:" + c.contentColor + ";font-size:" + c.contentFontSize + ";font-weight:" + c.contentFontWeight + ";" + c.contentStyle + "}");
-    c = {};
-    a = "#" + this.grid.mid;
-    c[a + " .classSliderMask"] = {position:"relative", overflow:"hidden", width:"100%", "border-bottom":"1px solid #ddd"};
-    c[a + " .classSlider"] = {position:"relative", overflow:"hidden", "white-space":"nowrap", cursor:"default", background:"#f0f0f0", left:"-10000px", width:"100000px", "line-height":"21px"};
-    c[a + " .classSliderCell"] = {position:"relative", overflow:"hidden", "float":"left", "text-overflow":"ellipsis", "text-align":"center", "vertical-align":"middle", height:"21px", left:1E4 - this.grid.view.getScrollLeft() + "px", "border-right":"1px solid #ddd"};
-    var d, e;
-    for(d in c) {
-      if(c.hasOwnProperty(d)) {
-        a = c[d];
-        b.push(d + "{");
-        for(e in a) {
-          b.push(e + ":" + a[e] + ";")
+    var a = {}, d = "#" + this.grid.mid;
+    a[d + " .classSliderMask"] = {position:"relative", overflow:"hidden", width:"100%", "border-bottom":"1px solid #ddd"};
+    a[d + " .classSlider"] = {position:"relative", overflow:"hidden", "white-space":"nowrap", cursor:"default", background:"#f0f0f0", left:"-10000px", width:"100000px", "line-height":"21px"};
+    a[d + " .classSliderCell"] = {position:"relative", overflow:"hidden", "float":"left", "text-overflow":"ellipsis", "text-align":c.sumAlign, "vertical-align":"middle", height:"21px", left:1E4 - this.grid.view.getScrollLeft() + "px", "border-right":"1px solid #ddd"};
+    var e, f;
+    for(e in a) {
+      if(a.hasOwnProperty(e)) {
+        c = a[e];
+        b.push(e + "{");
+        for(f in c) {
+          b.push(f + ":" + c[f] + ";")
         }
         b.push("}")
       }
