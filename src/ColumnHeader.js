@@ -769,10 +769,8 @@ prototype._onRenderModules = function() {
 	if (colmgr.hasGroups()) {
 		// group header enabled
 		// disable reordering
-		var opt = this._options;
-		opt['reorderEnabled'] = false;
-
-		var groups = colmgr.getGroups(),
+		var opt = this._options,
+			groups = colmgr.getGroups(),
 			j = 0,
 			l = groups.length,
 			group,
@@ -782,21 +780,33 @@ prototype._onRenderModules = function() {
 			k = 0,
 			m = 0,
 			view = this.getView(),
-			glen;
+			viewplus = view._colWidthPlus(),
+			glen,
+			wplus;
+
+		if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
+			wplus = 0;
+		}
+		else {
+			wplus = this._widthPlus();
+		}
+
+		opt['reorderEnabled'] = false;
+
 		for (; j < l; j++) {
 			group = groups[j];
 			groupName = group[0].parent;
 			groupWidth = 0;
 			for (k = 0, glen = group.length; k < glen; k++) {
 				if (!group[k].hidden) {
-					groupWidth += view._getColOuterWidth(m++);
+					groupWidth += group[i].width + viewplus;
 				}
 			}
 			doubleHeaders.push(element('div', {
 				'class': opt['classColHeader'],
 				'title': groupName,
 				'style': {
-					width: (groupWidth - this._widthPlus()) + 'px'
+					width: (groupWidth - wplus) + 'px'
 				}
 			}, groupName));
 		}
@@ -1236,12 +1246,23 @@ prototype._mouseup = function(e) {
 prototype._setWidthByKey = function(key, w, o) {
 	this.grid.log('setting ColumnHeader width=' + w + '. key=' + key, Grid.V_RESIZE);//IF_DEBUG
 
-	this.get(key)[0].style.width = w + this.getView()._colWidthPlus() - this._widthPlus() + "px";
+	var wplus,
+		viewplus;
+	if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
+		// IE6 | quirks mode
+		wplus = 0;
+		viewplus = 0;
+	}
+	else {
+		wplus = this._widthPlus();
+		viewplus = this.getView()._colWidthPlus();
+	}
+
+	this.get(key)[0].style.width = w + viewplus - wplus + "px";
 
 	if (this._doubleHead) {
 		var colmgr = this.getColMgr(),
 			view = this.getView(),
-			viewWidthPlus = view._colWidthPlus(),
 			groupIdx = colmgr.getGroupIndexByKey(key),
 			group = colmgr.getGroupByGroupIdx(groupIdx),
 			i = 0,
@@ -1250,11 +1271,11 @@ prototype._setWidthByKey = function(key, w, o) {
 
 		for (; i < l; i++) {
 			if (!group[i].hidden) {
-				groupWidth += group[i].width + viewWidthPlus;
+				groupWidth += group[i].width + viewplus;
 			}
 		}
 
-		this._doubleHead[0].childNodes[groupIdx].style.width = groupWidth - this._widthPlus() + 'px';
+		this._doubleHead[0].childNodes[groupIdx].style.width = groupWidth - wplus + 'px';
 	}
 	
 	this._syncResizeHandles(this.getColMgr().getIdxByKey(key));

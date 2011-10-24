@@ -452,8 +452,17 @@ prototype._onReorderCols = function() {
 prototype._setWidthByKey = function(key, w, o) {
 	var el = this.getSumCell(key);
 	if (el) {
-		var widthPlus = 1;
-		el.style.width = w + this.grid['view']._colWidthPlus() - widthPlus + "px";
+		var widthPlus,
+			viewplus;
+		if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
+			widthPlus = 0;
+			viewplus = 0;
+		}
+		else {
+			widthPlus = 1;
+			viewplus = this.grid['view']._colWidthPlus();
+		}
+		el.style.width = w + viewplus - widthPlus + "px";
 	}
 };
 
@@ -472,14 +481,24 @@ prototype.renderCells = function() {
 			colDef,
 			view = this.grid['view'],
 			cells = [],
+			widthPlus,
+			viewplus;
+
+		if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
+			widthPlus = 0;
+			viewplus = 0;
+		}
+		else {
 			widthPlus = 1;
+			viewplus = view._colWidthPlus();
+		}
 
 		for (; i < l; i++) {
 			cells.push(element('div', {
 				'class': 'classSliderCell',
 				'id': this.mid + '_sum_' + colDefs[i].key,
 				'style': {
-					width: (view._getColOuterWidth(i) - widthPlus) + "px"
+					width: (view.getColWidth(i) + viewplus - widthPlus) + "px"
 				}
 			}));
 		}
