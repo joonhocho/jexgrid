@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 56
- * Date: Fri Oct 21 18:25:52 KST 2011
+ * JexGrid Build 57
+ * Date: Mon Oct 24 15:00:46 KST 2011
  */
 /*
 AUTHOR
@@ -4775,7 +4775,7 @@ jx.grid.SelectionManager = {};
         e = [c, null, a];
         for(g in i) {
           if(i.hasOwnProperty(g) && g !== "length") {
-            l = f.get(g).key, l = "keydownColSel_" + l, e[1] = i[g], d.trigger(l + "_" + keycode, e, !0), d.trigger(l, e, !0)
+            l = f.get(g).key, l = "keydownColSel_" + l, e[1] = i[g], d.trigger(l + "_" + b, e, !0), d.trigger(l, e, !0)
           }
         }
       }
@@ -4784,7 +4784,7 @@ jx.grid.SelectionManager = {};
         g = this._rows;
         e = [c, null, a];
         for(o in g) {
-          g.hasOwnProperty(o) && o !== "length" && (e[1] = g[o], d.trigger("keydownRowSel_" + keycode, e, !0), d.trigger("keydownRowSel", e, !0))
+          g.hasOwnProperty(o) && o !== "length" && (e[1] = g[o], d.trigger("keydownRowSel_" + b, e, !0), d.trigger("keydownRowSel", e, !0))
         }
       }
       e = [c, this._rows, this._cols];

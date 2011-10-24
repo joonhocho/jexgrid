@@ -467,7 +467,7 @@ prototype._keydownCanvas = function(e) {
 					  @since 1.1.7
 					  @version 1.1.7
 					  */
-					evtmgr.trigger(event+"_"+keycode, args, true);
+					evtmgr.trigger(event+"_"+keyCode, args, true);
 					/**
 					  그리드 캔바스가 활성화 되어있고 오직 하나의 컬럼에 하나 이상의 셀이 선택이 된 상태에서 keydown 이벤트가 발생할 경우 트리거 되는 이벤트 입니다.
 					  @event {Event} keydownColSel_COLKEY
@@ -509,7 +509,7 @@ prototype._keydownCanvas = function(e) {
 			for (row in rows) {
 				if (rows.hasOwnProperty(row) && row !== "length") {
 					args[1] = rows[row];
-					evtmgr.trigger("keydownRowSel_"+keycode, args, true);
+					evtmgr.trigger("keydownRowSel_"+keyCode, args, true);
 					evtmgr.trigger("keydownRowSel", args, true);
 				}
 			}
