@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 58
- * Date: Mon Oct 24 15:31:28 KST 2011
+ * JexGrid Build 59
+ * Date: Tue Nov 15 10:11:41 KST 2011
  */
 /*
 AUTHOR
@@ -4705,9 +4705,9 @@ jx.grid.SelectionManager = {};
   };
   d._onCreateCss = function() {
     var c = this.grid.event.trigger("onBeforeCreateSelCss"), a = "#" + this.grid.mid + " .", b = this._options, c = c || [];
-    b.highlightRowEnabled === !0 && c.push(a + b.classRowSelected + " > *{background:" + b.bgColorRowSelected + "}");
+    b.highlightRowEnabled === !0 && c.push(a + b.classRowSelected + " div{background:" + b.bgColorRowSelected + "}");
     b.multiSelectEnabled === !0 && (c.push(a + b.classSelection + "{background:" + b.bgColorSelection + "}"), c.push(a + b.classRange + "{background:" + b.bgColorRange + "}"));
-    c.push(a + b.classLast + "{background:" + b.bgColorLast + "}");
+    c.push("#" + this.grid.mid + " div." + b.classLast + "{background:" + b.bgColorLast + "}");
     return c.join("\n")
   };
   d._onGetCellClass = function(c, a, b, d) {

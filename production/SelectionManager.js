@@ -223,13 +223,13 @@ prototype._onCreateCss = function() {
 		opt = this._options;
 	rules = rules || [];
 	if (opt['highlightRowEnabled'] === true) {
-		rules.push(gridId + opt['classRowSelected']  + " > *{background:" + opt['bgColorRowSelected'] + "}");
+		rules.push(gridId + opt['classRowSelected']  + " div{background:" + opt['bgColorRowSelected'] + "}");
 	}
 	if (opt['multiSelectEnabled'] === true) {
 		rules.push(gridId + opt['classSelection'] +  "{background:" + opt['bgColorSelection'] + "}");
 		rules.push(gridId + opt['classRange'] +  "{background:" + opt['bgColorRange'] + "}");
 	}
-	rules.push(gridId + opt['classLast']  + "{background:" + opt['bgColorLast'] + "}");
+	rules.push("#" + this.grid['mid'] + " div." + opt['classLast']  + "{background:" + opt['bgColorLast'] + "}");
 	return rules.join("\n");
 };
 prototype._onGetCellClass = function(row, col, datarow, colDef) {
