@@ -1392,17 +1392,7 @@ prototype.rerenderCellByIdAndKey = function(id, key) {
 				 renderer = colDef['renderer'],
 				 cellInput = renderer ? colDef['rendererInput'] : false,
 				 html = [];
-		if (renderer) {
-			if (cellInput) {
-				this._renderCell(html, rowIdx, i, datarow, colDef, renderer, true);
-			}
-			else {
-				this._renderCell(html, rowIdx, i, datarow, colDef, renderer);
-			}
-		}
-		else {
-			this._renderCell(html, rowIdx, i, datarow, colDef);
-		}
+		this._renderCell(html, rowIdx, i, datarow, colDef, renderer, cellInput);
 		cellnode.innerHTML = html.join('');
 	}
 };
@@ -1657,14 +1647,10 @@ prototype._getColCellClass = function(colDef) {
 	return cssClass;
 };
 prototype._getColCellClasses = function(colDefs) {
-	colDefs = colDefs || this._colmgr.get();
-	var cssClasses = [],
-		i = 0,
-		len = colDefs.length;
-	for (; i < len; i++) {
-		cssClasses.push(this._getColCellClass(colDefs[i]));
-	}
-	return cssClasses;
+	var that = this;
+	return (colDefs || this._colmgr.get()).map(function(colDef) {
+		return that._getColCellClass(colDef);
+	});
 };
 prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, renderers, cellInputs) {
 	var i = 0,
@@ -1693,28 +1679,31 @@ prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rende
 		  */
 		cellclass = evtmgr.trigger("onGetCellClass", args);
 		if (cellclass) {
-			html[html.length] = colCommon[i] + cellclass.join(" ") + "'>";
+			html[html.length] = colCommon[i] + cellclass.join(" ");
 		}
 		else {
-			html[html.length] = colCommon[i] + "'>";
+			html[html.length] = colCommon[i];
 		}
 		if (renderer = renderers[i]) {
-			if (cellInputs[i]) {
-				this._renderCell(html, rowIdx, i, datarow, colDef, renderer, true);
-			}
-			else {
-				this._renderCell(html, rowIdx, i, datarow, colDef, renderer);
-			}
+			html[html.length] = "'>";
+			this._renderCell(html, rowIdx, i, datarow, colDef, renderer, cellInputs[i]);
 		}
 		else {
-			this._renderCell(html, rowIdx, i, datarow, colDef);
+			var val = datarow[colDef['key']];
+			if (val == null || val === '') {
+				html[html.length] = "'>";
+			}
+			else {
+				html[html.length] = "' title='" + val + "'>";
+			}
+			this._renderCell(html, rowIdx, i, datarow, colDef, false, false);
 		}
 		html[html.length] = "</div>";
 	}
 	html[html.length] = "</div>";
 	return html;
 };
-prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef/*, renderer, cellInput */) {
+prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef, renderer, cellInput) {
 	var key = colDef['key'],
 		val = datarow[key],
 		args = [rowIdx, colIdx, datarow, colDef, html],
@@ -1735,9 +1724,9 @@ prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef/*, render
 	  */
 	evtmgr.trigger(event+"_prepend", args, true);
 	if (typeof val != "string" || val.substring(0, 3) !== "J@H") {
-		if (arguments.length > 5) {
+		if (renderer) {
 			// has renderer
-			if (arguments[6]) {
+			if (cellInput) {
 				// renderer with cell input
 				html[html.length] = arguments[5](new Cell({'grid':this.grid, 'row':rowIdx, 'col':colIdx, 'datarow':datarow, 'colDef':colDef}));
 			}
@@ -1748,7 +1737,7 @@ prototype._renderCell = function(html, rowIdx, colIdx, datarow, colDef/*, render
 		}
 		else {
 			// no renderer
-			if (val != null) {
+			if (!(val == null || val === '')) {
 				html[html.length] = val;
 			}
 		}
