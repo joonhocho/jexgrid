@@ -2062,27 +2062,18 @@ prototype._renderRow = function(html, rowIdx, datarow, colDefs, colCommon, rende
 		  @version 1.1.7
 		  */
 		cellclass = evtmgr.trigger("onGetCellClass", args);
+		html[html.length] = colCommon[i];
 		if (cellclass) {
-			html[html.length] = colCommon[i] + cellclass.join(" ");
+			html[html.length] = cellclass.join(" ");
 		}
-		else {
-			html[html.length] = colCommon[i];
-		}
-
-		if (renderer = renderers[i]) {
+		var val = datarow[colDef['key']];
+		if (val == null || val === '') {
 			html[html.length] = "'>";
-			this._renderCell(html, rowIdx, i, datarow, colDef, renderer, cellInputs[i]);
 		}
 		else {
-			var val = datarow[colDef['key']];
-			if (val == null || val === '') {
-				html[html.length] = "'>";
-			}
-			else {
-				html[html.length] = "' title='" + val + "'>";
-			}
-			this._renderCell(html, rowIdx, i, datarow, colDef, false, false);
+			html[html.length] = "' title='" + val + "'>";
 		}
+		this._renderCell(html, rowIdx, i, datarow, colDef, renderers[i], cellInputs[i]);
 
 		html[html.length] = "</div>";
 	}
