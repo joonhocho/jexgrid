@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 60
- * Date: Thu Nov 24 17:04:12 KST 2011
+ * JexGrid Build 61
+ * Date: Thu Nov 24 18:11:28 KST 2011
  */
 /*
 AUTHOR
@@ -2727,35 +2727,35 @@ jx.data.DataManager = {};
         return this.grid.error("LENGTH_NOT_EQUAL")
       }
     }
-    for(var k = 0, e = a.length, f, g, i, n = [], m = [], o = [], q, s;k < e;k++) {
+    for(var k = 0, e = a.length, f, g, i, o = [], m = [], n = [], q, s;k < e;k++) {
       if(!h.isNull(f = a[k])) {
         if((i = b[k]).hasOwnProperty(c)) {
           g = j[k];
           if(!g.hasOwnProperty(c) || !f.hasOwnProperty(c)) {
-            return this.updateUniqueIndices(d, c, n, o, m), this.grid.error("KEY_UNDEFINED", c)
+            return this.updateUniqueIndices(d, c, o, n, m), this.grid.error("KEY_UNDEFINED", c)
           }
           if(!d.hasOwnProperty(s = g[c])) {
-            return this.updateUniqueIndices(d, c, n, o, m), this.grid.error("KEY_NOT_FOUND", s, c)
+            return this.updateUniqueIndices(d, c, o, n, m), this.grid.error("KEY_NOT_FOUND", s, c)
           }
           if(h.isEmptyString(q = i[c])) {
-            return this.updateUniqueIndices(d, c, n, o, m), this.grid.error("BAD_NULL", c)
+            return this.updateUniqueIndices(d, c, o, n, m), this.grid.error("BAD_NULL", c)
           }
           if(d.hasOwnProperty(q)) {
             if(d[q] === f) {
               continue
             }
-            this.updateUniqueIndices(d, c, n, o, m);
+            this.updateUniqueIndices(d, c, o, n, m);
             return this.grid.error("DUP_ENTRY", q, c)
           }
           d[q] = f;
           delete d[s];
-          n.push(f);
+          o.push(f);
           m.push(i);
-          o.push(g)
+          n.push(g)
         }
       }
     }
-    return!n.length ? !1 : {datalist:n, changes:m, befores:o}
+    return!o.length ? !1 : {datalist:o, changes:m, befores:n}
   };
   e.removeUniqueIndex = function(d, c, a) {
     var b;
@@ -2908,7 +2908,7 @@ jx.data.DataManager = {};
         }
         for(var a = this._options.idColKeys, j = a.length, k = 0;k < j;k++) {
           if(c.hasOwnProperty(a[k])) {
-            for(var e = "", f = 0, g, i, n = {}, m = {}, k = m[b] = d[b];f < j;f++) {
+            for(var e = "", f = 0, g, i, o = {}, m = {}, k = m[b] = d[b];f < j;f++) {
               if(g = a[f], c.hasOwnProperty(g)) {
                 if(h.isEmptyString(i = c[g])) {
                   return this.grid.error("BAD_NULL", g)
@@ -2918,11 +2918,11 @@ jx.data.DataManager = {};
                 e += "&" + d[g]
               }
             }
-            d[b] = n[b] = e;
+            d[b] = o[b] = e;
             if(k === e) {
               break
             }
-            c = this.updateUniqueIndex(this._idToData, b, d, n, m);
+            c = this.updateUniqueIndex(this._idToData, b, d, o, m);
             c instanceof Error && (d[b] = k);
             return c
           }
@@ -2946,25 +2946,25 @@ jx.data.DataManager = {};
       case this._consts._given:
         return this.updateUniqueIndices(this._idToData, b, d, c, a);
       case this._consts._composite:
-        for(var e = this._idToData, f, g, i = this._options.idColKeys, n = i.length, m, a = [], o = [], q = [], s = [], r, v, u, w;k < j;k++) {
+        for(var e = this._idToData, f, g, i = this._options.idColKeys, o = i.length, m, a = [], n = [], q = [], s = [], r, v, u, w;k < j;k++) {
           f = d[k];
           g = c[k];
           if(g.hasOwnProperty(b)) {
             r = 0;
             for(j = a.length;r < j;r++) {
-              o[r][b] = a[r]
+              n[r][b] = a[r]
             }
             return this.grid.error("NOT_MODIFIABLE", b)
           }
-          for(r = 0;r < n;r++) {
+          for(r = 0;r < o;r++) {
             if(g.hasOwnProperty(i[r])) {
               m = "";
-              for(v = 0;v < n;v++) {
+              for(v = 0;v < o;v++) {
                 if(u = i[v], g.hasOwnProperty(u)) {
                   if(h.isEmptyString(w = g[u])) {
                     r = 0;
                     for(j = a.length;r < j;r++) {
-                      o[r][b] = a[r]
+                      n[r][b] = a[r]
                     }
                     return this.grid.error("BAD_NULL", u)
                   }
@@ -2973,18 +2973,18 @@ jx.data.DataManager = {};
                   m += "&" + f[u]
                 }
               }
-              f[b] !== m && (o.push(f), q.push({}), s.push({}), a.push(f[b]), f[b] = m)
+              f[b] !== m && (n.push(f), q.push({}), s.push({}), a.push(f[b]), f[b] = m)
             }
           }
         }
-        if(!o.length) {
+        if(!n.length) {
           break
         }
-        d = this.updateUniqueIndices(e, b, o, q, s);
+        d = this.updateUniqueIndices(e, b, n, q, s);
         if(d instanceof Error) {
           r = 0;
           for(j = a.length;r < j;r++) {
-            o[r][b] = a[r]
+            n[r][b] = a[r]
           }
         }
         return d
@@ -3106,13 +3106,13 @@ jx.data.DataManager = {};
     return!0
   };
   e.validateList = function(d, c) {
-    var a = this.grid.colDefMgr, b = a.getValidator(), a = a.getNullOnCreate(), j, e, l = c && c.isNew, f, g = d.length, h, i, m, o, q;
+    var a = this.grid.colDefMgr, b = a.getValidator(), a = a.getNullOnCreate(), j, e, l = c && c.isNew, f, g = d.length, h, i, m, n, q;
     try {
       for(j in b) {
         if(b.hasOwnProperty(j) && (!l || !a.hasOwnProperty(j))) {
           e = b[j];
           for(f = 0;f < g;f++) {
-            if(q = d[f], q.hasOwnProperty(j) && (h = q[j]) != null ? (m = !1, i = typeof h == "string" ? h : h.toString(), o = !i) : (h = null, o = m = !0, i = ""), !e(h, q, i, m, o)) {
+            if(q = d[f], q.hasOwnProperty(j) && (h = q[j]) != null ? (m = !1, i = typeof h == "string" ? h : h.toString(), n = !i) : (h = null, n = m = !0, i = ""), !e(h, q, i, m, n)) {
               return this.grid.error("WRONG_VALUE", i, j)
             }
           }
@@ -3370,10 +3370,10 @@ jx.data.DataManager = {};
     var a = this.grid.event;
     a.trigger("onBeforeDataChange", !1, !0);
     a.trigger("onBeforeUpdateDatalist", [d], !0);
-    for(var b = [], j = [], e = [], l, f, g, i = d.length, n = 0, m;n < i;n++) {
+    for(var b = [], j = [], e = [], l, f, g, i = d.length, o = 0, m;o < i;o++) {
       f = {};
-      l = d[n].datarow;
-      g = d[n].change;
+      l = d[o].datarow;
+      g = d[o].change;
       for(m in g) {
         g.hasOwnProperty(m) && (l[m] === g[m] ? delete g[m] : (f[m] = l[m], l[m] = g[m]))
       }
@@ -4287,7 +4287,7 @@ jx.grid.Grid = {};
     }
   };
   a._registerLinks = function(b) {
-    var a, c, d, e, f, g, i, m, o, q;
+    var a, c, d, e, f, g, i, m, n, q;
     a:for(a in b) {
       if(b.hasOwnProperty(a) && !(a in this)) {
         c = h.split(b[a]);
@@ -4297,15 +4297,15 @@ jx.grid.Grid = {};
           if(f = c[e].split("."), g = f.length, !(g < 1)) {
             i = this;
             m = this;
-            o = "";
+            n = "";
             for(q = 0;q < g;q++) {
               if(f[q] in i) {
-                m = i, i = i[o = f[q]]
+                m = i, i = i[n = f[q]]
               }else {
                 continue b
               }
             }
-            this._registerLink(a, i, m, o);
+            this._registerLink(a, i, m, n);
             continue a
           }
         }
@@ -4618,16 +4618,16 @@ jx.grid.Grid = {};
         throw Error("unknown chart type: " + a);
     }
     google.load("visualization", "1", {packages:[h]});
-    var m = this, o = this.colDefMgr, q = this.dataMgr, s = d.map(function(b) {
-      if(b = o.getByKey(b)) {
+    var m = this, n = this.colDefMgr, q = this.dataMgr, s = d.map(function(b) {
+      if(b = n.getByKey(b)) {
         return b
       }
       throw Error("column key not found");
     }), r = q.exportToArray(d, f, g);
     google.setOnLoadCallback(function() {
-      for(var c = new google.visualization.DataTable, h = 0, p = s.length, o, y;h < p;h++) {
-        o = s[h];
-        y = o.type;
+      for(var c = new google.visualization.DataTable, h = 0, p = s.length, n, y;h < p;h++) {
+        n = s[h];
+        y = n.type;
         switch(y) {
           case "boolean":
             y = "boolean";
@@ -4648,7 +4648,7 @@ jx.grid.Grid = {};
           case "text":
             y = "string"
         }
-        c.addColumn(y || r[0] && r[0][h] != null && typeof r[0][h] || h === 0 && "string" || "number", o.name)
+        c.addColumn(y || r[0] && r[0][h] != null && typeof r[0][h] || h === 0 && "string" || "number", n.name)
       }
       c.addRows(r);
       var z = m._charts[b] = new google.visualization[i](document.getElementById(b));
@@ -4780,11 +4780,11 @@ jx.grid.SelectionManager = {};
         }
       }
       if(this._rows.length === 1) {
-        var n;
+        var o;
         g = this._rows;
         e = [c, null, a];
-        for(n in g) {
-          g.hasOwnProperty(n) && n !== "length" && (e[1] = g[n], d.trigger("keydownRowSel_" + b, e, !0), d.trigger("keydownRowSel", e, !0))
+        for(o in g) {
+          g.hasOwnProperty(o) && o !== "length" && (e[1] = g[o], d.trigger("keydownRowSel_" + b, e, !0), d.trigger("keydownRowSel", e, !0))
         }
       }
       e = [c, this._rows, this._cols];
@@ -5175,17 +5175,17 @@ jx.grid.Editor = {};
   };
   c._deleteContents = function(a, b, c) {
     if(!this.active()) {
-      var a = {}, b = {}, d = [], e, f, h, i, n, m, o;
+      var a = {}, b = {}, d = [], e, f, h, i, o, m, n;
       a:for(e in c) {
         if(c.hasOwnProperty(e) && e !== "length") {
-          for(o in i = h = f = void 0, m = c[e], m) {
-            if(m.hasOwnProperty(o) && !(o === "length" || b.hasOwnProperty(o))) {
-              n = m[o].cell;
-              if(g.isNull(f) && (f = n.getColDef(), h = f.defaultValue, i = f.key, g.isNull(f.editor))) {
+          for(n in i = h = f = void 0, m = c[e], m) {
+            if(m.hasOwnProperty(n) && !(n === "length" || b.hasOwnProperty(n))) {
+              o = m[n].cell;
+              if(g.isNull(f) && (f = o.getColDef(), h = f.defaultValue, i = f.key, g.isNull(f.editor))) {
                 continue a
               }
-              n = g.isNotNull(a[o]) ? a[o].datarow : n.getDatarow();
-              this.grid.dataMgr.isReal(n) ? h !== n[i] && (g.isNull(a[o]) && (a[o] = {datarow:n, change:{}}, d.push(a[o])), a[o].change[i] = h) : b[o] = !0
+              o = g.isNotNull(a[n]) ? a[n].datarow : o.getDatarow();
+              this.grid.dataMgr.isReal(o) ? h !== o[i] && (g.isNull(a[n]) && (a[n] = {datarow:o, change:{}}, d.push(a[n])), a[n].change[i] = h) : b[n] = !0
             }
           }
         }
@@ -5323,26 +5323,26 @@ jx.grid.PrintManager = {};
     d.document.close()
   };
   g.getPrintHtml = function(e, d) {
-    var c = this._options, a = c.tableBorderColor, b = c.headerBorderColor, j = c.cellBorderColor, f = [], l = e.length, g = l - 1, h = d.length, i = h - 1, n = 0, m;
+    var c = this._options, a = c.tableBorderColor, b = c.headerBorderColor, j = c.cellBorderColor, f = [], l = e.length, g = l - 1, h = d.length, i = h - 1, o = 0, m;
     f.push("<html><head>");
     f.push("<title>" + c.title + "</title>");
     f.push("</head><body onload='window.print();'>");
     f.push("<table width='100%' cellspacing='0' cellpadding='0'><tbody><tr><td align='left'>");
     f.push("<table width='100%' cellspacing='0' cellpadding='2' style='border-collapse:collapse'>");
     f.push("<tbody style='font:" + c.font + ";'>");
-    for(f.push("<tr style='background-color:" + c.headerBackgroundColor + ";color:" + c.headerFontColor + ";text-align:center'>");n < l;n++) {
-      f.push("<td style='border:solid 1px " + b + ";'>" + e[n].name + "</td>")
+    for(f.push("<tr style='background-color:" + c.headerBackgroundColor + ";color:" + c.headerFontColor + ";text-align:center'>");o < l;o++) {
+      f.push("<td style='border:solid 1px " + b + ";'>" + e[o].name + "</td>")
     }
     f.push("</tr>");
-    for(n = 0;n < h;n++) {
-      c = d[n];
+    for(o = 0;o < h;o++) {
+      c = d[o];
       f.push("<tr>");
-      if(n === 0) {
+      if(o === 0) {
         for(m = 0;m < l;m++) {
           m === 0 ? f.push("<td style='border:solid 1px " + j + ";border-top:solid 1px " + b + ";border-left:solid 1px " + a + "'>" + c[e[m].key] + "</td>") : m === g ? f.push("<td style='border:solid 1px " + j + ";border-top:solid 1px " + b + ";border-right:solid 1px " + a + "'>" + c[e[m].key] + "</td>") : f.push("<td style='border:solid 1px " + j + ";border-top:solid 1px " + b + "'>" + c[e[m].key] + "</td>")
         }
       }else {
-        if(n < i) {
+        if(o < i) {
           for(m = 0;m < l;m++) {
             m === 0 ? f.push("<td style='border:solid 1px " + j + ";border-left:solid 1px " + a + "'>" + c[e[m].key] + "</td>") : m === g ? f.push("<td style='border:solid 1px " + j + ";border-right:solid 1px " + a + "'>" + c[e[m].key] + "</td>") : f.push("<td style='border:solid 1px " + j + "'>" + c[e[m].key] + "</td>")
           }
@@ -5823,8 +5823,8 @@ jx.grid.ViewportManager = {};
     if(this._datamgr.containsById(b)) {
       var a = this._renderedRows, c = this._canvasEl, d = this._datamgr, e = d.idKey, f = d.getIdxById(b), d = d.getById(b), h = this._colmgr.get(), i = this._getColCellClasses(h).map(function(b) {
         return"<div class='" + b + " "
-      }), m = this._getRendererSettings(h), o = m[0], m = m[1], q = this._getRowOuterHeight(), s = "<div class='" + this._rowClass + " odd' i='", r = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = [];
-      a.hasOwnProperty(b) && (c.removeChild(a[b]), this._evtmgr.trigger("onBeforeRenderRows", [[f]], !0), u.push((f % 2 ? r : s) + d[e] + v + f + "' style='top:" + q * f + "px'>"), this._renderRow(u, f, d, h, i, o, m), a[b] = g.appendHTML(c, u.join(""))[0], this._evtmgr.trigger("onAppendRows", [[f]], !0))
+      }), m = this._getRendererSettings(h), n = m[0], m = m[1], q = this._getRowOuterHeight(), s = "<div class='" + this._rowClass + " odd' i='", r = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = [];
+      a.hasOwnProperty(b) && (c.removeChild(a[b]), this._evtmgr.trigger("onBeforeRenderRows", [[f]], !0), u.push((f % 2 ? r : s) + d[e] + v + f + "' style='top:" + q * f + "px'>"), this._renderRow(u, f, d, h, i, n, m), a[b] = g.appendHTML(c, u.join(""))[0], this._evtmgr.trigger("onAppendRows", [[f]], !0))
     }
   };
   a._getRendererSettings = function(b) {
@@ -5851,12 +5851,12 @@ jx.grid.ViewportManager = {};
     return this.rerenderCellByIdAndKey(this._datamgr.getIdByIdx(b), this._colmgr.getKeyByIdx(a))
   };
   a._appendRows = function(b) {
-    var a = this._evtmgr, c = [b], d = [], e = b.start, b = b.end, f = this._datamgr, h = f.datalist, i = f.idKey, m = this._colmgr.get(), o = this._getColCellClasses(m).map(function(b) {
+    var a = this._evtmgr, c = [b], d = [], e = b.start, b = b.end, f = this._datamgr, h = f.datalist, i = f.idKey, m = this._colmgr.get(), n = this._getColCellClasses(m).map(function(b) {
       return"<div class='" + b + " "
     }), f = this._renderedRows, q = this._getRowOuterHeight(), s = this._canvasEl, r = "<div class='" + this._rowClass + " odd' i='", v = "<div class='" + this._rowClass + "' i='", u = "' " + this._rowIdxAttr + "='", w = this._getRendererSettings(m), B = w[0], y = w[1], z, A, w = [];
     a.trigger("onBeforeRenderRows", c, !0);
     for(this.grid.twstart();e <= b;e++) {
-      z = h[e], A = z[i], f.hasOwnProperty(A) || (d[d.length] = (e % 2 ? v : r) + A + u + e + "' style='top:" + q * e + "px'>", this._renderRow(d, e, z, m, o, B, y), this.grid.twlap(), w.push(A))
+      z = h[e], A = z[i], f.hasOwnProperty(A) || (d[d.length] = (e % 2 ? v : r) + A + u + e + "' style='top:" + q * e + "px'>", this._renderRow(d, e, z, m, n, B, y), this.grid.twlap(), w.push(A))
     }
     this.grid.twprint();
     this.grid.twstop();
@@ -5870,10 +5870,10 @@ jx.grid.ViewportManager = {};
   a._removeAndRenderRows = function(b) {
     var b = b || this._getRenderRange(), a = this._evtmgr, c = [b], d = [], e = b.start, b = b.end, f = this._datamgr, g = f.datalist, f = f.idKey, h = this._colmgr.get(), i = this._getColCellClasses(h).map(function(b) {
       return"<div class='" + b + " "
-    }), o = this._getRowOuterHeight(), q = this._canvasEl, s = "<div class='" + this._rowClass + " odd' i='", r = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = this._getRendererSettings(h), w = u[0], u = u[1], B, y, z = [], A = {};
+    }), n = this._getRowOuterHeight(), q = this._canvasEl, s = "<div class='" + this._rowClass + " odd' i='", r = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = this._getRendererSettings(h), w = u[0], u = u[1], B, y, z = [], A = {};
     a.trigger("onBeforeRenderRows", c, !0);
     for(this.grid.twstart();e <= b;e++) {
-      B = g[e], y = B[f], d[d.length] = (e % 2 ? r : s) + y + v + e + "' style='top:" + o * e + "px'>", this._renderRow(d, e, B, h, i, w, u), this.grid.twlap(), z.push(y)
+      B = g[e], y = B[f], d[d.length] = (e % 2 ? r : s) + y + v + e + "' style='top:" + n * e + "px'>", this._renderRow(d, e, B, h, i, w, u), this.grid.twlap(), z.push(y)
     }
     this.grid.twprint();
     this.grid.twstop();
@@ -5886,8 +5886,8 @@ jx.grid.ViewportManager = {};
     a.trigger("onAppendRows", c, !0)
   };
   a._renderColumn = function(b, a, c, d, f, g, h) {
-    for(var i = [], m, o = 0, q = c.length, s, r, v, u = a.key, w, B = this.grid, y = this._evtmgr, z = "onRenderCell_" + u, A = [null, b, r, a], C = [null, b, null, a, null];o < q;o++) {
-      s = c[o];
+    for(var i = [], m, n = 0, q = c.length, s, r, v, u = a.key, w, B = this.grid, y = this._evtmgr, z = "onRenderCell_" + u, A = [null, b, r, a], C = [null, b, null, a, null];n < q;n++) {
+      s = c[n];
       r = d[s];
       v = r[u];
       m = [];
@@ -5919,19 +5919,19 @@ jx.grid.ViewportManager = {};
     })
   };
   a._renderRow = function(b, a, c, d, e, f, g) {
-    for(var h = 0, i = d.length, o, q = [a, null, c, null], s = this._evtmgr, r;h < i;h++) {
-      o = d[h], q[1] = h, q[3] = o, r = s.trigger("onGetCellClass", q), b[b.length] = r ? e[h] + r.join(" ") : e[h], (r = f[h]) ? (b[b.length] = "'>", this._renderCell(b, a, h, c, o, r, g[h])) : (r = c[o.key], b[b.length] = r == null || r === "" ? "'>" : "' title='" + r + "'>", this._renderCell(b, a, h, c, o, !1, !1)), b[b.length] = "</div>"
+    for(var h = 0, i = d.length, n, q = [a, null, c, null], s = this._evtmgr, r;h < i;h++) {
+      n = d[h], q[1] = h, q[3] = n, r = s.trigger("onGetCellClass", q), b[b.length] = e[h], r && (b[b.length] = r.join(" ")), r = c[n.key], b[b.length] = r == null || r === "" ? "'>" : "' title='" + r + "'>", this._renderCell(b, a, h, c, n, f[h], g[h]), b[b.length] = "</div>"
     }
     b[b.length] = "</div>";
     return b
   };
   a._renderCell = function(b, a, c, d, f, g, h) {
-    var i = f.key, m = d[i], o = [a, c, d, f, b], q = this._evtmgr, i = "onRenderCell_" + i;
-    q.trigger(i + "_prepend", o, !0);
+    var i = f.key, m = d[i], n = [a, c, d, f, b], q = this._evtmgr, i = "onRenderCell_" + i;
+    q.trigger(i + "_prepend", n, !0);
     if(typeof m != "string" || m.substring(0, 3) !== "J@H") {
       g ? b[b.length] = h ? arguments[5](new e({grid:this.grid, row:a, col:c, datarow:d, colDef:f})) : arguments[5](m, a, c, d, f) : m == null || m === "" || (b[b.length] = m)
     }
-    q.trigger(i + "_append", o, !0)
+    q.trigger(i + "_append", n, !0)
   };
   e.prototype.rerender = function() {
     return this.grid.view.rerenderCellByIdAndKey(this.getId(), this.getKey())
@@ -6647,8 +6647,8 @@ jx.grid.MenuBar = {};
     this._ctnr = c.container;
     this._menubar = $("<div class='" + a.classMenuBar + "'></div>").prependTo(this._ctnr);
     if(this.grid._options.columnHideEnabled) {
-      for(var c = h.element, b = h.input, d = h.SAFE, e = this.getColumns(), f = 0, g = e.length, i = "", p = this.mid, n, m, o;f < g;f++) {
-        n = e[f], m = n.key, o = p + "-toggle-column-" + m, i += c("label", {"for":o}, c("li", null, b("checkbox", {id:o, checked:!0, onclick:"JGM.m.MenuBar." + p + ".toggleColumn('" + m + "', this.checked, this)"}) + n.name, d), d)
+      for(var c = h.element, b = h.input, d = h.SAFE, e = this.getColumns(), f = 0, g = e.length, i = "", p = this.mid, o, m, n;f < g;f++) {
+        o = e[f], m = o.key, n = p + "-toggle-column-" + m, i += c("label", {"for":n}, c("li", null, b("checkbox", {id:n, checked:!0, onclick:"JGM.m.MenuBar." + p + ".toggleColumn('" + m + "', this.checked, this)"}) + o.name, d), d)
       }
       var q = this.ul = $(c("ul", {"class":"jgrid-column-toggle-box"}, i, d)).appendTo(this.grid._ctnr);
       q.css({top:11, left:34});
@@ -6823,12 +6823,12 @@ jx.grid.Footer = {};
   };
   d._initSumCells = function() {
     if(this._hasSum) {
-      for(var c = this.grid.dataMgr.getReal(), a = this.grid.colDefMgr.get(), b = a.length, d, e, g, i, t, p = f._calSum, n = this._sumMap, m, o = 0;o < b;o++) {
-        if(d = a[o], e = d.sumRenderer) {
+      for(var c = this.grid.dataMgr.getReal(), a = this.grid.colDefMgr.get(), b = a.length, d, e, g, i, t, p = f._calSum, o = this._sumMap, m, n = 0;n < b;n++) {
+        if(d = a[n], e = d.sumRenderer) {
           g = d.key;
           i = d.name;
           t = p(c, g);
-          n[g] = !0;
+          o[g] = !0;
           switch(typeof e) {
             case "function":
               m = e(i, t);
@@ -6853,7 +6853,7 @@ jx.grid.Footer = {};
   };
   d._updateSums = function() {
     if(this._hasSum) {
-      var c = this.grid.dataMgr.getReal(), a, b = this._sumMap, d = this.grid.colDefMgr, e, g, i, t, p = f._calSum, n;
+      var c = this.grid.dataMgr.getReal(), a, b = this._sumMap, d = this.grid.colDefMgr, e, g, i, t, p = f._calSum, o;
       for(a in b) {
         if(b.hasOwnProperty(a)) {
           e = d.getByKey(a);
@@ -6862,22 +6862,22 @@ jx.grid.Footer = {};
           t = p(c, a);
           switch(typeof g) {
             case "function":
-              n = g(i, t);
+              o = g(i, t);
               break;
             case "string":
               e = g.toLowerCase();
               if(e === "krw" || g === "\\") {
-                n = h.formatNumber(t)
+                o = h.formatNumber(t)
               }else {
                 if(e === "usd" || g === "$") {
-                  n = h.formatNumber(t, 2, "$ ")
+                  o = h.formatNumber(t, 2, "$ ")
                 }
               }
               break;
             default:
-              n = e.renderer ? e.renderer(t) : t
+              o = e.renderer ? e.renderer(t) : t
           }
-          this.setCellValue(a, n)
+          this.setCellValue(a, o)
         }
       }
     }
@@ -6963,12 +6963,12 @@ jx.grid.ColumnHeader = {};
   };
   c._beforeCreateCss = function(a) {
     this.grid.log("creating CSS for ColumnHeader...", e.V_INIT);
-    var b = "#" + this.grid.mid + " .", c = this._options, d = c.borderThickness + "px " + c.border, f = this.getColumns(), g = f.length, h = 0, i = "." + c.classColHeader, n = c.scrollerLeft, m = c.height + "px", o = c.classColHeaderActive, q = {};
+    var b = "#" + this.grid.mid + " .", c = this._options, d = c.borderThickness + "px " + c.border, f = this.getColumns(), g = f.length, h = 0, i = "." + c.classColHeader, o = c.scrollerLeft, m = c.height + "px", n = c.classColHeaderActive, q = {};
     q["." + c.classHeaderMask] = {position:"relative", overflow:"hidden", width:"100%", font:c.font, background:c.background, "border-bottom":d, _append:c.style};
-    q["." + c.classHeader] = {position:"relative", overflow:"hidden", "white-space":"nowrap", cursor:"default", background:c.background, left:-n + "px", width:c.scrollerWidth + "px", "line-height":m};
-    q[i] = {position:"relative", overflow:"hidden", "float":"left", "text-overflow":"ellipsis", "text-align":"center", "vertical-align":"middle", height:m, left:n - this.getView().getScrollLeft() + "px", "border-right":d, _append:c.headerStyle};
-    q[i + "." + c.classInteractive + ":hover, " + b + o] = {cursor:"pointer", background:c.backgroundHover};
-    q["." + o] = {"border-left":d};
+    q["." + c.classHeader] = {position:"relative", overflow:"hidden", "white-space":"nowrap", cursor:"default", background:c.background, left:-o + "px", width:c.scrollerWidth + "px", "line-height":m};
+    q[i] = {position:"relative", overflow:"hidden", "float":"left", "text-overflow":"ellipsis", "text-align":"center", "vertical-align":"middle", height:m, left:o - this.getView().getScrollLeft() + "px", "border-right":d, _append:c.headerStyle};
+    q[i + "." + c.classInteractive + ":hover, " + b + n] = {cursor:"pointer", background:c.backgroundHover};
+    q["." + n] = {"border-left":d};
     q[i + "." + c.classColHeaderPlaceholder] = {background:c.backgroundPlaceholder + "!important"};
     q[".jgrid-header-text"] = {"vertical-align":"middle"};
     q[".jgrid-header-more"] = {position:"absolute", cursor:"pointer", height:"100%", width:"14px", right:0, top:0};
@@ -6997,16 +6997,16 @@ jx.grid.ColumnHeader = {};
     this.grid.log("rendering Colheader...", e.V_INIT);
     var a = this.getColumns(), b = a.length, c = 0, f, g = [], h = this.getColMgr();
     if(h.hasGroups()) {
-      var t = this._options, h = h.getGroups(), p = 0, n = h.length, m, o, q, s = [], r = 0, v = this.getView()._colWidthPlus(), u, w;
+      var t = this._options, h = h.getGroups(), p = 0, o = h.length, m, n, q, s = [], r = 0, v = this.getView()._colWidthPlus(), u, w;
       w = i.browser.browser == "Explorer" && (i.browser.version < 7 || document.documentMode < 7) ? 0 : this._widthPlus();
-      for(t.reorderEnabled = !1;p < n;p++) {
+      for(t.reorderEnabled = !1;p < o;p++) {
         m = h[p];
-        o = m[0].parent;
+        n = m[0].parent;
         r = q = 0;
         for(u = m.length;r < u;r++) {
           m[r].hidden || (q += m[c].width + v)
         }
-        s.push(d("div", {"class":t.classColHeader, title:o, style:{width:q - w + "px"}}, o))
+        s.push(d("div", {"class":t.classColHeader, title:n, style:{width:q - w + "px"}}, n))
       }
       this._doubleHead[0].innerHTML = s.join("")
     }
@@ -7025,7 +7025,7 @@ jx.grid.ColumnHeader = {};
     this._resizeGuide[0].style.height = "0px"
   };
   c._render = function(a, b, c) {
-    var e = this._options, f = b.key, g = b.noName ? "" : b.name || f, i = this._widthPlus(), p = "onRenderHeader_" + f, n = [a], m = e.classColHeader;
+    var e = this._options, f = b.key, g = b.noName ? "" : b.name || f, i = this._widthPlus(), p = "onRenderHeader_" + f, o = [a], m = e.classColHeader;
     if(e.reorderEnabled || b.sorter) {
       m += " " + e.classInteractive
     }
@@ -7034,9 +7034,9 @@ jx.grid.ColumnHeader = {};
       c.title = b.title || g
     }
     a.push(d("div", c, null, h.LEAVE_OPENED));
-    this.triggerGridEvent(p + "_prepend", n, !0);
+    this.triggerGridEvent(p + "_prepend", o, !0);
     a.push(g);
-    this.triggerGridEvent(p + "_append", n, !0);
+    this.triggerGridEvent(p + "_append", o, !0);
     b.sorter && a.push(d("span", {"class":e.classSort}));
     a.push("</div>")
   };
@@ -7151,10 +7151,10 @@ jx.grid.ColumnHeader = {};
     if(this._doubleHead) {
       var f = this.getColMgr();
       this.getView();
-      for(var g = f.getGroupIndexByKey(a), f = f.getGroupByGroupIdx(g), h = 0, p = f.length, n = 0;h < p;h++) {
-        f[h].hidden || (n += f[h].width + d)
+      for(var g = f.getGroupIndexByKey(a), f = f.getGroupByGroupIdx(g), h = 0, p = f.length, o = 0;h < p;h++) {
+        f[h].hidden || (o += f[h].width + d)
       }
-      this._doubleHead[0].childNodes[g].style.width = n - c + "px"
+      this._doubleHead[0].childNodes[g].style.width = o - c + "px"
     }
     this._syncResizeHandles(this.getColMgr().getIdxByKey(a));
     this.getView()._scroll()
@@ -7178,9 +7178,9 @@ jx.grid.ColumnHeader = {};
   };
   c._initResizeHandles = function() {
     this.grid.log("initializing Colheader resize functionality...", e.V_INIT);
-    for(var a = this.getColumns(), b = a.length, c = this.getView(), d = c.mid, c = c._getColLefts(), f = this._options, g = this._resizeMap, h, i = 0, n = this._resizeHandleOffset = Math.floor(f.scrollerLeft - f.resizeHandleWidth / 2), m = f.classResizeHandle, o = this._head;i < b;i++) {
+    for(var a = this.getColumns(), b = a.length, c = this.getView(), d = c.mid, c = c._getColLefts(), f = this._options, g = this._resizeMap, h, i = 0, o = this._resizeHandleOffset = Math.floor(f.scrollerLeft - f.resizeHandleWidth / 2), m = f.classResizeHandle, n = this._head;i < b;i++) {
       if(f = a[i], f.resizable) {
-        h = f.key, g[h] = $("<div class='" + m + "' key='" + h + "' ondblclick='JGM.m.ViewportManager." + d + '._autoColWidth("' + h + "\")' style='left:" + (n + c[i + 1]) + "px' title='" + f.name + " 컬럼의 폭을 조절합니다.'>").appendTo(o)
+        h = f.key, g[h] = $("<div class='" + m + "' key='" + h + "' ondblclick='JGM.m.ViewportManager." + d + '._autoColWidth("' + h + "\")' style='left:" + (o + c[i + 1]) + "px' title='" + f.name + " 컬럼의 폭을 조절합니다.'>").appendTo(n)
       }
     }
   }
@@ -7576,8 +7576,8 @@ jx.grid.Collapser = {};
     this.grid.event.trigger("onCollapserTreeChange", !1, !0)
   };
   d._onAddDatalist = function(c) {
-    for(var a = 0, b = c.length, d = this._tree, e = d.root, f = this._options.beginCollapsed, g = this.key, i = this.grid.view, p = this.grid.dataMgr, n, m = [], o;a < b;a++) {
-      n = d.createNode(c[a]), n._collapsed = f, h.isNotNull(n.parent) && n.parent.children.length === 1 && m.push(n.parent.data)
+    for(var a = 0, b = c.length, d = this._tree, e = d.root, f = this._options.beginCollapsed, g = this.key, i = this.grid.view, p = this.grid.dataMgr, o, m = [], n;a < b;a++) {
+      o = d.createNode(c[a]), o._collapsed = f, h.isNotNull(o.parent) && o.parent.children.length === 1 && m.push(o.parent.data)
     }
     if(i !== void 0) {
       a = 0;
@@ -7586,8 +7586,8 @@ jx.grid.Collapser = {};
       }
     }
     e.traverseChildren({fn:function(a) {
-      o = this.parent;
-      h.isNotNull(o) && (o === e || o._shown && !o._collapsed) ? this._shown = !0 : (a.propagate = !1, this.traverse({fn:function() {
+      n = this.parent;
+      h.isNotNull(n) && (n === e || n._shown && !n._collapsed) ? this._shown = !0 : (a.propagate = !1, this.traverse({fn:function() {
         this._shown = !1
       }}))
     }});
@@ -7599,11 +7599,11 @@ jx.grid.Collapser = {};
     a.hasOwnProperty(f) && (h.isNull(g) && (g = d.getNode(c)), d.changeParentId(g, b[f], a[f]), this.grid.event.trigger("onCollapserTreeChange", !1, !0))
   };
   d._onUpdateDatalist = function(c, a, b) {
-    for(var a = this._tree, d = a._options.nodeKey, e = a._options.parentKey, f, g, i, p = [], n = [], m = 0, o = c.length;m < o;m++) {
-      f = b[m], g = c[m], i = void 0, f.hasOwnProperty(d) && (h.isNull(i) && (i = a.getNodeByNodeId(f[d])), p.push({node:i, before:f[d], newId:g[d]})), f.hasOwnProperty(e) && (h.isNull(i) && (i = a.getNode(g)), n.push({node:i, before:f[e], newId:g[e]}))
+    for(var a = this._tree, d = a._options.nodeKey, e = a._options.parentKey, f, g, i, p = [], o = [], m = 0, n = c.length;m < n;m++) {
+      f = b[m], g = c[m], i = void 0, f.hasOwnProperty(d) && (h.isNull(i) && (i = a.getNodeByNodeId(f[d])), p.push({node:i, before:f[d], newId:g[d]})), f.hasOwnProperty(e) && (h.isNull(i) && (i = a.getNode(g)), o.push({node:i, before:f[e], newId:g[e]}))
     }
     c = p.length;
-    b = n.length;
+    b = o.length;
     if(c + b !== 0) {
       if(c + b > 10) {
         a.reattach()
@@ -7612,7 +7612,7 @@ jx.grid.Collapser = {};
           d = p[m], a.changeNodeId(d.node, d.before, d.newId)
         }
         for(m = 0;m < b;m++) {
-          d = n[m], a.changeParentId(d.node, d.before, d.newId)
+          d = o[m], a.changeParentId(d.node, d.before, d.newId)
         }
       }
       this.grid.event.trigger("onCollapserTreeChange", !1, !0)
@@ -7631,12 +7631,12 @@ jx.grid.Collapser = {};
   d._onAfterFilter = function(c, a) {
     var b = this._tree;
     if(a.length > 0) {
-      var d = this.grid.dataMgr, e = c.length, f = d._idToIdx, g = d.idKey, i, p = 0, n = function(b) {
+      var d = this.grid.dataMgr, e = c.length, f = d._idToIdx, g = d.idKey, i, p = 0, o = function(b) {
         h.isNotNull(this.parent) ? (i = this.parent.data, h.isNotNull(i) && !d.has(i) && (c.push(i), a.remove(i), f[i[g]] = -1)) : b.stop = !0
       };
       d._reidx();
       for(b.reattach();p < e;p++) {
-        b.getNode(c[p]).traverse({up:!0, fn:n})
+        b.getNode(c[p]).traverse({up:!0, fn:o})
       }
       b.reattach(c);
       b.sortList(c);
@@ -7873,11 +7873,11 @@ jx.grid.ColumnGroup = {};
     i._destroy(this, {name:"ColumnGroup", path:"colGroup", property:"collapser", map:"_parentMap _options"})
   };
   e._processData = function(d) {
-    for(var c = d.length, a = this._options.key, b = this._options.padColKeys, e = this.grid.dataMgr, f = e._consts._notReal, g = e.idKey, i = this.collapser, t = i._tree._options.nodeKey, p = i._tree._options.parentKey, n = [], m = 0;m < c;m++) {
-      this._addData(d[m], a, g, f, t, p, b, n)
+    for(var c = d.length, a = this._options.key, b = this._options.padColKeys, e = this.grid.dataMgr, f = e._consts._notReal, g = e.idKey, i = this.collapser, t = i._tree._options.nodeKey, p = i._tree._options.parentKey, o = [], m = 0;m < c;m++) {
+      this._addData(d[m], a, g, f, t, p, b, o)
     }
-    n.length !== 0 && (e.all.pushList(n), e.makeCompositeKeyList(n, !0), e.addListToIdMap(n), h.isNotNull(i) && i._onAddDatalist(n));
-    return n
+    o.length !== 0 && (e.all.pushList(o), e.makeCompositeKeyList(o, !0), e.addListToIdMap(o), h.isNotNull(i) && i._onAddDatalist(o));
+    return o
   };
   e._addData = function(d, c, a, b, e, f, g, h) {
     var i = d[c], p = this._parentMap;
@@ -7920,17 +7920,17 @@ jx.grid.ColumnGroup = {};
   e._onUpdateDatalist = function(d, c, a) {
     var b = this._options.key, e = this.mid, f = this.collapser, g = f._tree, h = g._options.parentKey, i, p = {};
     i = {};
-    for(var n = [], m = [], o = [], q = 0, s = d.length;q < s;q++) {
-      i = c[q], i.hasOwnProperty(b) && (p = {}, p[h] = e + i[b], n.push(p), i = {}, i[h] = e + a[q][b], m.push(i), o.push(d[q]))
+    for(var o = [], m = [], n = [], q = 0, s = d.length;q < s;q++) {
+      i = c[q], i.hasOwnProperty(b) && (p = {}, p[h] = e + i[b], o.push(p), i = {}, i[h] = e + a[q][b], m.push(i), n.push(d[q]))
     }
-    if(o.length !== 0) {
+    if(n.length !== 0) {
       d = this._parentMap;
       c = [];
-      this._processData(o);
-      f._onUpdateDatalist(o, n, m);
+      this._processData(n);
+      f._onUpdateDatalist(n, o, m);
       q = 0;
       for(s = m.length;q < s;q++) {
-        n = m[q][h], d.hasOwnProperty(n) && (o = g.getNode(d[n]), o.children.length === 0 && (delete d[n], c.push(o.data)))
+        o = m[q][h], d.hasOwnProperty(o) && (n = g.getNode(d[o]), n.children.length === 0 && (delete d[o], c.push(n.data)))
       }
       c.length !== 0 && (f._onRemoveDatalist(c), this.grid.dataMgr.all.removeList(c))
     }
@@ -8004,14 +8004,14 @@ jx.grid.DataCreator = {};
     return a.join("")
   };
   e._onRenderModules = function() {
-    for(var d = [], c = this.grid.colDefMgr.getAll(), a = c.length, b, e = this._options, f = e.classCol, g = e.classColName, i = this, t = this._creator, p = this._inputMap, n = 0, m = function(a) {
+    for(var d = [], c = this.grid.colDefMgr.getAll(), a = c.length, b, e = this._options, f = e.classCol, g = e.classColName, i = this, t = this._creator, p = this._inputMap, o = 0, m = function(a) {
       a.which === h.keyMapKeydown.enter && i._addData()
-    };n < a;n++) {
-      b = c[n], b.inputOnCreate === !0 && d.push("<div key='" + b.key + "' class='" + f + "'><div class='" + g + "'>" + b.name + "</div><input type='text' value='" + h.ifNull(b.defaultValue, "") + "' style='width:" + b.width + "px'/></div>")
+    };o < a;o++) {
+      b = c[o], b.inputOnCreate === !0 && d.push("<div key='" + b.key + "' class='" + f + "'><div class='" + g + "'>" + b.name + "</div><input type='text' value='" + h.ifNull(b.defaultValue, "") + "' style='width:" + b.width + "px'/></div>")
     }
     t[0].innerHTML = d.join("") + "<button type='button' onclick='JGM.m.DataCreator." + this.mid + "._addData()'>등록</button><button type='button' onclick='JGM.m.DataCreator." + this.mid + "._reset()'>초기화</button>";
-    for(n = 0;n < a;n++) {
-      b = c[n], b.inputOnCreate === !0 && (p[b.key] = t.find("div[key='" + b.key + "'] input").keyup(m))
+    for(o = 0;o < a;o++) {
+      b = c[o], b.inputOnCreate === !0 && (p[b.key] = t.find("div[key='" + b.key + "'] input").keyup(m))
     }
     this.grid.menubar != null && (this.grid.menubar.addIcon(e.classCreatorIcon, "데이터 로우를 추가합니다.", e.creatorIconWidth, e.creatorIconHeight, function() {
       t.toggle("fast")
@@ -8396,26 +8396,26 @@ jx.grid.SearchManager = {};
     return a <= b
   }, p = x[c] = function(a, b) {
     return a >= b
-  }, n = x[a] = function(a, b) {
+  }, o = x[a] = function(a, b) {
     return a === b
   }, l = x[l] = function() {
     return!0
-  }, m = f._disableMap = {}, o = m[e] = {}, q = m[c] = {}, s = m[a] = {}, m = m[b] = {};
+  }, m = f._disableMap = {}, n = m[e] = {}, q = m[c] = {}, s = m[a] = {}, m = m[b] = {};
   x[d] = function() {
     return!1
   };
-  o[e] = {};
-  o[e][j] = l;
-  o[e][k] = l;
-  o[c] = {};
-  o[c][j] = t;
-  o[c][k] = p;
-  o[a] = {};
-  o[a][j] = l;
-  o[a][k] = p;
-  o[b] = {};
-  o[b][j] = t;
-  o[b][k] = l;
+  n[e] = {};
+  n[e][j] = l;
+  n[e][k] = l;
+  n[c] = {};
+  n[c][j] = t;
+  n[c][k] = p;
+  n[a] = {};
+  n[a][j] = l;
+  n[a][k] = p;
+  n[b] = {};
+  n[b][j] = t;
+  n[b][k] = l;
   q[e] = {};
   q[e][j] = p;
   q[e][k] = t;
@@ -8436,7 +8436,7 @@ jx.grid.SearchManager = {};
   s[c][k] = p;
   s[a] = {};
   s[a][j] = l;
-  s[a][k] = n;
+  s[a][k] = o;
   s[b] = {};
   s[b][j] = l;
   s[b][k] = l;
@@ -8450,7 +8450,7 @@ jx.grid.SearchManager = {};
   m[a][j] = l;
   m[a][k] = l;
   m[b] = {};
-  m[b][j] = n;
+  m[b][j] = o;
   m[b][k] = l;
   f._checkDisable = function(a, b, c, d, e) {
     try {
