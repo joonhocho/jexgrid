@@ -434,7 +434,7 @@ prototype.bindEvents = function() {
 		'onDestroy': this._destroy,
 		'onDataChange': [this._updateTotalCount, this._updateSums],
 		'onAfterRefresh': this._updateShownCount,
-		'onResizeCol': this._setWidthByKey,
+		'onResizeCol': this.setSumWidthFromViewWidth,
 		'changeVisibleColumns': this._onReorderCols,
 		'onScrollViewportH': this._onScrollViewportH
 	}, this);
@@ -449,21 +449,19 @@ prototype._onReorderCols = function() {
 	}
 };
 
-prototype._setWidthByKey = function(key, w, o) {
+prototype.setSumWidthFromViewWidth = function(key, w) {
 	var el = this.getSumCell(key);
 	if (el) {
-		var widthPlus,
-			viewplus;
-		if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
-			widthPlus = 0;
-			viewplus = 0;
-		}
-		else {
-			widthPlus = 1;
-			viewplus = this.grid['view']._colWidthPlus();
-		}
-		el.style.width = w + viewplus - widthPlus + "px";
+		return el.style.width = this._toStyleWidth(w + this.grid['view']._colWidthPlus() - this._widthPlus()) + 'px'
 	}
+};
+
+prototype._widthPlus = prototype._getBorder = function() {
+	return this._border || (this._border = 1);
+};
+
+prototype._toStyleWidth = function(w) {
+	return JGM.IE6 ? w + this._widthPlus() : w;
 };
 
 prototype._onScrollViewportH = function(scrollLeft) {
@@ -481,24 +479,14 @@ prototype.renderCells = function() {
 			colDef,
 			view = this.grid['view'],
 			cells = [],
-			widthPlus,
-			viewplus;
-
-		if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
-			widthPlus = 0;
-			viewplus = 0;
-		}
-		else {
-			widthPlus = 1;
-			viewplus = view._colWidthPlus();
-		}
+			widthPlus = this._widthPlus();
 
 		for (; i < l; i++) {
 			cells.push(element('div', {
 				'class': 'classSliderCell',
 				'id': this.mid + '_sum_' + colDefs[i].key,
 				'style': {
-					width: (view.getColWidth(i) + viewplus - widthPlus) + "px"
+					width: this._toStyleWidth(view._getColOuterWidth(i) - widthPlus) + 'px'
 				}
 			}));
 		}

@@ -674,4 +674,6 @@ BrowserDetect.init();
 
 JGM.browser = BrowserDetect;
 
+JGM.IE6 = JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7);
+
 })();

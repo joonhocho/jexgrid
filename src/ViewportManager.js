@@ -406,6 +406,8 @@ function ViewportManager(args) {
 
 	this._options = JGM._extend(options, args['options']);
 
+	this._padding = Number(this._getPadding());
+
 	this._drag = false;
 	this._lastRowLen = this._lastScrollLeft = this._lastScrollTop = 0;
 
@@ -508,7 +510,7 @@ prototype._onCreateCss = function() {
 		opt = this._options,
 		cellSel = gridId + this._cellClass,
 		rowSel = gridId + this._rowClass,
-		border = opt['borderThickness'] + "px " + opt['border'],
+		border = this._getBorder() + "px " + opt['border'],
 		attrRowIdx = rowSel + "[" + this._rowIdxAttr,
 		colDefs = this._colmgr.get(),
 		clen = colDefs.length,
@@ -520,7 +522,7 @@ prototype._onCreateCss = function() {
 	rules.push(gridId + opt['classView'] + ":focus{background:" + opt['focusBackground'] + ";outline:" + opt['focusOutline'] + "}");
 	rules.push(gridId + opt['classCanvas'] + "{height:" + this._calCanvasHeight() + "px;" + opt['canvasStyle'] + ";}");
 	rules.push(rowSel + "{background:white;position:absolute;" + opt['rowStyle'] + "}");
-	rules.push(cellSel + "{height:" + opt['rowH'] + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + opt['padding'] + "px;border-right:" + border + ";" + opt['cellStyle'] + "}");
+	rules.push(cellSel + "{height:" + opt['rowH'] + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + this._getPadding() + "px;border-right:" + border + ";" + opt['cellStyle'] + "}");
 
 	if (opt['evenOddRows']) {
 		rules.push(rowSel + ".odd{background:" + opt['oddRowsBackground'] + "}");
@@ -547,7 +549,7 @@ prototype._onCreateDynamicCss = function() {
 
 	str += canSel + "{width:" + canw + "px}" + rowSel + "{width:" + canw + "px}";
 	for (; i < clen; i++) {
-		str += cellSel + ".k_" + colDefs[i].key + "{width:" + colDefs[i].width + "px}";
+		str += cellSel + ".k_" + colDefs[i].key + "{width:" + this._toStyleWidth(colDefs[i].width) + "px}";
 	}
 
 	return str;
@@ -751,6 +753,10 @@ prototype.scrollToCol = function(i) {
 	return this.setScrollLeft(this.getColLeft(i));
 };
 
+prototype._toStyleWidth = function(w) {
+	return JGM.IE6 ? w + this._colWidthPlus() : w;
+}
+
 prototype._getColInnerWidth = function(i) {
 	return this._colmgr.get(i).width;
 };
@@ -771,7 +777,7 @@ prototype._getColInnerWidthByKey = function(i) {
   @version 1.1.7
   */
 prototype.getColWidth = function(i) {
-	return this._colmgr.get(i).width + this._options['padding'];
+	return this._getColInnerWidth(i) + this._getPadding();
 };
 
 /**
@@ -786,30 +792,31 @@ prototype.getColWidth = function(i) {
   @version 1.1.7
   */
 prototype.getColWidthByKey = function(i) {
-	return this._colmgr.getByKey(i).width + this._options['padding'];
+	return this._getColInnerWidthByKey(i) + this._getPadding();
 };
 
 prototype._getColOuterWidth = function(i) {
-	return this._colmgr.get(i).width + this._options['padding'] + this._options['borderThickness'];
+	return this._getColInnerWidth(i) + this._colWidthPlus();
 };
 
 prototype._getColOuterWidthByKey = function(i) {
-	return this._colmgr.getByKey(i).width + this._options['padding'] + this._options['borderThickness'];
+	return this._getColInnerWidthByKey(i) + this._colWidthPlus();
 };
 
 prototype._getPadding = function() {
-	return this._options['padding'];
+	return this._padding || (this._padding = this._options['padding']);
+};
+
+prototype._getBorder = function() {
+	return this._border || (this._border = this._options['borderThickness']);
 };
 
 prototype._colWidthPlus = function() {
-	if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
-		return 0; // IE6 | quirks mode
-	}
-	return this._options['padding'] + this._options['borderThickness']; // correct standard
+	return this._columnWidthPlus || (this._columnWidthPlus = this._getPadding() + this._getBorder()); // correct standard
 };
 
 prototype._getRowOuterHeight = function() {
-	return this._options['rowH'] + this._options['borderThickness'];
+	return this._options['rowH'] + this._getBorder();
 };
 
 prototype._getRowInnerHeight = function() {
@@ -954,6 +961,8 @@ prototype._setCanvasWidth = function(w) {
 		  */
 		this._evtmgr.trigger("onResizeCanvasWidth", [w, old], true);
 	}
+
+	this.grid.log('set canvas width. ' + old + '->' + w);//IF_DEBUG
 };
 
 
@@ -980,12 +989,14 @@ prototype._setColLefts = function(from, to) {
 	from = from || 0;
 
 	var colDefs = this._colmgr.get(),
-		widthPlus = this._colWidthPlus();
+		last = this._colLefts[from];
+
 	to = to || colDefs.length;
 
 	for (; from < to; from++)  {
-		this._colLefts[from + 1] = this._colLefts[from] + colDefs[from].width + widthPlus;
+		last = this._colLefts[from + 1] = last + this._getColOuterWidth(from);
 	}
+
 	return this._colLefts;
 };
 

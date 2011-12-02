@@ -634,7 +634,7 @@ prototype._beforeCreateCss = function(e) {
 	var grid = this.grid,
 		gridId = "#" + grid['mid'] + " .",
 		opt = this._options,
-		border = opt['borderThickness'] + "px " + opt['border'],
+		border = this._getBorder() + "px " + opt['border'],
 		colDefs = this.getColumns(),
 		len = colDefs.length,
 		i = 0,
@@ -743,8 +743,8 @@ prototype._beforeCreateCss = function(e) {
 	this.toCssStyles(e.css, styles);
 };
 
-prototype._widthPlus = function() {
-	return this._options['borderThickness'];
+prototype._widthPlus = prototype._getBorder = function() {
+	return this._border || (this._border = this._options['borderThickness']);
 };
 
 prototype._onScrollViewportH = function(scrollLeft) {
@@ -780,16 +780,8 @@ prototype._onRenderModules = function() {
 			k = 0,
 			m = 0,
 			view = this.getView(),
-			viewplus = view._colWidthPlus(),
 			glen,
-			wplus;
-
-		if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
-			wplus = 0;
-		}
-		else {
 			wplus = this._widthPlus();
-		}
 
 		opt['reorderEnabled'] = false;
 
@@ -799,14 +791,14 @@ prototype._onRenderModules = function() {
 			groupWidth = 0;
 			for (k = 0, glen = group.length; k < glen; k++) {
 				if (!group[k].hidden) {
-					groupWidth += group[i].width + viewplus;
+					groupWidth += view._getColOuterWidthByKey(group[i].key);
 				}
 			}
 			doubleHeaders.push(element('div', {
 				'class': opt['classColHeader'],
 				'title': groupName,
 				'style': {
-					width: (groupWidth - wplus) + 'px'
+					width: this._toStyleWidth(groupWidth - wplus) + 'px'
 				}
 			}, groupName));
 		}
@@ -852,7 +844,6 @@ prototype._render = function(header, colDef, i) {
 	var opt = this._options,
 		key = colDef['key'],
 		name = (colDef['noName'] ? "" : colDef['name'] || key),
-		widthPlus = this._widthPlus(),
 		event = "onRenderHeader_" + key,
 		args = [header];
 
@@ -865,9 +856,10 @@ prototype._render = function(header, colDef, i) {
 		'class': classname,
 		colKey: key,
 		'style': {
-			width: (this.getView()._getColOuterWidth(i) - widthPlus) + "px"
+			width: this._toStyleWidth(this.fromViewWidth(i)) + "px"
 		}
 	};
+
 	if (!colDef['noTitle']) {
 		attr.title = colDef['title'] || name;
 	}
@@ -1151,7 +1143,7 @@ prototype._mousedown = function(e) {
 
 		this.grid.log('mousedown on ColumnHeader Resize Handle. key=' + key, Grid.V_MOUSEDOWN);//IF_DEBUG
 
-		this._resizeInitWidth = this.get(key)[0].clientWidth;
+		this._resizeInitWidth = parseInt(this.get(key)[0].style.width, 10);
 		this._resizeInitColWidth = this.getColMgr().getByKey(key).width;
 		this._resizeInitX = e.clientX;
 		this._resizeHandleInitX = this._resizeMap[key][0].offsetLeft;
@@ -1243,22 +1235,22 @@ prototype._mouseup = function(e) {
 	delete this._resizeInitColWidth;
 };
 
-prototype._setWidthByKey = function(key, w, o) {
+prototype._toStyleWidth = function(w) {
+	return JGM.IE6 ? w + this._widthPlus() : w;
+};
+
+prototype.setHeaderWidthFromViewWidth = function(key, w) {
+	return this.get(key)[0].style.width = this._toStyleWidth(w + this.getView()._colWidthPlus() - this._widthPlus()) + 'px'
+};
+
+prototype.fromViewWidth = function(i) {
+	return this.getView()._getColOuterWidth(i) - this._widthPlus();
+};
+
+prototype._setWidthByKey = function(key, w) {
 	this.grid.log('setting ColumnHeader width=' + w + '. key=' + key, Grid.V_RESIZE);//IF_DEBUG
 
-	var wplus,
-		viewplus;
-	if (JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7)) {
-		// IE6 | quirks mode
-		wplus = 0;
-		viewplus = 0;
-	}
-	else {
-		wplus = this._widthPlus();
-		viewplus = this.getView()._colWidthPlus();
-	}
-
-	this.get(key)[0].style.width = w + viewplus - wplus + "px";
+	this.setHeaderWidthFromViewWidth(key, w);
 
 	if (this._doubleHead) {
 		var colmgr = this.getColMgr(),
@@ -1271,11 +1263,11 @@ prototype._setWidthByKey = function(key, w, o) {
 
 		for (; i < l; i++) {
 			if (!group[i].hidden) {
-				groupWidth += group[i].width + viewplus;
+				groupWidth += view._getColOuterWidthByKey(group[i].key);
 			}
 		}
 
-		this._doubleHead[0].childNodes[groupIdx].style.width = groupWidth - wplus + 'px';
+		this._doubleHead[0].childNodes[groupIdx].style.width = this._toStyleWidth(groupWidth - this._widthPlus()) + 'px';
 	}
 	
 	this._syncResizeHandles(this.getColMgr().getIdxByKey(key));
