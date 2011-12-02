@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 61
- * Date: Thu Nov 24 18:11:28 KST 2011
+ * JexGrid Build 62
+ * Date: Fri Dec 2 19:57:58 KST 2011
  */
 /*
 AUTHOR
@@ -822,7 +822,7 @@ var jx = {util:{}}, Util = {}, echo = {};
       return t & j ? "<" + b + g(a, !0) + "/>" : "<" + c(b) + g(a, !1) + "/>"
     }
     t & j ? (a = "<" + b + g(a, !0) + ">", d != null && (a += d)) : (b = c(b), a = "<" + b + g(a, !1) + ">", d != null && (a += c(d)));
-    return p & j ? a : a + "</" + b + ">"
+    return q & j ? a : a + "</" + b + ">"
   }
   function g(b, a) {
     if(b) {
@@ -1592,9 +1592,9 @@ var jx = {util:{}}, Util = {}, echo = {};
   Util.style = e;
   Util.escapeChar = d;
   Util.encode = c;
-  var t = 1, p = 2;
+  var t = 1, q = 2;
   Util.SAFE = t;
-  Util.LEAVE_OPENED = p
+  Util.LEAVE_OPENED = q
 })();
 window.console && window.console.log && window.console.log('reading javascript source "Tracer.js"...');
 var Tracer = {};
@@ -2078,7 +2078,8 @@ var JGM = {};
   identity:"Firefox"}, {string:navigator.vendor, subString:"Camino", identity:"Camino"}, {string:navigator.userAgent, subString:"Netscape", identity:"Netscape"}, {string:navigator.userAgent, subString:"MSIE", identity:"Explorer", versionSearch:"MSIE"}, {string:navigator.userAgent, subString:"Gecko", identity:"Mozilla", versionSearch:"rv"}, {string:navigator.userAgent, subString:"Mozilla", identity:"Netscape", versionSearch:"Mozilla"}], dataOS:[{string:navigator.platform, subString:"Win", identity:"Windows"}, 
   {string:navigator.platform, subString:"Mac", identity:"Mac"}, {string:navigator.userAgent, subString:"iPhone", identity:"iPhone/iPod"}, {string:navigator.platform, subString:"Linux", identity:"Linux"}]};
   h.init();
-  JGM.browser = h
+  JGM.browser = h;
+  JGM.IE6 = JGM.browser.browser == "Explorer" && (JGM.browser.version < 7 || document.documentMode < 7)
 })();
 window.console && window.console.log && window.console.log('reading javascript source "renderer.js"...');
 jx.grid.renderer = {};
@@ -2727,35 +2728,35 @@ jx.data.DataManager = {};
         return this.grid.error("LENGTH_NOT_EQUAL")
       }
     }
-    for(var k = 0, e = a.length, f, g, i, o = [], m = [], n = [], q, s;k < e;k++) {
+    for(var k = 0, e = a.length, f, g, i, n = [], m = [], o = [], p, s;k < e;k++) {
       if(!h.isNull(f = a[k])) {
         if((i = b[k]).hasOwnProperty(c)) {
           g = j[k];
           if(!g.hasOwnProperty(c) || !f.hasOwnProperty(c)) {
-            return this.updateUniqueIndices(d, c, o, n, m), this.grid.error("KEY_UNDEFINED", c)
+            return this.updateUniqueIndices(d, c, n, o, m), this.grid.error("KEY_UNDEFINED", c)
           }
           if(!d.hasOwnProperty(s = g[c])) {
-            return this.updateUniqueIndices(d, c, o, n, m), this.grid.error("KEY_NOT_FOUND", s, c)
+            return this.updateUniqueIndices(d, c, n, o, m), this.grid.error("KEY_NOT_FOUND", s, c)
           }
-          if(h.isEmptyString(q = i[c])) {
-            return this.updateUniqueIndices(d, c, o, n, m), this.grid.error("BAD_NULL", c)
+          if(h.isEmptyString(p = i[c])) {
+            return this.updateUniqueIndices(d, c, n, o, m), this.grid.error("BAD_NULL", c)
           }
-          if(d.hasOwnProperty(q)) {
-            if(d[q] === f) {
+          if(d.hasOwnProperty(p)) {
+            if(d[p] === f) {
               continue
             }
-            this.updateUniqueIndices(d, c, o, n, m);
-            return this.grid.error("DUP_ENTRY", q, c)
+            this.updateUniqueIndices(d, c, n, o, m);
+            return this.grid.error("DUP_ENTRY", p, c)
           }
-          d[q] = f;
+          d[p] = f;
           delete d[s];
-          o.push(f);
+          n.push(f);
           m.push(i);
-          n.push(g)
+          o.push(g)
         }
       }
     }
-    return!o.length ? !1 : {datalist:o, changes:m, befores:n}
+    return!n.length ? !1 : {datalist:n, changes:m, befores:o}
   };
   e.removeUniqueIndex = function(d, c, a) {
     var b;
@@ -2906,24 +2907,24 @@ jx.data.DataManager = {};
         if(c.hasOwnProperty(b)) {
           return this.grid.error("NOT_MODIFIABLE", b)
         }
-        for(var a = this._options.idColKeys, j = a.length, k = 0;k < j;k++) {
-          if(c.hasOwnProperty(a[k])) {
-            for(var e = "", f = 0, g, i, o = {}, m = {}, k = m[b] = d[b];f < j;f++) {
+        for(var a = this._options.idColKeys, j = a.length, e = 0;e < j;e++) {
+          if(c.hasOwnProperty(a[e])) {
+            for(var l = "", f = 0, g, i, n = {}, m = {}, e = m[b] = d[b];f < j;f++) {
               if(g = a[f], c.hasOwnProperty(g)) {
                 if(h.isEmptyString(i = c[g])) {
                   return this.grid.error("BAD_NULL", g)
                 }
-                e += "&" + i
+                l += "&" + i
               }else {
-                e += "&" + d[g]
+                l += "&" + d[g]
               }
             }
-            d[b] = o[b] = e;
-            if(k === e) {
+            d[b] = n[b] = l;
+            if(e === l) {
               break
             }
-            c = this.updateUniqueIndex(this._idToData, b, d, o, m);
-            c instanceof Error && (d[b] = k);
+            c = this.updateUniqueIndex(this._idToData, b, d, n, m);
+            c instanceof Error && (d[b] = e);
             return c
           }
         }
@@ -2934,11 +2935,11 @@ jx.data.DataManager = {};
     if(h.isEmptyArray(d) || h.isEmptyArray(c) || h.isEmptyArray(a)) {
       return!1
     }
-    var b = this.idKey, j = d.length, k = 0;
+    var b = this.idKey, j = d.length, e = 0;
     switch(this._idMode) {
       case this._consts._auto:
-        for(;k < j;k++) {
-          if(c[k].hasOwnProperty(b)) {
+        for(;e < j;e++) {
+          if(c[e].hasOwnProperty(b)) {
             return this.grid.error("NOT_MODIFIABLE", b)
           }
         }
@@ -2946,25 +2947,25 @@ jx.data.DataManager = {};
       case this._consts._given:
         return this.updateUniqueIndices(this._idToData, b, d, c, a);
       case this._consts._composite:
-        for(var e = this._idToData, f, g, i = this._options.idColKeys, o = i.length, m, a = [], n = [], q = [], s = [], r, v, u, w;k < j;k++) {
-          f = d[k];
-          g = c[k];
+        for(var l = this._idToData, f, g, i = this._options.idColKeys, n = i.length, m, a = [], o = [], p = [], s = [], r, v, u, w;e < j;e++) {
+          f = d[e];
+          g = c[e];
           if(g.hasOwnProperty(b)) {
             r = 0;
             for(j = a.length;r < j;r++) {
-              n[r][b] = a[r]
+              o[r][b] = a[r]
             }
             return this.grid.error("NOT_MODIFIABLE", b)
           }
-          for(r = 0;r < o;r++) {
+          for(r = 0;r < n;r++) {
             if(g.hasOwnProperty(i[r])) {
               m = "";
-              for(v = 0;v < o;v++) {
+              for(v = 0;v < n;v++) {
                 if(u = i[v], g.hasOwnProperty(u)) {
                   if(h.isEmptyString(w = g[u])) {
                     r = 0;
                     for(j = a.length;r < j;r++) {
-                      n[r][b] = a[r]
+                      o[r][b] = a[r]
                     }
                     return this.grid.error("BAD_NULL", u)
                   }
@@ -2973,18 +2974,18 @@ jx.data.DataManager = {};
                   m += "&" + f[u]
                 }
               }
-              f[b] !== m && (n.push(f), q.push({}), s.push({}), a.push(f[b]), f[b] = m)
+              f[b] !== m && (o.push(f), p.push({}), s.push({}), a.push(f[b]), f[b] = m)
             }
           }
         }
-        if(!n.length) {
+        if(!o.length) {
           break
         }
-        d = this.updateUniqueIndices(e, b, n, q, s);
+        d = this.updateUniqueIndices(l, b, o, p, s);
         if(d instanceof Error) {
           r = 0;
           for(j = a.length;r < j;r++) {
-            n[r][b] = a[r]
+            o[r][b] = a[r]
           }
         }
         return d
@@ -2997,8 +2998,8 @@ jx.data.DataManager = {};
   };
   e.removeListFromIdMap = function(d) {
     if(!h.isEmptyArray(d)) {
-      for(var c = this.idKey, a = d.length, b = this._idToData, j, k, e = 0;e < a;e++) {
-        k = d[e], k.hasOwnProperty(c) && b.hasOwnProperty(j = k[c]) && delete b[j]
+      for(var c = this.idKey, a = d.length, b = this._idToData, j, e, l = 0;l < a;l++) {
+        e = d[l], e.hasOwnProperty(c) && b.hasOwnProperty(j = e[c]) && delete b[j]
       }
     }
   };
@@ -3106,13 +3107,13 @@ jx.data.DataManager = {};
     return!0
   };
   e.validateList = function(d, c) {
-    var a = this.grid.colDefMgr, b = a.getValidator(), a = a.getNullOnCreate(), j, e, l = c && c.isNew, f, g = d.length, h, i, m, n, q;
+    var a = this.grid.colDefMgr, b = a.getValidator(), a = a.getNullOnCreate(), j, e, l = c && c.isNew, f, g = d.length, h, i, m, o, p;
     try {
       for(j in b) {
         if(b.hasOwnProperty(j) && (!l || !a.hasOwnProperty(j))) {
           e = b[j];
           for(f = 0;f < g;f++) {
-            if(q = d[f], q.hasOwnProperty(j) && (h = q[j]) != null ? (m = !1, i = typeof h == "string" ? h : h.toString(), n = !i) : (h = null, n = m = !0, i = ""), !e(h, q, i, m, n)) {
+            if(p = d[f], p.hasOwnProperty(j) && (h = p[j]) != null ? (m = !1, i = typeof h == "string" ? h : h.toString(), o = !i) : (h = null, o = m = !0, i = ""), !e(h, p, i, m, o)) {
               return this.grid.error("WRONG_VALUE", i, j)
             }
           }
@@ -3370,10 +3371,10 @@ jx.data.DataManager = {};
     var a = this.grid.event;
     a.trigger("onBeforeDataChange", !1, !0);
     a.trigger("onBeforeUpdateDatalist", [d], !0);
-    for(var b = [], j = [], e = [], l, f, g, i = d.length, o = 0, m;o < i;o++) {
+    for(var b = [], j = [], e = [], l, f, g, i = d.length, n = 0, m;n < i;n++) {
       f = {};
-      l = d[o].datarow;
-      g = d[o].change;
+      l = d[n].datarow;
+      g = d[n].change;
       for(m in g) {
         g.hasOwnProperty(m) && (l[m] === g[m] ? delete g[m] : (f[m] = l[m], l[m] = g[m]))
       }
@@ -4287,7 +4288,7 @@ jx.grid.Grid = {};
     }
   };
   a._registerLinks = function(b) {
-    var a, c, d, e, f, g, i, m, n, q;
+    var a, c, d, e, f, g, i, m, o, p;
     a:for(a in b) {
       if(b.hasOwnProperty(a) && !(a in this)) {
         c = h.split(b[a]);
@@ -4297,15 +4298,15 @@ jx.grid.Grid = {};
           if(f = c[e].split("."), g = f.length, !(g < 1)) {
             i = this;
             m = this;
-            n = "";
-            for(q = 0;q < g;q++) {
-              if(f[q] in i) {
-                m = i, i = i[n = f[q]]
+            o = "";
+            for(p = 0;p < g;p++) {
+              if(f[p] in i) {
+                m = i, i = i[o = f[p]]
               }else {
                 continue b
               }
             }
-            this._registerLink(a, i, m, n);
+            this._registerLink(a, i, m, o);
             continue a
           }
         }
@@ -4618,16 +4619,16 @@ jx.grid.Grid = {};
         throw Error("unknown chart type: " + a);
     }
     google.load("visualization", "1", {packages:[h]});
-    var m = this, n = this.colDefMgr, q = this.dataMgr, s = d.map(function(b) {
-      if(b = n.getByKey(b)) {
+    var m = this, o = this.colDefMgr, p = this.dataMgr, s = d.map(function(b) {
+      if(b = o.getByKey(b)) {
         return b
       }
       throw Error("column key not found");
-    }), r = q.exportToArray(d, f, g);
+    }), r = p.exportToArray(d, f, g);
     google.setOnLoadCallback(function() {
-      for(var c = new google.visualization.DataTable, h = 0, p = s.length, n, y;h < p;h++) {
-        n = s[h];
-        y = n.type;
+      for(var c = new google.visualization.DataTable, h = 0, q = s.length, o, y;h < q;h++) {
+        o = s[h];
+        y = o.type;
         switch(y) {
           case "boolean":
             y = "boolean";
@@ -4648,7 +4649,7 @@ jx.grid.Grid = {};
           case "text":
             y = "string"
         }
-        c.addColumn(y || r[0] && r[0][h] != null && typeof r[0][h] || h === 0 && "string" || "number", n.name)
+        c.addColumn(y || r[0] && r[0][h] != null && typeof r[0][h] || h === 0 && "string" || "number", o.name)
       }
       c.addRows(r);
       var z = m._charts[b] = new google.visualization[i](document.getElementById(b));
@@ -4656,7 +4657,7 @@ jx.grid.Grid = {};
       m.event.bind("onAfterRefresh", function() {
         m.log("redrawing chart... type=" + a + ", columns=[" + d.join(",") + "]", 2);
         c.removeRows(0, c.getNumberOfRows());
-        c.addRows(q.exportToArray(d, f, g));
+        c.addRows(p.exportToArray(d, f, g));
         z.draw(c, e)
       });
       m.event.trigger("onChartLoaded", [z, c], !0)
@@ -4780,11 +4781,11 @@ jx.grid.SelectionManager = {};
         }
       }
       if(this._rows.length === 1) {
-        var o;
+        var n;
         g = this._rows;
         e = [c, null, a];
-        for(o in g) {
-          g.hasOwnProperty(o) && o !== "length" && (e[1] = g[o], d.trigger("keydownRowSel_" + b, e, !0), d.trigger("keydownRowSel", e, !0))
+        for(n in g) {
+          g.hasOwnProperty(n) && n !== "length" && (e[1] = g[n], d.trigger("keydownRowSel_" + b, e, !0), d.trigger("keydownRowSel", e, !0))
         }
       }
       e = [c, this._rows, this._cols];
@@ -4893,11 +4894,11 @@ jx.grid.SelectionManager = {};
   d._setRange = function(c, a, b, d) {
     var e = this._range;
     if(e) {
-      var f = e.getRowIdx();
-      if(c === f && a === e.getColIdx()) {
+      var l = e.getRowIdx();
+      if(c === l && a === e.getColIdx()) {
         return
       }
-      c !== f && this._last && f !== this._last.getRowIdx() && this.grid.view.unlockRowById(e.getId());
+      c !== l && this._last && l !== this._last.getRowIdx() && this.grid.view.unlockRowById(e.getId());
       e.get$().removeClass(this._options.classRange);
       b || delete this._range
     }
@@ -5175,17 +5176,17 @@ jx.grid.Editor = {};
   };
   c._deleteContents = function(a, b, c) {
     if(!this.active()) {
-      var a = {}, b = {}, d = [], e, f, h, i, o, m, n;
+      var a = {}, b = {}, d = [], e, f, h, i, n, m, o;
       a:for(e in c) {
         if(c.hasOwnProperty(e) && e !== "length") {
-          for(n in i = h = f = void 0, m = c[e], m) {
-            if(m.hasOwnProperty(n) && !(n === "length" || b.hasOwnProperty(n))) {
-              o = m[n].cell;
-              if(g.isNull(f) && (f = o.getColDef(), h = f.defaultValue, i = f.key, g.isNull(f.editor))) {
+          for(o in i = h = f = void 0, m = c[e], m) {
+            if(m.hasOwnProperty(o) && !(o === "length" || b.hasOwnProperty(o))) {
+              n = m[o].cell;
+              if(g.isNull(f) && (f = n.getColDef(), h = f.defaultValue, i = f.key, g.isNull(f.editor))) {
                 continue a
               }
-              o = g.isNotNull(a[n]) ? a[n].datarow : o.getDatarow();
-              this.grid.dataMgr.isReal(o) ? h !== o[i] && (g.isNull(a[n]) && (a[n] = {datarow:o, change:{}}, d.push(a[n])), a[n].change[i] = h) : b[n] = !0
+              n = g.isNotNull(a[o]) ? a[o].datarow : n.getDatarow();
+              this.grid.dataMgr.isReal(n) ? h !== n[i] && (g.isNull(a[o]) && (a[o] = {datarow:n, change:{}}, d.push(a[o])), a[o].change[i] = h) : b[o] = !0
             }
           }
         }
@@ -5323,26 +5324,26 @@ jx.grid.PrintManager = {};
     d.document.close()
   };
   g.getPrintHtml = function(e, d) {
-    var c = this._options, a = c.tableBorderColor, b = c.headerBorderColor, j = c.cellBorderColor, f = [], l = e.length, g = l - 1, h = d.length, i = h - 1, o = 0, m;
+    var c = this._options, a = c.tableBorderColor, b = c.headerBorderColor, j = c.cellBorderColor, f = [], l = e.length, g = l - 1, h = d.length, i = h - 1, n = 0, m;
     f.push("<html><head>");
     f.push("<title>" + c.title + "</title>");
     f.push("</head><body onload='window.print();'>");
     f.push("<table width='100%' cellspacing='0' cellpadding='0'><tbody><tr><td align='left'>");
     f.push("<table width='100%' cellspacing='0' cellpadding='2' style='border-collapse:collapse'>");
     f.push("<tbody style='font:" + c.font + ";'>");
-    for(f.push("<tr style='background-color:" + c.headerBackgroundColor + ";color:" + c.headerFontColor + ";text-align:center'>");o < l;o++) {
-      f.push("<td style='border:solid 1px " + b + ";'>" + e[o].name + "</td>")
+    for(f.push("<tr style='background-color:" + c.headerBackgroundColor + ";color:" + c.headerFontColor + ";text-align:center'>");n < l;n++) {
+      f.push("<td style='border:solid 1px " + b + ";'>" + e[n].name + "</td>")
     }
     f.push("</tr>");
-    for(o = 0;o < h;o++) {
-      c = d[o];
+    for(n = 0;n < h;n++) {
+      c = d[n];
       f.push("<tr>");
-      if(o === 0) {
+      if(n === 0) {
         for(m = 0;m < l;m++) {
           m === 0 ? f.push("<td style='border:solid 1px " + j + ";border-top:solid 1px " + b + ";border-left:solid 1px " + a + "'>" + c[e[m].key] + "</td>") : m === g ? f.push("<td style='border:solid 1px " + j + ";border-top:solid 1px " + b + ";border-right:solid 1px " + a + "'>" + c[e[m].key] + "</td>") : f.push("<td style='border:solid 1px " + j + ";border-top:solid 1px " + b + "'>" + c[e[m].key] + "</td>")
         }
       }else {
-        if(o < i) {
+        if(n < i) {
           for(m = 0;m < l;m++) {
             m === 0 ? f.push("<td style='border:solid 1px " + j + ";border-left:solid 1px " + a + "'>" + c[e[m].key] + "</td>") : m === g ? f.push("<td style='border:solid 1px " + j + ";border-right:solid 1px " + a + "'>" + c[e[m].key] + "</td>") : f.push("<td style='border:solid 1px " + j + "'>" + c[e[m].key] + "</td>")
           }
@@ -5367,6 +5368,7 @@ jx.grid.ViewportManager = {};
     this.grid = b.grid;
     this.grid.view = this;
     this._options = i._extend({attrRowIdx:"r", appendThreshold:3, renderThreshold:10, bufferSize:6, rowsPerPage:10, rowH:21, borderThickness:1, border:"solid #D0D7E5", padding:0, evenOddRows:!1, oddRowsBackground:"#F4F4F4", style:"", canvasStyle:"", rowStyle:"", cellStyle:"", classRow:"jgrid-row", classCell:"jgrid-cell", classView:"jgrid-viewport", classCanvas:"jgrid-canvas", focusBackground:"#FFF", focusOutline:"2px solid #f1ca7f", autoHeight:!1, autoWidth:!1}, b.options);
+    this._padding = Number(this._getPadding());
     this._drag = !1;
     this._lastRowLen = this._lastScrollLeft = this._lastScrollTop = 0;
     this._renderedRows = {};
@@ -5409,12 +5411,12 @@ jx.grid.ViewportManager = {};
     i._destroy(this, {name:"ViewportManager", path:"view", $:"_canvas _mask", property:"_ctnr", map:"_vars _lockedRows _renderedRows _options"})
   };
   a._onCreateCss = function() {
-    var b = "#" + this.grid.mid + " .", a = this._options, c = b + this._cellClass, d = b + this._rowClass, e = a.borderThickness + "px " + a.border, f = this._colmgr.get(), g = f.length, h = 0, i = [];
+    var b = "#" + this.grid.mid + " .", a = this._options, c = b + this._cellClass, d = b + this._rowClass, e = this._getBorder() + "px " + a.border, f = this._colmgr.get(), g = f.length, h = 0, i = [];
     i.push(b + a.classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + a.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + a.style + ";}");
     i.push(b + a.classView + ":focus{background:" + a.focusBackground + ";outline:" + a.focusOutline + "}");
     i.push(b + a.classCanvas + "{height:" + this._calCanvasHeight() + "px;" + a.canvasStyle + ";}");
     i.push(d + "{background:white;position:absolute;" + a.rowStyle + "}");
-    i.push(c + "{height:" + a.rowH + "px;border-bottom:" + e + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + a.padding + "px;border-right:" + e + ";" + a.cellStyle + "}");
+    i.push(c + "{height:" + a.rowH + "px;border-bottom:" + e + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + this._getPadding() + "px;border-right:" + e + ";" + a.cellStyle + "}");
     for(a.evenOddRows && i.push(d + ".odd{background:" + a.oddRowsBackground + "}");h < g;h++) {
       i.push(c + ".k_" + f[h].key + "{" + f[h].style + "}")
     }
@@ -5425,7 +5427,7 @@ jx.grid.ViewportManager = {};
     b += this._options.classCanvas;
     var d = this._calCanvasWidth(), e = this._colmgr.get(), f = "", g = e.length, h = 0;
     for(f += b + "{width:" + d + "px}" + c + "{width:" + d + "px}";h < g;h++) {
-      f += a + ".k_" + e[h].key + "{width:" + e[h].width + "px}"
+      f += a + ".k_" + e[h].key + "{width:" + this._toStyleWidth(e[h].width) + "px}"
     }
     return f
   };
@@ -5492,6 +5494,9 @@ jx.grid.ViewportManager = {};
   a.scrollToCol = function(b) {
     return this.setScrollLeft(this.getColLeft(b))
   };
+  a._toStyleWidth = function(b) {
+    return i.IE6 ? b + this._colWidthPlus() : b
+  };
   a._getColInnerWidth = function(b) {
     return this._colmgr.get(b).width
   };
@@ -5499,25 +5504,28 @@ jx.grid.ViewportManager = {};
     return this._colmgr.getByKey(b).width
   };
   a.getColWidth = function(b) {
-    return this._colmgr.get(b).width + this._options.padding
+    return this._getColInnerWidth(b) + this._getPadding()
   };
   a.getColWidthByKey = function(b) {
-    return this._colmgr.getByKey(b).width + this._options.padding
+    return this._getColInnerWidthByKey(b) + this._getPadding()
   };
   a._getColOuterWidth = function(b) {
-    return this._colmgr.get(b).width + this._options.padding + this._options.borderThickness
+    return this._getColInnerWidth(b) + this._colWidthPlus()
   };
   a._getColOuterWidthByKey = function(b) {
-    return this._colmgr.getByKey(b).width + this._options.padding + this._options.borderThickness
+    return this._getColInnerWidthByKey(b) + this._colWidthPlus()
   };
   a._getPadding = function() {
-    return this._options.padding
+    return this._padding || (this._padding = this._options.padding)
+  };
+  a._getBorder = function() {
+    return this._border || (this._border = this._options.borderThickness)
   };
   a._colWidthPlus = function() {
-    return i.browser.browser == "Explorer" && (i.browser.version < 7 || document.documentMode < 7) ? 0 : this._options.padding + this._options.borderThickness
+    return this._columnWidthPlus || (this._columnWidthPlus = this._getPadding() + this._getBorder())
   };
   a._getRowOuterHeight = function() {
-    return this._options.rowH + this._options.borderThickness
+    return this._options.rowH + this._getBorder()
   };
   a._getRowInnerHeight = function() {
     return this._options.rowH
@@ -5566,6 +5574,7 @@ jx.grid.ViewportManager = {};
       if(b != a) {
         this.grid.log("set canvas width. " + a + "->" + b, h.V_RESIZE), this._canvasEl.style.width = b + "px", this._evtmgr.trigger("onResizeCanvasWidth", [b, a], !0)
       }
+      this.grid.log("set canvas width. " + a + "->" + b)
     }
   };
   a.getColLeft = function(b) {
@@ -5575,8 +5584,8 @@ jx.grid.ViewportManager = {};
     return this._colLefts
   };
   a._setColLefts = function(b, a) {
-    for(var b = b || 0, c = this._colmgr.get(), d = this._colWidthPlus(), a = a || c.length;b < a;b++) {
-      this._colLefts[b + 1] = this._colLefts[b] + c[b].width + d
+    for(var b = b || 0, c = this._colmgr.get(), d = this._colLefts[b], a = a || c.length;b < a;b++) {
+      d = this._colLefts[b + 1] = d + this._getColOuterWidth(b)
     }
     return this._colLefts
   };
@@ -5823,8 +5832,8 @@ jx.grid.ViewportManager = {};
     if(this._datamgr.containsById(b)) {
       var a = this._renderedRows, c = this._canvasEl, d = this._datamgr, e = d.idKey, f = d.getIdxById(b), d = d.getById(b), h = this._colmgr.get(), i = this._getColCellClasses(h).map(function(b) {
         return"<div class='" + b + " "
-      }), m = this._getRendererSettings(h), n = m[0], m = m[1], q = this._getRowOuterHeight(), s = "<div class='" + this._rowClass + " odd' i='", r = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = [];
-      a.hasOwnProperty(b) && (c.removeChild(a[b]), this._evtmgr.trigger("onBeforeRenderRows", [[f]], !0), u.push((f % 2 ? r : s) + d[e] + v + f + "' style='top:" + q * f + "px'>"), this._renderRow(u, f, d, h, i, n, m), a[b] = g.appendHTML(c, u.join(""))[0], this._evtmgr.trigger("onAppendRows", [[f]], !0))
+      }), m = this._getRendererSettings(h), o = m[0], m = m[1], p = this._getRowOuterHeight(), s = "<div class='" + this._rowClass + " odd' i='", r = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = [];
+      a.hasOwnProperty(b) && (c.removeChild(a[b]), this._evtmgr.trigger("onBeforeRenderRows", [[f]], !0), u.push((f % 2 ? r : s) + d[e] + v + f + "' style='top:" + p * f + "px'>"), this._renderRow(u, f, d, h, i, o, m), a[b] = g.appendHTML(c, u.join(""))[0], this._evtmgr.trigger("onAppendRows", [[f]], !0))
     }
   };
   a._getRendererSettings = function(b) {
@@ -5851,12 +5860,12 @@ jx.grid.ViewportManager = {};
     return this.rerenderCellByIdAndKey(this._datamgr.getIdByIdx(b), this._colmgr.getKeyByIdx(a))
   };
   a._appendRows = function(b) {
-    var a = this._evtmgr, c = [b], d = [], e = b.start, b = b.end, f = this._datamgr, h = f.datalist, i = f.idKey, m = this._colmgr.get(), n = this._getColCellClasses(m).map(function(b) {
+    var a = this._evtmgr, c = [b], d = [], e = b.start, b = b.end, f = this._datamgr, h = f.datalist, i = f.idKey, m = this._colmgr.get(), o = this._getColCellClasses(m).map(function(b) {
       return"<div class='" + b + " "
-    }), f = this._renderedRows, q = this._getRowOuterHeight(), s = this._canvasEl, r = "<div class='" + this._rowClass + " odd' i='", v = "<div class='" + this._rowClass + "' i='", u = "' " + this._rowIdxAttr + "='", w = this._getRendererSettings(m), B = w[0], y = w[1], z, A, w = [];
+    }), f = this._renderedRows, p = this._getRowOuterHeight(), s = this._canvasEl, r = "<div class='" + this._rowClass + " odd' i='", v = "<div class='" + this._rowClass + "' i='", u = "' " + this._rowIdxAttr + "='", w = this._getRendererSettings(m), B = w[0], y = w[1], z, A, w = [];
     a.trigger("onBeforeRenderRows", c, !0);
     for(this.grid.twstart();e <= b;e++) {
-      z = h[e], A = z[i], f.hasOwnProperty(A) || (d[d.length] = (e % 2 ? v : r) + A + u + e + "' style='top:" + q * e + "px'>", this._renderRow(d, e, z, m, n, B, y), this.grid.twlap(), w.push(A))
+      z = h[e], A = z[i], f.hasOwnProperty(A) || (d[d.length] = (e % 2 ? v : r) + A + u + e + "' style='top:" + p * e + "px'>", this._renderRow(d, e, z, m, o, B, y), this.grid.twlap(), w.push(A))
     }
     this.grid.twprint();
     this.grid.twstop();
@@ -5870,24 +5879,24 @@ jx.grid.ViewportManager = {};
   a._removeAndRenderRows = function(b) {
     var b = b || this._getRenderRange(), a = this._evtmgr, c = [b], d = [], e = b.start, b = b.end, f = this._datamgr, g = f.datalist, f = f.idKey, h = this._colmgr.get(), i = this._getColCellClasses(h).map(function(b) {
       return"<div class='" + b + " "
-    }), n = this._getRowOuterHeight(), q = this._canvasEl, s = "<div class='" + this._rowClass + " odd' i='", r = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = this._getRendererSettings(h), w = u[0], u = u[1], B, y, z = [], A = {};
+    }), o = this._getRowOuterHeight(), p = this._canvasEl, s = "<div class='" + this._rowClass + " odd' i='", r = "<div class='" + this._rowClass + "' i='", v = "' " + this._rowIdxAttr + "='", u = this._getRendererSettings(h), w = u[0], u = u[1], B, y, z = [], A = {};
     a.trigger("onBeforeRenderRows", c, !0);
     for(this.grid.twstart();e <= b;e++) {
-      B = g[e], y = B[f], d[d.length] = (e % 2 ? r : s) + y + v + e + "' style='top:" + n * e + "px'>", this._renderRow(d, e, B, h, i, w, u), this.grid.twlap(), z.push(y)
+      B = g[e], y = B[f], d[d.length] = (e % 2 ? r : s) + y + v + e + "' style='top:" + o * e + "px'>", this._renderRow(d, e, B, h, i, w, u), this.grid.twlap(), z.push(y)
     }
     this.grid.twprint();
     this.grid.twstop();
-    q.innerHTML = d.join("");
+    p.innerHTML = d.join("");
     e = 0;
     for(b = z.length;e < b;e++) {
-      A[z[e]] = q.childNodes[e]
+      A[z[e]] = p.childNodes[e]
     }
     this._renderedRows = A;
     a.trigger("onAppendRows", c, !0)
   };
   a._renderColumn = function(b, a, c, d, f, g, h) {
-    for(var i = [], m, n = 0, q = c.length, s, r, v, u = a.key, w, B = this.grid, y = this._evtmgr, z = "onRenderCell_" + u, A = [null, b, r, a], C = [null, b, null, a, null];n < q;n++) {
-      s = c[n];
+    for(var i = [], m, o = 0, p = c.length, s, r, v, u = a.key, w, B = this.grid, y = this._evtmgr, z = "onRenderCell_" + u, A = [null, b, r, a], C = [null, b, null, a, null];o < p;o++) {
+      s = c[o];
       r = d[s];
       v = r[u];
       m = [];
@@ -5919,19 +5928,19 @@ jx.grid.ViewportManager = {};
     })
   };
   a._renderRow = function(b, a, c, d, e, f, g) {
-    for(var h = 0, i = d.length, n, q = [a, null, c, null], s = this._evtmgr, r;h < i;h++) {
-      n = d[h], q[1] = h, q[3] = n, r = s.trigger("onGetCellClass", q), b[b.length] = e[h], r && (b[b.length] = r.join(" ")), r = c[n.key], b[b.length] = r == null || r === "" ? "'>" : "' title='" + r + "'>", this._renderCell(b, a, h, c, n, f[h], g[h]), b[b.length] = "</div>"
+    for(var h = 0, i = d.length, o, p = [a, null, c, null], s = this._evtmgr, r;h < i;h++) {
+      o = d[h], p[1] = h, p[3] = o, r = s.trigger("onGetCellClass", p), b[b.length] = e[h], r && (b[b.length] = r.join(" ")), r = c[o.key], b[b.length] = r == null || r === "" ? "'>" : "' title='" + r + "'>", this._renderCell(b, a, h, c, o, f[h], g[h]), b[b.length] = "</div>"
     }
     b[b.length] = "</div>";
     return b
   };
   a._renderCell = function(b, a, c, d, f, g, h) {
-    var i = f.key, m = d[i], n = [a, c, d, f, b], q = this._evtmgr, i = "onRenderCell_" + i;
-    q.trigger(i + "_prepend", n, !0);
+    var i = f.key, m = d[i], o = [a, c, d, f, b], p = this._evtmgr, i = "onRenderCell_" + i;
+    p.trigger(i + "_prepend", o, !0);
     if(typeof m != "string" || m.substring(0, 3) !== "J@H") {
       g ? b[b.length] = h ? arguments[5](new e({grid:this.grid, row:a, col:c, datarow:d, colDef:f})) : arguments[5](m, a, c, d, f) : m == null || m === "" || (b[b.length] = m)
     }
-    q.trigger(i + "_append", n, !0)
+    p.trigger(i + "_append", o, !0)
   };
   e.prototype.rerender = function() {
     return this.grid.view.rerenderCellByIdAndKey(this.getId(), this.getKey())
@@ -5993,8 +6002,8 @@ jx.grid.ViewportManager = {};
           b = [b, h];
           h = this._evtmgr;
           if(a.indexOf(",") > -1) {
-            for(var a = a.split(","), g = 0, i = a.length, p;g < i;g++) {
-              p = a[g], h.trigger(p + "_" + f, b, !0), h.trigger(p, b, !0)
+            for(var a = a.split(","), g = 0, i = a.length, q;g < i;g++) {
+              q = a[g], h.trigger(q + "_" + f, b, !0), h.trigger(q, b, !0)
             }
           }else {
             h.trigger(a + "_" + f, b, !0), h.trigger(a, b, !0)
@@ -6006,29 +6015,29 @@ jx.grid.ViewportManager = {};
     return!1
   };
   a._scroll = function() {
-    var b = this.getScrollTop(), a = b - this._lastScrollTop, c = this.getScrollLeft(), d = c - this._lastScrollLeft;
-    if(a !== 0 || d !== 0) {
-      this.grid.log("Viewport scrolled... h=" + d + ", v=" + a, h.V_SCROLL);
-      var e = this._evtmgr, a = Math.abs(a / this._getRowOuterHeight());
-      e.trigger("onScrollViewport", !1, !0);
-      if(d) {
-        this._lastScrollLeft = c, e.trigger("onScrollViewportH", [c], !0)
+    var a = this.getScrollTop(), c = a - this._lastScrollTop, d = this.getScrollLeft(), e = d - this._lastScrollLeft;
+    if(c !== 0 || e !== 0) {
+      this.grid.log("Viewport scrolled... h=" + e + ", v=" + c, h.V_SCROLL);
+      var f = this._evtmgr, c = Math.abs(c / this._getRowOuterHeight());
+      f.trigger("onScrollViewport", !1, !0);
+      if(e) {
+        this._lastScrollLeft = d, f.trigger("onScrollViewportH", [d], !0)
       }
-      c = this.renderElapsed;
-      c == null && (c = 50);
-      c > 500 && (c = 500);
-      if(a >= this._options.appendThreshold) {
+      d = this.renderElapsed;
+      d == null && (d = 50);
+      d > 500 && (d = 500);
+      if(c >= this._options.appendThreshold) {
         if(this.scrollHandlerId) {
           window.clearTimeout(this.scrollHandlerId), this.scrollHandlerId = null
         }
-        var f = this;
+        var g = this;
         this.scrollHandlerId = window.setTimeout(function() {
-          var a = (new Date).getTime();
-          f._lastScrollTop = b;
-          f._removeAndRenderRows();
-          e.trigger("onScrollViewportV", !1, !0);
-          f.renderElapsed = (new Date).getTime() - a
-        }, c)
+          var c = (new Date).getTime();
+          g._lastScrollTop = a;
+          g._removeAndRenderRows();
+          f.trigger("onScrollViewportV", !1, !0);
+          g.renderElapsed = (new Date).getTime() - c
+        }, d)
       }
     }
   };
@@ -6342,8 +6351,8 @@ jx.grid.ColumnManager = {};
   };
   k.reorganizeGroups = function() {
     if(this.hasGroups()) {
-      for(var a = this._colDefs, b = 0, c = a.length, d, e = this._groups = [], f = this._groupsByName = {}, j;b < c;b++) {
-        d = a[b], j = d.parent = d.parent == null ? d.name || d.key : d.parent, f.hasOwnProperty(j) || e.push(f[j] = []), f[j].push(d)
+      for(var a = this._colDefs, b = 0, c = a.length, d, e = this._groups = [], f = this._groupsByName = {}, g;b < c;b++) {
+        d = a[b], g = d.parent = d.parent == null ? d.name || d.key : d.parent, f.hasOwnProperty(g) || e.push(f[g] = []), f[g].push(d)
       }
       b = 0;
       c = e.length;
@@ -6374,10 +6383,10 @@ jx.grid.ColumnManager = {};
   k.getGroupIndexByKey = function(a) {
     var b = this._groups;
     if(b) {
-      for(var c = 0, d = b.length, e, f, j;c < d;c++) {
+      for(var c = 0, d = b.length, e, f, g;c < d;c++) {
         e = b[c];
         f = 0;
-        for(j = e.length;f < j;f++) {
+        for(g = e.length;f < g;f++) {
           if(e[f].key == a) {
             return c
           }
@@ -6647,14 +6656,14 @@ jx.grid.MenuBar = {};
     this._ctnr = c.container;
     this._menubar = $("<div class='" + a.classMenuBar + "'></div>").prependTo(this._ctnr);
     if(this.grid._options.columnHideEnabled) {
-      for(var c = h.element, b = h.input, d = h.SAFE, e = this.getColumns(), f = 0, g = e.length, i = "", p = this.mid, o, m, n;f < g;f++) {
-        o = e[f], m = o.key, n = p + "-toggle-column-" + m, i += c("label", {"for":n}, c("li", null, b("checkbox", {id:n, checked:!0, onclick:"JGM.m.MenuBar." + p + ".toggleColumn('" + m + "', this.checked, this)"}) + o.name, d), d)
+      for(var c = h.element, b = h.input, d = h.SAFE, e = this.getColumns(), f = 0, g = e.length, i = "", q = this.mid, n, m, o;f < g;f++) {
+        n = e[f], m = n.key, o = q + "-toggle-column-" + m, i += c("label", {"for":o}, c("li", null, b("checkbox", {id:o, checked:!0, onclick:"JGM.m.MenuBar." + q + ".toggleColumn('" + m + "', this.checked, this)"}) + n.name, d), d)
       }
-      var q = this.ul = $(c("ul", {"class":"jgrid-column-toggle-box"}, i, d)).appendTo(this.grid._ctnr);
-      q.css({top:11, left:34});
-      q.hide();
+      var p = this.ul = $(c("ul", {"class":"jgrid-column-toggle-box"}, i, d)).appendTo(this.grid._ctnr);
+      p.css({top:11, left:34});
+      p.hide();
       this.columnIcon = this.addIcon(a.classColumnToggleIcon, "현재 보여지는 열을 숨기거나 숨겨진 열을 보이도록 합니다.", a.columnIconWidth, a.columnIconHeight, function() {
-        q.toggle()
+        p.toggle()
       })
     }
   };
@@ -6691,10 +6700,10 @@ jx.grid.MenuBar = {};
       g.toggleClass("active");
       a.preventDefault()
     }
-    var g = $("<div class='" + this._options.classIcon + "' tabIndex='0' title='" + a + "'><div class='" + c + "' style='margin-top:" + (this._options.iconHeight - d) / 2 + "px;margin-left:" + (this._options.iconWidth - b) / 2 + "px'></div></div>").appendTo(this._menubar), i = h.keyMapKeydown.enter, p = h.keyMapKeydown.space;
+    var g = $("<div class='" + this._options.classIcon + "' tabIndex='0' title='" + a + "'><div class='" + c + "' style='margin-top:" + (this._options.iconHeight - d) / 2 + "px;margin-left:" + (this._options.iconWidth - b) / 2 + "px'></div></div>").appendTo(this._menubar), i = h.keyMapKeydown.enter, q = h.keyMapKeydown.space;
     g.click(f).keydown(function(a) {
       var b = a.which;
-      (b === i || b === p) && f(a)
+      (b === i || b === q) && f(a)
     });
     return g
   };
@@ -6743,20 +6752,24 @@ jx.grid.Footer = {};
     this.bindEvents()
   };
   d.bindEvents = function() {
-    this.grid.event.bind({onCreateCss:this._onCreateCss, onDestroy:this._destroy, onDataChange:[this._updateTotalCount, this._updateSums], onAfterRefresh:this._updateShownCount, onResizeCol:this._setWidthByKey, changeVisibleColumns:this._onReorderCols, onScrollViewportH:this._onScrollViewportH}, this)
+    this.grid.event.bind({onCreateCss:this._onCreateCss, onDestroy:this._destroy, onDataChange:[this._updateTotalCount, this._updateSums], onAfterRefresh:this._updateShownCount, onResizeCol:this.setSumWidthFromViewWidth, changeVisibleColumns:this._onReorderCols, onScrollViewportH:this._onScrollViewportH}, this)
   };
   d._onReorderCols = function() {
     for(var c = this.grid.colDefMgr.get(), a = 0, b = c.length;a < b;a++) {
       this._slider[0].appendChild(this.getSumCell(c[a].key))
     }
   };
-  d._setWidthByKey = function(c, a) {
+  d.setSumWidthFromViewWidth = function(c, a) {
     var b = this.getSumCell(c);
     if(b) {
-      var d, e;
-      i.browser.browser == "Explorer" && (i.browser.version < 7 || document.documentMode < 7) ? e = d = 0 : (d = 1, e = this.grid.view._colWidthPlus());
-      b.style.width = a + e - d + "px"
+      return b.style.width = this._toStyleWidth(a + this.grid.view._colWidthPlus() - this._widthPlus()) + "px"
     }
+  };
+  d._widthPlus = d._getBorder = function() {
+    return this._border || (this._border = 1)
+  };
+  d._toStyleWidth = function(c) {
+    return i.IE6 ? c + this._widthPlus() : c
   };
   d._onScrollViewportH = function(c) {
     if(this._hasSum) {
@@ -6765,10 +6778,8 @@ jx.grid.Footer = {};
   };
   d.renderCells = function() {
     if(this._hasSum) {
-      var c = this.grid.colDefMgr.get(), a = 0, b = c.length, d = this.grid.view, f = [], g, h;
-      i.browser.browser == "Explorer" && (i.browser.version < 7 || document.documentMode < 7) ? h = g = 0 : (g = 1, h = d._colWidthPlus());
-      for(;a < b;a++) {
-        f.push(e("div", {"class":"classSliderCell", id:this.mid + "_sum_" + c[a].key, style:{width:d.getColWidth(a) + h - g + "px"}}))
+      for(var c = this.grid.colDefMgr.get(), a = 0, b = c.length, d = this.grid.view, f = [], g = this._widthPlus();a < b;a++) {
+        f.push(e("div", {"class":"classSliderCell", id:this.mid + "_sum_" + c[a].key, style:{width:this._toStyleWidth(d._getColOuterWidth(a) - g) + "px"}}))
       }
       this._slider[0].innerHTML = f.join("")
     }
@@ -6823,12 +6834,12 @@ jx.grid.Footer = {};
   };
   d._initSumCells = function() {
     if(this._hasSum) {
-      for(var c = this.grid.dataMgr.getReal(), a = this.grid.colDefMgr.get(), b = a.length, d, e, g, i, t, p = f._calSum, o = this._sumMap, m, n = 0;n < b;n++) {
-        if(d = a[n], e = d.sumRenderer) {
+      for(var c = this.grid.dataMgr.getReal(), a = this.grid.colDefMgr.get(), b = a.length, d, e, g, i, t, q = f._calSum, n = this._sumMap, m, o = 0;o < b;o++) {
+        if(d = a[o], e = d.sumRenderer) {
           g = d.key;
           i = d.name;
-          t = p(c, g);
-          o[g] = !0;
+          t = q(c, g);
+          n[g] = !0;
           switch(typeof e) {
             case "function":
               m = e(i, t);
@@ -6853,31 +6864,31 @@ jx.grid.Footer = {};
   };
   d._updateSums = function() {
     if(this._hasSum) {
-      var c = this.grid.dataMgr.getReal(), a, b = this._sumMap, d = this.grid.colDefMgr, e, g, i, t, p = f._calSum, o;
+      var c = this.grid.dataMgr.getReal(), a, b = this._sumMap, d = this.grid.colDefMgr, e, g, i, t, q = f._calSum, n;
       for(a in b) {
         if(b.hasOwnProperty(a)) {
           e = d.getByKey(a);
           i = e.name;
           g = e.sumRenderer;
-          t = p(c, a);
+          t = q(c, a);
           switch(typeof g) {
             case "function":
-              o = g(i, t);
+              n = g(i, t);
               break;
             case "string":
               e = g.toLowerCase();
               if(e === "krw" || g === "\\") {
-                o = h.formatNumber(t)
+                n = h.formatNumber(t)
               }else {
                 if(e === "usd" || g === "$") {
-                  o = h.formatNumber(t, 2, "$ ")
+                  n = h.formatNumber(t, 2, "$ ")
                 }
               }
               break;
             default:
-              o = e.renderer ? e.renderer(t) : t
+              n = e.renderer ? e.renderer(t) : t
           }
-          this.setCellValue(a, o)
+          this.setCellValue(a, n)
         }
       }
     }
@@ -6963,27 +6974,27 @@ jx.grid.ColumnHeader = {};
   };
   c._beforeCreateCss = function(a) {
     this.grid.log("creating CSS for ColumnHeader...", e.V_INIT);
-    var b = "#" + this.grid.mid + " .", c = this._options, d = c.borderThickness + "px " + c.border, f = this.getColumns(), g = f.length, h = 0, i = "." + c.classColHeader, o = c.scrollerLeft, m = c.height + "px", n = c.classColHeaderActive, q = {};
-    q["." + c.classHeaderMask] = {position:"relative", overflow:"hidden", width:"100%", font:c.font, background:c.background, "border-bottom":d, _append:c.style};
-    q["." + c.classHeader] = {position:"relative", overflow:"hidden", "white-space":"nowrap", cursor:"default", background:c.background, left:-o + "px", width:c.scrollerWidth + "px", "line-height":m};
-    q[i] = {position:"relative", overflow:"hidden", "float":"left", "text-overflow":"ellipsis", "text-align":"center", "vertical-align":"middle", height:m, left:o - this.getView().getScrollLeft() + "px", "border-right":d, _append:c.headerStyle};
-    q[i + "." + c.classInteractive + ":hover, " + b + n] = {cursor:"pointer", background:c.backgroundHover};
-    q["." + n] = {"border-left":d};
-    q[i + "." + c.classColHeaderPlaceholder] = {background:c.backgroundPlaceholder + "!important"};
-    q[".jgrid-header-text"] = {"vertical-align":"middle"};
-    q[".jgrid-header-more"] = {position:"absolute", cursor:"pointer", height:"100%", width:"14px", right:0, top:0};
-    q[".jgrid-header-more:hover"] = {"border-left":"1px solid black", background:"url(" + c.headerMoreButton + ") no-repeat left center"};
-    q["." + c.classSort] = {position:"absolute", height:"100%", top:(c.sortTop || 0) + "px", width:c.sortWidth + "px", background:"url(" + c.sortBackground + ") no-repeat center transparent"};
-    q["." + c.classSortAsc] = {background:"url(" + c.sortBackgroundAsc + ") no-repeat center transparent"};
-    q["." + c.classSortDesc] = {background:"url(" + c.sortBackgroundDesc + ") no-repeat center transparent"};
-    q["." + c.classResizeHandle] = {"z-index":10, background:c.resizeHandleBackground, cursor:"e-resize", position:"absolute", top:(c.resizeHandleTop || 0) + "px", height:"100%", width:c.resizeHandleWidth + "px"};
-    for(q["." + c.classResizeGuide] = {"z-index":10, position:"absolute", background:c.resizeBackground, width:c.resizeGuideWidth + "px"};h < g;h++) {
-      f[h].headerStyle && (q[i + "#" + this.mid + "h" + f[h].key] = {_append:f[h].headerStyle})
+    var b = "#" + this.grid.mid + " .", c = this._options, d = this._getBorder() + "px " + c.border, f = this.getColumns(), g = f.length, h = 0, i = "." + c.classColHeader, n = c.scrollerLeft, m = c.height + "px", o = c.classColHeaderActive, p = {};
+    p["." + c.classHeaderMask] = {position:"relative", overflow:"hidden", width:"100%", font:c.font, background:c.background, "border-bottom":d, _append:c.style};
+    p["." + c.classHeader] = {position:"relative", overflow:"hidden", "white-space":"nowrap", cursor:"default", background:c.background, left:-n + "px", width:c.scrollerWidth + "px", "line-height":m};
+    p[i] = {position:"relative", overflow:"hidden", "float":"left", "text-overflow":"ellipsis", "text-align":"center", "vertical-align":"middle", height:m, left:n - this.getView().getScrollLeft() + "px", "border-right":d, _append:c.headerStyle};
+    p[i + "." + c.classInteractive + ":hover, " + b + o] = {cursor:"pointer", background:c.backgroundHover};
+    p["." + o] = {"border-left":d};
+    p[i + "." + c.classColHeaderPlaceholder] = {background:c.backgroundPlaceholder + "!important"};
+    p[".jgrid-header-text"] = {"vertical-align":"middle"};
+    p[".jgrid-header-more"] = {position:"absolute", cursor:"pointer", height:"100%", width:"14px", right:0, top:0};
+    p[".jgrid-header-more:hover"] = {"border-left":"1px solid black", background:"url(" + c.headerMoreButton + ") no-repeat left center"};
+    p["." + c.classSort] = {position:"absolute", height:"100%", top:(c.sortTop || 0) + "px", width:c.sortWidth + "px", background:"url(" + c.sortBackground + ") no-repeat center transparent"};
+    p["." + c.classSortAsc] = {background:"url(" + c.sortBackgroundAsc + ") no-repeat center transparent"};
+    p["." + c.classSortDesc] = {background:"url(" + c.sortBackgroundDesc + ") no-repeat center transparent"};
+    p["." + c.classResizeHandle] = {"z-index":10, background:c.resizeHandleBackground, cursor:"e-resize", position:"absolute", top:(c.resizeHandleTop || 0) + "px", height:"100%", width:c.resizeHandleWidth + "px"};
+    for(p["." + c.classResizeGuide] = {"z-index":10, position:"absolute", background:c.resizeBackground, width:c.resizeGuideWidth + "px"};h < g;h++) {
+      f[h].headerStyle && (p[i + "#" + this.mid + "h" + f[h].key] = {_append:f[h].headerStyle})
     }
-    this.toCssStyles(a.css, q)
+    this.toCssStyles(a.css, p)
   };
-  c._widthPlus = function() {
-    return this._options.borderThickness
+  c._widthPlus = c._getBorder = function() {
+    return this._border || (this._border = this._options.borderThickness)
   };
   c._onScrollViewportH = function(a) {
     this.grid.log("adjusting Colheader style.left according to viewport scrollLeft...", e.V_RESIZE);
@@ -6997,16 +7008,15 @@ jx.grid.ColumnHeader = {};
     this.grid.log("rendering Colheader...", e.V_INIT);
     var a = this.getColumns(), b = a.length, c = 0, f, g = [], h = this.getColMgr();
     if(h.hasGroups()) {
-      var t = this._options, h = h.getGroups(), p = 0, o = h.length, m, n, q, s = [], r = 0, v = this.getView()._colWidthPlus(), u, w;
-      w = i.browser.browser == "Explorer" && (i.browser.version < 7 || document.documentMode < 7) ? 0 : this._widthPlus();
-      for(t.reorderEnabled = !1;p < o;p++) {
-        m = h[p];
-        n = m[0].parent;
-        r = q = 0;
+      var i = this._options, h = h.getGroups(), q = 0, n = h.length, m, o, p, s = [], r = 0, v = this.getView(), u, w = this._widthPlus();
+      for(i.reorderEnabled = !1;q < n;q++) {
+        m = h[q];
+        o = m[0].parent;
+        r = p = 0;
         for(u = m.length;r < u;r++) {
-          m[r].hidden || (q += m[c].width + v)
+          m[r].hidden || (p += v._getColOuterWidthByKey(m[c].key))
         }
-        s.push(d("div", {"class":t.classColHeader, title:n, style:{width:q - w + "px"}}, n))
+        s.push(d("div", {"class":i.classColHeader, title:o, style:{width:this._toStyleWidth(p - w) + "px"}}, o))
       }
       this._doubleHead[0].innerHTML = s.join("")
     }
@@ -7025,18 +7035,18 @@ jx.grid.ColumnHeader = {};
     this._resizeGuide[0].style.height = "0px"
   };
   c._render = function(a, b, c) {
-    var e = this._options, f = b.key, g = b.noName ? "" : b.name || f, i = this._widthPlus(), p = "onRenderHeader_" + f, o = [a], m = e.classColHeader;
+    var e = this._options, f = b.key, g = b.noName ? "" : b.name || f, i = "onRenderHeader_" + f, q = [a], n = e.classColHeader;
     if(e.reorderEnabled || b.sorter) {
-      m += " " + e.classInteractive
+      n += " " + e.classInteractive
     }
-    c = {id:this.mid + "h" + f, "class":m, colKey:f, style:{width:this.getView()._getColOuterWidth(c) - i + "px"}};
+    c = {id:this.mid + "h" + f, "class":n, colKey:f, style:{width:this._toStyleWidth(this.fromViewWidth(c)) + "px"}};
     if(!b.noTitle) {
       c.title = b.title || g
     }
     a.push(d("div", c, null, h.LEAVE_OPENED));
-    this.triggerGridEvent(p + "_prepend", o, !0);
+    this.triggerGridEvent(i + "_prepend", q, !0);
     a.push(g);
-    this.triggerGridEvent(p + "_append", o, !0);
+    this.triggerGridEvent(i + "_append", q, !0);
     b.sorter && a.push(d("span", {"class":e.classSort}));
     a.push("</div>")
   };
@@ -7110,7 +7120,7 @@ jx.grid.ColumnHeader = {};
     if(h.hasTagAndClass(a.target, "DIV", b.classResizeHandle)) {
       var c = this._resizeKey = a.target.getAttribute("key");
       this.grid.log("mousedown on ColumnHeader Resize Handle. key=" + c, e.V_MOUSEDOWN);
-      this._resizeInitWidth = this.get(c)[0].clientWidth;
+      this._resizeInitWidth = parseInt(this.get(c)[0].style.width, 10);
       this._resizeInitColWidth = this.getColMgr().getByKey(c).width;
       this._resizeInitX = a.clientX;
       this._resizeHandleInitX = this._resizeMap[c][0].offsetLeft;
@@ -7143,18 +7153,23 @@ jx.grid.ColumnHeader = {};
       this.grid.log("mouseup on ColumnHeader Resize Handle. key=" + b, e.V_MOUSEUP), this._resizeGuide.hide(), this._resizeGuide[0].style.height = "0px", a = this._getDx(a, this.getColMgr().getByKey(b)), Math.abs(a) >= 1 && this.getView().setWidthByKey(b, this._resizeInitColWidth + a), delete this._resizeKey, delete this._resizeInitX, delete this._resizeHandleInitX, delete this._resizeInitWidth, delete this._resizeInitColWidth
     }
   };
+  c._toStyleWidth = function(a) {
+    return i.IE6 ? a + this._widthPlus() : a
+  };
+  c.setHeaderWidthFromViewWidth = function(a, b) {
+    return this.get(a)[0].style.width = this._toStyleWidth(b + this.getView()._colWidthPlus() - this._widthPlus()) + "px"
+  };
+  c.fromViewWidth = function(a) {
+    return this.getView()._getColOuterWidth(a) - this._widthPlus()
+  };
   c._setWidthByKey = function(a, b) {
     this.grid.log("setting ColumnHeader width=" + b + ". key=" + a, e.V_RESIZE);
-    var c, d;
-    i.browser.browser == "Explorer" && (i.browser.version < 7 || document.documentMode < 7) ? d = c = 0 : (c = this._widthPlus(), d = this.getView()._colWidthPlus());
-    this.get(a)[0].style.width = b + d - c + "px";
+    this.setHeaderWidthFromViewWidth(a, b);
     if(this._doubleHead) {
-      var f = this.getColMgr();
-      this.getView();
-      for(var g = f.getGroupIndexByKey(a), f = f.getGroupByGroupIdx(g), h = 0, p = f.length, o = 0;h < p;h++) {
-        f[h].hidden || (o += f[h].width + d)
+      for(var c = this.getColMgr(), d = this.getView(), f = c.getGroupIndexByKey(a), c = c.getGroupByGroupIdx(f), g = 0, h = c.length, i = 0;g < h;g++) {
+        c[g].hidden || (i += d._getColOuterWidthByKey(c[g].key))
       }
-      this._doubleHead[0].childNodes[g].style.width = o - c + "px"
+      this._doubleHead[0].childNodes[f].style.width = this._toStyleWidth(i - this._widthPlus()) + "px"
     }
     this._syncResizeHandles(this.getColMgr().getIdxByKey(a));
     this.getView()._scroll()
@@ -7178,9 +7193,9 @@ jx.grid.ColumnHeader = {};
   };
   c._initResizeHandles = function() {
     this.grid.log("initializing Colheader resize functionality...", e.V_INIT);
-    for(var a = this.getColumns(), b = a.length, c = this.getView(), d = c.mid, c = c._getColLefts(), f = this._options, g = this._resizeMap, h, i = 0, o = this._resizeHandleOffset = Math.floor(f.scrollerLeft - f.resizeHandleWidth / 2), m = f.classResizeHandle, n = this._head;i < b;i++) {
+    for(var a = this.getColumns(), b = a.length, c = this.getView(), d = c.mid, c = c._getColLefts(), f = this._options, g = this._resizeMap, h, i = 0, n = this._resizeHandleOffset = Math.floor(f.scrollerLeft - f.resizeHandleWidth / 2), m = f.classResizeHandle, o = this._head;i < b;i++) {
       if(f = a[i], f.resizable) {
-        h = f.key, g[h] = $("<div class='" + m + "' key='" + h + "' ondblclick='JGM.m.ViewportManager." + d + '._autoColWidth("' + h + "\")' style='left:" + (o + c[i + 1]) + "px' title='" + f.name + " 컬럼의 폭을 조절합니다.'>").appendTo(n)
+        h = f.key, g[h] = $("<div class='" + m + "' key='" + h + "' ondblclick='JGM.m.ViewportManager." + d + '._autoColWidth("' + h + "\")' style='left:" + (n + c[i + 1]) + "px' title='" + f.name + " 컬럼의 폭을 조절합니다.'>").appendTo(o)
       }
     }
   }
@@ -7545,7 +7560,7 @@ jx.grid.Collapser = {};
     i._destroy(this, {name:"Collapser", path:"collapser", module:"_tree", $:"_master", property:"checkMgr", map:"_options"})
   };
   d._onCreateCss = function() {
-    var c = "#" + this.grid.mid + " .", a = this._options, b = c + this.grid.view._options.classRow + " .", d = c + a.classCollapser, e = d + "." + a.classExpanded, f = d + "." + a.classCollapsed, g = this.grid.view._getRowInnerHeight(), i = [], p = this.grid.header;
+    var c = "#" + this.grid.mid + " .", a = this._options, b = c + this.grid.view._options.classRow + " .", d = c + a.classCollapser, e = d + "." + a.classExpanded, f = d + "." + a.classCollapsed, g = this.grid.view._getRowInnerHeight(), i = [], q = this.grid.header;
     i.push(c + a.classIndent + "{height:" + g + "px;float:left;}");
     i.push(d + "{width:" + a.width + "px;float:left;padding:0 " + a.padding + "px}");
     i.push(b + a.classCollapser + "{height:" + g + "px}");
@@ -7553,7 +7568,7 @@ jx.grid.Collapser = {};
     i.push(e + ":hover{background:url(" + a.urlExpandedHover + ") no-repeat center transparent}");
     i.push(f + "{background:url(" + a.urlCollapsed + ") no-repeat center transparent}");
     i.push(f + ":hover{background:url(" + a.urlCollapsedHover + ") no-repeat center transparent}");
-    h.isNotNull(p) && i.push(c + p._options.classColHeader + " ." + a.classCollapser + "{height:" + p._options.height + "px}");
+    h.isNotNull(q) && i.push(c + q._options.classColHeader + " ." + a.classCollapser + "{height:" + q._options.height + "px}");
     return i.join("")
   };
   d._onAfterSetDatalist = function() {
@@ -7576,18 +7591,18 @@ jx.grid.Collapser = {};
     this.grid.event.trigger("onCollapserTreeChange", !1, !0)
   };
   d._onAddDatalist = function(c) {
-    for(var a = 0, b = c.length, d = this._tree, e = d.root, f = this._options.beginCollapsed, g = this.key, i = this.grid.view, p = this.grid.dataMgr, o, m = [], n;a < b;a++) {
-      o = d.createNode(c[a]), o._collapsed = f, h.isNotNull(o.parent) && o.parent.children.length === 1 && m.push(o.parent.data)
+    for(var a = 0, b = c.length, d = this._tree, e = d.root, f = this._options.beginCollapsed, g = this.key, i = this.grid.view, q = this.grid.dataMgr, n, m = [], o;a < b;a++) {
+      n = d.createNode(c[a]), n._collapsed = f, h.isNotNull(n.parent) && n.parent.children.length === 1 && m.push(n.parent.data)
     }
     if(i !== void 0) {
       a = 0;
       for(b = m.length;a < b;a++) {
-        i.rerenderCellByIdAndKey(p.getId(m[a]), g)
+        i.rerenderCellByIdAndKey(q.getId(m[a]), g)
       }
     }
     e.traverseChildren({fn:function(a) {
-      n = this.parent;
-      h.isNotNull(n) && (n === e || n._shown && !n._collapsed) ? this._shown = !0 : (a.propagate = !1, this.traverse({fn:function() {
+      o = this.parent;
+      h.isNotNull(o) && (o === e || o._shown && !o._collapsed) ? this._shown = !0 : (a.propagate = !1, this.traverse({fn:function() {
         this._shown = !1
       }}))
     }});
@@ -7599,20 +7614,20 @@ jx.grid.Collapser = {};
     a.hasOwnProperty(f) && (h.isNull(g) && (g = d.getNode(c)), d.changeParentId(g, b[f], a[f]), this.grid.event.trigger("onCollapserTreeChange", !1, !0))
   };
   d._onUpdateDatalist = function(c, a, b) {
-    for(var a = this._tree, d = a._options.nodeKey, e = a._options.parentKey, f, g, i, p = [], o = [], m = 0, n = c.length;m < n;m++) {
-      f = b[m], g = c[m], i = void 0, f.hasOwnProperty(d) && (h.isNull(i) && (i = a.getNodeByNodeId(f[d])), p.push({node:i, before:f[d], newId:g[d]})), f.hasOwnProperty(e) && (h.isNull(i) && (i = a.getNode(g)), o.push({node:i, before:f[e], newId:g[e]}))
+    for(var a = this._tree, d = a._options.nodeKey, e = a._options.parentKey, f, g, i, q = [], n = [], m = 0, o = c.length;m < o;m++) {
+      f = b[m], g = c[m], i = void 0, f.hasOwnProperty(d) && (h.isNull(i) && (i = a.getNodeByNodeId(f[d])), q.push({node:i, before:f[d], newId:g[d]})), f.hasOwnProperty(e) && (h.isNull(i) && (i = a.getNode(g)), n.push({node:i, before:f[e], newId:g[e]}))
     }
-    c = p.length;
-    b = o.length;
+    c = q.length;
+    b = n.length;
     if(c + b !== 0) {
       if(c + b > 10) {
         a.reattach()
       }else {
         for(m = 0;m < c;m++) {
-          d = p[m], a.changeNodeId(d.node, d.before, d.newId)
+          d = q[m], a.changeNodeId(d.node, d.before, d.newId)
         }
         for(m = 0;m < b;m++) {
-          d = o[m], a.changeParentId(d.node, d.before, d.newId)
+          d = n[m], a.changeParentId(d.node, d.before, d.newId)
         }
       }
       this.grid.event.trigger("onCollapserTreeChange", !1, !0)
@@ -7631,12 +7646,12 @@ jx.grid.Collapser = {};
   d._onAfterFilter = function(c, a) {
     var b = this._tree;
     if(a.length > 0) {
-      var d = this.grid.dataMgr, e = c.length, f = d._idToIdx, g = d.idKey, i, p = 0, o = function(b) {
+      var d = this.grid.dataMgr, e = c.length, f = d._idToIdx, g = d.idKey, i, q = 0, n = function(b) {
         h.isNotNull(this.parent) ? (i = this.parent.data, h.isNotNull(i) && !d.has(i) && (c.push(i), a.remove(i), f[i[g]] = -1)) : b.stop = !0
       };
       d._reidx();
-      for(b.reattach();p < e;p++) {
-        b.getNode(c[p]).traverse({up:!0, fn:o})
+      for(b.reattach();q < e;q++) {
+        b.getNode(c[q]).traverse({up:!0, fn:n})
       }
       b.reattach(c);
       b.sortList(c);
@@ -7873,24 +7888,24 @@ jx.grid.ColumnGroup = {};
     i._destroy(this, {name:"ColumnGroup", path:"colGroup", property:"collapser", map:"_parentMap _options"})
   };
   e._processData = function(d) {
-    for(var c = d.length, a = this._options.key, b = this._options.padColKeys, e = this.grid.dataMgr, f = e._consts._notReal, g = e.idKey, i = this.collapser, t = i._tree._options.nodeKey, p = i._tree._options.parentKey, o = [], m = 0;m < c;m++) {
-      this._addData(d[m], a, g, f, t, p, b, o)
+    for(var c = d.length, a = this._options.key, b = this._options.padColKeys, e = this.grid.dataMgr, f = e._consts._notReal, g = e.idKey, i = this.collapser, t = i._tree._options.nodeKey, q = i._tree._options.parentKey, n = [], m = 0;m < c;m++) {
+      this._addData(d[m], a, g, f, t, q, b, n)
     }
-    o.length !== 0 && (e.all.pushList(o), e.makeCompositeKeyList(o, !0), e.addListToIdMap(o), h.isNotNull(i) && i._onAddDatalist(o));
-    return o
+    n.length !== 0 && (e.all.pushList(n), e.makeCompositeKeyList(n, !0), e.addListToIdMap(n), h.isNotNull(i) && i._onAddDatalist(n));
+    return n
   };
   e._addData = function(d, c, a, b, e, f, g, h) {
-    var i = d[c], p = this._parentMap;
-    p.hasOwnProperty(i) || (c = this._makeParent(d, c, a, i, b, e, g), h.push(c), p[i] = c);
+    var i = d[c], q = this._parentMap;
+    q.hasOwnProperty(i) || (c = this._makeParent(d, c, a, i, b, e, g), h.push(c), q[i] = c);
     d[e] = d[a];
     d[f] = this.mid + i
   };
   e._makeParent = function(d, c, a, b, e, f, g) {
-    var h = {}, i = 0, p = g.length;
+    var h = {}, i = 0, q = g.length;
     h[e] = this.mid;
     h[f] = this.mid + b;
     h[c] = b;
-    for(h[a] = (this.grid.colDefMgr.getByKey(c).name || c) + ": " + b;i < p;i++) {
+    for(h[a] = (this.grid.colDefMgr.getByKey(c).name || c) + ": " + b;i < q;i++) {
       h[g[i]] = d[g[i]]
     }
     return h
@@ -7908,29 +7923,29 @@ jx.grid.ColumnGroup = {};
   };
   e._onUpdateDatarow = function(d, c, a) {
     if(c.hasOwnProperty(this._options.key)) {
-      var b = this._options.key, c = c[b], a = a[b], e = this.mid, b = this.collapser, f = b._tree, g = f._options.parentKey, h = {}, i = {}, p = this._parentMap;
-      p.hasOwnProperty(c) || this._onAddDatarow(d);
+      var b = this._options.key, c = c[b], a = a[b], e = this.mid, b = this.collapser, f = b._tree, g = f._options.parentKey, h = {}, i = {}, q = this._parentMap;
+      q.hasOwnProperty(c) || this._onAddDatarow(d);
       h[g] = e + c;
       i[g] = e + a;
       b._onUpdateDatarow(d, h, i);
-      d = f.getNode(p[a]);
-      d.children.length === 0 && (this.grid.dataMgr.all.remove(d.data), delete p[a], b._onRemoveDatarow(d.data))
+      d = f.getNode(q[a]);
+      d.children.length === 0 && (this.grid.dataMgr.all.remove(d.data), delete q[a], b._onRemoveDatarow(d.data))
     }
   };
   e._onUpdateDatalist = function(d, c, a) {
-    var b = this._options.key, e = this.mid, f = this.collapser, g = f._tree, h = g._options.parentKey, i, p = {};
+    var b = this._options.key, e = this.mid, f = this.collapser, g = f._tree, h = g._options.parentKey, i, q = {};
     i = {};
-    for(var o = [], m = [], n = [], q = 0, s = d.length;q < s;q++) {
-      i = c[q], i.hasOwnProperty(b) && (p = {}, p[h] = e + i[b], o.push(p), i = {}, i[h] = e + a[q][b], m.push(i), n.push(d[q]))
+    for(var n = [], m = [], o = [], p = 0, s = d.length;p < s;p++) {
+      i = c[p], i.hasOwnProperty(b) && (q = {}, q[h] = e + i[b], n.push(q), i = {}, i[h] = e + a[p][b], m.push(i), o.push(d[p]))
     }
-    if(n.length !== 0) {
+    if(o.length !== 0) {
       d = this._parentMap;
       c = [];
-      this._processData(n);
-      f._onUpdateDatalist(n, o, m);
-      q = 0;
-      for(s = m.length;q < s;q++) {
-        o = m[q][h], d.hasOwnProperty(o) && (n = g.getNode(d[o]), n.children.length === 0 && (delete d[o], c.push(n.data)))
+      this._processData(o);
+      f._onUpdateDatalist(o, n, m);
+      p = 0;
+      for(s = m.length;p < s;p++) {
+        n = m[p][h], d.hasOwnProperty(n) && (o = g.getNode(d[n]), o.children.length === 0 && (delete d[n], c.push(o.data)))
       }
       c.length !== 0 && (f._onRemoveDatalist(c), this.grid.dataMgr.all.removeList(c))
     }
@@ -8004,14 +8019,14 @@ jx.grid.DataCreator = {};
     return a.join("")
   };
   e._onRenderModules = function() {
-    for(var d = [], c = this.grid.colDefMgr.getAll(), a = c.length, b, e = this._options, f = e.classCol, g = e.classColName, i = this, t = this._creator, p = this._inputMap, o = 0, m = function(a) {
+    for(var d = [], c = this.grid.colDefMgr.getAll(), a = c.length, b, e = this._options, f = e.classCol, g = e.classColName, i = this, t = this._creator, q = this._inputMap, n = 0, m = function(a) {
       a.which === h.keyMapKeydown.enter && i._addData()
-    };o < a;o++) {
-      b = c[o], b.inputOnCreate === !0 && d.push("<div key='" + b.key + "' class='" + f + "'><div class='" + g + "'>" + b.name + "</div><input type='text' value='" + h.ifNull(b.defaultValue, "") + "' style='width:" + b.width + "px'/></div>")
+    };n < a;n++) {
+      b = c[n], b.inputOnCreate === !0 && d.push("<div key='" + b.key + "' class='" + f + "'><div class='" + g + "'>" + b.name + "</div><input type='text' value='" + h.ifNull(b.defaultValue, "") + "' style='width:" + b.width + "px'/></div>")
     }
     t[0].innerHTML = d.join("") + "<button type='button' onclick='JGM.m.DataCreator." + this.mid + "._addData()'>등록</button><button type='button' onclick='JGM.m.DataCreator." + this.mid + "._reset()'>초기화</button>";
-    for(o = 0;o < a;o++) {
-      b = c[o], b.inputOnCreate === !0 && (p[b.key] = t.find("div[key='" + b.key + "'] input").keyup(m))
+    for(n = 0;n < a;n++) {
+      b = c[n], b.inputOnCreate === !0 && (q[b.key] = t.find("div[key='" + b.key + "'] input").keyup(m))
     }
     this.grid.menubar != null && (this.grid.menubar.addIcon(e.classCreatorIcon, "데이터 로우를 추가합니다.", e.creatorIconWidth, e.creatorIconHeight, function() {
       t.toggle("fast")
@@ -8073,30 +8088,30 @@ jx.grid.SearchManager = {};
   var e = f.prototype;
   e._onCreateCss = function() {
     var a = "#" + this.grid.mid + " .", b = this._options, c = b.borderThickness + "px " + b.border, d = "border-radius:" + b.tagsBorderRadius + "px;-moz-border-radius:" + b.tagsBorderRadius + "px", e = b.advButtonBorderThickness + "px " + b.advButtonBorder, f = b.advButtonBorderThickness + "px " + b.advButtonBorderHover, g = b.advButtonBorderThickness + "px " + b.advButtonBorderActive, h = b.advButtonBorderThickness + "px " + b.advButtonBorderOpened, j = b.tagsHeight - 2 * b.tagsPadding, k = j - 
-    2 * b.advButtonBorderThickness, l = j - 2 * b.tagBorderThickness, m = a + b.classMask, o = a + b.classSearchbar, n = a + b.classAdvButton, q = a + b.classRemoveTag, p = [];
-    p.push(m + "{" + i._CONST._cssUnselectable + "overflow:hidden;float:left;background:" + b.background + "}");
-    p.push(m + " button{margin:0;padding:0 3px}");
-    p.push(m + " input{border:" + b.inputBorder + ";padding:" + b.inputPadding + "}");
-    p.push(o + "{float:left;width:" + b.searchbarWidth + ";margin:" + b.searchbarMargin + "px 2px;height:" + b.searchbarHeight + "px;" + d + "}");
-    p.push(a + b.classTagbar + "{float:left;cursor:default;height:" + (b.tagsHeight - b.tagsPadding) + "px;padding:" + b.tagsPadding + "px 0 0 " + b.tagsPadding + "px;border-bottom:" + c + "}");
-    p.push(n + "{float:left;margin-right:" + b.tagsPadding + "px;background:" + b.advButtonBg + ";border:" + e + ";padding:0 " + b.advButtonPadding + "px;" + d + "}");
-    p.push(n + ":hover{background:" + b.advButtonBgHover + ";border:" + f + "}");
-    p.push(n + ".opened{background:" + b.advButtonBgOpened + ";border:" + h + "}");
-    p.push(n + ":active{background:" + b.advButtonBgActive + ";border:" + g + "}");
-    p.push(a + b.classAdvButtonName + "{float:left;color:" + b.advButtonColor + ";font:" + b.advButtonFont + ";line-height:" + k + "px}");
-    p.push(a + b.classAdvButtonIcon + "{float:left;height:" + k + "px;margin-left:" + b.advButtonIconMargin + "px;background:url(" + b.advButtonIconUrl + ") no-repeat center;width:" + b.advButtonIconWidth + "px}");
-    p.push(n + ".opened ." + b.classAdvButtonIcon + "{background:url(" + b.advButtonIconCloseUrl + ") no-repeat center}");
-    p.push(a + b.classTag + "{float:left;border:" + b.tagBorderThickness + "px " + b.tagBorder + ";margin:0 " + b.tagsPadding + "px " + b.tagsPadding + "px 0;padding:0 " + b.tagPadding + "px;background:" + b.tagBackground + ";" + d + "}");
-    p.push(a + b.classTagName + "{float:left;color:" + b.tagColor + ";font:" + b.tagFont + ";line-height:" + l + "px}");
-    p.push(q + "{float:left;margin-left:" + b.tagPadding + "px;background:url(" + b.tagRemoveIconUrl + ") no-repeat center;width:" + b.tagRemoveIconWidth + "px;height:" + l + "px}");
-    p.push(q + ":hover{background:url(" + b.tagRemoveIconHoverUrl + ") no-repeat center}");
-    p.push(q + ":active{background:url(" + b.tagRemoveIconActiveUrl + ") no-repeat center}");
-    p.push(a + b.classClearTags + "{height:" + j + "px}");
-    p.push(a + b.classAdvanced + "{cursor:default;font:" + b.advFont + ";border-bottom:" + c + "}");
-    p.push(a + b.classOptionCol + "{display:inline-block;vertical-align:top}");
-    p.push(a + b.classOptionCol + " input{width:" + b.advInputWidth + "px;margin-right:2px;" + d + "}");
-    p.push(a + b.classSearchIcon + "{background:url(" + b.searchIconUrl + ") no-repeat center;width:" + b.searchIconWidth + "px;height:" + b.searchIconHeight + "px}");
-    return p.join("")
+    2 * b.advButtonBorderThickness, l = j - 2 * b.tagBorderThickness, m = a + b.classMask, o = a + b.classSearchbar, n = a + b.classAdvButton, p = a + b.classRemoveTag, q = [];
+    q.push(m + "{" + i._CONST._cssUnselectable + "overflow:hidden;float:left;background:" + b.background + "}");
+    q.push(m + " button{margin:0;padding:0 3px}");
+    q.push(m + " input{border:" + b.inputBorder + ";padding:" + b.inputPadding + "}");
+    q.push(o + "{float:left;width:" + b.searchbarWidth + ";margin:" + b.searchbarMargin + "px 2px;height:" + b.searchbarHeight + "px;" + d + "}");
+    q.push(a + b.classTagbar + "{float:left;cursor:default;height:" + (b.tagsHeight - b.tagsPadding) + "px;padding:" + b.tagsPadding + "px 0 0 " + b.tagsPadding + "px;border-bottom:" + c + "}");
+    q.push(n + "{float:left;margin-right:" + b.tagsPadding + "px;background:" + b.advButtonBg + ";border:" + e + ";padding:0 " + b.advButtonPadding + "px;" + d + "}");
+    q.push(n + ":hover{background:" + b.advButtonBgHover + ";border:" + f + "}");
+    q.push(n + ".opened{background:" + b.advButtonBgOpened + ";border:" + h + "}");
+    q.push(n + ":active{background:" + b.advButtonBgActive + ";border:" + g + "}");
+    q.push(a + b.classAdvButtonName + "{float:left;color:" + b.advButtonColor + ";font:" + b.advButtonFont + ";line-height:" + k + "px}");
+    q.push(a + b.classAdvButtonIcon + "{float:left;height:" + k + "px;margin-left:" + b.advButtonIconMargin + "px;background:url(" + b.advButtonIconUrl + ") no-repeat center;width:" + b.advButtonIconWidth + "px}");
+    q.push(n + ".opened ." + b.classAdvButtonIcon + "{background:url(" + b.advButtonIconCloseUrl + ") no-repeat center}");
+    q.push(a + b.classTag + "{float:left;border:" + b.tagBorderThickness + "px " + b.tagBorder + ";margin:0 " + b.tagsPadding + "px " + b.tagsPadding + "px 0;padding:0 " + b.tagPadding + "px;background:" + b.tagBackground + ";" + d + "}");
+    q.push(a + b.classTagName + "{float:left;color:" + b.tagColor + ";font:" + b.tagFont + ";line-height:" + l + "px}");
+    q.push(p + "{float:left;margin-left:" + b.tagPadding + "px;background:url(" + b.tagRemoveIconUrl + ") no-repeat center;width:" + b.tagRemoveIconWidth + "px;height:" + l + "px}");
+    q.push(p + ":hover{background:url(" + b.tagRemoveIconHoverUrl + ") no-repeat center}");
+    q.push(p + ":active{background:url(" + b.tagRemoveIconActiveUrl + ") no-repeat center}");
+    q.push(a + b.classClearTags + "{height:" + j + "px}");
+    q.push(a + b.classAdvanced + "{cursor:default;font:" + b.advFont + ";border-bottom:" + c + "}");
+    q.push(a + b.classOptionCol + "{display:inline-block;vertical-align:top}");
+    q.push(a + b.classOptionCol + " input{width:" + b.advInputWidth + "px;margin-right:2px;" + d + "}");
+    q.push(a + b.classSearchIcon + "{background:url(" + b.searchIconUrl + ") no-repeat center;width:" + b.searchIconWidth + "px;height:" + b.searchIconHeight + "px}");
+    return q.join("")
   };
   f.getInstance = function(a) {
     return new f(a)
@@ -8172,7 +8187,7 @@ jx.grid.SearchManager = {};
       this.grid.event.trigger("onSearch", [!0], !0);
       var c, d = this._tagMap, e, f, g = a.length, i, j = this._filterMap, k = this.constructor.CONST.and, l, m = this._global.length > 0, n, o;
       if(m) {
-        var q = this._global, p;
+        var p = this._global, q;
         i = this.grid.colDefMgr.get().filter(function(a) {
           return!a.noSearch
         });
@@ -8185,13 +8200,13 @@ jx.grid.SearchManager = {};
       a:for(;n >= 0;n--) {
         g = a[n];
         if(m) {
-          i = q.slice();
+          i = p.slice();
           c = 0;
           for(;i.length !== 0 && c < s;c++) {
-            if((p = g[t[c]]) != null) {
-              h.isString(p) || (p = p.toString());
+            if((q = g[t[c]]) != null) {
+              h.isString(q) || (q = q.toString());
               for(o = i.length - 1;o >= 0;o--) {
-                p.indexOf(i[o]) !== -1 && i.removeAt(o)
+                q.indexOf(i[o]) !== -1 && i.removeAt(o)
               }
             }
           }
@@ -8394,54 +8409,54 @@ jx.grid.SearchManager = {};
   };
   var d = f.CONST = {lt:0, lte:1, eq:2, neq:3, gt:4, gte:5, and:6, or:7, T:8, F:9}, e = d.lt, c = d.gt, a = d.eq, b = d.neq, j = d.and, k = d.or, l = d.T, d = d.F, x = f._comparator = {}, t = x[e] = function(a, b) {
     return a <= b
-  }, p = x[c] = function(a, b) {
+  }, q = x[c] = function(a, b) {
     return a >= b
-  }, o = x[a] = function(a, b) {
+  }, n = x[a] = function(a, b) {
     return a === b
   }, l = x[l] = function() {
     return!0
-  }, m = f._disableMap = {}, n = m[e] = {}, q = m[c] = {}, s = m[a] = {}, m = m[b] = {};
+  }, m = f._disableMap = {}, o = m[e] = {}, p = m[c] = {}, s = m[a] = {}, m = m[b] = {};
   x[d] = function() {
     return!1
   };
-  n[e] = {};
-  n[e][j] = l;
-  n[e][k] = l;
-  n[c] = {};
-  n[c][j] = t;
-  n[c][k] = p;
-  n[a] = {};
-  n[a][j] = l;
-  n[a][k] = p;
-  n[b] = {};
-  n[b][j] = t;
-  n[b][k] = l;
-  q[e] = {};
-  q[e][j] = p;
-  q[e][k] = t;
-  q[c] = {};
-  q[c][j] = l;
-  q[c][k] = l;
-  q[a] = {};
-  q[a][j] = l;
-  q[a][k] = t;
-  q[b] = {};
-  q[b][j] = p;
-  q[b][k] = l;
+  o[e] = {};
+  o[e][j] = l;
+  o[e][k] = l;
+  o[c] = {};
+  o[c][j] = t;
+  o[c][k] = q;
+  o[a] = {};
+  o[a][j] = l;
+  o[a][k] = q;
+  o[b] = {};
+  o[b][j] = t;
+  o[b][k] = l;
+  p[e] = {};
+  p[e][j] = q;
+  p[e][k] = t;
+  p[c] = {};
+  p[c][j] = l;
+  p[c][k] = l;
+  p[a] = {};
+  p[a][j] = l;
+  p[a][k] = t;
+  p[b] = {};
+  p[b][j] = q;
+  p[b][k] = l;
   s[e] = {};
   s[e][j] = l;
   s[e][k] = t;
   s[c] = {};
   s[c][j] = l;
-  s[c][k] = p;
+  s[c][k] = q;
   s[a] = {};
   s[a][j] = l;
-  s[a][k] = o;
+  s[a][k] = n;
   s[b] = {};
   s[b][j] = l;
   s[b][k] = l;
   m[e] = {};
-  m[e][j] = p;
+  m[e][j] = q;
   m[e][k] = l;
   m[c] = {};
   m[c][j] = t;
@@ -8450,7 +8465,7 @@ jx.grid.SearchManager = {};
   m[a][j] = l;
   m[a][k] = l;
   m[b] = {};
-  m[b][j] = o;
+  m[b][j] = n;
   m[b][k] = l;
   f._checkDisable = function(a, b, c, d, e) {
     try {
