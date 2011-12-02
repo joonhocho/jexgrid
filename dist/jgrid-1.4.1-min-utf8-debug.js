@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 62
- * Date: Fri Dec 2 19:57:58 KST 2011
+ * JexGrid Build 63
+ * Date: Fri Dec 2 20:08:56 KST 2011
  */
 /*
 AUTHOR
@@ -5414,8 +5414,8 @@ jx.grid.ViewportManager = {};
     var b = "#" + this.grid.mid + " .", a = this._options, c = b + this._cellClass, d = b + this._rowClass, e = this._getBorder() + "px " + a.border, f = this._colmgr.get(), g = f.length, h = 0, i = [];
     i.push(b + a.classView + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + a.rowH + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + a.style + ";}");
     i.push(b + a.classView + ":focus{background:" + a.focusBackground + ";outline:" + a.focusOutline + "}");
-    i.push(b + a.classCanvas + "{height:" + this._calCanvasHeight() + "px;" + a.canvasStyle + ";}");
-    i.push(d + "{background:white;position:absolute;" + a.rowStyle + "}");
+    i.push(b + a.classCanvas + "{height:" + this._calCanvasHeight() + "px;" + a.canvasStyle + ";padding:0;border:0;margin:0;}");
+    i.push(d + "{background:white;position:absolute;" + a.rowStyle + ";padding:0;border:0;margin:0;}");
     i.push(c + "{height:" + a.rowH + "px;border-bottom:" + e + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + this._getPadding() + "px;border-right:" + e + ";" + a.cellStyle + "}");
     for(a.evenOddRows && i.push(d + ".odd{background:" + a.oddRowsBackground + "}");h < g;h++) {
       i.push(c + ".k_" + f[h].key + "{" + f[h].style + "}")

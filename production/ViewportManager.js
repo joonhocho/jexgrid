@@ -408,8 +408,8 @@ prototype._onCreateCss = function() {
 	//background:url(" + this.grid._options['imageUrl'] + "loading.gif) repeat center
 	rules.push(gridId + opt['classView'] + "{height:" + this._calHeight() + "px;outline:0;position:relative;white-space:nowrap;overflow:auto;line-height:" + opt['rowH'] + "px;cursor:default;-moz-user-select:none;-webkit-user-select:none;" + opt['style'] + ";}");
 	rules.push(gridId + opt['classView'] + ":focus{background:" + opt['focusBackground'] + ";outline:" + opt['focusOutline'] + "}");
-	rules.push(gridId + opt['classCanvas'] + "{height:" + this._calCanvasHeight() + "px;" + opt['canvasStyle'] + ";}");
-	rules.push(rowSel + "{background:white;position:absolute;" + opt['rowStyle'] + "}");
+	rules.push(gridId + opt['classCanvas'] + "{height:" + this._calCanvasHeight() + "px;" + opt['canvasStyle'] + ";padding:0;border:0;margin:0;}");
+	rules.push(rowSel + "{background:white;position:absolute;" + opt['rowStyle'] + ";padding:0;border:0;margin:0;}");
 	rules.push(cellSel + "{height:" + opt['rowH'] + "px;border-bottom:" + border + ";display:inline-block;white-space:nowrap;overflow:hidden;float:left;text-overflow:ellipsis;padding-left:" + this._getPadding() + "px;border-right:" + border + ";" + opt['cellStyle'] + "}");
 	if (opt['evenOddRows']) {
 		rules.push(rowSel + ".odd{background:" + opt['oddRowsBackground'] + "}");
