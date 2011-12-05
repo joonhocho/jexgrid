@@ -918,7 +918,9 @@ prototype._setCanvasHeight = function(h) {
 };
 
 prototype._calCanvasWidth = function() {
-	return this._colLefts[this._colmgr.length()] + 150;
+	console.log(this._colLefts);
+	console.log(this._colLefts[this._colmgr.length()]);
+	return this._colLefts[this._colmgr.length()];
 };
 
 /**
@@ -942,7 +944,6 @@ prototype._setCanvasWidth = function(w) {
 	if (!isFinite(w) || w < 1) {
 		return;
 	}
-	w += 100;
 
 	var old = this.getCanvasWidth();
 	if (w != old) {
