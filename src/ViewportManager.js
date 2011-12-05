@@ -920,7 +920,7 @@ prototype._setCanvasHeight = function(h) {
 prototype._calCanvasWidth = function() {
 	console.log(this._colLefts);
 	console.log(this._colLefts[this._colmgr.length()]);
-	return this._colLefts[this._colmgr.length()];
+	return this._colLefts[this._colmgr.length()] + this._colmgr.length();
 };
 
 /**
