@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 67
- * Date: Mon Dec 5 10:36:36 KST 2011
+ * JexGrid Build 68
+ * Date: Mon Dec 5 11:30:52 KST 2011
  */
 /*
 AUTHOR
@@ -5564,7 +5564,7 @@ jx.grid.ViewportManager = {};
   a._calCanvasWidth = function() {
     console.log(this._colLefts);
     console.log(this._colLefts[this._colmgr.length()]);
-    return this._colLefts[this._colmgr.length()]
+    return this._colLefts[this._colmgr.length()] + this._colmgr.length()
   };
   a.getCanvasWidth = function() {
     return this._canvasEl.clientWidth
