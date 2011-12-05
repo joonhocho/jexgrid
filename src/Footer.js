@@ -461,7 +461,7 @@ prototype._widthPlus = prototype._getBorder = function() {
 };
 
 prototype._toStyleWidth = function(w) {
-	return JGM.IE6 ? w + this._widthPlus() : w;
+	return JGM.quirk ? w + this._widthPlus() : w;
 };
 
 prototype._onScrollViewportH = function(scrollLeft) {

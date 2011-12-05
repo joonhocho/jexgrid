@@ -754,7 +754,7 @@ prototype.scrollToCol = function(i) {
 };
 
 prototype._toStyleWidth = function(w) {
-	return JGM.IE6 ? w + this._colWidthPlus() : w;
+	return JGM.quirk ? w + this._colWidthPlus() : w;
 }
 
 prototype._getColInnerWidth = function(i) {
@@ -918,9 +918,7 @@ prototype._setCanvasHeight = function(h) {
 };
 
 prototype._calCanvasWidth = function() {
-	console.log(this._colLefts);
-	console.log(this._colLefts[this._colmgr.length()]);
-	return this._colLefts[this._colmgr.length()] + this._colmgr.length();
+	return this._colLefts[this._colmgr.length()];
 };
 
 /**
@@ -963,8 +961,6 @@ prototype._setCanvasWidth = function(w) {
 		  */
 		this._evtmgr.trigger("onResizeCanvasWidth", [w, old], true);
 	}
-
-	this.grid.log('set canvas width. ' + old + '->' + w);//IF_DEBUG
 };
 
 

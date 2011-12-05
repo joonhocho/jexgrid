@@ -1236,7 +1236,7 @@ prototype._mouseup = function(e) {
 };
 
 prototype._toStyleWidth = function(w) {
-	return JGM.IE6 ? w + this._widthPlus() : w;
+	return JGM.quirk ? w + this._widthPlus() : w;
 };
 
 prototype.setHeaderWidthFromViewWidth = function(key, w) {
