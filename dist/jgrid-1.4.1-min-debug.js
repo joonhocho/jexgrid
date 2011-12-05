@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 66
- * Date: Mon Dec 5 10:22:46 KST 2011
+ * JexGrid Build 67
+ * Date: Mon Dec 5 10:36:36 KST 2011
  */
 /*
 AUTHOR
@@ -5562,7 +5562,9 @@ jx.grid.ViewportManager = {};
     }
   };
   a._calCanvasWidth = function() {
-    return this._colLefts[this._colmgr.length()] + 150
+    console.log(this._colLefts);
+    console.log(this._colLefts[this._colmgr.length()]);
+    return this._colLefts[this._colmgr.length()]
   };
   a.getCanvasWidth = function() {
     return this._canvasEl.clientWidth
@@ -5570,7 +5572,6 @@ jx.grid.ViewportManager = {};
   a._setCanvasWidth = function(b) {
     typeof b != "number" && (b = parseInt(b, 10));
     if(isFinite(b) && !(b < 1)) {
-      b += 100;
       var a = this.getCanvasWidth();
       if(b != a) {
         this.grid.log("set canvas width. " + a + "->" + b, h.V_RESIZE), this._canvasEl.style.width = b + "px", this._evtmgr.trigger("onResizeCanvasWidth", [b, a], !0)
@@ -6016,29 +6017,29 @@ jx.grid.ViewportManager = {};
     return!1
   };
   a._scroll = function() {
-    var b = this.getScrollTop(), a = b - this._lastScrollTop, c = this.getScrollLeft(), d = c - this._lastScrollLeft;
-    if(a !== 0 || d !== 0) {
-      this.grid.log("Viewport scrolled... h=" + d + ", v=" + a, h.V_SCROLL);
-      var e = this._evtmgr, a = Math.abs(a / this._getRowOuterHeight());
-      e.trigger("onScrollViewport", !1, !0);
-      if(d) {
-        this._lastScrollLeft = c, e.trigger("onScrollViewportH", [c], !0)
+    var a = this.getScrollTop(), c = a - this._lastScrollTop, d = this.getScrollLeft(), e = d - this._lastScrollLeft;
+    if(c !== 0 || e !== 0) {
+      this.grid.log("Viewport scrolled... h=" + e + ", v=" + c, h.V_SCROLL);
+      var f = this._evtmgr, c = Math.abs(c / this._getRowOuterHeight());
+      f.trigger("onScrollViewport", !1, !0);
+      if(e) {
+        this._lastScrollLeft = d, f.trigger("onScrollViewportH", [d], !0)
       }
-      c = this.renderElapsed;
-      c == null && (c = 50);
-      c > 500 && (c = 500);
-      if(a >= this._options.appendThreshold) {
+      d = this.renderElapsed;
+      d == null && (d = 50);
+      d > 500 && (d = 500);
+      if(c >= this._options.appendThreshold) {
         if(this.scrollHandlerId) {
           window.clearTimeout(this.scrollHandlerId), this.scrollHandlerId = null
         }
-        var f = this;
+        var g = this;
         this.scrollHandlerId = window.setTimeout(function() {
-          var a = (new Date).getTime();
-          f._lastScrollTop = b;
-          f._removeAndRenderRows();
-          e.trigger("onScrollViewportV", !1, !0);
-          f.renderElapsed = (new Date).getTime() - a
-        }, c)
+          var c = (new Date).getTime();
+          g._lastScrollTop = a;
+          g._removeAndRenderRows();
+          f.trigger("onScrollViewportV", !1, !0);
+          g.renderElapsed = (new Date).getTime() - c
+        }, d)
       }
     }
   };
@@ -6352,8 +6353,8 @@ jx.grid.ColumnManager = {};
   };
   k.reorganizeGroups = function() {
     if(this.hasGroups()) {
-      for(var a = this._colDefs, b = 0, c = a.length, d, e = this._groups = [], f = this._groupsByName = {}, j;b < c;b++) {
-        d = a[b], j = d.parent = d.parent == null ? d.name || d.key : d.parent, f.hasOwnProperty(j) || e.push(f[j] = []), f[j].push(d)
+      for(var a = this._colDefs, b = 0, c = a.length, d, e = this._groups = [], f = this._groupsByName = {}, g;b < c;b++) {
+        d = a[b], g = d.parent = d.parent == null ? d.name || d.key : d.parent, f.hasOwnProperty(g) || e.push(f[g] = []), f[g].push(d)
       }
       b = 0;
       c = e.length;
@@ -6384,10 +6385,10 @@ jx.grid.ColumnManager = {};
   k.getGroupIndexByKey = function(a) {
     var b = this._groups;
     if(b) {
-      for(var c = 0, d = b.length, e, f, j;c < d;c++) {
+      for(var c = 0, d = b.length, e, f, g;c < d;c++) {
         e = b[c];
         f = 0;
-        for(j = e.length;f < j;f++) {
+        for(g = e.length;f < g;f++) {
           if(e[f].key == a) {
             return c
           }

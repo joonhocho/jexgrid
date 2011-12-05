@@ -738,7 +738,9 @@ prototype._setCanvasHeight = function(h) {
 	}
 };
 prototype._calCanvasWidth = function() {
-	return this._colLefts[this._colmgr.length()] + 150;
+	console.log(this._colLefts);
+	console.log(this._colLefts[this._colmgr.length()]);
+	return this._colLefts[this._colmgr.length()];
 };
 /**
   모든 그리드 컬럼을 포함하고 있는 캔버스의 가상 폭 픽셀을 리턴합니다.
@@ -758,7 +760,6 @@ prototype._setCanvasWidth = function(w) {
 	if (!isFinite(w) || w < 1) {
 		return;
 	}
-	w += 100;
 	var old = this.getCanvasWidth();
 	if (w != old) {
 		this._canvasEl.style.width = w + "px";
