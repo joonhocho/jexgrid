@@ -353,7 +353,7 @@ prototype._widthPlus = prototype._getBorder = function() {
 	return this._border || (this._border = 1);
 };
 prototype._toStyleWidth = function(w) {
-	return JGM.IE6 ? w + this._widthPlus() : w;
+	return JGM.quirk ? w + this._widthPlus() : w;
 };
 prototype._onScrollViewportH = function(scrollLeft) {
 	if (this._hasSum) {

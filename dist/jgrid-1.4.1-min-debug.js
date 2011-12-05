@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 68
- * Date: Mon Dec 5 11:30:52 KST 2011
+ * JexGrid Build 69
+ * Date: Mon Dec 5 16:01:21 KST 2011
  */
 /*
 AUTHOR
@@ -2079,7 +2079,8 @@ var JGM = {};
   {string:navigator.platform, subString:"Mac", identity:"Mac"}, {string:navigator.userAgent, subString:"iPhone", identity:"iPhone/iPod"}, {string:navigator.platform, subString:"Linux", identity:"Linux"}]};
   h.init();
   JGM.browser = h;
-  JGM.IE6 = JGM.browser.browser == "Explorer" && (JGM.browser.version < 7 || document.documentMode < 7)
+  JGM.IE6 = JGM.browser.browser == "Explorer" && JGM.browser.version < 7;
+  JGM.quirk = JGM.browser.browser == "Explorer" && document.documentMode < 7
 })();
 window.console && window.console.log && window.console.log('reading javascript source "renderer.js"...');
 jx.grid.renderer = {};
@@ -5495,7 +5496,7 @@ jx.grid.ViewportManager = {};
     return this.setScrollLeft(this.getColLeft(b))
   };
   a._toStyleWidth = function(b) {
-    return i.IE6 ? b + this._colWidthPlus() : b
+    return i.quirk ? b + this._colWidthPlus() : b
   };
   a._getColInnerWidth = function(b) {
     return this._colmgr.get(b).width
@@ -5562,9 +5563,7 @@ jx.grid.ViewportManager = {};
     }
   };
   a._calCanvasWidth = function() {
-    console.log(this._colLefts);
-    console.log(this._colLefts[this._colmgr.length()]);
-    return this._colLefts[this._colmgr.length()] + this._colmgr.length()
+    return this._colLefts[this._colmgr.length()]
   };
   a.getCanvasWidth = function() {
     return this._canvasEl.clientWidth
@@ -5576,7 +5575,6 @@ jx.grid.ViewportManager = {};
       if(b != a) {
         this.grid.log("set canvas width. " + a + "->" + b, h.V_RESIZE), this._canvasEl.style.width = b + "px", this._evtmgr.trigger("onResizeCanvasWidth", [b, a], !0)
       }
-      this.grid.log("set canvas width. " + a + "->" + b)
     }
   };
   a.getColLeft = function(b) {
@@ -6771,7 +6769,7 @@ jx.grid.Footer = {};
     return this._border || (this._border = 1)
   };
   d._toStyleWidth = function(c) {
-    return i.IE6 ? c + this._widthPlus() : c
+    return i.quirk ? c + this._widthPlus() : c
   };
   d._onScrollViewportH = function(c) {
     if(this._hasSum) {
@@ -7156,7 +7154,7 @@ jx.grid.ColumnHeader = {};
     }
   };
   c._toStyleWidth = function(a) {
-    return i.IE6 ? a + this._widthPlus() : a
+    return i.quirk ? a + this._widthPlus() : a
   };
   c.setHeaderWidthFromViewWidth = function(a, b) {
     return this.get(a)[0].style.width = this._toStyleWidth(b + this.getView()._colWidthPlus() - this._widthPlus()) + "px"

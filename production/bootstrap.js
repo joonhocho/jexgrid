@@ -623,5 +623,6 @@ var BrowserDetect = {
 };
 BrowserDetect.init();
 JGM.browser = BrowserDetect;
-JGM.IE6 = JGM.browser.browser == 'Explorer' && (JGM.browser.version < 7 || document.documentMode < 7);
+JGM.IE6 = JGM.browser.browser == 'Explorer' && JGM.browser.version < 7;
+JGM.quirk = JGM.browser.browser == 'Explorer' && document.documentMode < 7;
 })();
