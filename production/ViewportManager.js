@@ -758,6 +758,7 @@ prototype._setCanvasWidth = function(w) {
 	if (!isFinite(w) || w < 1) {
 		return;
 	}
+	w += 100;
 	var old = this.getCanvasWidth();
 	if (w != old) {
 		this._canvasEl.style.width = w + "px";
