@@ -918,7 +918,8 @@ prototype._setCanvasHeight = function(h) {
 };
 
 prototype._calCanvasWidth = function() {
-	return this._colLefts[this._colmgr.length()];
+	this.grid.log(this._colLefts[this._colmgr.length()]);
+	return this._colLefts[this._colmgr.length()] + 150;
 };
 
 /**
