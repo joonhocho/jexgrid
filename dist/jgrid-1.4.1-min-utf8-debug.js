@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 64
- * Date: Mon Dec 5 10:15:25 KST 2011
+ * JexGrid Build 65
+ * Date: Mon Dec 5 10:20:12 KST 2011
  */
 /*
 AUTHOR
@@ -5562,7 +5562,8 @@ jx.grid.ViewportManager = {};
     }
   };
   a._calCanvasWidth = function() {
-    return this._colLefts[this._colmgr.length()]
+    this.grid.log(this._colLefts[this._colmgr.length()]);
+    return this._colLefts[this._colmgr.length()] + 150
   };
   a.getCanvasWidth = function() {
     return this._canvasEl.clientWidth
