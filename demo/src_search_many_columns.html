@@ -40,7 +40,7 @@
 				name:"아이디",
 				width:100,
 				filter:"number",
-				sumRenderer:true,
+				sumRenderer:function(name, sum) { return Util.formatNumber(sum, 1, '') },
 				inputOnCreate:true,
 				defaultValue:30,
 				sorter:"int",
@@ -99,7 +99,6 @@
 					EditManager:{},
 					MenuBar:{},
 					DataCreator:{},
-					Footer:{},
 					CheckManager:{
 					}	// 체크 매니저를 기본 옵션으로 생성합니다.
 			}});
