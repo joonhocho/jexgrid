@@ -497,16 +497,17 @@ prototype._initSumCells = function() {
 			if (renderer) {
 				key = colDef['key'];
 				name = colDef['name'];
-				sum = sumfn(rows, key);
 				map[key] = true;
 				//cell = map[key] = this.getNextCell();
 				//node = cell[0];
 				switch (typeof renderer) {
 					case 'function':
 						// has custom sum renderer
-						html = renderer(name, sum);
+						sum = sumfn(rows, key, true);
+						html = renderer(name, sum.sum, sum.min, sum.max);
 						break;
 					case 'string':
+						sum = sumfn(rows, key);
 						lower = renderer.toLowerCase();
 						if (lower === "krw" || renderer === "\\") {
 							html = Util.formatNumber(sum);
@@ -516,6 +517,7 @@ prototype._initSumCells = function() {
 						}
 						break;
 					default:
+						sum = sumfn(rows, key);
 						html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
 						break;
 				}
@@ -546,15 +548,16 @@ prototype._updateSums = function() {
 				colDef = cmgr.getByKey(key);
 				name = colDef['name'];
 				renderer = colDef['sumRenderer'];
-				sum = sumfn(rows, key);
 				//cell = map[key];
 				//node = cell[0];
 				switch (typeof renderer) {
 					case 'function':
 						// has custom sum renderer
-						html = renderer(name, sum);
+						sum = sumfn(rows, key, true);
+						html = renderer(name, sum.sum, sum.min, sum.max);
 						break;
 					case 'string':
+						sum = sumfn(rows, key);
 						lower = renderer.toLowerCase();
 						if (lower === "krw" || renderer === "\\") {
 							html = Util.formatNumber(sum);
@@ -564,6 +567,7 @@ prototype._updateSums = function() {
 						}
 						break;
 					default:
+						sum = sumfn(rows, key);
 						html = colDef['renderer'] ? colDef['renderer'](sum) : sum;
 						break;
 				}
@@ -588,17 +592,44 @@ prototype.getNextCell = function() {
 prototype._sumRenderer = function(name, sum) {
 	return "<span class='" + this._options['classTitle'] + "'>" + name + " гу╟Х: </span><span class='" + this._options['classContent'] + "'>" + sum + "</span>";
 };
-Footer._calSum = function(datalist, key) {
-	var sum = 0,
-		tmp,
-		len = datalist.length,
-		i = 0;
-	for (; i < len; i++) {
-		if (typeof (tmp = datalist[i][key]) === "string") {
-			tmp = tmp.toFloat();
+Footer._calSum = function(datalist, key, minMax) {
+	if (minMax) {
+		var sum = 0,
+			tmp,
+			len = datalist.length,
+			i = 0,
+			min = Number.MAX_VALUE,
+			max = Number.MIN_VALUE;
+		for (; i < len; i++) {
+			if (typeof (tmp = datalist[i][key]) === "string") {
+				tmp = tmp.toFloat();
+			}
+			if (min > tmp) {
+				min = tmp;
+			}
+			if (max < tmp) {
+				max = tmp;
+			}
+			sum += isNaN(tmp) ? 0 : tmp;
 		}
-		sum += isNaN(tmp) ? 0 : tmp;
+		return {
+			sum: sum,
+			min: min,
+			max: max
+		};
 	}
-	return sum;
+	else {
+		var sum = 0,
+			tmp,
+				len = datalist.length,
+				i = 0;
+		for (; i < len; i++) {
+			if (typeof (tmp = datalist[i][key]) === "string") {
+				tmp = tmp.toFloat();
+			}
+			sum += isNaN(tmp) ? 0 : tmp;
+		}
+		return sum;
+	}
 };
 }());
