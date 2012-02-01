@@ -84,7 +84,7 @@
 				var colDefs = [
 					{key:"num", name:"#", width:200, sorter:"int"},
 					{key:"title", name:"Title", width:120, minW:120, tooltipEnabled: true},
-					{key:"duration", name:"Duration", sorter:"int", sumRenderer: true},
+					{key:"duration", name:"Duration", sorter:"int", sumRenderer: function(name, sum, min, max) {return sum + ',' + min + ',' + max}},
 					{key:"per", name:"% Complete", width:80, sorter:"int"},
 					{key:"start", name:"Start", minW:60, sorter:"int"},
 					{key:"finish", name:"Finish", minW:60, sorter:"int"},

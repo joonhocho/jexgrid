@@ -361,42 +361,47 @@ prototype.clickMaster = function(checked) {
 	var all = this.getAllData(),
 		list = this.getDataList();
 
+	checked = !!checked;
+
 	if (all.length === list.length) {
-		return checked ? this.checkAll() : this.uncheckAll();
-	}
-
-	if (checked) {
-		CheckManager._check(this.getCheckboxes());
-
-		var len = list.length,
-			idKey = this.getIdKey(),
-			id,
-			datarow,
-			i = 0;
-
-		for (; i < len; i++) {
-			datarow = list[i];
-			if (this._add(datarow, datarow[idKey])) {
-				this.triggerGridEvent("onCheckChange", [datarow, true], true);
-			}
-		}
+		checked ? this.checkAll() : this.uncheckAll();
 	}
 	else {
-		CheckManager._uncheck(this.getCheckboxes());
+		if (checked) {
+			CheckManager._check(this.getCheckboxes());
 
-		var len = list.length,
-			idKey = this.getIdKey(),
-			id,
-			datarow,
-			i = 0;
+			var len = list.length,
+				idKey = this.getIdKey(),
+				id,
+				datarow,
+				i = 0;
 
-		for (; i < len; i++) {
-			datarow = list[i];
-			if (this._remove(datarow, datarow[idKey])) {
-				this.triggerGridEvent("onCheckChange", [datarow, false], true);
+			for (; i < len; i++) {
+				datarow = list[i];
+				if (this._add(datarow, datarow[idKey])) {
+					this.triggerGridEvent("onCheckChange", [datarow, true], true);
+				}
+			}
+		}
+		else {
+			CheckManager._uncheck(this.getCheckboxes());
+
+			var len = list.length,
+				idKey = this.getIdKey(),
+				id,
+				datarow,
+				i = 0;
+
+			for (; i < len; i++) {
+				datarow = list[i];
+				if (this._remove(datarow, datarow[idKey])) {
+					this.triggerGridEvent("onCheckChange", [datarow, false], true);
+				}
 			}
 		}
 	}
+
+	this.triggerGridEvent("onClickMasterCheck", [checked], true);
 }
 
 
@@ -427,6 +432,8 @@ prototype.checkAll = function() {
 	}
 
 	this._count = len;
+
+	this.triggerGridEvent("onCheckAll", [], true);
 };
 
 
@@ -448,6 +455,8 @@ prototype.uncheckAll = function() {
 
 	this._map = {};
 	this._count = 0;
+
+	this.triggerGridEvent("onUncheckAll", [], true);
 };
 
 
