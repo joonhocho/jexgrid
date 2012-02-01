@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 70
- * Date: Tue Jan 17 14:24:23 KST 2012
+ * JexGrid Build 71
+ * Date: Wed Feb 1 17:53:16 KST 2012
  */
 /*
 AUTHOR
@@ -2936,11 +2936,11 @@ jx.data.DataManager = {};
     if(h.isEmptyArray(d) || h.isEmptyArray(c) || h.isEmptyArray(a)) {
       return!1
     }
-    var b = this.idKey, j = d.length, e = 0;
+    var b = this.idKey, j = d.length, k = 0;
     switch(this._idMode) {
       case this._consts._auto:
-        for(;e < j;e++) {
-          if(c[e].hasOwnProperty(b)) {
+        for(;k < j;k++) {
+          if(c[k].hasOwnProperty(b)) {
             return this.grid.error("NOT_MODIFIABLE", b)
           }
         }
@@ -2948,9 +2948,9 @@ jx.data.DataManager = {};
       case this._consts._given:
         return this.updateUniqueIndices(this._idToData, b, d, c, a);
       case this._consts._composite:
-        for(var l = this._idToData, f, g, i = this._options.idColKeys, n = i.length, m, a = [], o = [], q = [], t = [], r, v, u, w;e < j;e++) {
-          f = d[e];
-          g = c[e];
+        for(var e = this._idToData, f, g, i = this._options.idColKeys, n = i.length, m, a = [], o = [], q = [], t = [], r, v, u, w;k < j;k++) {
+          f = d[k];
+          g = c[k];
           if(g.hasOwnProperty(b)) {
             r = 0;
             for(j = a.length;r < j;r++) {
@@ -2982,7 +2982,7 @@ jx.data.DataManager = {};
         if(!o.length) {
           break
         }
-        d = this.updateUniqueIndices(l, b, o, q, t);
+        d = this.updateUniqueIndices(e, b, o, q, t);
         if(d instanceof Error) {
           r = 0;
           for(j = a.length;r < j;r++) {
@@ -2999,8 +2999,8 @@ jx.data.DataManager = {};
   };
   e.removeListFromIdMap = function(d) {
     if(!h.isEmptyArray(d)) {
-      for(var c = this.idKey, a = d.length, b = this._idToData, j, e, l = 0;l < a;l++) {
-        e = d[l], e.hasOwnProperty(c) && b.hasOwnProperty(j = e[c]) && delete b[j]
+      for(var c = this.idKey, a = d.length, b = this._idToData, j, k, e = 0;e < a;e++) {
+        k = d[e], k.hasOwnProperty(c) && b.hasOwnProperty(j = k[c]) && delete b[j]
       }
     }
   };
@@ -4895,11 +4895,11 @@ jx.grid.SelectionManager = {};
   d._setRange = function(c, a, b, d) {
     var e = this._range;
     if(e) {
-      var l = e.getRowIdx();
-      if(c === l && a === e.getColIdx()) {
+      var f = e.getRowIdx();
+      if(c === f && a === e.getColIdx()) {
         return
       }
-      c !== l && this._last && l !== this._last.getRowIdx() && this.grid.view.unlockRowById(e.getId());
+      c !== f && this._last && f !== this._last.getRowIdx() && this.grid.view.unlockRowById(e.getId());
       e.get$().removeClass(this._options.classRange);
       b || delete this._range
     }
@@ -6015,29 +6015,29 @@ jx.grid.ViewportManager = {};
     return!1
   };
   a._scroll = function() {
-    var b = this.getScrollTop(), a = b - this._lastScrollTop, c = this.getScrollLeft(), d = c - this._lastScrollLeft;
-    if(a !== 0 || d !== 0) {
-      this.grid.log("Viewport scrolled... h=" + d + ", v=" + a, h.V_SCROLL);
-      var e = this._evtmgr, a = Math.abs(a / this._getRowOuterHeight());
-      e.trigger("onScrollViewport", !1, !0);
-      if(d) {
-        this._lastScrollLeft = c, e.trigger("onScrollViewportH", [c], !0)
+    var a = this.getScrollTop(), c = a - this._lastScrollTop, d = this.getScrollLeft(), e = d - this._lastScrollLeft;
+    if(c !== 0 || e !== 0) {
+      this.grid.log("Viewport scrolled... h=" + e + ", v=" + c, h.V_SCROLL);
+      var f = this._evtmgr, c = Math.abs(c / this._getRowOuterHeight());
+      f.trigger("onScrollViewport", !1, !0);
+      if(e) {
+        this._lastScrollLeft = d, f.trigger("onScrollViewportH", [d], !0)
       }
-      c = this.renderElapsed;
-      c == null && (c = 50);
-      c > 500 && (c = 500);
-      if(a >= this._options.appendThreshold) {
+      d = this.renderElapsed;
+      d == null && (d = 50);
+      d > 500 && (d = 500);
+      if(c >= this._options.appendThreshold) {
         if(this.scrollHandlerId) {
           window.clearTimeout(this.scrollHandlerId), this.scrollHandlerId = null
         }
-        var f = this;
+        var g = this;
         this.scrollHandlerId = window.setTimeout(function() {
-          var a = (new Date).getTime();
-          f._lastScrollTop = b;
-          f._removeAndRenderRows();
-          e.trigger("onScrollViewportV", !1, !0);
-          f.renderElapsed = (new Date).getTime() - a
-        }, c)
+          var c = (new Date).getTime();
+          g._lastScrollTop = a;
+          g._removeAndRenderRows();
+          f.trigger("onScrollViewportV", !1, !0);
+          g.renderElapsed = (new Date).getTime() - c
+        }, d)
       }
     }
   };
@@ -7296,23 +7296,25 @@ jx.grid.CheckManager = {};
     return this.isCheckedAll() ? this.uncheckAll() : this.checkAll()
   };
   e.clickMaster = function(d) {
-    var c = this.getAllData(), a = this.getDataList();
+    var c = this.getAllData(), a = this.getDataList(), d = !!d;
     if(c.length === a.length) {
-      return d ? this.checkAll() : this.uncheckAll()
-    }
-    if(d) {
-      f._check(this.getCheckboxes());
-      for(var d = a.length, c = this.getIdKey(), b, e = 0;e < d;e++) {
-        b = a[e], this._add(b, b[c]) && this.triggerGridEvent("onCheckChange", [b, !0], !0)
-      }
+      d ? this.checkAll() : this.uncheckAll()
     }else {
-      f._uncheck(this.getCheckboxes());
-      d = a.length;
-      c = this.getIdKey();
-      for(e = 0;e < d;e++) {
-        b = a[e], this._remove(b, b[c]) && this.triggerGridEvent("onCheckChange", [b, !1], !0)
+      if(d) {
+        f._check(this.getCheckboxes());
+        for(var c = a.length, b = this.getIdKey(), e, g = 0;g < c;g++) {
+          e = a[g], this._add(e, e[b]) && this.triggerGridEvent("onCheckChange", [e, !0], !0)
+        }
+      }else {
+        f._uncheck(this.getCheckboxes());
+        c = a.length;
+        b = this.getIdKey();
+        for(g = 0;g < c;g++) {
+          e = a[g], this._remove(e, e[b]) && this.triggerGridEvent("onCheckChange", [e, !1], !0)
+        }
       }
     }
+    this.triggerGridEvent("onClickMasterCheck", [d], !0)
   };
   e.checkAll = function() {
     this._hasMaster && f._check(this._master);
@@ -7320,13 +7322,15 @@ jx.grid.CheckManager = {};
     for(var d = this.getAllData(), c = d.length, a = this.getIdKey(), b = this._map, e = 0;e < c;e++) {
       b[d[e][a]] = d[e]
     }
-    this._count = c
+    this._count = c;
+    this.triggerGridEvent("onCheckAll", [], !0)
   };
   e.uncheckAll = function() {
     this._hasMaster && f._uncheck(this._master);
     f._uncheck(this.getCheckboxes());
     this._map = {};
-    this._count = 0
+    this._count = 0;
+    this.triggerGridEvent("onUncheckAll", [], !0)
   };
   e.toggleCheck = function(d, c) {
     c || (d = this.getDataMgr().map(d));

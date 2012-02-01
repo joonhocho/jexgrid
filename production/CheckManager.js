@@ -282,37 +282,41 @@ prototype.toggleCheckAll = function() {
 prototype.clickMaster = function(checked) {
 	var all = this.getAllData(),
 		list = this.getDataList();
+	checked = !!checked;
 	if (all.length === list.length) {
-		return checked ? this.checkAll() : this.uncheckAll();
-	}
-	if (checked) {
-		CheckManager._check(this.getCheckboxes());
-		var len = list.length,
-			idKey = this.getIdKey(),
-			id,
-			datarow,
-			i = 0;
-		for (; i < len; i++) {
-			datarow = list[i];
-			if (this._add(datarow, datarow[idKey])) {
-				this.triggerGridEvent("onCheckChange", [datarow, true], true);
-			}
-		}
+		checked ? this.checkAll() : this.uncheckAll();
 	}
 	else {
-		CheckManager._uncheck(this.getCheckboxes());
-		var len = list.length,
-			idKey = this.getIdKey(),
-			id,
-			datarow,
-			i = 0;
-		for (; i < len; i++) {
-			datarow = list[i];
-			if (this._remove(datarow, datarow[idKey])) {
-				this.triggerGridEvent("onCheckChange", [datarow, false], true);
+		if (checked) {
+			CheckManager._check(this.getCheckboxes());
+			var len = list.length,
+				idKey = this.getIdKey(),
+				id,
+				datarow,
+				i = 0;
+			for (; i < len; i++) {
+				datarow = list[i];
+				if (this._add(datarow, datarow[idKey])) {
+					this.triggerGridEvent("onCheckChange", [datarow, true], true);
+				}
+			}
+		}
+		else {
+			CheckManager._uncheck(this.getCheckboxes());
+			var len = list.length,
+				idKey = this.getIdKey(),
+				id,
+				datarow,
+				i = 0;
+			for (; i < len; i++) {
+				datarow = list[i];
+				if (this._remove(datarow, datarow[idKey])) {
+					this.triggerGridEvent("onCheckChange", [datarow, false], true);
+				}
 			}
 		}
 	}
+	this.triggerGridEvent("onClickMasterCheck", [checked], true);
 }
 /**
   모든 데이터를 체크합니다.
@@ -335,6 +339,7 @@ prototype.checkAll = function() {
 		map[list[i][idKey]] = list[i];
 	}
 	this._count = len;
+	this.triggerGridEvent("onCheckAll", [], true);
 };
 /**
   모든 데이터를 체크를 헤재합니다.
@@ -350,6 +355,7 @@ prototype.uncheckAll = function() {
 	CheckManager._uncheck(this.getCheckboxes());
 	this._map = {};
 	this._count = 0;
+	this.triggerGridEvent("onUncheckAll", [], true);
 };
 /**
   주어진 데이터의 체크를 토글합니다.
