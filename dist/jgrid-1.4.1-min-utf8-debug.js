@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 71
- * Date: Wed Feb 1 17:53:16 KST 2012
+ * JexGrid Build 72
+ * Date: Mon Feb 6 10:03:44 KST 2012
  */
 /*
 AUTHOR
