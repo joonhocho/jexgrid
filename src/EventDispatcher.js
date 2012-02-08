@@ -57,6 +57,7 @@ EventDispatcher 컨스트럭터 입니다.
 function EventDispatcher(args) {
 }
 
+// class EventDispatcher extends Disposable
 goog.inherits(EventDispatcher, Disposable);
 
 var proto = EventDispatcher.prototype,

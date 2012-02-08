@@ -22,6 +22,7 @@
 			var colDefs;
 			var options;
 			var data;
+			
 
 			data = [];
 			for (var i = 0; i < 200; i++) {
@@ -39,10 +40,10 @@
 				key:"id",
 				name:"아이디",
 				width:100,
-				filter:"number",
+				//filter:"number",
 				sumRenderer:function(name, sum) { return Util.formatNumber(sum, 1, '') },
-				inputOnCreate:true,
-				defaultValue:30,
+				//inputOnCreate:true,
+				//defaultValue:30,
 				sorter:"int",
 				maxlength: 10,
 				resizable:true
@@ -51,9 +52,9 @@
 				key:"name",
 				name:"이름",
 				width:100,
-				filter:"number",
-				inputOnCreate:true,
-				defaultValue:"이름",
+				//filter:"number",
+				//inputOnCreate:true,
+				//defaultValue:"이름",
 				sorter:"int",
 				resizable:true,
 				editor:JGM.create("Editor"),
@@ -99,6 +100,7 @@
 					EditManager:{},
 					MenuBar:{},
 					DataCreator:{},
+					Footer:{},
 					CheckManager:{
 					}	// 체크 매니저를 기본 옵션으로 생성합니다.
 			}});

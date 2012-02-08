@@ -234,6 +234,7 @@ goog.provide('jx.grid.BaseModule');
 		});
 	}
 
+	 // class BaseModule  extends EventDispatcher
 	goog.inherits(BaseModule, EventDispatcher);
 
 	/**
