@@ -116,6 +116,9 @@ Grid.V_INIT = V_INIT;
   @version 1.0.0
   */
 function Grid(args) {
+	this._origCtnr = args['container'];
+	this._origColDefs = Util.deepClone(args['colDefs']);
+	this._origOpts = Util.deepClone(args['options']);
 	this.mid = args.mid;
 	this.log('creating new Grid instance...', V_INIT);//IF_DEBUG
 	goog.base(this, args);
@@ -138,6 +141,24 @@ Grid.getInstance = function(args) {
 };
 
 var prototype = Grid.prototype;
+
+prototype.reconstruct = function(args) {
+	args = args || {};
+	args.datalist = args.datalist || this.dataMgr.all;
+	args.container = args.container || this._origCtnr;
+	args.colDefs = args.colDefs || this._origColDefs;
+	args.options = args.options || this._origOpts;
+	args.mid = this.mid;
+
+
+	delete this._origCtnr;
+	delete this._origColDefs;
+	delete this._origOpts;
+
+	this.destroy(true);
+
+	Grid.call(this, args);
+};
 
 prototype._defaultOptions = function() {
 	return {		
@@ -324,6 +345,19 @@ prototype._defaultOptions = function() {
 				  @version 1.0.0
 				  */
 	};
+}
+
+prototype.getElementId = function() {
+	var ctnr = this._origCtnr;
+	if (ctnr.attr) {
+		return ctnr.attr('id');
+	}
+	else if (ctnr.getAttribute) {
+		return ctnr.getAttribute('id');
+	}
+	else {
+		return ctnr.id;
+	}
 }
 
 prototype._init = function(args) {
@@ -526,23 +560,28 @@ prototype._bindEvents = function() {
   @since 1.0.0
   @version 1.0.0
   */
-prototype.destroy = function() {	
+prototype.destroy = function(leaveJGM) {	
 	this.log('destroying Grid...', V_INIT);//IF_DEBUG
 
 	try {
-		var i = JGM.grids.indexOf(this);
-		if (i > -1) {
-			JGM.grids.splice(i, 1);
+		if (!leaveJGM) {
+			var i = JGM.grids.indexOf(this);
+			if (i > -1) {
+				JGM.grids.splice(i, 1);
+			}
+			if (this.name != null) {
+				delete JGM.gridMap[this.name];
+			}
 		}
-		if (this.name != null) {
-			delete JGM.gridMap[this.name];
-		}
+
 		this.log('event:beforeDispose.', V_INIT);//IF_DEBUG
 		this.dispatchEvent({'type':'beforeDispose'});
 
-		if (Util.isEmptyObj(JGM.m.Grid)) {
-			this.log('unbinding global event handlers.', V_INIT);//IF_DEBUG
-			JGM._unbindGlobalEvents();
+		if (!leaveJGM) {
+			if (Util.isEmptyObj(JGM.m.Grid)) {
+				this.log('unbinding global event handlers.', V_INIT);//IF_DEBUG
+				JGM._unbindGlobalEvents();
+			}
 		}
 
 		this.log('event:onDestroy.', V_INIT);//IF_DEBUG
@@ -559,13 +598,23 @@ prototype.destroy = function() {
 		this['event'].trigger("onDestroy", false, true);
 
 		this.log('destroying grid vars...', V_INIT);//IF_DEBUG
-		JGM._destroy(this, {
-			name: "Grid",
-			module: "event",
-			"$": "_ctnr",
-			map: "_options",
-			style: "_style _dynStyle"
-		});
+		if (!leaveJGM) {
+			JGM._destroy(this, {
+				name: "Grid",
+				module: "event",
+				"$": "_ctnr",
+				map: "_options",
+				style: "_style _dynStyle"
+			});
+		}
+		else {
+			JGM._destroy(this, {
+				module: "event",
+				"$": "_ctnr",
+				map: "_options",
+				style: "_style _dynStyle"
+			});
+		}
 		this.dispose();
 	}
 	catch (e) {

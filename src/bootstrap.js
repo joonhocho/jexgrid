@@ -677,4 +677,20 @@ JGM.browser = BrowserDetect;
 JGM.IE6 = JGM.browser.browser == 'Explorer' && JGM.browser.version < 7;
 JGM.quirk = JGM.browser.browser == 'Explorer' && document.documentMode < 7;
 
+JGM.getGridByElementId = function(id) {
+	var grids = JGM.grids,
+		i = 0,
+		l = grids.length,
+		grid;
+
+	for (; i < l; i++) {
+		grid = grids[i];
+		if (grid.getElementId() == id) {
+			return grid;
+		}
+	}
+
+	return null;
+};
+
 })();
