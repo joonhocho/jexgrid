@@ -99,6 +99,9 @@ Grid.V_INIT = V_INIT;
   @version 1.0.0
   */
 function Grid(args) {
+	this._origCtnr = args['container'];
+	this._origColDefs = Util.deepClone(args['colDefs']);
+	this._origOpts = Util.deepClone(args['options']);
 	this.mid = args.mid;
 	goog.base(this, args);
 }
@@ -115,6 +118,19 @@ Grid.getInstance = function(args) {
 	return new Grid(args);
 };
 var prototype = Grid.prototype;
+prototype.reconstruct = function(args) {
+	args = args || {};
+	args.datalist = args.datalist || this.dataMgr.all;
+	args.container = args.container || this._origCtnr;
+	args.colDefs = args.colDefs || this._origColDefs;
+	args.options = args.options || this._origOpts;
+	args.mid = this.mid;
+	delete this._origCtnr;
+	delete this._origColDefs;
+	delete this._origOpts;
+	this.destroy(true);
+	Grid.call(this, args);
+};
 prototype._defaultOptions = function() {
 	return {		
 		/**
@@ -271,6 +287,18 @@ prototype._defaultOptions = function() {
 				  */
 	};
 }
+prototype.getElementId = function() {
+	var ctnr = this._origCtnr;
+	if (ctnr.attr) {
+		return ctnr.attr('id');
+	}
+	else if (ctnr.getAttribute) {
+		return ctnr.getAttribute('id');
+	}
+	else {
+		return ctnr.id;
+	}
+}
 prototype._init = function(args) {
 	var ctnr = this._ctnr = args['container'],
 		opt = this._options,
@@ -426,18 +454,22 @@ prototype._bindEvents = function() {
   @since 1.0.0
   @version 1.0.0
   */
-prototype.destroy = function() {	
+prototype.destroy = function(leaveJGM) {	
 	try {
-		var i = JGM.grids.indexOf(this);
-		if (i > -1) {
-			JGM.grids.splice(i, 1);
-		}
-		if (this.name != null) {
-			delete JGM.gridMap[this.name];
+		if (!leaveJGM) {
+			var i = JGM.grids.indexOf(this);
+			if (i > -1) {
+				JGM.grids.splice(i, 1);
+			}
+			if (this.name != null) {
+				delete JGM.gridMap[this.name];
+			}
 		}
 		this.dispatchEvent({'type':'beforeDispose'});
-		if (Util.isEmptyObj(JGM.m.Grid)) {
-			JGM._unbindGlobalEvents();
+		if (!leaveJGM) {
+			if (Util.isEmptyObj(JGM.m.Grid)) {
+				JGM._unbindGlobalEvents();
+			}
 		}
 		/**
 		  Grid 인스턴스를 제거할 경우 트리거되는 이벤트입니다. 이 이벤트를 통해서
@@ -449,13 +481,23 @@ prototype.destroy = function() {
 		  @version 1.0.0
 		  */
 		this['event'].trigger("onDestroy", false, true);
-		JGM._destroy(this, {
-			name: "Grid",
-			module: "event",
-			"$": "_ctnr",
-			map: "_options",
-			style: "_style _dynStyle"
-		});
+		if (!leaveJGM) {
+			JGM._destroy(this, {
+				name: "Grid",
+				module: "event",
+				"$": "_ctnr",
+				map: "_options",
+				style: "_style _dynStyle"
+			});
+		}
+		else {
+			JGM._destroy(this, {
+				module: "event",
+				"$": "_ctnr",
+				map: "_options",
+				style: "_style _dynStyle"
+			});
+		}
 		this.dispose();
 	}
 	catch (e) {

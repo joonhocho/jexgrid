@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 72
- * Date: Mon Feb 6 10:03:44 KST 2012
+ * JexGrid Build 73
+ * Date: Wed Feb 8 11:35:47 KST 2012
  */
 /*
 AUTHOR
@@ -2080,7 +2080,15 @@ var JGM = {};
   h.init();
   JGM.browser = h;
   JGM.IE6 = JGM.browser.browser == "Explorer" && JGM.browser.version < 7;
-  JGM.quirk = JGM.browser.browser == "Explorer" && document.documentMode < 7
+  JGM.quirk = JGM.browser.browser == "Explorer" && document.documentMode < 7;
+  JGM.getGridByElementId = function(g) {
+    for(var e = JGM.grids, d = 0, c = e.length, a;d < c;d++) {
+      if(a = e[d], a.getElementId() == g) {
+        return a
+      }
+    }
+    return null
+  }
 })();
 window.console && window.console.log && window.console.log('reading javascript source "renderer.js"...');
 jx.grid.renderer = {};
@@ -4163,6 +4171,9 @@ window.console && window.console.log && window.console.log('reading javascript s
 jx.grid.Grid = {};
 (function() {
   function f(b) {
+    this._origCtnr = b.container;
+    this._origColDefs = h.deepClone(b.colDefs);
+    this._origOpts = h.deepClone(b.options);
     this.mid = b.mid;
     this.log("creating new Grid instance...", c);
     e.call(this, b)
@@ -4189,10 +4200,27 @@ jx.grid.Grid = {};
     return new f(b)
   };
   var a = f.prototype;
+  a.reconstruct = function(b) {
+    b = b || {};
+    b.datalist = b.datalist || this.dataMgr.all;
+    b.container = b.container || this._origCtnr;
+    b.colDefs = b.colDefs || this._origColDefs;
+    b.options = b.options || this._origOpts;
+    b.mid = this.mid;
+    delete this._origCtnr;
+    delete this._origColDefs;
+    delete this._origOpts;
+    this.destroy(!0);
+    f.call(this, b)
+  };
   a._defaultOptions = function() {
     return{classGrid:"jgrid", border:"1px solid #868686", width:"", font:"15px Arial,Helvetica,sans-serif", style:"", borderSide:!0, imageUrl:"../images/", links:{data:"dataMgr.all", datalen:"dataMgr.all.length", shown:"dataMgr.datalist", set:"dataMgr.set", add:"dataMgr.add", addList:"dataMgr.addList", update:"dataMgr.update", updateByKey:"dataMgr.updateByKey", updateList:"dataMgr.updateList", remove:"dataMgr.remove", removeList:"dataMgr.removeList", select:"dataMgr.executeSelect", undo:"dataMgr.undo", 
     redo:"dataMgr.redo", addFilter:"dataMgr.addFilter", removeFilter:"dataMgr.removeFilter", check:"collapser.checkMgr.checkList checkMgr.checkList", checked:"collapser.checkMgr.getCheckList checkMgr.getCheckList", removeChecked:"collapser.checkMgr.removeChecked checkMgr.removeChecked", register:"event.register", trigger:"event.trigger", bind:"event.bind", unregister:"event.unregister", unbind:"event.unregister", commit:"editMgr.commit", cancelEdit:"editMgr.cancel", beginEdit:"editMgr.begin", collen:"colDefMgr.length"}, 
     autoWidth:!1, showMessage:!1}
+  };
+  a.getElementId = function() {
+    var b = this._origCtnr;
+    return b.attr ? b.attr("id") : b.getAttribute ? b.getAttribute("id") : b.id
   };
   a._init = function(b) {
     var a = this._ctnr = b.container, c = this._options, d;
@@ -4270,22 +4298,24 @@ jx.grid.Grid = {};
     }});
     this._charts = []
   };
-  a.destroy = function() {
+  a.destroy = function(b) {
     this.log("destroying Grid...", c);
     try {
-      var b = i.grids.indexOf(this);
-      b > -1 && i.grids.splice(b, 1);
-      this.name != null && delete i.gridMap[this.name];
+      if(!b) {
+        var a = i.grids.indexOf(this);
+        a > -1 && i.grids.splice(a, 1);
+        this.name != null && delete i.gridMap[this.name]
+      }
       this.log("event:beforeDispose.", c);
       this.dispatchEvent({type:"beforeDispose"});
-      h.isEmptyObj(i.m.Grid) && (this.log("unbinding global event handlers.", c), i._unbindGlobalEvents());
+      !b && h.isEmptyObj(i.m.Grid) && (this.log("unbinding global event handlers.", c), i._unbindGlobalEvents());
       this.log("event:onDestroy.", c);
       this.event.trigger("onDestroy", !1, !0);
       this.log("destroying grid vars...", c);
-      i._destroy(this, {name:"Grid", module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"});
+      b ? i._destroy(this, {module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"}) : i._destroy(this, {name:"Grid", module:"event", $:"_ctnr", map:"_options", style:"_style _dynStyle"});
       this.dispose()
-    }catch(a) {
-      return this.log(a.stack), a
+    }catch(d) {
+      return this.log(d.stack), d
     }
   };
   a._registerLinks = function(b) {
@@ -6015,91 +6045,91 @@ jx.grid.ViewportManager = {};
     return!1
   };
   a._scroll = function() {
-    var a = this.getScrollTop(), c = a - this._lastScrollTop, d = this.getScrollLeft(), e = d - this._lastScrollLeft;
-    if(c !== 0 || e !== 0) {
-      this.grid.log("Viewport scrolled... h=" + e + ", v=" + c, h.V_SCROLL);
-      var f = this._evtmgr, c = Math.abs(c / this._getRowOuterHeight());
-      f.trigger("onScrollViewport", !1, !0);
-      if(e) {
-        this._lastScrollLeft = d, f.trigger("onScrollViewportH", [d], !0)
+    var b = this.getScrollTop(), a = b - this._lastScrollTop, c = this.getScrollLeft(), d = c - this._lastScrollLeft;
+    if(a !== 0 || d !== 0) {
+      this.grid.log("Viewport scrolled... h=" + d + ", v=" + a, h.V_SCROLL);
+      var e = this._evtmgr, a = Math.abs(a / this._getRowOuterHeight());
+      e.trigger("onScrollViewport", !1, !0);
+      if(d) {
+        this._lastScrollLeft = c, e.trigger("onScrollViewportH", [c], !0)
       }
-      d = this.renderElapsed;
-      d == null && (d = 50);
-      d > 500 && (d = 500);
-      if(c >= this._options.appendThreshold) {
+      c = this.renderElapsed;
+      c == null && (c = 50);
+      c > 500 && (c = 500);
+      if(a >= this._options.appendThreshold) {
         if(this.scrollHandlerId) {
           window.clearTimeout(this.scrollHandlerId), this.scrollHandlerId = null
         }
-        var g = this;
+        var f = this;
         this.scrollHandlerId = window.setTimeout(function() {
-          var c = (new Date).getTime();
-          g._lastScrollTop = a;
-          g._removeAndRenderRows();
-          f.trigger("onScrollViewportV", !1, !0);
-          g.renderElapsed = (new Date).getTime() - c
-        }, d)
+          var a = (new Date).getTime();
+          f._lastScrollTop = b;
+          f._removeAndRenderRows();
+          e.trigger("onScrollViewportV", !1, !0);
+          f.renderElapsed = (new Date).getTime() - a
+        }, c)
       }
     }
   };
-  a.focus = function(a) {
-    a && this._evtmgr.triggerInvalid("onBeforeFocusCanvas", [a])
+  a.focus = function(b) {
+    b && this._evtmgr.triggerInvalid("onBeforeFocusCanvas", [b])
   };
-  a.isRenderedById = function(a) {
-    return a != null ? this._renderedRows.hasOwnProperty(a) : !1
+  a.isRenderedById = function(b) {
+    return b != null ? this._renderedRows.hasOwnProperty(b) : !1
   };
-  a.isRendered = function(a) {
-    return this.isRenderedById(this._datamgr.getId(a))
+  a.isRendered = function(b) {
+    return this.isRenderedById(this._datamgr.getId(b))
   };
-  a.isRenderedByIdx = function(a) {
-    return this.isRenderedById(this._datamgr.getIdByIdx(a))
+  a.isRenderedByIdx = function(b) {
+    return this.isRenderedById(this._datamgr.getIdByIdx(b))
   };
-  a.getRowById = function(a) {
-    if(this.isRenderedById(a)) {
-      return this._renderedRows[a]
+  a.getRowById = function(b) {
+    if(this.isRenderedById(b)) {
+      return this._renderedRows[b]
     }
   };
-  a.getRow = function(a) {
-    return this.getRowById(this._datamgr.getId(a))
+  a.getRow = function(b) {
+    return this.getRowById(this._datamgr.getId(b))
   };
-  a.getRowByIdx = function(a) {
-    return this.getRowById(this._datamgr.getIdByIdx(a))
+  a.getRowByIdx = function(b) {
+    return this.getRowById(this._datamgr.getIdByIdx(b))
   };
-  a.getRenderedRowById = function(a) {
-    if(this.isRenderedById(a)) {
-      return this._renderedRows[a]
+  a.getRenderedRowById = function(b) {
+    if(this.isRenderedById(b)) {
+      return this._renderedRows[b]
     }
   };
-  a.getRenderedRow = function(a) {
-    return this.getRenderedRowById(this._datamgr.getId(a))
+  a.getRenderedRow = function(b) {
+    return this.getRenderedRowById(this._datamgr.getId(b))
   };
-  a.getRenderedRowByIdx = function(a) {
-    return this.getRenderedRowById(this._datamgr.getIdByIdx(a))
+  a.getRenderedRowByIdx = function(b) {
+    return this.getRenderedRowById(this._datamgr.getIdByIdx(b))
   };
   a.getRenderedRows = function() {
     return g.toArray(this._renderedRows)
   };
-  a.getCell = function(a, c) {
+  a.getCell = function(b, a) {
+    if(a != null) {
+      var c = this.getRowByIdx(b);
+      if(c) {
+        return c.childNodes[a]
+      }
+    }
+  };
+  a.getCellByIdAndKey = function(b, a) {
+    var c = this._colmgr.getIdxByKey(a);
     if(c != null) {
-      var d = this.getRowByIdx(a);
+      var d = this.getRowById(b);
       if(d) {
         return d.childNodes[c]
       }
     }
   };
-  a.getCellByIdAndKey = function(a, c) {
-    var d = this._colmgr.getIdxByKey(c);
-    if(d != null) {
-      var e = this.getRowById(a);
-      if(e) {
-        return e.childNodes[d]
-      }
-    }
-  };
-  a.getRenderedCell = function(a, c) {
-    if(c != null) {
-      var d = this.getRenderedRowByIdx(a);
-      if(d) {
-        return d.childNodes[c]
+  a.getRenderedCell = function(b, a) {
+    if(a != null) {
+      var c = this.getRenderedRowByIdx(b);
+      if(c) {
+        return c.childNodes[a]
       }
     }
   };
