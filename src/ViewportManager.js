@@ -588,15 +588,12 @@ prototype.onRemoveDatalist = function(datalist) {
 
 //tested
 prototype.onIdChange = function(datarow, before, after) {
-	var attrChanged = false,
-		node;
 	if (this.isRowLockedById(before)) {
 		this._lockedRows[after] = this._lockedRows[before];
 		delete this._lockedRows[before];
 	}
 	if (this.isRenderedById(before)) {
 		(this._renderedRows[after] = this._renderedRows[before]).setAttribute('i', after);
-		attrChanged = true;
 		delete this._renderedRows[before];
 	}
 };
@@ -608,20 +605,16 @@ prototype.onIdListChange = function(datalist, befores, idKey) {
 		locked = this._lockedRows,
 		rendered = this._renderedRows,
 		before,
-		after,
-		attrChanged,
-		node;
+		after;
 	for (; i < len; i++) {
 		before = befores[i];
 		after = datalist[i][idKey];
-		attrChanged = false;
 		if (locked.hasOwnProperty(before)) {
 			locked[after] = locked[before];
 			delete locked[before];
 		}
 		if (rendered.hasOwnProperty(before)) {
 			(rendered[after] = rendered[before]).setAttribute('i', after);
-			attrChanged = true;
 			delete rendered[before];
 		}
 	}
@@ -1336,11 +1329,9 @@ prototype._removeRows = function(range) {
 	if (!range) {
 		if (this._lockExist()) {
 			for (id in rendered) {
-				if (rendered.hasOwnProperty(id)) {
-					if (locked.hasOwnProperty(id)) {
-						canvas.removeChild(rendered[id]);
-						delete rendered[id];
-					}
+				if (!locked.hasOwnProperty(id) && rendered.hasOwnProperty(id)) {
+					canvas.removeChild(rendered[id]);
+					delete rendered[id];
 				}
 			}
 		}

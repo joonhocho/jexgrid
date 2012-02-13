@@ -953,6 +953,7 @@ function parseDate(v) {
 	return new Date(Date.parse(v));
 }
 
+// to be completed
 prototype.setVisible = function(key, visible) {
 	var colDef = this.getByKey(key, true);
 	if (!colDef) {
