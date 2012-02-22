@@ -1,6 +1,6 @@
 /**
- * JexGrid Build 73
- * Date: Wed Feb 8 11:35:47 KST 2012
+ * JexGrid Build 74
+ * Date: Wed Feb 22 11:23:08 KST 2012
  */
 /*
 AUTHOR
@@ -5790,7 +5790,7 @@ jx.grid.ViewportManager = {};
     }else {
       if(this._lockExist()) {
         for(e in c) {
-          c.hasOwnProperty(e) && d.hasOwnProperty(e) && (a.removeChild(c[e]), delete c[e])
+          !d.hasOwnProperty(e) && c.hasOwnProperty(e) && (a.removeChild(c[e]), delete c[e])
         }
       }else {
         this._renderedRows = {}, a.innerHTML = ""
